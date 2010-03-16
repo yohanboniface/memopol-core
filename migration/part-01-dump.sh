@@ -1,4 +1,5 @@
 #!/bin/bash
+# dump dbxml data to xml files
 
 set -e
 
