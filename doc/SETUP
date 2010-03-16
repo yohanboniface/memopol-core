@@ -1,0 +1,18 @@
+This describes how to setup the mempol2 dev environment
+
+
+* install couchdb & python bindings
+
+sudo apt-get install couchdb python-couchdbkit python-couchdb
+
+
+* install the tornado web server
+
+instructions copied from http://www.tornadoweb.org/
+
+sudo apt-get install python-dev python-pycurl python-simplejson
+wget http://www.tornadoweb.org/static/tornado-0.2.tar.gz
+tar xvzf tornado-0.2.tar.gz
+cd tornado-0.2
+python setup.py build
+sudo python setup.py install

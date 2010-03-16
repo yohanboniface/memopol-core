@@ -1,0 +1,24 @@
+Design Notes for Memopol 2
+==========================
+
+Memopol is a web application dedicated to revealing and following political processes. The basic feature
+is to provide the public (users) with a view of who their representatives are and what they do; how they vote,
+what they say.
+
+Technically the application is broken down in layers:
+
+* database or document store
+
+    SQL and/or NoSQL server(s) hosting content, user information...
+
+* server or backend
+
+    An http REST backend that serves dynamic data in JSON format
+    Static files are also served (maybe by a different server, maybe by a cdn)
+
+* client or frontend (multiple)
+
+    The client side, control and view layer. Html/javascript for the web and mobile web.
+
+
+    
