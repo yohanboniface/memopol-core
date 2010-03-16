@@ -16,15 +16,15 @@ trap "rm -f -- '$t'" EXIT
 cat >$t <<_EOF_
 openContainer meps.dbxml
 cquery '*'
-print $XML_DUMPS_PATH/dump-meps.xml
+print $XML_DUMPS_PATH/meps.xml
 
 openContainer mps.dbxml
 cquery '*'
-print $XML_DUMPS_PATH/dump-mps.xml
+print $XML_DUMPS_PATH/mps.xml
 
 openContainer votes.dbxml
 cquery '*'
-print $XML_DUMPS_PATH/dump-votes.xml
+print $XML_DUMPS_PATH/votes.xml
 
 quit
 _EOF_

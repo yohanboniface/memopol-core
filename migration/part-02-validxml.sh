@@ -2,7 +2,6 @@
 # Add xml header with encoding and a top level container tag
 
 set -e
-set -x
 
 source ./env
 
