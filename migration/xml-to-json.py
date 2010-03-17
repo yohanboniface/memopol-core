@@ -1,9 +1,9 @@
-#!/usr/bin/python
+#!/usr/bin/python2.6
 
 import sys
 from xml.etree import ElementTree
 
-import simplejson as json
+from jsonwrapper import json
 
 ## Taken from activestate - Recipe 573463 (r7): Converting XML to Dictionary and back 
 
@@ -116,11 +116,13 @@ output_name = sys.argv[2]
 
 root = ElementTree.parse(input_name).getroot()
 
-outfp = open(output_name, "w")
-
+outlist = []
 for pol in root.findall(root[0].tag):
     o = ConvertXmlToDict(pol)
-    outfp.write(json.dumps(o))
-    outfp.write("\n")
+    # we make a list of every item, skipping the toplevel tag
+    outlist.append(o.values()[0])
 
+# now write the ugly-ass enormous list of items
+outfp = open(output_name, "w")
+outfp.write(json.dumps(outlist))
 outfp.close()
