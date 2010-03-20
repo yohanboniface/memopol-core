@@ -3,8 +3,10 @@ This describes how to setup the mempol2 dev environment
 
 * install django, couchdb & python bindings
 
-    sudo apt-get install python-django couchdb python-anyjson python-memcache python-couchdb
+    sudo apt-get install python-django couchdb python-memcache python-couchdb
 
+
+    
 
 
 --- OUTDATED
