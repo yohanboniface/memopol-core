@@ -6,6 +6,11 @@ export COUCHDB_HOST
 export COUCHDB_PORT
 export COUCHDB_URL_ROOT
 
-#rm /tmp/memopol2.sqlite
+if ! test -f /tmp/memopol2.sqlite; then
+  cd ../memopol2
+  ./manage.py syncdb
+  cd -
+fi
+
 
 python part-06-django-import.py
