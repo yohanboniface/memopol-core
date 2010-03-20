@@ -1,0 +1,9 @@
+<h1>Yarr</h1>
+
+
+<ul>
+{% for r in meps_list %}
+        <li><a href="/mep/{{r.id}}">{{ r.value.first }} {{ r.value.last }}</a></li>
+{% endfor %}
+</ul>
+

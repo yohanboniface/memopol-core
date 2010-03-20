@@ -1,9 +1,31 @@
 This describes how to setup the mempol2 dev environment
 
 
-* install couchdb & python bindings
+* install django, couchdb & python bindings
 
-sudo apt-get install couchdb python-couchdbkit python-couchdb
+    sudo apt-get install python-django couchdb python-anyjson python-memcache python-couchdb
+
+
+
+--- OUTDATED
+
+* install restkit and couchdbkit
+
+    NOTE: restkit is not in debian squeeze as of now, and the couchdbkit version
+    that is provided didn't work against a recent restkit, so I got both
+    from git (stefan 2010-03-18)
+
+
+    git clone git://github.com/benoitc/restkit.git
+    cd couchdbkit
+    git checkout 1.2.1
+    sudo python2.6 ./setup.py install
+
+
+    git clone git://github.com/benoitc/couchdbkit.git
+    cd couchdbkit
+    git checkout 0.4.5
+    sudo python2.6 ./setup.py install
 
 
 * install the tornado web server

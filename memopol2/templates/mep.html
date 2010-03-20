@@ -1,0 +1,49 @@
+<h1>{{d.infos.name.first}} {{d.infos.name.last}}</h1>
+
+<small><a href="/mep/">Back to list</a></small>
+
+<hr/>
+
+Email:
+{% if d.contact.email.text %}
+    {{ d.contact.email.text }}
+{% else %}
+    {{ d.contact.email }}
+{% endif %}
+
+
+
+<hr/>
+Complete details:<br/>
+
+{% for key, value in d.items %}
+    <b>{{ key }}</b>: {{ value }}<br/>
+{% endfor %}
+<hr/>
+
+Positions:<br/>
+
+<ul>
+{% for pos in positions %}
+        <li>{{ pos.content }}
+        {% if not pos.visible %}
+        (not visible)
+        {% endif %}
+        {% if not pos.moderated %}
+        (not moderated)
+        {% endif %}
+        </li>
+{% endfor %}
+</ul>
+
+<hr/>
+
+Add position: 
+<form action="/mep/{{ mep_id }}/addposition/" method="post">
+
+
+<input type="text" name="text" id="text" value="Blah !">
+
+
+<input type="submit" value="Vote" />
+</form>
