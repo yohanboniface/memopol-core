@@ -3,10 +3,15 @@ This describes how to setup the mempol2 dev environment
 
 * install django, couchdb & python bindings
 
-    sudo apt-get install python-django couchdb python-memcache python-couchdb
+    sudo apt-get install couchdb python-memcache python-couchdb memcached
+    sudo apt-get install -t lenny-backports python-django
 
+* run the "migration" scripts:
 
+    cd migration
+    ./go.sh
     
+
 
 
 --- OUTDATED
