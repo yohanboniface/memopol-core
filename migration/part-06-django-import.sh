@@ -1,5 +1,7 @@
 #!/bin/sh
 
+source env
+
 export PYTHONPATH="../:"$PYTHONPATH
 export DJANGO_SETTINGS_MODULE="memopol2.settings"
 export COUCHDB_HOST
