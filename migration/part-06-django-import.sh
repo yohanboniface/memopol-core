@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source env
+source ./env
 
 export PYTHONPATH="../:"$PYTHONPATH
 export DJANGO_SETTINGS_MODULE="memopol2.settings"
