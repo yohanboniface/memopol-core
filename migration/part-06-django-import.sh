@@ -4,9 +4,9 @@ source ./env
 
 export PYTHONPATH="../:"$PYTHONPATH
 export DJANGO_SETTINGS_MODULE="memopol2.settings"
-export COUCHDB_HOST
-export COUCHDB_PORT
-export COUCHDB_URL_ROOT
+export COUCH_HOST
+export COUCH_PORT
+export COUCH_URL_ROOT
 
 if ! test -f /tmp/memopol2.sqlite; then
   cd ../memopol2
