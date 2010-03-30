@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 <h1>{{d.infos.name.first}} {{d.infos.name.last}}</h1>
 
 <small><a href="/mep/">Back to list</a></small>
@@ -47,3 +50,4 @@ Add position:
 
 <input type="submit" value="Ajouter une prise de position" />
 </form>
+{% endblock %}

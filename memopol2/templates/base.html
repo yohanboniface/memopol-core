@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <link rel="stylesheet" href="/static/reset.css" />
+    <link rel="stylesheet" href="/static/grid.css" />
+    <title>{{ title|default:"Memopol" }}</title>
+</head>
+
+<body>
+
+<div class="row">
+	<div class="column grid_9">
+        {% block header %}<h1>{{ title|default:"Memopol" }}</h1>{% endblock %}
+    </div>
+</div>
+
+<div class="row">
+	<div class="column grid_3">
+        {% block sidebar %}
+        <ul>
+            <li><a href="/">Home</a></li>
+        </ul>
+        {% endblock %}
+    </div>
+	<div class="column grid_6">{% block content %}{% endblock %}</div>
+</div>
+    
+</body>
+</html>

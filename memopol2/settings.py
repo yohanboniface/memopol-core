@@ -1,5 +1,9 @@
 # Django settings for memopol2 project.
 
+
+import os
+PROJECT_PATH = os.path.abspath(os.path.split(__file__)[0])
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -65,8 +69,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'memopol2.urls'
 
-import os
-PROJECT_PATH = os.path.abspath(os.path.split(__file__)[0])
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, "templates"),
