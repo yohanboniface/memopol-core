@@ -17,4 +17,5 @@ for item in jsondata:
     server.request("POST", db_name, anyjson.serialize(item))
     r = server.getresponse()
     r.read()
-    print r.status
+    if r.status < 200 or r.status > 299:
+        print "Got a bad http status: %d" % r.status

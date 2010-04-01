@@ -3,6 +3,7 @@
 import sys
 from xml.etree import ElementTree
 import codecs
+import pprint
 
 import anyjson
 
@@ -111,6 +112,14 @@ def ConvertXmlToDict(root, dictclass=XmlDictObject):
     return dictclass({root.tag: _ConvertXmlToDictRecurse(root, dictclass)})
 
 
+def transform(item):
+    #pprint.pprint(item)
+    try:
+        item["_id"] = item["infos"]["name"]["wiki"]
+    except:
+        pass
+    return item
+
 
 input_name = sys.argv[1]
 output_name = sys.argv[2]
@@ -121,7 +130,8 @@ outlist = []
 for pol in root.findall(root[0].tag):
     o = ConvertXmlToDict(pol)
     # we make a list of every item, skipping the toplevel tag
-    outlist.append(o.values()[0])
+    item = transform(o.values()[0])
+    outlist.append(item)
 
 # now write the ugly-ass enormous list of items
 
