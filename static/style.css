@@ -1,0 +1,24 @@
+.sidebar {
+    font-size: 80%;
+}
+
+
+ul.treelist {
+    padding-left: 0px;
+}
+
+li ul.treelist {
+    padding-left: 10px;
+}
+
+li ul.treelist li ul.treelist {
+    padding-left: 20px;
+}
+
+li ul.treelist li ul.treelist li ul.treelist {
+    padding-left: 30px;
+}
+
+li ul.treelist li ul.treelist li ul.treelist li ul.treelist {
+    padding-left: 40px;
+}

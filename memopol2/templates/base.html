@@ -4,10 +4,12 @@
 <head>
     <link rel="stylesheet" href="/static/reset.css" />
     <link rel="stylesheet" href="/static/grid.css" />
+    <link rel="stylesheet" href="/static/style.css" />
+    {% block head %}{% endblock %}
     <title>{{ title|default:"Memopol" }}</title>
 </head>
 
-<body>
+<body {% block bodyattrs %}{% endblock %}>
 
 <div class="row">
 	<div class="column grid_9">
@@ -16,14 +18,15 @@
 </div>
 
 <div class="row">
-	<div class="column grid_3">
-        {% block sidebar %}
-        <ul>
+	<div class="column grid_2">
+        <ul class="sidebar">
             <li><a href="/">Home</a></li>
+            {% block sidebar %}
+            {% endblock %}
         </ul>
-        {% endblock %}
+
     </div>
-	<div class="column grid_6">{% block content %}{% endblock %}</div>
+	<div class="column grid_7">{% block content %}{% endblock %}</div>
 </div>
     
 </body>

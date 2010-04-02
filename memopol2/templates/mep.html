@@ -1,9 +1,17 @@
 {% extends "base.html" %}
+{% load recursedict %}
+
+
+{% block sidebar %}
+<li><a href="/mep/">Back to list</a></li>
+<li><a href="raw">View Raw JSON</a></li>
+{% endblock %}
 
 {% block content %}
 <h1>{{d.infos.name.first}} {{d.infos.name.last}}</h1>
 
-<small><a href="/mep/">Back to list</a></small>
+
+
 
 <hr/>
 
@@ -19,9 +27,15 @@ Email:
 <hr/>
 Complete details:<br/>
 
-{% for key, value in d.items %}
-    <b>{{ key }}</b>: {{ value }}<br/>
-{% endfor %}
+{% recursedict d %}
+<ul class="treelist">
+{% loop %}
+<li>{% if key %}<b>{{ key }}</b>:&nbsp;{% endif %}{% value %}</li>
+{% endloop %}
+</ul>
+{% endrecursedict %}
+
+
 <hr/>
 
 Positions:<br/>

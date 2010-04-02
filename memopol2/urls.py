@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     
     (r'^mep/$', 'memopol2.show.views.index'),
     (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/$', 'memopol2.show.views.mep'),
+    (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/raw/$', 'memopol2.show.views.raw'),
     (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/addposition/$', 'memopol2.show.views.addposition'),
 
 

@@ -29,6 +29,14 @@ def mep(request, mep_id):
     positions = Position.objects.filter(mep=mep_id)
     return render_to_response('mep.html', {'mep_id': mep_id, 'mep': mep, 'positions': positions, 'd': mep.get_couch_data()}, context_instance=RequestContext(request))
 
+
+def raw(request, mep_id):
+    mep = get_object_or_404(Mep, pk=mep_id)
+    import simplejson
+    jsonstr = simplejson.dumps( mep.get_couch_data(), indent=4)
+    return render_to_response('mep_raw.html', {'mep_id': mep_id, 'mep': mep, 'jsonstr': jsonstr}, context_instance=RequestContext(request))
+
+
 def addposition(request, mep_id):
     mep = get_object_or_404(Mep, pk=mep_id)
     
