@@ -1,5 +1,5 @@
 #!/usr/bin/python
-
+# -*- coding: iso-8859-15 -*-
 import sys
 from xml.etree import ElementTree
 import codecs
@@ -112,12 +112,57 @@ def ConvertXmlToDict(root, dictclass=XmlDictObject):
     return dictclass({root.tag: _ConvertXmlToDictRecurse(root, dictclass)})
 
 
+class FixupException(Exception):
+    def __init__(self, message, item):
+        Exception.__init__(self, message)
+        self.item = item
+
+    def __str__(self):
+        return "FixupException: '%s' in [%s]" % (self.message, repr(self.item))
+
+def fixup_gender(item):
+    g = unicode(item["infos"]["birth"]["gender"])
+    del item["infos"]["birth"]["gender"]
+    if g == u'N\xe9':
+        item["infos"]["gender"] = "M"
+    elif g == u'N\xe9e':
+        item["infos"]["gender"] = "F"
+    else:
+        item["infos"]["gender"] = "?"
+
+def fixup_month_names(item):
+    m = unicode(item["infos"]["birth"]["date"]["month"].lower())
+    if len(m) == 0:
+        return
+    months = {
+        u"janvier": "01",
+        u"fevrier": "02", u"f\xe9vrier": "02",
+        u"mars": "03",
+        u"avril": "04",
+        u"mai": "05",
+        u"juin": "06",
+        u"juillet": "07",
+        u"aout": "08", u"ao\xfbt": "08",
+        u"septembre": "09",
+        u"octobre": "10",
+        u"novembre": "11",
+        u"decembre": "12", u"d\xe9cembre": "12",
+    }
+    mindex = months.get(m, None)
+    if mindex is None:
+        raise FixupException("Strange month [%s]" % m, item)
+    item["infos"]["birth"]["date"]["month"] = mindex
+
+
 def transform(item):
-    #pprint.pprint(item)
     try:
         item["_id"] = item["infos"]["name"]["wiki"]
-    except:
+        fixup_gender(item)
+        fixup_month_names(item)
+    except KeyError:
         pass
+    except FixupException, fe:
+        print fe
     return item
 
 
