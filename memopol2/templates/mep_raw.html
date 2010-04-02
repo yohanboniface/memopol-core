@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block head %}
+<link href="/static/prettify/prettify.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/static/prettify/prettify.js"></script>
+<style>
+pre.prettyprint {
+ overflow: scroll;
+ height: 800px;
+ font-size: 80%;
+}
+</style>
+{% endblock %}
+
+{% block bodyattrs %} onload="prettyPrint()" {% endblock %}
+
+{% block sidebar %}
+<li><a href="/mep/{{ mep_id  }}">Back to normal view</a></li>
+{% endblock %}
+
+{% block content %}
+<pre class="prettyprint lang-js">
+{{ jsonstr }}
+</pre>
+{% endblock %}
