@@ -7,13 +7,13 @@ urlpatterns = patterns('',
     # Example:
     # (r'^memopol2/', include('memopol2.foo.urls')),
 
-    (r'^$', 'memopol2.show.views.index'),
+    (r'^$', 'memopol2.main.views.index'),
 
 
-    (r'^mep/$', 'memopol2.show.views.index'),
-    (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/$', 'memopol2.show.views.mep'),
-    (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/raw/$', 'memopol2.show.views.raw'),
-    (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/addposition/$', 'memopol2.show.views.addposition'),
+    (r'^mep/$', 'memopol2.main.views.index'),
+    (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/$', 'memopol2.main.views.mep'),
+    (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/raw/$', 'memopol2.main.views.raw'),
+    (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/addposition/$', 'memopol2.main.views.addposition'),
 
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'

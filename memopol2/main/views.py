@@ -8,7 +8,7 @@ from django.utils import simplejson
 
 from couchdb import Server
 
-from memopol2.show.models import Mep, Position
+from memopol2.main.models import Mep, Position
 from memopol2 import settings
 
 
@@ -86,4 +86,4 @@ def addposition_old(request, mep_id):
     pos.visible = False
     pos.save()
 
-    return HttpResponseRedirect(reverse('memopol2.show.views.mep', args=(mep_id,)) + "?pos")
+    return HttpResponseRedirect(reverse('memopol2.main.views.mep', args=(mep_id,)) + "?pos")
