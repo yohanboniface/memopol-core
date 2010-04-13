@@ -19,7 +19,7 @@ class Mep(models.Model):
         return "<Mep id='%s'>" % self.couchid
 
 class Position(models.Model):
-    mep = models.ForeignKey(Mep) 
+    mep = models.ForeignKey(Mep)
     content = models.CharField(max_length=200)
     submitter_username = models.CharField(max_length=30)
     submitter_ip = models.IPAddressField()

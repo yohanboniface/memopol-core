@@ -8,7 +8,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Admin Istrator', 'admin@nowhere.net'),    
+    ('Admin Istrator', 'admin@nowhere.net'),
 )
 
 MANAGERS = ADMINS
@@ -65,6 +65,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'memopol2.crashlog.CrashLogMiddleware',
 )
 
 ROOT_URLCONF = 'memopol2.urls'
@@ -81,6 +82,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'memopol2.show',
+    'memopol2.crashlog',
 )
 
 CACHE_BACKEND = 'memcached://127.0.0.1:11211/'

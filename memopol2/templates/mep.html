@@ -38,9 +38,16 @@ Complete details:<br/>
 
 <hr/>
 
+
+{{ message }}
+
+<a name="pos">Prises de position</a>
+
+{% if positions %}
+
 Positions:<br/>
 
-<ul>
+<ul id="positions">
 {% for pos in positions %}
         <li>{{ pos.content }}
         {% if not pos.visible %}
@@ -51,17 +58,58 @@ Positions:<br/>
         {% endif %}
         </li>
 {% endfor %}
+
 </ul>
 
 <hr/>
+{% else %}
 
-Add position: 
-<form action="/mep/{{ mep_id }}/addposition/" method="post">
+Aucune prise de position enregistr&acute;e pour l'instant, mais vous pouvez contribuer en en ajoutant une !
+
+{% endif %}
 
 
-<input type="text" name="text" id="text" value="Blah !">
+
+<script>
+
+  function addPositionSubmitButtonClicked()
+  {
+    changeVisibility({addPosition: false, addPositionButton: true});
+
+    var contents = jQuery("#text").val();
+
+    jQuery.getJSON("/mep/{{ mep_id }}/addposition/", { text: contents }, function(json){
+
+      if (json['success'])
+      {
+        jQuery("#positions").append('<li>' + contents + '</li>');
+      }
+    });
+  }
+
+</script>
 
 
-<input type="submit" value="Ajouter une prise de position" />
-</form>
+<div id="addPosition" style="display: none" tabindex="1">
+    <h2>Ajout d'une prise de position</h2>
+    <p>Ce formulaire vout permet d'ajouter une prise de position de ce d&eacute;put&eacute;.<br/>
+    NB: Votre ajout ne sera affich&eacute; publiquement sur le site qu'apr&egrave;s mod&eacute;ration.</p>
+    <form id="addPositionForm" action="/mep/{{ mep_id }}/addposition/" method="post">
+      <textarea rows="5" cols="80" name="text" id="text"></textarea>
+      <br/>
+      <input id="addPositionCancelButton" type="button" value="Abandonner" />
+      <input id="addPositionSubmitButton" type="button" value="Ajouter" />
+    </form>
+</div>
+
+<span id="addPositionButton" class="clickable">Ajouter une prise de position</span>
+
+
+{% endblock %}
+{% block documentReady %}
+    onClickChangeVisibility("addPositionButton", {addPosition: true, addPositionButton: false});
+    onClickChangeVisibility("addPositionCancelButton", {addPosition: false, addPositionButton: true});
+
+    jQuery("#addPositionSubmitButton").click(addPositionSubmitButtonClicked);
+
 {% endblock %}

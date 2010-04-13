@@ -22,3 +22,7 @@ li ul.treelist li ul.treelist li ul.treelist {
 li ul.treelist li ul.treelist li ul.treelist li ul.treelist {
     padding-left: 40px;
 }
+
+.clickable {
+    cursor: pointer;
+}

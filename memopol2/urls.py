@@ -9,14 +9,14 @@ urlpatterns = patterns('',
 
     (r'^$', 'memopol2.show.views.index'),
 
-    
+
     (r'^mep/$', 'memopol2.show.views.index'),
     (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/$', 'memopol2.show.views.mep'),
     (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/raw/$', 'memopol2.show.views.raw'),
     (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/addposition/$', 'memopol2.show.views.addposition'),
 
 
-    # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
+    # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
@@ -24,7 +24,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
 
     # static files for development    , {'document_root': '/path/to/media'}),
-    
+
 )
 
 import settings, os
