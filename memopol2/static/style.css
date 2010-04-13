@@ -26,3 +26,17 @@ li ul.treelist li ul.treelist li ul.treelist li ul.treelist {
 .clickable {
     cursor: pointer;
 }
+
+
+.uiform {
+    border: 1px black solid;
+    margin: 10px;
+    padding: 10px;
+}
+
+#msg {
+    background: #FFFECA;
+    position: fixed;
+    bottom: 0;
+    font-size: 18px;
+}

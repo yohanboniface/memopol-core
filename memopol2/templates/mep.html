@@ -39,13 +39,10 @@ Complete details:<br/>
 <hr/>
 
 
-{{ message }}
 
-<a name="pos">Prises de position</a>
 
-{% if positions %}
+<a name="pos"><h2>Prises de position</h2></a>
 
-Positions:<br/>
 
 <ul id="positions">
 {% for pos in positions %}
@@ -58,39 +55,55 @@ Positions:<br/>
         {% endif %}
         </li>
 {% endfor %}
-
 </ul>
 
-<hr/>
-{% else %}
-
-Aucune prise de position enregistr&acute;e pour l'instant, mais vous pouvez contribuer en en ajoutant une !
-
+{% if not positions %}
+<p>
+Aucune prise de position enregistr&eacute;e pour l'instant, mais vous pouvez contribuer en en ajoutant une !
+</p>
 {% endif %}
+
+
 
 
 
 <script>
 
-  function addPositionSubmitButtonClicked()
-  {
-    changeVisibility({addPosition: false, addPositionButton: true});
-
+function addPositionSubmitButtonClicked()
+{
     var contents = jQuery("#text").val();
+    if (contents.length == 0)
+    {
+        msg("La zone de saisie est vide, veuillez entrer du texte...", 1);
+        return;
+    }
+
+    var btn = jQuery(this);
+    ajaxButtonStart(btn);
+    disable("#addPositionCancelButton");
 
     jQuery.getJSON("/mep/{{ mep_id }}/addposition/", { text: contents }, function(json){
 
-      if (json['success'])
-      {
-        jQuery("#positions").append('<li>' + contents + '</li>');
-      }
+        ajaxButtonStop(btn);
+        enable("#addPositionCancelButton");
+
+        if (json['success'])
+        {
+            changeVisibility({addPosition: false, addPositionButton: true});
+            jQuery("#text").val("");
+            msg("Votre contribution a bien &eacute;t&eacute; prise en compte", 1);
+        }
+        else
+        {
+            msg("Une erreur a eu lieu, votre contribution n'a pas &eacute;t&eacute; enregistr&eacute;e");
+        }
     });
-  }
+}
 
 </script>
 
 
-<div id="addPosition" style="display: none" tabindex="1">
+<div id="addPosition" class="uiform" style="display: none" tabindex="1">
     <h2>Ajout d'une prise de position</h2>
     <p>Ce formulaire vout permet d'ajouter une prise de position de ce d&eacute;put&eacute;.<br/>
     NB: Votre ajout ne sera affich&eacute; publiquement sur le site qu'apr&egrave;s mod&eacute;ration.</p>
@@ -102,7 +115,7 @@ Aucune prise de position enregistr&acute;e pour l'instant, mais vous pouvez cont
     </form>
 </div>
 
-<span id="addPositionButton" class="clickable">Ajouter une prise de position</span>
+<input type="button" id="addPositionButton" value="Ajouter une prise de position"/>
 
 
 {% endblock %}

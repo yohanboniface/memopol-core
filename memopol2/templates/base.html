@@ -3,25 +3,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <link rel="stylesheet" href="/static/reset.css" />
-    <link rel="stylesheet" href="/static/grid.css" />
+    <link rel="stylesheet" href="/static/fluid_grid.css" />
     <link rel="stylesheet" href="/static/style.css" />
     {% block head %}{% endblock %}
     <title>{{ title|default:"Memopol" }}</title>
     <script type="text/javascript" src="/static/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="/static/scrollTo/jquery.scrollTo.js"></script>
     <script type="text/javascript" src="/static/ui.js"></script>
 
 </head>
 
 <body {% block bodyattrs %}{% endblock %}>
 
-<div class="row">
-	<div class="column grid_9">
-        {% block header %}<h1>{{ title|default:"Memopol" }}</h1>{% endblock %}
-    </div>
-</div>
+<div class="container_12">
 
-<div class="row">
-	<div class="column grid_2">
+	<div class="grid_1">
+        {% block header %}<h1>{{ title|default:"Memopol" }}</h1>{% endblock %}
         <ul class="sidebar">
             <li><a href="/">Home</a></li>
             {% block sidebar %}
@@ -29,8 +26,10 @@
         </ul>
 
     </div>
-	<div class="column grid_7">{% block content %}{% endblock %}</div>
-</div>
+
+	<div class="grid_10">{% block content %}{% endblock %}</div>
+    <div class="clear"></div>
+
 
 <script type="text/javascript">
 jQuery(document).ready(function(){
@@ -38,5 +37,8 @@ jQuery(document).ready(function(){
 });
 </script>
 
+</div>
+
+<div id="msg"></div>
 </body>
 </html>

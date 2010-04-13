@@ -9,7 +9,6 @@ urlpatterns = patterns('',
 
     (r'^$', 'memopol2.main.views.index'),
 
-
     (r'^mep/$', 'memopol2.main.views.index'),
     (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/$', 'memopol2.main.views.mep'),
     (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/raw/$', 'memopol2.main.views.raw'),
@@ -30,5 +29,5 @@ urlpatterns = patterns('',
 import settings, os
 if settings.DEBUG:
     urlpatterns += patterns('',
-        (r'^static/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(settings.PROJECT_PATH, '..', 'static')}),
+        (r'^static/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(settings.PROJECT_PATH, 'static')}),
     )

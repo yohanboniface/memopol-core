@@ -4,7 +4,7 @@ import sys, os
 
 import couchdb
 
-from memopol2.show.models import Mep, Position
+from memopol2.main.models import Mep, Position
 
 print "Deleting existing django meps"
 Mep.objects.all().delete()

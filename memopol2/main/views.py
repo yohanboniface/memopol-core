@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import Context, loader,RequestContext
@@ -10,6 +11,10 @@ from couchdb import Server
 
 from memopol2.main.models import Mep, Position
 from memopol2 import settings
+
+class TestFailure(Exception):
+    pass
+
 
 
 def index(request):
@@ -51,10 +56,17 @@ def raw(request, mep_id):
 
 
 def addposition(request, mep_id):
+    if not request.is_ajax():
+        return HttpResponseServerError()
     results = {'success':False}
     mep = get_object_or_404(Mep, pk=mep_id)
     try:
         text = request.GET[u'text']
+        if settings.DEBUG:
+            if 'slow' in text:
+                time.sleep(10)
+            if 'fail' in text:
+                raise TestFailure()
         pos = Position(mep=mep, content=text)
         pos.submitter_username = request.user.username
         pos.submitter_ip = request.META["REMOTE_ADDR"]
@@ -64,8 +76,7 @@ def addposition(request, mep_id):
         pos.save()
         results = {'success':True}
     except:
-        if settings.DEBUG:
-            raise
+        pass
     json = simplejson.dumps(results)
     return HttpResponse(json, mimetype='application/json')
 
