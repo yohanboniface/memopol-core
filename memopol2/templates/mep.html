@@ -104,14 +104,14 @@ function addPositionSubmitButtonClicked()
 
 
 <div id="addPosition" class="uiform" style="display: none" tabindex="1">
-    <h2>Ajout d'une prise de position</h2>
-    <p>Ce formulaire vout permet d'ajouter une prise de position de ce d&eacute;put&eacute;.<br/>
-    NB: Votre ajout ne sera affich&eacute; publiquement sur le site qu'apr&egrave;s mod&eacute;ration.</p>
+    <h2>Ajout d'une prise de position</h2><hr/>
+    <p>Ce formulaire vout permet d'ajouter une prise de position de ce d&eacute;put&eacute;. Votre ajout ne sera affich&eacute; publiquement sur le site qu'apr&egrave;s mod&eacute;ration.</p>
+    <br/>
     <form id="addPositionForm" action="/mep/{{ mep_id }}/addposition/" method="post">
       <textarea rows="5" cols="80" name="text" id="text"></textarea>
       <br/>
-      <input id="addPositionCancelButton" type="button" value="Abandonner" />
-      <input id="addPositionSubmitButton" type="button" value="Ajouter" />
+      <span id="addPositionSubmitButton" class="submitButton">Ajouter</span>
+      <span id="addPositionCancelButton" class="cancelButton">Abandonner</span>
     </form>
 </div>
 

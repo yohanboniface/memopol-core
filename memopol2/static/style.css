@@ -32,6 +32,15 @@ li ul.treelist li ul.treelist li ul.treelist li ul.treelist {
     border: 1px black solid;
     margin: 10px;
     padding: 10px;
+    background-color: #efefef;
+    /* border-radius */
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    /* box-shadow */
+    -webkit-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+    -moz-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+    box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
 }
 
 #msg {
@@ -40,3 +49,40 @@ li ul.treelist li ul.treelist li ul.treelist li ul.treelist {
     bottom: 0;
     font-size: 18px;
 }
+
+.cancelButton {
+	text-decoration:none;
+    padding: 5px 5px 5px 30px;
+
+    /* border-radius */
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    /* box-shadow */
+    -webkit-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+    -moz-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+    box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+
+    background:url(/static/nicebutton/img/delete.gif) no-repeat 2px 5px;
+
+
+}
+
+.submitButton {
+	text-decoration:none;
+    padding: 5px 5px 5px 30px;
+
+    /* border-radius */
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    /* box-shadow */
+    -webkit-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+    -moz-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+    box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+
+
+    font-weight: bold;
+    background:url(/static/nicebutton/img/add.gif) no-repeat 2px 5px;
+}
+
