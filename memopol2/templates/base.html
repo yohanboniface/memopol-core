@@ -10,6 +10,7 @@
     <script type="text/javascript" src="/static/jquery-1.4.2.js"></script>
     <script type="text/javascript" src="/static/scrollTo/jquery.scrollTo.js"></script>
     <script type="text/javascript" src="/static/ui.js"></script>
+    <script type="text/javascript" src="/static/api.js"></script>
 
 </head>
 
@@ -19,26 +20,35 @@
 
 	<div class="grid_1">
         {% block header %}<h1>{{ title|default:"Memopol" }}</h1>{% endblock %}
-        <ul class="sidebar">
+        <div class="sidebar"><ul>
             <li><a href="/">Home</a></li>
             {% block sidebar %}
             {% endblock %}
+        </ul></div>
+
+        {% if user.is_staff %}
+        <br/>
+        <div class="adminbar">
+        <h3>Outils d'administration</h3>
+        <ul>
+            <li><a href="/admin">Administration</a></li>
+            <li><a href="/moderation">Moderation</a></li>
         </ul>
+        </div>
+        {% endif %}
+
 
     </div>
 
 	<div class="grid_10">{% block content %}{% endblock %}</div>
     <div class="clear"></div>
-
-
+</div>
+<div id="msg"></div>
 <script type="text/javascript">
 jQuery(document).ready(function(){
-{% block documentReady %} {% endblock %}
+    jQuery("#msg").click(rmsg);
+    {% block documentReady %} {% endblock %}
 });
 </script>
-
-</div>
-
-<div id="msg"></div>
 </body>
 </html>

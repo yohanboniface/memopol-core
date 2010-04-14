@@ -27,5 +27,8 @@ class Position(models.Model):
     moderated = models.BooleanField()
     visible = models.BooleanField()
 
+    def __json__(self):
+        return {mep_id: self.mep.couchid, content: self.content}
+
     def __unicode__(self):
         return "<Position for mep id='%s'>" % (self.mep)

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div id="positions">
+</div>
+
+<button id="refreshButton" class="btn">Rafraichir</button>
+
+<script type="text/javascript">
+
+
+function accept(pos_id)
+{
+    ajax_moderatePosition(pos_id, 1, function(json) {
+        jQuery("#pos" + pos_id).remove();
+    });
+}
+
+function reject(pos_id)
+{
+    ajax_moderatePosition(pos_id, 0, function(json) {
+        jQuery("#pos" + pos_id).remove();
+    });
+}
+
+function edit(pos_id)
+{
+    jQuery("#pos" + pos_id).remove();
+}
+
+
+function displayPosition(pos)
+{
+    var widget = "<div id='pos" + pos.pk + "' class='uiform'>";
+
+    widget += "<a target='_blank' href='/mep/" + pos.fields.mep + "'>" + pos.fields.mep + "</a><hr/>"
+    widget += "<code>" + pos.fields.content + "</code><hr/>";
+
+    for (var key in pos.fields)
+    {
+        widget += key + ":&nbsp;" + pos.fields[key] + "<br/>";
+    }
+
+    widget += "<button onClick='accept(" + pos.pk + ");'>Accepter</button>&nbsp;";
+    widget += "<button onClick='reject(" + pos.pk + ");'>Refuser</button>&nbsp;";
+    widget += "<a target='_blank' href='/admin/main/position/" + pos.pk + "/' onClick='edit(" + pos.pk + ");'>Ouvrir dans l'interface d'admin</a>&nbsp;";
+    widget += "</div>";
+
+    jQuery("#positions").append(jQuery(widget));
+}
+
+var last_id = 0;
+
+function refreshButtonClicked()
+{
+    var btn = jQuery(this);
+    startSpinner(btn);
+
+    ajax_getUnmoderatedPositions(last_id, function(results) {
+        stopSpinner(btn);
+        for (var i = 0; i < results.length; i++)
+        {
+            last_id = Math.max(last_id, results[i].pk);
+            displayPosition(results[i]);
+        }
+
+    });
+}
+
+
+</script>
+
+{% endblock %}
+
+{% block documentReady %}
+
+    jQuery("#refreshButton").click(refreshButtonClicked);
+
+{% endblock %}

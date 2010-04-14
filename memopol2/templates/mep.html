@@ -46,45 +46,42 @@ Complete details:<br/>
 
 <ul id="positions">
 {% for pos in positions %}
-        <li>{{ pos.content }}
-        {% if not pos.visible %}
-        (not visible)
-        {% endif %}
-        {% if not pos.moderated %}
-        (not moderated)
-        {% endif %}
-        </li>
+    {% if pos.visible %}
+        <li>{{ pos.content }}</li>
+    {% endif %}
 {% endfor %}
 </ul>
 
-{% if not positions %}
-<p>
+<p id="positionsnote">
+{% ifequal visible_count 0 %}
+{% ifnotequal positions|length visible_count %}
+Des prises de position sont en attente de mod&eacute;ration.
+{% else %}
 Aucune prise de position enregistr&eacute;e pour l'instant, mais vous pouvez contribuer en en ajoutant une !
+{% endifnotequal %}
+{% endifequal %}
 </p>
-{% endif %}
 
 
 
-
-
-<script>
+<script type="text/javascript">
 
 function addPositionSubmitButtonClicked()
 {
     var contents = jQuery("#text").val();
     if (contents.length == 0)
     {
-        msg("La zone de saisie est vide, veuillez entrer du texte...", 1);
+        msg("La zone de saisie est vide, veuillez entrer du texte...", 1, "red");
         return;
     }
 
     var btn = jQuery(this);
-    ajaxButtonStart(btn);
+    startSpinner(btn);
     disable("#addPositionCancelButton");
 
-    jQuery.getJSON("/mep/{{ mep_id }}/addposition/", { text: contents }, function(json){
+    ajax_addPosition("{{mep_id}}", contents, function(json) {
 
-        ajaxButtonStop(btn);
+        stopSpinner(btn);
         enable("#addPositionCancelButton");
 
         if (json['success'])
@@ -95,7 +92,7 @@ function addPositionSubmitButtonClicked()
         }
         else
         {
-            msg("Une erreur a eu lieu, votre contribution n'a pas &eacute;t&eacute; enregistr&eacute;e");
+            msg("Une erreur a eu lieu, votre contribution n'a pas &eacute;t&eacute; enregistr&eacute;e", 0, "red");
         }
     });
 }
@@ -107,19 +104,17 @@ function addPositionSubmitButtonClicked()
     <h2>Ajout d'une prise de position</h2><hr/>
     <p>Ce formulaire vout permet d'ajouter une prise de position de ce d&eacute;put&eacute;. Votre ajout ne sera affich&eacute; publiquement sur le site qu'apr&egrave;s mod&eacute;ration.</p>
     <br/>
-    <form id="addPositionForm" action="/mep/{{ mep_id }}/addposition/" method="post">
-      <textarea rows="5" cols="80" name="text" id="text"></textarea>
-      <br/>
-      <span id="addPositionSubmitButton" class="submitButton">Ajouter</span>
-      <span id="addPositionCancelButton" class="cancelButton">Abandonner</span>
-    </form>
+    <textarea rows="5" cols="80" name="text" id="text"></textarea>
+    <br/>
+    <button id="addPositionSubmitButton" class="submit">Ajouter</button>
+    <button id="addPositionCancelButton" class="cancel">Abandonner</button>
 </div>
 
-<input type="button" id="addPositionButton" value="Ajouter une prise de position"/>
-
+<button id="addPositionButton" class="btn submit">Ajouter une prise de position</button>
 
 {% endblock %}
 {% block documentReady %}
+
     onClickChangeVisibility("addPositionButton", {addPosition: true, addPositionButton: false});
     onClickChangeVisibility("addPositionCancelButton", {addPosition: false, addPositionButton: true});
 

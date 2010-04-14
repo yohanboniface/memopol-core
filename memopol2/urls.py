@@ -9,10 +9,14 @@ urlpatterns = patterns('',
 
     (r'^$', 'memopol2.main.views.index'),
 
-    (r'^mep/$', 'memopol2.main.views.index'),
     (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/$', 'memopol2.main.views.mep'),
-    (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/raw/$', 'memopol2.main.views.raw'),
-    (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/addposition/$', 'memopol2.main.views.addposition'),
+    (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/raw/$', 'memopol2.main.views.mep_raw'),
+    (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/addposition/$', 'memopol2.main.views.mep_addposition'),
+
+
+    (r'^moderation/$', 'memopol2.main.views.moderation'),
+    (r'^moderation/get_unmoderated_positions$', 'memopol2.main.views.moderation_get_unmoderated_positions'),
+    (r'^moderation/moderate_position$', 'memopol2.main.views.moderation_moderate_positions'),
 
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
