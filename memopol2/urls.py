@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     (r'^moderation/get_unmoderated_positions$', 'memopol2.main.views.moderation_get_unmoderated_positions'),
     (r'^moderation/moderate_position$', 'memopol2.main.views.moderation_moderate_positions'),
 
+    #(r'^comments/', include('django.contrib.comments.urls')),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:
