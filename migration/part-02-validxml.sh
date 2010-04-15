@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Add xml header with encoding and a top level container tag
 
 set -e

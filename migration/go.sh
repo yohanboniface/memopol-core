@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 source ./env
 
@@ -10,7 +10,7 @@ fi
 for i in part-*.sh; do
 
  echo "Running [$i]"
- /bin/sh $i
+ /bin/bash $i
  if test $? -ne 0; then
    echo "Script [$i] failed, stopping..."
    exit 1
