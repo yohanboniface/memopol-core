@@ -1,30 +1,27 @@
 {% extends "base.html" %}
 {% load recursedict %}
 
-
 {% block sidebar %}
-<li><a href="raw">View Raw JSON</a></li>
+    <li><a href="raw">View Raw JSON</a></li>
 {% endblock %}
 
 {% block content %}
-<h1>{{d.infos.name.first}} {{d.infos.name.last}}</h1>
+<article>
+<header><h1 id="name">{{d.infos.name.first}} {{d.infos.name.last}}</h1></header>
 
-
-
-
-<hr/>
-
+<section id="summary">
+<h1>Sommaire</h1>
 Email:
 {% if d.contact.email.text %}
     {{ d.contact.email.text }}
 {% else %}
     {{ d.contact.email }}
 {% endif %}
+</section>
 
 
-
-<hr/>
-Complete details:<br/>
+<section id="details">
+<h1>Details</h1>
 
 {% recursedict d %}
 <ul class="treelist">
@@ -33,33 +30,30 @@ Complete details:<br/>
 {% endloop %}
 </ul>
 {% endrecursedict %}
+</section>
 
 
-<hr/>
 
 
 
-<div id="positions">
-<a name="pos"><h2>Prises de position</h2></a>
+<section id="positions">
+    <h1>Prises de position</h1>
 
+    {% for pos in positions %}
+        {% if pos.visible %}
+        <article><h2>Position</h2>{{ pos.content }}</article>
+        {% endif %}
+    {% endfor %}
 
-<ul>
-{% for pos in positions %}
-    {% if pos.visible %}
-        <li>{{ pos.content }}</li>
-    {% endif %}
-{% endfor %}
-</ul>
-
-<p id="positionsnote">
-{% ifequal visible_count 0 %}
-{% ifnotequal positions|length visible_count %}
-Des prises de position sont en attente de mod&eacute;ration.
-{% else %}
-Aucune prise de position enregistr&eacute;e pour l'instant, mais vous pouvez contribuer en en ajoutant une !
-{% endifnotequal %}
-{% endifequal %}
-</p>
+    <aside id="positionsnote">
+    {% ifequal visible_count 0 %}
+    {% ifnotequal positions|length visible_count %}
+    Des prises de position sont en attente de mod&eacute;ration.
+    {% else %}
+    Aucune prise de position enregistr&eacute;e pour l'instant, mais vous pouvez contribuer en en ajoutant une !
+    {% endifnotequal %}
+    {% endifequal %}
+    </aside>
 
 
 
@@ -100,19 +94,21 @@ function addPositionSubmitButtonClicked()
 
 
 <div id="addPosition" class="uiform" style="display: none" tabindex="1">
-    <h2>Ajout d'une prise de position</h2><hr/>
+    <h3>Ajout d'une prise de position</h3>
     <p>Ce formulaire vout permet d'ajouter une prise de position de ce d&eacute;put&eacute;. Votre ajout ne sera affich&eacute; publiquement sur le site qu'apr&egrave;s mod&eacute;ration.</p>
     <br/>
-    <textarea rows="5" cols="80" name="text" id="text"></textarea>
+    <textarea rows="5" cols="80" name="text" id="text" placeholder="Entrez ici le texte de la prise de position"></textarea>
     <br/>
     <button id="addPositionSubmitButton" class="submit">Ajouter</button>
     <button id="addPositionCancelButton" class="cancel">Abandonner</button>
 </div>
 
-<button id="addPositionButton" class="btn submit">Ajouter une prise de position</button>
-</div>
+<button id="addPositionButton" class="submit">Ajouter une prise de position</button>
+</section>
 
-<hr/>
+
+</article>
+
 
 
 
@@ -122,7 +118,5 @@ function addPositionSubmitButtonClicked()
     onClickChangeVisibility("addPositionButton", {addPosition: true, addPositionButton: false});
     onClickChangeVisibility("addPositionCancelButton", {addPosition: false, addPositionButton: true});
     jQuery("#addPositionSubmitButton").click(addPositionSubmitButtonClicked);
-
-
 
 {% endblock %}

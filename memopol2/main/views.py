@@ -90,7 +90,6 @@ def moderation_moderate_positions(request):
         return HttpResponseServerError()
     results = {'success':False}
     try:
-        print request.GET
         position = get_object_or_404(Position, pk=int(request.GET[u'pos_id']))
         position.moderated = True
         position.visible = request.GET[u'decision']

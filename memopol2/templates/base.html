@@ -1,48 +1,54 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!doctype html>
+<html lang="fr">
 <head>
+    <meta charset="iso-8859-15" />
     <link rel="stylesheet" href="/static/reset.css" />
     <link rel="stylesheet" href="/static/fluid_grid.css" />
     <link rel="stylesheet" href="/static/style.css" />
     {% block head %}{% endblock %}
     <title>{{ title|default:"Memopol" }}</title>
+    <!--[if IE]>
+    <script src="/static/html5.js"></script>
+    <![endif]-->
     <script type="text/javascript" src="/static/jquery-1.4.2.js"></script>
-    <script type="text/javascript" src="/static/scrollTo/jquery.scrollTo.js"></script>
     <script type="text/javascript" src="/static/ui.js"></script>
     <script type="text/javascript" src="/static/api.js"></script>
-
 </head>
 
 <body {% block bodyattrs %}{% endblock %}>
 
+
 <div class="container_12">
 
-	<div class="grid_1">
-        {% block header %}<h1>{{ title|default:"Memopol" }}</h1>{% endblock %}
-        <div class="sidebar"><ul>
-            <li><a href="/">Home</a></li>
-            {% block sidebar %}
-            {% endblock %}
-        </ul></div>
+	<div class="grid_2">
+        <header id="mainheader" >{% block header %}<h1>{{ title|default:"Memopol" }}</h1>{% endblock %}</header>
 
-        {% if user.is_staff %}
-        <br/>
-        <div class="adminbar">
-        <h3>Outils d'administration</h3>
-        <ul>
-            <li><a href="/admin">Administration</a></li>
-            <li><a href="/moderation">Moderation</a></li>
-        </ul>
-        </div>
-        {% endif %}
+        <nav>
+            <h2>Liens</h2>
+            <ul>
+                <li><a href="/">Home</a></li>
+                {% block sidebar %}
+                {% endblock %}
+            </ul>
 
+            {% if user.is_staff %}
+            <h2>Outils d'administration</h2>
+            <ul>
+                <li><a href="/admin">Administration</a></li>
+                <li><a href="/moderation">Moderation</a></li>
+            </ul>
+            {% endif %}
+
+        </nav>
 
     </div>
 
 	<div class="grid_10">{% block content %}{% endblock %}</div>
     <div class="clear"></div>
+
+
 </div>
+
 <div id="msg"></div>
 <script type="text/javascript">
 jQuery(document).ready(function(){

@@ -6,7 +6,7 @@
 <div id="positions">
 </div>
 
-<button id="refreshButton" class="btn">Rafraichir</button>
+<button id="refreshButton" class="download">Rafraichir</button>
 
 <script type="text/javascript">
 
@@ -43,8 +43,8 @@ function displayPosition(pos)
         widget += key + ":&nbsp;" + pos.fields[key] + "<br/>";
     }
 
-    widget += "<button onClick='accept(" + pos.pk + ");'>Accepter</button>&nbsp;";
-    widget += "<button onClick='reject(" + pos.pk + ");'>Refuser</button>&nbsp;";
+    widget += "<button class='submit' onClick='accept(" + pos.pk + ");'>Accepter</button>&nbsp;";
+    widget += "<button class='cancel' onClick='reject(" + pos.pk + ");'>Refuser</button>&nbsp;";
     widget += "<a target='_blank' href='/admin/main/position/" + pos.pk + "/' onClick='edit(" + pos.pk + ");'>Ouvrir dans l'interface d'admin</a>&nbsp;";
     widget += "</div>";
 
