@@ -27,7 +27,7 @@
             <h2>Liens</h2>
             <ul>
                 <li><a href="/">Home</a></li>
-                {% block sidebar %}
+                {% block sidelinks %}
                 {% endblock %}
             </ul>
 
@@ -39,6 +39,9 @@
             </ul>
             {% endif %}
 
+
+            {% block sidetools %}
+            {% endblock %}
         </nav>
 
     </div>

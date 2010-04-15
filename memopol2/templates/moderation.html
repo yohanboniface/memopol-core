@@ -1,12 +1,39 @@
 {% extends "base.html" %}
 
+{% block head %}
+<link rel="stylesheet" href="/static/css/moderation.css" />
+{% endblock %}
+
+{% block sidetools %}
+<h2>Moderation</h2>
+<button id="refreshButton" class="download">Rafraichir</button>
+{% endblock %}
+
 {% block content %}
 
 
 <div id="positions">
+
+
+
+<article class="position grid_12" style="display: none" id="pos_proto">
+
+    <header><a class="name" href="" target="_blank"></a></header>
+
+    <section class="grid_8 content"></section>
+    <section class="grid_2 fields"></section>
+    <div class="clear"></div>
+
+    <section class="buttons">
+        <button class="submit" class="submit">Accepter</button>&nbsp;
+        <button class="cancel" class="cancel">Refuser</button>&nbsp;
+        <a class="admin" href="" target="_blank">Ouvrir dans l'interface d'admin</a>&nbsp;
+    </section>
+</article>
+
+
 </div>
 
-<button id="refreshButton" class="download">Rafraichir</button>
 
 <script type="text/javascript">
 
@@ -30,9 +57,42 @@ function edit(pos_id)
     jQuery("#pos" + pos_id).remove();
 }
 
+function obj2str(o)
+{
+    var res = "";
+    for (var key in o)
+    {
+        res += key + ":&nbsp;" + o[key] + "<br/>";
+    }    return res;
+}
+
 
 function displayPosition(pos)
 {
+    // clone the prototype element
+    var elem = jQuery("#pos_proto").clone();
+
+    // ... customize it
+    elem.attr("id", "pos" + pos.pk);
+    elem.css("display", "block");
+
+    elem.find(".name").attr("href","/mep/" + pos.fields.mep).html(pos.fields.mep);
+    elem.find(".content").html(pos.fields.content);
+    elem.find(".fields").html(obj2str(pos.fields));
+    elem.find(".submit").click(function() { accept(pos.pk); });
+    elem.find(".cancel").click(function() { reject(pos.pk); });
+    elem.find(".admin").attr("href","/admin/main/position/" + pos.fields.mep);
+
+    // and show
+    jQuery("#positions").append(elem);
+}
+
+
+function displayPosition0(pos)
+{
+
+
+
     var widget = "<div id='pos" + pos.pk + "' class='uiform'>";
 
     widget += "<a target='_blank' href='/mep/" + pos.fields.mep + "'>" + pos.fields.mep + "</a><hr/>"
@@ -77,5 +137,6 @@ function refreshButtonClicked()
 {% block documentReady %}
 
     jQuery("#refreshButton").click(refreshButtonClicked);
+    refreshButtonClicked();
 
 {% endblock %}

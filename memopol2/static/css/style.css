@@ -1,13 +1,17 @@
+html, body {
+    height: 100%;
+}
+
+
 body {
     background-color: #BCD;
 }
 
 .container_12 {
     background-color: #FAFAFA;
+    min-height: 100%;
 
 }
-
-
 
 nav {
     font-size: 90%;
@@ -37,7 +41,6 @@ h1#name
     background: url(/static/img/logo.png) no-repeat 2px 5px;
     padding-top: 130px;
 }
-
 
 
 ul.treelist {
