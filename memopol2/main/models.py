@@ -20,11 +20,13 @@ class Mep(models.Model):
 
 class Position(models.Model):
     mep = models.ForeignKey(Mep)
-    content = models.CharField(max_length=200)
+    subject = models.CharField(max_length=128)
+    content = models.CharField(max_length=512)
     submitter_username = models.CharField(max_length=30)
     submitter_ip = models.IPAddressField()
     submit_datetime = models.DateTimeField()
     moderated = models.BooleanField()
+    moderated_by = models.CharField(max_length=30)
     visible = models.BooleanField()
 
     def __json__(self):

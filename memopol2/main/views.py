@@ -92,7 +92,7 @@ def moderation_moderate_positions(request):
     try:
         position = get_object_or_404(Position, pk=int(request.GET[u'pos_id']))
         position.moderated = True
-        position.visible = request.GET[u'decision']
+        position.visible = (request.GET[u'decision'] == "1")
         position.save()
         results = {'success':True}
     except:

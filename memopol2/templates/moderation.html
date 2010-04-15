@@ -21,7 +21,7 @@
     <header><a class="name" href="" target="_blank"></a></header>
 
     <section class="grid_8 content"></section>
-    <section class="grid_2 fields"></section>
+    <section class="grid_3 fields"></section>
     <div class="clear"></div>
 
     <section class="buttons">
@@ -81,35 +81,12 @@ function displayPosition(pos)
     elem.find(".fields").html(obj2str(pos.fields));
     elem.find(".submit").click(function() { accept(pos.pk); });
     elem.find(".cancel").click(function() { reject(pos.pk); });
-    elem.find(".admin").attr("href","/admin/main/position/" + pos.fields.mep);
+    elem.find(".admin").attr("href","/admin/main/position/" + pos.pk);
 
     // and show
     jQuery("#positions").append(elem);
 }
 
-
-function displayPosition0(pos)
-{
-
-
-
-    var widget = "<div id='pos" + pos.pk + "' class='uiform'>";
-
-    widget += "<a target='_blank' href='/mep/" + pos.fields.mep + "'>" + pos.fields.mep + "</a><hr/>"
-    widget += "<code>" + pos.fields.content + "</code><hr/>";
-
-    for (var key in pos.fields)
-    {
-        widget += key + ":&nbsp;" + pos.fields[key] + "<br/>";
-    }
-
-    widget += "<button class='submit' onClick='accept(" + pos.pk + ");'>Accepter</button>&nbsp;";
-    widget += "<button class='cancel' onClick='reject(" + pos.pk + ");'>Refuser</button>&nbsp;";
-    widget += "<a target='_blank' href='/admin/main/position/" + pos.pk + "/' onClick='edit(" + pos.pk + ");'>Ouvrir dans l'interface d'admin</a>&nbsp;";
-    widget += "</div>";
-
-    jQuery("#positions").append(jQuery(widget));
-}
 
 var last_id = 0;
 
