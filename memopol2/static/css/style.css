@@ -34,7 +34,7 @@ h1#name
 
 #mainheader {
     font-size: 120%;
-    background: url(/static/logo.png) no-repeat 2px 5px;
+    background: url(/static/img/logo.png) no-repeat 2px 5px;
     padding-top: 130px;
 }
 
@@ -105,17 +105,17 @@ button {
 }
 
 .cancel {
-    background: url(/static/nicebutton/img/delete.gif) no-repeat 2px 5px;
+    background: url(/static/img/nicebutton/delete.gif) no-repeat 2px 5px;
 }
 
 .download {
-    background: url(/static/nicebutton/img/download.gif) no-repeat 2px 5px;
+    background: url(/static/img/nicebutton/download.gif) no-repeat 2px 5px;
 }
 
 
 .submit {
     font-weight: bold;
-    background: url(/static/nicebutton/img/add.gif) no-repeat 2px 5px;
+    background: url(/static/img/nicebutton/add.gif) no-repeat 2px 5px;
 }
 
 

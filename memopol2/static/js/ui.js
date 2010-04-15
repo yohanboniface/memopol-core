@@ -77,7 +77,7 @@ function rmsg()
 function startSpinner(btn)
 {
     btn.attr('disabled', 'disabled');
-    var spinner = jQuery("<img class='spinner' src='/static/spinner.gif'/>");
+    var spinner = jQuery("<img class='spinner' src='/static/img/spinner.gif'/>");
     btn.after(spinner);
     btn.data("spinner", spinner);
 }
