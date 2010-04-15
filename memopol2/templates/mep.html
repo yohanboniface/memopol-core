@@ -114,27 +114,6 @@ function addPositionSubmitButtonClicked()
 
 <hr/>
 
-<div id="comments">
-<a name="com"><h2>Commentaires</h2></a>
-{% get_comment_count for mep as comment_count %}
-{% get_comment_list for mep as comment_list %}
-
-<p>
-{{ comment_count }} commentaires.
-</p>
-
-<ul>
-{% for comment in comment_list %}
-<li><b>{{ comment.user_name }}</b>:{{ comment.comment }}</li>
-{% endfor %}
-</ul>
-
-<div id="addComment" style="display: none" tabindex="2">
-{% render_comment_form for mep %}
-</div>
-
-<button id="addCommentButton" class="btn submit">Ajouter un commentaire</button>
-</div>
 
 
 {% endblock %}
@@ -144,7 +123,6 @@ function addPositionSubmitButtonClicked()
     onClickChangeVisibility("addPositionCancelButton", {addPosition: false, addPositionButton: true});
     jQuery("#addPositionSubmitButton").click(addPositionSubmitButtonClicked);
 
-    onClickChangeVisibility("addCommentButton", {addComment: true, addCommentButton: false});
 
 
 {% endblock %}
