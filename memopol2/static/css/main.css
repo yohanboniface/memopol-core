@@ -17,8 +17,8 @@ nav {
     font-size: 90%;
 }
 
-h1, h2 {
-    margin: 2px 0px 2px 0px;
+nav h1, h2 {
+    margin: 10px 0px 5px 0px;
 }
 
 h1 {
@@ -30,37 +30,18 @@ h2 {
 
 }
 
-h1#name
-{
-    font-size: 150%;
-    border-bottom: 1px black solid;
-}
-
 #mainheader {
     font-size: 120%;
     background: url(/static/img/logo.png) no-repeat 2px 5px;
     padding-top: 130px;
 }
 
-
-ul.treelist {
-    padding-left: 0px;
-}
-
-li ul.treelist {
-    padding-left: 10px;
-}
-
-li ul.treelist li ul.treelist {
-    padding-left: 20px;
-}
-
-li ul.treelist li ul.treelist li ul.treelist {
-    padding-left: 30px;
-}
-
-li ul.treelist li ul.treelist li ul.treelist li ul.treelist {
-    padding-left: 40px;
+#msg {
+    background: #FFFECA;
+    position: fixed;
+    bottom: 0;
+    font-size: 18px;
+    cursor: pointer;
 }
 
 .clickable {
@@ -82,13 +63,7 @@ li ul.treelist li ul.treelist li ul.treelist li ul.treelist {
     box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
 }
 
-#msg {
-    background: #FFFECA;
-    position: fixed;
-    bottom: 0;
-    font-size: 18px;
-    cursor: pointer;
-}
+
 
 
 button {
@@ -115,10 +90,37 @@ button {
     background: url(/static/img/nicebutton/download.gif) no-repeat 2px 5px;
 }
 
-
 .submit {
     font-weight: bold;
     background: url(/static/img/nicebutton/add.gif) no-repeat 2px 5px;
 }
 
+/* meps
+ */
+
+h1#name
+{
+    font-size: 150%;
+    border-bottom: 1px black solid;
+}
+
+ul.treelist {
+    padding-left: 0px;
+}
+
+li ul.treelist {
+    padding-left: 10px;
+}
+
+li ul.treelist li ul.treelist {
+    padding-left: 20px;
+}
+
+li ul.treelist li ul.treelist li ul.treelist {
+    padding-left: 30px;
+}
+
+li ul.treelist li ul.treelist li ul.treelist li ul.treelist {
+    padding-left: 40px;
+}
 

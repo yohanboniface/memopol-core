@@ -7,7 +7,14 @@ urlpatterns = patterns('',
     # Example:
     # (r'^memopol2/', include('memopol2.foo.urls')),
 
-    (r'^$', 'memopol2.main.views.index'),
+    (r'^$', 'memopol2.main.views.index_countries'),
+
+    (r'^names/$', 'memopol2.main.views.index_names'),
+    (r'^countries/$', 'memopol2.main.views.index_countries'),
+    (r'^country/(?P<country_code>[a-zA-Z][a-zA-Z])/$', 'memopol2.main.views.index_by_country'),
+    (r'^groups/$', 'memopol2.main.views.index_groups'),
+    (r'^group/(?P<group>[a-zA-Z/-]+)/$', 'memopol2.main.views.index_by_group'),
+
 
     (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/$', 'memopol2.main.views.mep'),
     (r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/raw/$', 'memopol2.main.views.mep_raw'),

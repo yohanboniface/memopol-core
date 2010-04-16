@@ -2,10 +2,31 @@
 
 {% block content %}
 
+
+{% if meps_list %}
+
 <ul>
 {% for r in meps_list %}
         <li><a href="/mep/{{r.id}}">{{ r.value.first }} {{ r.value.last }}</a></li>
 {% endfor %}
 </ul>
+
+{% endif %}
+
+{% if countries %}
+    <ul>
+    {% for c in countries %}
+        <li><a href="/country/{{c.key}}">{{ c.value.name }}</a> ({{ c.value.count }} d&eacute;put&eacute;s).</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+{% if groups %}
+    <ul>
+    {% for c in groups %}
+        <li><a href="/group/{{c.key}}">{{ c.key }}</a> ({{ c.value.count }} d&eacute;put&eacute;s).</li>
+    {% endfor %}
+    </ul>
+{% endif %}
 
 {% endblock %}

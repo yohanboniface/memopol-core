@@ -18,7 +18,7 @@ from memopol2.main.models import Mep, Position
 from memopol2 import settings
 from memopol2.util import *
 
-def index(request):
+def index_names(request):
     couch = Server("http://localhost:5984")
 
     code = """
@@ -31,6 +31,93 @@ def index(request):
     meps_list = couch_meps.query(code).rows
 
     return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
+
+
+def index_groups(request):
+    couch = Server("http://localhost:5984")
+
+    map_fun = """
+    function(d) {
+        emit(d.infos.group.abbreviation, { count: 1 });
+    }
+    """
+
+    reduce_fun = """function(keys, values) {
+        var sum = 0;
+        for (var idx in values)
+        {
+            sum += values[idx].count;
+        }
+        return {count: sum};
+    }"""
+
+    couch_meps = couch["meps"]
+    groups = couch_meps.query(map_fun, reduce_fun, "javascript", group="true").rows
+
+    return render_to_response('index.html', {'groups': groups}, context_instance=RequestContext(request))
+
+
+def index_countries(request):
+    couch = Server("http://localhost:5984")
+
+    map_fun = """
+    function(d) {
+        emit(d.infos.constituency.country.code, { name: d.infos.constituency.country.name, count: 1 });
+    }
+    """
+
+    reduce_fun = """function(keys, values) {
+        var sum = 0;
+        for (var idx in values)
+        {
+            sum += values[idx].count;
+        }
+        return {name: values[0].name, count: sum};
+    }"""
+
+    couch_meps = couch["meps"]
+    countries = couch_meps.query(map_fun, reduce_fun, "javascript", group="true").rows
+
+    return render_to_response('index.html', {'countries': countries}, context_instance=RequestContext(request))
+
+
+def index_by_country(request, country_code):
+    country_code = country_code.upper()
+    couch = Server("http://localhost:5984")
+
+    code = """
+    function(d) {
+        if (d.infos.constituency.country.code)
+        {
+            emit(d.infos.constituency.country.code, {first: d.infos.name.first, last: d.infos.name.last});
+        }
+    }
+    """
+
+    couch_meps = couch["meps"]
+    meps_list = couch_meps.query(code, key=country_code).rows
+
+    return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
+
+def index_by_group(request, group):
+    group = group.upper()
+    couch = Server("http://localhost:5984")
+
+    code = """
+    function(d) {
+        if (d.infos.group.abbreviation)
+        {
+            emit(d.infos.group.abbreviation, {first: d.infos.name.first, last: d.infos.name.last});
+        }
+    }
+    """
+
+    couch_meps = couch["meps"]
+    meps_list = couch_meps.query(code, key=group).rows
+
+    return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
+
+
 
 def mep(request, mep_id):
     mep = get_object_or_404(Mep, pk=mep_id)

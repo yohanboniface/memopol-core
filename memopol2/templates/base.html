@@ -4,7 +4,7 @@
     <meta charset="iso-8859-15" />
     <link rel="stylesheet" href="/static/css/reset.css" />
     <link rel="stylesheet" href="/static/css/fluid_grid.css" />
-    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/main.css" />
     {% block head %}{% endblock %}
     <title>{{ title|default:"Memopol" }}</title>
     <!--[if IE]>
@@ -24,12 +24,20 @@
         <header id="mainheader" >{% block header %}<h1>{{ title|default:"Memopol" }}</h1>{% endblock %}</header>
 
         <nav>
-            <h2>Liens</h2>
+            <h2>Navigation</h2>
             <ul>
                 <li><a href="/">Home</a></li>
                 {% block sidelinks %}
                 {% endblock %}
             </ul>
+
+            <h2>Meps</h2>
+            <ul>
+                <li><a href="/countries">Par pays</a></li>
+                <li><a href="/groups">Par groupes parlementaires</a></li>
+                <li><a href="/names">Par nom</a></li>
+            </ul>
+
 
             {% if user.is_staff %}
             <h2>Outils d'administration</h2>
