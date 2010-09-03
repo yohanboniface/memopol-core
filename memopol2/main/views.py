@@ -1,6 +1,5 @@
 import time
 from datetime import datetime
-import simplejson
 
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseServerError
 from django.template import Context, loader,RequestContext

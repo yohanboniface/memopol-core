@@ -16,4 +16,4 @@ COUCH_PORT=5984
 COUCH_URL_ROOT=http://$COUCH_HOST:$COUCH_PORT
 
 # comment or remove this line when done
-ENV_HAS_NOT_BEEN_EDITED=Aha
+#ENV_HAS_NOT_BEEN_EDITED=Aha
