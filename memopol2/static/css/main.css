@@ -124,3 +124,20 @@ li ul.treelist li ul.treelist li ul.treelist li ul.treelist {
     padding-left: 40px;
 }
 
+#summary
+{
+	margin: 1em;
+	
+}
+
+#summary ul
+{
+	margin-left: 2em;
+	
+}
+
+#summary li
+{
+	list-style: disc url(/static/img/bullet.gif);
+	margin: .3em;
+}

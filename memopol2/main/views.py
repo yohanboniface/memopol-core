@@ -114,18 +114,28 @@ def index_by_group(request, group):
 
     return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
 
-
+def fixup_mep(mepdata):
+	# fixup email.addr.text
+    try:
+        node = mepdata["contact"]["email"]
+        if not(type(node) is dict and node.has_key("text")):
+            mepdata["contact"]["email"] = { "text": node }
+    except Exception:
+        raise
+    return mepdata
 
 def mep(request, mep_id):
     mep = get_object_or_404(Mep, pk=mep_id)
-    ctx = {'mep_id': mep_id, 'mep': mep, 'd': mep.get_couch_data() }
+    data = fixup_mep(mep.get_couch_data())
+    ctx = {'mep_id': mep_id, 'mep': mep, 'd': data }
     ctx['positions'] = Position.objects.filter(mep=mep_id)
     ctx['visible_count'] = len([ x for x in ctx['positions'] if x.visible ])
     return render_to_response('mep.html', ctx, context_instance=RequestContext(request))
 
 def mep_raw(request, mep_id):
     mep = get_object_or_404(Mep, pk=mep_id)
-    jsonstr = simplejson.dumps( mep.get_couch_data(), indent=4)
+    data = fixup_mep(mep.get_couch_data())
+    jsonstr = simplejson.dumps( data, indent=4)
     return render_to_response('mep_raw.html', {'mep_id': mep_id, 'mep': mep, 'jsonstr': jsonstr}, context_instance=RequestContext(request))
 
 def mep_addposition(request, mep_id):

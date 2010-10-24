@@ -7,21 +7,48 @@
 
 {% block content %}
 <article>
-<header><h1 id="name">{{d.infos.name.first}} {{d.infos.name.last}}</h1></header>
+<header><h1 id="name">{{d.infos.name.first}} {{d.infos.name.last}}, eurodéputé</h1></header>
 
 <section id="summary">
-<h1>Sommaire</h1>
-Email:
-{% if d.contact.email.text %}
-    {{ d.contact.email.text }}
-{% else %}
-    {{ d.contact.email }}
-{% endif %}
+<h1>Informations générales</h1>
+
+<ul id="infos">
+<li><i>Né le</i> {{ d.infos.birth.date.day }}/{{ d.infos.birth.date.month }}/{{ d.infos.birth.date.year }} <i>à</i> {{ d.infos.birth.place.city }} </li>
+<li><i>Pays</i>: {{ d.infos.constituency.country.name }}</li>
+<li><i>Groupe politique</i>: <a href="/group/{{ d.infos.group.abbreviation }}">{{ d.infos.group.name }} ({{ d.infos.group.abbreviation }})</a></li>
+{% if d.infos.group.party %}<li><i>Parti</i> : {{ d.infos.group.party }}</li>{% endif %}
+</ul>
+
+<div id="contact">
+	<h2>Contact</h2>
+	
+		<ul>
+		{% for addr in d.contact.address %}
+		<li><b>{{ addr.label}}</b><br/>
+			{% if addr.building %} Batiment {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
+			{{ addr.street }}, {{ addr.postcode }} {{ addr.city }}<br/>
+			{% if addr.phone %}Tél.: {% for phone in addr.phone %} <a href="callto://{{ phone }}">{{ phone }}</a>&nbsp;{% endfor %}<br/>{% endif %}
+			{% if addr.fax %}Fax: {{ addr.fax }}{% endif %}
+			 
+		</li>
+		{% endfor %}
+		
+		
+		<li><i>E-mail</i>: <a href="mailto:{{ d.contact.email.text }}">{{ d.contact.email.text }}</a></li>
+			
+		{% for webaddr in d.contact.web %}
+		<li>
+				{% if webaddr.type %}
+				<i>{{ webaddr.type}}</i>: <a target="_" href="{{ webaddr.text }}">{{ webaddr.text }}</a>
+				{% else %}
+				<i>Site web</i>: <a target="_" href="{{ webaddr }}">{{ webaddr }}</a>
+				{% endif %}
+		</li>
+		{% endfor %}
+		
+		</ul>
+</div>
 </section>
-
-
-
-
 
 
 <section id="positions">
