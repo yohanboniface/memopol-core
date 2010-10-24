@@ -6,7 +6,7 @@ import warnings
 
 try:
     import hashlib
-    md5sum = hashlib.md5()
+    md5sum = hashlib.md5
 except ImportError:
     # for Python << 2.5
     import md5

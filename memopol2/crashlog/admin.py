@@ -1,5 +1,5 @@
 from django.contrib import admin
-from crashlog.models import ErrorBatch, Error
+from memopol2.crashlog.models import ErrorBatch, Error
 
 class ErrorBatchAdmin(admin.ModelAdmin):
     list_display    = ('class_name', 'message', 'last_seen', 'times_seen', 'url', 'server_name')
@@ -13,3 +13,4 @@ class ErrorAdmin(admin.ModelAdmin):
 
 admin.site.register(ErrorBatch, ErrorBatchAdmin)
 admin.site.register(Error, ErrorAdmin)
+
