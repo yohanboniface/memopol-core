@@ -1,5 +1,5 @@
-from django.conf.urls.defaults import *
-# Uncomment the next two lines to enable the admin:
+from django.conf.urls.defaults import patterns, include
+
 from django.contrib import admin
 admin.autodiscover()
 
@@ -25,21 +25,15 @@ urlpatterns = patterns('',
     (r'^moderation/get_unmoderated_positions$', 'memopol2.main.views.moderation_get_unmoderated_positions'),
     (r'^moderation/moderate_position$', 'memopol2.main.views.moderation_moderate_positions'),
 
-    #(r'^comments/', include('django.contrib.comments.urls')),
-
-    # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
-    # to INSTALLED_APPS to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
+    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
-
-    # static files for development    , {'document_root': '/path/to/media'}),
 
 )
 
+# hack to autodiscover static files location in dev mode
 import settings, os
 if settings.DEBUG:
     urlpatterns += patterns('',
         (r'^static/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(settings.PROJECT_PATH, 'static')}),
     )
+# TODO: static files location in production

@@ -1,11 +1,9 @@
 import time
 from datetime import datetime
 
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseServerError
-from django.template import Context, loader,RequestContext
+from django.http import HttpResponse, HttpResponseServerError
+from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
-from django.core.cache import cache
-from django.core.urlresolvers import reverse
 from django.utils import simplejson
 from django.core import serializers
 

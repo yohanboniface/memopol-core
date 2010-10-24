@@ -2,7 +2,6 @@
 
 import anyjson
 import sys
-import os
 import difflib
 
 
