@@ -14,7 +14,7 @@
 
 <ul id="infos">
 <li><i>Né le</i> {{ d.infos.birth.date.day }}/{{ d.infos.birth.date.month }}/{{ d.infos.birth.date.year }} <i>à</i> {{ d.infos.birth.place.city }} </li>
-<li><i>Pays</i>: {{ d.infos.constituency.country.name }}</li>
+<li><i>Pays</i>:  <img src="/static/img/countries/small/{{ d.infos.constituency.country.code }}.png"/> {{ d.infos.constituency.country.name }} </li>
 <li><i>Groupe politique</i>: <a href="/group/{{ d.infos.group.abbreviation }}">{{ d.infos.group.name }} ({{ d.infos.group.abbreviation }})</a></li>
 {% if d.infos.group.party %}<li><i>Parti</i> : {{ d.infos.group.party }}</li>{% endif %}
 </ul>
