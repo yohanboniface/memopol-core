@@ -4,6 +4,7 @@ import sys
 from xml.etree import ElementTree
 import codecs
 import pprint
+import urlparse
 
 import anyjson
 
@@ -153,12 +154,46 @@ def fixup_month_names(item):
         raise FixupException("Strange month [%s]" % m, item)
     item["infos"]["birth"]["date"]["month"] = mindex
 
+def fixup_contact_email(item):
+    node = item["contact"]["email"]
+    if type(node) in (str, unicode):
+        item["contact"]["email"] = { "text": node }
+
+def fixup_contact_web(item):
+    """ makes sure contact.web is a list containing dicts, as in [{"text": "http://someurl"}, ]
+    """
+    nodelist = item["contact"]["web"]
+    if not type(nodelist) is list:
+        nodelist = (nodelist, )
+    newlist = []
+    for node in nodelist:
+        if type(node) in (str, unicode):
+            newlist.append({ u"text": node })
+        else:
+            newlist.append(node) 
+    item["contact"]["web"] = newlist
+
+def fixup_ext_id(item):
+    """ adds an exit_id attribute containing the 'external' identifier for the resource, meaning the id used by the original, authoritative source/site
+    """
+    for node in item["contact"]["web"]:
+        url = node[u"text"]
+        if u"europa.eu" in url:
+            # for meps, use the id in the query string in the parliament url
+            extid = urlparse.parse_qs(urlparse.urlsplit(url).query)["id"][0]
+        elif u"assemblee-nationale.fr" in url:
+            # for french mps, use the id in the url filename
+            extid = urlparse.urlsplit(url).path.split('/')[-1].split('.')[0]
+        item[u"extid"] = extid
 
 def transform(item):
     try:
         item["_id"] = item["infos"]["name"]["wiki"]
         fixup_gender(item)
         fixup_month_names(item)
+        fixup_contact_web(item)
+        fixup_contact_email(item)
+        fixup_ext_id(item)
     except KeyError:
         pass
     except FixupException, fe:
