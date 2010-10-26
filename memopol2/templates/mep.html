@@ -7,7 +7,7 @@
 
 {% block content %}
 <article>
-<header><h1 id="name">{{d.infos.name.first}} {{d.infos.name.last}}, eurodéputé</h1></header>
+<header><h1 id="name">{{d.infos.name.first}} {{d.infos.name.last|upper}}, eurodéputé</h1></header>
 
 <section id="summary">
 <h1>Informations générales</h1>
@@ -22,9 +22,7 @@
 
 <div id="contact">
 	<h2>Contact</h2>
-	
 
-	
 		<ul>
 		{% for addr in d.contact.address %}
 		<li><b>{{ addr.label|default:"Autre adresse" }}</b><br/>
