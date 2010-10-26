@@ -39,11 +39,7 @@
 			
 		{% for webaddr in d.contact.web %}
 		<li>
-				{% if webaddr.type %}
-				<i>Web</i>: <a target="_" href="{{ webaddr.text }}">{{ webaddr.type }}</a>
-				{% else %}
-				<i>Web</i>: <a target="_" href="{{ webaddr.text }}">{{ webaddr.text }}</a>
-				{% endif %}
+		    <i>Web</i>: <a target="_" href="{{ webaddr.text }}">{{ webaddr.type|default:webaddr.text }}</a>
 		</li>
 		{% endfor %}
 		
