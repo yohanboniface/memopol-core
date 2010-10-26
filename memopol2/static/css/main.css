@@ -148,11 +148,34 @@ li
     border: 0px;
 }
 
-.mugshot
+.quickView
 {
     float: right;
-    border: 1px gray solid;
 }
+
+.quickView span
+{
+    display: block;
+    padding: 5px 0px 5px 0px;
+}
+
+.mugshot
+{
+    border: 1px gray solid;
+    display: block;
+}
+
+.grouplogo 
+{
+    width: 30px;
+    height: 30px;
+    border: 1px gray solid;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+/* collapsible items
+ */
 
 .collapsible
 {

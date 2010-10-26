@@ -13,7 +13,13 @@
 <h1 class="collapsible expanded">Informations générales</h1>
 
 <ul id="infos" class="body">
+
+<div class="quickView">
 <img class="mugshot" src="http://www.europarl.europa.eu/mepphoto/{{ d.extid }}.jpg" onerror="onMugshotError(this);"/>
+<span>{{d.infos.name.first}} {{d.infos.name.last|upper}} <img src="/static/img/countries/small/{{ d.infos.constituency.country.code }}.png"/> </span>
+<img class="grouplogo" src="/static/img/groups/eu/{{ d.infos.group.abbreviation|cut:"/" }}.png"/><a href="/group/{{ d.infos.group.abbreviation }}">{{ d.infos.group.abbreviation }}</a>
+</div>
+
 <li><i>Né{% if d.infos.gender == "F" %}e{% endif %} le</i> {{ d.infos.birth.date.day }}/{{ d.infos.birth.date.month }}/{{ d.infos.birth.date.year }} <i>à</i> {{ d.infos.birth.place.city }} </li>
 <li><i>Pays</i>:  <img src="/static/img/countries/small/{{ d.infos.constituency.country.code }}.png"/> {{ d.infos.constituency.country.name }} </li>
 <li><i>Groupe politique</i>: <a href="/group/{{ d.infos.group.abbreviation }}">{{ d.infos.group.name }} ({{ d.infos.group.abbreviation }})</a></li>
@@ -176,5 +182,6 @@ function addPositionSubmitButtonClicked()
     onClickChangeVisibility("addPositionButton", {addPosition: true, addPositionButton: false});
     onClickChangeVisibility("addPositionCancelButton", {addPosition: false, addPositionButton: true});
     jQuery("#addPositionSubmitButton").click(addPositionSubmitButtonClicked);
+
 
 {% endblock %}
