@@ -13,6 +13,7 @@
 <h1>Informations générales</h1>
 
 <ul id="infos">
+<img id="mugshot" src="http://www.europarl.europa.eu/mepphoto/{{ d.extid }}.jpg"/>
 <li><i>Né le</i> {{ d.infos.birth.date.day }}/{{ d.infos.birth.date.month }}/{{ d.infos.birth.date.year }} <i>à</i> {{ d.infos.birth.place.city }} </li>
 <li><i>Pays</i>:  <img src="/static/img/countries/small/{{ d.infos.constituency.country.code }}.png"/> {{ d.infos.constituency.country.name }} </li>
 <li><i>Groupe politique</i>: <a href="/group/{{ d.infos.group.abbreviation }}">{{ d.infos.group.name }} ({{ d.infos.group.abbreviation }})</a></li>
@@ -22,12 +23,14 @@
 <div id="contact">
 	<h2>Contact</h2>
 	
+
+	
 		<ul>
 		{% for addr in d.contact.address %}
-		<li><b>{{ addr.label}}</b><br/>
+		<li><b>{{ addr.label|default:"Autre adresse" }}</b><br/>
 			{% if addr.building %} Batiment {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
 			{{ addr.street }}, {{ addr.postcode }} {{ addr.city }}<br/>
-			{% if addr.phone %}Tél.: {% for phone in addr.phone %} <a href="callto://{{ phone }}">{{ phone }}</a>&nbsp;{% endfor %}<br/>{% endif %}
+			{% if addr.phone %}Tél.: {% for phone in addr.phone %} <a href="callto://{{ phone|cut:" " }}">{{ phone }}</a>&nbsp;{% endfor %}<br/>{% endif %}
 			{% if addr.fax %}Fax: {{ addr.fax }}{% endif %}
 			 
 		</li>
@@ -39,9 +42,9 @@
 		{% for webaddr in d.contact.web %}
 		<li>
 				{% if webaddr.type %}
-				<i>{{ webaddr.type}}</i>: <a target="_" href="{{ webaddr.text }}">{{ webaddr.text }}</a>
+				<i>Web</i>: <a target="_" href="{{ webaddr.text }}">{{ webaddr.type }}</a>
 				{% else %}
-				<i>Site web</i>: <a target="_" href="{{ webaddr }}">{{ webaddr }}</a>
+				<i>Web</i>: <a target="_" href="{{ webaddr.text }}">{{ webaddr.text }}</a>
 				{% endif %}
 		</li>
 		{% endfor %}

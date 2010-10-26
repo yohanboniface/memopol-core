@@ -35,7 +35,7 @@ def index_groups(request):
 
     map_fun = """
     function(d) {
-        emit(d.infos.group.abbreviation, { count: 1 });
+        emit(d.infos.group.abbreviation, { name: d.infos.group.name,  count: 1 });
     }
     """
 
@@ -45,7 +45,7 @@ def index_groups(request):
         {
             sum += values[idx].count;
         }
-        return {count: sum};
+        return {name: values[0].name , count: sum};
     }"""
 
     couch_meps = couch["meps"]
@@ -97,7 +97,6 @@ def index_by_country(request, country_code):
     return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
 
 def index_by_group(request, group):
-    group = group.upper()
     couch = Server("http://localhost:5984")
 
     code = """

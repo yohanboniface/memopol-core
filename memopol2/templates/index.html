@@ -4,27 +4,28 @@
 
 
 {% if meps_list %}
-
-<ul>
-{% for r in meps_list %}
-        <li><a href="/mep/{{r.id}}">{{ r.value.first }} {{ r.value.last }}</a></li>
-{% endfor %}
-</ul>
-
+    <h1>Eurodéputés</h1>
+    <ul>
+        {% for r in meps_list %}
+            <li><a href="/mep/{{r.id}}">{{ r.value.first }} {{ r.value.last }}</a></li>
+        {% endfor %}
+    </ul>
 {% endif %}
 
 {% if countries %}
+    <h1>Eurodéputés par pays</h1>
     <ul>
     {% for c in countries %}
-        <li><a href="/country/{{c.key}}"><img src="/static/img/countries/small/{{ c.key }}.png"/>{{ c.value.name }}</a> ({{ c.value.count }} d&eacute;put&eacute;s).</li>
+        <li><a href="/country/{{c.key}}"><img src="/static/img/countries/small/{{ c.key }}.png"/></a>&nbsp;<a href="/country/{{c.key}}">{{ c.value.name }}</a> - {{ c.value.count }} d&eacute;put&eacute;s</li>
     {% endfor %}
     </ul>
 {% endif %}
 
 {% if groups %}
+    <h1>Eurodéputés par groupe parlementaire</h1>
     <ul>
     {% for c in groups %}
-        <li><a href="/group/{{c.key}}">{{ c.key }}</a> ({{ c.value.count }} d&eacute;put&eacute;s).</li>
+        <li><a href="/group/{{c.key}}">{{ c.value.name }} ({{ c.key }})</a> - {{ c.value.count }} d&eacute;put&eacute;s</li>
     {% endfor %}
     </ul>
 {% endif %}
