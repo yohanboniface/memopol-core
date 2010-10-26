@@ -154,3 +154,24 @@ li
     border: 1px gray solid;
 }
 
+.collapsible
+{
+    cursor: pointer;
+}
+
+.collapsed
+{
+    background-image: url(/static/img/arrow-right.png);
+    background-position: 0% 0%;
+    background-repeat: no-repeat;
+    padding-left: 1em;
+}
+
+.expanded
+{
+    background-image: url(/static/img/arrow-down.png);
+    background-position: 0% 0%;
+    background-repeat: no-repeat;
+    padding-left: 1em;
+}
+

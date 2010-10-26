@@ -88,11 +88,32 @@ function stopSpinner(btn)
     btn.data("spinner").remove();
 }
 
-//
+// replace mugshot by placeholder on errors
+// --------------------------------------
 
 function onMugshotError(source) {
     source.src = "/static/img/default-mugshot.png";
     source.className = "defaultMugshot";
     source.onerror = "";
     return true;
+}
+
+// collapsible elements
+// --------------------------------------
+
+function activateCollapsible()
+{
+    jQuery(".collapsed~.body").hide();
+    jQuery(".collapsible").click(function(){
+        if (jQuery(this).hasClass("collapsed"))
+        {
+            jQuery(this).removeClass("collapsed").addClass("expanded");
+            jQuery(this).next(".body").show("fast");
+        }
+        else
+        {
+            jQuery(this).removeClass("expanded").addClass("collapsed");
+            jQuery(this).next(".body").hide("fast");
+        }
+    });
 }

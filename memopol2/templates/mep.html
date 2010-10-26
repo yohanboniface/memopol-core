@@ -14,7 +14,7 @@
 
 <ul id="infos">
 <img class="mugshot" src="http://www.europarl.europa.eu/mepphoto/{{ d.extid }}.jpg" onerror="onMugshotError(this);"/>
-<li><i>Né le</i> {{ d.infos.birth.date.day }}/{{ d.infos.birth.date.month }}/{{ d.infos.birth.date.year }} <i>à</i> {{ d.infos.birth.place.city }} </li>
+<li><i>Né{% if d.infos.gender == "F" %}e{% endif %} le</i> {{ d.infos.birth.date.day }}/{{ d.infos.birth.date.month }}/{{ d.infos.birth.date.year }} <i>à</i> {{ d.infos.birth.place.city }} </li>
 <li><i>Pays</i>:  <img src="/static/img/countries/small/{{ d.infos.constituency.country.code }}.png"/> {{ d.infos.constituency.country.name }} </li>
 <li><i>Groupe politique</i>: <a href="/group/{{ d.infos.group.abbreviation }}">{{ d.infos.group.name }} ({{ d.infos.group.abbreviation }})</a></li>
 {% if d.infos.group.party %}<li><i>Parti</i> : {{ d.infos.group.party }}</li>{% endif %}
@@ -46,43 +46,49 @@
 		</ul>
 </div>
 
-
+{% if d.functions %}
 <div id="functions">
-    <h2>Fonctions</h2>
-    <ul>
+    <h2 class="collapsible collapsed">Fonctions</h2>
+    <ul class="body">
     {% for function in d.functions %}
         <li>{{ function.role }} - {{ function.label }}</li>
     {% endfor %}
     </ul>
 </div>
+{% endif %}
 
+{% if d.cv.position %}
 <div id="cv">
-    <h2>CV</h2>
-    <ul>
+    <h2 class="collapsible collapsed">CV</h2>
+    <ul class="body">
     {% for line in d.cv.position %}
         <li>{{ line }}</li>
     {% endfor %}
     </ul>
 </div>
+{% endif %}
 
+{% if d.opinions %}
 <div id="opinions">
-    <h2>Prises de position (memopol v1)</h2>
-    <ul>
+    <h2 class="collapsible collapsed">Prises de position (memopol v1)</h2>
+    <ul class="body">
     {% for line in d.opinions %}
         <li><b>{{ line.title }}</b> (le {{ line.date }})<br/>{% autoescape off %}{{ line.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.url }}"><br/>En savoir plus...</a> </li>
     {% endfor %}
     </ul>
 </div>
+{% endif %}
 
+{% if d.scores %}
 <div id="scores">
-    <h2>Scores</h2>
-    <ul>
+    <h2 class="collapsible collapsed">Scores</h2>
+    <ul class="body">
     {% for score in d.scores %}
     <li>{{ score.label }}: <strong>{{ score.value }}</strong> (le {{ score.date }})<br/><a target="_" href="http://www.laquadrature.net/wiki/{{ score.wiki }}">En savoir plus...</a></li>
     {% endfor %}
     </ul>
 </div>
-
+{% endif %}
 
 </section>
 
@@ -164,6 +170,8 @@ function addPositionSubmitButtonClicked()
 
 {% endblock %}
 {% block documentReady %}
+
+    activateCollapsible();
 
     onClickChangeVisibility("addPositionButton", {addPosition: true, addPositionButton: false});
     onClickChangeVisibility("addPositionCancelButton", {addPosition: false, addPositionButton: true});
