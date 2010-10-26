@@ -159,6 +159,11 @@ li
     cursor: pointer;
 }
 
+.collapsible:hover
+{
+    background-color: #ffffaa;
+}
+
 .collapsed
 {
     background-image: url(/static/img/arrow-right.png);

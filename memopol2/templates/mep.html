@@ -10,9 +10,9 @@
 <header><h1 id="name">{{d.infos.name.first}} {{d.infos.name.last|upper}}, eurodéputé</h1></header>
 
 <section id="summary">
-<h1>Informations générales</h1>
+<h1 class="collapsible expanded">Informations générales</h1>
 
-<ul id="infos">
+<ul id="infos" class="body">
 <img class="mugshot" src="http://www.europarl.europa.eu/mepphoto/{{ d.extid }}.jpg" onerror="onMugshotError(this);"/>
 <li><i>Né{% if d.infos.gender == "F" %}e{% endif %} le</i> {{ d.infos.birth.date.day }}/{{ d.infos.birth.date.month }}/{{ d.infos.birth.date.year }} <i>à</i> {{ d.infos.birth.place.city }} </li>
 <li><i>Pays</i>:  <img src="/static/img/countries/small/{{ d.infos.constituency.country.code }}.png"/> {{ d.infos.constituency.country.name }} </li>
@@ -21,9 +21,9 @@
 </ul>
 
 <div id="contact">
-	<h2>Contact</h2>
+	<h2 class="collapsible expanded">Contact</h2>
 
-		<ul>
+		<ul class="body">
 		{% for addr in d.contact.address %}
 		<li><b>{{ addr.label|default:"Autre adresse" }}</b><br/>
 			{% if addr.building %} Batiment {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
