@@ -88,3 +88,11 @@ function stopSpinner(btn)
     btn.data("spinner").remove();
 }
 
+//
+
+function onMugshotError(source) {
+    source.src = "/static/img/default-mugshot.png";
+    source.className = "defaultMugshot";
+    source.onerror = "";
+    return true;
+}
