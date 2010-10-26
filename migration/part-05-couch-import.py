@@ -18,4 +18,4 @@ for item in jsondata:
     r = server.getresponse()
     r.read()
     if r.status < 200 or r.status > 299:
-        print "Got a bad http status: %d" % r.status
+        print "Got a bad http status: %d for item %s in input %s" % (r.status, repr(item), input_name)

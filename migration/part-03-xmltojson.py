@@ -26,6 +26,10 @@ class XmlDictObject(dict):
     def __setattr__(self, item, value):
         self.__setitem__(item, value)
     
+    def __delattr__(self, item):
+        print "aha"
+        self.__delattr__(item)
+    
     def __str__(self):
         if self.has_key('text'):
             return self.__getitem__('text')
@@ -155,14 +159,20 @@ def fixup_month_names(item):
     item["infos"]["birth"]["date"]["month"] = mindex
 
 def fixup_contact_email(item):
-    node = item["contact"]["email"]
-    if type(node) in (str, unicode):
-        item["contact"]["email"] = { "text": node }
+    try:
+        node = item["contact"]["email"]
+        if type(node) in (str, unicode):
+            item["contact"]["email"] = { "text": node }
+    except KeyError, ke:
+        pass
 
 def fixup_contact_web(item):
     """ makes sure contact.web is a list containing dicts, as in [{"text": "http://someurl"}, ]
     """
-    nodelist = item["contact"]["web"]
+    try:
+        nodelist = item["contact"]["web"]
+    except KeyError, ke:
+        return
     if not type(nodelist) is list:
         nodelist = (nodelist, )
     newlist = []
@@ -176,7 +186,12 @@ def fixup_contact_web(item):
 def fixup_ext_id(item):
     """ adds an exit_id attribute containing the 'external' identifier for the resource, meaning the id used by the original, authoritative source/site
     """
-    for node in item["contact"]["web"]:
+    try:
+        nodes = item["contact"]["web"]
+    except KeyError, ke:
+        return
+    
+    for node in nodes:
         url = node[u"text"]
         if u"europa.eu" in url:
             # for meps, use the id in the query string in the parliament url
@@ -186,7 +201,45 @@ def fixup_ext_id(item):
             extid = urlparse.urlsplit(url).path.split('/')[-1].split('.')[0]
         item[u"extid"] = extid
 
-def transform(item):
+def listify(item, dictname, listname):
+    """ remove useless intermediary level
+    """
+    dictnode = item.get(dictname, None)
+    if not dictnode:
+     return
+    
+    assert isinstance(dictnode, dict)
+    listnode = dictnode.get(listname, None)
+    if not listnode:
+        del item[dictname]
+        return
+    if isinstance(listnode, list):
+        item[dictname] = listnode
+    else:
+        item[dictname] = (listnode, )
+
+def fixup_functions(item):
+    """ remove useless intermediary level
+    """
+    listify(item, "functions", "function")
+
+def fixup_scores(item):
+    """ remove useless intermediary level
+    """
+    listify(item, "scores", "score")
+
+def fixup_remove_cruft(item):
+    """ removes unneeded keys
+    """
+    del item["container"]
+
+def fixup_opinions(item):
+    """ remove useless intermediary level
+    """
+    listify(item, "opinions", "opinion")
+    
+
+def transform_politician(item):
     try:
         item["_id"] = item["infos"]["name"]["wiki"]
         fixup_gender(item)
@@ -194,12 +247,24 @@ def transform(item):
         fixup_contact_web(item)
         fixup_contact_email(item)
         fixup_ext_id(item)
-    except KeyError:
-        pass
-    except FixupException, fe:
-        print fe
+        fixup_functions(item)
+        fixup_scores(item)
+        fixup_opinions(item)
+        fixup_remove_cruft(item)
+    except:
+        print "\n------------------\nError in item %s" % repr(item)
+        raise
     return item
 
+def transform_votes(item):
+    """ TODO: tranform_votes
+    """
+    return item
+
+transforms = {
+    "politician": transform_politician,
+    "votes": transform_votes,
+}
 
 input_name = sys.argv[1]
 output_name = sys.argv[2]
@@ -210,7 +275,7 @@ outlist = []
 for pol in root.findall(root[0].tag):
     o = ConvertXmlToDict(pol)
     # we make a list of every item, skipping the toplevel tag
-    item = transform(o.values()[0])
+    item = transforms[o.keys()[0]](o.values()[0])
     outlist.append(item)
 
 # now write the ugly-ass enormous list of items

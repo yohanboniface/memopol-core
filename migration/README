@@ -1,3 +1,13 @@
 * Edit the provided 'env' file and correct environment settings
 * Run ./go.sh
 
+
+-- DBXML steps --
+This should not be needed for most people (just use the cached dumps), but just in case
+
+- Get and compile dbxml from oracle (./build_all.sh)
+
+- Get dumps from http://www.laquadrature.net/wiki/Memoire_politique_infrastructure_informatique
+
+- Load them into fresh dbxml containers:
+  dbxml_load -h . -f meps.dump meps.dbxml
