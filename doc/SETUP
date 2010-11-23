@@ -4,14 +4,25 @@ This describes how to setup the mempol2 dev environment
 
     sudo apt-get install couchdb python-memcache python-couchdb memcached
     sudo apt-get install -t lenny-backports python-django
+    // provides easy_install
+    sudo apt-get install python-setuptools
     sudo easy_install Werkzeug
     sudo easy_install django-debug-toolbar
     sudo easy_install django-extensions
     sudo easy_install South
-    
+
+* On Ubuntu 10.4 Lucid Lynx, django is outdated, and you need to install it from a PPA source:
+    - Add the following line to your /etc/apt/source.list
+     deb http://ppa.launchpad.net/ubuntu-backports-testers/ppa/ubuntu lucid main
+    - run: sudo apt-get install python-django
 
 * run the "migration" scripts:
 
     cd migration
     ./go.sh
     
+* run the server:
+    cd memopol2/
+    python manage.py runserver 8080
+    
+* Your application is available on http://localhost:8080/
