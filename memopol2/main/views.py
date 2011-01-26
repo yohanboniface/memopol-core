@@ -20,7 +20,7 @@ def index_names(request):
 
     code = """
     function(d) {
-        emit(null, {first: d.infos.name.first, last: d.infos.name.last});
+        emit(null, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
     }
     """
 
@@ -100,7 +100,7 @@ def index_by_group(request, group):
     function(d) {
         if (d.infos.group.abbreviation)
         {
-            emit(d.infos.group.abbreviation, {first: d.infos.name.first, last: d.infos.name.last});
+            emit(d.infos.group.abbreviation, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
         }
     }
     """
