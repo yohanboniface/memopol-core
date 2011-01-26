@@ -114,7 +114,7 @@ def index_by_group(request, group):
     return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
 
 def fixup_mep(mepdata):
-	# fixup email.addr.text
+    # fixup email.addr.text
     try:
         node = mepdata["contact"]["email"]
         if not(type(node) is dict and node.has_key("text")):
