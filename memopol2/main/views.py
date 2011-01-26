@@ -83,7 +83,7 @@ def index_by_country(request, country_code):
     function(d) {
         if (d.infos.constituency.country.code)
         {
-            emit(d.infos.constituency.country.code, {first: d.infos.name.first, last: d.infos.name.last});
+            emit(d.infos.constituency.country.code, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
         }
     }
     """

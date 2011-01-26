@@ -7,7 +7,7 @@
     <h1>Eurodéputés</h1>
     <ul>
         {% for r in meps_list %}
-            <li><a href="/mep/{{r.id}}">{{ r.value.first }} {{ r.value.last }}</a></li>
+            <li><img class="grouplogo" src="/static/img/groups/eu/{{ r.value.group|cut:"/" }}.png" /><a href="/mep/{{r.id}}">{{ r.value.first }} {{ r.value.last }}</a></li>
         {% endfor %}
     </ul>
 {% endif %}
