@@ -16,7 +16,7 @@ from memopol2 import settings
 from memopol2.util import *
 
 def index_names(request):
-    couch = Server("http://localhost:5984")
+    couch = Server(settings.COUCHDB)
 
     code = """
     function(d) {
@@ -31,7 +31,7 @@ def index_names(request):
 
 
 def index_groups(request):
-    couch = Server("http://localhost:5984")
+    couch = Server(settings.COUCHDB)
 
     map_fun = """
     function(d) {
@@ -55,7 +55,7 @@ def index_groups(request):
 
 
 def index_countries(request):
-    couch = Server("http://localhost:5984")
+    couch = Server(settings.COUCHDB)
 
     map_fun = """
     function(d) {
@@ -80,7 +80,7 @@ def index_countries(request):
 
 def index_by_country(request, country_code):
     country_code = country_code.upper()
-    couch = Server("http://localhost:5984")
+    couch = Server(settings.COUCHDB)
 
     code = """
     function(d) {
@@ -97,7 +97,7 @@ def index_by_country(request, country_code):
     return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
 
 def index_by_group(request, group):
-    couch = Server("http://localhost:5984")
+    couch = Server(settings.COUCHDB)
 
     code = """
     function(d) {

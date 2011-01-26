@@ -1,4 +1,5 @@
 from django.db import models
+from memopol2 import settings
 
 from couchdb import Server
 
@@ -7,7 +8,7 @@ class Mep(models.Model):
     couch_data = None
 
     def load_couch_data(self):
-        couch = Server("http://localhost:5984")
+        couch = Server(settings.COUCHDB)
         self.couch_data = couch["meps"][self.couchid]
 
     def get_couch_data(self):
