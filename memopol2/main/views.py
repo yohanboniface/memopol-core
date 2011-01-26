@@ -29,7 +29,6 @@ def index_names(request):
 
     return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
 
-
 def index_groups(request):
     couch = Server(settings.COUCHDB)
 
@@ -53,7 +52,6 @@ def index_groups(request):
 
     return render_to_response('index.html', {'groups': groups}, context_instance=RequestContext(request))
 
-
 def index_countries(request):
     couch = Server(settings.COUCHDB)
 
@@ -76,7 +74,6 @@ def index_countries(request):
     countries = couch_meps.query(map_fun, reduce_fun, "javascript", group="true").rows
 
     return render_to_response('index.html', {'countries': countries}, context_instance=RequestContext(request))
-
 
 def index_by_country(request, country_code):
     country_code = country_code.upper()
@@ -160,7 +157,6 @@ def mep_addposition(request, mep_id):
     except:
         pass
     return HttpResponse(simplejson.dumps(results), mimetype='application/json')
-
 
 @staff_member_required
 def moderation(request):
