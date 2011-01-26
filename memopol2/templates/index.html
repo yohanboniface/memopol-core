@@ -16,7 +16,7 @@
     <h1>Eurodéputés par pays</h1>
     <ul>
     {% for c in countries %}
-        <li><a href="/country/{{c.key}}"><img src="/static/img/countries/small/{{ c.key }}.png"/></a>&nbsp;<a href="/country/{{c.key}}">{{ c.value.name }}</a> - {{ c.value.count }} d&eacute;put&eacute;s</li>
+        <li><a href="/country/{{c.value.code}}"><img src="/static/img/countries/small/{{ c.value.code }}.png"/></a>&nbsp;<a href="/country/{{c.value.code}}">{{ c.key }}</a> - {{ c.value.count }} d&eacute;put&eacute;s</li>
     {% endfor %}
     </ul>
 {% endif %}

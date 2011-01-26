@@ -57,7 +57,7 @@ def index_countries(request):
 
     map_fun = """
     function(d) {
-        emit(d.infos.constituency.country.code, { name: d.infos.constituency.country.name, count: 1 });
+        emit(d.infos.constituency.country.name, { code: d.infos.constituency.country.code, count: 1 });
     }
     """
 
@@ -67,7 +67,7 @@ def index_countries(request):
         {
             sum += values[idx].count;
         }
-        return {name: values[0].name, count: sum};
+        return {code: values[0].code, count: sum};
     }"""
 
     couch_meps = couch["meps"]
