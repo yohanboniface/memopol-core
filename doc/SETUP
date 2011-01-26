@@ -1,28 +1,72 @@
 This describes how to setup the mempol2 dev environment
+=======================================================
 
-* install django, couchdb & its python bindings, as well as some django extensions
+Install the base dependencies
+=============================
 
-    sudo apt-get install couchdb python-memcache python-couchdb memcached
-    sudo apt-get install -t lenny-backports python-django
-    // provides easy_install
-    sudo apt-get install python-setuptools
-    sudo easy_install Werkzeug
-    sudo easy_install django-debug-toolbar
-    sudo easy_install django-extensions
-    sudo easy_install South
+* Install the couchdb server:
 
-* On Ubuntu 10.4 Lucid Lynx, django is outdated, and you need to install it from a PPA source:
-    - Add the following line to your /etc/apt/source.list
-     deb http://ppa.launchpad.net/ubuntu-backports-testers/ppa/ubuntu lucid main
-    - run: sudo apt-get update && sudo apt-get install python-django
+   sudo apt-get install couchdb
 
-* run the "migration" scripts:
+* Install the base python virtualenv tools:
+
+   sudo apt-get install python-setuptools
+   sudo easy_install virtualenv
+   sudo easy_install virtualenvwrapper
+
+
+Setup your virtual environment
+===============================
+
+If you already use virtualenv/virtualenvwrapper
+-----------------------------------------------
+
+Create the virtualenv for memopol and workon it:
+
+   mkvirtualenv --no-site-packages --distribute memopol2
+
+Install memopol2's depdendencies:
+
+   pip install -r requirements.txt
+
+
+If you don't alreasy use virtualenv/virtualenvwrapper
+-----------------------------------------------------
+
+Add to your .bashrc (or equivalent) something like the following:
+   
+   source /usr/local/bin/virtualenvwrapper.sh
+   export WORKON_HOME=~/envs
+     
+This will end up creating (relatively large) folders in ~/envs 
+where all the projet dependencies will be installed.
+
+Also run those commands in your session, or logout/login, and
+create the WORKON_HOME folder:
+
+   mkdir ~/WORKON_HOME
+
+Create the virtualenv for memopol:
+
+   mkvirtualenv --no-site-packages --distribute memopol2
+
+Your command prompt should now begin by (memopol2)
+
+Install memopol2's dependencies:
+
+   pip install -r requirements.txt
+
+
+Run the "migration" scripts
+===========================
 
     cd migration
     ./go.sh
-    
-* run the server:
-    cd memopol2/
+
+Run the server
+==============
+
+    cd ../memopol2
     python manage.py runserver 8080
     
-* Your application is available on http://localhost:8080/
+Your application is available on http://localhost:8080/
