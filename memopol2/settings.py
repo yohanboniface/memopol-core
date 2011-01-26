@@ -106,3 +106,4 @@ DEBUG_TOOLBAR_PANELS = (
 )
 
 #CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+COUCHDB = "http://localhost:5984"
