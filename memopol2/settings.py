@@ -86,9 +86,9 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'memopol2.main',
     'memopol2.crashlog',
-	'south',
-	'django_extensions',
-	'debug_toolbar',
+    'south',
+    'django_extensions',
+    'debug_toolbar',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
