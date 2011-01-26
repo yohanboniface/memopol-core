@@ -14,7 +14,7 @@ This describes how to setup the mempol2 dev environment
 * On Ubuntu 10.4 Lucid Lynx, django is outdated, and you need to install it from a PPA source:
     - Add the following line to your /etc/apt/source.list
      deb http://ppa.launchpad.net/ubuntu-backports-testers/ppa/ubuntu lucid main
-    - run: sudo apt-get install python-django
+    - run: sudo apt-get update && sudo apt-get install python-django
 
 * run the "migration" scripts:
 
