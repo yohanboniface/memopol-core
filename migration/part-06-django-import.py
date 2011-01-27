@@ -4,6 +4,7 @@ import sys, os
 
 import couchdb
 
+"""
 from memopol2.main.models import Mep, Position
 
 print "Deleting existing django meps"
@@ -23,3 +24,4 @@ for mepid in meps:
     if mepid not in existing_id_set:
         newmep = Mep(couchid=mepid)
         newmep.save()
+"""

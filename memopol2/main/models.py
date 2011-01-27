@@ -1,26 +1,19 @@
 from django.db import models
 from memopol2 import settings
 
-from couchdb import Server
+from couchdbkit import *
 
-class Mep(models.Model):
-    couchid = models.CharField(primary_key=True, max_length=32)
-    couch_data = None
-
-    def load_couch_data(self):
-        couch = Server(settings.COUCHDB)
-        self.couch_data = couch["meps"][self.couchid]
-
+class Mep(Document):
+    # for compat with our silly views
     def get_couch_data(self):
-        if self.couch_data is None:
-            self.load_couch_data()
-        return self.couch_data
+        return self
 
-    def __unicode__(self):
-        return "<Mep id='%s'>" % self.couchid
-
+# bind our couch db classes
+couch_server = Server()
+Mep.set_db(couch_server["meps"])
+    
 class Position(models.Model):
-    mep = models.ForeignKey(Mep)
+    mep = models.CharField(max_length=128)
     subject = models.CharField(max_length=128)
     content = models.CharField(max_length=512)
     submitter_username = models.CharField(max_length=30)

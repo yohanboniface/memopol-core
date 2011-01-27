@@ -9,7 +9,7 @@ from django.core import serializers
 
 from django.contrib.admin.views.decorators import staff_member_required
 
-from couchdb import Server
+from couchdbkit import *
 
 from memopol2.main.models import Mep, Position
 from memopol2 import settings
@@ -25,7 +25,7 @@ def index_names(request):
     """
 
     couch_meps = couch["meps"]
-    meps_list = couch_meps.query(code).rows
+    meps_list = couch_meps.temp_view(code).rows
 
     return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
 
@@ -49,7 +49,7 @@ def index_groups(request):
     }"""
 
     couch_meps = couch["meps"]
-    groups = couch_meps.query(map_fun, reduce_fun, "javascript", group="true").rows
+    groups = couch_meps.temp_view(map_fun, reduce_fun, "javascript", group="true").rows
 
     return render_to_response('index.html', {'groups': groups}, context_instance=RequestContext(request))
 
@@ -73,7 +73,10 @@ def index_countries(request):
     }"""
 
     couch_meps = couch["meps"]
-    countries = couch_meps.query(map_fun, reduce_fun, "javascript", group="true").rows
+    
+    req = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun })
+    req.fetch()
+    countries = req.all()
 
     return render_to_response('index.html', {'countries': countries}, context_instance=RequestContext(request))
 
@@ -82,17 +85,19 @@ def index_by_country(request, country_code):
     country_code = country_code.upper()
     couch = Server(settings.COUCHDB)
 
-    code = """
+    code = { "map": """
     function(d) {
         if (d.infos.constituency.country.code)
         {
             emit(d.infos.constituency.country.code, {first: d.infos.name.first, last: d.infos.name.last});
         }
     }
-    """
+    """}
 
     couch_meps = couch["meps"]
-    meps_list = couch_meps.query(code, key=country_code).rows
+    req = couch_meps.temp_view(code, key=country_code)
+    req.fetch()
+    meps_list = req.all()
 
     return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
 
@@ -109,7 +114,7 @@ def index_by_group(request, group):
     """
 
     couch_meps = couch["meps"]
-    meps_list = couch_meps.query(code, key=group).rows
+    meps_list = couch_meps.temp_view(code, key=group).rows
 
     return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
 
