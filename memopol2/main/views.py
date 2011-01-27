@@ -1,7 +1,7 @@
 import time
 from datetime import datetime
 
-from django.http import HttpResponse, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseServerError, Http404
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.utils import simplejson
@@ -10,10 +10,17 @@ from django.core import serializers
 from django.contrib.admin.views.decorators import staff_member_required
 
 from couchdbkit import *
+from couchdbkit.exceptions import ResourceNotFound
 
 from memopol2.main.models import Mep, Position
 from memopol2 import settings
 from memopol2.util import *
+
+def get_couch_doc_or_404(klass, key):
+    try:
+        return klass.get(key)
+    except ResourceNotFound:
+        raise Http404
 
 def index_names(request):
     couch = Server(settings.COUCHDB)
@@ -25,7 +32,9 @@ def index_names(request):
     """
 
     couch_meps = couch["meps"]
-    meps_list = couch_meps.temp_view(code).rows
+    meps_list = couch_meps.temp_view({"map": code})
+    meps_list.fetch()
+    meps_list = meps_list.all()
 
     return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
 
@@ -119,35 +128,24 @@ def index_by_group(request, group):
 
     return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
 
-def fixup_mep(mepdata):
-    # fixup email.addr.text
-    try:
-        node = mepdata["contact"]["email"]
-        if not(type(node) is dict and node.has_key("text")):
-            mepdata["contact"]["email"] = { "text": node }
-    except Exception:
-        raise
-    return mepdata
 
 def mep(request, mep_id):
-    mep = get_object_or_404(Mep, pk=mep_id)
-    data = fixup_mep(mep.get_couch_data())
+    data = get_couch_doc_or_404(Mep, mep_id)
     ctx = {'mep_id': mep_id, 'mep': mep, 'd': data }
-    ctx['positions'] = Position.objects.filter(mep=mep_id)
+    ctx['positions'] = Position.objects.filter(mep_id=mep_id)
     ctx['visible_count'] = len([ x for x in ctx['positions'] if x.visible ])
     return render_to_response('mep.html', ctx, context_instance=RequestContext(request))
 
 def mep_raw(request, mep_id):
-    mep = get_object_or_404(Mep, pk=mep_id)
-    data = fixup_mep(mep.get_couch_data())
-    jsonstr = simplejson.dumps( data, indent=4)
+    mep = get_couch_doc_or_404(Mep, mep_id)
+    jsonstr = simplejson.dumps( mep, indent=4)
     return render_to_response('mep_raw.html', {'mep_id': mep_id, 'mep': mep, 'jsonstr': jsonstr}, context_instance=RequestContext(request))
 
 def mep_addposition(request, mep_id):
     if not request.is_ajax():
         return HttpResponseServerError()
     results = {'success':False}
-    mep = get_object_or_404(Mep, pk=mep_id)
+    mep = get_couch_doc_or_404(Mep, mep_id)
     try:
         text = request.GET[u'text']
         if settings.DEBUG:
@@ -155,7 +153,7 @@ def mep_addposition(request, mep_id):
                 time.sleep(10)
             if 'fail' in text:
                 raise TestFailure()
-        pos = Position(mep=mep, content=text)
+        pos = Position(mep_id=mep_id, content=text)
         pos.submitter_username = request.user.username
         pos.submitter_ip = request.META["REMOTE_ADDR"]
         pos.submit_datetime = datetime.today()
