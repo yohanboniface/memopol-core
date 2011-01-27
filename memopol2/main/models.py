@@ -3,17 +3,30 @@ from memopol2 import settings
 
 from couchdbkit import *
 
-class Mep(Document):
-    # for compat with our silly views
-    def get_couch_data(self):
-        return self
-
-# bind our couch db classes
-couch_server = Server()
-Mep.set_db(couch_server["meps"])
+# FIXME this is fugly
+class Mep(dict):
+    def __init__(self, *args):
+        dict.__init__(self, *args)
+        self.fixup()
     
+    def fixup(self):
+        # fixup email.addr.text
+        try:
+            node = self["contact"]["email"]
+            if not(type(node) is dict and node.has_key("text")):
+                self["contact"]["email"] = { "text": node }
+        except Exception:
+            raise
+    
+    @staticmethod
+    def get(key):
+        couch = Server(settings.COUCHDB)
+        return Mep(couch["meps"].get(key)) 
+        
+
+
 class Position(models.Model):
-    mep = models.CharField(max_length=128)
+    mep_id = models.CharField(max_length=128)
     subject = models.CharField(max_length=128)
     content = models.CharField(max_length=512)
     submitter_username = models.CharField(max_length=30)
