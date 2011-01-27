@@ -48,7 +48,9 @@ def index_groups(request):
     }"""
 
     couch_meps = couch["meps"]
-    groups = couch_meps.temp_view(map_fun, reduce_fun, "javascript", group="true").rows
+    groups = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun}, group="true")
+    groups.fetch()
+    groups = groups.all()
 
     return render_to_response('index.html', {'groups': groups}, context_instance=RequestContext(request))
 
@@ -72,7 +74,7 @@ def index_countries(request):
 
     couch_meps = couch["meps"]
     
-    req = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun })
+    req = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun }, group=True)
     req.fetch()
     countries = req.all()
 
@@ -111,7 +113,9 @@ def index_by_group(request, group):
     """
 
     couch_meps = couch["meps"]
-    meps_list = couch_meps.temp_view(code, key=group).rows
+    meps_list = couch_meps.temp_view({"map": code}, key=group)
+    meps_list.fetch()
+    meps_list = meps_list.all()
 
     return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
 
