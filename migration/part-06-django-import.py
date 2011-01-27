@@ -2,9 +2,14 @@
 
 import sys, os
 
+# This is not needed anymore
+print "part-06-django-import.py is not needed at this time"
+sys.exit(0)
+
+
+
 import couchdb
 
-"""
 from memopol2.main.models import Mep, Position
 
 print "Deleting existing django meps"
@@ -24,4 +29,4 @@ for mepid in meps:
     if mepid not in existing_id_set:
         newmep = Mep(couchid=mepid)
         newmep.save()
-"""
+
