@@ -28,8 +28,6 @@ class Mep(dict):
     def get(key):
         couch = Server(settings.COUCHDB)
         return Mep(couch["meps"].get(key)) 
-        
-
 
 class Position(models.Model):
     mep_id = models.CharField(max_length=128)
@@ -43,7 +41,7 @@ class Position(models.Model):
     visible = models.BooleanField()
 
     def __json__(self):
-        return {"mep_id": self.mep.couchid, "content": self.content}
+        return {"mep_id": self.mep_id, "content": self.content}
 
     def __unicode__(self):
-        return "<Position for mep id='%s'>" % (self.mep)
+        return "<Position for mep id='%s'>" % (self.mep_id)
