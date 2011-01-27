@@ -1,0 +1,17 @@
+Some quick information about hacking on memopol:
+
+- follow the SETUP instructions to get the app up and running
+
+- when you want to work on memopol, be sure to use the virtualenvwrapper
+  workon command; for instance if you named your memopol virtual env
+  as 'memopol2', just do 'workon memopol2', and you're good to go.
+  
+In terms of submitting patches, the current process is like:
+
+- Explain what you are going to do on this ML
+
+- Do your changes
+
+- Commit!
+
+- Create a pull request on github
