@@ -1,7 +1,7 @@
 import time
 from datetime import datetime
 
-from django.http import HttpResponse, HttpResponseServerError, Http404
+from django.http import HttpResponse, HttpResponseServerError
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.utils import simplejson
@@ -16,23 +16,17 @@ from memopol2.main.models import Mep, Position
 from memopol2 import settings
 from memopol2.util import *
 
-def get_couch_doc_or_404(klass, key):
-    try:
-        return klass.get(key)
-    except ResourceNotFound:
-        raise Http404
-
 def index_names(request):
     couch = Server(settings.COUCHDB)
 
-    code = """
+    map_fun = """
     function(d) {
         emit(null, {first: d.infos.name.first, last: d.infos.name.last});
     }
     """
 
     couch_meps = couch["meps"]
-    meps_list = couch_meps.temp_view({"map": code})
+    meps_list = couch_meps.temp_view({"map": map_fun})
     meps_list.fetch()
     meps_list = meps_list.all()
 
@@ -96,17 +90,17 @@ def index_by_country(request, country_code):
     country_code = country_code.upper()
     couch = Server(settings.COUCHDB)
 
-    code = { "map": """
+    map_fun = """
     function(d) {
         if (d.infos.constituency.country.code)
         {
             emit(d.infos.constituency.country.code, {first: d.infos.name.first, last: d.infos.name.last});
         }
     }
-    """}
+    """
 
     couch_meps = couch["meps"]
-    req = couch_meps.temp_view(code, key=country_code)
+    req = couch_meps.temp_view({"map": map_fun}, key=country_code)
     req.fetch()
     meps_list = req.all()
 
@@ -115,7 +109,7 @@ def index_by_country(request, country_code):
 def index_by_group(request, group):
     couch = Server(settings.COUCHDB)
 
-    code = """
+    map_fun = """
     function(d) {
         if (d.infos.group.abbreviation)
         {
@@ -125,7 +119,7 @@ def index_by_group(request, group):
     """
 
     couch_meps = couch["meps"]
-    meps_list = couch_meps.temp_view({"map": code}, key=group)
+    meps_list = couch_meps.temp_view({"map": map_fun}, key=group)
     meps_list.fetch()
     meps_list = meps_list.all()
 

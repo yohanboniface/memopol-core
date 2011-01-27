@@ -3,8 +3,14 @@ from memopol2 import settings
 
 from couchdbkit import *
 
-# FIXME this is fugly
 class Mep(dict):
+    """
+    Our Mep pseudo model. Currently we use couchdbkit as a glorified http client and json parser,
+    the objets we work with are just dicts. This is here to wrap things a little bit, and do our
+    fixups (which should be moved to  the migration scripts anyway).
+    
+    FIXME - this is kind of fugly
+    """
     def __init__(self, *args):
         dict.__init__(self, *args)
         self.fixup()
