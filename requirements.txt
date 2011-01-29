@@ -1,0 +1,12 @@
+Django==1.2.4
+South==0.7.3
+Werkzeug==0.6.2
+anyjson==0.3
+couchdbkit==0.5.1
+distribute==0.6.14
+django-annoying==0.7.6
+django-debug-toolbar==0.8.4
+django-extensions==0.6
+restkit==2.3.3
+wsgiref==0.1.2
+yolk==0.4.1

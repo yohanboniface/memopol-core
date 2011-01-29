@@ -9,7 +9,8 @@ from django.core import serializers
 
 from django.contrib.admin.views.decorators import staff_member_required
 
-from couchdb import Server
+from couchdbkit import *
+from couchdbkit.exceptions import ResourceNotFound
 
 from memopol2.main.models import Mep, Position
 from memopol2 import settings
@@ -18,14 +19,16 @@ from memopol2.util import *
 def index_names(request):
     couch = Server(settings.COUCHDB)
 
-    code = """
+    map_fun = """
     function(d) {
         emit(null, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
     }
     """
 
     couch_meps = couch["meps"]
-    meps_list = couch_meps.query(code).rows
+    meps_list = couch_meps.temp_view({"map": map_fun})
+    meps_list.fetch()
+    meps_list = meps_list.all()
 
     return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
 
@@ -48,7 +51,9 @@ def index_groups(request):
     }"""
 
     couch_meps = couch["meps"]
-    groups = couch_meps.query(map_fun, reduce_fun, "javascript", group="true").rows
+    groups = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun}, group="true")
+    groups.fetch()
+    groups = groups.all()
 
     return render_to_response('index.html', {'groups': groups}, context_instance=RequestContext(request))
 
@@ -71,7 +76,10 @@ def index_countries(request):
     }"""
 
     couch_meps = couch["meps"]
-    countries = couch_meps.query(map_fun, reduce_fun, "javascript", group="true").rows
+    
+    req = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun }, group=True)
+    req.fetch()
+    countries = req.all()
 
     return render_to_response('index.html', {'countries': countries}, context_instance=RequestContext(request))
 
@@ -79,7 +87,7 @@ def index_by_country(request, country_code):
     country_code = country_code.upper()
     couch = Server(settings.COUCHDB)
 
-    code = """
+    map_fun = """
     function(d) {
         if (d.infos.constituency.country.code)
         {
@@ -89,14 +97,16 @@ def index_by_country(request, country_code):
     """
 
     couch_meps = couch["meps"]
-    meps_list = couch_meps.query(code, key=country_code).rows
+    req = couch_meps.temp_view({"map": map_fun}, key=country_code)
+    req.fetch()
+    meps_list = req.all()
 
     return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
 
 def index_by_group(request, group):
     couch = Server(settings.COUCHDB)
 
-    code = """
+    map_fun = """
     function(d) {
         if (d.infos.group.abbreviation)
         {
@@ -106,39 +116,30 @@ def index_by_group(request, group):
     """
 
     couch_meps = couch["meps"]
-    meps_list = couch_meps.query(code, key=group).rows
+    meps_list = couch_meps.temp_view({"map": map_fun}, key=group)
+    meps_list.fetch()
+    meps_list = meps_list.all()
 
     return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
 
-def fixup_mep(mepdata):
-    # fixup email.addr.text
-    try:
-        node = mepdata["contact"]["email"]
-        if not(type(node) is dict and node.has_key("text")):
-            mepdata["contact"]["email"] = { "text": node }
-    except Exception:
-        raise
-    return mepdata
 
 def mep(request, mep_id):
-    mep = get_object_or_404(Mep, pk=mep_id)
-    data = fixup_mep(mep.get_couch_data())
+    data = get_couch_doc_or_404(Mep, mep_id)
     ctx = {'mep_id': mep_id, 'mep': mep, 'd': data }
-    ctx['positions'] = Position.objects.filter(mep=mep_id)
+    ctx['positions'] = Position.objects.filter(mep_id=mep_id)
     ctx['visible_count'] = len([ x for x in ctx['positions'] if x.visible ])
     return render_to_response('mep.html', ctx, context_instance=RequestContext(request))
 
 def mep_raw(request, mep_id):
-    mep = get_object_or_404(Mep, pk=mep_id)
-    data = fixup_mep(mep.get_couch_data())
-    jsonstr = simplejson.dumps( data, indent=4)
+    mep = get_couch_doc_or_404(Mep, mep_id)
+    jsonstr = simplejson.dumps( mep, indent=4)
     return render_to_response('mep_raw.html', {'mep_id': mep_id, 'mep': mep, 'jsonstr': jsonstr}, context_instance=RequestContext(request))
 
 def mep_addposition(request, mep_id):
     if not request.is_ajax():
         return HttpResponseServerError()
     results = {'success':False}
-    mep = get_object_or_404(Mep, pk=mep_id)
+    mep = get_couch_doc_or_404(Mep, mep_id)
     try:
         text = request.GET[u'text']
         if settings.DEBUG:
@@ -146,7 +147,7 @@ def mep_addposition(request, mep_id):
                 time.sleep(10)
             if 'fail' in text:
                 raise TestFailure()
-        pos = Position(mep=mep, content=text)
+        pos = Position(mep_id=mep_id, content=text)
         pos.submitter_username = request.user.username
         pos.submitter_ip = request.META["REMOTE_ADDR"]
         pos.submit_datetime = datetime.today()

@@ -1,6 +1,12 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import sys, os
+
+# This is not needed anymore
+print "part-06-django-import.py is not needed at this time"
+sys.exit(0)
+
+
 
 import couchdb
 
@@ -23,3 +29,4 @@ for mepid in meps:
     if mepid not in existing_id_set:
         newmep = Mep(couchid=mepid)
         newmep.save()
+

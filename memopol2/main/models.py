@@ -1,26 +1,36 @@
 from django.db import models
 from memopol2 import settings
 
-from couchdb import Server
+from couchdbkit import *
 
-class Mep(models.Model):
-    couchid = models.CharField(primary_key=True, max_length=32)
-    couch_data = None
-
-    def load_couch_data(self):
+class Mep(dict):
+    """
+    Our Mep pseudo model. Currently we use couchdbkit as a glorified http client and json parser,
+    the objets we work with are just dicts. This is here to wrap things a little bit, and do our
+    fixups (which should be moved to  the migration scripts anyway).
+    
+    FIXME - this is kind of fugly
+    """
+    def __init__(self, *args):
+        dict.__init__(self, *args)
+        self.fixup()
+    
+    def fixup(self):
+        # fixup email.addr.text
+        try:
+            node = self["contact"]["email"]
+            if not(type(node) is dict and node.has_key("text")):
+                self["contact"]["email"] = { "text": node }
+        except Exception:
+            raise
+    
+    @staticmethod
+    def get(key):
         couch = Server(settings.COUCHDB)
-        self.couch_data = couch["meps"][self.couchid]
-
-    def get_couch_data(self):
-        if self.couch_data is None:
-            self.load_couch_data()
-        return self.couch_data
-
-    def __unicode__(self):
-        return "<Mep id='%s'>" % self.couchid
+        return Mep(couch["meps"].get(key)) 
 
 class Position(models.Model):
-    mep = models.ForeignKey(Mep)
+    mep_id = models.CharField(max_length=128)
     subject = models.CharField(max_length=128)
     content = models.CharField(max_length=512)
     submitter_username = models.CharField(max_length=30)
@@ -31,7 +41,7 @@ class Position(models.Model):
     visible = models.BooleanField()
 
     def __json__(self):
-        return {"mep_id": self.mep.couchid, "content": self.content}
+        return {"mep_id": self.mep_id, "content": self.content}
 
     def __unicode__(self):
-        return "<Position for mep id='%s'>" % (self.mep)
+        return "<Position for mep id='%s'>" % (self.mep_id)
