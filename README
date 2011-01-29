@@ -1,6 +1,14 @@
 Memopol2 is a django+couchdb rewrite of the incredibly useful Memoire 
 Politique tool.
 
+Installation
+============
+See /doc/SETUP
+
+Hacking
+=======
+See /doc/HACKING
+
 Overall goals
 =============
 
