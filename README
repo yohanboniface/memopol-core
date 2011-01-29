@@ -1,4 +1,4 @@
-Memopol2 is a django+couchdb rewrite of the incredibly useful Memoire 
+Memopol2 is a django+couchdb rewrite of the incredibly useful Memoire
 Politique tool.
 
 Installation
@@ -48,7 +48,7 @@ upcoming vote, but no way to really distribute the effort efficiently;
 also, the view (big table with percentages) of the vote results is not
 very readable.
 - The system is composed of a lot of subsystems which are not really
-centralized, making the ball hard to catch for new developers. 
+centralized, making the ball hard to catch for new developers.
 
 Memopol V2
 ==========
