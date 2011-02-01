@@ -75,6 +75,23 @@ class Database(object):
         req.fetch()
         return req.all()
 
+    def get_meps_by_country(self, country_code):
+        country_code = country_code.upper()
+
+        map_fun = """
+        function(d) {
+            if (d.infos.constituency.country.code)
+            {
+                emit(d.infos.constituency.country.code, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
+            }
+        }
+        """
+
+        couch_meps = self.couch["meps"]
+        req = couch_meps.temp_view({"map": map_fun}, key=country_code)
+        req.fetch()
+        return req.all()
+
 def index_names(request):
     return render_to_response('index.html', {'meps_list': Database().get_meps_by_names()}, context_instance=RequestContext(request))
 
@@ -85,24 +102,7 @@ def index_countries(request):
     return render_to_response('index.html', {'countries': Database().get_meps_by_countries()}, context_instance=RequestContext(request))
 
 def index_by_country(request, country_code):
-    country_code = country_code.upper()
-    couch = Server(settings.COUCHDB)
-
-    map_fun = """
-    function(d) {
-        if (d.infos.constituency.country.code)
-        {
-            emit(d.infos.constituency.country.code, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
-        }
-    }
-    """
-
-    couch_meps = couch["meps"]
-    req = couch_meps.temp_view({"map": map_fun}, key=country_code)
-    req.fetch()
-    meps_list = req.all()
-
-    return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
+    return render_to_response('index.html', {'meps_list': Database().get_meps_by_country(country_code)}, context_instance=RequestContext(request))
 
 def index_by_group(request, group):
     couch = Server(settings.COUCHDB)
