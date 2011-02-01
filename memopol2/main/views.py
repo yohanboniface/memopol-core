@@ -68,7 +68,7 @@ class Database(object):
         meps_list.fetch()
         return meps_list.all()
 
-    def get_meps_by_countries(self):
+    def get_countries(self):
         map_fun = """
         function(d) {
             emit(d.infos.constituency.country.name, { code: d.infos.constituency.country.code, count: 1 });
@@ -114,7 +114,7 @@ def index_groups(request):
     return render_to_response('index.html', {'groups': Database().get_groups()}, context_instance=RequestContext(request))
 
 def index_countries(request):
-    return render_to_response('index.html', {'countries': Database().get_meps_by_countries()}, context_instance=RequestContext(request))
+    return render_to_response('index.html', {'countries': Database().get_countries()}, context_instance=RequestContext(request))
 
 def index_by_country(request, country_code):
     return render_to_response('index.html', {'meps_list': Database().get_meps_by_country(country_code)}, context_instance=RequestContext(request))
