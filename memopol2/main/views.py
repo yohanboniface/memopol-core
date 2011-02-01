@@ -54,19 +54,7 @@ class Database(object):
         return groups.all()
 
     def get_meps_by_group(self, group):
-        map_fun = """
-        function(d) {
-            if (d.infos.group.abbreviation)
-            {
-                emit(d.infos.group.abbreviation, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
-            }
-        }
-        """
-
-        couch_meps = self.couch["meps"]
-        meps_list = couch_meps.temp_view({"map": map_fun}, key=group)
-        meps_list.fetch()
-        return meps_list.all()
+        return self._get_meps(group, "d.infos.group.abbreviation")
 
     def get_countries(self):
         map_fun = """
@@ -91,19 +79,20 @@ class Database(object):
         return req.all()
 
     def get_meps_by_country(self, country_code):
-        country_code = country_code.upper()
+        return self._get_meps(country_code.upper(), "d.infos.constituency.country.code")
 
+    def _get_meps(self, key, couch_key):
         map_fun = """
         function(d) {
-            if (d.infos.constituency.country.code)
+            if (%s)
             {
-                emit(d.infos.constituency.country.code, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
+                emit(%s, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
             }
         }
-        """
+        """ % (couch_key, couch_key)
 
         couch_meps = self.couch["meps"]
-        req = couch_meps.temp_view({"map": map_fun}, key=country_code)
+        req = couch_meps.temp_view({"map": map_fun}, key=key)
         req.fetch()
         return req.all()
 
