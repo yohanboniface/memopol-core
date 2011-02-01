@@ -120,7 +120,7 @@ def index_by_country(request, country_code):
     return render_to_response('index.html', {'meps_list': Database().get_meps_by_country(country_code)}, context_instance=RequestContext(request))
 
 def index_by_group(request, group):
-    return render_to_response('index.html', {'meps_list': Database.get_meps_by_group(group)}, context_instance=RequestContext(request))
+    return render_to_response('index.html', {'meps_list': Database().get_meps_by_group(group)}, context_instance=RequestContext(request))
 
 def mep(request, mep_id):
     data = get_couch_doc_or_404(Mep, mep_id)
