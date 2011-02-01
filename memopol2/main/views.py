@@ -49,7 +49,7 @@ class Database(object):
         }"""
 
         couch_meps = self.couch["meps"]
-        groups = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun}, group="true")
+        groups = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun}, group=True)
         groups.fetch()
         return groups.all()
 
