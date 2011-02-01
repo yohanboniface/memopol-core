@@ -19,20 +19,21 @@ class Database(object):
     def __init__(self):
         self.couch = Server(settings.COUCHDB)
 
+    def get_meps_by_names(self):
+        map_fun = """
+        function(d) {
+            emit(null, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
+        }
+        """
+
+        couch_meps = self.couch["meps"]
+        meps_list = couch_meps.temp_view({"map": map_fun})
+        meps_list.fetch()
+        return meps_list.all()
+
 
 def index_names(request):
-    couch = Server(settings.COUCHDB)
-
-    map_fun = """
-    function(d) {
-        emit(null, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
-    }
-    """
-
-    couch_meps = couch["meps"]
-    meps_list = couch_meps.temp_view({"map": map_fun})
-    meps_list.fetch()
-    meps_list = meps_list.all()
+    meps_list = Database().get_meps_by_names()
 
     return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
 
