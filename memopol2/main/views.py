@@ -32,33 +32,32 @@ class Database(object):
         return meps_list.all()
 
 
+    def get_meps_by_groups(self):
+        map_fun = """
+        function(d) {
+            emit(d.infos.group.abbreviation, { name: d.infos.group.name,  count: 1 });
+        }
+        """
+
+        reduce_fun = """function(keys, values) {
+            var sum = 0;
+            for (var idx in values)
+            {
+                sum += values[idx].count;
+            }
+            return {name: values[0].name , count: sum};
+        }"""
+
+        couch_meps = self.couch["meps"]
+        groups = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun}, group="true")
+        groups.fetch()
+        return groups.all()
+
 def index_names(request):
     return render_to_response('index.html', {'meps_list': Database().get_meps_by_names()}, context_instance=RequestContext(request))
 
 def index_groups(request):
-    couch = Server(settings.COUCHDB)
-
-    map_fun = """
-    function(d) {
-        emit(d.infos.group.abbreviation, { name: d.infos.group.name,  count: 1 });
-    }
-    """
-
-    reduce_fun = """function(keys, values) {
-        var sum = 0;
-        for (var idx in values)
-        {
-            sum += values[idx].count;
-        }
-        return {name: values[0].name , count: sum};
-    }"""
-
-    couch_meps = couch["meps"]
-    groups = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun}, group="true")
-    groups.fetch()
-    groups = groups.all()
-
-    return render_to_response('index.html', {'groups': groups}, context_instance=RequestContext(request))
+    return render_to_response('index.html', {'groups': Database().get_meps_by_groups()}, context_instance=RequestContext(request))
 
 def index_countries(request):
     couch = Server(settings.COUCHDB)
