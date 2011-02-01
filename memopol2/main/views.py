@@ -53,6 +53,28 @@ class Database(object):
         groups.fetch()
         return groups.all()
 
+    def get_meps_by_countries(self):
+        map_fun = """
+        function(d) {
+            emit(d.infos.constituency.country.name, { code: d.infos.constituency.country.code, count: 1 });
+        }
+        """
+
+        reduce_fun = """function(keys, values) {
+            var sum = 0;
+            for (var idx in values)
+            {
+                sum += values[idx].count;
+            }
+            return {code: values[0].code, count: sum};
+        }"""
+
+        couch_meps = self.couch["meps"]
+
+        req = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun }, group=True)
+        req.fetch()
+        return req.all()
+
 def index_names(request):
     return render_to_response('index.html', {'meps_list': Database().get_meps_by_names()}, context_instance=RequestContext(request))
 
@@ -60,30 +82,7 @@ def index_groups(request):
     return render_to_response('index.html', {'groups': Database().get_meps_by_groups()}, context_instance=RequestContext(request))
 
 def index_countries(request):
-    couch = Server(settings.COUCHDB)
-
-    map_fun = """
-    function(d) {
-        emit(d.infos.constituency.country.name, { code: d.infos.constituency.country.code, count: 1 });
-    }
-    """
-
-    reduce_fun = """function(keys, values) {
-        var sum = 0;
-        for (var idx in values)
-        {
-            sum += values[idx].count;
-        }
-        return {code: values[0].code, count: sum};
-    }"""
-
-    couch_meps = couch["meps"]
-
-    req = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun }, group=True)
-    req.fetch()
-    countries = req.all()
-
-    return render_to_response('index.html', {'countries': countries}, context_instance=RequestContext(request))
+    return render_to_response('index.html', {'countries': Database().get_meps_by_countries()}, context_instance=RequestContext(request))
 
 def index_by_country(request, country_code):
     country_code = country_code.upper()
