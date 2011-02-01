@@ -15,6 +15,11 @@ from memopol2.main.models import Mep, Position
 from memopol2 import settings
 from memopol2.util import get_couch_doc_or_404
 
+class Database(object):
+    def __init__(self):
+        self.couch = Server(settings.COUCHDB)
+
+
 def index_names(request):
     couch = Server(settings.COUCHDB)
 
