@@ -20,16 +20,7 @@ class Database(object):
         self.couch = Server(settings.COUCHDB)
 
     def get_meps_by_names(self):
-        map_fun = """
-        function(d) {
-            emit(null, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
-        }
-        """
-
-        couch_meps = self.couch["meps"]
-        meps_list = couch_meps.temp_view({"map": map_fun})
-        meps_list.fetch()
-        return meps_list.all()
+        return self._get_meps()
 
 
     def get_groups(self):
@@ -81,15 +72,21 @@ class Database(object):
     def get_meps_by_group(self, group):
         return self._get_meps(group, "infos.group.abbreviation")
 
-    def _get_meps(self, key, couch_key):
-        map_fun = """
-        function(d) {
-            if (d.%s)
-            {
-                emit(d.%s, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
-            }
-        }
-        """ % (couch_key, couch_key)
+    def _get_meps(self, key=None, couch_key=None):
+
+        map_fun = "function(d) {"
+
+        if couch_key:
+            map_fun += """
+                if (d.%s)
+                {
+                    emit(d.%s, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
+                }
+                """ % (couch_key, couch_key)
+        else:
+            map_fun += "emit(null, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});"
+
+        map_fun += "}"
 
         couch_meps = self.couch["meps"]
         req = couch_meps.temp_view({"map": map_fun}, key=key)
