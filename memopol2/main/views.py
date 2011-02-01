@@ -76,17 +76,17 @@ class Database(object):
         return req.all()
 
     def get_meps_by_country(self, country_code):
-        return self._get_meps(country_code.upper(), "d.infos.constituency.country.code")
+        return self._get_meps(country_code.upper(), "infos.constituency.country.code")
 
     def get_meps_by_group(self, group):
-        return self._get_meps(group, "d.infos.group.abbreviation")
+        return self._get_meps(group, "infos.group.abbreviation")
 
     def _get_meps(self, key, couch_key):
         map_fun = """
         function(d) {
-            if (%s)
+            if (d.%s)
             {
-                emit(%s, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
+                emit(d.%s, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
             }
         }
         """ % (couch_key, couch_key)
