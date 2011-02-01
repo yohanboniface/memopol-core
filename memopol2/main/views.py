@@ -19,10 +19,6 @@ class Database(object):
     def __init__(self):
         self.couch = Server(settings.COUCHDB)
 
-    def get_meps_by_names(self):
-        return self._get_meps()
-
-
     def get_groups(self):
         map_fun = """
         function(d) {
@@ -65,6 +61,9 @@ class Database(object):
         req = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun }, group=True)
         req.fetch()
         return req.all()
+
+    def get_meps_by_names(self):
+        return self._get_meps()
 
     def get_meps_by_country(self, country_code):
         return self._get_meps(country_code.upper(), "infos.constituency.country.code")
