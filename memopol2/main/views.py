@@ -75,7 +75,7 @@ def index_countries(request):
     }"""
 
     couch_meps = couch["meps"]
-    
+
     req = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun }, group=True)
     req.fetch()
     countries = req.all()
