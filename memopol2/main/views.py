@@ -33,9 +33,7 @@ class Database(object):
 
 
 def index_names(request):
-    meps_list = Database().get_meps_by_names()
-
-    return render_to_response('index.html', {'meps_list': meps_list}, context_instance=RequestContext(request))
+    return render_to_response('index.html', {'meps_list': Database().get_meps_by_names()}, context_instance=RequestContext(request))
 
 def index_groups(request):
     couch = Server(settings.COUCHDB)
