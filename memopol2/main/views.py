@@ -32,7 +32,7 @@ class Database(object):
         return meps_list.all()
 
 
-    def get_meps_by_groups(self):
+    def get_groups(self):
         map_fun = """
         function(d) {
             emit(d.infos.group.abbreviation, { name: d.infos.group.name,  count: 1 });
@@ -111,7 +111,7 @@ def index_names(request):
     return render_to_response('index.html', {'meps_list': Database().get_meps_by_names()}, context_instance=RequestContext(request))
 
 def index_groups(request):
-    return render_to_response('index.html', {'groups': Database().get_meps_by_groups()}, context_instance=RequestContext(request))
+    return render_to_response('index.html', {'groups': Database().get_groups()}, context_instance=RequestContext(request))
 
 def index_countries(request):
     return render_to_response('index.html', {'countries': Database().get_meps_by_countries()}, context_instance=RequestContext(request))
