@@ -53,9 +53,6 @@ class Database(object):
         groups.fetch()
         return groups.all()
 
-    def get_meps_by_group(self, group):
-        return self._get_meps(group, "d.infos.group.abbreviation")
-
     def get_countries(self):
         map_fun = """
         function(d) {
@@ -80,6 +77,9 @@ class Database(object):
 
     def get_meps_by_country(self, country_code):
         return self._get_meps(country_code.upper(), "d.infos.constituency.country.code")
+
+    def get_meps_by_group(self, group):
+        return self._get_meps(group, "d.infos.group.abbreviation")
 
     def _get_meps(self, key, couch_key):
         map_fun = """
