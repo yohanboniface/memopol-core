@@ -8,7 +8,7 @@ DBXML_BINARY=/Users/stefan/Downloads/dbxml-2.5.16/install/bin/dbxml-no
 DBXML_DATA_PATH=/Users/stefan/Downloads/dumps-no
 
 # path where we store the xml dumps of the dbxml data
-XML_DUMPS_PATH=/tmp/$USER-memopol-dumps/
+XML_DUMPS_PATH=$HOME/memopol-dumps/
 
 # couchdb settings
 COUCH_HOST=localhost
