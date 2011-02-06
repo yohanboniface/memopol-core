@@ -2,13 +2,13 @@
 # Edit carefully !
 
 # complete path to the 'dbxml' executable
-DBXML_BINARY=/home/stefan/Desktop/repos/lqdn/dbxml
+DBXML_BINARY=/Users/stefan/Downloads/dbxml-2.5.16/install/bin/dbxml-no
 
 # path to the dbxml environment (folder containing .dbxml files)
-DBXML_DATA_PATH=/home/stefan/Desktop/repos/lqdn/
+DBXML_DATA_PATH=/Users/stefan/Downloads/dumps-no
 
 # path where we store the xml dumps of the dbxml data
-XML_DUMPS_PATH=/tmp/memopol-dumps/
+XML_DUMPS_PATH=/tmp/$USER-memopol-dumps/
 
 # couchdb settings
 COUCH_HOST=localhost

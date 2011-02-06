@@ -13,7 +13,15 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = '/tmp/memopol2.sqlite'             # Or path to database file if using sqlite3.
+
+# will only work for sqlite - which is what we're using for now anyway
+
+if os.getenv('VIRTUAL_ENV'):
+    DATABASE_NAME = '%s/memopol2.sqlite' % os.getenv('VIRTUAL_ENV')
+else:
+    DATABASE_NAME = '/tmp/%s-memopol2.sqlite' % os.getenv('USER')
+fi
+
 DATABASE_USER = ''             # Not used with sqlite3.
 DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
