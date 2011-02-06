@@ -20,7 +20,6 @@ if os.getenv('VIRTUAL_ENV'):
     DATABASE_NAME = '%s/memopol2.sqlite' % os.getenv('VIRTUAL_ENV')
 else:
     DATABASE_NAME = '/tmp/%s-memopol2.sqlite' % os.getenv('USER')
-fi
 
 DATABASE_USER = ''             # Not used with sqlite3.
 DATABASE_PASSWORD = ''         # Not used with sqlite3.
