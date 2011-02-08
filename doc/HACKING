@@ -2,6 +2,10 @@ Some quick information about hacking on memopol:
 
 - follow the SETUP instructions to get the app up and running
 
+- add the test requirements: 
+
+   pip install -r requirements-test.txt
+
 - when you want to work on memopol, be sure to use the virtualenvwrapper
   workon command; for instance if you named your memopol virtual env
   as 'memopol2', just do 'workon memopol2', and you're good to go.
