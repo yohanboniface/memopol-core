@@ -14,7 +14,4 @@ python setup.py --quiet develop
 pip install -q -E ./ve -r requirements-test.txt
 
 # run our tests
-django-admin.py test --settings=memopol2.testsettings --with-coverage --cover-package=memopol2 --with-xunit --with-xcoverage
-
-# run pylint
-pylint -f parseable memopol2 | tee pylint.out
+source ./bin/run-all-tests.sh
