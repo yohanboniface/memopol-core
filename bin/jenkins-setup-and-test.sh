@@ -4,7 +4,7 @@
 cd $WORKSPACE
 
 # setup ve
-virtualenv -q ve
+virtualenv --no-site-packages --distribute -q ve
 source ./ve/bin/activate
 
 # dev install - installs requirements as well
