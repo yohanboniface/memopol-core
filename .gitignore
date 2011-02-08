@@ -1,7 +1,16 @@
+# please to sort the lines :p
 *~
-*.pyc
+build
 .coverage
 coverage.xml
-nosetests.xml
-dist/*
+develop-eggs
+dist
+*.egg
 *.egg-info
+eggs
+.installed.cfg
+nosetests.xml
+pip-log.txt
+*.py[co]
+pylint.out
+.tox
