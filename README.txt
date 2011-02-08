@@ -3,11 +3,11 @@ Politique tool.
 
 Installation
 ============
-See /doc/SETUP
+See /docs/SETUP.txt
 
 Hacking
 =======
-See /doc/HACKING
+See /docs/HACKING.txt
 
 Overall goals
 =============
