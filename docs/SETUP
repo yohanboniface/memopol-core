@@ -1,0 +1,72 @@
+This describes how to setup the mempol2 dev environment
+=======================================================
+
+Install the base dependencies
+=============================
+
+Install the couchdb server:
+
+    sudo apt-get install couchdb
+
+Install the base python virtualenv tools:
+
+    sudo apt-get install python-setuptools
+    sudo easy_install virtualenv
+    sudo easy_install virtualenvwrapper
+
+
+Setup your virtual environment
+===============================
+
+If you already use virtualenv/virtualenvwrapper
+-----------------------------------------------
+
+Create the virtualenv for memopol and workon it:
+
+    mkvirtualenv --no-site-packages --distribute memopol2
+
+Install memopol2's depdendencies:
+
+    pip install -r requirements.txt
+
+
+If you don't alreasy use virtualenv/virtualenvwrapper
+-----------------------------------------------------
+
+Add to your .bashrc (or equivalent) something like the following:
+   
+    source /usr/local/bin/virtualenvwrapper.sh
+    export WORKON_HOME=~/envs
+     
+This will end up creating (relatively large) folders in ~/envs 
+where all the projet dependencies will be installed.
+
+Also run those commands in your session, or logout/login, and
+create the WORKON_HOME folder:
+
+    mkdir ~/WORKON_HOME
+
+Create the virtualenv for memopol:
+
+    mkvirtualenv --no-site-packages --distribute memopol2
+
+Your command prompt should now begin by (memopol2)
+
+Install memopol2's dependencies:
+
+    pip install -r requirements.txt
+
+
+Run the "migration" scripts
+===========================
+
+    cd migration
+    ./go.sh
+
+Run the server
+==============
+
+    cd ../memopol2
+    python manage.py runserver 8080
+    
+Your application is available on http://localhost:8080/

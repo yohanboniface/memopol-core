@@ -1,0 +1,3 @@
+* couchdb
+  - put couch server settings in proper place
+  - make view permanent
