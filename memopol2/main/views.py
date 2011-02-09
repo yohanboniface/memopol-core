@@ -10,11 +10,10 @@ from django.core import serializers
 from django.contrib.admin.views.decorators import staff_member_required
 
 from couchdbkit import Server
-from couchdbkit.exceptions import ResourceNotFound
 
 from memopol2.main.models import Mep, Position
 from memopol2 import settings
-from memopol2.util import *
+from memopol2.util import get_couch_doc_or_404
 
 def index_names(request):
     couch = Server(settings.COUCHDB)
@@ -131,15 +130,17 @@ def mep(request, mep_id):
     return render_to_response('mep.html', ctx, context_instance=RequestContext(request))
 
 def mep_raw(request, mep_id):
-    mep = get_couch_doc_or_404(Mep, mep_id)
-    jsonstr = simplejson.dumps( mep, indent=4)
-    return render_to_response('mep_raw.html', {'mep_id': mep_id, 'mep': mep, 'jsonstr': jsonstr}, context_instance=RequestContext(request))
+    mep_ = get_couch_doc_or_404(Mep, mep_id)
+    jsonstr = simplejson.dumps(mep_, indent=4)
+    ctx = {'mep_id': mep_id, 'mep': mep_, 'jsonstr': jsonstr}
+    return render_to_response('mep_raw.html', ctx, context_instance=RequestContext(request))
 
 def mep_addposition(request, mep_id):
     if not request.is_ajax():
         return HttpResponseServerError()
     results = {'success':False}
-    mep = get_couch_doc_or_404(Mep, mep_id)
+    # make sure the mep exists
+    mep_ = get_couch_doc_or_404(Mep, mep_id)
     try:
         text = request.GET[u'text']
         if settings.DEBUG:
