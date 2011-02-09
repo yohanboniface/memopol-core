@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 import datetime
 
 class ErrorBatch(models.Model):
+    objects = models.Manager()
     class_name      = models.CharField(_('Type'), max_length=128)
     message         = models.TextField()
     traceback       = models.TextField()
@@ -18,6 +19,7 @@ class ErrorBatch(models.Model):
         unique_together = (('class_name', 'server_name', 'checksum'),)
 
 class Error(models.Model):
+    objects = models.Manager()
     class_name      = models.CharField(_('type'), max_length=128)
     message         = models.TextField()
     traceback       = models.TextField()
