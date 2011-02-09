@@ -9,7 +9,7 @@ from django.core import serializers
 
 from django.contrib.admin.views.decorators import staff_member_required
 
-from couchdbkit import *
+from couchdbkit import Server
 from couchdbkit.exceptions import ResourceNotFound
 
 from memopol2.main.models import Mep, Position

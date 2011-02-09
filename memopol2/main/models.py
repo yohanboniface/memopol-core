@@ -1,7 +1,7 @@
 from django.db import models
 from memopol2 import settings
 
-from couchdbkit import *
+from couchdbkit import Server
 
 class Mep(dict):
     """
