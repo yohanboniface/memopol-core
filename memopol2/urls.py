@@ -3,7 +3,7 @@ from django.conf.urls.defaults import patterns, include
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = patterns('', # pylint: disable=C0103
     # Example:
     # (r'^memopol2/', include('memopol2.foo.urls')),
 
@@ -31,9 +31,9 @@ urlpatterns = patterns('',
 )
 
 # hack to autodiscover static files location in dev mode
-import settings, os
-if settings.DEBUG:
+import memopol2.settings, os
+if memopol2.settings.DEBUG:
     urlpatterns += patterns('',
-        (r'^static/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(settings.PROJECT_PATH, 'static')}),
+    (r'^static/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(memopol2.settings.PROJECT_PATH, 'static')}),
     )
 # TODO: static files location in production
