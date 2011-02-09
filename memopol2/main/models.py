@@ -30,6 +30,7 @@ class Mep(dict):
         return Mep(couch["meps"].get(key)) 
 
 class Position(models.Model):
+    objects = models.Manager() # fix for pylint warnings
     mep_id = models.CharField(max_length=128)
     subject = models.CharField(max_length=128)
     content = models.CharField(max_length=512)
