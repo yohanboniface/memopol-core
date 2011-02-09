@@ -16,24 +16,23 @@
 
 from django import template
 
-register = template.Library()
-
 class RecurseDictNode(template.Node):
-    def __init__(self, var, nodeList):
+    def __init__(self, var, node_list):
+        template.Node.__init__(self)
         self.var = var
-        self.nodeList = nodeList
+        self.node_list = node_list
 
     def __repr__(self):
         return '<RecurseDictNode>'
 
-    def renderCallback(self, context, vals, level):
+    def render_callback(self, context, vals, level):
         if len(vals) == 0:
             return ''
 
         output = []
 
-        if 'loop' in self.nodeList:
-            output.append(self.nodeList['loop'].render(context))
+        if 'loop' in self.node_list:
+            output.append(self.node_list['loop'].render(context))
 
         for k, v in vals:
             context.push()
@@ -41,34 +40,34 @@ class RecurseDictNode(template.Node):
             context['level'] = level
             context['key'] = k
             
-            if 'value' in self.nodeList:
-                output.append(self.nodeList['value'].render(context))
+            if 'value' in self.node_list:
+                output.append(self.node_list['value'].render(context))
                 
                 if type(v) == list or type(v) == tuple:
                     child_items = [ (None, x) for x in v ]
-                    output.append(self.renderCallback(context, child_items, level + 1))
+                    output.append(self.render_callback(context, child_items, level + 1))
                 else:
                     try:
                         child_items = v.items()
-                        output.append(self.renderCallback(context, child_items, level + 1))
+                        output.append(self.render_callback(context, child_items, level + 1))
                     except:
                         output.append(unicode(v))
             
-            if 'endloop' in self.nodeList:
-                output.append(self.nodeList['endloop'].render(context))
+            if 'endloop' in self.node_list:
+                output.append(self.node_list['endloop'].render(context))
             else:
-                output.append(self.nodeList['endrecursedict'].render(context))
+                output.append(self.node_list['endrecursedict'].render(context))
             
             context.pop()
 
-        if 'endloop' in self.nodeList:
-            output.append(self.nodeList['endrecursedict'].render(context))
+        if 'endloop' in self.node_list:
+            output.append(self.node_list['endrecursedict'].render(context))
 
         return ''.join(output)
 
     def render(self, context):
         vals = self.var.resolve(context).items()
-        output = self.renderCallback(context, vals, 1)
+        output = self.render_callback(context, vals, 1)
         return output
 
 def recursedict_tag(parser, token):
@@ -77,15 +76,15 @@ def recursedict_tag(parser, token):
         raise template.TemplateSyntaxError, "Invalid tag syxtax expected '{% recursedict [dictVar] %}'"
 
     var = parser.compile_filter(bits[1])
-    nodeList = {}
-    while len(nodeList) < 4:
-        temp = parser.parse(('value','loop','endloop','endrecursedict'))
+    node_list = {}
+    while len(node_list) < 4:
+        temp = parser.parse(('value', 'loop', 'endloop', 'endrecursedict'))
         tag = parser.tokens[0].contents
-        nodeList[tag] = temp
+        node_list[tag] = temp
         parser.delete_first_token()
         if tag == 'endrecursedict':
             break
 
-    return RecurseDictNode(var, nodeList)
+    return RecurseDictNode(var, node_list)
 
-recursedict_tag = register.tag('recursedict', recursedict_tag)
+template.Library().tag('recursedict', recursedict_tag)
