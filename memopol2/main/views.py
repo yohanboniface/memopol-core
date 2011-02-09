@@ -147,7 +147,7 @@ def mep_addposition(request, mep_id):
             if 'slow' in text:
                 time.sleep(10)
             if 'fail' in text:
-                raise TestFailure()
+                raise Exception("Simulated failure ! (input contains 'fail' and DEBUG is on)")
         pos = Position(mep_id=mep_id, content=text)
         pos.submitter_username = request.user.username
         pos.submitter_ip = request.META["REMOTE_ADDR"]
