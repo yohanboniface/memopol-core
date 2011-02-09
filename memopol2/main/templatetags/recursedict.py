@@ -16,6 +16,8 @@
 
 from django import template
 
+register = template.Library()
+
 class RecurseDictNode(template.Node):
     def __init__(self, var, node_list):
         template.Node.__init__(self)
@@ -87,4 +89,4 @@ def recursedict_tag(parser, token):
 
     return RecurseDictNode(var, node_list)
 
-template.Library().tag('recursedict', recursedict_tag)
+recursedict_tag = register.tag('recursedict', recursedict_tag)

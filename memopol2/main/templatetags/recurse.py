@@ -16,6 +16,8 @@
 
 from django import template
 
+register = template.Library()
+
 class RecurseNode(template.Node):
     def __init__(self, var, name, child, node_list):
         template.Node.__init__(self)
@@ -80,4 +82,4 @@ def do_recurse(parser, token):
 
     return RecurseNode(var, name, child, node_list)
 
-template.Library().tag('recurse', do_recurse)
+do_recurse = register.tag('recurse', do_recurse)
