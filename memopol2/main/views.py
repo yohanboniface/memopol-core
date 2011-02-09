@@ -180,8 +180,8 @@ def moderation_moderate_positions(request):
     if not request.is_ajax():
         return HttpResponseServerError()
     results = {'success':False}
+    position = get_object_or_404(Position, pk=int(request.GET[u'pos_id']))
     try:
-        position = get_object_or_404(Position, pk=int(request.GET[u'pos_id']))
         position.moderated = True
         position.visible = (request.GET[u'decision'] == "1")
         position.save()
