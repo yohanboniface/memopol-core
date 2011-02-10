@@ -6,5 +6,9 @@ from memopol2.settings import * # pylint: disable=W0614,W0401
 #DATABASE_ENGINE = 'sqlite3'
 #DATABASE_NAME = ':memory:'
 
-INSTALLED_APPS += ('django_nose', )
+INSTALLED_APPS += (
+    'django_nose',
+    'lettuce.django',
+)
+
 TEST_RUNNER = 'django_nose.run_tests'

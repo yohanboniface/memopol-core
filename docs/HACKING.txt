@@ -4,7 +4,7 @@ Some quick information about hacking on memopol:
 
 - install dependencies for our test scripts:
 
-   apt-get install python-dev
+   apt-get install python-dev libxml2-dev libxslt-dev
    pip install -r requirements-test.txt
 
 - when you want to work on memopol, be sure to use the virtualenvwrapper
