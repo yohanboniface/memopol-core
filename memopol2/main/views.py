@@ -11,7 +11,6 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 from memopol2.main.models import Position, Database
 from memopol2 import settings
-from memopol2.util import get_couch_doc_or_404
 
 def index_names(request):
     return render_to_response('index.html', {'meps_list': Database().get_meps_by_names()}, context_instance=RequestContext(request))
@@ -29,14 +28,14 @@ def index_by_group(request, group):
     return render_to_response('index.html', {'meps_list': Database().get_meps_by_group(group)}, context_instance=RequestContext(request))
 
 def mep(request, mep_id):
-    data = get_couch_doc_or_404(Mep, mep_id)
+    data = Database().get_mep(mep_id)
     ctx = {'mep_id': mep_id, 'mep': mep, 'd': data }
     ctx['positions'] = Position.objects.filter(mep_id=mep_id)
     ctx['visible_count'] = len([ x for x in ctx['positions'] if x.visible ])
     return render_to_response('mep.html', ctx, context_instance=RequestContext(request))
 
 def mep_raw(request, mep_id):
-    mep_ = get_couch_doc_or_404(Mep, mep_id)
+    mep_ = Database().get_mep(mep_id)
     jsonstr = simplejson.dumps(mep_, indent=4)
     ctx = {'mep_id': mep_id, 'mep': mep_, 'jsonstr': jsonstr}
     return render_to_response('mep_raw.html', ctx, context_instance=RequestContext(request))
@@ -46,7 +45,7 @@ def mep_addposition(request, mep_id):
         return HttpResponseServerError()
     results = {'success':False}
     # make sure the mep exists
-    mep_ = get_couch_doc_or_404(Mep, mep_id)
+    mep_ = Database().get_mep(mep_id)
     try:
         text = request.GET[u'text']
         if settings.DEBUG:

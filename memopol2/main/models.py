@@ -1,5 +1,7 @@
 from django.db import models
+from django.http import Http404
 from couchdbkit import Server
+from couchdbkit.exceptions import ResourceNotFound
 from memopol2 import settings
 
 
@@ -8,13 +10,13 @@ class Mep(dict):
     Our Mep pseudo model. Currently we use couchdbkit as a glorified http client and json parser,
     the objets we work with are just dicts. This is here to wrap things a little bit, and do our
     fixups (which should be moved to  the migration scripts anyway).
-    
+
     FIXME - this is kind of fugly
     """
     def __init__(self, *args):
         dict.__init__(self, *args)
         self.fixup()
-    
+
     def fixup(self):
         # fixup email.addr.text
         try:
@@ -23,11 +25,11 @@ class Mep(dict):
                 self["contact"]["email"] = { "text": node }
         except Exception:
             raise
-    
+
     @staticmethod
     def get(key):
         couch = Server(settings.COUCHDB)
-        return Mep(couch["meps"].get(key)) 
+        return Mep(couch["meps"].get(key))
 
 class Position(models.Model):
     mep_id = models.CharField(max_length=128)
@@ -92,6 +94,12 @@ class Database(object):
         req = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun }, group=True)
         req.fetch()
         return req.all()
+
+    def get_mep(self, mep_id):
+        try:
+            return Mep(self.couch["meps"].get(mep_id))
+        except ResourceNotFound:
+            raise Http404
 
     def get_meps_by_names(self):
         return self._get_meps()
