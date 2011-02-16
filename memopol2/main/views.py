@@ -9,88 +9,9 @@ from django.core import serializers
 
 from django.contrib.admin.views.decorators import staff_member_required
 
-from couchdbkit import Server
-
-from memopol2.main.models import Mep, Position
+from memopol2.main.models import Position, Database
 from memopol2 import settings
 from memopol2.util import get_couch_doc_or_404
-
-class Database(object):
-    def __init__(self):
-        self.couch = Server(settings.COUCHDB)
-
-    def get_groups(self):
-        map_fun = """
-        function(d) {
-            emit(d.infos.group.abbreviation, { name: d.infos.group.name,  count: 1 });
-        }
-        """
-
-        reduce_fun = """function(keys, values) {
-            var sum = 0;
-            for (var idx in values)
-            {
-                sum += values[idx].count;
-            }
-            return {name: values[0].name , count: sum};
-        }"""
-
-        couch_meps = self.couch["meps"]
-        groups = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun}, group=True)
-        groups.fetch()
-        return groups.all()
-
-    def get_countries(self):
-        map_fun = """
-        function(d) {
-            emit(d.infos.constituency.country.name, { code: d.infos.constituency.country.code, count: 1 });
-        }
-        """
-
-        reduce_fun = """function(keys, values) {
-            var sum = 0;
-            for (var idx in values)
-            {
-                sum += values[idx].count;
-            }
-            return {code: values[0].code, count: sum};
-        }"""
-
-        couch_meps = self.couch["meps"]
-
-        req = couch_meps.temp_view({"map": map_fun, "reduce": reduce_fun }, group=True)
-        req.fetch()
-        return req.all()
-
-    def get_meps_by_names(self):
-        return self._get_meps()
-
-    def get_meps_by_country(self, country_code):
-        return self._get_meps(country_code.upper(), "infos.constituency.country.code")
-
-    def get_meps_by_group(self, group):
-        return self._get_meps(group, "infos.group.abbreviation")
-
-    def _get_meps(self, key=None, couch_key=None):
-
-        map_fun = "function(d) {"
-
-        if couch_key:
-            map_fun += """
-                if (d.%s)
-                {
-                    emit(d.%s, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});
-                }
-                """ % (couch_key, couch_key)
-        else:
-            map_fun += "emit(null, {first: d.infos.name.first, last: d.infos.name.last, group: d.infos.group.abbreviation});"
-
-        map_fun += "}"
-
-        couch_meps = self.couch["meps"]
-        req = couch_meps.temp_view({"map": map_fun}, key=key)
-        req.fetch()
-        return req.all()
 
 def index_names(request):
     return render_to_response('index.html', {'meps_list': Database().get_meps_by_names()}, context_instance=RequestContext(request))
