@@ -1,5 +1,5 @@
 from django.db import models
-from memopol2 import settings
+from django.conf import settings
 
 from couchdbkit import Server
 

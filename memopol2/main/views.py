@@ -6,13 +6,13 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.utils import simplejson
 from django.core import serializers
+from django.conf import settings
 
 from django.contrib.admin.views.decorators import staff_member_required
 
 from couchdbkit import Server
 
 from memopol2.main.models import Mep, Position
-from memopol2 import settings
 from memopol2.util import get_couch_doc_or_404
 
 def index_names(request):
