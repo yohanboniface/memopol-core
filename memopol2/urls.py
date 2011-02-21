@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 
 from django.conf.urls.defaults import patterns, include, url
@@ -19,9 +21,9 @@ urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^group/(?P<group>[a-zA-Z/-]+)/$', views.index_by_group, name='index_by_group'),
 
 
-    url(r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/$', views.mep, name='mep'),
-    url(r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/raw/$', views.mep_raw, name='mep_raw'),
-    url(r'^mep/(?P<mep_id>[a-zA-Z0-9]+)/addposition/$', views.mep_addposition, name='mep_addposition'),
+    url(r'^mep/(?P<mep_id>\w+)/$', views.mep, name='mep'),
+    url(r'^mep/(?P<mep_id>\w+)/raw/$', views.mep_raw, name='mep_raw'),
+    url(r'^mep/(?P<mep_id>\w+)/addposition/$', views.mep_addposition, name='mep_addposition'),
 
 
     url(r'^moderation/$', views.moderation, name='moderation'),
