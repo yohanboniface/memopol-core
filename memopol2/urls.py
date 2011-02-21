@@ -1,5 +1,7 @@
-from django.conf.urls.defaults import patterns, include
+import os
 
+from django.conf.urls.defaults import patterns, include
+from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
@@ -31,9 +33,9 @@ urlpatterns = patterns('', # pylint: disable=C0103
 )
 
 # hack to autodiscover static files location in dev mode
-import memopol2.settings, os
-if memopol2.settings.DEBUG:
+if settings.DEBUG:
     urlpatterns += patterns('',
-    (r'^static/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(memopol2.settings.PROJECT_PATH, 'static')}),
+    (r'^static/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(settings.PROJECT_PATH, 'static')}),
     )
 # TODO: static files location in production
+# should never be served by django, settings.MEDIA_URL is the right way to do
