@@ -7,7 +7,7 @@
     <h1>Eurodéputés</h1>
     <ul>
         {% for r in meps_list %}
-            <li><img class="grouplogo" src="/static/img/groups/eu/{{ r.value.group|cut:"/" }}.png" /><a href="/mep/{{r.id}}">{{ r.value.first }} {{ r.value.last }}</a></li>
+            <li><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ r.value.group|cut:"/" }}.png" /><a href="{% url mep r.id %}">{{ r.value.first }} {{ r.value.last }}</a></li>
         {% endfor %}
     </ul>
 {% endif %}
@@ -16,7 +16,7 @@
     <h1>Eurodéputés par pays</h1>
     <ul>
     {% for c in countries %}
-        <li><a href="/country/{{c.value.code}}"><img src="/static/img/countries/small/{{ c.value.code }}.png"/></a>&nbsp;<a href="/country/{{c.value.code}}">{{ c.key }}</a> - {{ c.value.count }} d&eacute;put&eacute;s</li>
+        <li><a href="{% url index_by_country c.value.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ c.value.code }}.png"/></a>&nbsp;<a href="{% url index_by_country c.value.code %}">{{ c.key }}</a> - {{ c.value.count }} d&eacute;put&eacute;s</li>
     {% endfor %}
     </ul>
 {% endif %}
@@ -25,7 +25,7 @@
     <h1>Eurodéputés par groupe parlementaire</h1>
     <ul>
     {% for c in groups %}
-        <li><a href="/group/{{c.key}}">{{ c.value.name }} ({{ c.key }})</a> - {{ c.value.count }} d&eacute;put&eacute;s</li>
+        <li><a href="{% url index_by_group c.key %}">{{ c.value.name }} ({{ c.key }})</a> - {{ c.value.count }} d&eacute;put&eacute;s</li>
     {% endfor %}
     </ul>
 {% endif %}

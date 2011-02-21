@@ -2,7 +2,7 @@
 {% load recursedict %}
 
 {% block sidelinks %}
-    <li><a href="raw">View Raw JSON</a></li>
+    <li><a href="{% url mep_raw mep_id %}">View Raw JSON</a></li>
 {% endblock %}
 
 {% block content %}
@@ -16,13 +16,13 @@
 
 <div class="quickView">
 <img class="mugshot" src="http://www.europarl.europa.eu/mepphoto/{{ d.extid }}.jpg" onerror="onMugshotError(this);"/>
-<span>{{d.infos.name.first}} {{d.infos.name.last|upper}} <img src="/static/img/countries/small/{{ d.infos.constituency.country.code }}.png"/> </span>
-<img class="grouplogo" src="/static/img/groups/eu/{{ d.infos.group.abbreviation|cut:"/" }}.png"/><a href="/group/{{ d.infos.group.abbreviation }}">{{ d.infos.group.abbreviation }}</a>
+<span>{{d.infos.name.first}} {{d.infos.name.last|upper}} <img src="{{ MEDIA_URL }}img/countries/small/{{ d.infos.constituency.country.code }}.png"/> </span>
+<img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ d.infos.group.abbreviation|cut:"/" }}.png"/><a href="{% url index_by_group d.infos.group.abbreviation %}">{{ d.infos.group.abbreviation }}</a>
 </div>
 
 <li><i>Né{% if d.infos.gender == "F" %}e{% endif %} le</i> {{ d.infos.birth.date.day }}/{{ d.infos.birth.date.month }}/{{ d.infos.birth.date.year }} <i>à</i> {{ d.infos.birth.place.city }} </li>
-<li><i>Pays</i>:  <img src="/static/img/countries/small/{{ d.infos.constituency.country.code }}.png"/> {{ d.infos.constituency.country.name }} </li>
-<li><i>Groupe politique</i>: <a href="/group/{{ d.infos.group.abbreviation }}">{{ d.infos.group.name }} ({{ d.infos.group.abbreviation }})</a></li>
+<li><i>Pays</i>:  <img src="{{ MEDIA_URL }}img/countries/small/{{ d.infos.constituency.country.code }}.png"/> {{ d.infos.constituency.country.name }} </li>
+<li><i>Groupe politique</i>: <a href="{% url index_by_group d.infos.group.abbreviation %}">{{ d.infos.group.name }} ({{ d.infos.group.abbreviation }})</a></li>
 {% if d.infos.group.party %}<li><i>Parti</i> : {{ d.infos.group.party }}</li>{% endif %}
 </ul>
 

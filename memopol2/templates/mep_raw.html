@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block head %}
-<link href="/static/prettify/prettify.css" type="text/css" rel="stylesheet" />
+<link href="{{ MEDIA_URL }}prettify/prettify.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="/static/prettify/prettify.js"></script>
 <style>
 pre.prettyprint {
@@ -14,7 +14,7 @@ pre.prettyprint {
 {% block bodyattrs %} onload="prettyPrint()" {% endblock %}
 
 {% block sidelinks %}
-<li><a href="/mep/{{ mep_id  }}">Back to normal view</a></li>
+<li><a href="{% url mep mep_id %}">Back to normal view</a></li>
 {% endblock %}
 
 {% block content %}

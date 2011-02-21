@@ -29,6 +29,7 @@ class Mep(dict):
         couch = Server(settings.COUCHDB)
         return Mep(couch["meps"].get(key)) 
 
+
 class Position(models.Model):
     mep_id = models.CharField(max_length=128)
     subject = models.CharField(max_length=128)
