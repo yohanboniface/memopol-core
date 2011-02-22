@@ -33,18 +33,21 @@ Install memopol2's depdendencies:
 If you don't alreasy use virtualenv/virtualenvwrapper
 -----------------------------------------------------
 
-Add to your .bashrc (or equivalent) something like the following:
+Create a directory to hold the virtual environments:
 
+    mkdir ~/.virtualenvs
+
+Add to your .bashrc (or equivalent) the following lines:
+
+    export WORKON_HOME=$HOME'/.virtualenvs'
     source /usr/local/bin/virtualenvwrapper.sh
-    export WORKON_HOME=~/envs
 
-This will end up creating (relatively large) folders in ~/envs
+Then run the following command:
+
+    source ~/.bashrc
+
+This will end up creating (relatively large) folders in ~/.virtualenvs
 where all the projet dependencies will be installed.
-
-Also run those commands in your session, or logout/login, and
-create the WORKON_HOME folder:
-
-    mkdir ~/WORKON_HOME
 
 Create the virtualenv for memopol:
 
