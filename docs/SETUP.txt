@@ -11,8 +11,8 @@ Install the couchdb server:
 Install the base python virtualenv tools:
 
     sudo apt-get install python-setuptools
-    sudo easy_install virtualenv
-    sudo easy_install virtualenvwrapper
+    sudo pip install virtualenv
+    sudo pip install virtualenvwrapper
 
 
 Setup your virtual environment
