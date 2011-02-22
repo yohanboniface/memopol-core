@@ -34,11 +34,11 @@ If you don't alreasy use virtualenv/virtualenvwrapper
 -----------------------------------------------------
 
 Add to your .bashrc (or equivalent) something like the following:
-   
+
     source /usr/local/bin/virtualenvwrapper.sh
     export WORKON_HOME=~/envs
-     
-This will end up creating (relatively large) folders in ~/envs 
+
+This will end up creating (relatively large) folders in ~/envs
 where all the projet dependencies will be installed.
 
 Also run those commands in your session, or logout/login, and
@@ -68,5 +68,5 @@ Run the server
 
     cd ../memopol2
     python manage.py runserver 8080
-    
+
 Your application is available on http://localhost:8080/
