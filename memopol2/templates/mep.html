@@ -7,7 +7,7 @@
 
 {% block content %}
 <article>
-<header><h1 id="name">{{d.infos.name.first}} {{d.infos.name.last|upper}}, eurodéputé</h1></header>
+<header><h1 id="name">{{ data.infos.name.first }} {{ data.infos.name.last|upper }}, eurodéputé</h1></header>
 
 <section id="summary">
 <h1 class="collapsible expanded">Informations générales</h1>
@@ -15,22 +15,22 @@
 <ul id="infos" class="body">
 
 <div class="quickView">
-<img class="mugshot" src="http://www.europarl.europa.eu/mepphoto/{{ d.extid }}.jpg" onerror="onMugshotError(this);"/>
-<span>{{d.infos.name.first}} {{d.infos.name.last|upper}} <img src="{{ MEDIA_URL }}img/countries/small/{{ d.infos.constituency.country.code }}.png"/> </span>
-<img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ d.infos.group.abbreviation|cut:"/" }}.png"/><a href="{% url index_by_group d.infos.group.abbreviation %}">{{ d.infos.group.abbreviation }}</a>
+<img class="mugshot" src="http://www.europarl.europa.eu/mepphoto/{{ data.extid }}.jpg" onerror="onMugshotError(this);"/>
+<span>{{ data.infos.name.first }} {{ data.infos.name.last|upper }} <img src="{{ MEDIA_URL }}img/countries/small/{{ data.infos.constituency.country.code }}.png"/> </span>
+<img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ data.infos.group.abbreviation|cut:"/" }}.png"/><a href="{% url index_by_group data.infos.group.abbreviation %}">{{ data.infos.group.abbreviation }}</a>
 </div>
 
-<li><i>Né{% if d.infos.gender == "F" %}e{% endif %} le</i> {{ d.infos.birth.date.day }}/{{ d.infos.birth.date.month }}/{{ d.infos.birth.date.year }} <i>à</i> {{ d.infos.birth.place.city }} </li>
-<li><i>Pays</i>:  <img src="{{ MEDIA_URL }}img/countries/small/{{ d.infos.constituency.country.code }}.png"/> {{ d.infos.constituency.country.name }} </li>
-<li><i>Groupe politique</i>: <a href="{% url index_by_group d.infos.group.abbreviation %}">{{ d.infos.group.name }} ({{ d.infos.group.abbreviation }})</a></li>
-{% if d.infos.group.party %}<li><i>Parti</i> : {{ d.infos.group.party }}</li>{% endif %}
+<li><i>Né{% if data.infos.gender == "F" %}e{% endif %} le</i> {{ data.infos.birth.date.day }}/{{ data.infos.birth.date.month }}/{{ data.infos.birth.date.year }} <i>à</i> {{ data.infos.birth.place.city }} </li>
+<li><i>Pays</i>:  <img src="{{ MEDIA_URL }}img/countries/small/{{ data.infos.constituency.country.code }}.png"/> {{ data.infos.constituency.country.name }} </li>
+<li><i>Groupe politique</i>: <a href="{% url index_by_group data.infos.group.abbreviation %}">{{ data.infos.group.name }} ({{ data.infos.group.abbreviation }})</a></li>
+{% if data.infos.group.party %}<li><i>Parti</i> : {{ data.infos.group.party }}</li>{% endif %}
 </ul>
 
 <div id="contact">
 	<h2 class="collapsible expanded">Contact</h2>
 
 		<ul class="body">
-		{% for addr in d.contact.address %}
+		{% for addr in data.contact.address %}
 		<li><b>{{ addr.label|default:"Autre adresse" }}</b><br/>
 			{% if addr.building %} Batiment {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
 			{{ addr.street }}, {{ addr.postcode }} {{ addr.city }}<br/>
@@ -41,9 +41,9 @@
 		{% endfor %}
 		
 		
-		<li><i>E-mail</i>: <a href="mailto:{{ d.contact.email.text }}">{{ d.contact.email.text }}</a></li>
+		<li><i>E-mail</i>: <a href="mailto:{{ data.contact.email.text }}">{{ data.contact.email.text }}</a></li>
 			
-		{% for webaddr in d.contact.web %}
+		{% for webaddr in data.contact.web %}
 		<li>
 		    <i>Web</i>: <a target="_" href="{{ webaddr.text }}">{{ webaddr.type|default:webaddr.text }}</a>
 		</li>
@@ -52,44 +52,44 @@
 		</ul>
 </div>
 
-{% if d.functions %}
+{% if data.functions %}
 <div id="functions">
     <h2 class="collapsible collapsed">Fonctions</h2>
     <ul class="body">
-    {% for function in d.functions %}
+    {% for function in data.functions %}
         <li>{{ function.role }} - {{ function.label }}</li>
     {% endfor %}
     </ul>
 </div>
 {% endif %}
 
-{% if d.cv.position %}
+{% if data.cv.position %}
 <div id="cv">
     <h2 class="collapsible collapsed">CV</h2>
     <ul class="body">
-    {% for line in d.cv.position %}
+    {% for line in data.cv.position %}
         <li>{{ line }}</li>
     {% endfor %}
     </ul>
 </div>
 {% endif %}
 
-{% if d.opinions %}
+{% if data.opinions %}
 <div id="opinions">
     <h2 class="collapsible collapsed">Prises de position (memopol v1)</h2>
     <ul class="body">
-    {% for line in d.opinions %}
+    {% for line in data.opinions %}
         <li><b>{{ line.title }}</b> (le {{ line.date }})<br/>{% autoescape off %}{{ line.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.url }}"><br/>En savoir plus...</a> </li>
     {% endfor %}
     </ul>
 </div>
 {% endif %}
 
-{% if d.scores %}
+{% if data.scores %}
 <div id="scores">
     <h2 class="collapsible collapsed">Scores</h2>
     <ul class="body">
-    {% for score in d.scores %}
+    {% for score in data.scores %}
     <li>{{ score.label }}: <strong>{{ score.value }}</strong> (le {{ score.date }})<br/><a target="_" href="http://www.laquadrature.net/wiki/{{ score.wiki }}">En savoir plus...</a></li>
     {% endfor %}
     </ul>

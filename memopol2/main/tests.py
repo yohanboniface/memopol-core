@@ -11,8 +11,8 @@ class ViewsTest(TestCase):
         """
         client = Client()
         response = client.get(reverse("index_names"))
-        self.failUnlessEqual(len(response.context['meps_list']), 1194)
-        self.failUnlessEqual(repr(response.context['meps_list'][0]), "{u'value': {u'group': u'ECR', u'last': u'Bielan', u'first': u'Adam'}, u'id': u'AdamBielan', u'key': None}")
+        self.failUnlessEqual(len(response.context['meps']), 1194)
+        self.failUnlessEqual(repr(response.context['meps'][0]), "{u'value': {u'group': u'ECR', u'last': u'Bielan', u'first': u'Adam'}, u'id': u'AdamBielan', u'key': None}")
 
     def test_index_groups(self):
         """
@@ -38,8 +38,8 @@ class ViewsTest(TestCase):
         """
         client = Client()
         response = client.get(reverse("index_by_country", args=('DE',)))
-        self.failUnlessEqual(len(response.context['meps_list']), 141)
-        self.failUnlessEqual(repr(response.context['meps_list'][0]), "{u'value': {u'group': u'PPE', u'last': u'Dess', u'first': u'Albert'}, u'id': u'AlbertDess', u'key': u'DE'}")
+        self.failUnlessEqual(len(response.context['meps']), 141)
+        self.failUnlessEqual(repr(response.context['meps'][0]), "{u'value': {u'group': u'PPE', u'last': u'Dess', u'first': u'Albert'}, u'id': u'AlbertDess', u'key': u'DE'}")
 
     def test_index_by_group(self):
         """
@@ -47,8 +47,8 @@ class ViewsTest(TestCase):
         """
         client = Client()
         response = client.get(reverse("index_by_group", args=('ALDE',)))
-        self.failUnlessEqual(len(response.context['meps_list']), 144)
-        self.failUnlessEqual(repr(response.context['meps_list'][0]), "{u'value': {u'group': u'ALDE', u'last': u'V\\u0103lean', u'first': u'Adina-Ioana'}, u'id': u'AdinaIoanaValean', u'key': u'ALDE'}")
+        self.failUnlessEqual(len(response.context['meps']), 144)
+        self.failUnlessEqual(repr(response.context['meps'][0]), "{u'value': {u'group': u'ALDE', u'last': u'V\\u0103lean', u'first': u'Adina-Ioana'}, u'id': u'AdinaIoanaValean', u'key': u'ALDE'}")
 
     def test_mep(self):
         """
@@ -56,8 +56,8 @@ class ViewsTest(TestCase):
         """
         client = Client()
         response = client.get(reverse("mep", args=('AlbertDess',)))
-        self.failUnlessEqual(repr(response.context['d'].keys()), "[u'activities', u'functions', u'_rev', u'extid', u'contact', u'scores', u'infos', u'_id', u'cv']")
-        self.failUnlessEqual(repr(response.context['d']['cv']['position'][-1]), 'u"M\\xe9daill\\xe9 de l\'ordre bavarois du M\\xe9rite (2007)."')
-        self.failUnlessEqual(str(response.context['d']['contact']['address'][0]['street']), '60, rue Wiertz')
+        self.failUnlessEqual(repr(response.context['data'].keys()), "[u'activities', u'functions', u'_rev', u'extid', u'contact', u'scores', u'infos', u'_id', u'cv']")
+        self.failUnlessEqual(repr(response.context['data']['cv']['position'][-1]), 'u"M\\xe9daill\\xe9 de l\'ordre bavarois du M\\xe9rite (2007)."')
+        self.failUnlessEqual(str(response.context['data']['contact']['address'][0]['street']), '60, rue Wiertz')
         self.failUnlessEqual(repr(response.context['positions']), "[]")
 

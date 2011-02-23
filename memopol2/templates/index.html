@@ -3,11 +3,14 @@
 {% block content %}
 
 
-{% if meps_list %}
+{% if meps %}
     <h1>Eurodéputés</h1>
     <ul>
-        {% for r in meps_list %}
-            <li><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ r.value.group|cut:"/" }}.png" /><a href="{% url mep r.id %}">{{ r.value.first }} {{ r.value.last }}</a></li>
+        {% for mep in meps %}
+            <li>
+                <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.value.group|cut:"/" }}.png" />
+                <a href="{% url mep mep.id %}">{{ mep.value.first }} {{ mep.value.last }}</a>
+            </li>
         {% endfor %}
     </ul>
 {% endif %}
@@ -15,8 +18,13 @@
 {% if countries %}
     <h1>Eurodéputés par pays</h1>
     <ul>
-    {% for c in countries %}
-        <li><a href="{% url index_by_country c.value.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ c.value.code }}.png"/></a>&nbsp;<a href="{% url index_by_country c.value.code %}">{{ c.key }}</a> - {{ c.value.count }} d&eacute;put&eacute;s</li>
+    {% for country in countries %}
+        <li>
+            <a href="{% url index_by_country country.value.code %}">
+                <img src="{{ MEDIA_URL }}img/countries/small/{{ country.value.code }}.png"/>
+            </a>&nbsp;<a href="{% url index_by_country country.value.code %}">{{ country.key }}</a> 
+            - {{ country.value.count }} d&eacute;put&eacute;s
+        </li>
     {% endfor %}
     </ul>
 {% endif %}
@@ -24,8 +32,13 @@
 {% if groups %}
     <h1>Eurodéputés par groupe parlementaire</h1>
     <ul>
-    {% for c in groups %}
-        <li><a href="{% url index_by_group c.key %}">{{ c.value.name }} ({{ c.key }})</a> - {{ c.value.count }} d&eacute;put&eacute;s</li>
+    {% for group in groups %}
+        <li>
+            <a href="{% url index_by_group group.key %}">
+                {{ group.value.name }} ({{ group.key }})
+            </a> 
+            - {{ group.value.count }} d&eacute;put&eacute;s
+        </li>
     {% endfor %}
     </ul>
 {% endif %}

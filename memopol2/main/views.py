@@ -2,45 +2,70 @@ import time
 from datetime import datetime
 
 from django.http import HttpResponse, HttpResponseServerError
-from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.utils import simplejson
 from django.core import serializers
 from django.conf import settings
-
+from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
-
-from couchdbkit import Server
 
 from memopol2.main.models import Position, Database
 
 def index_names(request):
-    return render_to_response('index.html', {'meps_list': Database().get_meps_by_names()}, context_instance=RequestContext(request))
+    meps_by_name = Database().get_meps_by_names()
+    context = {
+        'meps': meps_by_name,
+    }
+    return direct_to_template(request, 'index.html', context)
 
 def index_groups(request):
-    return render_to_response('index.html', {'groups': Database().get_groups()}, context_instance=RequestContext(request))
+    groups = Database().get_groups()
+    context = {
+        'groups': groups,
+    }
+    return direct_to_template(request, 'index.html', context)
 
 def index_countries(request):
-    return render_to_response('index.html', {'countries': Database().get_countries()}, context_instance=RequestContext(request))
+    countries = Database().get_countries()
+    context = {
+        'countries': countries,
+    }
+    return direct_to_template(request, 'index.html', context)
 
 def index_by_country(request, country_code):
-    return render_to_response('index.html', {'meps_list': Database().get_meps_by_country(country_code)}, context_instance=RequestContext(request))
+    meps_by_country = Database().get_meps_by_country(country_code)
+    context = {
+        'meps': meps_by_country,
+    }
+    return direct_to_template(request, 'index.html', context)
 
 def index_by_group(request, group):
-    return render_to_response('index.html', {'meps_list': Database().get_meps_by_group(group)}, context_instance=RequestContext(request))
+    meps_by_group = Database().get_meps_by_group(group)
+    context = {
+        'meps': meps_by_group,
+    }
+    return direct_to_template(request, 'index.html', context)
 
 def mep(request, mep_id):
     data = Database().get_mep(mep_id)
-    ctx = {'mep_id': mep_id, 'mep': mep, 'd': data }
-    ctx['positions'] = Position.objects.filter(mep_id=mep_id)
-    ctx['visible_count'] = len([ x for x in ctx['positions'] if x.visible ])
-    return render_to_response('mep.html', ctx, context_instance=RequestContext(request))
+    positions = Position.objects.filter(mep_id=mep_id)
+    context = {
+        'mep_id': mep_id,
+        'data': data,
+        'positions': positions,
+        'visible_count': len([ x for x in positions if x.visible ]),
+    }
+    return direct_to_template(request, 'mep.html', context)
 
 def mep_raw(request, mep_id):
     mep_ = Database().get_mep(mep_id)
     jsonstr = simplejson.dumps(mep_, indent=4)
-    ctx = {'mep_id': mep_id, 'mep': mep_, 'jsonstr': jsonstr}
-    return render_to_response('mep_raw.html', ctx, context_instance=RequestContext(request))
+    context = {
+        'mep_id': mep_id, 
+        'mep': mep_, 
+        'jsonstr': jsonstr,
+    }
+    return direct_to_template(request, 'mep_raw.html', context)
 
 def mep_addposition(request, mep_id):
     if not request.is_ajax():
@@ -69,9 +94,11 @@ def mep_addposition(request, mep_id):
 
 @staff_member_required
 def moderation(request):
-    ctx = {}
-    ctx['positions'] = Position.objects.filter(moderated=False)
-    return render_to_response('moderation.html', ctx, context_instance=RequestContext(request))
+    positions = Position.objects.filter(moderated=False)
+    context = {
+        'positions': positions,
+    }
+    return direct_to_template(request, 'moderation.html', context)
 
 @staff_member_required
 def moderation_get_unmoderated_positions(request):
