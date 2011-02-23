@@ -12,9 +12,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 from couchdbkit import Server
 
-from memopol2.util import get_couch_doc_or_404
 from memopol2.main.models import Position, Database
-from memopol2 import settings # TODO check this if neccessary and not obsoleted by django.conf import settings
 
 def index_names(request):
     return render_to_response('index.html', {'meps_list': Database().get_meps_by_names()}, context_instance=RequestContext(request))
