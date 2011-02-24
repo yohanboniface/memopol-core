@@ -14,7 +14,7 @@ pre.prettyprint {
 {% block bodyattrs %} onload="prettyPrint()" {% endblock %}
 
 {% block sidelinks %}
-<li><a href="{% url meps:mep mep_id %}">Back to normal view</a></li>
+<li><a href="{% url meps:mep mep_id %}">{% trans "Back to normal view" %}</a></li>
 {% endblock %}
 
 {% block content %}

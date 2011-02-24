@@ -21,36 +21,36 @@
         <header id="mainheader" >{% block header %}<h1>{{ title|default:"Memopol" }}</h1>{% endblock %}</header>
 
         <nav>
-            <h2>Navigation</h2>
+            <h2>{% trans "Navigation" %}</h2>
             <ul>
-                <li><a href="{% url index %}">Home</a></li>
+                <li><a href="{% url index %}">{% trans "Accueil" %}</a></li>
                 {% block sidelinks %}
                 {% endblock %}
             </ul>
 
-            <h2>Meps</h2>
+            <h2>{% trans "Meps" %}</h2>
             <ul>
-                <li><a href="{% url meps:index_countries %}">Par pays</a></li>
-                <li><a href="{% url meps:index_groups %}">Par groupes parlementaires</a></li>
-                <li><a href="{% url meps:index_names %}">Par nom</a></li>
+                <li><a href="{% url meps:index_countries %}">{% trans "Par pays" %}</a></li>
+                <li><a href="{% url meps:index_groups %}">{% trans "Par groupes parlementaires" %}</a></li>
+                <li><a href="{% url meps:index_names %}">{% trans "Par nom" %}</a></li>
             </ul>
 
-            <h2>Votes</h2>
+            <h2>{% trans "Votes" %}</h2>
             <ul>
-                <li><a href="{% url votes:index %}">Par nom</a></li>
+                <li><a href="{% url votes:index %}">{% trans "Par nom" %}</a></li>
             </ul>
 
-            <h2>MPs</h2>
+            <h2>{% trans "MPs" %}</h2>
             <ul>
-                <li><a href="{% url mps:index %}">Par nom</a></li>
+                <li><a href="{% url mps:index %}">{% trans "Par nom" %}</a></li>
             </ul>
 
 
             {% if user.is_staff %}
-            <h2>Outils d'administration</h2>
+            <h2>{% trans "Outils d'administration" %}</h2>
             <ul>
-                <li><a href="/admin">Administration</a></li>
-                <li><a href="/moderation">Moderation</a></li>
+                <li><a href="/admin">{% trans "Administration" %}</a></li>
+                <li><a href="/moderation">{% trans "Modération" %}</a></li>
             </ul>
             {% endif %}
 
