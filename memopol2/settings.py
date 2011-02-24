@@ -72,7 +72,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.csrf.middleware.CsrfMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'memopol2.crashlog.CrashLogMiddleware',
+    'crashlog.CrashLogMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -89,17 +89,25 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    # django
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'memopol2.main',
-    'memopol2.crashlog',
+    
+    # 3rd party
+    'couchdbkit.ext.django',
     'south',
     'django_extensions',
     'debug_toolbar',
+    
+    # memopol
+    'crashlog',
+    'meps',
+    'votes',
+    'mps',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
@@ -118,3 +126,7 @@ DEBUG_TOOLBAR_PANELS = (
 
 #CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 COUCHDB = "http://localhost:5984"
+COUCHDB_DATABASES = (
+     ('votes', '%s/votes' % COUCHDB),
+     ('mps', '%s/mps' % COUCHDB),
+ )

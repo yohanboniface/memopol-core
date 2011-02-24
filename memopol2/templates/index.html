@@ -9,7 +9,7 @@
         {% for mep in meps %}
             <li>
                 <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.value.group|cut:"/" }}.png" />
-                <a href="{% url mep mep.id %}">{{ mep.value.first }} {{ mep.value.last }}</a>
+                <a href="{% url meps:mep mep.id %}">{{ mep.value.first }} {{ mep.value.last }}</a>
             </li>
         {% endfor %}
     </ul>
@@ -20,9 +20,9 @@
     <ul>
     {% for country in countries %}
         <li>
-            <a href="{% url index_by_country country.value.code %}">
+            <a href="{% url meps:index_by_country country.value.code %}">
                 <img src="{{ MEDIA_URL }}img/countries/small/{{ country.value.code }}.png"/>
-            </a>&nbsp;<a href="{% url index_by_country country.value.code %}">{{ country.key }}</a> 
+            </a>&nbsp;<a href="{% url meps:index_by_country country.value.code %}">{{ country.key }}</a> 
             - {{ country.value.count }} d&eacute;put&eacute;s
         </li>
     {% endfor %}
@@ -34,7 +34,7 @@
     <ul>
     {% for group in groups %}
         <li>
-            <a href="{% url index_by_group group.key %}">
+            <a href="{% url meps:index_by_group group.key %}">
                 {{ group.value.name }} ({{ group.key }})
             </a> 
             - {{ group.value.count }} d&eacute;put&eacute;s

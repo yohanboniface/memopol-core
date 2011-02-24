@@ -5,12 +5,14 @@ class ViewsTest(TestCase):
     """
     Check basic context of indexes' views.
     """
+    def setUp(self):
+        self.client = Client()
+    
     def test_index_names(self):
         """
         Tests index_names context.
         """
-        client = Client()
-        response = client.get(reverse("index_names"))
+        response = self.client.get(reverse("meps:index_names"))
         self.failUnlessEqual(len(response.context['meps']), 1194)
         self.failUnlessEqual(repr(response.context['meps'][0]), "{u'value': {u'group': u'ECR', u'last': u'Bielan', u'first': u'Adam'}, u'id': u'AdamBielan', u'key': None}")
 
@@ -18,8 +20,7 @@ class ViewsTest(TestCase):
         """
         Tests index_groups context.
         """
-        client = Client()
-        response = client.get(reverse("index_groups"))
+        response = self.client.get(reverse("meps:index_groups"))
         self.failUnlessEqual(len(response.context['groups']), 12)
         self.failUnlessEqual(repr(response.context['groups'][0]), '{u\'value\': {u\'count\': 144, u\'name\': u"Groupe Alliance des d\\xe9mocrates et des lib\\xe9raux pour l\'Europe"}, u\'key\': u\'ALDE\'}')
 
@@ -27,8 +28,7 @@ class ViewsTest(TestCase):
         """
         Tests index_countries context.
         """
-        client = Client()
-        response = client.get(reverse("index_countries"))
+        response = self.client.get(reverse("meps:index_countries"))
         self.failUnlessEqual(len(response.context['countries']), 27)
         self.failUnlessEqual(repr(response.context['countries'][0]), "{u'value': {u'count': 141, u'code': u'DE'}, u'key': u'Allemagne'}")
 
@@ -36,8 +36,7 @@ class ViewsTest(TestCase):
         """
         Tests index_by_country context.
         """
-        client = Client()
-        response = client.get(reverse("index_by_country", args=('DE',)))
+        response = self.client.get(reverse("meps:index_by_country", args=('DE',)))
         self.failUnlessEqual(len(response.context['meps']), 141)
         self.failUnlessEqual(repr(response.context['meps'][0]), "{u'value': {u'group': u'PPE', u'last': u'Dess', u'first': u'Albert'}, u'id': u'AlbertDess', u'key': u'DE'}")
 
@@ -45,8 +44,7 @@ class ViewsTest(TestCase):
         """
         Tests index_by_group context.
         """
-        client = Client()
-        response = client.get(reverse("index_by_group", args=('ALDE',)))
+        response = self.client.get(reverse("meps:index_by_group", args=('ALDE',)))
         self.failUnlessEqual(len(response.context['meps']), 144)
         self.failUnlessEqual(repr(response.context['meps'][0]), "{u'value': {u'group': u'ALDE', u'last': u'V\\u0103lean', u'first': u'Adina-Ioana'}, u'id': u'AdinaIoanaValean', u'key': u'ALDE'}")
 
@@ -54,10 +52,9 @@ class ViewsTest(TestCase):
         """
         Tests mep context.
         """
-        client = Client()
-        response = client.get(reverse("mep", args=('AlbertDess',)))
+        response = self.client.get(reverse("meps:mep", args=('AlbertDess',)))
         self.failUnlessEqual(repr(response.context['data'].keys()), "[u'activities', u'functions', u'_rev', u'extid', u'contact', u'scores', u'infos', u'_id', u'cv']")
         self.failUnlessEqual(repr(response.context['data']['cv']['position'][-1]), 'u"M\\xe9daill\\xe9 de l\'ordre bavarois du M\\xe9rite (2007)."')
         self.failUnlessEqual(str(response.context['data']['contact']['address'][0]['street']), '60, rue Wiertz')
         self.failUnlessEqual(repr(response.context['positions']), "[]")
-
+        self.failUnlessEqual(repr(response.context['visible_count']), "0")
