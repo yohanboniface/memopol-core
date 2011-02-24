@@ -7,7 +7,7 @@ class ViewsTest(TestCase):
     """
     def setUp(self):
         self.client = Client()
-    
+
     def test_index_names(self):
         """
         Tests index_names context.
