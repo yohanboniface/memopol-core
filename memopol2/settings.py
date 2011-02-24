@@ -130,4 +130,4 @@ COUCHDB_DATABASES = (
      ('votes', '%s/votes' % COUCHDB),
      ('mps',   '%s/mps' % COUCHDB),
      ('meps',  '%s/meps' % COUCHDB),
- )
+)
