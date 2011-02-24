@@ -7,7 +7,7 @@
 
 {% block content %}
 <article>
-<header><h1 id="name">{{ data.infos.name.first }} {{ data.infos.name.last|upper }}, eurodéputé</h1></header>
+<header><h1 id="name">{{ mep.infos.name.first }} {{ mep.infos.name.last|upper }}, eurodéputé</h1></header>
 
 <section id="summary">
 <h1 class="collapsible expanded">Informations générales</h1>
@@ -15,22 +15,22 @@
 <ul id="infos" class="body">
 
 <div class="quickView">
-<img class="mugshot" src="http://www.europarl.europa.eu/mepphoto/{{ data.extid }}.jpg" onerror="onMugshotError(this);"/>
-<span>{{ data.infos.name.first }} {{ data.infos.name.last|upper }} <img src="{{ MEDIA_URL }}img/countries/small/{{ data.infos.constituency.country.code }}.png"/> </span>
-<img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ data.infos.group.abbreviation|cut:"/" }}.png"/><a href="{% url meps:index_by_group data.infos.group.abbreviation %}">{{ data.infos.group.abbreviation }}</a>
+<img class="mugshot" src="http://www.europarl.europa.eu/mepphoto/{{ mep.extid }}.jpg" onerror="onMugshotError(this);"/>
+<span>{{ mep.infos.name.first }} {{ mep.infos.name.last|upper }} <img src="{{ MEDIA_URL }}img/countries/small/{{ mep.infos.constituency.country.code }}.png"/> </span>
+<img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.infos.group.abbreviation|cut:"/" }}.png"/><a href="{% url meps:index_by_group mep.infos.group.abbreviation %}">{{ mep.infos.group.abbreviation }}</a>
 </div>
 
-<li><i>Né{% if data.infos.gender == "F" %}e{% endif %} le</i> {{ data.infos.birth.date.day }}/{{ data.infos.birth.date.month }}/{{ data.infos.birth.date.year }} <i>à</i> {{ data.infos.birth.place.city }} </li>
-<li><i>Pays</i>:  <img src="{{ MEDIA_URL }}img/countries/small/{{ data.infos.constituency.country.code }}.png"/> {{ data.infos.constituency.country.name }} </li>
-<li><i>Groupe politique</i>: <a href="{% url meps:index_by_group data.infos.group.abbreviation %}">{{ data.infos.group.name }} ({{ data.infos.group.abbreviation }})</a></li>
-{% if data.infos.group.party %}<li><i>Parti</i> : {{ data.infos.group.party }}</li>{% endif %}
+<li><i>Né{% if mep.infos.gender == "F" %}e{% endif %} le</i> {{ mep.infos.birth.date.day }}/{{ mep.infos.birth.date.month }}/{{ mep.infos.birth.date.year }} <i>à</i> {{ mep.infos.birth.place.city }} </li>
+<li><i>Pays</i>:  <img src="{{ MEDIA_URL }}img/countries/small/{{ mep.infos.constituency.country.code }}.png"/> {{ mep.infos.constituency.country.name }} </li>
+<li><i>Groupe politique</i>: <a href="{% url meps:index_by_group mep.infos.group.abbreviation %}">{{ mep.infos.group.name }} ({{ mep.infos.group.abbreviation }})</a></li>
+{% if mep.infos.group.party %}<li><i>Parti</i> : {{ mep.infos.group.party }}</li>{% endif %}
 </ul>
 
 <div id="contact">
 	<h2 class="collapsible expanded">Contact</h2>
 
 		<ul class="body">
-		{% for addr in data.contact.address %}
+		{% for addr in mep.contact.address %}
 		<li><b>{{ addr.label|default:"Autre adresse" }}</b><br/>
 			{% if addr.building %} Batiment {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
 			{{ addr.street }}, {{ addr.postcode }} {{ addr.city }}<br/>
@@ -41,9 +41,9 @@
 		{% endfor %}
 		
 		
-		<li><i>E-mail</i>: <a href="mailto:{{ data.contact.email.text }}">{{ data.contact.email.text }}</a></li>
+		<li><i>E-mail</i>: <a href="mailto:{{ mep.contact.email.text }}">{{ mep.contact.email.text }}</a></li>
 			
-		{% for webaddr in data.contact.web %}
+		{% for webaddr in mep.contact.web %}
 		<li>
 		    <i>Web</i>: <a target="_" href="{{ webaddr.text }}">{{ webaddr.type|default:webaddr.text }}</a>
 		</li>
@@ -52,44 +52,44 @@
 		</ul>
 </div>
 
-{% if data.functions %}
+{% if mep.functions %}
 <div id="functions">
     <h2 class="collapsible collapsed">Fonctions</h2>
     <ul class="body">
-    {% for function in data.functions %}
+    {% for function in mep.functions %}
         <li>{{ function.role }} - {{ function.label }}</li>
     {% endfor %}
     </ul>
 </div>
 {% endif %}
 
-{% if data.cv.position %}
+{% if mep.cv.position %}
 <div id="cv">
     <h2 class="collapsible collapsed">CV</h2>
     <ul class="body">
-    {% for line in data.cv.position %}
+    {% for line in mep.cv.position %}
         <li>{{ line }}</li>
     {% endfor %}
     </ul>
 </div>
 {% endif %}
 
-{% if data.opinions %}
+{% if mep.opinions %}
 <div id="opinions">
     <h2 class="collapsible collapsed">Prises de position (memopol v1)</h2>
     <ul class="body">
-    {% for line in data.opinions %}
+    {% for line in mep.opinions %}
         <li><b>{{ line.title }}</b> (le {{ line.date }})<br/>{% autoescape off %}{{ line.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.url }}"><br/>En savoir plus...</a> </li>
     {% endfor %}
     </ul>
 </div>
 {% endif %}
 
-{% if data.scores %}
+{% if mep.scores %}
 <div id="scores">
     <h2 class="collapsible collapsed">Scores</h2>
     <ul class="body">
-    {% for score in data.scores %}
+    {% for score in mep.scores %}
     <li>{{ score.label }}: <strong>{{ score.value }}</strong> (le {{ score.date }})<br/><a target="_" href="http://www.laquadrature.net/wiki/{{ score.wiki }}">En savoir plus...</a></li>
     {% endfor %}
     </ul>
