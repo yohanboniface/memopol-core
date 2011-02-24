@@ -7,14 +7,14 @@ class ViewsTest(TestCase):
     """
     def setUp(self):
         self.client = Client()
-    
+
     def test_index(self):
         """
         Tests index context.
         """
         response = self.client.get(reverse("votes:index"))
         self.failUnlessEqual(len(response.context['votes']), 7)
-        self.failUnlessEqual(repr(response.context['votes'].all()[0].label), 'u\'Directive sur la brevetabilit\\xe9 des "inventions mise en \\u0153uvre par ordinateur" (brevets logiciels), 1re lecture\'')
+        self.assertTrue('u\'Directive sur la brevetabilit\\xe9 des "inventions mise en \\u0153uvre par ordinateur" (brevets logiciels), 1re lecture\'' in [repr(i.label) for i in response.context['votes'].all()])
 
     def test_detail(self):
         """
@@ -22,4 +22,3 @@ class ViewsTest(TestCase):
         """
         response = self.client.get(reverse("votes:detail", args=('Directive_brevets_logiciels_1re_lecture',)))
         self.failUnlessEqual(repr(response.context['vote'].label), 'u\'Directive sur la brevetabilit\\xe9 des "inventions mise en \\u0153uvre par ordinateur" (brevets logiciels), 1re lecture\'')
-
