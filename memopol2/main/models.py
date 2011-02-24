@@ -4,7 +4,6 @@ from django.http import Http404
 
 from couchdbkit import Server
 from couchdbkit.exceptions import ResourceNotFound
-from couchdbkit.ext.django.schema import Document, StringProperty
 
 class Mep(dict):
     """
@@ -134,8 +133,4 @@ class Database(object):
         req.fetch()
         return req.all()
 
-
-class Vote(Document):
-    label = StringProperty()
-    wiki = StringProperty()
 

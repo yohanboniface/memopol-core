@@ -7,7 +7,7 @@
     <ul>
         {% for vote in votes %}
             <li>
-                <a href="{% url vote vote.wiki %}">{{ vote.label }}</a>
+                <a href="{% url votes:detail vote.wiki %}">{{ vote.label }}</a>
             </li>
         {% endfor %}
     </ul>

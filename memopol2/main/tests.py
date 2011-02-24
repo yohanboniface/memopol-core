@@ -58,19 +58,3 @@ class ViewsTest(TestCase):
         self.failUnlessEqual(str(response.context['data']['contact']['address'][0]['street']), '60, rue Wiertz')
         self.failUnlessEqual(repr(response.context['positions']), "[]")
         self.failUnlessEqual(repr(response.context['visible_count']), "0")
-
-    def test_index_votes(self):
-        """
-        Tests index_votes context.
-        """
-        response = self.client.get(reverse("index_votes"))
-        self.failUnlessEqual(len(response.context['votes']), 7)
-        self.failUnlessEqual(repr(response.context['votes'].all()[0].label), 'u\'Directive sur la brevetabilit\\xe9 des "inventions mise en \\u0153uvre par ordinateur" (brevets logiciels), 1re lecture\'')
-
-    def test_vote(self):
-        """
-        Tests vote context.
-        """
-        response = self.client.get(reverse("vote", args=('Directive_brevets_logiciels_1re_lecture',)))
-        self.failUnlessEqual(repr(response.context['vote'].label), 'u\'Directive sur la brevetabilit\\xe9 des "inventions mise en \\u0153uvre par ordinateur" (brevets logiciels), 1re lecture\'')
-

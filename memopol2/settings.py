@@ -89,18 +89,24 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    # django
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    
+    # 3rd party
     'couchdbkit.ext.django',
-    'memopol2.main',
-    'memopol2.crashlog',
     'south',
     'django_extensions',
     'debug_toolbar',
+    
+    # memopol
+    'main',
+    'crashlog',
+    'votes',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
@@ -120,5 +126,5 @@ DEBUG_TOOLBAR_PANELS = (
 #CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 COUCHDB = "http://localhost:5984"
 COUCHDB_DATABASES = (
-     ('memopol2.main', '%s/votes' % COUCHDB),
+     ('votes', '%s/votes' % COUCHDB),
  )
