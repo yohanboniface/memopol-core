@@ -9,7 +9,7 @@ from django.conf import settings
 from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 
-from memopol2.main.models import Position, Database
+from meps.models import Position, Database
 
 def index_names(request):
     meps_by_name = Database().get_meps_by_names()
@@ -53,9 +53,9 @@ def mep(request, mep_id):
         'mep_id': mep_id,
         'data': data,
         'positions': positions,
-        'visible_count': len([ x for x in positions if x.visible ]),
+        'visible_count': len([x for x in positions if x.visible]),
     }
-    return direct_to_template(request, 'mep.html', context)
+    return direct_to_template(request, 'meps/mep.html', context)
 
 def mep_raw(request, mep_id):
     mep_ = Database().get_mep(mep_id)
@@ -65,7 +65,7 @@ def mep_raw(request, mep_id):
         'mep': mep_, 
         'jsonstr': jsonstr,
     }
-    return direct_to_template(request, 'mep_raw.html', context)
+    return direct_to_template(request, 'meps/mep_raw.html', context)
 
 def mep_addposition(request, mep_id):
     if not request.is_ajax():
@@ -98,7 +98,7 @@ def moderation(request):
     context = {
         'positions': positions,
     }
-    return direct_to_template(request, 'moderation.html', context)
+    return direct_to_template(request, 'meps/moderation.html', context)
 
 @staff_member_required
 def moderation_get_unmoderated_positions(request):
@@ -123,4 +123,3 @@ def moderation_moderate_positions(request):
     except:
         pass
     return HttpResponse(simplejson.dumps(results), mimetype='application/json')
-

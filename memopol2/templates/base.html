@@ -30,9 +30,19 @@
 
             <h2>Meps</h2>
             <ul>
-                <li><a href="{% url index_countries %}">Par pays</a></li>
-                <li><a href="{% url index_groups %}">Par groupes parlementaires</a></li>
-                <li><a href="{% url index_names %}">Par nom</a></li>
+                <li><a href="{% url meps:index_countries %}">Par pays</a></li>
+                <li><a href="{% url meps:index_groups %}">Par groupes parlementaires</a></li>
+                <li><a href="{% url meps:index_names %}">Par nom</a></li>
+            </ul>
+
+            <h2>Votes</h2>
+            <ul>
+                <li><a href="{% url votes:index %}">Par nom</a></li>
+            </ul>
+
+            <h2>MPs</h2>
+            <ul>
+                <li><a href="{% url mps:index %}">Par nom</a></li>
             </ul>
 
 
