@@ -23,7 +23,7 @@
             <a href="{% url meps:index_by_country country.code %}">
                 <img src="{{ MEDIA_URL }}img/countries/small/{{ country.code }}.png"/>
             </a>&nbsp;<a href="{% url meps:index_by_country country.code %}">{{ country.key }}</a> 
-            {% blocktrans with count=country.count %} - {{ count }} députés {% endblocktrans %}
+            {% blocktrans with country.count as count %} - {{ count }} députés {% endblocktrans %}
         </li>
     {% endfor %}
     </ul>
@@ -37,7 +37,7 @@
             <a href="{% url meps:index_by_group group.code %}">
                 {{ group.name }} ({{ group.code }})
             </a> 
-            {% blocktrans with count=group.count %} - {{ count }} députés {% endblocktrans %}
+            {% blocktrans with group.count as count %} - {{ count }} députés {% endblocktrans %}
         </li>
     {% endfor %}
     </ul>
