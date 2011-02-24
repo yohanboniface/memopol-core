@@ -27,6 +27,7 @@ urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^moderation/get_unmoderated_positions$', views.moderation_get_unmoderated_positions, name='moderation_get_unmoderated_positions'),
     url(r'^moderation/moderate_position$', views.moderation_moderate_positions, name='moderation_moderate_positions'),
 
+    url(r'^mps/', include('mps.urls', namespace='mps', app_name='mps')),
     url(r'^votes/', include('votes.urls', namespace='votes', app_name='votes')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),

@@ -107,6 +107,7 @@ INSTALLED_APPS = (
     'main',
     'crashlog',
     'votes',
+    'mps',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
@@ -127,4 +128,5 @@ DEBUG_TOOLBAR_PANELS = (
 COUCHDB = "http://localhost:5984"
 COUCHDB_DATABASES = (
      ('votes', '%s/votes' % COUCHDB),
+     ('mps', '%s/mps' % COUCHDB),
  )
