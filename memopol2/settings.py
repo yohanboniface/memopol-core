@@ -128,5 +128,6 @@ DEBUG_TOOLBAR_PANELS = (
 COUCHDB = "http://localhost:5984"
 COUCHDB_DATABASES = (
      ('votes', '%s/votes' % COUCHDB),
-     ('mps', '%s/mps' % COUCHDB),
- )
+     ('mps',   '%s/mps' % COUCHDB),
+     ('meps',  '%s/meps' % COUCHDB),
+)

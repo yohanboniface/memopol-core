@@ -9,56 +9,82 @@ from django.conf import settings
 from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 
-from meps.models import Position, Database
+from meps.models import Position, MEP
 
 def index_names(request):
-    meps_by_name = Database().get_meps_by_names()
+    meps_by_name = MEP.view('meps/by_name')
     context = {
         'meps': meps_by_name,
     }
     return direct_to_template(request, 'index.html', context)
 
 def index_groups(request):
-    groups = Database().get_groups()
+    groups = MEP.view('meps/groups')
+
+    # TODO: find a way to do the reduce at the couchdb level
+    from collections import defaultdict
+    py_groups = defaultdict(dict)
+    for group in groups:
+        py_groups[group.code].setdefault('count', 0)
+        py_groups[group.code]['count'] += 1
+        py_groups[group.code]['code'] = group.code
+        py_groups[group.code]['name'] = group.name
+    groups = list(py_groups.values())
+    groups.sort(key=lambda dic: dic['name'])
+    # /TODO
+
     context = {
         'groups': groups,
     }
     return direct_to_template(request, 'index.html', context)
 
 def index_countries(request):
-    countries = Database().get_countries()
+    countries = MEP.view('meps/countries')
+    
+    # TODO: find a way to do the reduce at the couchdb level
+    from collections import defaultdict
+    py_countries = defaultdict(dict)
+    for country in countries:
+        py_countries[country.code].setdefault('count', 0)
+        py_countries[country.code]['count'] += 1
+        py_countries[country.code]['code'] = country.code
+        py_countries[country.code]['name'] = country.name
+    countries = list(py_countries.values())
+    countries.sort(key=lambda dic: dic['name'])
+    # /TODO
+    
     context = {
         'countries': countries,
     }
     return direct_to_template(request, 'index.html', context)
 
 def index_by_country(request, country_code):
-    meps_by_country = Database().get_meps_by_country(country_code)
+    meps_by_country = MEP.view('meps/by_country', key=country_code)
     context = {
         'meps': meps_by_country,
     }
     return direct_to_template(request, 'index.html', context)
 
 def index_by_group(request, group):
-    meps_by_group = Database().get_meps_by_group(group)
+    meps_by_group = MEP.view('meps/by_group', key=group)
     context = {
         'meps': meps_by_group,
     }
     return direct_to_template(request, 'index.html', context)
 
 def mep(request, mep_id):
-    data = Database().get_mep(mep_id)
+    mep_ = MEP.view('meps/by_id', key=mep_id).first()
     positions = Position.objects.filter(mep_id=mep_id)
     context = {
         'mep_id': mep_id,
-        'data': data,
+        'mep': mep_,
         'positions': positions,
         'visible_count': len([x for x in positions if x.visible]),
     }
     return direct_to_template(request, 'meps/mep.html', context)
 
 def mep_raw(request, mep_id):
-    mep_ = Database().get_mep(mep_id)
+    mep_ = MEP.view('meps/by_id', key=mep_id).first()
     jsonstr = simplejson.dumps(mep_, indent=4)
     context = {
         'mep_id': mep_id, 
@@ -72,7 +98,7 @@ def mep_addposition(request, mep_id):
         return HttpResponseServerError()
     results = {'success':False}
     # make sure the mep exists
-    mep_ = Database().get_mep(mep_id)
+    mep_ = MEP.view('meps/by_id', key=mep_id).first()
     try:
         text = request.GET[u'text']
         if settings.DEBUG:
