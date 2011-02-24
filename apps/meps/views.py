@@ -40,7 +40,7 @@ def index_groups(request):
 
 def index_countries(request):
     countries = MEP.view('meps/countries')
-    
+
     # TODO: find a way to do the reduce at the couchdb level
     from collections import defaultdict
     py_countries = defaultdict(dict)
@@ -52,7 +52,7 @@ def index_countries(request):
     countries = list(py_countries.values())
     countries.sort(key=lambda dic: dic['name'])
     # /TODO
-    
+
     context = {
         'countries': countries,
     }
@@ -87,8 +87,8 @@ def mep_raw(request, mep_id):
     mep_ = MEP.view('meps/by_id', key=mep_id).first()
     jsonstr = simplejson.dumps(mep_, indent=4)
     context = {
-        'mep_id': mep_id, 
-        'mep': mep_, 
+        'mep_id': mep_id,
+        'mep': mep_,
         'jsonstr': jsonstr,
     }
     return direct_to_template(request, 'meps/mep_raw.html', context)
