@@ -132,9 +132,9 @@ def index_votes(request):
     return direct_to_template(request, 'votes.html', context)
 
 def vote(request, vote_name):
-    votes = Vote.view('main/all')
+    votes = Vote.view('main/by_name', key=vote_name)
     context = {
-        'vote': [vote for vote in votes.all() if vote.wiki==vote_name][0],
+        'vote': votes.first(),
     }
     return direct_to_template(request, 'vote.html', context)
 
