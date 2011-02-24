@@ -8,8 +8,8 @@
     <ul>
         {% for mep in meps %}
             <li>
-                <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.value.group|cut:"/" }}.png" />
-                <a href="{% url meps:mep mep.id %}">{{ mep.value.first }} {{ mep.value.last }}</a>
+                <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group|cut:"/" }}.png" />
+                <a href="{% url meps:mep mep.id %}">{{ mep.first }} {{ mep.last }}</a>
             </li>
         {% endfor %}
     </ul>
@@ -20,10 +20,10 @@
     <ul>
     {% for country in countries %}
         <li>
-            <a href="{% url meps:index_by_country country.value.code %}">
-                <img src="{{ MEDIA_URL }}img/countries/small/{{ country.value.code }}.png"/>
-            </a>&nbsp;<a href="{% url meps:index_by_country country.value.code %}">{{ country.key }}</a> 
-            - {{ country.value.count }} d&eacute;put&eacute;s
+            <a href="{% url meps:index_by_country country.code %}">
+                <img src="{{ MEDIA_URL }}img/countries/small/{{ country.code }}.png"/>
+            </a>&nbsp;<a href="{% url meps:index_by_country country.code %}">{{ country.name }}</a> 
+            - {{ country.count }} d&eacute;put&eacute;s
         </li>
     {% endfor %}
     </ul>
@@ -34,10 +34,10 @@
     <ul>
     {% for group in groups %}
         <li>
-            <a href="{% url meps:index_by_group group.key %}">
-                {{ group.value.name }} ({{ group.key }})
+            <a href="{% url meps:index_by_group group.code %}">
+                {{ group.name }} ({{ group.code }})
             </a> 
-            - {{ group.value.count }} d&eacute;put&eacute;s
+            - {{ group.count }} d&eacute;put&eacute;s
         </li>
     {% endfor %}
     </ul>
