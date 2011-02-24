@@ -7,7 +7,7 @@ class ViewsTest(TestCase):
     """
     def setUp(self):
         self.client = Client()
-    
+
     def test_index(self):
         """
         Tests index context.
@@ -22,4 +22,3 @@ class ViewsTest(TestCase):
         """
         response = self.client.get(reverse("votes:detail", args=('Directive_brevets_logiciels_1re_lecture',)))
         self.failUnlessEqual(repr(response.context['vote'].label), 'u\'Directive sur la brevetabilit\\xe9 des "inventions mise en \\u0153uvre par ordinateur" (brevets logiciels), 1re lecture\'')
-
