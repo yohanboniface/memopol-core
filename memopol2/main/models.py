@@ -1,10 +1,10 @@
 from django.db import models
 from django.conf import settings
 from django.http import Http404
+
 from couchdbkit import Server
 from couchdbkit.exceptions import ResourceNotFound
-from memopol2 import settings # TODO check this if neccessary - see import above
-
+from couchdbkit.ext.django.schema import Document, StringProperty
 
 class Mep(dict):
     """
@@ -49,6 +49,7 @@ class Position(models.Model):
 
     def __unicode__(self):
         return "<Position for mep id='%s'>" % (self.mep_id)
+
 
 class Database(object):
     def __init__(self):
@@ -132,3 +133,9 @@ class Database(object):
         req = couch_meps.temp_view({"map": map_fun}, key=key)
         req.fetch()
         return req.all()
+
+
+class Vote(Document):
+    label = StringProperty()
+    wiki = StringProperty()
+

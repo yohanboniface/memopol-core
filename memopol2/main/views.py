@@ -9,7 +9,7 @@ from django.conf import settings
 from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 
-from memopol2.main.models import Position, Database
+from memopol2.main.models import Position, Database, Vote
 
 def index_names(request):
     meps_by_name = Database().get_meps_by_names()
@@ -53,7 +53,7 @@ def mep(request, mep_id):
         'mep_id': mep_id,
         'data': data,
         'positions': positions,
-        'visible_count': len([ x for x in positions if x.visible ]),
+        'visible_count': len([x for x in positions if x.visible]),
     }
     return direct_to_template(request, 'mep.html', context)
 
@@ -123,4 +123,18 @@ def moderation_moderate_positions(request):
     except:
         pass
     return HttpResponse(simplejson.dumps(results), mimetype='application/json')
+
+def index_votes(request):
+    votes = Vote.view('main/all')
+    context = {
+        'votes': votes,
+    }
+    return direct_to_template(request, 'votes.html', context)
+
+def vote(request, vote_name):
+    votes = Vote.view('main/all')
+    context = {
+        'vote': [vote for vote in votes.all() if vote.wiki==vote_name][0],
+    }
+    return direct_to_template(request, 'vote.html', context)
 

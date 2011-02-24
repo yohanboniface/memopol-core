@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if votes %}
+    <h1>Votes</h1>
+    <ul>
+        {% for vote in votes %}
+            <li>
+                <a href="{% url vote vote.wiki %}">{{ vote.label }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}

@@ -95,6 +95,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'couchdbkit.ext.django',
     'memopol2.main',
     'memopol2.crashlog',
     'south',
@@ -118,3 +119,6 @@ DEBUG_TOOLBAR_PANELS = (
 
 #CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 COUCHDB = "http://localhost:5984"
+COUCHDB_DATABASES = (
+     ('memopol2.main', '%s/votes' % COUCHDB),
+ )

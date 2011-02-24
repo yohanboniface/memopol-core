@@ -17,6 +17,8 @@ urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^country/(?P<country_code>[a-zA-Z][a-zA-Z])/$', views.index_by_country, name='index_by_country'),
     url(r'^groups/$', views.index_groups, name='index_groups'),
     url(r'^group/(?P<group>[a-zA-Z/-]+)/$', views.index_by_group, name='index_by_group'),
+    url(r'^votes/$', views.index_votes, name='index_votes'),
+    url(r'^vote/(?P<vote_name>[a-zA-Z/-_]+)/$', views.vote, name='vote'),
 
 
     url(r'^mep/(?P<mep_id>\w+)/$', views.mep, name='mep'),

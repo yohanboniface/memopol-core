@@ -35,6 +35,11 @@
                 <li><a href="{% url index_names %}">Par nom</a></li>
             </ul>
 
+            <h2>Votes</h2>
+            <ul>
+                <li><a href="{% url index_votes %}">Par nom</a></li>
+            </ul>
+
 
             {% if user.is_staff %}
             <h2>Outils d'administration</h2>
