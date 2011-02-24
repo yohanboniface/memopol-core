@@ -21,7 +21,7 @@
 </div>
 
 <li><i>{% if mep.infos.gender == "F" %}{% trans "Née le" %}{% else %}{% trans "Né le" %}{% endif %}</i>
-{% blocktrans with day=mep.infos.birth.date.day month=mep.infos.birth.date.month year=mep.infos.birth.date.year city=mep.infos.birth.place.city %}{{ day }}/{{ month }}/{{ year }} <i>à</i> {{ city }}{% endblocktrans %}</li>
+{% blocktrans with mep.infos.birth.date.day as day and mep.infos.birth.date.month as month and mep.infos.birth.date.year as year and mep.infos.birth.place.city as city %}{{ day }}/{{ month }}/{{ year }} <i>à</i> {{ city }}{% endblocktrans %}</li>
 <li><i>{% trans "Pays" %}</i>:  <img src="{{ MEDIA_URL }}img/countries/small/{{ mep.infos.constituency.country.code }}.png"/> {{ mep.infos.constituency.country.name }} </li>
 <li><i>{% trans "Groupe politique&nbsp;: " %}</i><a href="{% url meps:index_by_group mep.infos.group.abbreviation %}">{{ mep.infos.group.name }} ({{ mep.infos.group.abbreviation }})</a></li>
 {% if mep.infos.group.party %}<li><i>{% trans "Parti&nbsp;: " %}</i>{{ mep.infos.group.party }}</li>{% endif %}
