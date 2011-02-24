@@ -72,7 +72,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.csrf.middleware.CsrfMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'crashlog.CrashLogMiddleware',
+    #    'crashlog.CrashLogMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -104,7 +104,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     
     # memopol
-    'crashlog',
+    # 'crashlog',
     'meps',
     'votes',
     'mps',
