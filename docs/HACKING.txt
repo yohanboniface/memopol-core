@@ -7,6 +7,10 @@ Some quick information about hacking on memopol:
    apt-get install python-dev libxml2-dev libxslt-dev
    pip install -r requirements-test.txt
 
+- "install" the app in development mode:
+ 
+   python setup.py develop
+
 - when you want to work on memopol, be sure to use the virtualenvwrapper
   workon command; for instance if you named your memopol virtual env
   as 'memopol2', just do 'workon memopol2', and you're good to go.

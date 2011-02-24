@@ -1,6 +1,8 @@
 #!/bin/bash
 # This script will setup our virtualenv in the jenkins workspace, and run the tests
 
+export PYTHONPATH="apps/:"$PYTHONPATH
+
 cd $WORKSPACE
 
 # setup ve
