@@ -2,15 +2,15 @@
 {% load recursedict %}
 
 {% block sidelinks %}
-    <li><a href="{% url meps:mep_raw mep_id %}">View Raw JSON</a></li>
+    <li><a href="{% url meps:mep_raw mep_id %}">{% trans "View Raw JSON" %}</a></li>
 {% endblock %}
 
 {% block content %}
 <article>
-<header><h1 id="name">{{ mep.infos.name.first }} {{ mep.infos.name.last|upper }}, eurodéputé</h1></header>
+<header><h1 id="name">{{ mep.infos.name.first }} {{ mep.infos.name.last|upper }}{% trans ", eurodéputé" %}</h1></header>
 
 <section id="summary">
-<h1 class="collapsible expanded">Informations générales</h1>
+<h1 class="collapsible expanded">{% trans "Informations générales" %}</h1>
 
 <ul id="infos" class="body">
 
@@ -20,32 +20,33 @@
 <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.infos.group.abbreviation|cut:"/" }}.png"/><a href="{% url meps:index_by_group mep.infos.group.abbreviation %}">{{ mep.infos.group.abbreviation }}</a>
 </div>
 
-<li><i>Né{% if mep.infos.gender == "F" %}e{% endif %} le</i> {{ mep.infos.birth.date.day }}/{{ mep.infos.birth.date.month }}/{{ mep.infos.birth.date.year }} <i>à</i> {{ mep.infos.birth.place.city }} </li>
-<li><i>Pays</i>:  <img src="{{ MEDIA_URL }}img/countries/small/{{ mep.infos.constituency.country.code }}.png"/> {{ mep.infos.constituency.country.name }} </li>
-<li><i>Groupe politique</i>: <a href="{% url meps:index_by_group mep.infos.group.abbreviation %}">{{ mep.infos.group.name }} ({{ mep.infos.group.abbreviation }})</a></li>
-{% if mep.infos.group.party %}<li><i>Parti</i> : {{ mep.infos.group.party }}</li>{% endif %}
+<li><i>{% if mep.infos.gender == "F" %}{% trans "Née le" %}{% else %}{% trans "Né le" %}{% endif %}</i>
+{% blocktrans with day=mep.infos.birth.date.day month=mep.infos.birth.date.month year=mep.infos.birth.date.year city=mep.infos.birth.place.city %}{{ day }}/{{ month }}/{{ year }} <i>à</i> {{ city }}{% endblocktrans %}</li>
+<li><i>{% trans "Pays" %}</i>:  <img src="{{ MEDIA_URL }}img/countries/small/{{ mep.infos.constituency.country.code }}.png"/> {{ mep.infos.constituency.country.name }} </li>
+<li><i>{% trans "Groupe politique&nbsp;: " %}</i><a href="{% url meps:index_by_group mep.infos.group.abbreviation %}">{{ mep.infos.group.name }} ({{ mep.infos.group.abbreviation }})</a></li>
+{% if mep.infos.group.party %}<li><i>{% trans "Parti&nbsp;: " %}</i>{{ mep.infos.group.party }}</li>{% endif %}
 </ul>
 
 <div id="contact">
-	<h2 class="collapsible expanded">Contact</h2>
+	<h2 class="collapsible expanded">{% trans "Contact" %}</h2>
 
 		<ul class="body">
 		{% for addr in mep.contact.address %}
-		<li><b>{{ addr.label|default:"Autre adresse" }}</b><br/>
-			{% if addr.building %} Batiment {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
+		<li><b>{{ addr.label|default:_("Autre adresse") }}</b><br/>
+			{% if addr.building %} {% trans "Bâtiment" %} {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
 			{{ addr.street }}, {{ addr.postcode }} {{ addr.city }}<br/>
-			{% if addr.phone %}Tél.: {% for phone in addr.phone %} <a href="callto://{{ phone|cut:" " }}">{{ phone }}</a>&nbsp;{% endfor %}<br/>{% endif %}
-			{% if addr.fax %}Fax: {{ addr.fax }}{% endif %}
+			{% if addr.phone %}{% trans "Tél.: " %}{% for phone in addr.phone %} <a href="callto://{{ phone|cut:" " }}">{{ phone }}</a>&nbsp;{% endfor %}<br/>{% endif %}
+			{% if addr.fax %}{% trans "Fax: " %}{{ addr.fax }}{% endif %}
 			 
 		</li>
 		{% endfor %}
 		
 		
-		<li><i>E-mail</i>: <a href="mailto:{{ mep.contact.email.text }}">{{ mep.contact.email.text }}</a></li>
+		<li><i>{% trans "E-mail&nbsp;: " %}</i><a href="mailto:{{ mep.contact.email.text }}">{{ mep.contact.email.text }}</a></li>
 			
 		{% for webaddr in mep.contact.web %}
 		<li>
-		    <i>Web</i>: <a target="_" href="{{ webaddr.text }}">{{ webaddr.type|default:webaddr.text }}</a>
+		    <i>{% trans "Web&nbsp;: " %}</i><a target="_" href="{{ webaddr.text }}">{{ webaddr.type|default:webaddr.text }}</a>
 		</li>
 		{% endfor %}
 		
@@ -54,7 +55,7 @@
 
 {% if mep.functions %}
 <div id="functions">
-    <h2 class="collapsible collapsed">Fonctions</h2>
+    <h2 class="collapsible collapsed">{% trans "Fonctions" %}</h2>
     <ul class="body">
     {% for function in mep.functions %}
         <li>{{ function.role }} - {{ function.label }}</li>
@@ -65,7 +66,7 @@
 
 {% if mep.cv.position %}
 <div id="cv">
-    <h2 class="collapsible collapsed">CV</h2>
+    <h2 class="collapsible collapsed">{% trans "CV" %}</h2>
     <ul class="body">
     {% for line in mep.cv.position %}
         <li>{{ line }}</li>
@@ -76,10 +77,10 @@
 
 {% if mep.opinions %}
 <div id="opinions">
-    <h2 class="collapsible collapsed">Prises de position (memopol v1)</h2>
+    <h2 class="collapsible collapsed">{% trans "Prises de position (memopol v1)" %}</h2>
     <ul class="body">
     {% for line in mep.opinions %}
-        <li><b>{{ line.title }}</b> (le {{ line.date }})<br/>{% autoescape off %}{{ line.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.url }}"><br/>En savoir plus...</a> </li>
+        <li><b>{{ line.title }}</b> (le {{ line.date }})<br/>{% autoescape off %}{{ line.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.url }}"><br/>{% trans "En savoir plus..." %}</a> </li>
     {% endfor %}
     </ul>
 </div>
@@ -87,10 +88,10 @@
 
 {% if mep.scores %}
 <div id="scores">
-    <h2 class="collapsible collapsed">Scores</h2>
+    <h2 class="collapsible collapsed">{% trans "Scores" %}</h2>
     <ul class="body">
     {% for score in mep.scores %}
-    <li>{{ score.label }}: <strong>{{ score.value }}</strong> (le {{ score.date }})<br/><a target="_" href="http://www.laquadrature.net/wiki/{{ score.wiki }}">En savoir plus...</a></li>
+    <li>{{ score.label }}: <strong>{{ score.value }}</strong> (le {{ score.date }})<br/><a target="_" href="http://www.laquadrature.net/wiki/{{ score.wiki }}">{% trans "En savoir plus..." %}</a></li>
     {% endfor %}
     </ul>
 </div>
@@ -100,20 +101,20 @@
 
 
 <section id="positions">
-    <h1>Prises de position</h1>
+    <h1>{% trans "Prises de position" %}</h1>
 
     {% for pos in positions %}
         {% if pos.visible %}
-        <article><h2>Position</h2>{{ pos.content }}</article>
+        <article><h2>{% trans "Position" %}</h2>{{ pos.content }}</article>
         {% endif %}
     {% endfor %}
 
     <aside id="positionsnote">
     {% ifequal visible_count 0 %}
     {% ifnotequal positions|length visible_count %}
-    Des prises de position sont en attente de mod&eacute;ration.
+    {% trans "Des prises de position sont en attente de modération." %}
     {% else %}
-    Aucune prise de position enregistr&eacute;e pour l'instant, mais vous pouvez contribuer en en ajoutant une !
+    {% trans "Aucune prise de position enregistrée pour l'instant, mais vous pouvez contribuer en en ajoutant une !" %}
     {% endifnotequal %}
     {% endifequal %}
     </aside>
@@ -127,7 +128,7 @@ function addPositionSubmitButtonClicked()
     var contents = jQuery("#text").val();
     if (contents.length == 0)
     {
-        msg("La zone de saisie est vide, veuillez entrer du texte...", 1, "red");
+        msg("{% trans "La zone de saisie est vide, veuillez entrer du texte..." %}", 1, "red");
         return;
     }
 
@@ -144,11 +145,11 @@ function addPositionSubmitButtonClicked()
         {
             changeVisibility({addPosition: false, addPositionButton: true});
             jQuery("#text").val("");
-            msg("Votre contribution a bien &eacute;t&eacute; prise en compte", 1);
+            msg("{% trans "Votre contribution a bien été prise en compte" %}", 1);
         }
         else
         {
-            msg("Une erreur a eu lieu, votre contribution n'a pas &eacute;t&eacute; enregistr&eacute;e", 0, "red");
+            msg("{% trans "Une erreur a eu lieu, votre contribution n'a pas été enregistrtée" %}", 0, "red");
         }
     });
 }
@@ -157,16 +158,16 @@ function addPositionSubmitButtonClicked()
 
 
 <div id="addPosition" class="uiform" style="display: none" tabindex="1">
-    <h3>Ajout d'une prise de position</h3>
-    <p>Ce formulaire vout permet d'ajouter une prise de position de ce d&eacute;put&eacute;. Votre ajout ne sera affich&eacute; publiquement sur le site qu'apr&egrave;s mod&eacute;ration.</p>
+    <h3>{% trans "Ajout d'une prise de position" %}</h3>
+    <p>{% trans "Ce formulaire vout permet d'ajouter une prise de position de ce député. Votre ajout ne sera affiché publiquement sur le site qu'après modération."% }</p>
     <br/>
-    <textarea rows="5" cols="80" name="text" id="text" placeholder="Entrez ici le texte de la prise de position"></textarea>
+    <textarea rows="5" cols="80" name="text" id="text" placeholder="{% trans "Entrez ici le texte de la prise de position" %}"></textarea>
     <br/>
-    <button id="addPositionSubmitButton" class="submit">Ajouter</button>
-    <button id="addPositionCancelButton" class="cancel">Abandonner</button>
+    <button id="addPositionSubmitButton" class="submit">{% trans "Ajouter" %}</button>
+    <button id="addPositionCancelButton" class="cancel">{% trans "Abandonner" %}</button>
 </div>
 
-<button id="addPositionButton" class="submit">Ajouter une prise de position</button>
+<button id="addPositionButton" class="submit">{% trans "Ajouter une prise de position" %}</button>
 </section>
 
 </article>
@@ -182,6 +183,5 @@ function addPositionSubmitButtonClicked()
     onClickChangeVisibility("addPositionButton", {addPosition: true, addPositionButton: false});
     onClickChangeVisibility("addPositionCancelButton", {addPosition: false, addPositionButton: true});
     jQuery("#addPositionSubmitButton").click(addPositionSubmitButtonClicked);
-
 
 {% endblock %}
