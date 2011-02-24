@@ -20,7 +20,8 @@ def set_browser():
 @step(r'I access the url "(.*)"')
 def access_url(step, url):
     response = world.browser.get(url, follow=True)
-    world.dom = lxml.html.fromstring(unicode(response.content, "utf-8"))
+    htmldata = unicode(response.content, "utf-8")
+    world.dom = lxml.html.fromstring(htmldata)
 
 @step(r'I see the header "(.*)"')
 def see_header(step, text):
