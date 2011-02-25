@@ -21,36 +21,36 @@
         <header id="mainheader" >{% block header %}<h1>{{ title|default:"Memopol" }}</h1>{% endblock %}</header>
 
         <nav>
-            <h2>{% trans "Navigation" %}</h2>
+            <h2>{% trans "Browsing" %}</h2>
             <ul>
-                <li><a href="{% url index %}">{% trans "Accueil" %}</a></li>
+                <li><a href="{% url index %}">{% trans "Homepage" %}</a></li>
                 {% block sidelinks %}
                 {% endblock %}
             </ul>
 
-            <h2>{% trans "Meps" %}</h2>
+            <h2>{% trans "MEPs" %}</h2>
             <ul>
-                <li><a href="{% url meps:index_countries %}">{% trans "Par pays" %}</a></li>
-                <li><a href="{% url meps:index_groups %}">{% trans "Par groupes parlementaires" %}</a></li>
-                <li><a href="{% url meps:index_names %}">{% trans "Par nom" %}</a></li>
+                <li><a href="{% url meps:index_countries %}">{% trans "By country" %}</a></li>
+                <li><a href="{% url meps:index_groups %}">{% trans "By political group" %}</a></li>
+                <li><a href="{% url meps:index_names %}">{% trans "By name" %}</a></li>
             </ul>
 
             <h2>{% trans "Votes" %}</h2>
             <ul>
-                <li><a href="{% url votes:index %}">{% trans "Par nom" %}</a></li>
+                <li><a href="{% url votes:index %}">{% trans "By name" %}</a></li>
             </ul>
 
-            <h2>{% trans "MPs" %}</h2>
+            <h2>{% trans "MEPs" %}</h2>
             <ul>
-                <li><a href="{% url mps:index %}">{% trans "Par nom" %}</a></li>
+                <li><a href="{% url mps:index %}">{% trans "By name" %}</a></li>
             </ul>
 
 
             {% if user.is_staff %}
-            <h2>{% trans "Outils d'administration" %}</h2>
+            <h2>{% trans "Administration tools" %}</h2>
             <ul>
                 <li><a href="/admin">{% trans "Administration" %}</a></li>
-                <li><a href="/moderation">{% trans "Modération" %}</a></li>
+                <li><a href="/moderation">{% trans "Moderation" %}</a></li>
             </ul>
             {% endif %}
 
