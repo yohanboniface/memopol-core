@@ -16,9 +16,13 @@ from votes.models import Vote
 @staff_member_required
 def home(request):
     # TODO: We really should do a nicer thing here with all the home objects
-    home = Home.objects.all()[0]
-    edito_title = home.edito_title
-    edito = home.edito
+    homes = Home.objects.all()
+    if homes:
+        edito_title = homes[0].edito_title
+        edito = homes[0].edito
+    else:
+        edito_title = ''
+        edito = ''
 
     groups = MEP.view('meps/groups')
     # TODO: find a way to do the reduce at the couchdb level
