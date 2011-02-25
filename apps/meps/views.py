@@ -10,6 +10,7 @@ from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 
 from meps.models import Position, MEP
+from votes.models import Vote
 
 def index_names(request):
     meps_by_name = MEP.view('meps/by_name')
@@ -53,8 +54,11 @@ def index_countries(request):
     countries.sort(key=lambda dic: dic['name'])
     # /TODO
 
+    votes = Vote.view('votes/all')
+
     context = {
         'countries': countries,
+        'votes' : votes,
     }
     return direct_to_template(request, 'index.html', context)
 
