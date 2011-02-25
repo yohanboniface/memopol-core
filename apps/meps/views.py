@@ -13,6 +13,7 @@ from meps.models import Position, MEP
 
 def index_names(request):
     meps_by_name = MEP.view('meps/by_name')
+    meps_by_name = sorted(meps_by_name, key=lambda x: x['last'])
     context = {
         'meps': meps_by_name,
     }
@@ -103,7 +104,7 @@ def mep_addposition(request, mep_id):
     # For testing purpose: add the possibility to cause a failure in the js (if
     # in debug) to see what's would happened for the user
     try:
-        text = request.GET[u'text'] if u'text' in request.GET.keys() else ''
+        text = request.GET.get(u'text', '')
         if settings.DEBUG:
             if 'slow' in text:
                 time.sleep(10)
