@@ -21,7 +21,9 @@
         {% endfor %}
         </ul>
     </div-->
-    <div class="groups">
+    <h1>{% trans "MEPs by political group" %}</h1>
+    {% include "hemicycle-eu.html" %}
+    <!--div class="groups">
     {% if groups %}
         <h1>{% trans "MEPs by political group" %}</h1>
         <ul>
@@ -35,7 +37,7 @@
         {% endfor %}
         </ul>
     {% endif %}
-    </div>
+    </div-->
 
     <div class="votes">
     {% if votes %}
