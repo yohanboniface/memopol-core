@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block content %}
+    <div class="edito">
+        <h1>{{ edito_title }}</h1>
+        <div>{{edito|markdown}}</div>
+    </div>
+    <div class="coutries">
+        <h1>{% trans "MEPs by country" %}</h1>
+        <ul>
+        {% for country in countries %}
+            <li>
+                <a href="{% url meps:index_by_country country.code %}">
+                    <img src="{{ MEDIA_URL }}img/countries/small/{{ country.code }}.png"/>
+                </a>&nbsp;<a href="{% url meps:index_by_country country.code %}">{{ country.key }}</a> 
+                {% blocktrans with country.count as count %} - {{ count }} MEPs {% endblocktrans %}
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="groups">
+    {% if groups %}
+        <h1>{% trans "MEPs by political group" %}</h1>
+        <ul>
+        {% for group in groups %}
+            <li>
+                <a href="{% url meps:index_by_group group.code %}">
+                    {{ group.name }} ({{ group.code }})
+                </a>
+                {% blocktrans with group.count as count %} - {{ count }} MEPs {% endblocktrans %}
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
+
+    <div class="votes">
+    {% if votes %}
+        <h1>{% trans "Votes" %}</h1>
+        <ul>
+            {% for vote in votes %}
+                <li>
+                    <a href="{% url votes:detail vote.wiki %}">{{ vote.label }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
+{% endblock %}
