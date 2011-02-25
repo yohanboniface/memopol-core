@@ -6,7 +6,9 @@
         <h1>{{ edito_title }}</h1>
         <div>{{edito|markdown}}</div>
     </div>
-    <div class="coutries">
+    <h1>{% trans "MEPs by country" %}</h1>
+    {% include "map-eu.html" %}
+    <!--div class="coutries">
         <h1>{% trans "MEPs by country" %}</h1>
         <ul>
         {% for country in countries %}
@@ -18,7 +20,7 @@
             </li>
         {% endfor %}
         </ul>
-    </div>
+    </div-->
     <div class="groups">
     {% if groups %}
         <h1>{% trans "MEPs by political group" %}</h1>
