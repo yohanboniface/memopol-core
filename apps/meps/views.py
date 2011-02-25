@@ -12,6 +12,46 @@ from django.contrib.admin.views.decorators import staff_member_required
 from meps.models import Position, MEP
 from votes.models import Vote
 
+def home(request):
+    #template needs countries list, groups list, votes list
+
+    groups = MEP.view('meps/groups')
+    # TODO: find a way to do the reduce at the couchdb level
+    from collections import defaultdict
+    py_groups = defaultdict(dict)
+    for group in groups:
+        py_groups[group.code].setdefault('count', 0)
+        py_groups[group.code]['count'] += 1
+        py_groups[group.code]['code'] = group.code
+        py_groups[group.code]['name'] = group.name
+    groups = list(py_groups.values())
+    groups.sort(key=lambda dic: dic['name'])
+    # /TODO
+
+    countries = MEP.view('meps/countries')
+    # TODO: find a way to do the reduce at the couchdb level
+    from collections import defaultdict
+    py_countries = defaultdict(dict)
+    for country in countries:
+        py_countries[country.code].setdefault('count', 0)
+        py_countries[country.code]['count'] += 1
+        py_countries[country.code]['code'] = country.code
+        py_countries[country.code]['name'] = country.name
+    countries = list(py_countries.values())
+    countries.sort(key=lambda dic: dic['name'])
+    # /TODO
+
+    votes = MEP.view('votes/all')
+    
+    context = {
+        'groups': groups,
+        'countries': countries,
+        'votes': votes,
+    }
+    return direct_to_template(request, 'home.html', context)
+
+  
+
 def index_names(request):
     meps_by_name = MEP.view('meps/by_name')
     context = {
