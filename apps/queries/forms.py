@@ -5,5 +5,5 @@ from django.utils.translation import ugettext as _
 
 class QueryForm(forms.Form):
    country =forms.CharField(required=False, label=_("Constituent Country"))
-   party = forms.CharField(widget=AdvancedEditor(), label=_("Political Group"))
+   party = forms.CharField(required=False, label=_("Political Group"))
    commitee = forms.CharField(required=False, label=_("Commitee"))
