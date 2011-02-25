@@ -96,13 +96,13 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    
+
     # 3rd party
     'couchdbkit.ext.django',
     'south',
     'django_extensions',
     'debug_toolbar',
-    
+
     # memopol
     # 'crashlog',
     'meps',
