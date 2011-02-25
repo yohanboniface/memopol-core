@@ -20,4 +20,4 @@ def bla(request):
     context = {
         'meps': meps_by_name,
     }
-    return direct_to_template(request, 'queries.html', context)
+    return direct_to_template(request, 'query.html', context)
