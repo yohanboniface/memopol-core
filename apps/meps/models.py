@@ -5,6 +5,11 @@ from couchdbkit.ext.django.schema import Document, StringProperty
 class MEP(Document):
     id = StringProperty()
 
+class Home(models.Model):
+    edito_title = models.CharField(max_length=128)
+    edito = models.TextField()
+
+
 class Position(models.Model):
     mep_id = models.CharField(max_length=128)
     subject = models.CharField(max_length=128)

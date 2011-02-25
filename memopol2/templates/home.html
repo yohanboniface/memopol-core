@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load markup %}
 
 {% block content %}
     <div class="edito">
         <h1>{{ edito_title }}</h1>
-        <div>{{ edito }}</div>
+        <div>{{edito|markdown}}</div>
     </div>
     <div class="coutries">
         <h1>{% trans "MEPs by country" %}</h1>

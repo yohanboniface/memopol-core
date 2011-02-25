@@ -9,13 +9,16 @@ from django.conf import settings
 from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 
-from votes.models import Vote
-from meps.models import Position, MEP
+from meps.models import Position, MEP, Home
 from votes.models import Vote
 
 # XXX: home shouldn't be here
+@staff_member_required
 def home(request):
-    #template needs countries list, groups list, votes list
+    # TODO: We really should do a nicer thing here with all the home objects
+    home = Home.objects.all()[0]
+    edito_title = home.edito_title
+    edito = home.edito
 
     groups = MEP.view('meps/groups')
     # TODO: find a way to do the reduce at the couchdb level
@@ -49,9 +52,8 @@ def home(request):
         'groups': groups,
         'countries': countries,
         'votes': votes,
-        # TODO: Retrieve this data from the db, and make it editable from the backoffice
-        'edito_title': 'Reach members of European Parliament and track their votes & opinions!',
-        'edito' : ''
+        'edito_title': edito_title,
+        'edito' : edito
     }
     return direct_to_template(request, 'home.html', context)
 
