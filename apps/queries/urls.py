@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 
-from meps import views
+import views
 
 
 urlpatterns = patterns('', 
