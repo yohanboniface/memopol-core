@@ -60,3 +60,21 @@ class ViewsTest(TestCase):
         self.failUnlessEqual(str(response.context['mep']['contact']['address'][0]['street']), '60, rue Wiertz')
         self.failUnlessEqual(repr(response.context['positions']), "[]")
         self.failUnlessEqual(repr(response.context['visible_count']), "0")
+
+    def test_js_functionnal_test(self):
+        """
+        Test the functionnal test that allow to make the js fail
+        """
+        from django.conf import settings
+        settings.DEBUG = True
+        response = self.client.get(reverse("meps:mep_addposition", args=('AlbertDess',)), HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.failUnlessEqual(response.content, '{"success": true}')
+
+    def test_js_functionnal_test_make_fail(self):
+        """
+        Test the functionnal test that allow to make the js fail
+        """
+        from django.conf import settings
+        settings.DEBUG = True
+        response = self.client.get(reverse("meps:mep_addposition", args=('AlbertDess',)), {'text' : 'fail'}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.failUnlessEqual(response.content, '{"success": false}')
