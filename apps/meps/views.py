@@ -9,36 +9,7 @@ from django.conf import settings
 from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 
-from meps.models import Position, MEP, Home
-from votes.models import Vote
-
-# XXX: home shouldn't be here
-def home(request):
-    # TODO: We really should do a nicer thing here with all the home objects
-    homes = Home.objects.all()
-    if homes:
-        edito_title = homes[0].edito_title
-        edito = homes[0].edito
-    else:
-        edito_title = ''
-        edito = ''
-
-    groups = list(MEP.view('meps/groups', group=True))
-    groups.sort(key=lambda group: group['value']['count'], reverse=True)
-
-    countries = list(MEP.view('meps/countries', group=True))
-    countries.sort(key=lambda group: group['value']['count'], reverse=True)
-
-    votes = Vote.view('votes/all')
-
-    context = {
-        'groups': groups,
-        'countries': countries,
-        'votes': votes,
-        'edito_title': edito_title,
-        'edito' : edito
-    }
-    return direct_to_template(request, 'home.html', context)
+from meps.models import Position, MEP
 
 def index_names(request):
     meps_by_name = MEP.view('meps/by_name')
@@ -85,7 +56,11 @@ def index_by_group(request, group):
 def mep(request, mep_id):
     mep_ = MEP.view('meps/by_id', key=mep_id).first()
     positions = Position.objects.filter(mep_id=mep_id)
-    #scores = Scores.objects.filter(mep_id=mep_id)
+    score_list = mep_.scores
+    print score_list
+    print "XXX"
+    score_list.sort(key = lambda k : k['value'])
+    print score_list
     scores = [s['value'] for s in mep_.scores]
     context = {
         'mep_id': mep_id,
@@ -93,6 +68,9 @@ def mep(request, mep_id):
         'positions': positions,
         'visible_count': len([x for x in positions if x.visible]),
         'average': sum(scores)/len(scores) if len(scores) > 0 else "",
+        'score_list' : score_list,
+#        'color_index' : map(lambda  i : int(float(i))/10 , scores),   ## TODO color_index
+        'vote_colors' : ['#ff0000', '#dd0022', '#bb0044', '#dd0022', '#bb0044', '#990066', '#770088', '#5500aa', '#3300cc', '#0000ff'],
     }
     return direct_to_template(request, 'meps/mep.html', context)
 

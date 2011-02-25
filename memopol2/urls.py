@@ -7,7 +7,7 @@ from django.views.static import serve
 
 from django.conf.urls.defaults import *
 
-from meps import views
+from home import views
 
 admin.autodiscover()
 
