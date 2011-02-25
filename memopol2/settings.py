@@ -97,6 +97,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'django.contrib.markup',
 
     # 3rd party
     'couchdbkit.ext.django',
