@@ -1,16 +1,75 @@
-{% extends "base.html" %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 
-{% block content %}
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="MediaWiki 1.15.3" />
+    <title>Eurodeputes DE - La Quadrature du Net</title>
+    <link media="screen" type="text/css" href="/static/css/queries.css" rel="stylesheet"/>
+</head>
 
+<body>
 
-<h1>{% trans "Members of the European Parliament" %}</h1>
-<ul class="col">
-  {% for mep in meps %}
-  <li>
-    <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group|cut:"/" }}.png" />
-    <a href="{% url meps:mep mep.id %}">{{ mep.first }} {{ mep.last }}</a>
-  </li>
-  {% endfor %}
-</ul>
+<div id="wrap">
 
-{% endblock %}
+    <h1><a href=""><img src="http://www.laquadrature.net/files/laquadrature_logo_wiki.png" alt="logo"/></a></h1>
+
+    <div id="filter">
+        <form>
+            <fieldset>
+                <legend>Filter by country</legend>
+                {% for country_code in countries_code %}
+                <input type="checkbox" name="country[]" value="{{ country_code }}"/>
+                {% endfor %}
+            </fieldset>
+            <fieldset>
+                <legend>Filter by political group</legend>
+                {% for group_code in group_code %}
+                <input type="checkbox" name="group[]" value="{{ group_code }}"/>
+                {% endfor %}
+            </fieldset>
+            <fieldset>
+                <legend>Filter by commitee</legend>
+                {% for commitee_code in commitee_code %}
+                <input type="checkbox" name="commitee[]" value="{{ group_code }}"/>
+                {% endfor %}
+            </fieldset>
+	    <p><input type="submit" value="Search" /></p>
+        </form>
+    </div>
+
+    <div id="result">
+        <ul id="sort">
+            <li>Country</li>
+            <li>Group</li>
+            <li>Name</li>
+            <li>eMail</li>
+            <li>Bruxelle</li>
+            <li>Strasbourg</li>
+            <li>grade</li>
+        </ul>
+        <ul id="mps">
+            {% for mep in meps %}
+            <li class="mp odd">
+                <ul>
+                    <li class="Country">flag</li>
+                    <!--<img src="{{ MEDIA_URL }}img/countries/small/{# mep.country.code #}.png"/>-->
+                    <li><img src="{{ MEDIA_URL }}img/countries/small/prout.png"/></li>
+                    <li><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group|cut:"/" }}.png" /></li>
+                    <li class="Name"><a href="{% url meps:mep mep.id %}">{{ mep.last }} {{ mep.first }}</a></li>
+                    <li class="eMail">{{ mep.email }}</li>
+                    <li class="Bruxelles"><span class="desk">{# mep.bruxelles_room #}</span><span class="tel">{# mep.bruxelles_phone #}</span></li>
+                    <li class="Strasbourg"><span class="desk">{# mep.strasbourg_room #}</span><span class="tel">{# mep.strasbourg_phone #}</span></li>
+                    <li class="grade">{# mep.grade #}</li>
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -8,17 +8,57 @@ body {
 }
 
 .container_12 {
-    background-color: #FAFAFA;
+    background-color: #FFF;
     min-height: 100%;
 
 }
 
-nav {
-    font-size: 90%;
+#header {
+    background-color: #497ED5;
+    color: #ffffff;
+    margin: 10px;
+    border: solid 13px white;
+    height: 185px;
+    font-size: 72px;
+    font-family: Palatino;
+    font-weight: bold;
+    font-variant: small-caps;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 104px;
+}
+#header .span { 
+    vertical-align: middle;
 }
 
-nav h1, h2 {
-    margin: 10px 0px 5px 0px;
+
+
+#nav {
+    background-color: #497ED5;
+    color: #ffffff;
+    font-size: 80%;
+    margin-left: 6px;
+    width: 175px;
+    font-family: Palatino;
+    font-weight: bold;
+    font-variant: small-caps;
+    padding: 5px;
+    padding-top: 20px;
+    min-height: 100%;
+}
+
+#nav h1, h2 {
+    padding: 10px 4px 5px 4px;
+}
+
+#nav a:link, 
+#nav a:visited, 
+#nav a:active {
+    text-decoration: none;
+    color: #fff;
+}
+#nav a:hover {
+    text-decoration: underline overline; color: white; 
 }
 
 h1 {
@@ -32,8 +72,37 @@ h2 {
 
 #mainheader {
     font-size: 120%;
-    background: url(/static/img/logo.png) no-repeat 2px 5px;
-    padding-top: 130px;
+    background: url(/static/img/logo.png) no-repeat ;
+    padding-top: 200px;
+    margin-top: 6px; 
+    width: 202px;
+}
+
+
+#mainheader h1 {
+    font-family: Palatino;
+    font-weight: bold;
+    font-variant: small-caps;
+    text-align: center;
+    background-color: #497ED5;
+    margin-left: 6px;
+    margin-right: 9px;
+    border-right: 2px solid white;
+    padding-top: 10px;
+    color: #fff;
+}
+
+
+#content {
+    background-color: #fff;
+    margin: 20px;
+    padding: 20px;
+    padding-left: 200px;
+    text-align: justify;
+}
+
+#grid_10 {
+    margin-top: 30px;
 }
 
 #msg {
@@ -104,6 +173,7 @@ h1#name
     border-bottom: 1px black solid;
 }
 
+
 ul.treelist {
     padding-left: 0px;
 }
@@ -139,6 +209,8 @@ li ul.treelist li ul.treelist li ul.treelist li ul.treelist {
 ul, ol
 {
 	list-style: disc url(/static/img/bullet.gif);
+    list-style:circle;
+    list-style-position: inside;
 }
 
 li {

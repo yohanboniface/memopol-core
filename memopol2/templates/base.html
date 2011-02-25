@@ -18,9 +18,9 @@
 <div class="container_12">
 
 	<div class="grid_2">
-        <header id="mainheader" >{% block header %}<h1>{{ title|default:"Memopol" }}</h1>{% endblock %}</header>
+        <div id="mainheader" >{% block header %}<h1>{{ title|default:"Memopol" }}</h1>{% endblock %}</div>
 
-        <nav>
+        <div id="nav">
             <h2>{% trans "Browsing" %}</h2>
             <ul>
                 <li><a href="{% url index %}">{% trans "Homepage" %}</a></li>
@@ -57,13 +57,19 @@
 
             {% block sidetools %}
             {% endblock %}
-        </nav>
+        </div>
 
     </div>
+
+    <div id="header"><span>Political Memory</span></div>
+
+<div id="content">
 
 	<div class="grid_10">{% block content %}{% endblock %}</div>
     <div class="clear"></div>
 
+
+</div>
 
 </div>
 

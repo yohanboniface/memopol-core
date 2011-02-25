@@ -4,5 +4,6 @@ import views
 
 urlpatterns = patterns('',
     url(r'^$', views.query, name='query'),
+    url(r'^bla$', views.bla, name='bla'),
 )
 
