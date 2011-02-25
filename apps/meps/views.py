@@ -85,11 +85,14 @@ def index_by_group(request, group):
 def mep(request, mep_id):
     mep_ = MEP.view('meps/by_id', key=mep_id).first()
     positions = Position.objects.filter(mep_id=mep_id)
+    #scores = Scores.objects.filter(mep_id=mep_id)
+    scores = [s['value'] for s in mep_.scores]
     context = {
         'mep_id': mep_id,
         'mep': mep_,
         'positions': positions,
         'visible_count': len([x for x in positions if x.visible]),
+        'average': sum(scores)/len(scores),
     }
     return direct_to_template(request, 'meps/mep.html', context)
 
