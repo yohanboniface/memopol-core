@@ -9,9 +9,11 @@ from django.conf import settings
 from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 
+from votes.models import Vote
 from meps.models import Position, MEP
 from votes.models import Vote
 
+# XXX: home shouldn't be here
 def home(request):
     #template needs countries list, groups list, votes list
 
@@ -41,12 +43,15 @@ def home(request):
     countries.sort(key=lambda dic: dic['name'])
     # /TODO
 
-    votes = MEP.view('votes/all')
+    votes = Vote.view('votes/all')
     
     context = {
         'groups': groups,
         'countries': countries,
         'votes': votes,
+        # TODO: Retrieve this data from the db, and make it editable from the backoffice
+        'edito_title': 'Reach members of European Parliament and track their votes & opinions!',
+        'edito' : ''
     }
     return direct_to_template(request, 'home.html', context)
 
