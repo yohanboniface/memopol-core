@@ -92,7 +92,7 @@ def mep(request, mep_id):
         'mep': mep_,
         'positions': positions,
         'visible_count': len([x for x in positions if x.visible]),
-        'average': sum(scores)/len(scores),
+        'average': sum(scores)/len(scores) if len(scores) > 0 else "",
     }
     return direct_to_template(request, 'meps/mep.html', context)
 
