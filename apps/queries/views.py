@@ -12,6 +12,7 @@ def query(request):
     if not form.is_valid():
         return render_to_response('query.html')
     meps = MEP.view('meps/query', key=form.cleaned_data.get('commitee_filter'))
+    print list(meps)
     return render_to_response('query.html', { 'meps': meps})
 
 def bla(request):
