@@ -10,38 +10,7 @@ from django.conf import settings
 from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 
-from meps.models import Position, MEP, Home
-from votes.models import Vote
-
-# XXX: home shouldn't be here
-def home(request):
-    # TODO: We really should do a nicer thing here with all the home objects
-    homes = Home.objects.all()
-    if homes:
-        edito_title = homes[0].edito_title
-        edito = homes[0].edito
-    else:
-        edito_title = ''
-        edito = ''
-
-    groups = list(MEP.view('meps/groups', group=True))
-    groups.sort(key=lambda group: group['value']['count'], reverse=True)
-
-    countries = list(MEP.view('meps/countries', group=True))
-    countries.sort(key=lambda group: group['value']['count'], reverse=True)
-
-    votes = Vote.view('votes/all')
-    
-    context = {
-        'groups': groups,
-        'countries': countries,
-        'votes': votes,
-        'edito_title': edito_title,
-        'edito' : edito
-    }
-    return direct_to_template(request, 'home.html', context)
-
-  
+from meps.models import Position, MEP
 
 def index_names(request):
     meps_by_name = MEP.view('meps/by_name')
@@ -66,15 +35,8 @@ def index_countries(request):
     countries = list(MEP.view('meps/countries', group=True))
     countries.sort(key=lambda group: group['value']['count'], reverse=True)
 
-    votes = Vote.view('votes/all')
-
-    groups = list(MEP.view('meps/groups', group=True))
-    groups.sort(key=lambda group: group['value']['count'], reverse=True)
-
     context = {
         'countries': countries,
-        'votes' : votes,
-        'groups' : groups,
     }
     return direct_to_template(request, 'index.html', context)
 
@@ -95,11 +57,14 @@ def index_by_group(request, group):
 def mep(request, mep_id):
     mep_ = MEP.view('meps/by_id', key=mep_id).first()
     positions = Position.objects.filter(mep_id=mep_id)
+    #scores = Scores.objects.filter(mep_id=mep_id)
+    scores = [s['value'] for s in mep_.scores]
     context = {
         'mep_id': mep_id,
         'mep': mep_,
         'positions': positions,
         'visible_count': len([x for x in positions if x.visible]),
+        'average': sum(scores)/len(scores) if len(scores) > 0 else "",
     }
     return direct_to_template(request, 'meps/mep.html', context)
 
