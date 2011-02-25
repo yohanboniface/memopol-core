@@ -65,15 +65,8 @@ def index_countries(request):
     countries = list(MEP.view('meps/countries', group=True))
     countries.sort(key=lambda group: group['value']['count'], reverse=True)
 
-    votes = Vote.view('votes/all')
-
-    groups = list(MEP.view('meps/groups', group=True))
-    groups.sort(key=lambda group: group['value']['count'], reverse=True)
-
     context = {
         'countries': countries,
-        'votes' : votes,
-        'groups' : groups,
     }
     return direct_to_template(request, 'index.html', context)
 
