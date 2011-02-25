@@ -4,6 +4,6 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 
 class QueryForm(forms.Form):
-   country =forms.CharField(required=False, label=_("Constituent Country"))
-   party = forms.CharField(required=False, label=_("Political Group"))
-   commitee = forms.CharField(required=False, label=_("Commitee"))
+   country_filter =forms.CharField(required=False, label=_("Constituent Country"))
+   party_filter = forms.CharField(required=False, label=_("Political Group"))
+   commitee_filter = forms.CharField(required=False, label=_("Commitee"))
