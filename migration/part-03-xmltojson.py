@@ -207,7 +207,8 @@ def listify(item, dictname, listname):
     """
     dictnode = item.get(dictname, None)
     if not dictnode:
-     return
+        item[dictname] = ()
+        return
     
     assert isinstance(dictnode, dict)
     listnode = dictnode.get(listname, None)
