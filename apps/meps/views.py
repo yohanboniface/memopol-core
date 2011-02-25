@@ -13,7 +13,6 @@ from meps.models import Position, MEP
 
 def index_names(request):
     meps_by_name = MEP.view('meps/by_name')
-    meps_by_name = sorted(meps_by_name, key=lambda x: x['last'])
     context = {
         'meps': meps_by_name,
     }

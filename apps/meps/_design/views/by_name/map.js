@@ -1,5 +1,5 @@
 function(doc) {
-    emit(doc._id, {
+    emit(doc.infos.name.last, {
         'id': doc._id,
         'group': doc.infos.group.abbreviation,
         'first': doc.infos.name.first,
