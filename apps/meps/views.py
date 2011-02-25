@@ -99,6 +99,9 @@ def mep_addposition(request, mep_id):
     results = {'success':False}
     # make sure the mep exists
     mep_ = MEP.view('meps/by_id', key=mep_id).first()
+
+    # For testing purpose: add the possibility to cause a failure in the js (if
+    # in debug) to see what's would happened for the user
     try:
         text = request.GET[u'text']
         if settings.DEBUG:
