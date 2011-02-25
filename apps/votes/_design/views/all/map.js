@@ -1,6 +1,6 @@
-function(doc) { 
+function(doc) {
     emit(doc._id, {
-        'label': doc.label, 
+        'label': doc.label,
         'wiki': doc.wiki
-    }); 
+    });
 }

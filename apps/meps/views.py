@@ -10,6 +10,7 @@ from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 
 from meps.models import Position, MEP
+from votes.models import Vote
 
 def index_names(request):
     meps_by_name = MEP.view('meps/by_name')
@@ -53,8 +54,27 @@ def index_countries(request):
     countries.sort(key=lambda dic: dic['name'])
     # /TODO
 
+    votes = Vote.view('votes/all')
+    groups = MEP.view('meps/groups')
+
+    # TODO: find a way to do the reduce at the couchdb level
+    # ugly copypasta from over, will disapered the day w'll discovered how to do
+    # reduce with couchdbkit
+    from collections import defaultdict
+    py_groups = defaultdict(dict)
+    for group in groups:
+        py_groups[group.code].setdefault('count', 0)
+        py_groups[group.code]['count'] += 1
+        py_groups[group.code]['code'] = group.code
+        py_groups[group.code]['name'] = group.name
+    groups = list(py_groups.values())
+    groups.sort(key=lambda dic: -dic['count'])
+    # /TODO
+
     context = {
         'countries': countries,
+        'votes' : votes,
+        'groups' : groups,
     }
     return direct_to_template(request, 'index.html', context)
 

@@ -14,8 +14,9 @@ class ViewsTest(TestCase):
         """
         response = self.client.get(reverse("meps:index_names"))
         self.failUnlessEqual(len(response.context['meps']), 1194)
-        self.failUnlessEqual(response.context['meps'].first().group, u"ECR")
-        self.failUnlessEqual(response.context['meps'].first().first, u"Adam")
+        self.assertTrue(u"ECR" in [i.group for i in response.context['meps']])
+        a = response.context['meps'].all()[:2]
+        self.assertTrue(a[0].last[0] < a[1].last[1])
 
     def test_index_groups(self):
         """
