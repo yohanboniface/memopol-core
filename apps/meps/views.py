@@ -103,7 +103,7 @@ def mep_addposition(request, mep_id):
     # For testing purpose: add the possibility to cause a failure in the js (if
     # in debug) to see what's would happened for the user
     try:
-        text = request.GET[u'text'] if u'text' in request.GET.keys() else ''
+        text = request.GET.get(u'text', '')
         if settings.DEBUG:
             if 'slow' in text:
                 time.sleep(10)
