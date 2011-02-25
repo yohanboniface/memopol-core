@@ -50,7 +50,7 @@ def home(request):
     # /TODO
 
     votes = Vote.view('votes/all')
-    
+
     context = {
         'groups': groups,
         'countries': countries,
@@ -60,7 +60,7 @@ def home(request):
     }
     return direct_to_template(request, 'home.html', context)
 
-  
+
 
 def index_names(request):
     meps_by_name = MEP.view('meps/by_name')
