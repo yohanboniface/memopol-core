@@ -22,7 +22,8 @@
         <li>
             <a href="{% url meps:index_by_country country.code %}">
                 <img src="{{ MEDIA_URL }}img/countries/small/{{ country.code }}.png"/>
-            </a>&nbsp;<a href="{% url meps:index_by_country country.code %}">{{ country.key }}</a> 
+                {{ country.name }}</a>&nbsp;
+            <a href="{% url meps:index_by_country country.code %}">{{ country.key }}</a>
             {% blocktrans with country.count as count %} - {{ count }} MEPs {% endblocktrans %}
         </li>
     {% endfor %}
