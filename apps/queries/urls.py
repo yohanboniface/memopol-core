@@ -1,9 +1,8 @@
 from django.conf.urls.defaults import patterns, url
 
-from meps import views
+import views
 
-
-urlpatterns = patterns('', 
+urlpatterns = patterns('',
     url(r'^$', views.query, name='query'),
 )
 
