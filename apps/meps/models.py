@@ -4,9 +4,6 @@ from couchdbkit.ext.django.schema import Document, StringProperty
 
 class MEP(Document):
     id = StringProperty()
-    opinions = StringProperty()
-    scores = StringProperty()
-
 
 class Position(models.Model):
     mep_id = models.CharField(max_length=128)

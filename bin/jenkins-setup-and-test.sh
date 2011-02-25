@@ -16,4 +16,5 @@ python setup.py --quiet develop
 pip install -q -E ./ve -r requirements-test.txt
 
 # run our tests
+django-admin.py syncdb --settings=memopol2.testsettings --noinput
 source ./bin/run-all-tests.sh

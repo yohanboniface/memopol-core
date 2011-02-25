@@ -105,7 +105,7 @@ def mep(request, mep_id):
 
 def mep_raw(request, mep_id):
     mep_ = MEP.view('meps/by_id', key=mep_id).first()
-    jsonstr = simplejson.dumps(mep_, indent=4)
+    jsonstr = simplejson.dumps(dict(mep_), indent=4)
     context = {
         'mep_id': mep_id,
         'mep': mep_,

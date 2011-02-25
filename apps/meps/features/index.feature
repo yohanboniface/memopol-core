@@ -6,8 +6,12 @@ Feature: Basic lettuce tests
 
     Scenario: Country list
         Given I access the url "/meps/countries"
-        Then I see the header "Eurodéputés par pays"
+        Then I see the header "MEPs by country"
 
     Scenario: Albert Dess
         Given I access the url "/meps/mep/AlbertDess"
-        Then I see the header "Albert DESS, eurodéputé"
+        Then I see the header "Albert DESS, member of the european parliament"
+	
+    Scenario: Albert Dess Raw JSON
+        Given I access the url "/meps/mep/AlbertDess/raw"
+        Then I see the header "Memopol"
