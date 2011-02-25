@@ -23,31 +23,11 @@ def home(request):
         edito_title = ''
         edito = ''
 
-    groups = MEP.view('meps/groups')
-    # TODO: find a way to do the reduce at the couchdb level
-    from collections import defaultdict
-    py_groups = defaultdict(dict)
-    for group in groups:
-        py_groups[group.code].setdefault('count', 0)
-        py_groups[group.code]['count'] += 1
-        py_groups[group.code]['code'] = group.code
-        py_groups[group.code]['name'] = group.name
-    groups = list(py_groups.values())
-    groups.sort(key=lambda dic: dic['name'])
-    # /TODO
+    groups = list(MEP.view('meps/groups', group=True))
+    groups.sort(key=lambda group: group['value']['count'], reverse=True)
 
-    countries = MEP.view('meps/countries')
-    # TODO: find a way to do the reduce at the couchdb level
-    from collections import defaultdict
-    py_countries = defaultdict(dict)
-    for country in countries:
-        py_countries[country.code].setdefault('count', 0)
-        py_countries[country.code]['count'] += 1
-        py_countries[country.code]['code'] = country.code
-        py_countries[country.code]['name'] = country.name
-    countries = list(py_countries.values())
-    countries.sort(key=lambda dic: dic['name'])
-    # /TODO
+    countries = list(MEP.view('meps/countries', group=True))
+    countries.sort(key=lambda group: group['value']['count'], reverse=True)
 
     votes = Vote.view('votes/all')
 
@@ -68,19 +48,9 @@ def index_names(request):
     return direct_to_template(request, 'index.html', context)
 
 def index_groups(request):
-    groups = MEP.view('meps/groups')
 
-    # TODO: find a way to do the reduce at the couchdb level
-    from collections import defaultdict
-    py_groups = defaultdict(dict)
-    for group in groups:
-        py_groups[group.code].setdefault('count', 0)
-        py_groups[group.code]['count'] += 1
-        py_groups[group.code]['code'] = group.code
-        py_groups[group.code]['name'] = group.name
-    groups = list(py_groups.values())
-    groups.sort(key=lambda dic: dic['name'])
-    # /TODO
+    groups = list(MEP.view('meps/groups', group=True))
+    groups.sort(key=lambda group: group['value']['count'], reverse=True)
 
     context = {
         'groups': groups,
@@ -90,34 +60,13 @@ def index_groups(request):
 def index_countries(request):
     countries = MEP.view('meps/countries')
 
-    # TODO: find a way to do the reduce at the couchdb level
-    from collections import defaultdict
-    py_countries = defaultdict(dict)
-    for country in countries:
-        py_countries[country.code].setdefault('count', 0)
-        py_countries[country.code]['count'] += 1
-        py_countries[country.code]['code'] = country.code
-        py_countries[country.code]['name'] = country.name
-    countries = list(py_countries.values())
-    countries.sort(key=lambda dic: dic['name'])
-    # /TODO
+    countries = list(MEP.view('meps/countries', group=True))
+    countries.sort(key=lambda group: group['value']['count'], reverse=True)
 
     votes = Vote.view('votes/all')
-    groups = MEP.view('meps/groups')
 
-    # TODO: find a way to do the reduce at the couchdb level
-    # ugly copypasta from over, will disapered the day w'll discovered how to do
-    # reduce with couchdbkit
-    from collections import defaultdict
-    py_groups = defaultdict(dict)
-    for group in groups:
-        py_groups[group.code].setdefault('count', 0)
-        py_groups[group.code]['count'] += 1
-        py_groups[group.code]['code'] = group.code
-        py_groups[group.code]['name'] = group.name
-    groups = list(py_groups.values())
-    groups.sort(key=lambda dic: -dic['count'])
-    # /TODO
+    groups = list(MEP.view('meps/groups', group=True))
+    groups.sort(key=lambda group: group['value']['count'], reverse=True)
 
     context = {
         'countries': countries,
