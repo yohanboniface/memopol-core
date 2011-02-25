@@ -11,3 +11,7 @@ Feature: Basic lettuce tests
     Scenario: Albert Dess
         Given I access the url "/meps/mep/AlbertDess"
         Then I see the header "Albert DESS, member of the european parliament"
+	
+    Scenario: Albert Dess Raw JSON
+        Given I access the url "/meps/mep/AlbertDess/raw"
+        Then I see the header "Memopol"
