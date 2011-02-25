@@ -1,9 +1,10 @@
 import time
 from datetime import datetime
 
+import simplejson
+
 from django.http import HttpResponse, HttpResponseServerError
 from django.shortcuts import get_object_or_404
-from django.utils import simplejson
 from django.core import serializers
 from django.conf import settings
 from django.views.generic.simple import direct_to_template
@@ -105,7 +106,7 @@ def mep(request, mep_id):
 
 def mep_raw(request, mep_id):
     mep_ = MEP.view('meps/by_id', key=mep_id).first()
-    jsonstr = simplejson.dumps(dict(mep_), indent=4)
+    jsonstr = simplejson.dumps(dict(mep_), indent=4, use_decimal=True)
     context = {
         'mep_id': mep_id,
         'mep': mep_,
