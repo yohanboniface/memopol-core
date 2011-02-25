@@ -6,7 +6,8 @@ import codecs
 import pprint
 import urlparse
 
-import anyjson
+#import anyjson
+import json
 
 ## Taken from activestate - Recipe 573463 (r7): Converting XML to Dictionary and back 
 
@@ -281,5 +282,5 @@ for pol in root.findall(root[0].tag):
 # now write the ugly-ass enormous list of items
 
 outfp = codecs.open(output_name, 'wt', 'utf-8')
-outfp.write(anyjson.serialize(outlist))
+outfp.write(json.dumps(outlist, indent=4))
 outfp.close()
