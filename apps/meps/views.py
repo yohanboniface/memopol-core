@@ -13,7 +13,6 @@ from meps.models import Position, MEP, Home
 from votes.models import Vote
 
 # XXX: home shouldn't be here
-@staff_member_required
 def home(request):
     # TODO: We really should do a nicer thing here with all the home objects
     homes = Home.objects.all()
