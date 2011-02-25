@@ -71,6 +71,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.csrf.middleware.CsrfMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     #    'crashlog.CrashLogMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -130,4 +131,9 @@ COUCHDB_DATABASES = (
      ('votes', '%s/votes' % COUCHDB),
      ('mps',   '%s/mps' % COUCHDB),
      ('meps',  '%s/meps' % COUCHDB),
+)
+
+LANGUAGES = (
+  ('fr', 'French'),
+  ('en', 'English'),
 )

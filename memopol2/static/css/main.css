@@ -136,9 +136,12 @@ li ul.treelist li ul.treelist li ul.treelist li ul.treelist {
 	
 }
 
-li
+ul, ol
 {
 	list-style: disc url(/static/img/bullet.gif);
+}
+
+li {
 	margin: .3em;
 }
 
@@ -203,3 +206,13 @@ li
     padding-left: 1em;
 }
 
+.col {
+    list-style: none;
+}
+
+.col li
+{
+    float: left;
+    width: 25em;
+    margin: 0.1em;
+}
