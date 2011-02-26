@@ -67,7 +67,7 @@ def mep(request, mep_id):
     score_list.sort(key = lambda k : k['value'])
     print score_list
     scores = [s['value'] for s in mep_.scores]
-    
+
     context = {
         'mep_id': mep_id,
         'mep': mep_,
