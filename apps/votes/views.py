@@ -3,7 +3,7 @@ from django.views.generic.simple import direct_to_template
 from votes.models import Vote
 
 def index(request):
-    votes = Vote.view('votes/all')
+    votes = Vote.view('votes/all', descending=True)
     context = {
         'votes': votes,
     }
