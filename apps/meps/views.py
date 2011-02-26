@@ -1,9 +1,10 @@
 import time
 from datetime import datetime
 
+import simplejson
+
 from django.http import HttpResponse, HttpResponseServerError
 from django.shortcuts import get_object_or_404
-from django.utils import simplejson
 from django.core import serializers
 from django.conf import settings
 from django.views.generic.simple import direct_to_template
@@ -60,12 +61,20 @@ def index_by_group(request, group):
     }
     return direct_to_template(request, 'index.html', context)
 
+def score_to_color(score):
+    """
+    map a score between 0 and 100 to a red-green colorspace
+    """
+    red = 255 - score
+    green = score * 2.55
+    return "rgb(%d, %d, 0)" % (red, green)
+
 def mep(request, mep_id):
     mep_ = MEP.get(mep_id)
     positions = Position.objects.filter(mep_id=mep_id)
     score_list = mep_.scores
-    print score_list
-    print "XXX"
+    for score in score_list:
+        score['color'] = score_to_color(int(score['value']))
     score_list.sort(key = lambda k : k['value'])
     print score_list
     scores = [s['value'] for s in mep_.scores]
@@ -86,13 +95,12 @@ def mep(request, mep_id):
         'visible_count': len([x for x in positions if x.visible]),
         'average': sum(scores)/len(scores) if len(scores) > 0 else "",
         'score_list' : score_list,
-        'vote_colors' : ['#ff0000', '#dd0022', '#bb0044', '#dd0022', '#bb0044', '#990066', '#770088', '#5500aa', '#3300cc', '#1100ee', '#0000ff'],
     }
     return direct_to_template(request, 'meps/mep.html', context)
 
 def mep_raw(request, mep_id):
     mep_ = MEP.get(mep_id)
-    jsonstr = simplejson.dumps(dict(mep_), indent=4)
+    jsonstr = simplejson.dumps(dict(mep_), indent=4, use_decimal=True)
     context = {
         'mep_id': mep_id,
         'mep': mep_,

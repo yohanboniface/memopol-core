@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load recursedict %}
 
 {% block sidelinks %}
     <li><a href="{% url meps:mep_raw mep_id %}">{% trans "View Raw JSON" %}</a></li>
@@ -31,7 +30,7 @@
 	<h2 class="collapsible expanded">{% trans "Contact" %}</h2>
 
 		<ul class="body">
-		{% for addr in mep.contact.address %}
+		{% for city,addr in mep.contact.address.items %}
 		<li><b>{{ addr.label|default:_("Other adresse") }}</b><br/>
 			{% if addr.building %} {% trans "Building" %} {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
 			{{ addr.street }}, {{ addr.postcode }} {{ addr.city }}<br/>
@@ -91,42 +90,8 @@
         <h2 class="collapsible collapsed">{% trans "Scores" %} (TODO moyenne: {{average}})</h2>
         <ul class="body">
         {% for score in score_list %}
-        <li style="background:
-    {# <AWFUL> BUT WORKING TO COLORIZE THE VOTES (look at apps/meps/views.py for the color list, context['vote_colors']) #}
-    {% if score.value == 100 %}
-        {{ vote_colors.10 }}
-    {% else %}{% if score.value|get_digit:"2" == 9 %}
-            {{ vote_colors.9 }}
-        {% else %}{% if score.value|get_digit:"2" == 8 %}
-                {{ vote_colors.8 }}
-            {% else %}{% if score.value|get_digit:"2" == 7 %}
-                    {{ vote_colors.7 }}
-                {% else %}{% if score.value|get_digit:"2" == 6 %}
-                        {{ vote_colors.6 }}
-                    {% else %}{% if score.value|get_digit:"2" == 5 %}
-                            {{ vote_colors.5 }}
-                        {% else %}{% if score.value|get_digit:"2" == 4 %}
-                                {{ vote_colors.4 }}
-                            {% else %}{% if score.value|get_digit:"2" == 3 %}
-                                    {{ vote_colors.3 }}
-                                {% else %}{% if score.value|get_digit:"2" == 2 %}
-                                        {{ vote_colors.2 }}
-                                    {% else %}{% if score.value|get_digit:"2" == 1 %}
-                                            {{ vote_colors.1 }}
-                                        {% else %}{% if score.value|get_digit:"2" == 0 %}
-                                                {{ vote_colors.0 }}
-                                            {% endif %}
-                                        {% endif %}
-                                    {% endif %}
-                                {% endif %}
-                            {% endif %}
-                        {% endif %}
-                    {% endif %}
-                {% endif %}
-            {% endif %}
-        {% endif %}
-    {% endif %}">
-    {# </AWFUL> #}
+        <li style="background:{{ score.color }}">
+
             {{ score.label }}: <strong>{{ score.value }}</strong> ({% trans "on" %} {{ score.date }})<br/><a target="_" href="http://www.laquadrature.net/wiki/{{ score.wiki }}">{% trans "Read more..." %}</a>
             </li>
         {% endfor %}
