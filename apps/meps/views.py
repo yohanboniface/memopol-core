@@ -90,6 +90,7 @@ def mep(request, mep_id):
             pyplot.plot([a*int(x) + b for x in range(len(scores))])
             pyplot.axis([0, len(scores) - 1, 0, 102])
             pyplot.title("%s - Votes notes evolution over time" % (mep_.infos['name']['full']))
+            pyplot.xticks(range(len(scores)), [k['date'] for k in score_list])
             pyplot.savefig(realpath(".%simg/trends/meps/%s-scores.png" % (settings.MEDIA_URL, mep_id)), format="png")
             pyplot.clf()
         except ImportError:
