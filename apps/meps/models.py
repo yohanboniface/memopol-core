@@ -4,7 +4,15 @@ from couchdbkit.ext.django.schema import Document, StringProperty, ListProperty
 
 class MEP(Document):
     id = StringProperty()
-    trophies = ListProperty()
+    trophies_ids = ListProperty()
+    
+    @property
+    def trophies(self):
+        """
+        Retrieves trophies Django's objects from trophies_ids.
+        """
+        from trophies.models import ManualTrophy
+        return [ManualTrophy.objects.get(id=trophy_id) for trophy_id in self.trophies_ids]
 
 
 class Position(models.Model):
