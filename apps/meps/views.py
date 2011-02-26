@@ -58,13 +58,22 @@ def index_by_group(request, group):
     }
     return direct_to_template(request, 'index.html', context)
 
+def score_to_color(score):
+    """
+    map a score between 0 and 100 to a red-green colorspace
+    """
+    red = 255 - score
+    green = score * 2.55
+    return "rgb(%d, %d, 0)" % (red, green)
+
 def mep(request, mep_id):
     mep_ = MEP.view('meps/by_id', key=mep_id).first()
     positions = Position.objects.filter(mep_id=mep_id)
     score_list = mep_.scores
+    for score in score_list:
+        score['color'] = score_to_color(int(score['value']))
     score_list.sort(key = lambda k : k['value'])
-    scores = [s['value'] for s in mep_.scores]
-
+    scores = [ s['value'] for s in mep_.scores]
     context = {
         'mep_id': mep_id,
         'mep': mep_,
@@ -72,7 +81,6 @@ def mep(request, mep_id):
         'visible_count': len([x for x in positions if x.visible]),
         'average': sum(scores)/len(scores) if len(scores) > 0 else "",
         'score_list' : score_list,
-        'vote_colors' : ['#ff0000', '#dd0022', '#bb0044', '#dd0022', '#bb0044', '#990066', '#770088', '#5500aa', '#3300cc', '#1100ee', '#0000ff'],
     }
     return direct_to_template(request, 'meps/mep.html', context)
 
