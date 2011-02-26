@@ -247,7 +247,8 @@ def fixup_contact_addresses(item):
     addresses = item["contact"]["address"]
     for addr in addresses:
         if isinstance(addr, dict) and addr.has_key("city"):
-            addr_map[addr["city"]] = addr
+            city = addr['city'].split(' ')[0]
+            addr_map[city] = addr
         else:
             addr_map["unknown"] = addr
     item["contact"]["address"] = addr_map
