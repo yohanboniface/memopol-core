@@ -111,6 +111,7 @@ INSTALLED_APPS = (
     'votes',
     'mps',
     'home',
+    'queries',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
