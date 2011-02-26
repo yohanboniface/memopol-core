@@ -17,7 +17,7 @@ class Trophy(models.Model):
 
 
 #Automatically attached to a MEP, with a condition
-class TrophyAuto(Trophy):
+class AutoTrophy(Trophy):
     condition = models.TextField(default="False")  #python function, used in hasAchievement = eval(condition, {'mep': yourMepDocument})
 
     #Give achievement to mep if he deserves it
@@ -32,7 +32,7 @@ class TrophyAuto(Trophy):
 
 
 #Given by hand
-class TrophyManual(Trophy):
+class ManuelTrophy(Trophy):
     reason = models.TextField()
 
     def obtain(self, mep, reason="Because I want to!"):

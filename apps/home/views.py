@@ -19,7 +19,7 @@ def home(request):
     countries = list(MEP.view('meps/countries', group=True))
     countries.sort(key=lambda group: group['value']['count'], reverse=True)
 
-    votes = Vote.view('votes/all')
+    votes = Vote.view('votes/all', descending=True)
 
     context = {
         'groups': groups,
