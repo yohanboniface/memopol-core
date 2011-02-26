@@ -91,7 +91,7 @@
         <h2 class="collapsible collapsed">{% trans "Scores" %} (TODO moyenne: {{average}})</h2>
         <ul class="body">
         {% for score in score_list %}
-            <li style="background:{{ score.couleur }}"
+        <li style="background:rgb({{ score.couleur }}, 0, 0)">
             {{ score.label }}: <strong>{{ score.value }}</strong> ({% trans "on" %} {{ score.date }})<br/><a target="_" href="http://www.laquadrature.net/wiki/{{ score.wiki }}">{% trans "Read more..." %}</a>
             </li>
         {% endfor %}
