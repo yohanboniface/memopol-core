@@ -84,8 +84,12 @@ def mep(request, mep_id):
             matplotlib.use("Agg")
             from matplotlib import pyplot
 
-            pyplot.plot([x['value'] for x in score_list])
-            #pyplot.xlabel("%s %s" % (mep_.last, mep_.first))
+            scores = [x['value'] for x in score_list]
+            pyplot.plot(scores, 'bo')
+            pyplot.plot(scores)
+            pyplot.axis([0, len(scores) - 1, 0, 102])
+            print dir(mep_)
+            pyplot.xlabel("%s" % (mep_.infos['name']['full']))
             pyplot.savefig(realpath(".%simg/trends/meps/%s-scores.png" % (settings.MEDIA_URL, mep_id)), format="png")
         except ImportError:
             pass
