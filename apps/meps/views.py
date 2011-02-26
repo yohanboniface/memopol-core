@@ -59,7 +59,7 @@ def index_by_group(request, group):
     return direct_to_template(request, 'index.html', context)
 
 def mep(request, mep_id):
-    mep_ = MEP.view('meps/by_id', key=mep_id).first()
+    mep_ = MEP.get(mep_id)
     positions = Position.objects.filter(mep_id=mep_id)
     score_list = mep_.scores
     print score_list
@@ -80,7 +80,7 @@ def mep(request, mep_id):
     return direct_to_template(request, 'meps/mep.html', context)
 
 def mep_raw(request, mep_id):
-    mep_ = MEP.view('meps/by_id', key=mep_id).first()
+    mep_ = MEP.get(mep_id)
     jsonstr = simplejson.dumps(dict(mep_), indent=4)
     context = {
         'mep_id': mep_id,
