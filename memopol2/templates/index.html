@@ -4,12 +4,13 @@
 
 
 {% if meps %}
-    <h1>{% trans "Members of the European Parliament" %}</h1>
+<h1>{% trans "Members of the European Parliament" %}{% if country %} {% trans "from" %} {{ country }}{% else %}{% if group %} {% trans "from" %} {{ group }}{% endif %}{% endif %}</h1>
+    
     <ul class="col">
         {% for mep in meps %}
             <li>
                 <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group|cut:"/" }}.png" />
-                <a href="{% url meps:mep mep.id %}">{{ mep.first }} {{ mep.last }}</a>
+                <a href="{% url meps:mep mep.id %}">{{ mep.last }} {{ mep.first }}</a>
             </li>
         {% endfor %}
     </ul>
