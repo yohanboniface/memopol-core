@@ -1,5 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save, pre_delete
+from django.core.exceptions import ImproperlyConfigured
+from django.utils.importlib import import_module
 
 from meps.models import MEP
 
@@ -9,6 +11,17 @@ def retrieve_meps_choices():
     """
     meps = MEP.view('meps/all')
     return ((mep.id, mep.doc['infos']['name']['full']) for mep in meps)
+
+def retrieve_condition_choices():
+    """
+    Dynamically retrieve functions available in filters.py for conditions.
+    """
+    from trophies.filters import *
+    choices = []
+    for name, func in locals().items():
+        if name.startswith('condition_'):
+            choices.append(('trophies.filter.%s' % name, func.__doc__ and func.__doc__.strip() or name))
+    return choices
 
 
 class ManualTrophy(models.Model):
@@ -45,13 +58,26 @@ class AutoTrophy(ManualTrophy):
     """
     A trophy dynamically attributed by computation, depends on a condition.
     """
-    condition = models.TextField(default="False", help_text="python function, used in attribute_to = eval(condition, {'mep': mep}")
+    condition = models.CharField(max_length=255, 
+                                 choices=retrieve_condition_choices(),)
 
     def attribute_to(self, mep):
         """
         Attribute the trophy to the mep parameter given the model's condition.
         """
-        if eval(self.condition, {'mep': mep}):
+        # stolen from django.template.context.get_standard_processors
+        i = self.condition.rfind('.')
+        module, attr = self.condition[:i], self.condition[i+1:]
+        try:
+            mod = import_module(module)
+        except ImportError, e:
+            raise ImproperlyConfigured('Error importing request processor module %s: "%s"' % (module, e))
+        try:
+            condition_func = getattr(mod, attr)
+        except AttributeError:
+            raise ImproperlyConfigured('Module "%s" does not define a "%s" callable condition' % (module, attr))
+        
+        if condition_func(mep):
             # Attach it to the user
             mep.trophies_ids.append(self.id)
             mep.save()
