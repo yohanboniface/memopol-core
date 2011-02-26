@@ -12,8 +12,5 @@ wsgiref==0.1.2
 yolk==0.4.1
 simplejson==2.1
 Markdown==2.0.3
-<<<<<<< HEAD
 numpy==1.5.1
-matplotlib==0.91.1
-=======
->>>>>>> ebc0def47d574a86f9155706d9106f10fa71ebb2
+git+http://github.com/matplotlib/matplotlib.git@3bf76b9fe6152280950168f9a3791f56c508eeed#egg=matplotlib
