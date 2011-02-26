@@ -76,17 +76,19 @@ def mep(request, mep_id):
     for score in score_list:
         score['color'] = score_to_color(int(score['value']))
     score_list.sort(key = lambda k : k['value'])
-    print score_list
     scores = [s['value'] for s in mep_.scores]
 
     if score_list:
-        import matplotlib
-        matplotlib.use("Agg")
-        from matplotlib import pyplot
+        try:
+            import matplotlib
+            matplotlib.use("Agg")
+            from matplotlib import pyplot
 
-        pyplot.plot([x['value'] for x in score_list])
-        #pyplot.xlabel("%s %s" % (mep_.last, mep_.first))
-        pyplot.savefig(realpath(".%simg/trends/meps/%s-scores.png" % (settings.MEDIA_URL, mep_id)), format="png")
+            pyplot.plot([x['value'] for x in score_list])
+            #pyplot.xlabel("%s %s" % (mep_.last, mep_.first))
+            pyplot.savefig(realpath(".%simg/trends/meps/%s-scores.png" % (settings.MEDIA_URL, mep_id)), format="png")
+        except ImportError:
+            pass
 
     context = {
         'mep_id': mep_id,

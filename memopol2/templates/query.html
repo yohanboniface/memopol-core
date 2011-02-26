@@ -56,6 +56,18 @@
                     <li><img class="grouplogo" src="{{ MEDIA_URL }}/static/img/groups/eu/{{ mep.infos.group.abbreviation|cut:"/" }}.png" /></li>
                     <li class="Name"><a href="{% url meps:mep mep.infos.name.wiki %}">{{ mep.infos.name.first }} {{ mep.infos.name.last|upper }}</a></li>
                     <li class="eMail"><a href="mailto:{{ mep.contact.email.text }}">{{ mep.contact.email.text }}</a></li>
+                    <li class="Strasbourg">
+                      <ul>
+                        <li>{{ mep.contact.address.Strasbourg.office }}</li>
+                        <li>{{ mep.contact.address.Strasbourg.phone.1 }}</li>
+                      </ul>
+                    </li>
+                    <li class="Bruxelles">
+                      <ul>
+                        <li>{{ mep.contact.address.Bruxelles.office }}</li>
+                        <li>{{ mep.contact.address.Bruxelles.phone.1 }}</li>
+                      </ul>
+                    </li>
                 </ul>
             </li>
             {% endfor %}
