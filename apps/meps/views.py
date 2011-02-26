@@ -62,6 +62,7 @@ def mep(request, mep_id):
     score_list.sort(key = lambda k : k['value'])
     print score_list
     scores = [s['value'] for s in mep_.scores]
+    
     context = {
         'mep_id': mep_id,
         'mep': mep_,
@@ -69,8 +70,7 @@ def mep(request, mep_id):
         'visible_count': len([x for x in positions if x.visible]),
         'average': sum(scores)/len(scores) if len(scores) > 0 else "",
         'score_list' : score_list,
-#        'color_index' : map(lambda  i : int(float(i))/10 , scores),   ## TODO color_index
-        'vote_colors' : ['#ff0000', '#dd0022', '#bb0044', '#dd0022', '#bb0044', '#990066', '#770088', '#5500aa', '#3300cc', '#0000ff'],
+        'vote_colors' : ['#ff0000', '#dd0022', '#bb0044', '#dd0022', '#bb0044', '#990066', '#770088', '#5500aa', '#3300cc', '#1100ee', '#0000ff'],
     }
     return direct_to_template(request, 'meps/mep.html', context)
 
