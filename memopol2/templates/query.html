@@ -19,8 +19,8 @@
         <form>
             <fieldset>
                 <legend>Filter by country</legend>
-                {% for country_code in countries_code %}
-                <input type="checkbox" name="country[]" value="{{ country_code }}"/>
+                {% for country in countries %}
+                <input type="checkbox" name="country[]" value="{{ country.key }}"/>
                 {% endfor %}
             </fieldset>
             <fieldset>
