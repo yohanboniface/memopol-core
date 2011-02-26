@@ -107,11 +107,6 @@ def mep(request, mep_id):
 def mep_json(request, mep_id):
     mep_ = MEP.get(mep_id)
     jsonstr = simplejson.dumps(dict(mep_), indent=4, use_decimal=True)
-    context = {
-        'mep_id': mep_id,
-        'mep': mep_,
-        'jsonstr': jsonstr,
-    }
     return HttpResponse(jsonstr)
 
 def mep_raw(request, mep_id):
