@@ -62,10 +62,7 @@ def mep(request, mep_id):
     mep_ = MEP.view('meps/by_id', key=mep_id).first()
     positions = Position.objects.filter(mep_id=mep_id)
     score_list = mep_.scores
-    print score_list
-    print "XXX"
     score_list.sort(key = lambda k : k['value'])
-    print score_list
     scores = [s['value'] for s in mep_.scores]
 
     context = {
