@@ -5,6 +5,8 @@ from couchdbkit.ext.django.schema import Document, StringProperty
 class MEP(Document):
     id = StringProperty()
 
+
+#The fact that MEP is a Document messes with the traditional django relationships
 class Trophy(models.Model):
     label = models.TextField()
     logo = models.CharField(max_length=25) #name of associated logo
@@ -32,8 +34,7 @@ class AutoTrophy(Trophy):
 
 
 #Given by hand
-class ManuelTrophy(Trophy):
-    reason = models.TextField()
+class ManualTrophy(Trophy):
 
     def obtain(self, mep, reason="Because I want to!"):
         #We arbitrarly choose to give this trophy to a mep
@@ -41,6 +42,14 @@ class ManuelTrophy(Trophy):
         mep.save()
 
         return true
+
+#Representation of the many-to-many relationship
+class Reward(models.Model):
+    mep = models.IntegerField() #Id of the MEP
+    trophy = models.ForeignKey(Trophy)
+    date_attribution = models.DateField()
+    reason_attribution = models.TextField() #Shall be null if the Trophy is auto
+
 
 
 class Position(models.Model):
