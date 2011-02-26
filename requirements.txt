@@ -11,4 +11,5 @@ django-extensions==0.6
 wsgiref==0.1.2
 yolk==0.4.1
 Markdown==2.0.3
-matplotlib=0.99.1.1
+numpy=1.5.1
+matplotlib==0.91.1
