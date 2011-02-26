@@ -83,7 +83,6 @@ def mep(request, mep_id):
             matplotlib.use("Agg")
             from matplotlib import pyplot
 
-            scores = [x['value'] for x in score_list]
             pyplot.plot(scores, 'bo')
             pyplot.plot(scores)
             pyplot.axis([0, len(scores) - 1, 0, 102])
