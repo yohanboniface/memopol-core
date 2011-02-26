@@ -1,4 +1,5 @@
 import time
+from os.path import realpath
 from datetime import datetime
 
 from django.http import HttpResponse, HttpResponseServerError
@@ -9,10 +10,8 @@ from django.conf import settings
 from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 
-from meps.models import *
-from meps.forms import *
+from meps.models import MEP, Position
 
-from os.path import realpath
 
 def index_names(request):
     meps_by_name = MEP.view('meps/by_name')
@@ -160,22 +159,3 @@ def moderation_moderate_positions(request):
         pass
     return HttpResponse(simplejson.dumps(results), mimetype='application/json')
 
-
-
-#Views related to trophies
-#Not linked to any url yet
-
-#Should distinguish Manual/Auto!
-#See with related forms
-def addTrophy(request):
-    if request.method == 'POST':
-        form = TrophyForm(request.POST)
-        if form.is_valid():
-           #We register the trophy
-           form.save()
-           return HttpResponseRedirect('/trophies/')
-
-        else:
-            form = TrophyForm()
-
-    return direct_to_template(request, 'trophy.html', {'form': form})
