@@ -30,7 +30,7 @@
 	<h2 class="collapsible expanded">{% trans "Contact" %}</h2>
 
 		<ul class="body">
-		{% for addr in mep.contact.address %}
+		{% for city,addr in mep.contact.address.items %}
 		<li><b>{{ addr.label|default:_("Other adresse") }}</b><br/>
 			{% if addr.building %} {% trans "Building" %} {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
 			{{ addr.street }}, {{ addr.postcode }} {{ addr.city }}<br/>

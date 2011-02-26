@@ -239,7 +239,18 @@ def fixup_opinions(item):
     """ remove useless intermediary level
     """
     listify(item, "opinions", "opinion")
-    
+
+def fixup_contact_addresses(item):
+    """ split addresses by office
+    """
+    addr_map = {}
+    addresses = item["contact"]["address"]
+    for addr in addresses:
+        if isinstance(addr, dict) and addr.has_key("city"):
+            addr_map[addr["city"]] = addr
+        else:
+            addr_map["unknown"] = addr
+    item["contact"]["address"] = addr_map
 
 def transform_politician(item):
     try:
@@ -248,6 +259,7 @@ def transform_politician(item):
         fixup_month_names(item)
         fixup_contact_web(item)
         fixup_contact_email(item)
+        fixup_contact_addresses(item)
         fixup_ext_id(item)
         fixup_functions(item)
         fixup_scores(item)
