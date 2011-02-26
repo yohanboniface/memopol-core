@@ -4,6 +4,7 @@ function(doc) {
         'group': doc.infos.group.abbreviation,
         'first': doc.infos.name.first,
         'last': doc.infos.name.last,
-        'email': doc.contact.email.text
+        'email': doc.contact.email.text,
+        'scores': doc.scores
     });
 }

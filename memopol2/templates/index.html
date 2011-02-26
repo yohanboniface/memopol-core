@@ -5,7 +5,7 @@
 
 {% if meps %}
 <h1>{% trans "Members of the European Parliament" %}{% if country %} {% trans "from" %} {{ country }}{% else %}{% if group %} {% trans "from" %} {{ group }}{% endif %}{% endif %}</h1>
-    
+
     <ul class="col">
         {% for mep in meps %}
             <li>
@@ -48,7 +48,7 @@
         <li>
             <a href="{% url meps:index_by_group group.key %}">
                 {{ group.value.name }} ({{ group.key }})
-            </a> 
+            </a>
             {% blocktrans with group.value.count as count %} - {{ count }} MEPs {% endblocktrans %}
         </li>
     {% endfor %}

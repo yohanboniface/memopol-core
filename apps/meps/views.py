@@ -11,6 +11,9 @@ from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 
 from meps.models import *
+from meps.forms import *
+
+from os.path import realpath
 
 def index_names(request):
     meps_by_name = MEP.view('meps/by_name')
@@ -67,13 +70,26 @@ def score_to_color(score):
     return "rgb(%d, %d, 0)" % (red, green)
 
 def mep(request, mep_id):
-    mep_ = MEP.view('meps/by_id', key=mep_id).first()
+    mep_ = MEP.get(mep_id)
     positions = Position.objects.filter(mep_id=mep_id)
     score_list = mep_.scores
     for score in score_list:
         score['color'] = score_to_color(int(score['value']))
     score_list.sort(key = lambda k : k['value'])
-    scores = [ s['value'] for s in mep_.scores]
+    scores = [s['value'] for s in mep_.scores]
+
+    if score_list:
+        try:
+            import matplotlib
+            matplotlib.use("Agg")
+            from matplotlib import pyplot
+
+            pyplot.plot([x['value'] for x in score_list])
+            #pyplot.xlabel("%s %s" % (mep_.last, mep_.first))
+            pyplot.savefig(realpath(".%simg/trends/meps/%s-scores.png" % (settings.MEDIA_URL, mep_id)), format="png")
+        except ImportError:
+            pass
+
     context = {
         'mep_id': mep_id,
         'mep': mep_,
@@ -85,7 +101,7 @@ def mep(request, mep_id):
     return direct_to_template(request, 'meps/mep.html', context)
 
 def mep_raw(request, mep_id):
-    mep_ = MEP.view('meps/by_id', key=mep_id).first()
+    mep_ = MEP.get(mep_id)
     jsonstr = simplejson.dumps(dict(mep_), indent=4, use_decimal=True)
     context = {
         'mep_id': mep_id,
@@ -153,3 +169,23 @@ def moderation_moderate_positions(request):
     except:
         pass
     return HttpResponse(simplejson.dumps(results), mimetype='application/json')
+
+
+
+#Views related to trophies
+#Not linked to any url yet
+
+#Should distinguish Manual/Auto!
+#See with related forms
+def addTrophy(request):
+    if request.method == 'POST':
+        form = TrophyForm(request.POST)
+        if form.is_valid():
+           #We register the trophy
+           form.save()
+           return HttpResponseRedirect('/trophies/')
+
+        else:
+            form = TrophyForm()
+
+    return direct_to_template(request, 'trophy.html', {'form': form})

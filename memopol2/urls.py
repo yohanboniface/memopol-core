@@ -17,6 +17,7 @@ urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^mps/', include('mps.urls', namespace='mps', app_name='mps')),
     url(r'^votes/', include('votes.urls', namespace='votes', app_name='votes')),
     url(r'^list/', include('queries.urls', namespace='queries', app_name='queries')),
+    url(r'^trends/', include('trends.urls', namespace='trends', app_name='trends')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
