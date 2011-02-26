@@ -26,20 +26,18 @@ class ManualTrophy(models.Model):
     def __json__(self):
         return {"label": self.label, "logo": self.logo}
 
-    def attribute_to(self, mep_wikiname):
+    def attribute_to(self, mep):
         """
         Attribute the trophy to the mep parameter.
         """
-        mep = MEP.get(mep_wikiname)
-        mep.trophies.append(self.id)
+        mep.trophies_ids.append(self.id)
         mep.save()
 
-    def discharge_to(self, mep_wikiname):
+    def discharge_to(self, mep):
         """
         Discharge the trophy to the mep parameter.
         """
-        mep = MEP.get(mep_wikiname)
-        mep.trophies.remove(self.id)
+        mep.trophies_ids.remove(self.id)
         mep.save()
 
 
@@ -55,7 +53,7 @@ class AutoTrophy(ManualTrophy):
         """
         if eval(self.condition, {'mep': mep}):
             # Attach it to the user
-            mep.trophies.append(self.id)
+            mep.trophies_ids.append(self.id)
             mep.save()
 
 
@@ -74,13 +72,16 @@ class Reward(models.Model):
         return u'"%s" attributed to %s%s' % (self.trophy, self.mep_wikiname,
             self.reason and u' because "%s"' % self.reason)
 
+    @property
+    def mep(self):
+        return MEP.get(self.mep_wikiname)
 
 def update_trophies_addition(sender, **kwargs):
     if kwargs['created']:
-        kwargs['instance'].trophy.attribute_to(kwargs['instance'].mep_wikiname)
+        kwargs['instance'].trophy.attribute_to(kwargs['instance'].mep)
 
 def update_trophies_removal(sender, **kwargs):
-    kwargs['instance'].trophy.discharge_to(kwargs['instance'].mep_wikiname)
+    kwargs['instance'].trophy.discharge_to(kwargs['instance'].mep)
 
 post_save.connect(update_trophies_addition, sender=Reward)
 pre_delete.connect(update_trophies_removal, sender=Reward)
