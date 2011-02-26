@@ -9,7 +9,7 @@ from django.conf import settings
 from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 
-from meps.models import Position, MEP
+from meps.models import *
 
 def index_names(request):
     meps_by_name = MEP.view('meps/by_name')
@@ -29,7 +29,6 @@ def index_groups(request):
     return direct_to_template(request, 'index.html', context)
 
 def index_countries(request):
-    countries = MEP.view('meps/countries')
 
     countries = list(MEP.view('meps/countries', group=True))
     countries.sort(key=lambda group: group['value']['count'], reverse=True)
