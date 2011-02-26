@@ -20,7 +20,9 @@ def query(request):
 
 def bla(request):
     meps_by_name = MEP.view('meps/by_name')
+    countries = list(MEP.view('meps/countries', group=True))
     context = {
         'meps': meps_by_name,
+        'countries': countries,
     }
     return direct_to_template(request, 'query.html', context)

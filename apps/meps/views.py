@@ -10,7 +10,7 @@ from django.conf import settings
 from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 
-from meps.models import Position, MEP
+from meps.models import *
 
 def index_names(request):
     meps_by_name = MEP.view('meps/by_name')
@@ -30,7 +30,6 @@ def index_groups(request):
     return direct_to_template(request, 'index.html', context)
 
 def index_countries(request):
-    countries = MEP.view('meps/countries')
 
     countries = list(MEP.view('meps/countries', group=True))
     countries.sort(key=lambda group: group['value']['count'], reverse=True)
@@ -42,15 +41,20 @@ def index_countries(request):
 
 def index_by_country(request, country_code):
     meps_by_country = MEP.view('meps/by_country', key=country_code)
+    country_infos = MEP.view('meps/countries', key=country_code)
+
     context = {
         'meps': meps_by_country,
+        'country': list(country_infos)[0]['value']['name'],
     }
     return direct_to_template(request, 'index.html', context)
 
 def index_by_group(request, group):
     meps_by_group = MEP.view('meps/by_group', key=group)
+    group_infos = MEP.view('meps/groups', key=group)
     context = {
         'meps': meps_by_group,
+        'group': list(group_infos)[0]['value']['name'],
     }
     return direct_to_template(request, 'index.html', context)
 
@@ -63,12 +67,6 @@ def mep(request, mep_id):
     score_list.sort(key = lambda k : k['value'])
     print score_list
     scores = [s['value'] for s in mep_.scores]
-    
-    #AAAWWWFFFUUUUUULLLLLLL
-    i=0
-    for score in score_list:
-        score_list[i] = {'label': score['label'], 'value': score['value'], 'couleur': score['value']/10}
-        i+=1
 
     context = {
         'mep_id': mep_id,
@@ -77,8 +75,7 @@ def mep(request, mep_id):
         'visible_count': len([x for x in positions if x.visible]),
         'average': sum(scores)/len(scores) if len(scores) > 0 else "",
         'score_list' : score_list,
-        'color_index' : map(lambda  i : int(float(i))/10 , scores),   ## TODO color_index
-        'vote_colors' : ['#ff0000', '#dd0022', '#bb0044', '#dd0022', '#bb0044', '#990066', '#770088', '#5500aa', '#3300cc', '#0000ff'],
+        'vote_colors' : ['#ff0000', '#dd0022', '#bb0044', '#dd0022', '#bb0044', '#990066', '#770088', '#5500aa', '#3300cc', '#1100ee', '#0000ff'],
     }
     return direct_to_template(request, 'meps/mep.html', context)
 

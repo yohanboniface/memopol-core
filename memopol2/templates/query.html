@@ -19,8 +19,8 @@
         <form>
             <fieldset>
                 <legend>Filter by country</legend>
-                {% for country_code in countries_code %}
-                <input type="checkbox" name="country[]" value="{{ country_code }}"/>
+                {% for country in countries %}
+                <input type="checkbox" name="country[]" value="{{ country.key }}"/>
                 {% endfor %}
             </fieldset>
             <fieldset>
@@ -35,7 +35,7 @@
                 <input type="checkbox" name="commitee[]" value="{{ group_code }}"/>
                 {% endfor %}
             </fieldset>
-	    <p><input type="submit" value="Search" /></p>
+        <p><input type="submit" value="Search" /></p>
         </form>
     </div>
 
@@ -50,6 +50,18 @@
             <li>grade</li>
         </ul>
         <ul id="mps">
+            <li class="mp even">
+                <ul>
+                    <li class="Country">flag</li>
+                    <li><img src="{{ MEDIA_URL }}img/countries/small/prout.png"/></li>
+                    <li><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/prout.png" /></li>
+                    <li class="Name"><a href="">Jean Dupont</a></li>
+                    <li class="eMail">pouet@pouet.pouet</li>
+                    <li class="Bruxelles"><span class="desk">no where</span><span class="tel">00000</span></li>
+                    <li class="Strasbourg"><span class="desk">noo where</span><span class="tel">00000</span></li>
+                    <li class="grade">zero</li>
+                </ul>
+            </li>
             {% for mep in meps %}
             <li class="mp odd">
                 <ul>
@@ -58,7 +70,7 @@
                     <li><img src="{{ MEDIA_URL }}img/countries/small/prout.png"/></li>
                     <li><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group|cut:"/" }}.png" /></li>
                     <li class="Name"><a href="{% url meps:mep mep.id %}">{{ mep.last }} {{ mep.first }}</a></li>
-                    <li class="eMail">{{ mep.email }}</li>
+                    <li class="eMail">{# mep.email #}</li>
                     <li class="Bruxelles"><span class="desk">{# mep.bruxelles_room #}</span><span class="tel">{# mep.bruxelles_phone #}</span></li>
                     <li class="Strasbourg"><span class="desk">{# mep.strasbourg_room #}</span><span class="tel">{# mep.strasbourg_phone #}</span></li>
                     <li class="grade">{# mep.grade #}</li>
