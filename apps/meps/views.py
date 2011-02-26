@@ -12,6 +12,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 from meps.models import *
 from meps.forms import *
 
+from os.path import realpath
+
 def index_names(request):
     meps_by_name = MEP.view('meps/by_name')
     context = {
@@ -67,6 +69,15 @@ def mep(request, mep_id):
     score_list.sort(key = lambda k : k['value'])
     print score_list
     scores = [s['value'] for s in mep_.scores]
+
+    if score_list:
+        import matplotlib
+        matplotlib.use("Agg")
+        from matplotlib import pyplot
+
+        pyplot.plot([x['value'] for x in score_list])
+        #pyplot.xlabel("%s %s" % (mep_.last, mep_.first))
+        pyplot.savefig(realpath(".%simg/trends/meps/%s-scores.png" % (settings.MEDIA_URL, mep_id)), format="png")
 
     context = {
         'mep_id': mep_id,
