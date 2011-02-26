@@ -14,3 +14,4 @@ simplejson==2.1
 Markdown==2.0.3
 numpy==1.5.1
 git+http://github.com/matplotlib/matplotlib.git@3bf76b9fe6152280950168f9a3791f56c508eeed#egg=matplotlib
+PIL==1.1.7
