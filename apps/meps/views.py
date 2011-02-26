@@ -90,6 +90,7 @@ def mep(request, mep_id):
             print dir(mep_)
             pyplot.xlabel("%s" % (mep_.infos['name']['full']))
             pyplot.savefig(realpath(".%simg/trends/meps/%s-scores.png" % (settings.MEDIA_URL, mep_id)), format="png")
+            pyplot.clf()
         except ImportError:
             pass
 
