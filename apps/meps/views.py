@@ -33,7 +33,6 @@ def index_groups(request):
     return direct_to_template(request, 'index.html', context)
 
 def index_countries(request):
-
     countries = list(MEP.view('meps/countries', group=True))
     countries.sort(key=lambda group: group['value']['count'], reverse=True)
 
@@ -103,6 +102,16 @@ def mep(request, mep_id):
         'score_list' : score_list,
     }
     return direct_to_template(request, 'meps/mep.html', context)
+
+def mep_json(request, mep_id):
+    mep_ = MEP.get(mep_id)
+    jsonstr = simplejson.dumps(dict(mep_), indent=4, use_decimal=True)
+    context = {
+        'mep_id': mep_id,
+        'mep': mep_,
+        'jsonstr': jsonstr,
+    }
+    return HttpResponse(jsonstr)
 
 def mep_raw(request, mep_id):
     mep_ = MEP.get(mep_id)
