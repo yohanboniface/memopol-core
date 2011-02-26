@@ -10,7 +10,7 @@ class Trophy(models.Model):
     logo = models.CharField(max_length=25) #name of associated logo
 
     def __unicode__(self):
-        return len(self.label)>18 and foo[:15] + "..." or foo
+        return len(self.label)>18 and self.label[:15] + "..." or self.label
 
     def __json__(self):
         return {"label": self.label, "logo": self.logo}
@@ -26,7 +26,7 @@ class AutoTrophy(Trophy):
         if hasAchievement:
             #Attach it to the user
             mep.achievement.append(self.id)
-            MEP.save(mep)
+            mep.save()
 
             return hasAchievement
 
@@ -38,7 +38,7 @@ class ManuelTrophy(Trophy):
     def obtain(self, mep, reason="Because I want to!"):
         #We arbitrarly choose to give this trophy to a mep
         mep.achievement.append(self.id)
-        MEP.save(mep)
+        mep.save()
 
         return true
 
