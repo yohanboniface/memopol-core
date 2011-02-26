@@ -78,15 +78,17 @@ def mep(request, mep_id):
 
     if score_list:
         try:
+            import numpy
             import matplotlib
             matplotlib.use("Agg")
             from matplotlib import pyplot
 
             pyplot.plot(scores, 'bo')
             pyplot.plot(scores)
+            a, b = numpy.polyfit(range(len(scores)), [int(x) for x in scores], 1)
+            pyplot.plot([a*int(x) + b for x in range(len(scores))])
             pyplot.axis([0, len(scores) - 1, 0, 102])
-            print dir(mep_)
-            pyplot.xlabel("%s" % (mep_.infos['name']['full']))
+            pyplot.xlabel("%s - Votes notes evolution over time" % (mep_.infos['name']['full']))
             pyplot.savefig(realpath(".%simg/trends/meps/%s-scores.png" % (settings.MEDIA_URL, mep_id)), format="png")
             pyplot.clf()
         except ImportError:
