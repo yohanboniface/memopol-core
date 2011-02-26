@@ -74,7 +74,7 @@ def mep(request, mep_id):
     score_list = mep_.scores
     for score in score_list:
         score['color'] = score_to_color(int(score['value']))
-    score_list.sort(key = lambda k : k['value'])
+    score_list.sort(key = lambda k : datetime.strptime(k['date'], "%d/%m/%Y"))
     scores = [s['value'] for s in mep_.scores]
 
     if score_list:
