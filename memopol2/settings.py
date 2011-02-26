@@ -112,6 +112,7 @@ INSTALLED_APPS = (
     'mps',
     'home',
     'queries',
+    'trends',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
