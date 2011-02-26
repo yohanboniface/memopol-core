@@ -24,15 +24,15 @@ class ViewsTest(TestCase):
         """
         response = self.client.get(reverse("meps:index_groups"))
         self.failUnlessEqual(len(response.context['groups']), 12)
-        self.failUnlessEqual(repr(response.context['groups'][0]), "{'count': 54, 'code': u'ECR', 'name': u'Conservateurs et R\\xe9formistes europ\\xe9ens'}")
-
+        self.failUnlessEqual(repr(response.context['groups'][0]), "{u'value': {u'count': 268, u'name': u'Groupe du Parti Populaire Europ\\xe9en (D\\xe9mocrates-Chr\\xe9tiens)'}, u'key': u'PPE'}")
+        
     def test_index_countries(self):
         """
         Tests index_countries context.
         """
         response = self.client.get(reverse("meps:index_countries"))
         self.failUnlessEqual(len(response.context['countries']), 27)
-        self.failUnlessEqual(repr(response.context['countries'][0]), "{'count': 141, 'code': u'DE', 'name': u'Allemagne'}")
+        self.failUnlessEqual(repr(response.context['countries'][0]), "{u'value': {u'count': 141, u'name': u'Allemagne'}, u'key': u'DE'}")
 
     def test_index_by_country(self):
         """
