@@ -10,7 +10,7 @@
         {% for mep in meps %}
             <li>
                 <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group|cut:"/" }}.png" />
-                <a href="{% url meps:mep mep.id %}">{{ mep.first }} {{ mep.last }}</a>
+                <a href="{% url meps:mep mep.id %}">{{ mep.last }} {{ mep.first }}</a>
             </li>
         {% endfor %}
     </ul>
