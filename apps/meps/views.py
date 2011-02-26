@@ -41,15 +41,20 @@ def index_countries(request):
 
 def index_by_country(request, country_code):
     meps_by_country = MEP.view('meps/by_country', key=country_code)
+    country_infos = MEP.view('meps/countries', key=country_code)
+
     context = {
         'meps': meps_by_country,
+        'country': list(country_infos)[0]['value']['name'],
     }
     return direct_to_template(request, 'index.html', context)
 
 def index_by_group(request, group):
     meps_by_group = MEP.view('meps/by_group', key=group)
+    group_infos = MEP.view('meps/groups', key=group)
     context = {
         'meps': meps_by_group,
+        'group': list(group_infos)[0]['value']['name'],
     }
     return direct_to_template(request, 'index.html', context)
 
