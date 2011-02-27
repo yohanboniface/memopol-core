@@ -15,7 +15,7 @@
 
 <div class="quickView">
 <img class="mugshot" src="http://www.europarl.europa.eu/mepphoto/{{ mep.extid }}.jpg" onerror="onMugshotError(this);"/>
-<span>{{ mep.infos.name.first }} {{ mep.infos.name.last|upper }} <img src="{{ MEDIA_URL }}img/countries/small/{{ mep.infos.constituency.country.code }}.png"/> </span>
+<span>{{ mep.infos.name.first }} {{ mep.infos.name.last|upper }} <a href="{% url meps:index_by_country mep.infos.constituency.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.infos.constituency.country.code }}.png"/></a> </span>
 <a href="{% url meps:index_by_group mep.infos.group.abbreviation %}"><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.infos.group.abbreviation|cut:"/" }}.png"/></a><a href="{% url meps:index_by_group mep.infos.group.abbreviation %}">{{ mep.infos.group.abbreviation }}</a>
 </div>
 
