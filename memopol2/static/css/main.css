@@ -226,6 +226,7 @@ li {
 .quickView
 {
     float: right;
+    margin-left: 1em;
 }
 
 .quickView span
