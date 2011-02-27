@@ -16,7 +16,7 @@
 <div class="quickView">
 <img class="mugshot" src="http://www.europarl.europa.eu/mepphoto/{{ mep.extid }}.jpg" onerror="onMugshotError(this);"/>
 <span>{{ mep.infos.name.first }} {{ mep.infos.name.last|upper }} <img src="{{ MEDIA_URL }}img/countries/small/{{ mep.infos.constituency.country.code }}.png"/> </span>
-<img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.infos.group.abbreviation|cut:"/" }}.png"/><a href="{% url meps:index_by_group mep.infos.group.abbreviation %}">{{ mep.infos.group.abbreviation }}</a>
+<a href="{% url meps:index_by_group mep.infos.group.abbreviation %}"><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.infos.group.abbreviation|cut:"/" }}.png"/>{{ mep.infos.group.abbreviation }}</a>
 </div>
 
 <li><i>{% if mep.infos.gender == "F" %}{% trans "Born on (female)" %}{% else %}{% trans "Born on" %}{% endif %}</i>
