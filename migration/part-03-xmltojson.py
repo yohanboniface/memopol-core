@@ -3,13 +3,12 @@
 import sys
 from xml.etree import ElementTree
 import codecs
-import pprint
 import urlparse
 
 #import anyjson
 import json
 
-## Taken from activestate - Recipe 573463 (r7): Converting XML to Dictionary and back 
+## Taken from activestate - Recipe 573463 (r7): Converting XML to Dictionary and back
 
 class XmlDictObject(dict):
     """
@@ -20,17 +19,17 @@ class XmlDictObject(dict):
         if initdict is None:
             initdict = {}
         dict.__init__(self, initdict)
-    
+
     def __getattr__(self, item):
         return self.__getitem__(item)
-    
+
     def __setattr__(self, item, value):
         self.__setitem__(item, value)
-    
+
     def __delattr__(self, item):
         print "aha"
         self.__delattr__(item)
-    
+
     def __str__(self):
         if self.has_key('text'):
             return self.__getitem__('text')
@@ -58,7 +57,7 @@ class XmlDictObject(dict):
             return [XmlDictObject._UnWrap(v) for v in x]
         else:
             return x
-        
+
     def UnWrap(self):
         """
         Recursively converts an XmlDictObject to a standard dictionary and returns the result.
@@ -69,11 +68,11 @@ class XmlDictObject(dict):
 
 def _ConvertXmlToDictRecurse(node, dictclass):
     nodedict = dictclass()
-    
+
     if len(node.items()) > 0:
         # if we have attributes, set them
         nodedict.update(dict(node.items()))
-    
+
     for child in node:
         # recursively add the element's children
         newitem = _ConvertXmlToDictRecurse(child, dictclass)
@@ -89,21 +88,21 @@ def _ConvertXmlToDictRecurse(node, dictclass):
             # only one, directly set the dictionary
             nodedict[child.tag] = newitem
 
-    if node.text is None: 
+    if node.text is None:
         text = ''
-    else: 
+    else:
         text = node.text.strip()
-    
-    if len(nodedict) > 0:            
+
+    if len(nodedict) > 0:
         # if we have a dictionary add the text as a dictionary value (if there is any)
         if len(text) > 0:
             nodedict['text'] = text
     else:
         # if we don't have child nodes or attributes, just set the text
         nodedict = text
-        
+
     return nodedict
-        
+
 def ConvertXmlToDict(root, dictclass=XmlDictObject):
     """
     Converts an XML file or ElementTree Element to a dictionary
@@ -181,7 +180,7 @@ def fixup_contact_web(item):
         if type(node) in (str, unicode):
             newlist.append({ u"text": node })
         else:
-            newlist.append(node) 
+            newlist.append(node)
     item["contact"]["web"] = newlist
 
 def fixup_ext_id(item):
@@ -191,7 +190,7 @@ def fixup_ext_id(item):
         nodes = item["contact"]["web"]
     except KeyError, ke:
         return
-    
+
     for node in nodes:
         url = node[u"text"]
         if u"europa.eu" in url:
@@ -209,7 +208,7 @@ def listify(item, dictname, listname):
     if not dictnode:
         item[dictname] = ()
         return
-    
+
     assert isinstance(dictnode, dict)
     listnode = dictnode.get(listname, None)
     if not listnode:
