@@ -6,4 +6,31 @@
     <h1>{% trans "Vote" %} {{ vote.label }}</h1>
 {% endif %}
 
+<br>
+
+{% regroup vote.doc.vote by subject.text as zoubiboulba %}
+
+<ul>
+    {% for x in zoubiboulba %}
+    <li><b>{{ x.grouper }}</b>
+    <br>
+    <ul>
+        {% for v in x.list %}
+        <li>
+            {{ v.subject.description }}
+            <ul>
+                <div class="{{ v.subject.recommendation }}">
+                <li><em>Part</em> : {{ v.subject.part }}</li>
+                <li><em>Recommendation</em> : {{ v.subject.recommendation }}</li>
+                <li><em>Weight</em> : {{ v.subject.weight }}</li>
+                </div>
+            </ul>
+        </li>
+        <br>
+        {% endfor %}
+    </ul>
+    </li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
