@@ -41,8 +41,9 @@ def index_countries(request):
     return direct_to_template(request, 'index.html', context)
 
 def index_by_country(request, country_code):
-    meps_by_country = MEP.view('meps/by_country', key=country_code)
+    meps_by_country = list(MEP.view('meps/by_country', key=country_code))
     country_infos = MEP.view('meps/countries', key=country_code)
+    meps_by_country.sort(key=lambda mep: mep['last'])
 
     context = {
         'meps': meps_by_country,
