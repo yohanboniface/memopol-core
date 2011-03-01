@@ -57,9 +57,9 @@ def index_by_group(request, group):
     meps_by_group.sort(key=lambda mep: mep['last'])
     context = {
         'meps': meps_by_group,
-        'group': list(group_infos)[0]['value']['name'],
+        'group': group_infos.first()['value'],
     }
-    return direct_to_template(request, 'index.html', context)
+    return direct_to_template(request, 'meps/by_group.html', context)
 
 def score_to_color(score):
     """
