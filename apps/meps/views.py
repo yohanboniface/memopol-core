@@ -52,8 +52,9 @@ def index_by_country(request, country_code):
     return direct_to_template(request, 'index.html', context)
 
 def index_by_group(request, group):
-    meps_by_group = MEP.view('meps/by_group', key=group)
+    meps_by_group = list(MEP.view('meps/by_group', key=group))
     group_infos = MEP.view('meps/groups', key=group)
+    meps_by_group.sort(key=lambda mep: mep['last'])
     context = {
         'meps': meps_by_group,
         'group': list(group_infos)[0]['value']['name'],
