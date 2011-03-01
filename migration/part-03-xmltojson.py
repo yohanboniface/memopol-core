@@ -229,10 +229,11 @@ def fixup_scores(item):
     """
     listify(item, "scores", "score")
 
-def fixup_remove_cruft(item):
-    """ removes unneeded keys
+def fixup_active(item):
+    """ is the mep still active?
     """
-    del item["container"]
+    item['active']=item["container"]["current"]
+    del(item['container'])
 
 def fixup_opinions(item):
     """ remove useless intermediary level
@@ -264,7 +265,7 @@ def transform_politician(item):
         fixup_functions(item)
         fixup_scores(item)
         fixup_opinions(item)
-        fixup_remove_cruft(item)
+        fixup_active(item)
     except:
         print "\n------------------\nError in item %s" % repr(item)
         raise

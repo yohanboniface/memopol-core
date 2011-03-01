@@ -3,5 +3,5 @@ function(keys, values, rereduce) {
     for (index in values) {
         total += values[index].count;
     }
-    return {name: values[0].name, count: total};
+    return {name: values[0].name, count: total, code: values[0].code};
 }

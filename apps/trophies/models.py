@@ -3,6 +3,8 @@ from django.db.models.signals import post_save, pre_delete
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.importlib import import_module
 
+from couchdbkit import ResourceNotFound
+
 from meps.models import MEP
 
 def retrieve_meps_choices():
@@ -10,7 +12,10 @@ def retrieve_meps_choices():
     Dynamically retrieve MEPs ids from CouchDB to propose choices in Django.
     """
     meps = MEP.view('meps/all')
-    return ((mep.id, mep.doc['infos']['name']['full']) for mep in meps)
+    try:
+        return [(mep.id, mep.doc['infos']['name']['full']) for mep in meps]
+    except ResourceNotFound:
+        return []
 
 def retrieve_condition_choices():
     """
