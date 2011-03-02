@@ -9,6 +9,7 @@
     <ul class="col">
         {% for mep in meps %}
             <li>
+                <img class="country" src="{{ MEDIA_URL }}img/countries/small/{{ mep.country_code|cut:"/" }}.png" />
                 <a href="{% url meps:mep mep.id %}">{{ mep.last }} {{ mep.first }}</a>
             </li>
         {% endfor %}

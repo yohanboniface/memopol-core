@@ -7,7 +7,7 @@
     <ul>
         {% for mp in mps %}
             <li>
-                <a href="{% url mps:detail mp.id %}">{{ mp.name }}</a>
+                <a href="{% url mps:detail mp.id %}">{{ mp.last }} {{ mp.first }}</a> ({{ mp.group }})
             </li>
         {% endfor %}
     </ul>
