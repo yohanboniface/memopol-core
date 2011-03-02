@@ -1,7 +1,9 @@
-function(doc) { 
-    emit(doc._id, {
-        'id': doc._id, 
+function(doc) {
+    emit(doc.infos.name.last, {
+        'id': doc._id,
         'extid': doc.extid,
-        'name': doc.infos.name.first+' '+doc.infos.name.last
-    }); 
+        'last': doc.infos.name.last,
+        'first': doc.infos.name.first,
+        'group': doc.infos.group.abbreviation
+    });
 }
