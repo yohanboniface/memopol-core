@@ -3,7 +3,9 @@
 {% block content %}
 
 {% if mp %}
-    <h1>{% trans "MEP" %} {{ mp.name }}</h1>
+
+<header><h1 id="name">{{ mp.infos.name.first }} {{ mp.infos.name.last|upper }}{% trans ", member of the french parliament" %}</h1></header>
+
 {% endif %}
 
 {% endblock %}
