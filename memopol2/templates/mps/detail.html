@@ -61,6 +61,33 @@
 </div>
 {% endif %}
 
+{% if mp.doc.opinions %}
+<div id="opinions">
+    <h2 class="collapsible collapsed">{% trans "Opinions (memopol v1)" %}</h2>
+    <ul class="body">
+    {% for line in mp.doc.opinions %}
+        <li><b>{{ line.title }}</b> (le {{ line.date }})<br/>{% autoescape off %}{{ line.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.url }}"><br/>{% trans "Read more..." %}</a> </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% if mp.doc.scores %}
+    <div id="scores">
+        <h2 class="collapsible collapsed">{% trans "Scores average" %} : {{ average|floatformat:0 }}</h2>
+        <ul class="body">
+        {% for score in mp.doc.scores %}
+        <li style="background:{{ score.color }}">
+
+            {{ score.label }}: <strong>{{ score.value }}</strong> ({% trans "on" %} {{ score.date }})<br/><a target="_" href="http://www.laquadrature.net/wiki/{{ score.wiki }}">{% trans "Read more..." %}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+</section>
+
 {% endif %}
 
 {% endblock %}
