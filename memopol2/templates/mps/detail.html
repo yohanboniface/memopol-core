@@ -6,6 +6,88 @@
 
 <header><h1 id="name">{{ mp.infos.name.first }} {{ mp.infos.name.last|upper }}{% trans ", member of the french parliament" %}</h1></header>
 
+<section id="summary">
+<h1 class="collapsible expanded">{% trans "General information" %}</h1>
+
+<ul id="infos" class="body">
+
+<div class="quickView">
+    <img class="mugshot" src="http://www.assemblee-nationale.fr/13/tribun/photos/{{ mp.doc.extid }}.jpg" onerror="onMugshotError(this);"/>
+<span>{{ mp.infos.name.first }} {{ mp.infos.name.last|upper }}  </span>
+{{ mp.infos.group.abbreviation }}
+</div>
+
+<li><i>{% if mp.infos.gender == "F" %}{% trans "Born on (female)" %}{% else %}{% trans "Born on" %}{% endif %}</i>
+{% blocktrans with mp.infos.birth.date.day as day and mp.infos.birth.date.month as month and mp.infos.birth.date.year as year and mp.infos.birth.place.city as city %}{{ day }}/{{ month }}/{{ year }} <i>at</i> {{ city }}{% endblocktrans %}</li>
+<li><i>{% trans "Département:" %}</i>:  {{ mp.infos.constituency.department.name }} - {{ mp.infos.constituency.department.number }} </li>
+<li><i>{% trans "Political group: " %}</i>{{ mp.infos.group.name }} ({{ mp.infos.group.abbreviation }})</li>
+{% if mp.infos.group.party %}<li><i>{% trans "Party: " %}</i>{{ mp.infos.group.party }}</li>{% endif %}
+</ul>
+
+<div id="contact">
+    <h2 class="collapsible expanded">{% trans "Contact" %}</h2>
+
+        <ul class="body">
+        {% for city,addr in mp.doc.contact.address.items %}
+        <li><b>{{ addr.label|default:_("Other adresse") }}</b><br/>
+            {% if addr.building %} {% trans "Building" %} {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
+            {{ addr.street }}, {{ addr.postcode }} {{ addr.city }}<br/>
+            {% if addr.phone %}{% trans "Tel.: " %} <a href="callto://{{ addr.phone }}">{{ addr.phone }}</a>&nbsp;<br/>{% endif %}
+            {% if addr.fax %}{% trans "Fax: " %}{{ addr.fax }}{% endif %}
+
+        </li>
+        {% endfor %}
+
+
+        <li><i>{% trans "E-mail&nbsp;: " %}</i><a href="mailto:{{ mp.doc.contact.email.text }}">{{ mp.doc.contact.email.text }}</a></li>
+
+        {% for webaddr in mp.doc.contact.web %}
+        <li>
+            <i>{% trans "Web&nbsp;: " %}</i><a target="_" href="{{ webaddr.text }}">{{ webaddr.type|default:webaddr.text }}</a>
+        </li>
+        {% endfor %}
+
+        </ul>
+</div>
+
+{% if mp.doc.functions %}
+<div id="functions">
+    <h2 class="collapsible collapsed">{% trans "Functions" %}</h2>
+    <ul class="body">
+    {% for function in mp.doc.functions %}
+        <li>{{ function.role }} - {{ function.label }}</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% if mp.doc.opinions %}
+<div id="opinions">
+    <h2 class="collapsible collapsed">{% trans "Opinions (memopol v1)" %}</h2>
+    <ul class="body">
+    {% for line in mp.doc.opinions %}
+        <li><b>{{ line.title }}</b> (le {{ line.date }})<br/>{% autoescape off %}{{ line.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.url }}"><br/>{% trans "Read more..." %}</a> </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% if mp.doc.scores %}
+    <div id="scores">
+        <h2 class="collapsible collapsed">{% trans "Scores average" %} : {{ average|floatformat:0 }}</h2>
+        <ul class="body">
+        {% for score in mp.doc.scores %}
+        <li style="background:{{ score.color }}">
+
+            {{ score.label }}: <strong>{{ score.value }}</strong> ({% trans "on" %} {{ score.date }})<br/><a target="_" href="http://www.laquadrature.net/wiki/{{ score.wiki }}">{% trans "Read more..." %}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+</section>
+
 {% endif %}
 
 {% endblock %}
