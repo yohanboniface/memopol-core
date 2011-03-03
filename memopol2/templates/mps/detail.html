@@ -90,6 +90,25 @@
 
 {% endif %}
 
+<section id="positions">
+    <h1>{% trans "Opinions" %}</h1>
+
+    {% for pos in positions %}
+        {% if pos.visible %}
+        <article><h2>{% trans "Opinion" %}</h2>{{ pos.content }}</article>
+        {% endif %}
+    {% endfor %}
+
+    <aside id="positionsnote">
+    {% ifequal visible_count 0 %}
+    {% ifnotequal positions|length visible_count %}
+    {% trans "Some opinions are awaiting moderation." %}
+    {% else %}
+    {% trans "No opinion is currently recorded, but you can contribute by adding one!" %}
+    {% endifnotequal %}
+    {% endifequal %}
+    </aside>
+
 <script type="text/javascript">
 
 function addPositionSubmitButtonClicked()
