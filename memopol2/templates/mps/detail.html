@@ -24,6 +24,32 @@
 {% if mp.infos.group.party %}<li><i>{% trans "Party: " %}</i>{{ mp.infos.group.party }}</li>{% endif %}
 </ul>
 
+<div id="contact">
+    <h2 class="collapsible expanded">{% trans "Contact" %}</h2>
+
+        <ul class="body">
+        {% for city,addr in mp.doc.contact.address.items %}
+        <li><b>{{ addr.label|default:_("Other adresse") }}</b><br/>
+            {% if addr.building %} {% trans "Building" %} {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
+            {{ addr.street }}, {{ addr.postcode }} {{ addr.city }}<br/>
+            {% if addr.phone %}{% trans "Tel.: " %} <a href="callto://{{ addr.phone }}">{{ addr.phone }}</a>&nbsp;<br/>{% endif %}
+            {% if addr.fax %}{% trans "Fax: " %}{{ addr.fax }}{% endif %}
+
+        </li>
+        {% endfor %}
+
+
+        <li><i>{% trans "E-mail&nbsp;: " %}</i><a href="mailto:{{ mp.doc.contact.email.text }}">{{ mp.doc.contact.email.text }}</a></li>
+
+        {% for webaddr in mp.doc.contact.web %}
+        <li>
+            <i>{% trans "Web&nbsp;: " %}</i><a target="_" href="{{ webaddr.text }}">{{ webaddr.type|default:webaddr.text }}</a>
+        </li>
+        {% endfor %}
+
+        </ul>
+</div>
+
 {% endif %}
 
 {% endblock %}
