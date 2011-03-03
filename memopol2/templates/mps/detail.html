@@ -125,6 +125,21 @@ function addPositionSubmitButtonClicked()
 
 </script>
 
+<div id="addPosition" class="uiform" style="display: none" tabindex="1">
+    <h3>{% trans "Add an opinion" %}</h3>
+    <p>{% trans "This form allows you to add an opinion of one MP. This opinion will only be published after being moderated."%}</p>
+    <br/>
+    <textarea rows="5" cols="80" name="text" id="text" placeholder="{% trans "Enter this MEP's opinion here" %}"></textarea>
+    <br/>
+    <button id="addPositionSubmitButton" class="submit">{% trans "Add" %}</button>
+    <button id="addPositionCancelButton" class="cancel">{% trans "Cancel" %}</button>
+</div>
+
+<button id="addPositionButton" class="submit">{% trans "Add an opinion" %}</button>
+</section>
+
+</article>
+
 {% endblock %}
 {% block documentReady %}
 
