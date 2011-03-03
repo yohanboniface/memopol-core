@@ -6,6 +6,13 @@
 
 <header><h1 id="name">{{ mp.infos.name.first }} {{ mp.infos.name.last|upper }}{% trans ", member of the french parliament" %}</h1></header>
 
+<li><i>{% if mp.infos.gender == "F" %}{% trans "Born on (female)" %}{% else %}{% trans "Born on" %}{% endif %}</i>
+{% blocktrans with mp.infos.birth.date.day as day and mp.infos.birth.date.month as month and mp.infos.birth.date.year as year and mp.infos.birth.place.city as city %}{{ day }}/{{ month }}/{{ year }} <i>at</i> {{ city }}{% endblocktrans %}</li>
+<li><i>{% trans "Département:" %}</i>:  {{ mp.infos.constituency.department.name }} - {{ mp.infos.constituency.department.number }} </li>
+<li><i>{% trans "Political group: " %}</i>{{ mp.infos.group.name }} ({{ mp.infos.group.abbreviation }})</li>
+{% if mp.infos.group.party %}<li><i>{% trans "Party: " %}</i>{{ mp.infos.group.party }}</li>{% endif %}
+</ul>
+
 {% endif %}
 
 {% endblock %}
