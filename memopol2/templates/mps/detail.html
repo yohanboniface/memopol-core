@@ -55,7 +55,9 @@
     <h2 class="collapsible collapsed">{% trans "Functions" %}</h2>
     <ul class="body">
     {% for function in mp.doc.functions %}
+        {% if function.type != "Groupe d'études" and function.type != "Groupe d'amitié" %}
         <li>{{ function.role }} - {{ function.label }}</li>
+        {% endif %}
     {% endfor %}
     </ul>
 </div>
