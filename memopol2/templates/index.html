@@ -47,7 +47,9 @@
     <ul class="groups">
     {% for group in groups %}
         <li>
+            <a href="{% url meps:index_by_group group.key %}">
             <img src="{{ MEDIA_URL }}img/groups/eu/{{ group.key|cut:"/" }}.png" />
+            </a>
             <a href="{% url meps:index_by_group group.key %}">
                 {{ group.value.name }} ({{ group.key }})
             </a>
