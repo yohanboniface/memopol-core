@@ -18,6 +18,7 @@
 
 {% if countries %}
     <h1>{% trans "MEPs by country" %}</h1>
+    {% include "map-eu.html" %}
     <ul class="col">
     {% for country in countries %}
         <li>
@@ -43,9 +44,10 @@
 
 {% if groups %}
     <h1>{% trans "MEPs by political group" %}</h1>
-    <ul class="col">
+    <ul class="groups">
     {% for group in groups %}
         <li>
+            <img src="{{ MEDIA_URL }}img/groups/eu/{{ group.key|cut:"/" }}.png" />
             <a href="{% url meps:index_by_group group.key %}">
                 <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ group.key|cut:"/" }}.png" />
                 {{ group.value.name }} ({{ group.key }})
@@ -54,6 +56,8 @@
         </li>
     {% endfor %}
     </ul>
+    <br />
+    {% include "hemicycle-eu.html" %}
 {% endif %}
 
 {% endblock %}

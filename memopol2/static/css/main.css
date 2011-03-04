@@ -289,3 +289,8 @@ li {
     width: 25em;
     margin: 0.1em;
 }
+
+.groups
+{
+    list-style: none;
+}
