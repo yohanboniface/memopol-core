@@ -49,7 +49,6 @@
         <li>
             <img src="{{ MEDIA_URL }}img/groups/eu/{{ group.key|cut:"/" }}.png" />
             <a href="{% url meps:index_by_group group.key %}">
-                <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ group.key|cut:"/" }}.png" />
                 {{ group.value.name }} ({{ group.key }})
             </a>
             {% blocktrans with group.value.count as count %} - {{ count }} MEPs {% endblocktrans %}
