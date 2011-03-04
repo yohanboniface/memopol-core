@@ -16,9 +16,7 @@ def big_mess(request):
         score_list = mep_.scores
         pyplot.plot([x['value'] for x in score_list])
         pyplot.xlabel("%s %s" % (mep_.last, mep_.first))
-        print [score_list]
         pyplot.savefig(realpath("./%simg/trends/%s.png" % (settings.MEDIA_URL, mep_.id)), format="png")
-        print mep_.id
         pyplot.clf()
     context = {
         'trends' : [m.id for m in meps],
