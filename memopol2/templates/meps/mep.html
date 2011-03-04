@@ -16,14 +16,14 @@
 <div class="quickView">
 <img class="mugshot" src="http://www.europarl.europa.eu/mepphoto/{{ mep.extid }}.jpg" onerror="onMugshotError(this);"/>
 <span>{{ mep.infos.name.first }} {{ mep.infos.name.last|upper }} <a href="{% url meps:index_by_country mep.infos.constituency.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.infos.constituency.country.code }}.png"/></a> </span>
-<a href="{% url meps:index_by_group mep.infos.group.abbreviation %}"><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.infos.group.abbreviation|cut:"/" }}.png"/></a><a href="{% url meps:index_by_group mep.infos.group.abbreviation %}">{{ mep.infos.group.abbreviation }}</a>
-</div>
+<a href="{% url meps:index_by_group mep.infos.group.abbreviation %}"><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.infos.group.abbreviation|cut:"/" }}.png"/></a></div>
 
-<li><i>{% if mep.infos.gender == "F" %}{% trans "Born on (female)" %}{% else %}{% trans "Born on" %}{% endif %}</i>
-{% blocktrans with mep.infos.birth.date.day as day and mep.infos.birth.date.month as month and mep.infos.birth.date.year as year and mep.infos.birth.place.city as city %}{{ day }}/{{ month }}/{{ year }} <i>at</i> {{ city }}{% endblocktrans %}</li>
+<li><i>{% trans "Active: " %}</i>{% if mep.active %}{% trans "yes" %}{% else %}{% trans "no" %}{% endif %}
 <li><i>{% trans "Country" %}</i>:  <a href="{% url meps:index_by_country mep.infos.constituency.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.infos.constituency.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.infos.constituency.country.code %}">{{ mep.infos.constituency.country.name }} </li></a>
 <li><i>{% trans "Political group: " %}</i><a href="{% url meps:index_by_group mep.infos.group.abbreviation %}">{{ mep.infos.group.name }} ({{ mep.infos.group.abbreviation }})</a></li>
 {% if mep.infos.group.party %}<li><i>{% trans "Party: " %}</i>{{ mep.infos.group.party }}</li>{% endif %}
+<li><i>{% if mep.infos.gender == "F" %}{% trans "Born on (female)" %}{% else %}{% trans "Born on" %}{% endif %}</i>
+{% blocktrans with mep.infos.birth.date.day as day and mep.infos.birth.date.month as month and mep.infos.birth.date.year as year and mep.infos.birth.place.city as city %}{{ day }}/{{ month }}/{{ year }} <i>at</i> {{ city }}{% endblocktrans %}</li>
 </ul>
 
 <div id="contact">
