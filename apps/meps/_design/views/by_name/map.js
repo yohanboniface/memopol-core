@@ -1,5 +1,5 @@
 function(doc) {
-    if (doc && doc.active == "true") {
+    if (doc && doc.active) {
         emit(doc.infos.name.last, {
             'id': doc._id,
             'group': doc.infos.group.abbreviation,

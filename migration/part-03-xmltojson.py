@@ -232,7 +232,7 @@ def fixup_scores(item):
 def fixup_active(item):
     """ is the mep still active?
     """
-    item['active']=item["container"]["current"]
+    item['active']=item["container"]["current"]=='true'
     del(item['container'])
 
 def fixup_opinions(item):
