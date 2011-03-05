@@ -1,0 +1,14 @@
+Stefan Praszalowicz <stefan@popidiou.net> - initiator of the project
+Matthieu Parisot <mat@owiowi.(none)>
+Laurent Peuch <cortex@worlddomination.be>
+David Larlet <larlet@gmail.com>
+Romain Gauthier <romain.gauthier@masteri2l.org>
+stef <stefan.marsiske@gmail.com>
+Benjamin Sonntag <benjamin@sonntag.fr>
+Snip <snip@snip.eu.org>
+Bruno Cauet <bruno.cauet@supelec.fr>
+Romain Gauthier <romain.gauthier@masteri2l.org>
+Guyzmo <guyzmo+github@m0g.net>
+Gelnior <gelnior@free.fr>
+
+Gibus <neurone2@laquadrature.net> - creator of memopol v1
