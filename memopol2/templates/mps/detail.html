@@ -53,8 +53,8 @@
 <div id="nosdeputes">
     <h2 class="collapsible expanded">{% trans "NosDéputés.fr" %}</h2>
     <ul class="body">
-        <li> <i>NosDéputés.fr: </i><a href="http://www.nosdeputes.fr/{{ mp.first }}-{{ mp.last }}">{{ mp.first }} {{ mp.last }}</a><br>
-    <a href="http://www.nosdeputes.fr/{{ mp.first }}-{{ mp.last }}/graphes/lastyear"><img src="http://www.nosdeputes.fr/{{ mp.first }}-{{ mp.last }}/graphes/lastyear/total?questions=true&link=true&mapId=Map_9521.map" /></a>
+        <li> <i>NosDéputés.fr: </i><a href="http://www.nosdeputes.fr/{{ mp.first|slugify }}-{{ mp.last|slugify }}">{{ mp.first }} {{ mp.last }}</a><br>
+    <a href="http://www.nosdeputes.fr/{{ mp.first|slugify }}-{{ mp.last|slugify }}/graphes/lastyear"><img src="http://www.nosdeputes.fr/{{ mp.first|slugify }}-{{ mp.last|slugify }}/graphes/lastyear/total?questions=true&link=true&mapId=Map_9521.map" /></a>
     </li>
     <li>
     <p style="font-size: small;"><span style='background-color: rgb(255,0,0);'>&nbsp;</span>
