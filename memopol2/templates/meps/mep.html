@@ -57,7 +57,7 @@
     <h2 class="collapsible collapsed">{% trans "Functions" %}</h2>
     <ul class="body">
     {% for function in mep.functions %}
-        <li>{{ function.role }} - {{ function.label }}</li>
+        <li>{{ function.role }} - {% if function.label.text %}{{ function.label.text}}{% else %}{{ function.label }}{% endif %}</li>
     {% endfor %}
     </ul>
 </div>
