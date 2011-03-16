@@ -16,7 +16,7 @@
 <div class="quickView">
 <img class="mugshot" src="http://www.europarl.europa.eu/mepphoto/{{ mep.extid }}.jpg" onerror="onMugshotError(this);"/>
 <span>{{ mep.infos.name.first }} {{ mep.infos.name.last|upper }} <a href="{% url meps:index_by_country mep.infos.constituency.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.infos.constituency.country.code }}.png"/></a> </span>
-<a href="{% url meps:index_by_group mep.infos.group.abbreviation %}"><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.infos.group.abbreviation|cut:"/" }}.png"/></a></div>
+<a href="{% url meps:index_by_group mep.infos.group.abbreviation %}"><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.infos.group.abbreviation|cut:"/" }}.png"/></a><ul>{%for i in mep.achievements%}<li><img alt="{{i.0}}" src="{{ MEDIA_URL }}img/trophies/{{i.1}}" /></li>{%endfor%}</ul></div>
 
 <li><i>{% trans "Active: " %}</i>{% if mep.active %}{% trans "yes" %}{% else %}{% trans "no" %}{% endif %}
 <li><i>{% trans "Country" %}</i>:  <a href="{% url meps:index_by_country mep.infos.constituency.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.infos.constituency.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.infos.constituency.country.code %}">{{ mep.infos.constituency.country.name }} </li></a>
