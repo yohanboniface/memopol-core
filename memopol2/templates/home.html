@@ -1,43 +1,13 @@
 {% extends "base.html" %}
-{% load markup %}
-
+{% load flatblock_tags %}
 {% block content %}
     <div class="edito">
-        <h1>{{ edito_title }}</h1>
-        <div>{{edito|markdown}}</div>
+	{% flatblock "welcome.info" %}
     </div>
     <h1>{% trans "MEPs by country" %}</h1>
     {% include "map-eu.html" %}
-    <!--div class="coutries">
-        <h1>{% trans "MEPs by country" %}</h1>
-        <ul>
-        {% for country in countries %}
-            <li>
-                <a href="{% url meps:index_by_country country.key %}">
-                    <img src="{{ MEDIA_URL }}img/countries/small/{{ country.key }}.png"/>
-                </a>&nbsp;<a href="{% url meps:index_by_country country.key %}">{{ country.value.name }}</a>
-                {% blocktrans with country.value.count as count %} - {{ count }} MEPs {% endblocktrans %}
-            </li>
-        {% endfor %}
-        </ul>
-    </div-->
     <h1>{% trans "MEPs by political group" %}</h1>
     {% include "hemicycle-eu.html" %}
-    <!--div class="groups">
-    {% if groups %}
-        <h1>{% trans "MEPs by political group" %}</h1>
-        <ul>
-        {% for group in groups %}
-            <li>
-                <a href="{% url meps:index_by_group group.key %}">
-                    {{ group.value.name }} ({{ group.key }})
-                </a>
-                {% blocktrans with group.value.count as count %} - {{ count }} MEPs {% endblocktrans %}
-            </li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-    </div-->
 
     <div class="votes">
     {% if votes %}

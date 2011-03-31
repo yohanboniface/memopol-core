@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "flatblocks.flatblock", "fields": {"content": "Go to the <a href=\"/admin\">admin page</a> to change this message.", "header": "Welcome to memopol2", "slug": "welcome.info"}}]

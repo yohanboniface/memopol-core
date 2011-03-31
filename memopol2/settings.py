@@ -104,6 +104,7 @@ INSTALLED_APPS = (
     'south',
     'django_extensions',
     'debug_toolbar',
+    'flatblocks',
 
     # memopol
     # 'crashlog',
@@ -141,4 +142,8 @@ COUCHDB_DATABASES = (
 LANGUAGES = (
   ('fr', 'French'),
   ('en', 'English'),
+)
+
+FIXTURE_DIRS = (
+    'fixtures',
 )
