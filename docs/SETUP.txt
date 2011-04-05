@@ -66,6 +66,11 @@ Run the "migration" scripts
     cd migration
     ./go.sh
 
+Install the default welcome message (optional)
+==============================================
+
+   python manage.py loaddata welcome
+
 Run the server
 ==============
 
