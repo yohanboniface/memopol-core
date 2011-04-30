@@ -24,6 +24,9 @@ class Mep(models.Model):
 class Email(models.Model):
     email = models.EmailField()
 
+class CV(models.Model):
+    title = models.CharField(max_length=255)
+
 class Deleguation(models.Model):
     name = models.CharField(max_length=255, unique=True)
 

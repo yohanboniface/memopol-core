@@ -10,7 +10,7 @@ from datetime import date
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/apps/"]
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/"]
 
-from meps.models import Deleguation, Committe, Country, Group, Opinion, Mep, Email
+from meps.models import Deleguation, Committe, Country, Group, Opinion, Mep, Email, CV
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -22,6 +22,8 @@ def clean():
     Mep.objects.all().delete()
     print " * remove Email"
     Email.objects.all().delete()
+    print " * remove CV"
+    CV.objects.all().delete()
     print " * remove Deleguation"
     Deleguation.objects.all().delete()
     print " * remove Committe"
@@ -92,9 +94,19 @@ def _create_mep(mep):
         print "   new email", mep["contact"]["email"]["text"]
         Email.objects.create(email=mep["contact"]["email"]["text"])
 
+def _create_cv(cv):
+    if type(cv) is list:
+        for c in cv:
+            print "   new cv:", c
+            CV.objects.create(title=c)
+    else:
+        CV.objects.create(title=cv)
+
 def manage_meps(path):
+    print
     print "Load meps json."
     meps = json.loads(open(os.path.join(path, MEPS), "r").read())
+    print
     print "Create Committe and Deleguation:"
     a = 0
     for mep in meps:
@@ -108,6 +120,8 @@ def manage_meps(path):
         _create_groups(mep["infos"]["group"])
         _create_opinions(mep["opinions"])
         _create_mep(mep)
+        if mep["cv"]:
+            _create_cv(mep["cv"]["position"])
 
 if __name__ == "__main__":
     path = sys.argv[1]
