@@ -20,6 +20,8 @@ def clean():
     print "Clean database:"
     print " * remove Mep"
     Mep.objects.all().delete()
+    print " * remove Email"
+    Email.objects.all().delete()
     print " * remove Deleguation"
     Deleguation.objects.all().delete()
     print " * remove Committe"
@@ -84,8 +86,10 @@ def _create_mep(mep):
 
     if type(mep["contact"]["email"]) is list:
         for email in mep["contact"]["email"]:
+            print "   new email", email
             Email.objects.create(email=email)
     else:
+        print "   new email", mep["contact"]["email"]["text"]
         Email.objects.create(email=mep["contact"]["email"]["text"])
 
 def manage_meps(path):
