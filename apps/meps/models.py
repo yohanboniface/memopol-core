@@ -14,7 +14,7 @@ class Committe(models.Model):
         return u"%s: %s" % (self.abbreviation, self.name)
 
 class Country(models.Model):
-    code = models.CharField(max_length=3, unique=True)
+    code = models.CharField(max_length=2, unique=True)
     name = models.CharField(max_length=30, unique=True)
 
     def __unicode__(self):
