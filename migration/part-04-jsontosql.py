@@ -4,13 +4,13 @@ import json
 import sys
 import os
 
-from datetime import date
+from datetime import date, datetime
 
 #sys.path += os.path.join(os.path.realpath(os.path.curdir
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/apps/"]
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/"]
 
-from meps.models import Deleguation, Committe, Country, Group, Opinion, Mep, Email, CV, Party, WebSite, DeleguationRole, CommitteRole
+from meps.models import Deleguation, Committe, Country, Group, Opinion, Mep, Email, CV, Party, WebSite, DeleguationRole, CommitteRole, OpinionMep
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -72,11 +72,15 @@ def _create_groups_and_party(group):
         print "   new party:", group["party"]
         Party.objects.create(name=group["party"])
 
-def _create_opinions(opinions):
+def _create_opinions(opinions, _mep):
     for opinion in opinions:
         if not Opinion.objects.filter(title=opinion["title"]):
             print "    new opinion:", opinion["title"]
             Opinion.objects.create(title=opinion["title"], content=opinion["content"], url=opinion["url"])
+
+        _date = datetime.strptime(opinion["date"], "%d/%m/%Y").date()
+        print "   new link to opinion:", _mep.full_name, _date
+        OpinionMep.objects.create(mep=_mep, opinion=Opinion.objects.get(title=opinion["title"], date=_date))
 
 def _create_mep(mep):
     name = mep["infos"]["name"]
@@ -165,8 +169,8 @@ def manage_meps(path):
         _create_functions(mep["functions"])
         _create_countries(mep["infos"]["constituency"]["country"])
         _create_groups_and_party(mep["infos"]["group"])
-        _create_opinions(mep["opinions"])
         _mep = _create_mep(mep)
+        _create_opinions(mep["opinions"], _mep)
         _create_role(mep["functions"], _mep)
         if mep["cv"]:
             _create_cv(mep["cv"]["position"], _mep)

@@ -108,3 +108,7 @@ class CommitteRole(models.Model):
     committe = models.ForeignKey(Committe)
     role = models.CharField(max_length=255)
 
+class OpinionMep(models.Model):
+    mep = models.ForeignKey(Mep)
+    opinion = models.ForeignKey(Opinion)
+    date = models.DateField()
