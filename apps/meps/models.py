@@ -33,6 +33,12 @@ class Party(models.Model):
     def __unicode__(self):
         return self.name
 
+class WebSite(models.Model):
+    url = models.URLField()
+
+    def __unicode__(self):
+        return self.url
+
 class Deleguation(models.Model):
     name = models.CharField(max_length=255, unique=True)
 

@@ -10,7 +10,7 @@ from datetime import date
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/apps/"]
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/"]
 
-from meps.models import Deleguation, Committe, Country, Group, Opinion, Mep, Email, CV, Party
+from meps.models import Deleguation, Committe, Country, Group, Opinion, Mep, Email, CV, Party, WebSite
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -25,6 +25,8 @@ def clean():
     print " * remove CV"
     CV.objects.all().delete()
     print " * remove Deleguation"
+    WebSite.objects.all().delete()
+    print " * remove WebSite"
     Deleguation.objects.all().delete()
     print " * remove Committe"
     Committe.objects.all().delete()
@@ -99,6 +101,11 @@ def _create_mep(mep):
     else:
         print "   new email", mep["contact"]["email"]["text"]
         Email.objects.create(email=mep["contact"]["email"]["text"])
+
+    if mep["contact"]["web"][1:]:
+        for i in mep["contact"]["web"][1:]:
+            print "   create website:", i["text"]
+            WebSite.objects.create(url=i["text"])
 
 def _create_cv(cv):
     if type(cv) is list:
