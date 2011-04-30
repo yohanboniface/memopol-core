@@ -4,11 +4,13 @@ import json
 import sys
 import os
 
+from datetime import date
+
 #sys.path += os.path.join(os.path.realpath(os.path.curdir
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/apps/"]
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/"]
 
-from meps.models import Deleguation, Committe, Country, Group, Opinion
+from meps.models import Deleguation, Committe, Country, Group, Opinion, Mep
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -16,6 +18,8 @@ VOTES = "votes.xml.json"
 
 def clean():
     print "Clean database:"
+    print " * remove Mep"
+    Mep.objects.all().delete()
     print " * remove Deleguation"
     Deleguation.objects.all().delete()
     print " * remove Committe"
@@ -58,6 +62,17 @@ def _create_opinions(opinions):
             print "    new opinion:", opinion["title"]
             Opinion.objects.create(title=opinion["title"], content=opinion["content"], url=opinion["url"])
 
+def _create_mep(mep):
+    name = mep["infos"]["name"]
+    birth_date = mep["infos"]["birth"]["date"]
+    Mep.objects.create(key_name=name["wiki"],
+                       first_name=name["first"],
+                       last_name=name["last"],
+                       full_name=name["full"],
+                       gender=mep["infos"]["gender"],
+                       birth_place=mep["infos"]["birth"]["place"],
+                       birth_date=date(int(birth_date["year"]), int(birth_date["month"]), int(birth_date["day"])),
+                       ep_id=mep["extid"])
 
 def manage_meps(path):
     print "Load meps json."
@@ -65,12 +80,16 @@ def manage_meps(path):
     print "Create Committe and Deleguation:"
     a = 0
     for mep in meps:
+        if mep["_id"] in ["LucasHartong", "InnocenzoLeontini"]:
+            # rubish data
+            continue
         a += 1
-        print " *", a
+        print " *", a, "-", mep["infos"]["name"]["full"], "-", mep["_id"]
         _create_functions(mep["functions"])
         _create_countries(mep["infos"]["constituency"]["country"])
         _create_groups(mep["infos"]["group"])
         _create_opinions(mep["opinions"])
+        _create_mep(mep)
 
 if __name__ == "__main__":
     path = sys.argv[1]
