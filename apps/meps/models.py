@@ -17,6 +17,15 @@ class Mep(models.Model):
     ep_reports = models.URLField()
     ep_motions = models.URLField()
     ep_webpage = models.URLField()
+    bxl_building_name = models.CharField(max_length=255)
+    bxl_building_abbreviation = models.CharField(max_length=255)
+    bxl_office = models.CharField(max_length=255)
+    bxl_fax = models.CharField(max_length=255)
+    bxl_phone1 = models.CharField(max_length=255)
+    bxl_phone2 = models.CharField(max_length=255)
+    bxl_street = models.CharField(max_length=255)
+    bxl_postcode = models.CharField(max_length=255)
+
 
     def __unicode__(self):
         return self.full_name

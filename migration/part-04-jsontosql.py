@@ -92,7 +92,15 @@ def _create_mep(mep):
                        ep_declarations=mep["activities"]["declarations"],
                        ep_reports=mep["activities"]["reports"],
                        ep_motions=mep["activities"]["motions"],
-                       ep_webpage=mep["contact"]["web"][0]["text"])
+                       ep_webpage=mep["contact"]["web"][0]["text"],
+                       bxl_building_name=mep["contact"]["address"]["Bruxelles"]["building"]["name"],
+                       bxl_building_abbreviation=mep["contact"]["address"]["Bruxelles"]["building"]["abbreviation"],
+                       bxl_office=mep["contact"]["address"]["Bruxelles"]["office"],
+                       bxl_fax=mep["contact"]["address"]["Bruxelles"]["fax"],
+                       bxl_phone1=mep["contact"]["address"]["Bruxelles"]["phone"][0],
+                       bxl_phone2=mep["contact"]["address"]["Bruxelles"]["phone"][1],
+                       bxl_street=mep["contact"]["address"]["Bruxelles"]["street"],
+                       bxl_postcode=mep["contact"]["address"]["Bruxelles"]["postcode"])
 
     if type(mep["contact"]["email"]) is list:
         for email in mep["contact"]["email"]:
@@ -120,7 +128,6 @@ def manage_meps(path):
     print "Load meps json."
     meps = json.loads(open(os.path.join(path, MEPS), "r").read())
     print
-    print "Create Committe and Deleguation:"
     a = 0
     for mep in meps:
         if mep["_id"] in ["LucasHartong", "InnocenzoLeontini"]:
