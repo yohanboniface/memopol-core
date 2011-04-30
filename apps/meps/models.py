@@ -79,6 +79,8 @@ class Mep(models.Model):
     group_role = models.CharField(max_length=63)
     country = models.ForeignKey(Country)
     deleguations = models.ManyToManyField(Deleguation, through='DeleguationRole')
+    opinions = models.ManyToManyField(Opinion, through='OpinionMep')
+    committes = models.ManyToManyField(Committe, through='CommitteRole')
 
     def __unicode__(self):
         return self.full_name
