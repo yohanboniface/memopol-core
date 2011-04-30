@@ -8,7 +8,7 @@ import os
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/apps/"]
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/"]
 
-from meps.models import Deleguation, Committe, Country, Group
+from meps.models import Deleguation, Committe, Country, Group, Opinion
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -24,6 +24,8 @@ def clean():
     Country.objects.all().delete()
     print " * remove Group"
     Group.objects.all().delete()
+    print " * remove Opinion"
+    Opinion.objects.all().delete()
 
 def manage_meps(path):
     print "Load meps json."
@@ -57,6 +59,14 @@ def manage_meps(path):
             print "   new group: %s (%s)" % (group["name"], group["abbreviation"])
             Group.objects.create(abbreviation=group["abbreviation"], name=group["name"])
 
+        for opinion in mep["opinions"]:
+            try:
+                if not Opinion.objects.filter(title=opinion["title"]):
+                    print "    new opinion:", opinion["title"]
+                    Opinion.objects.create(title=opinion["title"], content=opinion["content"], url=opinion["url"])
+            except KeyError, e:
+                print function
+                raise e
 
 if __name__ == "__main__":
     path = sys.argv[1]
