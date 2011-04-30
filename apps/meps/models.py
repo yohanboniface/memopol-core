@@ -21,6 +21,9 @@ class Mep(models.Model):
     def __unicode__(self):
         return self.full_name
 
+class Email(models.Model):
+    email = models.EmailField()
+
 class Deleguation(models.Model):
     name = models.CharField(max_length=255, unique=True)
 

@@ -10,7 +10,7 @@ from datetime import date
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/apps/"]
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/"]
 
-from meps.models import Deleguation, Committe, Country, Group, Opinion, Mep
+from meps.models import Deleguation, Committe, Country, Group, Opinion, Mep, Email
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -81,6 +81,12 @@ def _create_mep(mep):
                        ep_reports=mep["activities"]["reports"],
                        ep_motions=mep["activities"]["motions"],
                        ep_webpage=mep["contact"]["web"][0]["text"])
+
+    if type(mep["contact"]["email"]) is list:
+        for email in mep["contact"]["email"]:
+            Email.objects.create(email=email)
+    else:
+        Email.objects.create(email=mep["contact"]["email"]["text"])
 
 def manage_meps(path):
     print "Load meps json."
