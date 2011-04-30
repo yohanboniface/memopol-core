@@ -34,8 +34,10 @@ def manage_meps(path):
                 if function.get("abbreviation") and not Committe.objects.filter(name=function["label"], abbreviation=function["abbreviation"]):
                     Committe.objects.create(abbreviation=function["abbreviation"],
                                             name=function["label"])
-                elif not Deleguation.objects.filter(name=function["label"]):
-                    Deleguation.objects.create(name=function["label"].get("text", function["label"]))
+                elif type(function["label"]) is unicode and not Deleguation.objects.filter(name=function["label"]):
+                    Deleguation.objects.create(name=function["label"])
+                elif type(function["label"]) is not unicode and not Deleguation.objects.filter(name=function["label"]["text"]):
+                    Deleguation.objects.create(name=function["label"]["text"])
                 else:
                     pass
             except KeyError, e:
