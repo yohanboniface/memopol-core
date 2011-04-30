@@ -30,7 +30,7 @@ class Group(models.Model):
 class Opinion(models.Model):
     title = models.CharField(max_length=255, unique=True)
     content = models.CharField(max_length=255, unique=True)
-    url = models.CharField(max_length=255, unique=True)
+    url = models.URLField()
 
     def __unicode__(self):
         return self.title
