@@ -6,6 +6,13 @@ class Party(models.Model):
     def __unicode__(self):
         return self.name
 
+class Group(models.Model):
+    abbreviation = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=100, unique=True)
+
+    def __unicode__(self):
+        return u"%s - %s" % (self.abbreviation, self.name)
+
 class Mep(models.Model):
     key_name = models.CharField(max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
@@ -40,7 +47,8 @@ class Mep(models.Model):
     stg_street = models.CharField(max_length=255)
     stg_postcode = models.CharField(max_length=255)
     party = models.ForeignKey(Party)
-
+    group = models.ForeignKey(Group)
+    group_role = models.CharField(max_length=63)
 
     def __unicode__(self):
         return self.full_name
@@ -79,13 +87,6 @@ class Country(models.Model):
 
     def __unicode__(self):
         return u"%s - %s" % (self.code, self.name)
-
-class Group(models.Model):
-    abbreviation = models.CharField(max_length=10, unique=True)
-    name = models.CharField(max_length=100, unique=True)
-
-    def __unicode__(self):
-        return u"%s - %s" % (self.abbreviation, self.name)
 
 class Opinion(models.Model):
     title = models.CharField(max_length=255, unique=True)

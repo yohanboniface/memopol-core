@@ -109,7 +109,9 @@ def _create_mep(mep):
                        stg_phone2=mep["contact"]["address"]["Strasbourg"]["phone"][1],
                        stg_street=mep["contact"]["address"]["Strasbourg"]["street"],
                        stg_postcode=mep["contact"]["address"]["Strasbourg"]["postcode"],
-                       party=Party.objects.get(name=mep["infos"]["group"]["party"]))
+                       party=Party.objects.get(name=mep["infos"]["group"]["party"]),
+                       group_role=mep["infos"]["group"]["role"],
+                       group=Group.objects.get(name=mep["infos"]["group"]["name"]))
 
     if type(mep["contact"]["email"]) is list:
         for email in mep["contact"]["email"]:
