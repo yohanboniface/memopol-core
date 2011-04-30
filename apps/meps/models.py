@@ -1,3 +1,15 @@
 from django.db import models
 
+class Deleguation(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __unicode__(self):
+        return self.name
+
+class Committe(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    abbreviation = models.CharField(max_length=30, unique=True)
+
+    def __unicode__(self):
+        return u"%s: %s" % (self.abbreviation, self.name)
 
