@@ -34,22 +34,18 @@ def manage_meps(path):
         a += 1
         print " *", a
         for function in mep["functions"]:
-            try:
-                if function.get("abbreviation") and not Committe.objects.filter(name=function["label"], abbreviation=function["abbreviation"]):
-                    print "   new committe:", function["abbreviation"], "-", function["label"]
-                    Committe.objects.create(abbreviation=function["abbreviation"],
-                                            name=function["label"])
-                elif type(function["label"]) is unicode and not Deleguation.objects.filter(name=function["label"]):
-                    print "   new deleguation:", function["label"]
-                    Deleguation.objects.create(name=function["label"])
-                elif type(function["label"]) is not unicode and not Deleguation.objects.filter(name=function["label"]["text"]):
-                    print "   new deleguation:", function["label"]["text"]
-                    Deleguation.objects.create(name=function["label"]["text"])
-                else:
-                    pass
-            except KeyError, e:
-                print function
-                raise e
+            if function.get("abbreviation") and not Committe.objects.filter(name=function["label"], abbreviation=function["abbreviation"]):
+                print "   new committe:", function["abbreviation"], "-", function["label"]
+                Committe.objects.create(abbreviation=function["abbreviation"],
+                                        name=function["label"])
+            elif type(function["label"]) is unicode and not Deleguation.objects.filter(name=function["label"]):
+                print "   new deleguation:", function["label"]
+                Deleguation.objects.create(name=function["label"])
+            elif type(function["label"]) is not unicode and not Deleguation.objects.filter(name=function["label"]["text"]):
+                print "   new deleguation:", function["label"]["text"]
+                Deleguation.objects.create(name=function["label"]["text"])
+            else:
+                pass
 
         country = mep["infos"]["constituency"]["country"]
         if not Country.objects.filter(code=country["code"]):
