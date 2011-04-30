@@ -103,3 +103,8 @@ class DeleguationRole(models.Model):
     deleguation = models.ForeignKey(Deleguation)
     role = models.CharField(max_length=255)
 
+class CommitteRole(models.Model):
+    mep = models.ForeignKey(Mep)
+    committe = models.ForeignKey(Committe)
+    role = models.CharField(max_length=255)
+

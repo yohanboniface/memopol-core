@@ -10,7 +10,7 @@ from datetime import date
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/apps/"]
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/"]
 
-from meps.models import Deleguation, Committe, Country, Group, Opinion, Mep, Email, CV, Party, WebSite, DeleguationRole
+from meps.models import Deleguation, Committe, Country, Group, Opinion, Mep, Email, CV, Party, WebSite, DeleguationRole, CommitteRole
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -20,6 +20,8 @@ def clean():
     print "Clean database:"
     print " * remove DeleguationRole"
     DeleguationRole.objects.all().delete()
+    print " * remove CommitteRole"
+    CommitteRole.objects.all().delete()
     print " * remove Mep"
     Mep.objects.all().delete()
     print " * remove Email"
@@ -135,6 +137,9 @@ def _create_role(functions, _mep):
     for f in functions:
         if not f.get("abbreviation"):
             DeleguationRole.objects.create(mep=_mep, role=f["role"], deleguation=Deleguation.objects.get(name=f["label"]))
+        else:
+            print "   new role in committe:", f["role"], "in", f["abbreviation"]
+            CommitteRole.objects.create(mep=_mep, role=f["role"], committe=Committe.objects.get(abbreviation=f["abbreviation"]))
 
 def _create_cv(cv, _mep):
     if type(cv) is list:
