@@ -100,7 +100,6 @@ INSTALLED_APPS = (
     'django.contrib.markup',
 
     # 3rd party
-    'couchdbkit.ext.django',
     'south',
     'django_extensions',
     'debug_toolbar',
@@ -129,14 +128,6 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.sql.SQLDebugPanel',
     'debug_toolbar.panels.signals.SignalDebugPanel',
     'debug_toolbar.panels.logger.LoggingPanel',
-)
-
-#CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
-COUCHDB = "http://localhost:5984"
-COUCHDB_DATABASES = (
-     ('votes', '%s/votes' % COUCHDB),
-     ('mps',   '%s/mps' % COUCHDB),
-     ('meps',  '%s/meps' % COUCHDB),
 )
 
 LANGUAGES = (
