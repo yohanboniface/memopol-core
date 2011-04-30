@@ -136,6 +136,7 @@ def _create_mep(mep):
 def _create_role(functions, _mep):
     for f in functions:
         if not f.get("abbreviation"):
+            print "   new role in deleguation:", f["role"], "in", f["label"]
             DeleguationRole.objects.create(mep=_mep, role=f["role"], deleguation=Deleguation.objects.get(name=f["label"]))
         else:
             print "   new role in committe:", f["role"], "in", f["abbreviation"]
@@ -165,7 +166,6 @@ def manage_meps(path):
         _create_countries(mep["infos"]["constituency"]["country"])
         _create_groups_and_party(mep["infos"]["group"])
         _create_opinions(mep["opinions"])
-        _create_mep(mep)
         _mep = _create_mep(mep)
         _create_role(mep["functions"], _mep)
         if mep["cv"]:
