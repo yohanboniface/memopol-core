@@ -140,11 +140,26 @@ def _create_mep(mep):
 def _create_role(functions, _mep):
     for f in functions:
         if not f.get("abbreviation"):
-            print "   new role in deleguation:", f["role"], "in", f["label"]
-            DeleguationRole.objects.create(mep=_mep, role=f["role"], deleguation=Deleguation.objects.get(name=f["label"]))
+            name = f["label"] if type(f["label"]) is unicode else f["label"]["text"]
+            if not f.get("begin_term"):
+                print "   new role in deleguation:", f["role"], "in", name
+                DeleguationRole.objects.create(mep=_mep, role=f["role"], deleguation=Deleguation.objects.get(name=name))
+            else:
+                b = f["begin_term"]
+                _begin = date(int(b["year"]), int(b["month"]), int(b["day"]))
+                e = f["end_term"]
+                _end = date(int(e["year"]), int(e["month"]), int(e["day"]))
+                DeleguationRole.objects.create(mep=_mep, role=f["role"], deleguation=Deleguation.objects.get(name=name), begin=_begin, end=_end)
         else:
-            print "   new role in committe:", f["role"], "in", f["abbreviation"]
-            CommitteRole.objects.create(mep=_mep, role=f["role"], committe=Committe.objects.get(abbreviation=f["abbreviation"]))
+            if not f.get("begin_term"):
+                print "   new role in committe:", f["role"], "in", f["abbreviation"]
+                CommitteRole.objects.create(mep=_mep, role=f["role"], committe=Committe.objects.get(abbreviation=f["abbreviation"]))
+            else:
+                b = f["begin_term"]
+                _begin = date(int(b["year"]), int(b["month"]), int(b["day"]))
+                e = f["end_term"]
+                _end = date(int(e["year"]), int(e["month"]), int(e["day"]))
+                CommitteRole.objects.create(mep=_mep, role=f["role"], deleguation=Deleguation.objects.get(name=f["label"]), begin=_begin, end=_end)
 
 def _create_cv(cv, _mep):
     if type(cv) is list:

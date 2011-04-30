@@ -104,11 +104,15 @@ class DeleguationRole(models.Model):
     mep = models.ForeignKey(Mep)
     deleguation = models.ForeignKey(Deleguation)
     role = models.CharField(max_length=255)
+    begin = models.DateField(null=True)
+    end = models.DateField(null=True)
 
 class CommitteRole(models.Model):
     mep = models.ForeignKey(Mep)
     committe = models.ForeignKey(Committe)
     role = models.CharField(max_length=255)
+    begin = models.DateField(null=True)
+    end = models.DateField(null=True)
 
 class OpinionMep(models.Model):
     mep = models.ForeignKey(Mep)
