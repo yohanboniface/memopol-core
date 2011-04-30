@@ -8,7 +8,7 @@ import os
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/apps/"]
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/"]
 
-from meps.models import Deleguation, Committe
+from meps.models import Deleguation, Committe, Country
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -20,6 +20,8 @@ def clean():
     Deleguation.objects.all().delete()
     print " * remove Committe"
     Committe.objects.all().delete()
+    print " * remove Country"
+    Country.objects.all().delete()
 
 def manage_meps(path):
     print "Load meps json."
@@ -46,6 +48,11 @@ def manage_meps(path):
             except KeyError, e:
                 print function
                 raise e
+
+        country = mep["infos"]["constituency"]["country"]
+        if not Country.objects.filter(code=country["code"]):
+            print "   new country: %s (%s)" % (country["name"], country["code"])
+            Country.objects.create(code=country["code"], name=country["name"])
 
 if __name__ == "__main__":
     path = sys.argv[1]

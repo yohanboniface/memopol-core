@@ -13,3 +13,6 @@ class Committe(models.Model):
     def __unicode__(self):
         return u"%s: %s" % (self.abbreviation, self.name)
 
+class Country(models.Model):
+    code = models.CharField(max_length=3, unique=True)
+    name = models.CharField(max_length=30, unique=True)
