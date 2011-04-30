@@ -10,7 +10,7 @@ from datetime import date
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/apps/"]
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/"]
 
-from meps.models import Deleguation, Committe, Country, Group, Opinion, Mep, Email, CV
+from meps.models import Deleguation, Committe, Country, Group, Opinion, Mep, Email, CV, Party
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -32,6 +32,8 @@ def clean():
     Country.objects.all().delete()
     print " * remove Group"
     Group.objects.all().delete()
+    print " * remove Party"
+    Party.objects.all().delete()
     print " * remove Opinion"
     Opinion.objects.all().delete()
 
@@ -55,10 +57,14 @@ def _create_countries(country):
         print "   new country: %s (%s)" % (country["name"], country["code"])
         Country.objects.create(code=country["code"], name=country["name"])
 
-def _create_groups(group):
+def _create_groups_and_party(group):
     if not Group.objects.filter(abbreviation=group["abbreviation"]):
         print "   new group: %s (%s)" % (group["name"], group["abbreviation"])
         Group.objects.create(abbreviation=group["abbreviation"], name=group["name"])
+
+    if not Party.objects.filter(name=group["party"]):
+        print "   new party:", group["party"]
+        Party.objects.create(name=group["party"])
 
 def _create_opinions(opinions):
     for opinion in opinions:
@@ -117,7 +123,7 @@ def manage_meps(path):
         print " *", a, "-", mep["infos"]["name"]["full"], "-", mep["_id"]
         _create_functions(mep["functions"])
         _create_countries(mep["infos"]["constituency"]["country"])
-        _create_groups(mep["infos"]["group"])
+        _create_groups_and_party(mep["infos"]["group"])
         _create_opinions(mep["opinions"])
         _create_mep(mep)
         if mep["cv"]:
