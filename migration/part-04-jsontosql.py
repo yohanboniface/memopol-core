@@ -35,17 +35,11 @@ def manage_meps(path):
                     Committe.objects.create(abbreviation=function["abbreviation"],
                                             name=function["label"])
                 elif not Deleguation.objects.filter(name=function["label"]):
-                    Deleguation.objects.create(name=function["label"])
+                    Deleguation.objects.create(name=function["label"].get("text", function["label"]))
                 else:
                     pass
             except KeyError, e:
                 print function
-                raise e
-            except Exception, e:
-                print function
-                print Committe.objects.filter(name=function["label"])
-                print Committe.objects.filter(abbreviation=function["abbreviation"])
-                print Deleguation.objects.filter(name=function["label"])
                 raise e
 
 if __name__ == "__main__":
