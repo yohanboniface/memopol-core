@@ -6,9 +6,20 @@ class Mep(models.Model):
     last_name = models.CharField(max_length=255)
     full_name = models.CharField(max_length=255, unique=True)
     gender = models.CharField(max_length=2, choices=((u'M', u'Male'), (u'F', u'Female')))
+    picture = models.CharField(max_length=255, unique=True)
     birth_date = models.DateField()
     birth_place = models.CharField(max_length=255)
     ep_id = models.IntegerField()
+    ep_opinions = models.URLField()
+    ep_debates = models.URLField()
+    ep_questions = models.URLField()
+    ep_declarations = models.URLField()
+    ep_reports = models.URLField()
+    ep_motions = models.URLField()
+    ep_webpage = models.URLField()
+
+    def __unicode__(self):
+        return self.full_name
 
 class Deleguation(models.Model):
     name = models.CharField(max_length=255, unique=True)

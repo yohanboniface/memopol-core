@@ -70,9 +70,17 @@ def _create_mep(mep):
                        last_name=name["last"],
                        full_name=name["full"],
                        gender=mep["infos"]["gender"],
+                       picture=mep["infos"]["picture"],
                        birth_place=mep["infos"]["birth"]["place"],
                        birth_date=date(int(birth_date["year"]), int(birth_date["month"]), int(birth_date["day"])),
-                       ep_id=mep["extid"])
+                       ep_id=mep["extid"],
+                       ep_opinions=mep["activities"]["opinions"],
+                       ep_debates=mep["activities"]["debates"],
+                       ep_questions=mep["activities"]["questions"],
+                       ep_declarations=mep["activities"]["declarations"],
+                       ep_reports=mep["activities"]["reports"],
+                       ep_motions=mep["activities"]["motions"],
+                       ep_webpage=mep["contact"]["web"][0]["text"])
 
 def manage_meps(path):
     print "Load meps json."
