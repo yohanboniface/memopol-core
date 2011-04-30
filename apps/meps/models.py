@@ -19,3 +19,10 @@ class Country(models.Model):
 
     def __unicode__(self):
         return u"%s - %s" % (self.code, self.name)
+
+class Group(models.Model):
+    abbreviation = models.CharField(max_length=3, unique=True)
+    name = models.CharField(max_length=100, unique=True)
+
+    def __unicode__(self):
+        return u"%s - %s" % (self.abbreviation, self.name)

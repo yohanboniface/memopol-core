@@ -8,7 +8,7 @@ import os
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/apps/"]
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/"]
 
-from meps.models import Deleguation, Committe, Country
+from meps.models import Deleguation, Committe, Country, Group
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -22,6 +22,8 @@ def clean():
     Committe.objects.all().delete()
     print " * remove Country"
     Country.objects.all().delete()
+    print " * remove Group"
+    Group.objects.all().delete()
 
 def manage_meps(path):
     print "Load meps json."
@@ -53,6 +55,12 @@ def manage_meps(path):
         if not Country.objects.filter(code=country["code"]):
             print "   new country: %s (%s)" % (country["name"], country["code"])
             Country.objects.create(code=country["code"], name=country["name"])
+
+        group = mep["infos"]["group"]
+        if not Group.objects.filter(abbreviation=group["abbreviation"]):
+            print "   new group: %s (%s)" % (group["name"], group["abbreviation"])
+            Group.objects.create(abbreviation=group["abbreviation"], name=group["name"])
+
 
 if __name__ == "__main__":
     path = sys.argv[1]
