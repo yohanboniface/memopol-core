@@ -40,6 +40,7 @@ class Mep(models.Model):
 
 class Email(models.Model):
     email = models.EmailField()
+    mep = models.ForeignKey(Mep)
 
 class CV(models.Model):
     title = models.CharField(max_length=255)

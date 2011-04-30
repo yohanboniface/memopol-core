@@ -77,7 +77,7 @@ def _create_opinions(opinions):
 def _create_mep(mep):
     name = mep["infos"]["name"]
     birth_date = mep["infos"]["birth"]["date"]
-    Mep.objects.create(key_name=name["wiki"],
+    _mep = Mep.objects.create(key_name=name["wiki"],
                        first_name=name["first"],
                        last_name=name["last"],
                        full_name=name["full"],
@@ -113,10 +113,10 @@ def _create_mep(mep):
     if type(mep["contact"]["email"]) is list:
         for email in mep["contact"]["email"]:
             print "   new email", email
-            Email.objects.create(email=email)
+            Email.objects.create(email=email, mep=_mep)
     else:
         print "   new email", mep["contact"]["email"]["text"]
-        Email.objects.create(email=mep["contact"]["email"]["text"])
+        Email.objects.create(email=mep["contact"]["email"]["text"], mep=_mep)
 
     if mep["contact"]["web"][1:]:
         for i in mep["contact"]["web"][1:]:
