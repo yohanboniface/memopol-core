@@ -1,5 +1,11 @@
 from django.db import models
 
+class Party(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __unicode__(self):
+        return self.name
+
 class Mep(models.Model):
     key_name = models.CharField(max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
@@ -33,6 +39,7 @@ class Mep(models.Model):
     stg_phone2 = models.CharField(max_length=255)
     stg_street = models.CharField(max_length=255)
     stg_postcode = models.CharField(max_length=255)
+    party = models.ForeignKey(Party)
 
 
     def __unicode__(self):
@@ -45,12 +52,6 @@ class Email(models.Model):
 class CV(models.Model):
     title = models.CharField(max_length=255)
     mep = models.ForeignKey(Mep)
-
-class Party(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-
-    def __unicode__(self):
-        return self.name
 
 class WebSite(models.Model):
     url = models.URLField()
