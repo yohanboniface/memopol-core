@@ -71,7 +71,7 @@ def _create_mep(mep):
                        full_name=name["full"],
                        gender=mep["infos"]["gender"],
                        picture=mep["infos"]["picture"],
-                       birth_place=mep["infos"]["birth"]["place"],
+                       birth_place=mep["infos"]["birth"]["place"]["city"],
                        birth_date=date(int(birth_date["year"]), int(birth_date["month"]), int(birth_date["day"])),
                        ep_id=mep["extid"],
                        ep_opinions=mep["activities"]["opinions"],
