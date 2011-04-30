@@ -80,7 +80,7 @@ def _create_opinions(opinions, _mep):
 
         _date = datetime.strptime(opinion["date"], "%d/%m/%Y").date()
         print "   new link to opinion:", _mep.full_name, _date
-        OpinionMep.objects.create(mep=_mep, opinion=Opinion.objects.get(title=opinion["title"], date=_date))
+        OpinionMep.objects.create(mep=_mep, opinion=Opinion.objects.get(title=opinion["title"]), date=_date)
 
 def _create_mep(mep):
     name = mep["infos"]["name"]
