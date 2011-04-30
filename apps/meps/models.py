@@ -78,6 +78,7 @@ class Mep(models.Model):
     group = models.ForeignKey(Group)
     group_role = models.CharField(max_length=63)
     country = models.ForeignKey(Country)
+    deleguations = models.ManyToManyField(Deleguation, through='DeleguationRole')
 
     def __unicode__(self):
         return self.full_name
@@ -97,4 +98,8 @@ class WebSite(models.Model):
     def __unicode__(self):
         return self.url
 
+class DeleguationRole(models.Model):
+    mep = models.ForeignKey(Mep)
+    deleguation = models.ForeignKey(Deleguation)
+    role = models.CharField(max_length=255)
 

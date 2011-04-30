@@ -10,7 +10,7 @@ from datetime import date
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/apps/"]
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/"]
 
-from meps.models import Deleguation, Committe, Country, Group, Opinion, Mep, Email, CV, Party, WebSite
+from meps.models import Deleguation, Committe, Country, Group, Opinion, Mep, Email, CV, Party, WebSite, DeleguationRole
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -18,6 +18,8 @@ VOTES = "votes.xml.json"
 
 def clean():
     print "Clean database:"
+    print " * remove DeleguationRole"
+    DeleguationRole.objects.all().delete()
     print " * remove Mep"
     Mep.objects.all().delete()
     print " * remove Email"
@@ -129,6 +131,11 @@ def _create_mep(mep):
 
     return _mep
 
+def _create_role(functions, _mep):
+    for f in functions:
+        if not f.get("abbreviation"):
+            DeleguationRole.objects.create(mep=_mep, role=f["role"], deleguation=Deleguation.objects.get(name=f["label"]))
+
 def _create_cv(cv, _mep):
     if type(cv) is list:
         for c in cv:
@@ -155,6 +162,7 @@ def manage_meps(path):
         _create_opinions(mep["opinions"])
         _create_mep(mep)
         _mep = _create_mep(mep)
+        _create_role(mep["functions"], _mep)
         if mep["cv"]:
             _create_cv(mep["cv"]["position"], _mep)
 
