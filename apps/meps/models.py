@@ -1,5 +1,12 @@
 from django.db import models
 
+class Country(models.Model):
+    code = models.CharField(max_length=2, unique=True)
+    name = models.CharField(max_length=30, unique=True)
+
+    def __unicode__(self):
+        return u"%s - %s" % (self.code, self.name)
+
 class Party(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
@@ -12,6 +19,27 @@ class Group(models.Model):
 
     def __unicode__(self):
         return u"%s - %s" % (self.abbreviation, self.name)
+
+class Deleguation(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __unicode__(self):
+        return self.name
+
+class Committe(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    abbreviation = models.CharField(max_length=30, unique=True)
+
+    def __unicode__(self):
+        return u"%s: %s" % (self.abbreviation, self.name)
+
+class Opinion(models.Model):
+    title = models.CharField(max_length=255, unique=True)
+    content = models.CharField(max_length=255, unique=True)
+    url = models.URLField()
+
+    def __unicode__(self):
+        return self.title
 
 class Mep(models.Model):
     key_name = models.CharField(max_length=255, unique=True)
@@ -49,6 +77,7 @@ class Mep(models.Model):
     party = models.ForeignKey(Party)
     group = models.ForeignKey(Group)
     group_role = models.CharField(max_length=63)
+    country = models.ForeignKey(Country)
 
     def __unicode__(self):
         return self.full_name
@@ -68,30 +97,4 @@ class WebSite(models.Model):
     def __unicode__(self):
         return self.url
 
-class Deleguation(models.Model):
-    name = models.CharField(max_length=255, unique=True)
 
-    def __unicode__(self):
-        return self.name
-
-class Committe(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    abbreviation = models.CharField(max_length=30, unique=True)
-
-    def __unicode__(self):
-        return u"%s: %s" % (self.abbreviation, self.name)
-
-class Country(models.Model):
-    code = models.CharField(max_length=2, unique=True)
-    name = models.CharField(max_length=30, unique=True)
-
-    def __unicode__(self):
-        return u"%s - %s" % (self.code, self.name)
-
-class Opinion(models.Model):
-    title = models.CharField(max_length=255, unique=True)
-    content = models.CharField(max_length=255, unique=True)
-    url = models.URLField()
-
-    def __unicode__(self):
-        return self.title
