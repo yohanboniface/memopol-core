@@ -54,13 +54,9 @@ def _create_groups(group):
 
 def _create_opinions(opinions):
     for opinion in opinions:
-        try:
-            if not Opinion.objects.filter(title=opinion["title"]):
-                print "    new opinion:", opinion["title"]
-                Opinion.objects.create(title=opinion["title"], content=opinion["content"], url=opinion["url"])
-        except KeyError, e:
-            print opinion
-            raise e
+        if not Opinion.objects.filter(title=opinion["title"]):
+            print "    new opinion:", opinion["title"]
+            Opinion.objects.create(title=opinion["title"], content=opinion["content"], url=opinion["url"])
 
 
 def manage_meps(path):
