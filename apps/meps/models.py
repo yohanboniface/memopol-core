@@ -25,6 +25,14 @@ class Mep(models.Model):
     bxl_phone2 = models.CharField(max_length=255)
     bxl_street = models.CharField(max_length=255)
     bxl_postcode = models.CharField(max_length=255)
+    stg_building_name = models.CharField(max_length=255)
+    stg_building_abbreviation = models.CharField(max_length=255)
+    stg_office = models.CharField(max_length=255)
+    stg_fax = models.CharField(max_length=255)
+    stg_phone1 = models.CharField(max_length=255)
+    stg_phone2 = models.CharField(max_length=255)
+    stg_street = models.CharField(max_length=255)
+    stg_postcode = models.CharField(max_length=255)
 
 
     def __unicode__(self):

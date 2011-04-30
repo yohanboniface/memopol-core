@@ -100,7 +100,15 @@ def _create_mep(mep):
                        bxl_phone1=mep["contact"]["address"]["Bruxelles"]["phone"][0],
                        bxl_phone2=mep["contact"]["address"]["Bruxelles"]["phone"][1],
                        bxl_street=mep["contact"]["address"]["Bruxelles"]["street"],
-                       bxl_postcode=mep["contact"]["address"]["Bruxelles"]["postcode"])
+                       bxl_postcode=mep["contact"]["address"]["Bruxelles"]["postcode"],
+                       stg_building_name=mep["contact"]["address"]["Strasbourg"]["building"]["name"],
+                       stg_building_abbreviation=mep["contact"]["address"]["Strasbourg"]["building"]["abbreviation"],
+                       stg_office=mep["contact"]["address"]["Strasbourg"]["office"],
+                       stg_fax=mep["contact"]["address"]["Strasbourg"]["fax"],
+                       stg_phone1=mep["contact"]["address"]["Strasbourg"]["phone"][0],
+                       stg_phone2=mep["contact"]["address"]["Strasbourg"]["phone"][1],
+                       stg_street=mep["contact"]["address"]["Strasbourg"]["street"],
+                       stg_postcode=mep["contact"]["address"]["Strasbourg"]["postcode"])
 
     if type(mep["contact"]["email"]) is list:
         for email in mep["contact"]["email"]:
