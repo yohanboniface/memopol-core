@@ -123,13 +123,15 @@ def _create_mep(mep):
             print "   create website:", i["text"]
             WebSite.objects.create(url=i["text"])
 
-def _create_cv(cv):
+    return _mep
+
+def _create_cv(cv, _mep):
     if type(cv) is list:
         for c in cv:
             print "   new cv:", c
-            CV.objects.create(title=c)
+            CV.objects.create(title=c, mep=_mep)
     else:
-        CV.objects.create(title=cv)
+        CV.objects.create(title=cv, mep=_mep)
 
 def manage_meps(path):
     print
@@ -139,7 +141,7 @@ def manage_meps(path):
     a = 0
     for mep in meps:
         if mep["_id"] in ["LucasHartong", "InnocenzoLeontini"]:
-            # rubish data
+            #rubish data
             continue
         a += 1
         print " *", a, "-", mep["infos"]["name"]["full"], "-", mep["_id"]
@@ -148,8 +150,9 @@ def manage_meps(path):
         _create_groups_and_party(mep["infos"]["group"])
         _create_opinions(mep["opinions"])
         _create_mep(mep)
+        _mep = _create_mep(mep)
         if mep["cv"]:
-            _create_cv(mep["cv"]["position"])
+            _create_cv(mep["cv"]["position"], _mep)
 
 if __name__ == "__main__":
     path = sys.argv[1]

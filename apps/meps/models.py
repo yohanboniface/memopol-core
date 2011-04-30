@@ -44,6 +44,7 @@ class Email(models.Model):
 
 class CV(models.Model):
     title = models.CharField(max_length=255)
+    mep = models.ForeignKey(Mep)
 
 class Party(models.Model):
     name = models.CharField(max_length=255, unique=True)
