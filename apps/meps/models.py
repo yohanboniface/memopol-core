@@ -54,6 +54,7 @@ class Party(models.Model):
 
 class WebSite(models.Model):
     url = models.URLField()
+    mep = models.ForeignKey(Mep)
 
     def __unicode__(self):
         return self.url

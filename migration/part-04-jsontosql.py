@@ -121,7 +121,7 @@ def _create_mep(mep):
     if mep["contact"]["web"][1:]:
         for i in mep["contact"]["web"][1:]:
             print "   create website:", i["text"]
-            WebSite.objects.create(url=i["text"])
+            WebSite.objects.create(url=i["text"], mep=_mep)
 
     return _mep
 
