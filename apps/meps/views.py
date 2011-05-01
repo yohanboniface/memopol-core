@@ -11,7 +11,7 @@ from django.conf import settings
 from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 
-from meps.models import MEP, Position
+from meps.models import MEP
 
 def index_names(request):
     meps_by_name = MEP.view('meps/by_name')
