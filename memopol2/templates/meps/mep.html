@@ -64,11 +64,11 @@
 </div>
 {% endif %}
 
-{% if mep.cv.position %}
+{% if mep.cv %}
 <div id="cv">
     <h2 class="collapsible collapsed">{% trans "CV" %}</h2>
     <ul class="body">
-    {% for line in mep.cv.position %}
+    {% for line in mep.cv %}
         <li>{{ line }}</li>
     {% endfor %}
     </ul>

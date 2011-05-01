@@ -102,6 +102,10 @@ class MEP(models.Model):
     def websites(self):
         return WebSite.objects.filter(mep=self)
 
+    @property
+    def cv(self):
+        return CV.objects.filter(mep=self)
+
     class Meta:
         ordering = ['last_name']
 
@@ -115,6 +119,9 @@ class Email(models.Model):
 class CV(models.Model):
     title = models.CharField(max_length=255)
     mep = models.ForeignKey(MEP)
+
+    def __unicode__(self):
+        return self.title
 
 class WebSite(models.Model):
     url = models.URLField()
