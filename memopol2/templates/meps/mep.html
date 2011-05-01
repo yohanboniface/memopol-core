@@ -30,15 +30,21 @@
     <h2 class="collapsible expanded">{% trans "Contact" %}</h2>
 
         <ul class="body">
-        {% for city,addr in mep.contact.address.items %}
-        <li><b>{{ addr.label|default:_("Other adresse") }}</b><br/>
-            {% if addr.building %} {% trans "Building" %} {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
-            {{ addr.street }}, {{ addr.postcode }} {{ addr.city }}<br/>
-            {% if addr.phone %}{% trans "Tel.: " %}{% for phone in addr.phone %} <a href="callto://{{ phone|cut:" " }}">{{ phone }}</a>&nbsp;{% endfor %}<br/>{% endif %}
-            {% if addr.fax %}{% trans "Fax: " %}{{ addr.fax }}{% endif %}
+
+        <li><b>{% trans "Bruxelles" %}</b><br/>
+            Building {{ mep.bxl_building_name }} {{ mep.bxl_office }}<br/>
+            {{ mep.bxl_street }}, {{ mep.bxl_postcode }} Bruxelles<br/>
+            Tel.:  <a href="callto://{{ mep.bxl_phone1|cut:" " }}">{{ mep.bxl_phone1 }}</a>&nbsp;<a href="callto://{{ mep.bxl_phone2|cut:" " }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
+            Fax: {{ mep.bxl_fax }}
+        </li>
+
+        <li><b>{% trans "Strasbourg" %}</b><br/>
+            Building {{ mep.stg_building_name }} {{ mep.stg_office }}<br/>
+            {{ mep.stg_street }}, {{ mep.stg_postcode }} Strasbourg Cedex<br/>
+            Tel.:  <a href="callto://{{ mep.stg_phone1|cut:" " }}">{{ mep.stg_phone1 }}</a>&nbsp;<a href="callto://{{ mep.stg_phone2|cut:" " }}">{{ mep.stg_phone2 }}</a>&nbsp;<br/>
+            Fax: {{ mep.stg_fax }}
 
         </li>
-        {% endfor %}
 
 
         <li><i>{% trans "E-mail&nbsp;: " %}</i>{% for email in mep.email_set.all %}<a href="mailto:{{ email }}">{{ email }}</a> {% endfor %}</li>
