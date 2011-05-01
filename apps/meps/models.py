@@ -94,10 +94,6 @@ class MEP(models.Model):
     def __unicode__(self):
         return self.full_name
 
-    @property
-    def cv(self):
-        return CV.objects.filter(mep=self)
-
     class Meta:
         ordering = ['last_name']
 
