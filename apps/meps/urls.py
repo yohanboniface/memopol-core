@@ -2,7 +2,7 @@ from django.conf.urls.defaults import patterns, url
 from django.views.generic import list_detail
 
 from meps import views
-from meps.models import MEP, Country, Group
+from meps.models import MEP, Country, Group, Committe
 
 
 urlpatterns = patterns('',
@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^country/(?P<country_code>[a-zA-Z][a-zA-Z])/$', views.index_by_country, name='index_by_country'),
     url(r'^groups/$', list_detail.object_list, {'queryset': Group.objects.all()}, name='index_groups'),
     url(r'^group/(?P<group>[a-zA-Z/-]+)/$', views.index_by_group, name='index_by_group'),
+    url(r'^committes/$', list_detail.object_list, {'queryset': Committe.objects.all()}, name='index_committes'),
 
     url(r'^mep/(?P<mep_id>\w+)/$', views.mep, name='mep'),
     url(r'^mep/(?P<mep_id>\w+)/raw/$', views.mep_raw, name='mep_raw'),

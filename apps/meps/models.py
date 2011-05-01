@@ -41,6 +41,10 @@ class Committe(models.Model):
     def __unicode__(self):
         return u"%s: %s" % (self.abbreviation, self.name)
 
+    @property
+    def count(self):
+        return len(self.committerole_set.all())
+
 class Opinion(models.Model):
     title = models.CharField(max_length=255, unique=True)
     content = models.CharField(max_length=255, unique=True)
