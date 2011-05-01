@@ -11,7 +11,7 @@ from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 from django.views.generic import list_detail
 
-from meps.models import MEP, Country, Group
+from meps.models import MEP, Country, Group, Committe
 
 def index_by_country(request, country_code):
     country = get_object_or_404(Country, code=country_code)
@@ -28,6 +28,15 @@ def index_by_group(request, group):
     return list_detail.object_list(
         request,
         queryset=MEP.objects.filter(active=True, group=group),
+        template_name='meps/mep_list.html'
+    )
+
+def index_by_committe(request, committe):
+    committe = get_object_or_404(Committe, abbreviation=committe)
+
+    return list_detail.object_list(
+        request,
+        queryset=committe.mep_set.filter(active=True),
         template_name='meps/mep_list.html'
     )
 

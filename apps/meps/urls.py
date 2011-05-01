@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^groups/$', list_detail.object_list, {'queryset': Group.objects.all()}, name='index_groups'),
     url(r'^group/(?P<group>[a-zA-Z/-]+)/$', views.index_by_group, name='index_by_group'),
     url(r'^committes/$', list_detail.object_list, {'queryset': Committe.objects.all()}, name='index_committes'),
+    url(r'^committe/(?P<committe>[A-Z]+)/$', views.index_by_committe, name='index_committes'),
 
     url(r'^mep/(?P<mep_id>\w+)/$', views.mep, name='mep'),
     url(r'^mep/(?P<mep_id>\w+)/raw/$', views.mep_raw, name='mep_raw'),
