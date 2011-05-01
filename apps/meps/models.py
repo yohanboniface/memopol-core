@@ -42,6 +42,7 @@ class Opinion(models.Model):
         return self.title
 
 class MEP(models.Model):
+    active = models.BooleanField()
     key_name = models.CharField(max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
