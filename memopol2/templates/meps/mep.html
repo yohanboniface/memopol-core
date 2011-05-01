@@ -48,10 +48,10 @@
 
         <li><i>{% trans "E-mail&nbsp;: " %}</i>{% for email in mep.email_set.all %}<a href="mailto:{{ email }}">{{ email }}</a> {% endfor %}</li>
 
-        <li><i>{% trans "Web&nbsp;: " %}</i><a target="_" href="{{ mep.ep_webpage }}">{% trans "Page sur le site du Parlement européen" %}</a></li>
+        <li><i>{% trans "Website&nbsp;: " %}</i><a target="_" href="{{ mep.ep_webpage }}">{% trans "Page sur le site du Parlement européen" %}</a></li>
         {% for website in mep.website_set.all %}
         <li>
-            <i>{% trans "Web&nbsp;: " %}</i><a target="_" href="{{ website }}">{{ webaddr.type|default:webaddr.text }}</a>
+            <i>{% trans "Other website&nbsp;: " %}</i><a target="_" href="{{ website }}">{{ website }}</a>
         </li>
         {% endfor %}
 
