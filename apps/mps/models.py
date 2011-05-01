@@ -1,5 +1,9 @@
 from django.db import models
 
+class Function(models.Model):
+    type = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
+
 class MP(models.Model):
     active = models.BooleanField()
     key_name = models.CharField(max_length=255, unique=True, primary_key=True)
@@ -20,6 +24,3 @@ class MP(models.Model):
     an_webpage = models.URLField()
     profession = models.CharField(max_length=255, null=True)
 
-class Function(models.Model):
-    type = models.CharField(max_length=255)
-    title = models.CharField(max_length=255)
