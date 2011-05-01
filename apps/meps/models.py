@@ -17,6 +17,10 @@ class Party(models.Model):
     def __unicode__(self):
         return self.name
 
+    @property
+    def count(self):
+        return len(self.mep_set.filter(active=True))
+
 class Group(models.Model):
     abbreviation = models.CharField(max_length=10, unique=True)
     name = models.CharField(max_length=100, unique=True)

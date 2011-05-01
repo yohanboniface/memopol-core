@@ -11,7 +11,7 @@ from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 from django.views.generic import list_detail
 
-from meps.models import MEP, Country, Group, Committe, Deleguation
+from meps.models import MEP, Country, Group, Committe, Deleguation, Party
 
 def index_by_country(request, country_code):
     country = get_object_or_404(Country, code=country_code)
@@ -46,6 +46,15 @@ def index_by_deleguation(request, deleguation):
     return list_detail.object_list(
         request,
         queryset=deleguation.mep_set.filter(active=True),
+        template_name='meps/mep_list.html'
+    )
+
+def index_by_party(request, party):
+    party = get_object_or_404(Party, id=party)
+
+    return list_detail.object_list(
+        request,
+        queryset=party.mep_set.filter(active=True),
         template_name='meps/mep_list.html'
     )
 
