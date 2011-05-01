@@ -98,6 +98,10 @@ class MEP(models.Model):
     def emails(self):
         return Email.objects.filter(mep=self)
 
+    @property
+    def websites(self):
+        return WebSite.objects.filter(mep=self)
+
     class Meta:
         ordering = ['last_name']
 
