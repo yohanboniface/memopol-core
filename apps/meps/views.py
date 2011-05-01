@@ -1,5 +1,4 @@
 import time
-from os.path import realpath
 from datetime import datetime
 
 import simplejson
