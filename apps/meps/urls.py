@@ -3,7 +3,7 @@ from django.conf.urls.defaults import patterns, url
 from meps import views
 
 
-urlpatterns = patterns('', 
+urlpatterns = patterns('',
     url(r'^names/$', views.index_names, name='index_names'),
     url(r'^countries/$', views.index_countries, name='index_countries'),
     url(r'^country/(?P<country_code>[a-zA-Z][a-zA-Z])/$', views.index_by_country, name='index_by_country'),
