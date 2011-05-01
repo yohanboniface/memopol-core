@@ -77,46 +77,9 @@ def autoTrophies(mep):
     return [(x[1], x[2]) for x in sorted(res, reverse=True)]
 
 def mep(request, mep_id):
-    mep_ = MEP.get(mep_id)
-    mep_['achievements']=autoTrophies(mep_)
-    positions = Position.objects.filter(mep_id=mep_id)
-    score_list = mep_.scores
-    for score in score_list:
-        score['color'] = score_to_color(int(score['value']))
-    score_list.sort(key = lambda k : datetime.strptime(k['date'], "%d/%m/%Y"))
-    scores = [s['value'] for s in mep_.scores]
+    mep = get_object_or_404(MEP, key_name=mep_id)
 
-    if score_list:
-        try:
-            import numpy
-            import matplotlib
-            matplotlib.use("Agg")
-            from matplotlib import pyplot
-
-            pyplot.plot(scores, 'bo')
-            a, b = numpy.polyfit(range(len(scores)), [int(x) for x in scores], 1)
-            pyplot.plot([a*int(x) + b for x in range(len(scores))])
-            pyplot.legend(('Scores', 'Mediane'), 'best', shadow=True)
-            pyplot.plot(scores)
-            pyplot.axis([0, len(scores) - 1, 0, 102])
-            pyplot.title("%s - Votes notes evolution over time" % (mep_.infos['name']['full']))
-            pyplot.xticks(range(len(scores)), [k['date'] for k in score_list])
-            pyplot.xlabel("Votes dates")
-            pyplot.ylabel("Scores on votes")
-            pyplot.savefig(realpath(".%simg/trends/meps/%s-scores.png" % (settings.MEDIA_URL, mep_id)), format="png")
-            pyplot.clf()
-        except ImportError:
-            pass
-
-    context = {
-        'mep_id': mep_id,
-        'mep': mep_,
-        'positions': positions,
-        'visible_count': len([x for x in positions if x.visible]),
-        'average': sum(scores)/len(scores) if len(scores) > 0 else "",
-        'score_list' : score_list,
-    }
-    return direct_to_template(request, 'meps/mep.html', context)
+    return direct_to_template(request, 'meps/mep.html', {'mep': mep})
 
 def mep_json(request, mep_id):
     mep_ = MEP.get(mep_id)
