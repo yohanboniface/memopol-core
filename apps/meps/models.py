@@ -43,7 +43,7 @@ class Committe(models.Model):
 
     @property
     def count(self):
-        return len(self.committerole_set.all())
+        return len(self.mep_set.filter(active=True))
 
 class Opinion(models.Model):
     title = models.CharField(max_length=255, unique=True)
