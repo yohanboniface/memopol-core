@@ -6,9 +6,7 @@ import os
 
 from datetime import date, datetime
 
-#sys.path += os.path.join(os.path.realpath(os.path.curdir
-sys.path += ["/home/psycojoker/code/django/sqlmemopol2/apps/"]
-sys.path += ["/home/psycojoker/code/django/sqlmemopol2/"]
+sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "apps/"]
 
 from meps.models import Deleguation, Committe, Country, Group, Opinion, MEP, Email, CV, Party, WebSite, DeleguationRole, CommitteRole, OpinionMEP
 
