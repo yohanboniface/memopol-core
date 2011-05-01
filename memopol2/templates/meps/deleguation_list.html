@@ -5,10 +5,12 @@
 <h1>{% trans "MEPs by deleguation" %}</h1>
 <ul class="deleguations">
 {% for deleguation in object_list %}
+    {% if deleguation.count %}
     <li>
         <a href="{% url meps:index_by_deleguation deleguation.id %}">{{ deleguation.name }}</a>
         {% blocktrans with deleguation.count as count %} - {{ count }} MEPs {% endblocktrans %}
     </li>
+    {% endif %}
 {% endfor %}
 </ul>
 
