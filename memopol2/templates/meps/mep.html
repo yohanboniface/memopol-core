@@ -53,12 +53,23 @@
         </ul>
 </div>
 
-{% if mep.functions %}
-<div id="functions">
-    <h2 class="collapsible collapsed">{% trans "Functions" %}</h2>
+{% if mep.committerole_set.all %}
+<div id="committes">
+    <h2 class="collapsible collapsed">{% trans "Committes" %}</h2>
     <ul class="body">
-    {% for function in mep.functions %}
-        <li>{{ function.role }} - {% if function.label.text %}{{ function.label.text}}{% else %}{{ function.label }}{% endif %}</li>
+    {% for role in mep.committerole_set.all %}
+        <li>{{ role.role }} - {{ role.committe }}</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% if mep.deleguationrole_set.all %}
+<div id="deleguations">
+    <h2 class="collapsible collapsed">{% trans "Deleguations" %}</h2>
+    <ul class="body">
+    {% for role in mep.deleguationrole_set.all %}
+        <li>{{ role.role }} - {{ role.deleguation }}</li>
     {% endfor %}
     </ul>
 </div>
