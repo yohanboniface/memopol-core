@@ -120,7 +120,7 @@ def _create_mep(mep):
                        stg_postcode=mep["contact"]["address"]["Strasbourg"]["postcode"],
                        party=Party.objects.get(name=mep["infos"]["group"]["party"]),
                        group_role=mep["infos"]["group"]["role"],
-                       group=Group.objects.get(name=mep["infos"]["group"]["name"]),
+                       group=Group.objects.get(abbreviation=mep["infos"]["group"]["abbreviation"]),
                        country=Country.objects.get(code=mep["infos"]["constituency"]["country"]["code"]))
 
     if type(mep["contact"]["email"]) is list:
