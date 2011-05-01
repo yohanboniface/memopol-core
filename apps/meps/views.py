@@ -12,7 +12,7 @@ from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
 from django.views.generic import list_detail
 
-from meps.models import MEP, Country
+from meps.models import MEP, Country, Group
 
 def index_names(request):
     meps_by_name = MEP.view('meps/by_name')
@@ -50,14 +50,13 @@ def index_by_country(request, country_code):
     )
 
 def index_by_group(request, group):
-    meps_by_group = list(MEP.view('meps/by_group', key=group))
-    group_infos = MEP.view('meps/groups', key=group)
-    meps_by_group.sort(key=lambda mep: mep['last'])
-    context = {
-        'meps': meps_by_group,
-        'group': group_infos.first()['value'],
-    }
-    return direct_to_template(request, 'meps/by_group.html', context)
+    group = get_object_or_404(Group, abbreviation=group)
+
+    return list_detail.object_list(
+        request,
+        queryset=MEP.objects.filter(active=True, group=group),
+        template_name='meps/mep_list.html'
+    )
 
 def score_to_color(score):
     """
