@@ -14,32 +14,6 @@ from django.views.generic import list_detail
 
 from meps.models import MEP, Country, Group
 
-def index_names(request):
-    meps_by_name = MEP.view('meps/by_name')
-    context = {
-        'meps': meps_by_name,
-    }
-    return direct_to_template(request, 'index.html', context)
-
-def index_groups(request):
-
-    groups = list(MEP.view('meps/groups', group=True))
-    groups.sort(key=lambda group: group['value']['count'], reverse=True)
-
-    context = {
-        'groups': groups,
-    }
-    return direct_to_template(request, 'index.html', context)
-
-def index_countries(request):
-    countries = list(MEP.view('meps/countries', group=True))
-    countries.sort(key=lambda group: group['value']['count'], reverse=True)
-
-    context = {
-        'countries': countries,
-    }
-    return direct_to_template(request, 'index.html', context)
-
 def index_by_country(request, country_code):
     country = get_object_or_404(Country, code=country_code)
 
