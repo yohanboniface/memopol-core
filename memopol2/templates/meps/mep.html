@@ -41,7 +41,7 @@
         {% endfor %}
 
 
-        <li><i>{% trans "E-mail&nbsp;: " %}</i><a href="mailto:{{ mep.contact.email.text }}">{{ mep.contact.email.text }}</a></li>
+        <li><i>{% trans "E-mail&nbsp;: " %}</i>{% for email in mep.emails %}<a href="mailto:{{ email }}">{{ email }}</a> {% endfor %}</li>
 
         {% for webaddr in mep.contact.web %}
         <li>

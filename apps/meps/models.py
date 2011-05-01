@@ -94,12 +94,19 @@ class MEP(models.Model):
     def __unicode__(self):
         return self.full_name
 
+    @property
+    def emails(self):
+        return Email.objects.filter(mep=self)
+
     class Meta:
         ordering = ['last_name']
 
 class Email(models.Model):
     email = models.EmailField()
     mep = models.ForeignKey(MEP)
+
+    def __unicode__(self):
+        return self.email
 
 class CV(models.Model):
     title = models.CharField(max_length=255)
