@@ -205,12 +205,16 @@ def _create_mp_functions(mp):
 
 def _create_mp(mp):
     name = mp["infos"]["name"]
+    if name["gender"] == "M.":
+        name["gender"] = "M"
+    elif name["gender"] == "Mme":
+        name["gender"] = "M"
     birth_date = mp["infos"]["birth"]["date"]
     _mp = MP.objects.create(active=mp["active"],
                        key_name=name["wiki"],
                        first_name=name["first"],
                        last_name=name["last"],
-                       gender=name["gender"] if name["gender"] != "M." else "M",
+                       gender=name["gender"],
                        picture=mp["infos"]["picture"],
                        birth_city=mp["infos"]["birth"]["place"]["city"],
                        birth_department=mp["infos"]["birth"]["place"]["department"],
