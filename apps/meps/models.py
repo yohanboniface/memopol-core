@@ -107,6 +107,9 @@ class DeleguationRole(models.Model):
     begin = models.DateField(null=True)
     end = models.DateField(null=True)
 
+    def __unicode__(self):
+        return u"%s : %s" % (self.mep.full_name, self.deleguation)
+
 class CommitteRole(models.Model):
     mep = models.ForeignKey(Mep)
     committe = models.ForeignKey(Committe)
