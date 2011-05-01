@@ -41,6 +41,9 @@ def clean_meps():
     print " * remove Opinion"
     Opinion.objects.all().delete()
 
+def clean_mps():
+    pass
+
 def _create_meps_functions(functions):
     for function in functions:
         if function.get("abbreviation") and not Committe.objects.filter(name=function["label"], abbreviation=function["abbreviation"]):
@@ -190,7 +193,18 @@ def manage_meps(path):
         if mep["cv"]:
             _create_cv(mep["cv"]["position"], _mep)
 
+def manage_mps(path):
+    clean_mps()
+    print
+    print "Load mps json."
+    mps = json.loads(open(os.path.join(path, MPS), "r").read())
+    print
+    a = 0
+    for mp in mps:
+        pass
+
 if __name__ == "__main__":
     path = sys.argv[1]
     manage_meps(path)
+    manage_mps(path)
 
