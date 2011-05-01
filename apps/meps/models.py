@@ -114,6 +114,9 @@ class CommitteRole(models.Model):
     begin = models.DateField(null=True)
     end = models.DateField(null=True)
 
+    def __unicode__(self):
+        return u"%s : %s" % (self.committe.abbreviation, self.mep.full_name)
+
 class OpinionMep(models.Model):
     mep = models.ForeignKey(Mep)
     opinion = models.ForeignKey(Opinion)
