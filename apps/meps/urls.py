@@ -1,10 +1,12 @@
 from django.conf.urls.defaults import patterns, url
+from django.views.generic import list_detail
 
 from meps import views
+from meps.models import MEP
 
 
 urlpatterns = patterns('',
-    url(r'^names/$', views.index_names, name='index_names'),
+    url(r'^names/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=True)}, name='index_names'),
     url(r'^countries/$', views.index_countries, name='index_countries'),
     url(r'^country/(?P<country_code>[a-zA-Z][a-zA-Z])/$', views.index_by_country, name='index_by_country'),
     url(r'^groups/$', views.index_groups, name='index_groups'),
