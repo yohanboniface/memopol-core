@@ -24,6 +24,10 @@ class Group(models.Model):
     def __unicode__(self):
         return u"%s - %s" % (self.abbreviation, self.name)
 
+    @property
+    def count(self):
+        return len(MEP.objects.filter(group=self, active=True))
+
 class Deleguation(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
