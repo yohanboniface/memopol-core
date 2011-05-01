@@ -7,6 +7,10 @@ class Country(models.Model):
     def __unicode__(self):
         return u"%s - %s" % (self.code, self.name)
 
+    @property
+    def count(self):
+        return len(MEP.objects.filter(country=self, active=True))
+
 class Party(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
