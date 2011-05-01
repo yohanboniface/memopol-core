@@ -9,7 +9,7 @@ from datetime import date, datetime
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "apps/"]
 
 from meps.models import Deleguation, Committe, Country, Group, Opinion, MEP, Email, CV, Party, WebSite, DeleguationRole, CommitteRole, OpinionMEP
-from mps.models import MP
+from mps.models import MP, Function
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -196,6 +196,11 @@ def manage_meps(path):
         if mep["cv"]:
             _create_cv(mep["cv"]["position"], _mep)
 
+def _create_mp_functions(mp):
+    for function in mp["functions"]:
+        print "   create new", function["type"], ":", function["label"]
+        Function.objects.create(type=function["type"], title=function["label"])
+
 def _create_mp(mp):
     name = mp["infos"]["name"]
     birth_date = mp["infos"]["birth"]["date"]
@@ -231,6 +236,7 @@ def manage_mps(path):
         a += 1
         print "  *", a, "-", mp["infos"]["name"]["first"], mp["infos"]["name"]["last"], "-", mp["_id"]
         _mep = _create_mp(mp)
+        _create_mp_functions(mp)
 
 if __name__ == "__main__":
     path = sys.argv[1]

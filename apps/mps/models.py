@@ -19,3 +19,7 @@ class MP(models.Model):
     an_propositions = models.URLField()
     an_webpage = models.URLField()
     profession = models.CharField(max_length=255, null=True)
+
+class Function(models.Model):
+    type = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
