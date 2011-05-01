@@ -41,7 +41,7 @@
         {% endfor %}
 
 
-        <li><i>{% trans "E-mail&nbsp;: " %}</i>{% for email in mep.emails %}<a href="mailto:{{ email }}">{{ email }}</a> {% endfor %}</li>
+        <li><i>{% trans "E-mail&nbsp;: " %}</i>{% for email in mep.email_set.all %}<a href="mailto:{{ email }}">{{ email }}</a> {% endfor %}</li>
 
         <li><i>{% trans "Web&nbsp;: " %}</i><a target="_" href="{{ mep.ep_webpage }}">{% trans "Page sur le site du Parlement européen" %}</a></li>
         {% for website in mep.websites %}

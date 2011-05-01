@@ -95,10 +95,6 @@ class MEP(models.Model):
         return self.full_name
 
     @property
-    def emails(self):
-        return Email.objects.filter(mep=self)
-
-    @property
     def websites(self):
         return WebSite.objects.filter(mep=self)
 
