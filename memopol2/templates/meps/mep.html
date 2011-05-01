@@ -6,7 +6,7 @@
 
 {% block content %}
 <article>
-<header><h1 id="name">{{ mep.infos.name.first }} {{ mep.infos.name.last|upper }}{% trans ", member of the european parliament" %}</h1></header>
+<header><h1 id="name">{{ mep.first_name }} {{ mep.last_name|upper }}{% trans ", member of the european parliament" %}</h1></header>
 
 <section id="summary">
 <h1 class="collapsible expanded">{% trans "General information" %}</h1>
