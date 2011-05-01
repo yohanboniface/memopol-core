@@ -6,7 +6,7 @@
 <ul class="deleguations">
 {% for deleguation in object_list %}
     <li>
-        <a href="">{{ deleguation.name }}</a>
+        <a href="{% url meps:index_by_deleguation deleguation.id %}">{{ deleguation.name }}</a>
         {% blocktrans with deleguation.count as count %} - {{ count }} MEPs {% endblocktrans %}
     </li>
 {% endfor %}
