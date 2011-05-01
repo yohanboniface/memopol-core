@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{% trans "MEPs by deleguation" %}</h1>
+<ul class="deleguations">
+{% for deleguation in object_list %}
+    <li>
+        <a href="">{{ deleguation.name }}</a>
+        {% blocktrans with deleguation.count as count %} - {{ count }} MEPs {% endblocktrans %}
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}
