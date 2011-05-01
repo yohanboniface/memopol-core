@@ -15,7 +15,7 @@ MPS = "mps.xml.json"
 VOTES = "votes.xml.json"
 
 def clean_meps():
-    print "Clean database:"
+    print "Clean meps database:"
     print " * remove DeleguationRole"
     DeleguationRole.objects.all().delete()
     print " * remove CommitteRole"
