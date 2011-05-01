@@ -14,7 +14,7 @@ MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
 VOTES = "votes.xml.json"
 
-def clean():
+def clean_meps():
     print "Clean database:"
     print " * remove DeleguationRole"
     DeleguationRole.objects.all().delete()
@@ -169,6 +169,7 @@ def _create_cv(cv, _mep):
         CV.objects.create(title=cv, mep=_mep)
 
 def manage_meps(path):
+    clean_meps()
     print
     print "Load meps json."
     meps = json.loads(open(os.path.join(path, MEPS), "r").read())
@@ -191,6 +192,5 @@ def manage_meps(path):
 
 if __name__ == "__main__":
     path = sys.argv[1]
-    clean()
     manage_meps(path)
 
