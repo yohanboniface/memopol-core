@@ -10,8 +10,9 @@ from django.core import serializers
 from django.conf import settings
 from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
+from django.views.generic import list_detail
 
-from meps.models import MEP
+from meps.models import MEP, Country
 
 def index_names(request):
     meps_by_name = MEP.view('meps/by_name')
@@ -40,15 +41,13 @@ def index_countries(request):
     return direct_to_template(request, 'index.html', context)
 
 def index_by_country(request, country_code):
-    meps_by_country = list(MEP.view('meps/by_country', key=country_code))
-    country_infos = MEP.view('meps/countries', key=country_code)
-    meps_by_country.sort(key=lambda mep: mep['last'])
+    country = get_object_or_404(Country, code=country_code)
 
-    context = {
-        'meps': meps_by_country,
-        'country': list(country_infos)[0]['value']['name'],
-    }
-    return direct_to_template(request, 'index.html', context)
+    return list_detail.object_list(
+        request,
+        queryset=MEP.objects.filter(active=True, country=country),
+        template_name='meps/mep_list.html'
+    )
 
 def index_by_group(request, group):
     meps_by_group = list(MEP.view('meps/by_group', key=group))
