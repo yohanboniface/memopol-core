@@ -63,7 +63,7 @@
     <h2 class="collapsible collapsed">{% trans "Committes" %}</h2>
     <ul class="body">
     {% for role in mep.committerole_set.all %}
-        <li>{{ role.role }} - {{ role.committe }}</li>
+        <li><a href="{% url meps:index_by_committe role.committe.abbreviation %}">{{ role.role }} - {{ role.committe }}</a></li>
     {% endfor %}
     </ul>
 </div>
@@ -74,7 +74,7 @@
     <h2 class="collapsible collapsed">{% trans "Deleguations" %}</h2>
     <ul class="body">
     {% for role in mep.deleguationrole_set.all %}
-        <li>{{ role.role }} - {{ role.deleguation }}</li>
+        <li><a href="{% url meps:index_by_deleguation role.deleguation.id %}">{{ role.role }} - {{ role.deleguation }}</a></li>
     {% endfor %}
     </ul>
 </div>
