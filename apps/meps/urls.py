@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^committes/$', list_detail.object_list, {'queryset': Committe.objects.all()}, name='index_committes'),
     url(r'^committe/(?P<committe>[A-Z]+)/$', views.index_by_committe, name='index_by_committe'),
     url(r'^deleguations/$', list_detail.object_list, {'queryset': Deleguation.objects.all()}, name='index_deleguations'),
+    url(r'^deleguation/(?P<deleguation>[0-9]+)/$', views.index_by_deleguation, name='index_by_deleguation'),
 
     url(r'^mep/(?P<mep_id>\w+)/$', views.mep, name='mep'),
     url(r'^mep/(?P<mep_id>\w+)/raw/$', views.mep_raw, name='mep_raw'),
