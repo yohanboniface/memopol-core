@@ -95,10 +95,6 @@ class MEP(models.Model):
         return self.full_name
 
     @property
-    def websites(self):
-        return WebSite.objects.filter(mep=self)
-
-    @property
     def cv(self):
         return CV.objects.filter(mep=self)
 
