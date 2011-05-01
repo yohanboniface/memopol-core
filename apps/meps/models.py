@@ -34,6 +34,10 @@ class Deleguation(models.Model):
     def __unicode__(self):
         return self.name
 
+    @property
+    def count(self):
+        return len(self.mep_set.filter(active=True))
+
 class Committe(models.Model):
     name = models.CharField(max_length=255, unique=True)
     abbreviation = models.CharField(max_length=30, unique=True)
