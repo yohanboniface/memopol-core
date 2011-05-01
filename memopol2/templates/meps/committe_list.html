@@ -6,9 +6,7 @@
 <ul class="committes">
 {% for committe in object_list %}
     <li>
-        <a href="">
-            {{ committe.name }} ({{ committe.abbreviation }})
-        </a>
+        <a href="{% url meps:index_by_committe committe.abbreviation %}">{{ committe.name }} ({{ committe.abbreviation }})</a>
         {% blocktrans with committe.count as count %} - {{ count }} MEPs {% endblocktrans %}
     </li>
 {% endfor %}
