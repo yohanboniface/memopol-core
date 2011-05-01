@@ -85,6 +85,9 @@ class MEP(models.Model):
     def __unicode__(self):
         return self.full_name
 
+    class Meta:
+        ordering = ['last_name']
+
 class Email(models.Model):
     email = models.EmailField()
     mep = models.ForeignKey(MEP)
