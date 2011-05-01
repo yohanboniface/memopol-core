@@ -46,6 +46,8 @@ def clean_mps():
     print "Clean mps database:"
     print " * remove MP"
     MP.objects.all().delete()
+    print " * remove Function"
+    Function.objects.all().delete()
 
 def _create_meps_functions(functions):
     for function in functions:
