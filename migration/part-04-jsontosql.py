@@ -41,7 +41,7 @@ def clean_meps():
     print " * remove Opinion"
     Opinion.objects.all().delete()
 
-def _create_functions(functions):
+def _create_meps_functions(functions):
     for function in functions:
         if function.get("abbreviation") and not Committe.objects.filter(name=function["label"], abbreviation=function["abbreviation"]):
             print "   new committe:", function["abbreviation"], "-", function["label"]
@@ -181,7 +181,7 @@ def manage_meps(path):
             continue
         a += 1
         print " *", a, "-", mep["infos"]["name"]["full"], "-", mep["_id"]
-        _create_functions(mep["functions"])
+        _create_meps_functions(mep["functions"])
         _create_countries(mep["infos"]["constituency"]["country"])
         _create_groups_and_party(mep["infos"]["group"])
         _mep = _create_mep(mep)
