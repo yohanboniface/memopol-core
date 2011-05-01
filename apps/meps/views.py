@@ -9,54 +9,8 @@ from django.core import serializers
 from django.conf import settings
 from django.views.generic.simple import direct_to_template
 from django.contrib.admin.views.decorators import staff_member_required
-from django.views.generic import list_detail
 
-from meps.models import MEP, Country, Group, Committe, Deleguation, Party
-
-def index_by_country(request, country_code):
-    country = get_object_or_404(Country, code=country_code)
-
-    return list_detail.object_list(
-        request,
-        queryset=MEP.objects.filter(active=True, country=country),
-        template_name='meps/mep_list.html'
-    )
-
-def index_by_group(request, group):
-    group = get_object_or_404(Group, abbreviation=group)
-
-    return list_detail.object_list(
-        request,
-        queryset=MEP.objects.filter(active=True, group=group),
-        template_name='meps/mep_list.html'
-    )
-
-def index_by_committe(request, committe):
-    committe = get_object_or_404(Committe, abbreviation=committe)
-
-    return list_detail.object_list(
-        request,
-        queryset=committe.mep_set.filter(active=True),
-        template_name='meps/mep_list.html'
-    )
-
-def index_by_deleguation(request, deleguation):
-    deleguation = get_object_or_404(Deleguation, id=deleguation)
-
-    return list_detail.object_list(
-        request,
-        queryset=deleguation.mep_set.filter(active=True),
-        template_name='meps/mep_list.html'
-    )
-
-def index_by_party(request, party):
-    party = get_object_or_404(Party, id=party)
-
-    return list_detail.object_list(
-        request,
-        queryset=party.mep_set.filter(active=True),
-        template_name='meps/mep_list.html'
-    )
+from meps.models import MEP
 
 def score_to_color(score):
     """

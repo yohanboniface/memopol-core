@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{% trans "Members of the European Parliament" %}</h1>
+
+    <ul class="col">
+        {% for mep in object.meps %}
+            <li>
+                <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" />
+                <a href="{% url meps:mep mep.key_name %}">{{ mep.last_name }} {{ mep.first_name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

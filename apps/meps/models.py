@@ -9,7 +9,11 @@ class Country(models.Model):
 
     @property
     def count(self):
-        return len(MEP.objects.filter(country=self, active=True))
+        return len(self.meps)
+
+    @property
+    def meps(self):
+        return self.mep_set.filter(active=True)
 
 class Party(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -19,7 +23,12 @@ class Party(models.Model):
 
     @property
     def count(self):
-        return len(self.mep_set.filter(active=True))
+        return len(self.meps)
+
+    @property
+    def meps(self):
+        return self.mep_set.filter(active=True)
+
 
 class Group(models.Model):
     abbreviation = models.CharField(max_length=10, unique=True)
@@ -30,7 +39,12 @@ class Group(models.Model):
 
     @property
     def count(self):
-        return len(MEP.objects.filter(group=self, active=True))
+        return len(self.meps)
+
+    @property
+    def meps(self):
+        return self.mep_set.filter(active=True)
+
 
 class Deleguation(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -40,7 +54,12 @@ class Deleguation(models.Model):
 
     @property
     def count(self):
-        return len(self.mep_set.filter(active=True))
+        return len(self.meps)
+
+    @property
+    def meps(self):
+        return self.mep_set.filter(active=True)
+
 
 class Committe(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -51,7 +70,12 @@ class Committe(models.Model):
 
     @property
     def count(self):
-        return len(self.mep_set.filter(active=True))
+        return len(self.meps)
+
+    @property
+    def meps(self):
+        return self.mep_set.filter(active=True)
+
 
 class Opinion(models.Model):
     title = models.CharField(max_length=255, unique=True)

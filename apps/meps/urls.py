@@ -4,19 +4,24 @@ from django.views.generic import list_detail
 from meps import views
 from meps.models import MEP, Country, Group, Committe, Deleguation, Party
 
+country_dict = {'queryset': Country.objects.all(), 'slug_field':'code', 'template_name' :'meps/container_detail.html' }
+party_dict = {'queryset': Party.objects.all(), 'template_name' :'meps/container_detail.html' }
+group_dict = {'queryset': Group.objects.all(), 'slug_field':'abbreviation', 'template_name' :'meps/container_detail.html' }
+deleguation_dict = {'queryset': Deleguation.objects.all(), 'template_name' :'meps/container_detail.html' }
+committe_dict = {'queryset': Committe.objects.all(), 'slug_field':'abbreviation', 'template_name' :'meps/container_detail.html' }
 
 urlpatterns = patterns('',
     url(r'^names/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=True)}, name='index_names'),
     url(r'^countries/$', list_detail.object_list, {'queryset': Country.objects.all()}, name='index_countries'),
-    url(r'^country/(?P<country_code>[a-zA-Z][a-zA-Z])/$', views.index_by_country, name='index_by_country'),
+    url(r'^country/(?P<slug>[a-zA-Z][a-zA-Z])/$', list_detail.object_detail, country_dict, name='index_by_country'),
     url(r'^groups/$', list_detail.object_list, {'queryset': Group.objects.all()}, name='index_groups'),
-    url(r'^group/(?P<group>[a-zA-Z/-]+)/$', views.index_by_group, name='index_by_group'),
+    url(r'^group/(?P<slug>[a-zA-Z/-]+)/$', list_detail.object_detail, group_dict,  name='index_by_group'),
     url(r'^committes/$', list_detail.object_list, {'queryset': Committe.objects.all()}, name='index_committes'),
-    url(r'^committe/(?P<committe>[A-Z]+)/$', views.index_by_committe, name='index_by_committe'),
+    url(r'^committe/(?P<slug>[A-Z]+)/$', list_detail.object_detail, committe_dict, name='index_by_committe'),
     url(r'^deleguations/$', list_detail.object_list, {'queryset': Deleguation.objects.all()}, name='index_deleguations'),
-    url(r'^deleguation/(?P<deleguation>[0-9]+)/$', views.index_by_deleguation, name='index_by_deleguation'),
+    url(r'^deleguation/(?P<object_id>[0-9]+)/$', list_detail.object_detail, deleguation_dict, name='index_by_deleguation'),
     url(r'^parties/$', list_detail.object_list, {'queryset': Party.objects.all()}, name='index_parties'),
-    url(r'^party/(?P<party>[0-9]+)/$', views.index_by_party, name='index_by_party'),
+    url(r'^party/(?P<object_id>[0-9]+)/$', list_detail.object_detail, party_dict,  name='index_by_party'),
 
     url(r'^mep/(?P<mep_id>\w+)/$', views.mep, name='mep'),
     url(r'^mep/(?P<mep_id>\w+)/raw/$', views.mep_raw, name='mep_raw'),
