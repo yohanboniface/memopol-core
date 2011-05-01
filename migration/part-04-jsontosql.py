@@ -10,7 +10,7 @@ from datetime import date, datetime
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/apps/"]
 sys.path += ["/home/psycojoker/code/django/sqlmemopol2/"]
 
-from meps.models import Deleguation, Committe, Country, Group, Opinion, Mep, Email, CV, Party, WebSite, DeleguationRole, CommitteRole, OpinionMep
+from meps.models import Deleguation, Committe, Country, Group, Opinion, MEP, Email, CV, Party, WebSite, DeleguationRole, CommitteRole, OpinionMEP
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -22,8 +22,8 @@ def clean():
     DeleguationRole.objects.all().delete()
     print " * remove CommitteRole"
     CommitteRole.objects.all().delete()
-    print " * remove Mep"
-    Mep.objects.all().delete()
+    print " * remove MEP"
+    MEP.objects.all().delete()
     print " * remove Email"
     Email.objects.all().delete()
     print " * remove CV"
@@ -80,12 +80,12 @@ def _create_opinions(opinions, _mep):
 
         _date = datetime.strptime(opinion["date"], "%d/%m/%Y").date()
         print "   new link to opinion:", _mep.full_name, _date
-        OpinionMep.objects.create(mep=_mep, opinion=Opinion.objects.get(title=opinion["title"]), date=_date)
+        OpinionMEP.objects.create(mep=_mep, opinion=Opinion.objects.get(title=opinion["title"]), date=_date)
 
 def _create_mep(mep):
     name = mep["infos"]["name"]
     birth_date = mep["infos"]["birth"]["date"]
-    _mep = Mep.objects.create(key_name=name["wiki"],
+    _mep = MEP.objects.create(key_name=name["wiki"],
                        first_name=name["first"],
                        last_name=name["last"],
                        full_name=name["full"],

@@ -41,7 +41,7 @@ class Opinion(models.Model):
     def __unicode__(self):
         return self.title
 
-class Mep(models.Model):
+class MEP(models.Model):
     key_name = models.CharField(max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -79,7 +79,7 @@ class Mep(models.Model):
     group_role = models.CharField(max_length=63)
     country = models.ForeignKey(Country)
     deleguations = models.ManyToManyField(Deleguation, through='DeleguationRole')
-    opinions = models.ManyToManyField(Opinion, through='OpinionMep')
+    opinions = models.ManyToManyField(Opinion, through='OpinionMEP')
     committes = models.ManyToManyField(Committe, through='CommitteRole')
 
     def __unicode__(self):
@@ -87,21 +87,21 @@ class Mep(models.Model):
 
 class Email(models.Model):
     email = models.EmailField()
-    mep = models.ForeignKey(Mep)
+    mep = models.ForeignKey(MEP)
 
 class CV(models.Model):
     title = models.CharField(max_length=255)
-    mep = models.ForeignKey(Mep)
+    mep = models.ForeignKey(MEP)
 
 class WebSite(models.Model):
     url = models.URLField()
-    mep = models.ForeignKey(Mep)
+    mep = models.ForeignKey(MEP)
 
     def __unicode__(self):
         return self.url
 
 class DeleguationRole(models.Model):
-    mep = models.ForeignKey(Mep)
+    mep = models.ForeignKey(MEP)
     deleguation = models.ForeignKey(Deleguation)
     role = models.CharField(max_length=255)
     begin = models.DateField(null=True)
@@ -111,7 +111,7 @@ class DeleguationRole(models.Model):
         return u"%s : %s" % (self.mep.full_name, self.deleguation)
 
 class CommitteRole(models.Model):
-    mep = models.ForeignKey(Mep)
+    mep = models.ForeignKey(MEP)
     committe = models.ForeignKey(Committe)
     role = models.CharField(max_length=255)
     begin = models.DateField(null=True)
@@ -120,8 +120,8 @@ class CommitteRole(models.Model):
     def __unicode__(self):
         return u"%s : %s" % (self.committe.abbreviation, self.mep.full_name)
 
-class OpinionMep(models.Model):
-    mep = models.ForeignKey(Mep)
+class OpinionMEP(models.Model):
+    mep = models.ForeignKey(MEP)
     opinion = models.ForeignKey(Opinion)
     date = models.DateField()
 
