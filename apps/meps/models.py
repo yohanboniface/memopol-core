@@ -124,3 +124,6 @@ class OpinionMep(models.Model):
     mep = models.ForeignKey(Mep)
     opinion = models.ForeignKey(Opinion)
     date = models.DateField()
+
+    def __unicode__(self):
+        return u"%s : %s" % (self.opinion, self.mep)
