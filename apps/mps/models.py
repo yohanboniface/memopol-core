@@ -40,3 +40,7 @@ class OpinionMP(models.Model):
     mp = models.ForeignKey(MP)
     opinion = models.ForeignKey(Opinion)
     date = models.DateField()
+
+class WebSite(models.Model):
+    url = models.URLField()
+    mp = models.ForeignKey(MP)
