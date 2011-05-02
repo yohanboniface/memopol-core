@@ -271,7 +271,8 @@ def _create_mp(mp):
                        an_questions=mp["activities"]["questions"],
                        an_propositions=mp["activities"]["propositions"],
                        an_webpage=mp["contact"]["web"][0]["text"],
-                       profession=mp["infos"].get("profession"))
+                       profession=mp["infos"].get("profession"),
+                       department=Department.objects.get(number=mp["infos"]["constituency"]["department"]["number"]))
 
     if mp["contact"].get("email"):
         if type(mp["contact"]["email"]) is list:

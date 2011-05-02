@@ -33,6 +33,7 @@ class MP(models.Model):
     an_webpage = models.URLField()
     functions = models.ManyToManyField(Function, through='FunctionMP')
     profession = models.CharField(max_length=255, null=True)
+    department = models.ForeignKey(Department)
 
 class FunctionMP(models.Model):
     mp = models.ForeignKey(MP)
