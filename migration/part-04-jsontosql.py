@@ -9,6 +9,7 @@ from datetime import date, datetime
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "apps/"]
 
 from meps.models import Deleguation, Committe, Country, Group, Opinion, MEP, Email, CV, Party, WebSite, DeleguationRole, CommitteRole, OpinionMEP
+from mps.models import MP
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -42,7 +43,9 @@ def clean_meps():
     Opinion.objects.all().delete()
 
 def clean_mps():
-    pass
+    print "Clean mps database:"
+    print " * remove MP"
+    MP.objects.all().delete()
 
 def _create_meps_functions(functions):
     for function in functions:
@@ -193,6 +196,30 @@ def manage_meps(path):
         if mep["cv"]:
             _create_cv(mep["cv"]["position"], _mep)
 
+def _create_mp(mp):
+    name = mp["infos"]["name"]
+    birth_date = mp["infos"]["birth"]["date"]
+    _mp = MP.objects.create(active=mp["active"],
+                       key_name=name["wiki"],
+                       first_name=name["first"],
+                       last_name=name["last"],
+                       gender=name["gender"] if name["gender"] != "M." else "M",
+                       picture=mp["infos"]["picture"],
+                       birth_city=mp["infos"]["birth"]["place"]["city"],
+                       birth_department=mp["infos"]["birth"]["place"]["department"],
+                       birth_date=date(int(birth_date["year"]), int(birth_date["month"]), int(birth_date["day"])),
+                       an_id=mp["extid"],
+                       an_speeches=mp["activities"]["speeches"],
+                       an_debates=mp["activities"].get("debates", None),
+                       an_commissions=mp["activities"]["commissions"],
+                       an_reports=mp["activities"]["reports"],
+                       an_questions=mp["activities"]["questions"],
+                       an_propositions=mp["activities"]["propositions"],
+                       an_webpage=mp["contact"]["web"][0]["text"],
+                       profession=mp["infos"].get("profession"))
+
+    return _mp
+
 def manage_mps(path):
     clean_mps()
     print
@@ -201,7 +228,9 @@ def manage_mps(path):
     print
     a = 0
     for mp in mps:
-        pass
+        a += 1
+        print "  *", a, "-", mp["infos"]["name"]["first"], mp["infos"]["name"]["last"], "-", mp["_id"]
+        _mep = _create_mp(mp)
 
 if __name__ == "__main__":
     path = sys.argv[1]
