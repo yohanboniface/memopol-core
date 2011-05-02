@@ -44,3 +44,7 @@ class OpinionMP(models.Model):
 class WebSite(models.Model):
     url = models.URLField()
     mp = models.ForeignKey(MP)
+
+class Email(models.Model):
+    email = models.EmailField()
+    mp = models.ForeignKey(MP)
