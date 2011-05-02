@@ -11,6 +11,7 @@ sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "
 from meps.models import Deleguation, Committe, Country, Group, Opinion, MEP, Email, CV, Party, WebSite, DeleguationRole, CommitteRole, OpinionMEP
 from mps.models import MP, Function, FunctionMP, OpinionMP
 from mps.models import Opinion as _mp_Opinion
+from mps.models import WebSite as _mp_WebSite
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -55,6 +56,8 @@ def clean_mps():
     MP.objects.all().delete()
     print " * remove Function"
     Function.objects.all().delete()
+    print " * remove WebSite"
+    _mp_WebSite.objects.all().delete()
 
 def _create_meps_functions(functions):
     for function in functions:
@@ -258,6 +261,11 @@ def _create_mp(mp):
                        an_propositions=mp["activities"]["propositions"],
                        an_webpage=mp["contact"]["web"][0]["text"],
                        profession=mp["infos"].get("profession"))
+
+    if mp["contact"]["web"][1:]:
+        for i in mp["contact"]["web"][1:]:
+            print "   create website:", i["text"]
+            _mp_WebSite.objects.create(url=i["text"], mp=_mp)
 
     return _mp
 
