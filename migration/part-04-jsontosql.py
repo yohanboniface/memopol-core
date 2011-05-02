@@ -13,6 +13,7 @@ from mps.models import MP, Function, FunctionMP, OpinionMP, Department, Circonsc
 from mps.models import Opinion as _mp_Opinion
 from mps.models import WebSite as _mp_WebSite
 from mps.models import Email as _mp_Email
+from mps.models import Group as _mp_Group
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -53,6 +54,8 @@ def clean_mps():
     _mp_Opinion.objects.all().delete()
     print " * remove OpinionMP"
     OpinionMP.objects.all().delete()
+    print " * remove Group"
+    _mp_Group.objects.all().delete()
     print " * remove MP"
     MP.objects.all().delete()
     print " * remove Function"
@@ -264,6 +267,12 @@ def _create_mp_departments(mp):
             print "   create new canton:", canton
             Canton.objects.create(name=canton, circonscription=Circonscription.objects.get(number=mp["infos"]["constituency"]["number"], department=Department.objects.filter(number=department["number"])))
 
+def _create_mp_groups(group):
+    g = group["abbreviation"]
+    if not _mp_Group.objects.filter(abbreviation=g):
+        print "   new group: %s (%s)" % (group["name"], g)
+        _mp_Group.objects.create(abbreviation=g, name=group["name"])
+
 def _create_mp(mp):
     name = mp["infos"]["name"]
     if name["gender"] == "M.":
@@ -289,7 +298,9 @@ def _create_mp(mp):
                        an_propositions=mp["activities"]["propositions"],
                        an_webpage=mp["contact"]["web"][0]["text"],
                        profession=mp["infos"].get("profession"),
-                       department=Department.objects.get(number=mp["infos"]["constituency"]["department"]["number"]))
+                       department=Department.objects.get(number=mp["infos"]["constituency"]["department"]["number"]),
+                       group=_mp_Group.objects.get(abbreviation=mp["infos"]["group"]["abbreviation"]),
+                       group_role=mp["infos"]["group"].get("role"))
 
     if mp["contact"].get("email"):
         if type(mp["contact"]["email"]) is list:
@@ -318,6 +329,7 @@ def manage_mps(path):
         a += 1
         print "  *", a, "-", mp["infos"]["name"]["first"], mp["infos"]["name"]["last"], "-", mp["_id"]
         _create_mp_departments(mp)
+        _create_mp_groups(mp["infos"]["group"])
         _mp = _create_mp(mp)
         _create_mp_functions(mp, _mp)
         _create_mp_opinions(mp["opinions"], _mp)

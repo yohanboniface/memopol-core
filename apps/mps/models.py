@@ -21,6 +21,10 @@ class Canton(models.Model):
     name = models.CharField(max_length=511)
     circonscription = models.ForeignKey(Circonscription)
 
+class Group(models.Model):
+    abbreviation = models.CharField(max_length=31, primary_key=True)
+    name = models.CharField(max_length=255)
+
 class MP(models.Model):
     active = models.BooleanField()
     id = models.CharField(max_length=255, unique=True, primary_key=True)
@@ -42,6 +46,8 @@ class MP(models.Model):
     functions = models.ManyToManyField(Function, through='FunctionMP')
     profession = models.CharField(max_length=255, null=True)
     department = models.ForeignKey(Department)
+    group = models.ForeignKey(Group)
+    group_role = models.CharField(max_length=63, null=True)
 
 class FunctionMP(models.Model):
     mp = models.ForeignKey(MP)
