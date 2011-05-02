@@ -4,6 +4,11 @@ class Function(models.Model):
     type = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
 
+class Opinion(models.Model):
+    title = models.CharField(max_length=1023, unique=True)
+    url = models.URLField()
+    content = models.TextField()
+
 class MP(models.Model):
     active = models.BooleanField()
     id = models.CharField(max_length=255, unique=True, primary_key=True)
@@ -30,3 +35,8 @@ class FunctionMP(models.Model):
     function = models.ForeignKey(Function)
     role = models.CharField(max_length=255)
     mission = models.CharField(max_length=255, null=True)
+
+class OpinionMP(models.Model):
+    mp = models.ForeignKey(MP)
+    opinion = models.ForeignKey(Opinion)
+    date = models.DateField()
