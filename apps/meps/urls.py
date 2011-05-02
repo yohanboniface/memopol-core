@@ -9,6 +9,7 @@ party_dict = {'queryset': Party.objects.all(), 'template_name' :'meps/container_
 group_dict = {'queryset': Group.objects.all(), 'slug_field':'abbreviation', 'template_name' :'meps/container_detail.html' }
 deleguation_dict = {'queryset': Deleguation.objects.all(), 'template_name' :'meps/container_detail.html' }
 committe_dict = {'queryset': Committe.objects.all(), 'slug_field':'abbreviation', 'template_name' :'meps/container_detail.html' }
+mep_dict = {'queryset': MEP.objects.all(), 'slug_field':'key_name', 'template_object_name' :'mep' }
 
 urlpatterns = patterns('',
     url(r'^names/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=True)}, name='index_names'),
@@ -23,7 +24,7 @@ urlpatterns = patterns('',
     url(r'^parties/$', list_detail.object_list, {'queryset': Party.objects.all()}, name='index_parties'),
     url(r'^party/(?P<object_id>[0-9]+)/$', list_detail.object_detail, party_dict,  name='index_by_party'),
 
-    url(r'^mep/(?P<mep_id>\w+)/$', views.mep, name='mep'),
+    url(r'^mep/(?P<slug>\w+)/$', list_detail.object_detail, mep_dict, name='mep'),
     url(r'^mep/(?P<mep_id>\w+)/raw/$', views.mep_raw, name='mep_raw'),
     url(r'^mep/(?P<mep_id>\w+)/json/$', views.mep_json, name='mep_json'),
     url(r'^mep/(?P<mep_id>\w+)/addposition/$', views.mep_addposition, name='mep_addposition'),

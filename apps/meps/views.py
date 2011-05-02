@@ -56,11 +56,6 @@ def autoTrophies(mep):
             res.append((5, 'signed WD12', 'wd12.jpg'))
     return [(x[1], x[2]) for x in sorted(res, reverse=True)]
 
-def mep(request, mep_id):
-    mep = get_object_or_404(MEP, key_name=mep_id)
-
-    return direct_to_template(request, 'meps/mep.html', {'mep': mep})
-
 def mep_json(request, mep_id):
     mep_ = MEP.get(mep_id)
     jsonstr = simplejson.dumps(dict(mep_), indent=4, use_decimal=True)
