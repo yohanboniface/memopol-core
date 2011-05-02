@@ -9,7 +9,7 @@ from datetime import date, datetime
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "apps/"]
 
 from meps.models import Deleguation, Committe, Country, Group, Opinion, MEP, Email, CV, Party, WebSite, DeleguationRole, CommitteRole, OpinionMEP
-from mps.models import MP, Function, FunctionMP, OpinionMP
+from mps.models import MP, Function, FunctionMP, OpinionMP, Department
 from mps.models import Opinion as _mp_Opinion
 from mps.models import WebSite as _mp_WebSite
 from mps.models import Email as _mp_Email
@@ -61,6 +61,8 @@ def clean_mps():
     _mp_WebSite.objects.all().delete()
     print " * remove Email"
     _mp_Email.objects.all().delete()
+    print " * remove Department"
+    Department.objects.all().delete()
 
 def _create_meps_functions(functions):
     for function in functions:
@@ -238,6 +240,12 @@ def _create_mp_functions(mp, _mp):
             Function.objects.create(type=function["type"], title=function["label"])
         _function = Function.objects.get(title=function["label"])
         FunctionMP.objects.create(function=_function, mp=_mp, role=function["role"], mission=function.get("mission"))
+
+def _create_mp_departments(mp):
+    department = mp["infos"]["constituency"]["department"]
+    if not Department.objects.filter(number=department["number"]):
+        print "   create new department:", department["name"], department["number"]
+        Department.objects.create(name=department["name"], number=department["number"])
 
 def _create_mp(mp):
     name = mp["infos"]["name"]

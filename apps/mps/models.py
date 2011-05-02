@@ -9,6 +9,10 @@ class Opinion(models.Model):
     url = models.URLField()
     content = models.TextField()
 
+class Department(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    number = models.CharField(max_length=3, primary_key=True)
+
 class MP(models.Model):
     active = models.BooleanField()
     id = models.CharField(max_length=255, unique=True, primary_key=True)
