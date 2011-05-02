@@ -10,6 +10,7 @@ sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "
 
 from meps.models import Deleguation, Committe, Country, Group, Opinion, MEP, Email, CV, Party, WebSite, DeleguationRole, CommitteRole, OpinionMEP
 from mps.models import MP, Function, FunctionMP
+from mps.models import Opinion as _mp_Opinion
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -46,6 +47,8 @@ def clean_mps():
     print "Clean mps database:"
     print " * remove FunctionMP"
     FunctionMP.objects.all().delete()
+    print " * remove Opinion"
+    _mp_Opinion.objects.all().delete()
     print " * remove MP"
     MP.objects.all().delete()
     print " * remove Function"
@@ -200,6 +203,12 @@ def manage_meps(path):
         if mep["cv"]:
             _create_cv(mep["cv"]["position"], _mep)
 
+def _create_mp_opinions(opinions, _mp):
+    for opinion in opinions:
+        if not _mp_Opinion.objects.filter(title=opinion["title"]):
+            print "   create new opinion :", opinion["title"]
+            _mp_Opinion.objects.create(content=opinion["content"], title=opinion["title"], url=opinion["url"])
+
 def _create_mp_functions(mp, _mp):
     for function in mp["functions"]:
         if not Function.objects.filter(title=function["label"]):
@@ -248,6 +257,7 @@ def manage_mps(path):
         print "  *", a, "-", mp["infos"]["name"]["first"], mp["infos"]["name"]["last"], "-", mp["_id"]
         _mp = _create_mp(mp)
         _create_mp_functions(mp, _mp)
+        _create_mp_opinions(mp["opinions"], _mp)
 
 if __name__ == "__main__":
     path = sys.argv[1]

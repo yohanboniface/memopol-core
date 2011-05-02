@@ -4,6 +4,11 @@ class Function(models.Model):
     type = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
 
+class Opinion(models.Model):
+    title = models.CharField(max_length=1023, unique=True)
+    url = models.URLField()
+    content = models.TextField()
+
 class MP(models.Model):
     active = models.BooleanField()
     id = models.CharField(max_length=255, unique=True, primary_key=True)
