@@ -17,6 +17,10 @@ class Circonscription(models.Model):
     number = models.CharField(max_length=31)
     department = models.ForeignKey(Department)
 
+class Canton(models.Model):
+    name = models.CharField(max_length=511)
+    circonscription = models.ForeignKey(Circonscription)
+
 class MP(models.Model):
     active = models.BooleanField()
     id = models.CharField(max_length=255, unique=True, primary_key=True)
