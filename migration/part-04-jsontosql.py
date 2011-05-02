@@ -12,6 +12,7 @@ from meps.models import Deleguation, Committe, Country, Group, Opinion, MEP, Ema
 from mps.models import MP, Function, FunctionMP, OpinionMP
 from mps.models import Opinion as _mp_Opinion
 from mps.models import WebSite as _mp_WebSite
+from mps.models import Email as _mp_Email
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -58,6 +59,8 @@ def clean_mps():
     Function.objects.all().delete()
     print " * remove WebSite"
     _mp_WebSite.objects.all().delete()
+    print " * remove Email"
+    _mp_Email.objects.all().delete()
 
 def _create_meps_functions(functions):
     for function in functions:
@@ -261,6 +264,15 @@ def _create_mp(mp):
                        an_propositions=mp["activities"]["propositions"],
                        an_webpage=mp["contact"]["web"][0]["text"],
                        profession=mp["infos"].get("profession"))
+
+    if mp["contact"].get("email"):
+        if type(mp["contact"]["email"]) is list:
+            for email in mp["contact"]["email"]:
+                print "   new email", email
+                _mp_Email.objects.create(email=email, mp=_mp)
+        else:
+            print "   new email", mp["contact"]["email"]["text"]
+            _mp_Email.objects.create(email=mp["contact"]["email"]["text"], mp=_mp)
 
     if mp["contact"]["web"][1:]:
         for i in mp["contact"]["web"][1:]:
