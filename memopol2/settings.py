@@ -138,3 +138,8 @@ LANGUAGES = (
 FIXTURE_DIRS = (
     'fixtures',
 )
+
+try:
+    from settings_local import *
+except ImportError:
+    pass
