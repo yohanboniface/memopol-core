@@ -35,3 +35,8 @@ class FunctionMP(models.Model):
     function = models.ForeignKey(Function)
     role = models.CharField(max_length=255)
     mission = models.CharField(max_length=255, null=True)
+
+class OpinionMP(models.Model):
+    mp = models.ForeignKey(MP)
+    opinion = models.ForeignKey(Opinion)
+    date = models.DateField()

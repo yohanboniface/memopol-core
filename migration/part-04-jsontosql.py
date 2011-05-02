@@ -9,7 +9,7 @@ from datetime import date, datetime
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "apps/"]
 
 from meps.models import Deleguation, Committe, Country, Group, Opinion, MEP, Email, CV, Party, WebSite, DeleguationRole, CommitteRole, OpinionMEP
-from mps.models import MP, Function, FunctionMP
+from mps.models import MP, Function, FunctionMP, OpinionMP
 from mps.models import Opinion as _mp_Opinion
 
 MEPS = "meps.xml.json"
@@ -49,6 +49,8 @@ def clean_mps():
     FunctionMP.objects.all().delete()
     print " * remove Opinion"
     _mp_Opinion.objects.all().delete()
+    print " * remove OpinionMP"
+    OpinionMP.objects.all().delete()
     print " * remove MP"
     MP.objects.all().delete()
     print " * remove Function"
@@ -208,6 +210,20 @@ def _create_mp_opinions(opinions, _mp):
         if not _mp_Opinion.objects.filter(title=opinion["title"]):
             print "   create new opinion :", opinion["title"]
             _mp_Opinion.objects.create(content=opinion["content"], title=opinion["title"], url=opinion["url"])
+
+        if opinion["date"] == "7": #stupid data
+            _date = date(2009, 5, 7)
+        elif opinion["date"] == "04": #stupid stupid data
+            _date = date(2009, 5, 4)
+        else:
+            try:
+                try:
+                    _date = datetime.strptime(opinion["date"], "%d/%m/%Y").date()
+                except ValueError:
+                    _date = datetime.strptime(opinion["date"], "%d/%m/%y").date()
+            except ValueError:
+                _date = datetime.strptime(opinion["date"], "%m/%Y").date()
+        OpinionMP.objects.create(date=_date, mp=_mp, opinion=_mp_Opinion.objects.get(title=opinion["title"]))
 
 def _create_mp_functions(mp, _mp):
     for function in mp["functions"]:
