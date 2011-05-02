@@ -22,5 +22,11 @@ class MP(models.Model):
     an_questions = models.URLField()
     an_propositions = models.URLField()
     an_webpage = models.URLField()
+    functions = models.ManyToManyField(Function, through='FunctionMP')
     profession = models.CharField(max_length=255, null=True)
 
+class FunctionMP(models.Model):
+    mp = models.ForeignKey(MP)
+    function = models.ForeignKey(Function)
+    role = models.CharField(max_length=255)
+    mission = models.CharField(max_length=255, null=True)

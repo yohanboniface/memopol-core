@@ -9,7 +9,7 @@ from datetime import date, datetime
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "apps/"]
 
 from meps.models import Deleguation, Committe, Country, Group, Opinion, MEP, Email, CV, Party, WebSite, DeleguationRole, CommitteRole, OpinionMEP
-from mps.models import MP, Function
+from mps.models import MP, Function, FunctionMP
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -44,6 +44,8 @@ def clean_meps():
 
 def clean_mps():
     print "Clean mps database:"
+    print " * remove FunctionMP"
+    FunctionMP.objects.all().delete()
     print " * remove MP"
     MP.objects.all().delete()
     print " * remove Function"
@@ -198,10 +200,13 @@ def manage_meps(path):
         if mep["cv"]:
             _create_cv(mep["cv"]["position"], _mep)
 
-def _create_mp_functions(mp):
+def _create_mp_functions(mp, _mp):
     for function in mp["functions"]:
-        print "   create new", function["type"], ":", function["label"]
-        Function.objects.create(type=function["type"], title=function["label"])
+        if not Function.objects.filter(title=function["label"]):
+            print "   create new", function["type"], ":", function["label"]
+            Function.objects.create(type=function["type"], title=function["label"])
+        _function = Function.objects.get(title=function["label"])
+        FunctionMP.objects.create(function=_function, mp=_mp, role=function["role"], mission=function.get("mission"))
 
 def _create_mp(mp):
     name = mp["infos"]["name"]
@@ -241,8 +246,8 @@ def manage_mps(path):
     for mp in mps:
         a += 1
         print "  *", a, "-", mp["infos"]["name"]["first"], mp["infos"]["name"]["last"], "-", mp["_id"]
-        _mep = _create_mp(mp)
-        _create_mp_functions(mp)
+        _mp = _create_mp(mp)
+        _create_mp_functions(mp, _mp)
 
 if __name__ == "__main__":
     path = sys.argv[1]
