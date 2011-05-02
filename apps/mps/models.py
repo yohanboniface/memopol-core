@@ -6,7 +6,7 @@ class Function(models.Model):
 
 class MP(models.Model):
     active = models.BooleanField()
-    key_name = models.CharField(max_length=255, unique=True, primary_key=True)
+    id = models.CharField(max_length=255, unique=True, primary_key=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     gender = models.CharField(max_length=2, choices=((u'M', u'Male'), (u'F', u'Female')))

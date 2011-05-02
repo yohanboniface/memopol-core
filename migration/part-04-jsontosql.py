@@ -211,7 +211,7 @@ def _create_mp(mp):
         name["gender"] = "M"
     birth_date = mp["infos"]["birth"]["date"]
     _mp = MP.objects.create(active=mp["active"],
-                       key_name=name["wiki"],
+                       id=name["wiki"],
                        first_name=name["first"],
                        last_name=name["last"],
                        gender=name["gender"],
