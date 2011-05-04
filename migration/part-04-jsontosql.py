@@ -273,12 +273,15 @@ def _create_mp_departments(mp):
             print "   create new canton:", canton
             Canton.objects.create(name=canton, circonscription=Circonscription.objects.get(number=mp["infos"]["constituency"]["number"], department=Department.objects.filter(number=department["number"])))
 
+<<<<<<< HEAD
 def _create_mp_groups(group):
     g = group["abbreviation"]
     if not _mp_Group.objects.filter(abbreviation=g):
         print "   new group: %s (%s)" % (group["name"], g)
         _mp_Group.objects.create(abbreviation=g, name=group["name"])
 
+=======
+>>>>>>> FETCH_HEAD
 def _create_mp(mp):
     name = mp["infos"]["name"]
     if name["gender"] == "M.":
@@ -345,7 +348,6 @@ def _create_mp(mp):
                     print "   new fax number:", fax
                     Phone.objects.create(number=fax, type="fax", mp=_mp)
 
-
     return _mp
 
 def _create_mp_mandates(mandates, _mp):
@@ -404,6 +406,8 @@ def manage_mps(path):
         print "  *", a, "-", mp["infos"]["name"]["first"], mp["infos"]["name"]["last"], "-", mp["_id"]
         _create_mp_departments(mp)
         _create_mp_groups(mp["infos"]["group"])
+        _create_mp_groups(mp["infos"]["group"])
+        _create_mp_departments(mp)
         _mp = _create_mp(mp)
         _create_mp_mandates(mp["mandates"], _mp)
         _create_mp_functions(mp, _mp)
