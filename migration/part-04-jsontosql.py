@@ -9,7 +9,7 @@ from datetime import date, datetime
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "apps/"]
 
 from meps.models import Deleguation, Committe, Country, Group, Opinion, MEP, Email, CV, Party, WebSite, DeleguationRole, CommitteRole, OpinionMEP
-from mps.models import MP, Function, FunctionMP, OpinionMP, Department, Circonscription, Canton, Address, Phone
+from mps.models import MP, Function, FunctionMP, OpinionMP, Department, Circonscription, Canton, Address, Phone, Mandate
 from mps.models import Opinion as _mp_Opinion
 from mps.models import WebSite as _mp_WebSite
 from mps.models import Email as _mp_Email
@@ -74,6 +74,8 @@ def clean_mps():
     Address.objects.all().delete()
     print " * remove Phone"
     Phone.objects.all().delete()
+    print " * remove Mandate"
+    Mandate.objects.all().delete()
 
 def _create_meps_functions(functions):
     for function in functions:
@@ -346,6 +348,50 @@ def _create_mp(mp):
 
     return _mp
 
+def _create_mp_mandates(mandates, _mp):
+    c = lambda x: True if x == "true" else False
+    d = lambda x: date(int(x["year"]), int(x["month"]), int(x["day"])) if x else None
+    if mandates.get("mandate"):
+        if type(mandates["mandate"]) is list:
+            for mandate in mandates["mandate"]:
+                print "   new mandate", mandate["type"]
+                if type(mandate.get("end_term")) is list:
+                    mandate["end_term"] = mandate["end_term"][0]
+                Mandate.objects.create(current=c(mandate["current"]),
+                                       mp=_mp,
+                                       type=mandate["type"],
+                                       role=mandate.get('role'),
+                                       institution=mandate.get('institution'),
+                                       election_date=d(mandate.get("election_date")),
+                                       end_term=d(mandate.get("end_term")),
+                                       begin_term=d(mandate.get("begin_term")),
+                                       begin_reason=mandate.get("begin_term").get("reason")
+                                                  if mandate.get("begin_term") and
+                                                  mandate.get("begin_term").get("reason")
+                                                  else None,
+                                       end_reason=mandate.get("end_term").get("reason")
+                                                  if mandate.get("end_term") and
+                                                  mandate.get("end_term").get("reason")
+                                                  else None)
+        else:
+            print "   new mandate", mandates["mandate"]["type"]
+            Mandate.objects.create(current=c(mandates["mandate"]["current"]),
+                                   mp=_mp,
+                                   type=mandates["mandate"]["type"],
+                                   role=mandates["mandate"].get('role'),
+                                   institution=mandates["mandate"].get('institution'),
+                                   election_date=d(mandates["mandate"].get("election_date")),
+                                   begin_term=d(mandates["mandate"].get("begin_term")),
+                                   end_term=d(mandates["mandate"].get("end_term")),
+                                   begin_reason=mandates["mandate"].get("begin_term").get("reason")
+                                       if mandates["mandate"].get("begin_term") and
+                                       mandates["mandate"].get("begin_term").get("reason")
+                                       else None,
+                                   end_reason=mandates["mandate"].get("end_term").get("reason")
+                                       if mandates["mandate"].get("end_term") and
+                                       mandates["mandate"].get("end_term").get("reason")
+                                       else None)
+
 def manage_mps(path):
     clean_mps()
     print
@@ -359,6 +405,7 @@ def manage_mps(path):
         _create_mp_departments(mp)
         _create_mp_groups(mp["infos"]["group"])
         _mp = _create_mp(mp)
+        _create_mp_mandates(mp["mandates"], _mp)
         _create_mp_functions(mp, _mp)
         _create_mp_opinions(mp["opinions"], _mp)
 

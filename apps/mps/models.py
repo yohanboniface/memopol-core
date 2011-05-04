@@ -79,3 +79,15 @@ class Phone(models.Model):
     type = models.CharField(max_length=5, choices=((u'phone', u'Phone'), (u'fax', u'Fax')))
     number = models.CharField(max_length=63)
     mp = models.ForeignKey(MP)
+
+class Mandate(models.Model):
+    current = models.BooleanField()
+    type = models.CharField(max_length=127)
+    role = models.CharField(max_length=255, null=True)
+    election_date = models.DateField(null=True)
+    begin_term = models.DateField(null=True)
+    begin_reason = models.CharField(max_length=255, null=True)
+    end_term = models.DateField(null=True)
+    end_reason = models.CharField(max_length=255, null=True)
+    institution = models.CharField(max_length=255, null=True)
+    mp = models.ForeignKey(MP)
