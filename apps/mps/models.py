@@ -74,3 +74,8 @@ class Address(models.Model):
     street = models.CharField(max_length=255)
     postcode = models.CharField(max_length=31)
     mp = models.ForeignKey(MP)
+
+class Phone(models.Model):
+    type = models.CharField(max_length=5, choices=((u'phone', u'Phone'), (u'fax', u'Fax')))
+    number = models.CharField(max_length=63)
+    mp = models.ForeignKey(MP)
