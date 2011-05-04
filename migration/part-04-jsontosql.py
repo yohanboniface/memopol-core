@@ -9,7 +9,7 @@ from datetime import date, datetime
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "apps/"]
 
 from meps.models import Deleguation, Committe, Country, Group, Opinion, MEP, Email, CV, Party, WebSite, DeleguationRole, CommitteRole, OpinionMEP
-from mps.models import MP, Function, FunctionMP, OpinionMP, Department, Circonscription, Canton
+from mps.models import MP, Function, FunctionMP, OpinionMP, Department, Circonscription, Canton, Address
 from mps.models import Opinion as _mp_Opinion
 from mps.models import WebSite as _mp_WebSite
 from mps.models import Email as _mp_Email
@@ -70,6 +70,8 @@ def clean_mps():
     Circonscription.objects.all().delete()
     print " * remove Canton"
     Canton.objects.all().delete()
+    print " * remove Address"
+    Address.objects.all().delete()
 
 def _create_meps_functions(functions):
     for function in functions:
@@ -316,6 +318,13 @@ def _create_mp(mp):
             print "   create website:", i["text"]
             _mp_WebSite.objects.create(url=i["text"], mp=_mp)
 
+    addrs = mp["contact"]["address"]
+    for addr in addrs:
+        if addr != "unknown":
+            street = addrs[addr]["street"] if type(addrs[addr]["street"]) is unicode else addrs[addr]["street"]["text"]
+            print "   new address:", addr, street, addrs[addr]["postcode"]
+            Address.objects.create(key=addr, city=addrs[addr]["city"],
+                                   street=street, postcode=addrs[addr]["postcode"], mp=_mp)
     return _mp
 
 def manage_mps(path):

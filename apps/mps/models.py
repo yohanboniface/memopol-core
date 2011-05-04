@@ -67,3 +67,10 @@ class WebSite(models.Model):
 class Email(models.Model):
     email = models.EmailField()
     mp = models.ForeignKey(MP)
+
+class Address(models.Model):
+    key = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    street = models.CharField(max_length=255)
+    postcode = models.CharField(max_length=31)
+    mp = models.ForeignKey(MP)
