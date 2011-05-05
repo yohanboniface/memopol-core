@@ -327,23 +327,23 @@ def _create_mp(mp):
         if addr != "unknown":
             street = addrs[addr]["street"] if type(addrs[addr]["street"]) is unicode else addrs[addr]["street"]["text"]
             print "   new address:", addr, street, addrs[addr]["postcode"]
-            Address.objects.create(key=addr, city=addrs[addr]["city"],
+            _addr = Address.objects.create(key=addr, city=addrs[addr]["city"],
                                    street=street, postcode=addrs[addr]["postcode"], mp=_mp)
 
             if type(addrs[addr].get("phone")) is unicode:
                 print "   new phone number:", addrs[addr]["phone"]
-                Phone.objects.create(number=addrs[addr]["phone"], type="phone", mp=_mp)
+                Phone.objects.create(number=addrs[addr]["phone"], type="phone", address=_addr)
             elif type(addrs[addr].get("phone")) is list:
                 for phone in addrs[addr].get("phone"):
                     print "   new phone number:", phone
-                    Phone.objects.create(number=phone, type="phone", mp=_mp)
+                    Phone.objects.create(number=phone, type="phone", address=_addr)
             if type(addrs[addr].get("fax")) is unicode:
                 print "   new fax number:", addrs[addr]["fax"]
-                Phone.objects.create(number=addrs[addr]["fax"], type="fax", mp=_mp)
+                Phone.objects.create(number=addrs[addr]["fax"], type="fax", address=_addr)
             elif type(addrs[addr].get("fax")) is list:
                 for fax in addrs[addr].get("fax"):
                     print "   new fax number:", fax
-                    Phone.objects.create(number=fax, type="fax", mp=_mp)
+                    Phone.objects.create(number=fax, type="fax", address=_addr)
 
     return _mp
 

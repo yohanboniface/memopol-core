@@ -78,7 +78,7 @@ class Address(models.Model):
 class Phone(models.Model):
     type = models.CharField(max_length=5, choices=((u'phone', u'Phone'), (u'fax', u'Fax')))
     number = models.CharField(max_length=63)
-    mp = models.ForeignKey(MP)
+    address = models.ForeignKey(Address)
 
 class Mandate(models.Model):
     current = models.BooleanField()
