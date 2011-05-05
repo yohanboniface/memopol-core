@@ -14,6 +14,7 @@ from mps.models import Opinion as _mp_Opinion
 from mps.models import WebSite as _mp_WebSite
 from mps.models import Email as _mp_Email
 from mps.models import Group as _mp_Group
+from votes.models import Vote
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -76,6 +77,11 @@ def clean_mps():
     Phone.objects.all().delete()
     print " * remove Mandate"
     Mandate.objects.all().delete()
+
+def clean_votes():
+    print "Clean votes database:"
+    print " * remove Vote"
+    Vote.objects.all().delete()
 
 def _create_meps_functions(functions):
     for function in functions:
@@ -410,8 +416,23 @@ def manage_mps(path):
         _create_mp_functions(mp, _mp)
         _create_mp_opinions(mp["opinions"], _mp)
 
+def _create_votes(vote):
+    Vote.objects.create(id=vote["wiki"], title=vote["label"])
+
+def manage_votes(path):
+    clean_votes()
+    print
+    print "Load votes json."
+    votes = json.loads(open(os.path.join(path, VOTES), "r").read())
+    print
+    a = 0
+    for vote in votes:
+        a += 1
+        print "  *", a, "-", vote["label"]
+        _create_votes(vote)
+
 if __name__ == "__main__":
     path = sys.argv[1]
     manage_meps(path)
     manage_mps(path)
-
+    manage_votes(path)
