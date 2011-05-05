@@ -7,7 +7,9 @@
 {% for group in object_list %}
     {% if group.count %}
     <li>
+        <a href="{% url mps:index_by_group group.abbreviation %}">
             {{ group.name }} ({{ group.abbreviation }})
+        </a>
         {% blocktrans with group.count as count %} - {{ count }} MEPs {% endblocktrans %}
     </li>
     {% endif %}

@@ -26,7 +26,10 @@ class Group(models.Model):
     name = models.CharField(max_length=255)
 
     def count(self):
-        return len(self.mp_set.filter(active=True))
+        return len(self.mps())
+
+    def mps(self):
+        return self.mp_set.filter(active=True)
 
 class MP(models.Model):
     active = models.BooleanField()
