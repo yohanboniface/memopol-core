@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{% trans "Departments" %}</h1>
+<ul class="groups">
+{% for department in object_list %}
+    {% if department.count %}
+    <li>
+            {{ department.name }} ({{ department.number }})
+        {% blocktrans with department.count as count %} - {{ count }} MEPs {% endblocktrans %}
+    </li>
+    {% endif %}
+{% endfor %}
+</ul>
+<br />
+
+{% endblock %}

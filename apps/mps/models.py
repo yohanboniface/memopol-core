@@ -13,6 +13,12 @@ class Department(models.Model):
     name = models.CharField(max_length=255, unique=True)
     number = models.CharField(max_length=3, primary_key=True)
 
+    def count(self):
+        return len(self.mps())
+
+    def mps(self):
+        return self.mp_set.filter(active=True)
+
 class Circonscription(models.Model):
     number = models.CharField(max_length=31)
     department = models.ForeignKey(Department)
