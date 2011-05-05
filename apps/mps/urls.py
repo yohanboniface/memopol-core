@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     url(r'^groups/$', list_detail.object_list, {'queryset': Group.objects.all()}, name='index_groups'),
     url(r'^group/(?P<object_id>.+)/$', list_detail.object_detail, {'queryset': Group.objects.all(), 'template_name': 'mps/container_detail.html'}, name='index_by_group'),
     url(r'^departments/$', list_detail.object_list, {'queryset': Department.objects.all().order_by('number')}, name='index_departments'),
+    url(r'^department/(?P<object_id>.+)/$', list_detail.object_detail, {'queryset': Department.objects.all(), 'template_name': 'mps/container_detail.html'}, name='index_by_department'),
 )
