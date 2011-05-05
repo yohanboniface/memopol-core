@@ -25,6 +25,9 @@ class Group(models.Model):
     abbreviation = models.CharField(max_length=31, primary_key=True)
     name = models.CharField(max_length=255)
 
+    def count(self):
+        return len(self.mp_set.filter(active=True))
+
 class MP(models.Model):
     active = models.BooleanField()
     id = models.CharField(max_length=255, unique=True, primary_key=True)
