@@ -141,7 +141,7 @@ class Email(models.Model):
         return self.email
 
 class CV(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=1023)
     mep = models.ForeignKey(MEP)
 
     def __unicode__(self):
