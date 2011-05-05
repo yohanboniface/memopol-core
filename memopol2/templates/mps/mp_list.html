@@ -6,7 +6,7 @@
 <ul class="col">
     {% for mp in object_list %}
         <li>
-            <a href="{% url mps:detail mp.id %}">{{ mp.last_name }} {{ mp.first_name }}</a> ({{ mp.group.abbreviation }})
+            <a href="{% url mps:mp mp.id %}">{{ mp.last_name }} {{ mp.first_name }}</a> ({{ mp.group.abbreviation }})
         </li>
     {% endfor %}
 </ul>
