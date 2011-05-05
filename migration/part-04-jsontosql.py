@@ -328,7 +328,7 @@ def _create_mp(mp):
             street = addrs[addr]["street"] if type(addrs[addr]["street"]) is unicode else addrs[addr]["street"]["text"]
             print "   new address:", addr, street, addrs[addr]["postcode"]
             _addr = Address.objects.create(key=addr, city=addrs[addr]["city"],
-                                   street=street, postcode=addrs[addr]["postcode"], mp=_mp)
+                                   street=street, postcode=addrs[addr]["postcode"], title=addrs[addr].get("label"), mp=_mp)
 
             if type(addrs[addr].get("phone")) is unicode:
                 print "   new phone number:", addrs[addr]["phone"]
