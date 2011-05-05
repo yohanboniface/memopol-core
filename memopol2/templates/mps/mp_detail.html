@@ -2,9 +2,7 @@
 
 {% block content %}
 
-{% if mp %}
-
-<header><h1 id="name">{{ mp.infos.name.first }} {{ mp.infos.name.last|upper }}{% trans ", member of the french parliament" %}</h1></header>
+<header><h1 id="name">{{ mp.first_name }} {{ mp.last_name|upper }}{% trans ", member of the french parliament" %}</h1></header>
 
 <section id="summary">
 <h1 class="collapsible expanded">{% trans "General information" %}</h1>
@@ -12,38 +10,40 @@
 <ul id="infos" class="body">
 
 <div class="quickView">
-    <img class="mugshot" src="http://www.assemblee-nationale.fr/13/tribun/photos/{{ mp.doc.extid }}.jpg" onerror="onMugshotError(this);"/>
-<span>{{ mp.infos.name.first }} {{ mp.infos.name.last|upper }}  </span>
-{{ mp.infos.group.abbreviation }}
+    <img class="mugshot" src="http://www.assemblee-nationale.fr/13/tribun/photos/{{ mp.an_id }}.jpg" onerror="onMugshotError(this);"/>
+<span>{{ mp.first_name }} {{ mp.last_name|upper }}  </span>
+{{ mp.group.abbreviation }}
 </div>
 
-<li><i>{% if mp.infos.gender == "F" %}{% trans "Born on (female)" %}{% else %}{% trans "Born on" %}{% endif %}</i>
-{% blocktrans with mp.infos.birth.date.day as day and mp.infos.birth.date.month as month and mp.infos.birth.date.year as year and mp.infos.birth.place.city as city %}{{ day }}/{{ month }}/{{ year }} <i>at</i> {{ city }}{% endblocktrans %}</li>
-<li><i>{% trans "Département:" %}</i>:  {{ mp.infos.constituency.department.name }} - {{ mp.infos.constituency.department.number }} </li>
-<li><i>{% trans "Political group: " %}</i>{{ mp.infos.group.name }} ({{ mp.infos.group.abbreviation }})</li>
-{% if mp.infos.group.party %}<li><i>{% trans "Party: " %}</i>{{ mp.infos.group.party }}</li>{% endif %}
+<li><i>{% if mp.gender == "F" %}{% trans "Born on (female)" %}{% else %}{% trans "Born on" %}{% endif %}</i>
+{% blocktrans with mp.birth_date.day as day and mp.birth_date.month as month and mp.birth_date.year as year and mp.birth_city as city %}{{ day }}/{{ month }}/{{ year }} <i>at</i> {{ city }}{% endblocktrans %}</li>
+<li><i>{% trans "Département:" %}</i> {{ mp.department.name }} - {{ mp.department.number }}</li>
+<li><i>{% trans "Political group: " %}</i>{{ mp.group.name }} ({{ mp.group.abbreviation }})</li>
 </ul>
 
 <div id="contact">
     <h2 class="collapsible expanded">{% trans "Contact" %}</h2>
 
         <ul class="body">
-        {% for city,addr in mp.doc.contact.address.items %}
-        <li><b>{{ addr.label|default:_("Other adresse") }}</b><br/>
+        {% for addr in mp.address_set.all %}
+        <li><b>{{ addr.title|default:"Other address" }}</b><br/>
             {% if addr.building %} {% trans "Building" %} {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
             {{ addr.street }}, {{ addr.postcode }} {{ addr.city }}<br/>
-            {% if addr.phone %}{% trans "Tel.: " %} <a href="callto://{{ addr.phone }}">{{ addr.phone }}</a>&nbsp;<br/>{% endif %}
-            {% if addr.fax %}{% trans "Fax: " %}{{ addr.fax }}{% endif %}
+            {% for phone in addr.phone_set.all %}
+            {{ phone.type|capfirst }}.: {% if phone.type == "phone" %}<a href="callto://{{ addr.phone }}">{% endif %}{{ phone.number }}{% if phone.type == "phone" %}</a>{% endif %}&nbsp;<br/>
+            {% endfor %}
 
         </li>
         {% endfor %}
 
+        {% for email in mp.email_set.all %}
+            <li><i>{% trans "E-mail&nbsp;: " %}</i><a href="mailto:{{ email.email }}">{{ email.email }}</a></li>
+        {% endfor %}
 
-        <li><i>{% trans "E-mail&nbsp;: " %}</i><a href="mailto:{{ mp.doc.contact.email.text }}">{{ mp.doc.contact.email.text }}</a></li>
-
-        {% for webaddr in mp.doc.contact.web %}
+        <li><i>{% trans "Web&nbsp;: " %}</i><a target="_" href="{{ mp.an_webpage }}">{{ mp.an_webpage }}</a></li>
+        {% for webaddr in mp.website_set.all %}
         <li>
-            <i>{% trans "Web&nbsp;: " %}</i><a target="_" href="{{ webaddr.text }}">{{ webaddr.type|default:webaddr.text }}</a>
+            <i>{% trans "Web&nbsp;: " %}</i><a target="_" href="{{ webaddr.url }}">{{ webaddr.url }}</a>
         </li>
         {% endfor %}
 
@@ -53,8 +53,8 @@
 <div id="nosdeputes">
     <h2 class="collapsible expanded">{% trans "NosDéputés.fr" %}</h2>
     <ul class="body">
-        <li> <i>NosDéputés.fr: </i><a href="http://www.nosdeputes.fr/{{ mp.first|slugify }}-{{ mp.last|slugify }}">{{ mp.first }} {{ mp.last }}</a><br>
-    <a href="http://www.nosdeputes.fr/{{ mp.first|slugify }}-{{ mp.last|slugify }}/graphes/lastyear"><img src="http://www.nosdeputes.fr/{{ mp.first|slugify }}-{{ mp.last|slugify }}/graphes/lastyear/total?questions=true&link=true&mapId=Map_9521.map" /></a>
+        <li> <i>NosDéputés.fr: </i><a href="http://www.nosdeputes.fr/{{ mp.first_name|slugify }}-{{ mp.last_name|slugify }}">{{ mp.first_name }} {{ mp.last_name }}</a><br>
+    <a href="http://www.nosdeputes.fr/{{ mp.first_name|slugify }}-{{ mp.last_name|slugify }}/graphes/lastyear"><img src="http://www.nosdeputes.fr/{{ mp.first_name|slugify }}-{{ mp.last_name|slugify }}/graphes/lastyear/total?questions=true&link=true&mapId=Map_9521.map" /></a>
     </li>
     <li>
     <p style="font-size: small;"><span style='background-color: rgb(255,0,0);'>&nbsp;</span>
@@ -70,31 +70,30 @@
     </ul>
 </div>
 
-{% if mp.doc.functions %}
+{% if mp.functionmp_set.all %}
 <div id="functions">
     <h2 class="collapsible collapsed">{% trans "Functions" %}</h2>
     <ul class="body">
-    {% for function in mp.doc.functions %}
+    {% for function in mp.functionmp_set.all %}
         {% if function.type != "Groupe d'études" and function.type != "Groupe d'amitié" %}
-        <li>{{ function.role }} - {{ function.label }}</li>
+        <li>{% if function.role %}{{ function.role }} - {% endif %}{{ function.function.title }}</li>
         {% endif %}
     {% endfor %}
     </ul>
 </div>
-{% endif %}
 
-{% if mp.doc.opinions %}
+{% if mp.opinionmp_set.all %}
 <div id="opinions">
     <h2 class="collapsible collapsed">{% trans "Opinions (memopol v1)" %}</h2>
     <ul class="body">
-    {% for line in mp.doc.opinions %}
-        <li><b>{{ line.title }}</b> (le {{ line.date }})<br/>{% autoescape off %}{{ line.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.url }}"><br/>{% trans "Read more..." %}</a> </li>
+    {% for line in mp.opinionmp_set.all %}
+        <li><b>{{ line.opinion.title }}</b> (le {{ line.date }})<br/>{% autoescape off %}{{ line.opinion.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.opinion.url }}"><br/>{% trans "Read more..." %}</a> </li>
     {% endfor %}
     </ul>
 </div>
 {% endif %}
 
-{% if mp.doc.scores %}
+{% if mp.scores %}
     <div id="scores">
         <h2 class="collapsible collapsed">{% trans "Scores average" %} : {{ average|floatformat:0 }}</h2>
         <ul class="body">
