@@ -79,7 +79,7 @@ class Committe(models.Model):
 
 class Opinion(models.Model):
     title = models.CharField(max_length=255, unique=True)
-    content = models.CharField(max_length=255, unique=True)
+    content = models.TextField()
     url = models.URLField()
 
     def __unicode__(self):
