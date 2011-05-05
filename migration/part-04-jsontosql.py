@@ -14,7 +14,7 @@ from mps.models import Opinion as _mp_Opinion
 from mps.models import WebSite as _mp_WebSite
 from mps.models import Email as _mp_Email
 from mps.models import Group as _mp_Group
-from votes.models import Vote, SubVote
+from votes.models import Vote, SubVote, Result
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -84,6 +84,8 @@ def clean_votes():
     Vote.objects.all().delete()
     print " * remove SubVote"
     SubVote.objects.all().delete()
+    print " * remove Result"
+    Result.objects.all().delete()
 
 def _create_meps_functions(functions):
     for function in functions:
@@ -425,6 +427,11 @@ def _create_votes(vote):
     for v in vote["vote"]:
         print "   new subvote:", v["subject"]["part"]
         SubVote.objects.create(description=v["subject"]["description"], subject=v["subject"]["text"], part=v["subject"]["part"], vote=_v, weight=v["subject"].get("weight"), datetime=d(v["date"]), recommendation=v["subject"].get("recommendation"))
+        for r in v["result"]["mep"]:
+            if r.get("dbxmlid"):
+                print "   create new result:", r["name"], ":", r["choice"], r.get("dbxmlid", "")
+                if MEP.objects.filter(key_name=r["dbxmlid"]):
+                    Result.objects.create(choice=r["choice"], name=r["name"], mep=MEP.objects.get(key_name=r["dbxmlid"]))
 
 def manage_votes(path):
     clean_votes()
