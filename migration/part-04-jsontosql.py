@@ -273,15 +273,12 @@ def _create_mp_departments(mp):
             print "   create new canton:", canton
             Canton.objects.create(name=canton, circonscription=Circonscription.objects.get(number=mp["infos"]["constituency"]["number"], department=Department.objects.filter(number=department["number"])))
 
-<<<<<<< HEAD
 def _create_mp_groups(group):
     g = group["abbreviation"]
     if not _mp_Group.objects.filter(abbreviation=g):
         print "   new group: %s (%s)" % (group["name"], g)
         _mp_Group.objects.create(abbreviation=g, name=group["name"])
 
-=======
->>>>>>> FETCH_HEAD
 def _create_mp(mp):
     name = mp["infos"]["name"]
     if name["gender"] == "M.":
