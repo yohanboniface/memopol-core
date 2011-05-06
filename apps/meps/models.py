@@ -1,15 +1,20 @@
 from django.db import models
 
+class MepsContainerManager(models.Manager):
+    """ Manager for models to which the MEP model has a foreign key"""
+    def with_counts(self):
+        """ Return the models with a count property, with the count of active meps """
+        return self.get_query_set().filter(mep__active=True).annotate(count=models.Count('mep'))
+
+
 class Country(models.Model):
     code = models.CharField(max_length=2, unique=True)
     name = models.CharField(max_length=30, unique=True)
 
+    objects = MepsContainerManager()
+
     def __unicode__(self):
         return u"%s - %s" % (self.code, self.name)
-
-    @property
-    def count(self):
-        return len(self.meps)
 
     @property
     def meps(self):
@@ -18,12 +23,10 @@ class Country(models.Model):
 class Party(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
+    objects = MepsContainerManager()
+
     def __unicode__(self):
         return self.name
-
-    @property
-    def count(self):
-        return len(self.meps)
 
     @property
     def meps(self):
@@ -34,12 +37,10 @@ class Group(models.Model):
     abbreviation = models.CharField(max_length=10, unique=True)
     name = models.CharField(max_length=100, unique=True)
 
+    objects = MepsContainerManager()
+
     def __unicode__(self):
         return u"%s - %s" % (self.abbreviation, self.name)
-
-    @property
-    def count(self):
-        return len(self.meps)
 
     @property
     def meps(self):
@@ -49,12 +50,10 @@ class Group(models.Model):
 class Deleguation(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
+    objects = MepsContainerManager()
+
     def __unicode__(self):
         return self.name
-
-    @property
-    def count(self):
-        return len(self.meps)
 
     @property
     def meps(self):
@@ -65,12 +64,10 @@ class Committe(models.Model):
     name = models.CharField(max_length=255, unique=True)
     abbreviation = models.CharField(max_length=30, unique=True)
 
+    objects = MepsContainerManager()
+
     def __unicode__(self):
         return u"%s: %s" % (self.abbreviation, self.name)
-
-    @property
-    def count(self):
-        return len(self.meps)
 
     @property
     def meps(self):
@@ -181,3 +178,4 @@ class OpinionMEP(models.Model):
 
     def __unicode__(self):
         return u"%s : %s" % (self.opinion, self.mep)
+
