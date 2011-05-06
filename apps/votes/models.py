@@ -15,6 +15,6 @@ class SubVote(models.Model):
     recommendation = models.CharField(max_length=15, choices=((u'against', u'against'), (u'for', u'for')), null=True)
 
 class Result(models.Model):
-    choice = models.CharField(max_length=15, choices=((u'for', u'for'), (u'against', u'against'), (u'abstention', u'abstention'), (u'abstention', u'abstention')))
+    choice = models.CharField(max_length=15, choices=((u'for', u'for'), (u'against', u'against'), (u'abstention', u'abstention')))
     name = models.CharField(max_length=127)
     mep = models.ForeignKey(MEP)
