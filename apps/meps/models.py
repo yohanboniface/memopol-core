@@ -1,5 +1,7 @@
 from django.db import models
 
+from reps.models import Representative
+
 class MepsContainerManager(models.Manager):
     """ Manager for models to which the MEP model has a foreign key"""
     def with_counts(self):
@@ -15,18 +17,6 @@ class Country(models.Model):
 
     def __unicode__(self):
         return u"%s - %s" % (self.code, self.name)
-
-    @property
-    def meps(self):
-        return self.mep_set.filter(active=True)
-
-class Party(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-
-    objects = MepsContainerManager()
-
-    def __unicode__(self):
-        return self.name
 
     @property
     def meps(self):
@@ -60,7 +50,7 @@ class Deleguation(models.Model):
         return self.mep_set.filter(active=True)
 
 
-class Committe(models.Model):
+class Committee(models.Model):
     name = models.CharField(max_length=255, unique=True)
     abbreviation = models.CharField(max_length=30, unique=True)
 
@@ -74,24 +64,15 @@ class Committe(models.Model):
         return self.mep_set.filter(active=True)
 
 
-class Opinion(models.Model):
-    title = models.CharField(max_length=255, unique=True)
-    content = models.TextField()
-    url = models.URLField()
+class Building(models.Model):
+    """ A building of the European Parliament"""
+    name = models.CharField(max_length=255)
+    id = models.CharField('Abbreviation', max_length=255, primary_key=True)
+    street = models.CharField(max_length=255)
+    postcode = models.CharField(max_length=255)
 
-    def __unicode__(self):
-        return self.title
-
-class MEP(models.Model):
+class MEP(Representative):
     active = models.BooleanField()
-    key_name = models.CharField(max_length=255, unique=True)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    full_name = models.CharField(max_length=255, unique=True)
-    gender = models.CharField(max_length=2, choices=((u'M', u'Male'), (u'F', u'Female')))
-    picture = models.CharField(max_length=255, unique=True)
-    birth_date = models.DateField()
-    birth_place = models.CharField(max_length=255)
     ep_id = models.IntegerField()
     ep_opinions = models.URLField()
     ep_debates = models.URLField()
@@ -100,56 +81,27 @@ class MEP(models.Model):
     ep_reports = models.URLField()
     ep_motions = models.URLField()
     ep_webpage = models.URLField()
-    bxl_building_name = models.CharField(max_length=255)
-    bxl_building_abbreviation = models.CharField(max_length=255)
+    bxl_building = models.ForeignKey(Building)
     bxl_office = models.CharField(max_length=255)
     bxl_fax = models.CharField(max_length=255)
     bxl_phone1 = models.CharField(max_length=255)
     bxl_phone2 = models.CharField(max_length=255)
-    bxl_street = models.CharField(max_length=255)
-    bxl_postcode = models.CharField(max_length=255)
-    stg_building_name = models.CharField(max_length=255)
-    stg_building_abbreviation = models.CharField(max_length=255)
+    stg_building = models.ForeignKey(Building)
     stg_office = models.CharField(max_length=255)
     stg_fax = models.CharField(max_length=255)
     stg_phone1 = models.CharField(max_length=255)
     stg_phone2 = models.CharField(max_length=255)
-    stg_street = models.CharField(max_length=255)
-    stg_postcode = models.CharField(max_length=255)
-    party = models.ForeignKey(Party)
     group = models.ForeignKey(Group)
     group_role = models.CharField(max_length=63)
     country = models.ForeignKey(Country)
     deleguations = models.ManyToManyField(Deleguation, through='DeleguationRole')
-    opinions = models.ManyToManyField(Opinion, through='OpinionMEP')
-    committes = models.ManyToManyField(Committe, through='CommitteRole')
+    committees = models.ManyToManyField(Committee, through='CommitteeRole')
 
     def __unicode__(self):
         return self.full_name
 
     class Meta:
         ordering = ['last_name']
-
-class Email(models.Model):
-    email = models.EmailField()
-    mep = models.ForeignKey(MEP)
-
-    def __unicode__(self):
-        return self.email
-
-class CV(models.Model):
-    title = models.CharField(max_length=1023)
-    mep = models.ForeignKey(MEP)
-
-    def __unicode__(self):
-        return self.title
-
-class WebSite(models.Model):
-    url = models.URLField()
-    mep = models.ForeignKey(MEP)
-
-    def __unicode__(self):
-        return self.url
 
 class DeleguationRole(models.Model):
     mep = models.ForeignKey(MEP)
@@ -161,21 +113,13 @@ class DeleguationRole(models.Model):
     def __unicode__(self):
         return u"%s : %s" % (self.mep.full_name, self.deleguation)
 
-class CommitteRole(models.Model):
+class CommitteeRole(models.Model):
     mep = models.ForeignKey(MEP)
-    committe = models.ForeignKey(Committe)
+    committe = models.ForeignKey(Committee)
     role = models.CharField(max_length=255)
     begin = models.DateField(null=True)
     end = models.DateField(null=True)
 
     def __unicode__(self):
         return u"%s : %s" % (self.committe.abbreviation, self.mep.full_name)
-
-class OpinionMEP(models.Model):
-    mep = models.ForeignKey(MEP)
-    opinion = models.ForeignKey(Opinion)
-    date = models.DateField()
-
-    def __unicode__(self):
-        return u"%s : %s" % (self.opinion, self.mep)
 

@@ -40,13 +40,6 @@ class Group(models.Model):
 
 class MP(Representative):
     active = models.BooleanField()
-    id = models.CharField(max_length=255, unique=True, primary_key=True)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    gender = models.CharField(max_length=2, choices=((u'M', u'Male'), (u'F', u'Female')))
-    picture = models.CharField(max_length=255, unique=True)
-    birth_date = models.DateField()
-    birth_city = models.CharField(max_length=255)
     birth_department = models.CharField(max_length=255)
     an_id = models.IntegerField()
     an_speeches = models.URLField()
@@ -59,8 +52,6 @@ class MP(Representative):
     functions = models.ManyToManyField(Function, through='FunctionMP')
     profession = models.CharField(max_length=255, null=True)
     department = models.ForeignKey(Department)
-    group = models.ForeignKey(Group)
-    group_role = models.CharField(max_length=63, null=True)
 
 class FunctionMP(models.Model):
     mp = models.ForeignKey(MP)
@@ -68,18 +59,6 @@ class FunctionMP(models.Model):
     role = models.CharField(max_length=255)
     mission = models.CharField(max_length=255, null=True)
 
-class OpinionMP(models.Model):
-    mp = models.ForeignKey(MP)
-    opinion = models.ForeignKey(Opinion)
-    date = models.DateField()
-
-class WebSite(models.Model):
-    url = models.URLField()
-    mp = models.ForeignKey(MP)
-
-class Email(models.Model):
-    email = models.EmailField()
-    mp = models.ForeignKey(MP)
 
 class Address(models.Model):
     key = models.CharField(max_length=255)
