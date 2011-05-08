@@ -1,4 +1,5 @@
 from django.db import models
+from reps.models import Representative
 
 class Function(models.Model):
     type = models.CharField(max_length=255)
@@ -37,7 +38,7 @@ class Group(models.Model):
     def mps(self):
         return self.mp_set.filter(active=True)
 
-class MP(models.Model):
+class MP(Representative):
     active = models.BooleanField()
     id = models.CharField(max_length=255, unique=True, primary_key=True)
     first_name = models.CharField(max_length=255)
