@@ -37,8 +37,7 @@ class Representative(models.Model):
     #picture = models.ImageField(upload_to="")
     birth_date = models.DateField()
     birth_place = models.CharField(max_length=255)
-    local_party = models.ForeignKey(Party)
-    local_party_role = models.ForeignKey(Party)
+    local_party = models.ManyToManyField(Party, through='PartyRepresentative')
     opinions = models.ManyToManyField(Opinion, through='OpinionREP')
 
     def __unicode__(self):
@@ -46,6 +45,15 @@ class Representative(models.Model):
 
     class Meta:
         ordering = ['last_name']
+
+class PartyRepresentative(models.Model):
+    representative = models.ForeignKey(Representative)
+    party = models.ForeignKey(Party)
+    role = models.CharField(max_length=255)
+    current = models.BooleanField()
+    # well maybe need those one day
+    #begin = models.DateField()
+    #end = models.DateField()
 
 class Email(models.Model):
     email = models.EmailField()
