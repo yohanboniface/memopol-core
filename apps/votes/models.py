@@ -17,5 +17,5 @@ class SubProposal(models.Model):
 class Vote(models.Model):
     choice = models.CharField(max_length=15, choices=((u'for', u'for'), (u'against', u'against'), (u'abstention', u'abstention')))
     name = models.CharField(max_length=127)
-    sub_proposal = models.ForeignKey(SubProposal)
+    sub_proposal = models.ForeignKey(SubProposal, related_name="sub_proposal")
     mep = models.ForeignKey(MEP)
