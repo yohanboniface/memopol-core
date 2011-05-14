@@ -8,8 +8,8 @@ from datetime import date, datetime
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "apps/"]
 
-from reps.models import CV, Email, Opinion, OpinionREP
-from meps.models import Deleguation, Committee, Country, Group, MEP, Party, WebSite, DeleguationRole, CommitteeRole
+from reps.models import Party, CV, Email, Opinion, OpinionREP
+from meps.models import Deleguation, Committee, Country, Group, MEP, WebSite, DeleguationRole, CommitteeRole
 from mps.models import MP, Function, FunctionMP, OpinionMP, Department, Circonscription, Canton, Address, Phone, Mandate
 from mps.models import Opinion as _mp_Opinion
 from mps.models import WebSite as _mp_WebSite
