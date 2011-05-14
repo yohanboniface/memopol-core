@@ -12,7 +12,7 @@ from reps.models import WebSite, Party, CV, Email, Opinion, OpinionREP
 from meps.models import Deleguation, Committee, Country, Group, MEP, DeleguationRole, CommitteeRole
 from mps.models import MP, Function, FunctionMP, Department, Circonscription, Canton, Address, Phone, Mandate
 from mps.models import Group as _mp_Group
-from votes.models import Vote, SubVote, Result
+from votes.models import Proposal, SubProposal, Vote
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -80,12 +80,12 @@ def clean_mps():
 
 def clean_votes():
     print "Clean votes database:"
+    print " * remove Proposal"
+    Proposal.objects.all().delete()
+    print " * remove SubProposal"
+    SubProposal.objects.all().delete()
     print " * remove Vote"
     Vote.objects.all().delete()
-    print " * remove SubVote"
-    SubVote.objects.all().delete()
-    print " * remove Result"
-    Result.objects.all().delete()
 
 def _create_meps_functions(functions):
     for function in functions:
@@ -421,17 +421,17 @@ def manage_mps(path):
         _create_mp_opinions(mp["opinions"], _mp)
 
 def _create_votes(vote):
-    _v = Vote.objects.create(id=vote["wiki"], title=vote["label"])
+    _v = Proposal.objects.create(id=vote["wiki"], title=vote["label"])
     d = lambda x: datetime(int(x["year"]), int(x["month"]), int(x["day"]), int(x["hour"]), int(x["minute"]), int(x["second"]))
 
     for v in vote["vote"]:
         print "   new subvote:", v["subject"]["part"]
-        SubVote.objects.create(description=v["subject"]["description"], subject=v["subject"]["text"], part=v["subject"]["part"], vote=_v, weight=v["subject"].get("weight"), datetime=d(v["date"]), recommendation=v["subject"].get("recommendation"))
+        SubProposal.objects.create(description=v["subject"]["description"], subject=v["subject"]["text"], part=v["subject"]["part"], vote=_v, weight=v["subject"].get("weight"), datetime=d(v["date"]), recommendation=v["subject"].get("recommendation"))
         for r in v["result"]["mep"]:
             if r.get("dbxmlid"):
                 print "   create new result:", r["name"], ":", r["choice"], r.get("dbxmlid", "")
                 if MEP.objects.filter(key_name=r["dbxmlid"]):
-                    Result.objects.create(choice=r["choice"], name=r["name"], mep=MEP.objects.get(key_name=r["dbxmlid"]))
+                    Vote.objects.create(choice=r["choice"], name=r["name"], mep=MEP.objects.get(key_name=r["dbxmlid"]))
 
 def manage_votes(path):
     clean_votes()
