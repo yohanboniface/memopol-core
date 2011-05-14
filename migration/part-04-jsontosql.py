@@ -10,8 +10,7 @@ sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "
 
 from reps.models import WebSite, Party, CV, Email, Opinion, OpinionREP
 from meps.models import Deleguation, Committee, Country, Group, MEP, DeleguationRole, CommitteeRole
-from mps.models import MP, Function, FunctionMP, OpinionMP, Department, Circonscription, Canton, Address, Phone, Mandate
-from mps.models import Opinion as _mp_Opinion
+from mps.models import MP, Function, FunctionMP, Department, Circonscription, Canton, Address, Phone, Mandate
 from mps.models import WebSite as _mp_WebSite
 from mps.models import Email as _mp_Email
 from mps.models import Group as _mp_Group
@@ -55,9 +54,9 @@ def clean_mps():
     print " * remove FunctionMP"
     FunctionMP.objects.all().delete()
     print " * remove Opinion"
-    _mp_Opinion.objects.all().delete()
-    print " * remove OpinionMP"
-    OpinionMP.objects.all().delete()
+    Opinion.objects.all().delete()
+    print " * remove OpinionREP"
+    OpinionREP.objects.all().delete()
     print " * remove Group"
     _mp_Group.objects.all().delete()
     print " * remove MP"
@@ -241,9 +240,9 @@ def manage_meps(path):
 
 def _create_mp_opinions(opinions, _mp):
     for opinion in opinions:
-        if not _mp_Opinion.objects.filter(title=opinion["title"]):
+        if not Opinion.objects.filter(title=opinion["title"]):
             print "   create new opinion :", opinion["title"]
-            _mp_Opinion.objects.create(content=opinion["content"], title=opinion["title"], url=opinion["url"])
+            Opinion.objects.create(content=opinion["content"], title=opinion["title"], url=opinion["url"])
 
         if opinion["date"] == "7": #stupid data
             _date = date(2009, 5, 7)
@@ -257,7 +256,7 @@ def _create_mp_opinions(opinions, _mp):
                     _date = datetime.strptime(opinion["date"], "%d/%m/%y").date()
             except ValueError:
                 _date = datetime.strptime(opinion["date"], "%m/%Y").date()
-        OpinionMP.objects.create(date=_date, mp=_mp, opinion=_mp_Opinion.objects.get(title=opinion["title"]))
+        OpinionREP.objects.create(date=_date, mp=_mp, opinion=Opinion.objects.get(title=opinion["title"]))
 
 def _create_mp_functions(mp, _mp):
     for function in mp["functions"]:
