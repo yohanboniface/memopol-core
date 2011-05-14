@@ -179,15 +179,15 @@ def _create_mep(mep):
     if type(mep["contact"]["email"]) is list:
         for email in mep["contact"]["email"]:
             print "   new email", email
-            Email.objects.create(email=email, mep=_mep)
+            Email.objects.create(email=email, representative=_mep)
     else:
         print "   new email", mep["contact"]["email"]["text"]
-        Email.objects.create(email=mep["contact"]["email"]["text"], mep=_mep)
+        Email.objects.create(email=mep["contact"]["email"]["text"], representative=_mep)
 
     if mep["contact"]["web"][1:]:
         for i in mep["contact"]["web"][1:]:
             print "   create website:", i["text"]
-            WebSite.objects.create(url=i["text"], mep=_mep)
+            WebSite.objects.create(url=i["text"], representative=_mep)
 
     return _mep
 
