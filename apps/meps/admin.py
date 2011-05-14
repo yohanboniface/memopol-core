@@ -1,4 +1,5 @@
-from models import Committee, Deleguation, Country, Group, Opinion, MEP, Party, WebSite, CommitteRole, DeleguationRole, OpinionMEP
+from reps.models import WebSite, Party, Opinion
+from models import Committee, Deleguation, Country, Group, MEP, CommitteRole, DeleguationRole, OpinionMEP
 from django.contrib import admin
 
 admin.site.register(MEP)
