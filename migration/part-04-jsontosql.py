@@ -207,7 +207,7 @@ def _create_role(functions, _mep):
         else:
             if not f.get("begin_term"):
                 print "   new role in Committee:", f["role"], "in", f["abbreviation"]
-                CommitteeRole.objects.create(mep=_mep, role=f["role"], Committee=Committee.objects.get(abbreviation=f["abbreviation"]))
+                CommitteeRole.objects.create(mep=_mep, role=f["role"], committee=Committee.objects.get(abbreviation=f["abbreviation"]))
             else:
                 b = f["begin_term"]
                 _begin = date(int(b["year"]), int(b["month"]), int(b["day"]))

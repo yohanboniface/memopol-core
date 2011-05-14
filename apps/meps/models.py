@@ -115,7 +115,7 @@ class DeleguationRole(models.Model):
 
 class CommitteeRole(models.Model):
     mep = models.ForeignKey(MEP)
-    committe = models.ForeignKey(Committee)
+    committee = models.ForeignKey(Committee)
     role = models.CharField(max_length=255)
     begin = models.DateField(null=True)
     end = models.DateField(null=True)
