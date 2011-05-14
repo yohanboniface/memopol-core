@@ -8,7 +8,7 @@ from datetime import date, datetime
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "apps/"]
 
-from meps.models import Deleguation, Committe, Country, Group, Opinion, MEP, Email, CV, Party, WebSite, DeleguationRole, CommitteRole, OpinionMEP
+from meps.models import Deleguation, Committee, Country, Group, Opinion, MEP, Email, CV, Party, WebSite, DeleguationRole, CommitteeRole, OpinionMEP
 from mps.models import MP, Function, FunctionMP, OpinionMP, Department, Circonscription, Canton, Address, Phone, Mandate
 from mps.models import Opinion as _mp_Opinion
 from mps.models import WebSite as _mp_WebSite
@@ -24,8 +24,8 @@ def clean_meps():
     print "Clean meps database:"
     print " * remove DeleguationRole"
     DeleguationRole.objects.all().delete()
-    print " * remove CommitteRole"
-    CommitteRole.objects.all().delete()
+    print " * remove CommitteeRole"
+    CommitteeRole.objects.all().delete()
     print " * remove MEP"
     MEP.objects.all().delete()
     print " * remove Email"
@@ -36,8 +36,8 @@ def clean_meps():
     WebSite.objects.all().delete()
     print " * remove WebSite"
     Deleguation.objects.all().delete()
-    print " * remove Committe"
-    Committe.objects.all().delete()
+    print " * remove Committee"
+    Committee.objects.all().delete()
     print " * remove Country"
     Country.objects.all().delete()
     print " * remove Group"
@@ -89,9 +89,9 @@ def clean_votes():
 
 def _create_meps_functions(functions):
     for function in functions:
-        if function.get("abbreviation") and not Committe.objects.filter(name=function["label"], abbreviation=function["abbreviation"]):
-            print "   new committe:", function["abbreviation"], "-", function["label"]
-            Committe.objects.create(abbreviation=function["abbreviation"],
+        if function.get("abbreviation") and not Committee.objects.filter(name=function["label"], abbreviation=function["abbreviation"]):
+            print "   new Committee:", function["abbreviation"], "-", function["label"]
+            Committee.objects.create(abbreviation=function["abbreviation"],
                                     name=function["label"])
         elif type(function["label"]) is unicode and not Deleguation.objects.filter(name=function["label"]):
             print "   new deleguation:", function["label"]
@@ -197,14 +197,14 @@ def _create_role(functions, _mep):
                 DeleguationRole.objects.create(mep=_mep, role=f["role"], deleguation=Deleguation.objects.get(name=name), begin=_begin, end=_end)
         else:
             if not f.get("begin_term"):
-                print "   new role in committe:", f["role"], "in", f["abbreviation"]
-                CommitteRole.objects.create(mep=_mep, role=f["role"], committe=Committe.objects.get(abbreviation=f["abbreviation"]))
+                print "   new role in Committee:", f["role"], "in", f["abbreviation"]
+                CommitteeRole.objects.create(mep=_mep, role=f["role"], Committee=Committee.objects.get(abbreviation=f["abbreviation"]))
             else:
                 b = f["begin_term"]
                 _begin = date(int(b["year"]), int(b["month"]), int(b["day"]))
                 e = f["end_term"]
                 _end = date(int(e["year"]), int(e["month"]), int(e["day"]))
-                CommitteRole.objects.create(mep=_mep, role=f["role"], deleguation=Deleguation.objects.get(name=f["label"]), begin=_begin, end=_end)
+                CommitteeRole.objects.create(mep=_mep, role=f["role"], deleguation=Deleguation.objects.get(name=f["label"]), begin=_begin, end=_end)
 
 def _create_cv(cv, _mep):
     if type(cv) is list:
