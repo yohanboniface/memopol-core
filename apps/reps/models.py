@@ -4,7 +4,7 @@ class RepsContainerManager(models.Manager):
     """ Manager for models to which the representative model has a foreign key"""
     def with_counts(self):
         """ Return the models with a count property, with the count of active Reps """
-        return self.get_query_set().filter(representative__active=True).annotate(count=models.Count('representative'))
+        return self.get_query_set().filter(representative__mep__active=True).annotate(count=models.Count('representative'))
 
 
 class Party(models.Model):
@@ -16,7 +16,7 @@ class Party(models.Model):
         return self.name
 
     @property
-    def reps(self):
+    def meps(self):
         return self.mep_set.filter(active=True)
 
 class Opinion(models.Model):
