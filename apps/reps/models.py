@@ -6,7 +6,6 @@ class RepsContainerManager(models.Manager):
         """ Return the models with a count property, with the count of active Reps """
         return self.get_query_set().filter(representative__mep__active=True).annotate(count=models.Count('representative'))
 
-
 class Party(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
