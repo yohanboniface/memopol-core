@@ -1,10 +1,10 @@
 from django.db import models
 
 class RepsContainerManager(models.Manager):
-    """ Manager for models to which the REP model has a foreign key"""
+    """ Manager for models to which the representative model has a foreign key"""
     def with_counts(self):
         """ Return the models with a count property, with the count of active Reps """
-        return self.get_query_set().filter(rep__active=True).annotate(count=models.Count('rep'))
+        return self.get_query_set().filter(representative__active=True).annotate(count=models.Count('representative'))
 
 
 class Party(models.Model):
@@ -57,28 +57,28 @@ class PartyRepresentative(models.Model):
 
 class Email(models.Model):
     email = models.EmailField()
-    rep = models.ForeignKey(Representative)
+    representative = models.ForeignKey(Representative)
 
     def __unicode__(self):
         return self.email
 
 class CV(models.Model):
     title = models.CharField(max_length=1023)
-    rep = models.ForeignKey(Representative)
+    representative = models.ForeignKey(Representative)
 
     def __unicode__(self):
         return self.title
 
 class WebSite(models.Model):
     url = models.URLField()
-    rep = models.ForeignKey(Representative)
+    representative = models.ForeignKey(Representative)
 
     def __unicode__(self):
         return self.url
 
 
 class OpinionREP(models.Model):
-    rep = models.ForeignKey(Representative)
+    representative = models.ForeignKey(Representative)
     opinion = models.ForeignKey(Opinion)
     date = models.DateField()
 
