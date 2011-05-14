@@ -64,9 +64,9 @@ def clean_mps():
     print " * remove Function"
     Function.objects.all().delete()
     print " * remove WebSite"
-    _mp_WebSite.objects.all().delete()
+    WebSite.objects.all().delete()
     print " * remove Email"
-    _mp_Email.objects.all().delete()
+    Email.objects.all().delete()
     print " * remove Department"
     Department.objects.all().delete()
     print " * remove Circonscription"
@@ -331,15 +331,15 @@ def _create_mp(mp):
         if type(mp["contact"]["email"]) is list:
             for email in mp["contact"]["email"]:
                 print "   new email", email
-                _mp_Email.objects.create(email=email, mp=_mp)
+                Email.objects.create(email=email, mp=_mp)
         else:
             print "   new email", mp["contact"]["email"]["text"]
-            _mp_Email.objects.create(email=mp["contact"]["email"]["text"], mp=_mp)
+            Email.objects.create(email=mp["contact"]["email"]["text"], mp=_mp)
 
     if mp["contact"]["web"][1:]:
         for i in mp["contact"]["web"][1:]:
             print "   create website:", i["text"]
-            _mp_WebSite.objects.create(url=i["text"], mp=_mp)
+            WebSite.objects.create(url=i["text"], mp=_mp)
 
     addrs = mp["contact"]["address"]
     for addr in addrs:
