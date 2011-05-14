@@ -145,7 +145,7 @@ def _create_mep(mep):
     name = mep["infos"]["name"]
     birth_date = mep["infos"]["birth"]["date"]
     _mep = MEP.objects.create(active=mep["active"],
-                       key_name=name["wiki"],
+                       id=name["wiki"],
                        first_name=name["first"],
                        last_name=name["last"],
                        full_name=name["full"],
