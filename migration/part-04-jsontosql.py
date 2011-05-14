@@ -311,7 +311,7 @@ def _create_mp(mp):
                        last_name=name["last"],
                        gender=name["gender"],
                        picture=mp["infos"]["picture"],
-                       birth_city=mp["infos"]["birth"]["place"]["city"],
+                       birth_place=mp["infos"]["birth"]["place"]["city"],
                        birth_department=mp["infos"]["birth"]["place"]["department"],
                        birth_date=date(int(birth_date["year"]), int(birth_date["month"]), int(birth_date["day"])),
                        an_id=mp["extid"],
