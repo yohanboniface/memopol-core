@@ -19,7 +19,7 @@ class Party(models.Model):
         return self.mep_set.filter(active=True)
 
 class Opinion(models.Model):
-    title = models.CharField(max_length=255, unique=True)
+    title = models.CharField(max_length=1023, unique=True)
     content = models.TextField()
     url = models.URLField()
 
