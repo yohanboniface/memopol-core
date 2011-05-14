@@ -219,9 +219,9 @@ def _create_cv(cv, _mep):
     if type(cv) is list:
         for c in cv:
             print "   new cv:", c
-            CV.objects.create(title=c, mep=_mep)
+            CV.objects.create(title=c, representative=_mep)
     else:
-        CV.objects.create(title=cv, mep=_mep)
+        CV.objects.create(title=cv, representative=_mep)
 
 def manage_meps(path):
     clean_meps()
