@@ -8,7 +8,7 @@ from datetime import date, datetime
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "apps/"]
 
-from reps.models import WebSite, Party, CV, Email, Opinion, OpinionREP
+from reps.models import WebSite, Party, CV, Email, Opinion, OpinionREP, Representative
 from meps.models import Deleguation, Committee, Country, Group, MEP, DeleguationRole, CommitteeRole, Building
 from mps.models import MP, Function, FunctionMP, Department, Circonscription, Canton, Address, Phone, Mandate
 from mps.models import Group as _mp_Group
@@ -435,12 +435,12 @@ def _create_votes(vote):
 
     for v in vote["vote"]:
         print "   new subvote:", v["subject"]["part"]
-        SubProposal.objects.create(description=v["subject"]["description"], subject=v["subject"]["text"], part=v["subject"]["part"], vote=_v, weight=v["subject"].get("weight"), datetime=d(v["date"]), recommendation=v["subject"].get("recommendation"))
+        _sub = SubProposal.objects.create(description=v["subject"]["description"], subject=v["subject"]["text"], part=v["subject"]["part"], vote=_v, weight=v["subject"].get("weight"), datetime=d(v["date"]), recommendation=v["subject"].get("recommendation"))
         for r in v["result"]["mep"]:
             if r.get("dbxmlid"):
                 print "   create new result:", r["name"], ":", r["choice"], r.get("dbxmlid", "")
-                if MEP.objects.filter(key_name=r["dbxmlid"]):
-                    Vote.objects.create(choice=r["choice"], name=r["name"], mep=MEP.objects.get(key_name=r["dbxmlid"]))
+                if Representative.objects.filter(id=r["dbxmlid"]):
+                    Vote.objects.create(choice=r["choice"], name=r["name"], representative=Representative.objects.get(id=r["dbxmlid"]), sub_proposal=_sub)
 
 def manage_votes(path):
     clean_votes()

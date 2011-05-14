@@ -1,5 +1,5 @@
 from django.db import models
-from meps.models import MEP
+from reps.models import Representative
 
 class Proposal(models.Model):
     id = models.CharField(max_length=63, primary_key=True)
@@ -18,4 +18,4 @@ class Vote(models.Model):
     choice = models.CharField(max_length=15, choices=((u'for', u'for'), (u'against', u'against'), (u'abstention', u'abstention')))
     name = models.CharField(max_length=127)
     sub_proposal = models.ForeignKey(SubProposal, related_name="sub_proposal")
-    mep = models.ForeignKey(MEP)
+    representative = models.ForeignKey(Representative)
