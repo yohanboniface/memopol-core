@@ -47,6 +47,8 @@ def clean_meps():
     Party.objects.all().delete()
     print " * remove Opinion"
     Opinion.objects.all().delete()
+    print " * remove OpinionREP"
+    OpinionREP.objects.all().delete()
 
 def clean_mps():
     print "Clean mps database:"
