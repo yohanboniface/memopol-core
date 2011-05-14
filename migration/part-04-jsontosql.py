@@ -9,7 +9,7 @@ from datetime import date, datetime
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "apps/"]
 
 from reps.models import WebSite, Party, CV, Email, Opinion, OpinionREP
-from meps.models import Deleguation, Committee, Country, Group, MEP, DeleguationRole, CommitteeRole
+from meps.models import Deleguation, Committee, Country, Group, MEP, DeleguationRole, CommitteeRole, Building
 from mps.models import MP, Function, FunctionMP, Department, Circonscription, Canton, Address, Phone, Mandate
 from mps.models import Group as _mp_Group
 from votes.models import Proposal, SubProposal, Vote
@@ -24,6 +24,8 @@ def clean_meps():
     DeleguationRole.objects.all().delete()
     print " * remove CommitteeRole"
     CommitteeRole.objects.all().delete()
+    print " * remove Building"
+    Building.objects.all().delete()
     print " * remove MEP"
     MEP.objects.all().delete()
     print " * remove Email"
@@ -127,6 +129,19 @@ def _create_opinions(opinions, _mep):
         OpinionREP.objects.create(mep=_mep, opinion=Opinion.objects.get(title=opinion["title"]), date=_date)
 
 def _create_mep(mep):
+    if not Building.objects.filter(id=mep["contact"]["address"]["Bruxelles"]["building"]["abbreviation"]):
+        print "   create BXL Building:", mep["contact"]["address"]["Bruxelles"]["building"]["name"], mep["contact"]["address"]["Bruxelles"]["building"]["abbreviation"]
+        bxl = Building.objects.create(name=mep["contact"]["address"]["Bruxelles"]["building"]["name"],
+                    id=mep["contact"]["address"]["Bruxelles"]["building"]["abbreviation"],
+                    street=mep["contact"]["address"]["Bruxelles"]["street"],
+                    postcode=mep["contact"]["address"]["Bruxelles"]["postcode"])
+    if not Building.objects.filter(id=mep["contact"]["address"]["Strasbourg"]["building"]["abbreviation"]):
+        print "   create STG Building:", mep["contact"]["address"]["Strasbourg"]["building"]["name"], mep["contact"]["address"]["Strasbourg"]["building"]["abbreviation"]
+        stg = Building.objects.create(name=mep["contact"]["address"]["Strasbourg"]["building"]["name"],
+                    id=mep["contact"]["address"]["Strasbourg"]["building"]["abbreviation"],
+                    street=mep["contact"]["address"]["Strasbourg"]["street"],
+                    postcode=mep["contact"]["address"]["Strasbourg"]["postcode"])
+
     name = mep["infos"]["name"]
     birth_date = mep["infos"]["birth"]["date"]
     _mep = MEP.objects.create(active=mep["active"],
@@ -146,22 +161,16 @@ def _create_mep(mep):
                        ep_reports=mep["activities"]["reports"],
                        ep_motions=mep["activities"]["motions"],
                        ep_webpage=mep["contact"]["web"][0]["text"],
-                       bxl_building_name=mep["contact"]["address"]["Bruxelles"]["building"]["name"],
-                       bxl_building_abbreviation=mep["contact"]["address"]["Bruxelles"]["building"]["abbreviation"],
+                       bxl_building=Building.objects.get(id=mep["contact"]["address"]["Bruxelles"]["building"]["abbreviation"]),
                        bxl_office=mep["contact"]["address"]["Bruxelles"]["office"],
                        bxl_fax=mep["contact"]["address"]["Bruxelles"]["fax"],
                        bxl_phone1=mep["contact"]["address"]["Bruxelles"]["phone"][0],
                        bxl_phone2=mep["contact"]["address"]["Bruxelles"]["phone"][1],
-                       bxl_street=mep["contact"]["address"]["Bruxelles"]["street"],
-                       bxl_postcode=mep["contact"]["address"]["Bruxelles"]["postcode"],
-                       stg_building_name=mep["contact"]["address"]["Strasbourg"]["building"]["name"],
-                       stg_building_abbreviation=mep["contact"]["address"]["Strasbourg"]["building"]["abbreviation"],
+                       stg_building=Building.objects.get(id=mep["contact"]["address"]["Strasbourg"]["building"]["abbreviation"]),
                        stg_office=mep["contact"]["address"]["Strasbourg"]["office"],
                        stg_fax=mep["contact"]["address"]["Strasbourg"]["fax"],
                        stg_phone1=mep["contact"]["address"]["Strasbourg"]["phone"][0],
                        stg_phone2=mep["contact"]["address"]["Strasbourg"]["phone"][1],
-                       stg_street=mep["contact"]["address"]["Strasbourg"]["street"],
-                       stg_postcode=mep["contact"]["address"]["Strasbourg"]["postcode"],
                        party=Party.objects.get(name=mep["infos"]["group"]["party"]),
                        group_role=mep["infos"]["group"]["role"],
                        group=Group.objects.get(abbreviation=mep["infos"]["group"]["abbreviation"]),
