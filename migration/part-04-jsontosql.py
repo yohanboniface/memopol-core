@@ -263,7 +263,7 @@ def _create_mp_opinions(opinions, _mp):
                     _date = datetime.strptime(opinion["date"], "%d/%m/%y").date()
             except ValueError:
                 _date = datetime.strptime(opinion["date"], "%m/%Y").date()
-        OpinionREP.objects.create(date=_date, mp=_mp, opinion=Opinion.objects.get(title=opinion["title"]))
+        OpinionREP.objects.create(date=_date, representative=_mp, opinion=Opinion.objects.get(title=opinion["title"]))
 
 def _create_mp_functions(mp, _mp):
     for function in mp["functions"]:
@@ -331,15 +331,15 @@ def _create_mp(mp):
         if type(mp["contact"]["email"]) is list:
             for email in mp["contact"]["email"]:
                 print "   new email", email
-                Email.objects.create(email=email, mp=_mp)
+                Email.objects.create(email=email, representative=_mp)
         else:
             print "   new email", mp["contact"]["email"]["text"]
-            Email.objects.create(email=mp["contact"]["email"]["text"], mp=_mp)
+            Email.objects.create(email=mp["contact"]["email"]["text"], representative=_mp)
 
     if mp["contact"]["web"][1:]:
         for i in mp["contact"]["web"][1:]:
             print "   create website:", i["text"]
-            WebSite.objects.create(url=i["text"], mp=_mp)
+            WebSite.objects.create(url=i["text"], representative=_mp)
 
     addrs = mp["contact"]["address"]
     for addr in addrs:
