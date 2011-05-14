@@ -8,7 +8,8 @@ from datetime import date, datetime
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "apps/"]
 
-from meps.models import Deleguation, Committee, Country, Group, Opinion, MEP, Email, CV, Party, WebSite, DeleguationRole, CommitteeRole, OpinionMEP
+from reps.models import Opinion, OpinionREP
+from meps.models import Deleguation, Committee, Country, Group, MEP, Email, CV, Party, WebSite, DeleguationRole, CommitteeRole
 from mps.models import MP, Function, FunctionMP, OpinionMP, Department, Circonscription, Canton, Address, Phone, Mandate
 from mps.models import Opinion as _mp_Opinion
 from mps.models import WebSite as _mp_WebSite
@@ -124,7 +125,7 @@ def _create_opinions(opinions, _mep):
 
         _date = datetime.strptime(opinion["date"], "%d/%m/%Y").date()
         print "   new link to opinion:", _mep.full_name, _date
-        OpinionMEP.objects.create(mep=_mep, opinion=Opinion.objects.get(title=opinion["title"]), date=_date)
+        OpinionREP.objects.create(mep=_mep, opinion=Opinion.objects.get(title=opinion["title"]), date=_date)
 
 def _create_mep(mep):
     name = mep["infos"]["name"]
