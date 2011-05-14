@@ -2,7 +2,9 @@ from django.conf.urls.defaults import patterns, url
 from django.views.generic import list_detail
 
 from meps import views
-from meps.models import MEP, Country, Group, Committee, Deleguation, Party
+from meps.models import MEP, Country, Group, Committee, Deleguation
+
+from reps.models import Party
 
 country_dict = {'queryset': Country.objects.all(), 'slug_field': 'code', 'template_name': 'meps/container_detail.html'}
 party_dict = {'queryset': Party.objects.all(), 'template_name': 'meps/container_detail.html'}
