@@ -2,13 +2,13 @@ from django.conf.urls.defaults import patterns, url
 from django.views.generic import list_detail
 
 from meps import views
-from meps.models import MEP, Country, Group, Committe, Deleguation, Party
+from meps.models import MEP, Country, Group, Committee, Deleguation, Party
 
 country_dict = {'queryset': Country.objects.all(), 'slug_field': 'code', 'template_name': 'meps/container_detail.html'}
 party_dict = {'queryset': Party.objects.all(), 'template_name': 'meps/container_detail.html'}
 group_dict = {'queryset': Group.objects.all(), 'slug_field': 'abbreviation', 'template_name': 'meps/container_detail.html'}
 deleguation_dict = {'queryset': Deleguation.objects.all(), 'template_name': 'meps/container_detail.html'}
-committe_dict = {'queryset': Committe.objects.all(), 'slug_field': 'abbreviation', 'template_name': 'meps/container_detail.html'}
+committe_dict = {'queryset': Committee.objects.all(), 'slug_field': 'abbreviation', 'template_name': 'meps/container_detail.html'}
 mep_dict = {'queryset': MEP.objects.all(), 'slug_field': 'key_name', 'template_object_name': 'mep'}
 
 urlpatterns = patterns('',
@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     url(r'^country/(?P<slug>[a-zA-Z][a-zA-Z])/$', list_detail.object_detail, country_dict, name='index_by_country'),
     url(r'^groups/$', list_detail.object_list, {'queryset': Group.objects.with_counts()}, name='index_groups'),
     url(r'^group/(?P<slug>[a-zA-Z/-]+)/$', list_detail.object_detail, group_dict,  name='index_by_group'),
-    url(r'^committes/$', list_detail.object_list, {'queryset': Committe.objects.with_counts()}, name='index_committes'),
+    url(r'^committes/$', list_detail.object_list, {'queryset': Committee.objects.with_counts()}, name='index_committes'),
     url(r'^committe/(?P<slug>[A-Z]+)/$', list_detail.object_detail, committe_dict, name='index_by_committe'),
     url(r'^deleguations/$', list_detail.object_list, {'queryset': Deleguation.objects.with_counts()}, name='index_deleguations'),
     url(r'^deleguation/(?P<object_id>[0-9]+)/$', list_detail.object_detail, deleguation_dict, name='index_by_deleguation'),
