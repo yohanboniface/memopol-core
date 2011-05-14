@@ -224,7 +224,6 @@ def _create_cv(cv, _mep):
         CV.objects.create(title=cv, representative=_mep)
 
 def manage_meps(path):
-    clean_meps()
     print
     print "Load meps json."
     meps = json.loads(open(os.path.join(path, MEPS), "r").read())
@@ -411,7 +410,6 @@ def _create_mp_mandates(mandates, _mp):
                                        else None)
 
 def manage_mps(path):
-    clean_mps()
     print
     print "Load mps json."
     mps = json.loads(open(os.path.join(path, MPS), "r").read())
@@ -443,7 +441,6 @@ def _create_votes(vote):
                     Vote.objects.create(choice=r["choice"], name=r["name"], representative=Representative.objects.get(id=r["dbxmlid"]), sub_proposal=_sub)
 
 def manage_votes(path):
-    clean_votes()
     print
     print "Load votes json."
     votes = json.loads(open(os.path.join(path, VOTES), "r").read())
@@ -454,8 +451,14 @@ def manage_votes(path):
         print "  *", a, "-", vote["label"]
         _create_votes(vote)
 
+def _clean():
+    clean_meps()
+    clean_mps()
+    clean_votes()
+
 if __name__ == "__main__":
     path = sys.argv[1]
+    _clean()
     manage_meps(path)
     manage_mps(path)
     manage_votes(path)
