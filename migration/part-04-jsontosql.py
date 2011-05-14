@@ -11,8 +11,6 @@ sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "
 from reps.models import WebSite, Party, CV, Email, Opinion, OpinionREP
 from meps.models import Deleguation, Committee, Country, Group, MEP, DeleguationRole, CommitteeRole
 from mps.models import MP, Function, FunctionMP, Department, Circonscription, Canton, Address, Phone, Mandate
-from mps.models import WebSite as _mp_WebSite
-from mps.models import Email as _mp_Email
 from mps.models import Group as _mp_Group
 from votes.models import Vote, SubVote, Result
 
