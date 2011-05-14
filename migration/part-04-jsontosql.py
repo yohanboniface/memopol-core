@@ -171,7 +171,7 @@ def _create_mep(mep):
                        stg_fax=mep["contact"]["address"]["Strasbourg"]["fax"],
                        stg_phone1=mep["contact"]["address"]["Strasbourg"]["phone"][0],
                        stg_phone2=mep["contact"]["address"]["Strasbourg"]["phone"][1],
-                       local_party=Party.objects.get(name=mep["infos"]["group"]["party"]),
+                       #local_party=Party.objects.get(name=mep["infos"]["group"]["party"]),
                        group_role=mep["infos"]["group"]["role"],
                        group=Group.objects.get(abbreviation=mep["infos"]["group"]["abbreviation"]),
                        country=Country.objects.get(code=mep["infos"]["constituency"]["country"]["code"]))
