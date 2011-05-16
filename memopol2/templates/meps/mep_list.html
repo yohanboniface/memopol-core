@@ -8,7 +8,7 @@
         {% for mep in object_list %}
             <li>
                 <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" />
-                <a href="{% url meps:mep mep.key_name %}">{{ mep.last_name }} {{ mep.first_name }}</a>
+                <a href="{% url meps:mep mep.id %}">{{ mep.last_name }} {{ mep.first_name }}</a>
             </li>
         {% endfor %}
     </ul>

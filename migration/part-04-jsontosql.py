@@ -8,13 +8,11 @@ from datetime import date, datetime
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "apps/"]
 
-from meps.models import Deleguation, Committe, Country, Group, Opinion, MEP, Email, CV, Party, WebSite, DeleguationRole, CommitteRole, OpinionMEP
-from mps.models import MP, Function, FunctionMP, OpinionMP, Department, Circonscription, Canton, Address, Phone, Mandate
-from mps.models import Opinion as _mp_Opinion
-from mps.models import WebSite as _mp_WebSite
-from mps.models import Email as _mp_Email
+from reps.models import WebSite, Party, CV, Email, Opinion, OpinionREP, Representative
+from meps.models import Deleguation, Committee, Country, Group, MEP, DeleguationRole, CommitteeRole, Building
+from mps.models import MP, Function, FunctionMP, Department, Circonscription, Canton, Address, Phone, Mandate
 from mps.models import Group as _mp_Group
-from votes.models import Vote, SubVote, Result
+from votes.models import Proposal, SubProposal, Vote
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -24,8 +22,10 @@ def clean_meps():
     print "Clean meps database:"
     print " * remove DeleguationRole"
     DeleguationRole.objects.all().delete()
-    print " * remove CommitteRole"
-    CommitteRole.objects.all().delete()
+    print " * remove CommitteeRole"
+    CommitteeRole.objects.all().delete()
+    print " * remove Building"
+    Building.objects.all().delete()
     print " * remove MEP"
     MEP.objects.all().delete()
     print " * remove Email"
@@ -36,8 +36,8 @@ def clean_meps():
     WebSite.objects.all().delete()
     print " * remove WebSite"
     Deleguation.objects.all().delete()
-    print " * remove Committe"
-    Committe.objects.all().delete()
+    print " * remove Committee"
+    Committee.objects.all().delete()
     print " * remove Country"
     Country.objects.all().delete()
     print " * remove Group"
@@ -46,15 +46,17 @@ def clean_meps():
     Party.objects.all().delete()
     print " * remove Opinion"
     Opinion.objects.all().delete()
+    print " * remove OpinionREP"
+    OpinionREP.objects.all().delete()
 
 def clean_mps():
     print "Clean mps database:"
     print " * remove FunctionMP"
     FunctionMP.objects.all().delete()
     print " * remove Opinion"
-    _mp_Opinion.objects.all().delete()
-    print " * remove OpinionMP"
-    OpinionMP.objects.all().delete()
+    Opinion.objects.all().delete()
+    print " * remove OpinionREP"
+    OpinionREP.objects.all().delete()
     print " * remove Group"
     _mp_Group.objects.all().delete()
     print " * remove MP"
@@ -62,9 +64,9 @@ def clean_mps():
     print " * remove Function"
     Function.objects.all().delete()
     print " * remove WebSite"
-    _mp_WebSite.objects.all().delete()
+    WebSite.objects.all().delete()
     print " * remove Email"
-    _mp_Email.objects.all().delete()
+    Email.objects.all().delete()
     print " * remove Department"
     Department.objects.all().delete()
     print " * remove Circonscription"
@@ -80,18 +82,18 @@ def clean_mps():
 
 def clean_votes():
     print "Clean votes database:"
+    print " * remove Proposal"
+    Proposal.objects.all().delete()
+    print " * remove SubProposal"
+    SubProposal.objects.all().delete()
     print " * remove Vote"
     Vote.objects.all().delete()
-    print " * remove SubVote"
-    SubVote.objects.all().delete()
-    print " * remove Result"
-    Result.objects.all().delete()
 
 def _create_meps_functions(functions):
     for function in functions:
-        if function.get("abbreviation") and not Committe.objects.filter(name=function["label"], abbreviation=function["abbreviation"]):
-            print "   new committe:", function["abbreviation"], "-", function["label"]
-            Committe.objects.create(abbreviation=function["abbreviation"],
+        if function.get("abbreviation") and not Committee.objects.filter(name=function["label"], abbreviation=function["abbreviation"]):
+            print "   new Committee:", function["abbreviation"], "-", function["label"]
+            Committee.objects.create(abbreviation=function["abbreviation"],
                                     name=function["label"])
         elif type(function["label"]) is unicode and not Deleguation.objects.filter(name=function["label"]):
             print "   new deleguation:", function["label"]
@@ -124,13 +126,26 @@ def _create_opinions(opinions, _mep):
 
         _date = datetime.strptime(opinion["date"], "%d/%m/%Y").date()
         print "   new link to opinion:", _mep.full_name, _date
-        OpinionMEP.objects.create(mep=_mep, opinion=Opinion.objects.get(title=opinion["title"]), date=_date)
+        OpinionREP.objects.create(representative=_mep, opinion=Opinion.objects.get(title=opinion["title"]), date=_date)
 
 def _create_mep(mep):
+    if not Building.objects.filter(id=mep["contact"]["address"]["Bruxelles"]["building"]["abbreviation"]):
+        print "   create BXL Building:", mep["contact"]["address"]["Bruxelles"]["building"]["name"], mep["contact"]["address"]["Bruxelles"]["building"]["abbreviation"]
+        bxl = Building.objects.create(name=mep["contact"]["address"]["Bruxelles"]["building"]["name"],
+                    id=mep["contact"]["address"]["Bruxelles"]["building"]["abbreviation"],
+                    street=mep["contact"]["address"]["Bruxelles"]["street"],
+                    postcode=mep["contact"]["address"]["Bruxelles"]["postcode"])
+    if not Building.objects.filter(id=mep["contact"]["address"]["Strasbourg"]["building"]["abbreviation"]):
+        print "   create STG Building:", mep["contact"]["address"]["Strasbourg"]["building"]["name"], mep["contact"]["address"]["Strasbourg"]["building"]["abbreviation"]
+        stg = Building.objects.create(name=mep["contact"]["address"]["Strasbourg"]["building"]["name"],
+                    id=mep["contact"]["address"]["Strasbourg"]["building"]["abbreviation"],
+                    street=mep["contact"]["address"]["Strasbourg"]["street"],
+                    postcode=mep["contact"]["address"]["Strasbourg"]["postcode"])
+
     name = mep["infos"]["name"]
     birth_date = mep["infos"]["birth"]["date"]
     _mep = MEP.objects.create(active=mep["active"],
-                       key_name=name["wiki"],
+                       id=name["wiki"],
                        first_name=name["first"],
                        last_name=name["last"],
                        full_name=name["full"],
@@ -146,23 +161,17 @@ def _create_mep(mep):
                        ep_reports=mep["activities"]["reports"],
                        ep_motions=mep["activities"]["motions"],
                        ep_webpage=mep["contact"]["web"][0]["text"],
-                       bxl_building_name=mep["contact"]["address"]["Bruxelles"]["building"]["name"],
-                       bxl_building_abbreviation=mep["contact"]["address"]["Bruxelles"]["building"]["abbreviation"],
+                       bxl_building=Building.objects.get(id=mep["contact"]["address"]["Bruxelles"]["building"]["abbreviation"]),
                        bxl_office=mep["contact"]["address"]["Bruxelles"]["office"],
                        bxl_fax=mep["contact"]["address"]["Bruxelles"]["fax"],
                        bxl_phone1=mep["contact"]["address"]["Bruxelles"]["phone"][0],
                        bxl_phone2=mep["contact"]["address"]["Bruxelles"]["phone"][1],
-                       bxl_street=mep["contact"]["address"]["Bruxelles"]["street"],
-                       bxl_postcode=mep["contact"]["address"]["Bruxelles"]["postcode"],
-                       stg_building_name=mep["contact"]["address"]["Strasbourg"]["building"]["name"],
-                       stg_building_abbreviation=mep["contact"]["address"]["Strasbourg"]["building"]["abbreviation"],
+                       stg_building=Building.objects.get(id=mep["contact"]["address"]["Strasbourg"]["building"]["abbreviation"]),
                        stg_office=mep["contact"]["address"]["Strasbourg"]["office"],
                        stg_fax=mep["contact"]["address"]["Strasbourg"]["fax"],
                        stg_phone1=mep["contact"]["address"]["Strasbourg"]["phone"][0],
                        stg_phone2=mep["contact"]["address"]["Strasbourg"]["phone"][1],
-                       stg_street=mep["contact"]["address"]["Strasbourg"]["street"],
-                       stg_postcode=mep["contact"]["address"]["Strasbourg"]["postcode"],
-                       party=Party.objects.get(name=mep["infos"]["group"]["party"]),
+                       #local_party=Party.objects.get(name=mep["infos"]["group"]["party"]),
                        group_role=mep["infos"]["group"]["role"],
                        group=Group.objects.get(abbreviation=mep["infos"]["group"]["abbreviation"]),
                        country=Country.objects.get(code=mep["infos"]["constituency"]["country"]["code"]))
@@ -170,15 +179,15 @@ def _create_mep(mep):
     if type(mep["contact"]["email"]) is list:
         for email in mep["contact"]["email"]:
             print "   new email", email
-            Email.objects.create(email=email, mep=_mep)
+            Email.objects.create(email=email, representative=_mep)
     else:
         print "   new email", mep["contact"]["email"]["text"]
-        Email.objects.create(email=mep["contact"]["email"]["text"], mep=_mep)
+        Email.objects.create(email=mep["contact"]["email"]["text"], representative=_mep)
 
     if mep["contact"]["web"][1:]:
         for i in mep["contact"]["web"][1:]:
             print "   create website:", i["text"]
-            WebSite.objects.create(url=i["text"], mep=_mep)
+            WebSite.objects.create(url=i["text"], representative=_mep)
 
     return _mep
 
@@ -197,25 +206,24 @@ def _create_role(functions, _mep):
                 DeleguationRole.objects.create(mep=_mep, role=f["role"], deleguation=Deleguation.objects.get(name=name), begin=_begin, end=_end)
         else:
             if not f.get("begin_term"):
-                print "   new role in committe:", f["role"], "in", f["abbreviation"]
-                CommitteRole.objects.create(mep=_mep, role=f["role"], committe=Committe.objects.get(abbreviation=f["abbreviation"]))
+                print "   new role in Committee:", f["role"], "in", f["abbreviation"]
+                CommitteeRole.objects.create(mep=_mep, role=f["role"], committee=Committee.objects.get(abbreviation=f["abbreviation"]))
             else:
                 b = f["begin_term"]
                 _begin = date(int(b["year"]), int(b["month"]), int(b["day"]))
                 e = f["end_term"]
                 _end = date(int(e["year"]), int(e["month"]), int(e["day"]))
-                CommitteRole.objects.create(mep=_mep, role=f["role"], deleguation=Deleguation.objects.get(name=f["label"]), begin=_begin, end=_end)
+                CommitteeRole.objects.create(mep=_mep, role=f["role"], deleguation=Deleguation.objects.get(name=f["label"]), begin=_begin, end=_end)
 
 def _create_cv(cv, _mep):
     if type(cv) is list:
         for c in cv:
             print "   new cv:", c
-            CV.objects.create(title=c, mep=_mep)
+            CV.objects.create(title=c, representative=_mep)
     else:
-        CV.objects.create(title=cv, mep=_mep)
+        CV.objects.create(title=cv, representative=_mep)
 
 def manage_meps(path):
-    clean_meps()
     print
     print "Load meps json."
     meps = json.loads(open(os.path.join(path, MEPS), "r").read())
@@ -238,9 +246,9 @@ def manage_meps(path):
 
 def _create_mp_opinions(opinions, _mp):
     for opinion in opinions:
-        if not _mp_Opinion.objects.filter(title=opinion["title"]):
+        if not Opinion.objects.filter(title=opinion["title"]):
             print "   create new opinion :", opinion["title"]
-            _mp_Opinion.objects.create(content=opinion["content"], title=opinion["title"], url=opinion["url"])
+            Opinion.objects.create(content=opinion["content"], title=opinion["title"], url=opinion["url"])
 
         if opinion["date"] == "7": #stupid data
             _date = date(2009, 5, 7)
@@ -254,7 +262,7 @@ def _create_mp_opinions(opinions, _mp):
                     _date = datetime.strptime(opinion["date"], "%d/%m/%y").date()
             except ValueError:
                 _date = datetime.strptime(opinion["date"], "%m/%Y").date()
-        OpinionMP.objects.create(date=_date, mp=_mp, opinion=_mp_Opinion.objects.get(title=opinion["title"]))
+        OpinionREP.objects.create(date=_date, representative=_mp, opinion=Opinion.objects.get(title=opinion["title"]))
 
 def _create_mp_functions(mp, _mp):
     for function in mp["functions"]:
@@ -302,7 +310,7 @@ def _create_mp(mp):
                        last_name=name["last"],
                        gender=name["gender"],
                        picture=mp["infos"]["picture"],
-                       birth_city=mp["infos"]["birth"]["place"]["city"],
+                       birth_place=mp["infos"]["birth"]["place"]["city"],
                        birth_department=mp["infos"]["birth"]["place"]["department"],
                        birth_date=date(int(birth_date["year"]), int(birth_date["month"]), int(birth_date["day"])),
                        an_id=mp["extid"],
@@ -322,15 +330,15 @@ def _create_mp(mp):
         if type(mp["contact"]["email"]) is list:
             for email in mp["contact"]["email"]:
                 print "   new email", email
-                _mp_Email.objects.create(email=email, mp=_mp)
+                Email.objects.create(email=email, representative=_mp)
         else:
             print "   new email", mp["contact"]["email"]["text"]
-            _mp_Email.objects.create(email=mp["contact"]["email"]["text"], mp=_mp)
+            Email.objects.create(email=mp["contact"]["email"]["text"], representative=_mp)
 
     if mp["contact"]["web"][1:]:
         for i in mp["contact"]["web"][1:]:
             print "   create website:", i["text"]
-            _mp_WebSite.objects.create(url=i["text"], mp=_mp)
+            WebSite.objects.create(url=i["text"], representative=_mp)
 
     addrs = mp["contact"]["address"]
     for addr in addrs:
@@ -402,7 +410,6 @@ def _create_mp_mandates(mandates, _mp):
                                        else None)
 
 def manage_mps(path):
-    clean_mps()
     print
     print "Load mps json."
     mps = json.loads(open(os.path.join(path, MPS), "r").read())
@@ -421,20 +428,19 @@ def manage_mps(path):
         _create_mp_opinions(mp["opinions"], _mp)
 
 def _create_votes(vote):
-    _v = Vote.objects.create(id=vote["wiki"], title=vote["label"])
+    _v = Proposal.objects.create(id=vote["wiki"], title=vote["label"])
     d = lambda x: datetime(int(x["year"]), int(x["month"]), int(x["day"]), int(x["hour"]), int(x["minute"]), int(x["second"]))
 
     for v in vote["vote"]:
         print "   new subvote:", v["subject"]["part"]
-        SubVote.objects.create(description=v["subject"]["description"], subject=v["subject"]["text"], part=v["subject"]["part"], vote=_v, weight=v["subject"].get("weight"), datetime=d(v["date"]), recommendation=v["subject"].get("recommendation"))
+        _sub = SubProposal.objects.create(description=v["subject"]["description"], subject=v["subject"]["text"], part=v["subject"]["part"], vote=_v, weight=v["subject"].get("weight"), datetime=d(v["date"]), recommendation=v["subject"].get("recommendation"))
         for r in v["result"]["mep"]:
             if r.get("dbxmlid"):
                 print "   create new result:", r["name"], ":", r["choice"], r.get("dbxmlid", "")
-                if MEP.objects.filter(key_name=r["dbxmlid"]):
-                    Result.objects.create(choice=r["choice"], name=r["name"], mep=MEP.objects.get(key_name=r["dbxmlid"]))
+                if Representative.objects.filter(id=r["dbxmlid"]):
+                    Vote.objects.create(choice=r["choice"], name=r["name"], representative=Representative.objects.get(id=r["dbxmlid"]), sub_proposal=_sub)
 
 def manage_votes(path):
-    clean_votes()
     print
     print "Load votes json."
     votes = json.loads(open(os.path.join(path, VOTES), "r").read())
@@ -445,8 +451,14 @@ def manage_votes(path):
         print "  *", a, "-", vote["label"]
         _create_votes(vote)
 
+def _clean():
+    clean_meps()
+    clean_mps()
+    clean_votes()
+
 if __name__ == "__main__":
     path = sys.argv[1]
+    _clean()
     manage_meps(path)
     manage_mps(path)
     manage_votes(path)
