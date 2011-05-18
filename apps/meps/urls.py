@@ -11,7 +11,7 @@ party_dict = {'queryset': Party.objects.all(), 'template_name': 'meps/container_
 group_dict = {'queryset': Group.objects.all(), 'slug_field': 'abbreviation', 'template_name': 'meps/container_detail.html'}
 deleguation_dict = {'queryset': Deleguation.objects.all(), 'template_name': 'meps/container_detail.html'}
 committe_dict = {'queryset': Committee.objects.all(), 'slug_field': 'abbreviation', 'template_name': 'meps/container_detail.html'}
-mep_dict = {'queryset': MEP.objects.all(), 'slug_field': 'key_name', 'template_object_name': 'mep'}
+mep_dict = {'queryset': MEP.objects.all(), 'slug_field': 'id', 'template_object_name': 'mep'}
 
 urlpatterns = patterns('',
     url(r'^names/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=True)}, name='index_names'),

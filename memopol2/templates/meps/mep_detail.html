@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block sidelinks %}
-    <li><a href="{% url meps:mep_raw mep.key_name %}">{% trans "View Raw JSON" %}</a></li>
+    <li><a href="{% url meps:mep_raw mep.id %}">{% trans "View Raw JSON" %}</a></li>
 {% endblock %}
 
 {% block content %}
