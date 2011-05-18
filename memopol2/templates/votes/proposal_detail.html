@@ -8,7 +8,7 @@
 
 <br>
 
-{% regroup vote.subproposal_set.all by subject as subvote %}
+{% regroup vote.recommendation_set.all by subject as subvote %}
 
 <ul>
     {% for x in subvote %}
@@ -22,6 +22,12 @@
                 <li><em>Part</em> : {{ v.part }}</li>
                 {% if v.recommendation %}<li><em>Recommendation</em> : {{ v.recommendation }}</li>{% endif %}
                 {% if v.weight %}<li><em>Weight</em> : {{ v.weight }}</li>{% endif %}
+                <ul>
+                  {% regroup v.vote_set.all by choice as V %}
+                  {% for y in V %}
+                  <li><b>{{ y.grouper }}</b>: {{y.list|length}} </li>
+                  {% endfor %}
+                </ul>
                 </div>
             </ul>
         </li>
