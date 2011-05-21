@@ -433,7 +433,7 @@ def _create_votes(vote):
 
     for v in vote["vote"]:
         print "   new subvote:", v["subject"]["part"]
-        _sub = Recommendation.objects.create(description=v["subject"]["description"], subject=v["subject"]["text"], part=v["subject"]["part"], vote=_v, weight=v["subject"].get("weight"), datetime=d(v["date"]), recommendation=v["subject"].get("recommendation"))
+        _sub = Recommendation.objects.create(description=v["subject"]["description"], subject=v["subject"]["text"], part=v["subject"]["part"], proposal=_v, weight=v["subject"].get("weight"), datetime=d(v["date"]), recommendation=v["subject"].get("recommendation"))
         for r in v["result"]["mep"]:
             if r.get("dbxmlid"):
                 print "   create new result:", r["name"], ":", r["choice"], r.get("dbxmlid", "")
