@@ -435,10 +435,11 @@ def _create_votes(vote):
         print "   new subvote:", v["subject"]["part"]
         _sub = Recommendation.objects.create(description=v["subject"]["description"], subject=v["subject"]["text"], part=v["subject"]["part"], proposal=_v, weight=v["subject"].get("weight"), datetime=d(v["date"]), recommendation=v["subject"].get("recommendation"))
         for r in v["result"]["mep"]:
-            if r.get("dbxmlid"):
-                print "   create new result:", r["name"], ":", r["choice"], r.get("dbxmlid", "")
-                if Representative.objects.filter(id=r["dbxmlid"]):
-                    Vote.objects.create(choice=r["choice"], name=r["name"], representative=Representative.objects.get(id=r["dbxmlid"]), sub_proposal=_sub)
+            print "   create new result:", r["name"], ":", r["choice"], r.get("dbxmlid", "")
+            if r.get("dbxmlid") and Representative.objects.filter(id=r["dbxmlid"]):
+                Vote.objects.create(choice=r["choice"], name=r["name"], representative=Representative.objects.get(id=r["dbxmlid"]), recommendation=_sub)
+            else:
+                Vote.objects.create(choice=r["choice"], name=r["name"], representative=None, recommendation=_sub)
 
 def manage_votes(path):
     print
