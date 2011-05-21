@@ -12,12 +12,11 @@ from reps.models import WebSite, Party, CV, Email, Opinion, OpinionREP, Represen
 from meps.models import Deleguation, Committee, Country, Group, MEP, DeleguationRole, CommitteeRole, Building
 from mps.models import MP, Function, FunctionMP, Department, Circonscription, Canton, Address, Phone, Mandate
 from mps.models import Group as _mp_Group
-from votes.models import Proposal, Recommendation, Vote
+from votes.models import Proposal, Recommendation, Vote, Score
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
 VOTES = "votes.xml.json"
-
 def clean_meps():
     print "Clean meps database:"
     print " * remove DeleguationRole"
@@ -88,6 +87,11 @@ def clean_votes():
     Recommendation.objects.all().delete()
     print " * remove Vote"
     Vote.objects.all().delete()
+
+def clean_scores():
+    print "Clean scores"
+    print "  * remove Score"
+    Score.objects.all().delete()
 
 def _create_meps_functions(functions):
     for function in functions:
@@ -456,6 +460,18 @@ def _clean():
     clean_meps()
     clean_mps()
     clean_votes()
+    clean_scores()
+
+def manage_scores(path):
+    print
+    print "Load meps json."
+    meps = json.loads(open(os.path.join(path, MEPS), "r").read())
+    print
+    a = 0
+    for mep in meps:
+        for score in mep['scores']:
+            print "   * new score for", mep["infos"]["name"]["full"], "on", score["label"]
+            Score.objects.create(value=score['value'], representative=Representative.objects.get(id=mep['_id']), proposal=Proposal.objects.get(id=score["wiki"]))
 
 if __name__ == "__main__":
     path = sys.argv[1]
@@ -463,3 +479,4 @@ if __name__ == "__main__":
     manage_meps(path)
     manage_mps(path)
     manage_votes(path)
+    manage_scores(path)

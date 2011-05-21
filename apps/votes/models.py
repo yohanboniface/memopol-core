@@ -19,3 +19,8 @@ class Vote(models.Model):
     name = models.CharField(max_length=127)
     recommendation = models.ForeignKey(Recommendation)
     representative = models.ForeignKey(Representative, null=True)
+
+class Score(models.Model):
+    value = models.FloatField()
+    representative = models.ForeignKey(Representative)
+    proposal = models.ForeignKey(Proposal)
