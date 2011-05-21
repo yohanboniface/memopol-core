@@ -12,7 +12,7 @@ from reps.models import WebSite, Party, CV, Email, Opinion, OpinionREP, Represen
 from meps.models import Deleguation, Committee, Country, Group, MEP, DeleguationRole, CommitteeRole, Building
 from mps.models import MP, Function, FunctionMP, Department, Circonscription, Canton, Address, Phone, Mandate
 from mps.models import Group as _mp_Group
-from votes.models import Proposal, SubProposal, Vote
+from votes.models import Proposal, Recommendation, Vote
 
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
@@ -84,8 +84,8 @@ def clean_votes():
     print "Clean votes database:"
     print " * remove Proposal"
     Proposal.objects.all().delete()
-    print " * remove SubProposal"
-    SubProposal.objects.all().delete()
+    print " * remove Recommendation"
+    Recommendation.objects.all().delete()
     print " * remove Vote"
     Vote.objects.all().delete()
 
@@ -433,7 +433,7 @@ def _create_votes(vote):
 
     for v in vote["vote"]:
         print "   new subvote:", v["subject"]["part"]
-        _sub = SubProposal.objects.create(description=v["subject"]["description"], subject=v["subject"]["text"], part=v["subject"]["part"], vote=_v, weight=v["subject"].get("weight"), datetime=d(v["date"]), recommendation=v["subject"].get("recommendation"))
+        _sub = Recommendation.objects.create(description=v["subject"]["description"], subject=v["subject"]["text"], part=v["subject"]["part"], vote=_v, weight=v["subject"].get("weight"), datetime=d(v["date"]), recommendation=v["subject"].get("recommendation"))
         for r in v["result"]["mep"]:
             if r.get("dbxmlid"):
                 print "   create new result:", r["name"], ":", r["choice"], r.get("dbxmlid", "")
