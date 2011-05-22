@@ -472,6 +472,16 @@ def manage_scores(path):
         for score in mep['scores']:
             print "   * new score for", mep["infos"]["name"]["full"], "on", score["label"]
             Score.objects.create(value=score['value'], representative=Representative.objects.get(id=mep['_id']), proposal=Proposal.objects.get(id=score["wiki"]))
+    print
+    print "Load mps json."
+    mps = json.loads(open(os.path.join(path, MPS), "r").read())
+    print
+    a = 0
+    for mp in mps:
+        for score in mp['scores']:
+            print "   * new score for", mp["infos"]["name"]["last"], mp["infos"]["name"]["first"], "on", score["label"], score['wiki']
+            proposal = Proposal.objects.filter(id=score["wiki"])
+            Score.objects.create(value=score['value'], representative=Representative.objects.get(id=mp['_id']), proposal=proposal if proposal else None)
 
 if __name__ == "__main__":
     path = sys.argv[1]
