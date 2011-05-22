@@ -14,3 +14,5 @@ pip-log.txt
 *.py[co]
 pylint.out
 .tox
+env
+fixtures
