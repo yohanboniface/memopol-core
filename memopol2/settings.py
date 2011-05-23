@@ -114,7 +114,7 @@ INSTALLED_APPS = (
     'queries',
     'trends',
     'trophies',
-    'reps'
+    'reps',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
