@@ -8,7 +8,7 @@ from datetime import date, datetime
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "apps/"]
 
-from reps.models import WebSite, Party, CV, Email, Opinion, OpinionREP, Representative
+from reps.models import WebSite, Party, CV, Email, Opinion, OpinionREP, Representative, PartyRepresentative
 from meps.models import Deleguation, Committee, Country, Group, MEP, DeleguationRole, CommitteeRole, Building
 from mps.models import MP, Function, FunctionMP, Department, Circonscription, Canton, Address, Phone, Mandate
 from mps.models import Group as _mp_Group
@@ -175,7 +175,6 @@ def _create_mep(mep):
                        stg_fax=mep["contact"]["address"]["Strasbourg"]["fax"],
                        stg_phone1=mep["contact"]["address"]["Strasbourg"]["phone"][0],
                        stg_phone2=mep["contact"]["address"]["Strasbourg"]["phone"][1],
-                       #local_party=Party.objects.get(name=mep["infos"]["group"]["party"]),
                        group_role=mep["infos"]["group"]["role"],
                        group=Group.objects.get(abbreviation=mep["infos"]["group"]["abbreviation"]),
                        country=Country.objects.get(code=mep["infos"]["constituency"]["country"]["code"]))
@@ -192,6 +191,9 @@ def _create_mep(mep):
         for i in mep["contact"]["web"][1:]:
             print "   create website:", i["text"]
             WebSite.objects.create(url=i["text"], representative=_mep)
+
+    print "   link to local party", mep["infos"]["group"]["party"]
+    PartyRepresentative(party=Party.objects.get(name=mep["infos"]["group"]["party"]), representative=_mep, current=True)
 
     return _mep
 

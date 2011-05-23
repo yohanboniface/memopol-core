@@ -48,7 +48,7 @@ class Representative(models.Model):
 class PartyRepresentative(models.Model):
     representative = models.ForeignKey(Representative)
     party = models.ForeignKey(Party)
-    role = models.CharField(max_length=255)
+    role = models.CharField(max_length=255, null=True)
     current = models.BooleanField()
     # well maybe need those one day
     #begin = models.DateField()
@@ -74,7 +74,6 @@ class WebSite(models.Model):
 
     def __unicode__(self):
         return self.url
-
 
 class OpinionREP(models.Model):
     representative = models.ForeignKey(Representative)
