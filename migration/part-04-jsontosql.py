@@ -17,6 +17,7 @@ from votes.models import Proposal, Recommendation, Vote, Score
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
 VOTES = "votes.xml.json"
+
 def clean_meps():
     print "Clean meps database:"
     print " * remove DeleguationRole"
