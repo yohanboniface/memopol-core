@@ -16,7 +16,7 @@ class Party(models.Model):
 
     @property
     def meps(self):
-        return self.mep_set.filter(active=True)
+        return self.representative_set.filter(mep__active=True)
 
 class Opinion(models.Model):
     title = models.CharField(max_length=1023, unique=True)
