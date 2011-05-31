@@ -23,4 +23,4 @@ class Vote(models.Model):
 class Score(models.Model):
     value = models.FloatField()
     representative = models.ForeignKey(Representative)
-    proposal = models.ForeignKey(Proposal, null=True)
+    proposal = models.ForeignKey(Proposal)
