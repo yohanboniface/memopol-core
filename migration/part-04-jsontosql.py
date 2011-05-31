@@ -425,8 +425,6 @@ def manage_mps(path):
     for mp in mps:
         a += 1
         print "  *", a, "-", mp["infos"]["name"]["first"], mp["infos"]["name"]["last"], "-", mp["_id"]
-        _create_mp_departments(mp)
-        _create_mp_groups(mp["infos"]["group"])
         _create_mp_groups(mp["infos"]["group"])
         _create_mp_departments(mp)
         _mp = _create_mp(mp)
