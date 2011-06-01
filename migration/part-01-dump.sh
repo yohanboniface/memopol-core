@@ -10,7 +10,7 @@ if ! test -x "$DBXML_BINARY"; then
 echo "No dbxml binary, using cached development dumps..."
 
 mkdir -p $XML_DUMPS_PATH
-gunzip -c cache/meps.xml.gz > $XML_DUMPS_PATH/meps.xml
+cp cache/meps_en.xml $XML_DUMPS_PATH/meps.xml
 gunzip -c cache/mps.xml.gz > $XML_DUMPS_PATH/mps.xml
 gunzip -c cache/votes.xml.gz > $XML_DUMPS_PATH/votes.xml
 
