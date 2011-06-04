@@ -57,10 +57,10 @@ def clean_mps():
     Opinion.objects.all().delete()
     print " * remove OpinionREP"
     OpinionREP.objects.all().delete()
-    print " * remove Group"
-    _mp_Group.objects.all().delete()
     print " * remove MP"
     MP.objects.all().delete()
+    print " * remove Group"
+    _mp_Group.objects.all().delete()
     print " * remove Function"
     Function.objects.all().delete()
     print " * remove WebSite"
@@ -460,13 +460,13 @@ def manage_votes(path):
 def _clean():
     clean_scores()
     clean_votes()
-    clean_mps()
-    clean_meps()
     print "Clean representatives database:"
     print " * remove Representative"
     Representative.objects.all().delete()
     print " * remove PartyRepresentative"
     PartyRepresentative.objects.all().delete()
+    clean_meps()
+    clean_mps()
 
 def manage_scores(path):
     print
