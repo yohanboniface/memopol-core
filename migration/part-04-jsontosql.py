@@ -458,10 +458,10 @@ def manage_votes(path):
         _create_votes(vote)
 
 def _clean():
-    clean_meps()
-    clean_mps()
-    clean_votes()
     clean_scores()
+    clean_votes()
+    clean_mps()
+    clean_meps()
 
 def manage_scores(path):
     print
