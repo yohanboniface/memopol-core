@@ -476,6 +476,9 @@ def manage_scores(path):
     a = 0
     for mep in meps:
         for score in mep['scores']:
+            if mep["_id"] in ["LucasHartong", "InnocenzoLeontini"]:
+                #rubish data
+                continue
             print "   * new score for", mep["infos"]["name"]["full"], "on", score["label"]
             Score.objects.create(value=score['value'], representative=Representative.objects.get(id=mep['_id']), proposal=Proposal.objects.get(id=score["wiki"]))
     print
