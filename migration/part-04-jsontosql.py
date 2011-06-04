@@ -462,6 +462,11 @@ def _clean():
     clean_votes()
     clean_mps()
     clean_meps()
+    print "Clean representatives database:"
+    print " * remove Representative"
+    Representative.objects.all().delete()
+    print " * remove PartyRepresentative"
+    PartyRepresentative.objects.all().delete()
 
 def manage_scores(path):
     print
