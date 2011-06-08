@@ -520,10 +520,7 @@ def manage_scores(path):
         for score in mp['scores']:
             print "   * new score for", mp["infos"]["name"]["last"], mp["infos"]["name"]["first"], "on", score["label"], score['wiki']
             proposal = Proposal.objects.filter(id=score["wiki"])
-            if not proposal:
-                proposal = Proposal.objects.create(id=score["wiki"], title=score["label"])
-            else:
-                proposal = proposal[0]
+            proposal = proposal[0]
             Score.objects.create(value=score['value'], representative=Representative.objects.get(id=mp['_id']), proposal=proposal)
 
 if __name__ == "__main__":
