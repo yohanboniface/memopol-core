@@ -17,6 +17,7 @@ from votes.models import Proposal, Recommendation, Vote, Score
 MEPS = "meps.xml.json"
 MPS = "mps.xml.json"
 VOTES = "votes.xml.json"
+MPS_VOTES = "votes_mps.xml.json"
 
 def clean_meps():
     print "Clean meps database:"
@@ -446,6 +447,26 @@ def _create_votes(vote):
             else:
                 Vote.objects.create(choice=r["choice"], name=r["name"], representative=None, recommendation=_sub)
 
+def _create_votes_mps(vote):
+    _v = Proposal.objects.create(id=vote["wiki"], title=vote["label"])
+    d = lambda x: datetime(int(x["year"]), int(x["month"]), int(x["day"]), int(x.get("hour", "0")), int(x.get("minute", "0")), int(x.get("second", "0")))
+
+    def _process_vote(v):
+        print "   new subvote:", v["subject"]["part"]
+        _sub = Recommendation.objects.create(description=v["subject"]["description"], subject=v["subject"]["text"], part=v["subject"]["part"], proposal=_v, weight=v["subject"].get("weight"), datetime=d(v["date"]), recommendation=v["subject"].get("recommendation"))
+        for r in v["result"]["mp"]:
+            print "    create new result:", r["name"], ":", r["choice"], r.get("dbxmlid", "")
+            if r.get("dbxmlid") and Representative.objects.filter(id=r["dbxmlid"]):
+                Vote.objects.create(choice=r["choice"], name=r["name"], representative=Representative.objects.get(id=r["dbxmlid"]), recommendation=_sub)
+            else:
+                Vote.objects.create(choice=r["choice"], name=r["name"], representative=None, recommendation=_sub)
+
+    if not isinstance(vote["vote"], dict):
+        for v in vote["vote"]:
+            _process_vote(v)
+    else:
+        _process_vote(vote["vote"])
+
 def manage_votes(path):
     print
     print "Load votes json."
@@ -456,6 +477,15 @@ def manage_votes(path):
         a += 1
         print "  *", a, "-", vote["label"]
         _create_votes(vote)
+    print
+    print "Load mps votes json."
+    votes = json.loads(open(os.path.join(path, MPS_VOTES), "r").read())
+    print
+    a = 0
+    for vote in votes:
+        a += 1
+        print "  *", a, "-", vote["label"]
+        _create_votes_mps(vote)
 
 def _clean():
     clean_scores()

@@ -13,6 +13,7 @@ mkdir -p $XML_DUMPS_PATH
 cp cache/meps_en.xml $XML_DUMPS_PATH/meps.xml
 gunzip -c cache/mps.xml.gz > $XML_DUMPS_PATH/mps.xml
 cp cache/votes.xml $XML_DUMPS_PATH/votes.xml
+cp cache/votes_mps.xml $XML_DUMPS_PATH/votes_mps.xml
 
 
 else
