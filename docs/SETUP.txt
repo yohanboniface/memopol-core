@@ -63,8 +63,10 @@ Install memopol2's dependencies:
 Run the "migration" scripts
 ===========================
 
-    cd migration
-    ./go.sh
+Run syncdb, this will import the fixtures. Warning: this take a *LOTS* of time,
+arround 25min.
+
+    python manage.py syncdb
 
 Install the default welcome message (optional)
 ==============================================
