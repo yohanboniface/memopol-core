@@ -5,6 +5,10 @@ class Proposal(models.Model):
     id = models.CharField(max_length=63, primary_key=True)
     title = models.CharField(max_length=255, unique=True)
 
+    @property
+    def date(self):
+        return self.recommendation_set.all()[0].datetime.date()
+
 class Recommendation(models.Model):
     datetime = models.DateTimeField()
     subject = models.CharField(max_length=255)

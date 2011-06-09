@@ -106,10 +106,10 @@
     <div id="scores">
         <h2 class="collapsible expanded">{% trans "Scores average" %} : {{ mep.average_scores|floatformat:0 }}</h2>
         <ul class="body">
-        {% for score in score_list %}
+        {% for score in mep.score_set.all %}
         <li style="background:{{ score.color }}">
 
-            {{ score.label }}: <strong>{{ score.value }}</strong> ({% trans "on" %} {{ score.date }})<br/><a target="_" href="http://www.laquadrature.net/wiki/{{ score.wiki }}">{% trans "Read more..." %}</a>
+            {{ score.proposal.title }}: <strong>{{ score.value }}</strong> ({% trans "on" %} {{ score.proposal.date }})<br/><a target="_" href="http://www.laquadrature.net/wiki/{{ score.proposal.id }}">{% trans "Read more..." %}</a>
             </li>
         {% endfor %}
         </ul>
