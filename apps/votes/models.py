@@ -28,3 +28,9 @@ class Score(models.Model):
     value = models.FloatField()
     representative = models.ForeignKey(Representative)
     proposal = models.ForeignKey(Proposal)
+
+    @property
+    def color(self):
+        red = 255 - self.value
+        green = self.value * 2.55
+        return "rgb(%d, %d, 0)" % (red, green)
