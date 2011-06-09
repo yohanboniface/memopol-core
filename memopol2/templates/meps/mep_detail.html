@@ -102,9 +102,9 @@
 </div>
 {% endif %}
 
-{% if mep.scores %}
+{% if mep.score_set.all %}
     <div id="scores">
-        <h2 class="collapsible collapsed">{% trans "Scores average" %} : {{ average|floatformat:0 }}</h2>
+        <h2 class="collapsible expanded">{% trans "Scores average" %} : {{ mep.average_scores|floatformat:0 }}</h2>
         <ul class="body">
         {% for score in score_list %}
         <li style="background:{{ score.color }}">
