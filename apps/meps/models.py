@@ -37,7 +37,7 @@ class Group(models.Model):
         return self.mep_set.filter(active=True)
 
 
-class Deleguation(models.Model):
+class Delegation(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
     objects = MepsContainerManager()
@@ -94,7 +94,7 @@ class MEP(Representative):
     group = models.ForeignKey(Group)
     group_role = models.CharField(max_length=63)
     country = models.ForeignKey(Country)
-    deleguations = models.ManyToManyField(Deleguation, through='DeleguationRole')
+    delegations = models.ManyToManyField(Delegation, through='DelegationRole')
     committees = models.ManyToManyField(Committee, through='CommitteeRole')
 
     def __unicode__(self):
@@ -103,15 +103,15 @@ class MEP(Representative):
     class Meta:
         ordering = ['last_name']
 
-class DeleguationRole(models.Model):
+class DelegationRole(models.Model):
     mep = models.ForeignKey(MEP)
-    deleguation = models.ForeignKey(Deleguation)
+    delegation = models.ForeignKey(Delegation)
     role = models.CharField(max_length=255)
     begin = models.DateField(null=True)
     end = models.DateField(null=True)
 
     def __unicode__(self):
-        return u"%s : %s" % (self.mep.full_name, self.deleguation)
+        return u"%s : %s" % (self.mep.full_name, self.delegation)
 
 class CommitteeRole(models.Model):
     mep = models.ForeignKey(MEP)

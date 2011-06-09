@@ -69,12 +69,12 @@
 </div>
 {% endif %}
 
-{% if mep.deleguationrole_set.all %}
-<div id="deleguations">
-    <h2 class="collapsible collapsed">{% trans "Deleguations" %}</h2>
+{% if mep.delegationrole_set.all %}
+<div id="delegations">
+    <h2 class="collapsible collapsed">{% trans "Delegations" %}</h2>
     <ul class="body">
-    {% for role in mep.deleguationrole_set.all %}
-        <li><a href="{% url meps:index_by_deleguation role.deleguation.id %}">{{ role.role }} - {{ role.deleguation }}</a></li>
+    {% for role in mep.delegationrole_set.all %}
+        <li><a href="{% url meps:index_by_delegation role.delegation.id %}">{{ role.role }} - {{ role.delegation }}</a></li>
     {% endfor %}
     </ul>
 </div>

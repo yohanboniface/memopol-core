@@ -9,7 +9,7 @@ from datetime import date, datetime
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("migration")] + "apps/"]
 
 from reps.models import WebSite, Party, CV, Email, Opinion, OpinionREP, Representative, PartyRepresentative
-from meps.models import Deleguation, Committee, Country, Group, MEP, DeleguationRole, CommitteeRole, Building
+from meps.models import Delegation, Committee, Country, Group, MEP, DelegationRole, CommitteeRole, Building
 from mps.models import MP, Function, FunctionMP, Department, Circonscription, Canton, Address, Phone, Mandate
 from mps.models import Group as _mp_Group
 from votes.models import Proposal, Recommendation, Vote, Score
@@ -21,8 +21,8 @@ MPS_VOTES = "votes_mps.xml.json"
 
 def clean_meps():
     print "Clean meps database:"
-    print " * remove DeleguationRole"
-    DeleguationRole.objects.all().delete()
+    print " * remove DelegationRole"
+    DelegationRole.objects.all().delete()
     print " * remove CommitteeRole"
     CommitteeRole.objects.all().delete()
     print " * remove Building"
@@ -33,10 +33,10 @@ def clean_meps():
     Email.objects.all().delete()
     print " * remove CV"
     CV.objects.all().delete()
-    print " * remove Deleguation"
+    print " * remove Delegation"
     WebSite.objects.all().delete()
     print " * remove WebSite"
-    Deleguation.objects.all().delete()
+    Delegation.objects.all().delete()
     print " * remove Committee"
     Committee.objects.all().delete()
     print " * remove Country"
@@ -101,12 +101,12 @@ def _create_meps_functions(functions):
             print "   new Committee:", function["abbreviation"], "-", function["label"]
             Committee.objects.create(abbreviation=function["abbreviation"],
                                     name=function["label"])
-        elif type(function["label"]) is unicode and not Deleguation.objects.filter(name=function["label"]):
-            print "   new deleguation:", function["label"]
-            Deleguation.objects.create(name=function["label"])
-        elif type(function["label"]) is not unicode and not Deleguation.objects.filter(name=function["label"]["text"]):
-            print "   new deleguation:", function["label"]["text"]
-            Deleguation.objects.create(name=function["label"]["text"])
+        elif type(function["label"]) is unicode and not Delegation.objects.filter(name=function["label"]):
+            print "   new delegation:", function["label"]
+            Delegation.objects.create(name=function["label"])
+        elif type(function["label"]) is not unicode and not Delegation.objects.filter(name=function["label"]["text"]):
+            print "   new delegation:", function["label"]["text"]
+            Delegation.objects.create(name=function["label"]["text"])
         else:
             pass
 
@@ -204,14 +204,14 @@ def _create_role(functions, _mep):
         if not f.get("abbreviation"):
             name = f["label"] if type(f["label"]) is unicode else f["label"]["text"]
             if not f.get("begin_term"):
-                print "   new role in deleguation:", f["role"], "in", name
-                DeleguationRole.objects.create(mep=_mep, role=f["role"], deleguation=Deleguation.objects.get(name=name))
+                print "   new role in delegation:", f["role"], "in", name
+                DelegationRole.objects.create(mep=_mep, role=f["role"], delegation=Delegation.objects.get(name=name))
             else:
                 b = f["begin_term"]
                 _begin = date(int(b["year"]), int(b["month"]), int(b["day"]))
                 e = f["end_term"]
                 _end = date(int(e["year"]), int(e["month"]), int(e["day"]))
-                DeleguationRole.objects.create(mep=_mep, role=f["role"], deleguation=Deleguation.objects.get(name=name), begin=_begin, end=_end)
+                DelegationRole.objects.create(mep=_mep, role=f["role"], delegation=Delegation.objects.get(name=name), begin=_begin, end=_end)
         else:
             if not f.get("begin_term"):
                 print "   new role in Committee:", f["role"], "in", f["abbreviation"]
@@ -221,7 +221,7 @@ def _create_role(functions, _mep):
                 _begin = date(int(b["year"]), int(b["month"]), int(b["day"]))
                 e = f["end_term"]
                 _end = date(int(e["year"]), int(e["month"]), int(e["day"]))
-                CommitteeRole.objects.create(mep=_mep, role=f["role"], deleguation=Deleguation.objects.get(name=f["label"]), begin=_begin, end=_end)
+                CommitteeRole.objects.create(mep=_mep, role=f["role"], delegation=Delegation.objects.get(name=f["label"]), begin=_begin, end=_end)
 
 def _create_cv(cv, _mep):
     if type(cv) is list:
