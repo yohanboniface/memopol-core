@@ -8,24 +8,24 @@
 
 <br>
 
-{% regroup vote.recommendation_set.all by subject as subvote %}
+{% regroup vote.recommendation_set.all by subject as subvotes %}
 
 <ul>
-    {% for x in subvote %}
-    <li><b>{{ x.grouper }}</b>
+    {% for subvote in subvotes %}
+    <li><b>{{ subvote.grouper }}</b>
     <ul>
-        {% for v in x.list %}
+        {% for vote in subvote.list %}
         <li>
-            {{ v.description }}
+            {{ vote.description }}
             <ul>
-                <div class="{{ v.recommendation }}">
-                <li><em>Part</em> : {{ v.part }}</li>
-                {% if v.recommendation %}<li><em>Recommendation</em> : {{ v.recommendation }}</li>{% endif %}
-                {% if v.weight %}<li><em>Weight</em> : {{ v.weight }}</li>{% endif %}
+                <div class="{{ vote.recommendation }}">
+                <li><em>Part</em> : {{ vote.part }}</li>
+                {% if vote.recommendation %}<li><em>Recommendation</em> : {{ vote.recommendation }}</li>{% endif %}
+                {% if vote.weight %}<li><em>Weight</em> : {{ vote.weight }}</li>{% endif %}
                 <ul>
-                  {% regroup v.vote_set.all by choice as V %}
-                  {% for y in V %}
-                  <li><b>{{ y.grouper }}</b>: {{y.list|length}} </li>
+                  {% regroup vote.vote_set.all by choice as result %}
+                  {% for re in result %}
+                  <li><b>{{ re.grouper }}</b>: {{ re.list|length }} </li>
                   {% endfor %}
                 </ul>
                 </div>
