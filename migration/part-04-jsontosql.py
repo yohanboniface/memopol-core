@@ -509,7 +509,7 @@ def manage_scores(path):
             if mep["_id"] in ["LucasHartong", "InnocenzoLeontini"]:
                 #rubish data
                 continue
-            print "   * new score for", mep["infos"]["name"]["full"], "on", score["label"]
+            print "   * new score for", mep["infos"]["name"]["full"], "on", score["label"], score["wiki"], mep["_id"]
             Score.objects.create(value=score['value'], representative=Representative.objects.get(id=mep['_id']), proposal=Proposal.objects.get(id=score["wiki"]))
     print
     print "Load mps json."
