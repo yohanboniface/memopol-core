@@ -113,7 +113,7 @@
             </li>
         {% endfor %}
         </ul>
-        <img src="/static/img/trends/meps/{{ mep.id }}-scores.png" />
+        <img src="{% url trends:trends mep.id %}" />
     </div>
 {% endif %}
 
