@@ -12,14 +12,6 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 from meps.models import MEP
 
-def score_to_color(score):
-    """
-    map a score between 0 and 100 to a red-green colorspace
-    """
-    red = 255 - score
-    green = score * 2.55
-    return "rgb(%d, %d, 0)" % (red, green)
-
 def autoTrophies(mep):
     mapping = { (u'Parlement europ\u00e9en',u'Pr\u00e9sident') : (12, 'President of EP', 'pep.jpg'),
                 (u'Parlement europ\u00e9en',u'Vice-Pr\u00e9sident') : (11, 'VP of EP', 'vpep.jpg'),
