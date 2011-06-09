@@ -109,7 +109,7 @@
         {% for score in mep.score_set.all %}
         <li style="background:{{ score.color }}">
 
-            {{ score.proposal.title }}: <strong>{{ score.value }}</strong> ({% trans "on" %} {{ score.proposal.date }})<br/><a target="_" href="http://www.laquadrature.net/wiki/{{ score.proposal.id }}">{% trans "Read more..." %}</a>
+            {{ score.proposal.title }}: <strong>{{ score.value }}</strong> ({% trans "on" %} {{ score.date }})<br/><a target="_" href="http://www.laquadrature.net/wiki/{{ score.proposal.id }}">{% trans "Read more..." %}</a>
             </li>
         {% endfor %}
         </ul>

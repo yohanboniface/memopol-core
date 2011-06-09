@@ -28,6 +28,10 @@ class Score(models.Model):
     value = models.FloatField()
     representative = models.ForeignKey(Representative)
     proposal = models.ForeignKey(Proposal)
+    date = models.DateField()
+
+    class Meta:
+        ordering = ['date']
 
     @property
     def color(self):
