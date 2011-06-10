@@ -73,7 +73,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    #    'crashlog.CrashLogMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -106,7 +105,6 @@ INSTALLED_APPS = (
     'flatblocks',
 
     # memopol
-    # 'crashlog',
     'meps',
     'votes',
     'mps',
