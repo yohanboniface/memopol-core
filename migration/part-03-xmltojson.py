@@ -140,6 +140,18 @@ def fixup_month_names(item):
     if len(m) == 0:
         return
     months = {
+        u"january": "01",
+        u"february": "02",
+        u"march": "03",
+        u"april": "04",
+        u"may": "05",
+        u"june": "06",
+        u"july": "07",
+        u"august": "08",
+        u"september": "09",
+        u"october": "10",
+        u"november": "11",
+        u"december": "12",
         u"janvier": "01",
         u"fevrier": "02", u"f\xe9vrier": "02",
         u"mars": "03",

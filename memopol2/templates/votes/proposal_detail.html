@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if vote %}
+    <h1>{{ vote.title }}</h1>
+{% endif %}
+
+<br>
+
+{% regroup vote.recommendation_set.all by subject as subvotes %}
+
+<ul>
+    {% for subvote in subvotes %}
+    <li><b>{{ subvote.grouper }}</b>
+    <ul>
+        {% for vote in subvote.list %}
+        <li>
+            {{ vote.description }}
+            <ul>
+                <div class="{{ vote.recommendation }}">
+                <li><em>Part</em> : {{ vote.part }}</li>
+                {% if vote.recommendation %}<li><em>Recommendation</em> : {{ vote.recommendation }}</li>{% endif %}
+                {% if vote.weight %}<li><em>Weight</em> : {{ vote.weight }}</li>{% endif %}
+                <ul>
+                  {% regroup vote.vote_set.all by choice as result %}
+                  {% for re in result %}
+                  <li><b>{{ re.grouper }}</b>: {{ re.list|length }} </li>
+                  {% endfor %}
+                </ul>
+                </div>
+            </ul>
+        </li>
+        <br>
+        {% endfor %}
+    </ul>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

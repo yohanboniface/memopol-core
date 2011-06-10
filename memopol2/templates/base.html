@@ -33,6 +33,9 @@
                 <li><a href="{% url meps:index_countries %}">{% trans "By country" %}</a></li>
                 <li><a href="{% url meps:index_groups %}">{% trans "By political group" %}</a></li>
                 <li><a href="{% url meps:index_names %}">{% trans "By name" %}</a></li>
+                <li><a href="{% url meps:index_committes %}">{% trans "By committe" %}</a></li>
+                <li><a href="{% url meps:index_delegations %}">{% trans "By delegation" %}</a></li>
+                <li><a href="{% url meps:index_parties %}">{% trans "By local party" %}</a></li>
             </ul>
 
             <h2>{% trans "Votes" %}</h2>
@@ -43,6 +46,8 @@
             <h2>{% trans "French MPs" %}</h2>
             <ul>
                 <li><a href="{% url mps:index %}">{% trans "By name" %}</a></li>
+                <li><a href="{% url mps:index_groups %}">{% trans "By political group" %}</a></li>
+                <li><a href="{% url mps:index_departments %}">{% trans "By departments" %}</a></li>
             </ul>
 
 

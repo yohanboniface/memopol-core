@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{% trans "Departments" %}</h1>
+<ul class="groups">
+{% for department in object_list %}
+    {% if department.count %}
+    <li>
+        <a href="{% url mps:index_by_department department.number %}">
+            {{ department.name }} ({{ department.number }})
+        </a>
+        {% blocktrans with department.count as count %} - {{ count }} MEPs {% endblocktrans %}
+    </li>
+    {% endif %}
+{% endfor %}
+</ul>
+<br />
+
+{% endblock %}

@@ -10,5 +10,6 @@ Bruno Cauet <bruno.cauet@supelec.fr>
 Romain Gauthier <romain.gauthier@masteri2l.org>
 Guyzmo <guyzmo+github@m0g.net>
 Gelnior <gelnior@free.fr>
+Olivier Le Thanh Duong <olivier@lethanh.be>
 
 Gibus <neurone2@laquadrature.net> - creator of memopol v1
