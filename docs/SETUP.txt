@@ -18,18 +18,6 @@ Install the base python virtualenv tools:
 Setup your virtual environment
 ===============================
 
-If you already use virtualenv/virtualenvwrapper
------------------------------------------------
-
-Create the virtualenv for memopol and workon it:
-
-    mkvirtualenv --no-site-packages --distribute memopol2
-
-Install memopol2's depdendencies:
-
-    pip install -r requirements.txt
-
-
 If you don't alreasy use virtualenv/virtualenvwrapper
 -----------------------------------------------------
 
@@ -56,6 +44,18 @@ Create the virtualenv for memopol:
 Your command prompt should now begin by (memopol2)
 
 Install memopol2's dependencies:
+
+    pip install -r requirements.txt
+
+
+If you already use virtualenv/virtualenvwrapper
+-----------------------------------------------
+
+Create the virtualenv for memopol and workon it:
+
+    mkvirtualenv --no-site-packages --distribute memopol2
+
+Install memopol2's depdendencies:
 
     pip install -r requirements.txt
 
