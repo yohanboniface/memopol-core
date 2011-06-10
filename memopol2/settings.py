@@ -108,7 +108,6 @@ INSTALLED_APPS = (
     'meps',
     'votes',
     'mps',
-    'home',
     'queries',
     'trends',
     'trophies',

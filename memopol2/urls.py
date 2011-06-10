@@ -1,18 +1,17 @@
 import os
 
 from django.conf.urls.defaults import patterns, include, url
+from django.views.generic.simple import direct_to_template
 from django.conf import settings
 from django.contrib import admin
 from django.views.static import serve
 
 from django.conf.urls.defaults import *
 
-from home import views
-
 admin.autodiscover()
 
 urlpatterns = patterns('', # pylint: disable=C0103
-    url(r'^$', views.home, name='index'),
+    url(r'^$', direct_to_template, {'template' : 'home.html'}, name='index'),
     url(r'^meps/', include('meps.urls', namespace='meps', app_name='meps')),
     url(r'^mps/', include('mps.urls', namespace='mps', app_name='mps')),
     url(r'^votes/', include('votes.urls', namespace='votes', app_name='votes')),
