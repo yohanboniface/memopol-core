@@ -221,7 +221,7 @@ def _create_role(functions, _mep):
                 _begin = date(int(b["year"]), int(b["month"]), int(b["day"]))
                 e = f["end_term"]
                 _end = date(int(e["year"]), int(e["month"]), int(e["day"]))
-                CommitteeRole.objects.create(mep=_mep, role=f["role"], delegation=Delegation.objects.get(name=f["label"]), begin=_begin, end=_end)
+                CommitteeRole.objects.create(mep=_mep, role=f["role"], delegation=Committee.objects.get(abbreviation=f["abbreviation"]), begin=_begin, end=_end)
 
 def _create_cv(cv, _mep):
     if type(cv) is list:
