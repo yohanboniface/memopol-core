@@ -15,3 +15,5 @@ numpy==1.5.1
 git+http://github.com/matplotlib/matplotlib.git@3bf76b9fe6152280950168f9a3791f56c508eeed#egg=matplotlib
 PIL==1.1.7
 django-flatblocks==0.5
+BeautifulSoup==3.2.0
+lxml==2.3
