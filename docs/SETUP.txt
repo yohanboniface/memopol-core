@@ -63,10 +63,12 @@ Install memopol2's dependencies:
 Run the "migration" scripts
 ===========================
 
-Run syncdb, this will import the fixtures. Warning: this take a *LOTS* of time,
-arround 25min.
+Run syncdb then migrate, this will import the fixtures. Warning: this take a
+*LOTS* of time, arround 25min.
 
     python manage.py syncdb
+    python manage.py migrate
+
 
 Install the default welcome message (optional)
 ==============================================
