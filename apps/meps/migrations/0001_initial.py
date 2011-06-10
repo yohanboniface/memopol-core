@@ -24,12 +24,12 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('meps', ['Group'])
 
-        # Adding model 'Deleguation'
-        db.create_table('meps_deleguation', (
+        # Adding model 'Delegation'
+        db.create_table('meps_delegation', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255)),
         ))
-        db.send_create_signal('meps', ['Deleguation'])
+        db.send_create_signal('meps', ['Delegation'])
 
         # Adding model 'Committee'
         db.create_table('meps_committee', (
@@ -76,16 +76,16 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('meps', ['MEP'])
 
-        # Adding model 'DeleguationRole'
-        db.create_table('meps_deleguationrole', (
+        # Adding model 'DelegationRole'
+        db.create_table('meps_delegationrole', (
             ('begin', self.gf('django.db.models.fields.DateField')(null=True)),
             ('end', self.gf('django.db.models.fields.DateField')(null=True)),
             ('role', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('mep', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['meps.MEP'])),
-            ('deleguation', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['meps.Deleguation'])),
+            ('delegation', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['meps.Delegation'])),
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
         ))
-        db.send_create_signal('meps', ['DeleguationRole'])
+        db.send_create_signal('meps', ['DelegationRole'])
 
         # Adding model 'CommitteeRole'
         db.create_table('meps_committeerole', (
@@ -107,8 +107,8 @@ class Migration(SchemaMigration):
         # Deleting model 'Group'
         db.delete_table('meps_group')
 
-        # Deleting model 'Deleguation'
-        db.delete_table('meps_deleguation')
+        # Deleting model 'Delegation'
+        db.delete_table('meps_delegation')
 
         # Deleting model 'Committee'
         db.delete_table('meps_committee')
@@ -119,8 +119,8 @@ class Migration(SchemaMigration):
         # Deleting model 'MEP'
         db.delete_table('meps_mep')
 
-        # Deleting model 'DeleguationRole'
-        db.delete_table('meps_deleguationrole')
+        # Deleting model 'DelegationRole'
+        db.delete_table('meps_delegationrole')
 
         # Deleting model 'CommitteeRole'
         db.delete_table('meps_committeerole')
@@ -155,15 +155,15 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
-        'meps.deleguation': {
-            'Meta': {'object_name': 'Deleguation'},
+        'meps.delegation': {
+            'Meta': {'object_name': 'Delegation'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
         },
-        'meps.deleguationrole': {
-            'Meta': {'object_name': 'DeleguationRole'},
+        'meps.delegationrole': {
+            'Meta': {'object_name': 'DelegationRole'},
             'begin': ('django.db.models.fields.DateField', [], {'null': 'True'}),
-            'deleguation': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['meps.Deleguation']"}),
+            'delegation': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['meps.Delegation']"}),
             'end': ('django.db.models.fields.DateField', [], {'null': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'mep': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['meps.MEP']"}),
@@ -185,7 +185,7 @@ class Migration(SchemaMigration):
             'bxl_phone2': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'committees': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['meps.Committee']", 'through': "orm['meps.CommitteeRole']", 'symmetrical': 'False'}),
             'country': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['meps.Country']"}),
-            'deleguations': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['meps.Deleguation']", 'through': "orm['meps.DeleguationRole']", 'symmetrical': 'False'}),
+            'delegations': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['meps.Delegation']", 'through': "orm['meps.DelegationRole']", 'symmetrical': 'False'}),
             'ep_debates': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
             'ep_declarations': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
             'ep_id': ('django.db.models.fields.IntegerField', [], {}),
