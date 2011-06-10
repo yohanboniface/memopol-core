@@ -27,8 +27,6 @@ urlpatterns = patterns('',
     url(r'^party/(?P<object_id>[0-9]+)/$', list_detail.object_detail, party_dict,  name='index_by_party'),
 
     url(r'^mep/(?P<slug>\w+)/$', list_detail.object_detail, mep_dict, name='mep'),
-    url(r'^mep/(?P<mep_id>\w+)/raw/$', views.mep_raw, name='mep_raw'),
-    url(r'^mep/(?P<mep_id>\w+)/json/$', views.mep_json, name='mep_json'),
     url(r'^mep/(?P<mep_id>\w+)/addposition/$', views.mep_addposition, name='mep_addposition'),
 
     url(r'^moderation/$', views.moderation, name='moderation'),

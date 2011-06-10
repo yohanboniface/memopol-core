@@ -1,9 +1,5 @@
 {% extends "base.html" %}
 
-{% block sidelinks %}
-    <li><a href="{% url meps:mep_raw mep.id %}">{% trans "View Raw JSON" %}</a></li>
-{% endblock %}
-
 {% block content %}
 <article>
 <header><h1 id="name">{{ mep.first_name }} {{ mep.last_name|upper }}{% trans ", member of the european parliament" %}</h1></header>
