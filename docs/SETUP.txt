@@ -18,18 +18,6 @@ Install the base python virtualenv tools:
 Setup your virtual environment
 ===============================
 
-If you already use virtualenv/virtualenvwrapper
------------------------------------------------
-
-Create the virtualenv for memopol and workon it:
-
-    mkvirtualenv --no-site-packages --distribute memopol2
-
-Install memopol2's depdendencies:
-
-    pip install -r requirements.txt
-
-
 If you don't alreasy use virtualenv/virtualenvwrapper
 -----------------------------------------------------
 
@@ -60,13 +48,27 @@ Install memopol2's dependencies:
     pip install -r requirements.txt
 
 
+If you already use virtualenv/virtualenvwrapper
+-----------------------------------------------
+
+Create the virtualenv for memopol and workon it:
+
+    mkvirtualenv --no-site-packages --distribute memopol2
+
+Install memopol2's depdendencies:
+
+    pip install -r requirements.txt
+
+
 Run the "migration" scripts
 ===========================
 
-Run syncdb, this will import the fixtures. Warning: this take a *LOTS* of time,
-arround 25min.
+Run syncdb then migrate, this will import the fixtures. Warning: this take a
+*LOTS* of time, arround 25min.
 
     python manage.py syncdb
+    python manage.py migrate
+
 
 Install the default welcome message (optional)
 ==============================================
