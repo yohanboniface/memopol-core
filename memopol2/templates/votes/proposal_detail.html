@@ -14,16 +14,16 @@
     {% for subvote in subvotes %}
     <li><b>{{ subvote.grouper }}</b>
     <ul>
-        {% for vote in subvote.list %}
+        {% for v in subvote.list %}
         <li>
-            {{ vote.description }}
+            {{ v.description }}
             <ul>
-                <div class="{{ vote.recommendation }}">
-                <li><em>Part</em> : {{ vote.part }}</li>
-                {% if vote.recommendation %}<li><em>Recommendation</em> : {{ vote.recommendation }}</li>{% endif %}
-                {% if vote.weight %}<li><em>Weight</em> : {{ vote.weight }}</li>{% endif %}
+                <div class="{{ v.recommendation }}">
+                <li><em>Part</em> : {{ v.part }}</li>
+                {% if v.recommendation %}<li><em>Recommendation</em> : {{ v.recommendation }}</li>{% endif %}
+                {% if v.weight %}<li><em>Weight</em> : {{ v.weight }}</li>{% endif %}
                 <ul>
-                  {% regroup vote.vote_set.all by choice as result %}
+                  {% regroup v.vote_set.all by choice as result %}
                   {% for re in result %}
                   <li><b>{{ re.grouper }}</b>: {{ re.list|length }} </li>
                   {% endfor %}
