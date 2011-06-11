@@ -24,6 +24,9 @@ class Vote(models.Model):
     recommendation = models.ForeignKey(Recommendation)
     representative = models.ForeignKey(Representative, null=True)
 
+    class Meta:
+        ordering = ["choice"]
+
 class Score(models.Model):
     value = models.FloatField()
     representative = models.ForeignKey(Representative)
