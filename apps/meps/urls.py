@@ -1,7 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 from django.views.generic import list_detail
 
-from meps import views
 from meps.models import MEP, Country, Group, Committee, Delegation
 
 from reps.models import Party
@@ -27,10 +26,5 @@ urlpatterns = patterns('',
     url(r'^party/(?P<object_id>[0-9]+)/$', list_detail.object_detail, party_dict,  name='index_by_party'),
 
     url(r'^mep/(?P<slug>\w+)/$', list_detail.object_detail, mep_dict, name='mep'),
-    url(r'^mep/(?P<mep_id>\w+)/addposition/$', views.mep_addposition, name='mep_addposition'),
-
-    url(r'^moderation/$', views.moderation, name='moderation'),
-    url(r'^moderation/get_unmoderated_positions$', views.moderation_get_unmoderated_positions, name='moderation_get_unmoderated_positions'),
-    url(r'^moderation/moderate_position$', views.moderation_moderate_positions, name='moderation_moderate_positions'),
 )
 
