@@ -24,7 +24,5 @@ urlpatterns = patterns('',
     url(r'^delegation/(?P<object_id>[0-9]+)/$', list_detail.object_detail, delegation_dict, name='index_by_delegation'),
     url(r'^parties/$', list_detail.object_list, {'queryset': Party.objects.with_counts()}, name='index_parties'),
     url(r'^party/(?P<object_id>[0-9]+)/$', list_detail.object_detail, party_dict,  name='index_by_party'),
-
     url(r'^mep/(?P<slug>\w+)/$', list_detail.object_detail, mep_dict, name='mep'),
 )
-
