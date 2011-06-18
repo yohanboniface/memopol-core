@@ -68,6 +68,7 @@ Run the "migration" scripts
 Run syncdb then migrate, this will import the fixtures. Warning: this take a
 *LOTS* of time, arround 25min.
 
+    cd memopol2
     python manage.py syncdb
     python manage.py migrate
 
@@ -87,7 +88,6 @@ Install the default welcome message (optional)
 Run the server
 ==============
 
-    cd ../memopol2
     python manage.py runserver 8080
 
 Your application is available on http://localhost:8080/
