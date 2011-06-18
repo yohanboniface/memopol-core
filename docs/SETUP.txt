@@ -4,7 +4,7 @@ This describes how to setup the mempol2 dev environment
 Install the base dependencies
 =============================
 
-Install the base python virtualenv tools:
+Install the base python virtualenv tools (on Ubuntu you have to enable universe):
 
     sudo apt-get install python-setuptools python-dev libxml2-dev libxslt1-dev libfreetype6-dev libpng12-dev python-pip
     sudo pip install virtualenv
@@ -39,6 +39,10 @@ Create the virtualenv for memopol:
 
 Your command prompt should now begin by (memopol2)
 
+To load this virtualenv later, you can run:
+    
+    workon memopol2
+
 If you already use virtualenv/virtualenvwrapper
 -----------------------------------------------
 
@@ -48,6 +52,13 @@ Create the virtualenv for memopol and workon it:
 
 Installation
 ------------
+
+On Debian systems running Python 2.7 (like Ubuntu Natty), you must run this first:
+
+    mkdir $VIRTUAL_ENV/local
+    ln -s $VIRTUAL_ENV/lib $VIRTUAL_ENV/local/lib
+
+(more info here: http://mail.scipy.org/pipermail/numpy-discussion/2011-June/056544.html)
 
 Install memopol2's depdendencies:
 
