@@ -6,7 +6,7 @@ Install the base dependencies
 
 Install the base python virtualenv tools:
 
-    sudo apt-get install python-setuptools
+    sudo apt-get install python-setuptools python-dev libxml2-dev libxslt1-dev libfreetype6-dev libpng12-dev
     sudo pip install virtualenv
     sudo pip install virtualenvwrapper
 
@@ -55,7 +55,7 @@ Install memopol2's depdendencies:
 
 If you have errors with matplotlib or numpy do a:
 
-    pip install numpy
+    pip install numpy==1.5.1
 
 Then
 
