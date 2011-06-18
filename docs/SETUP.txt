@@ -6,7 +6,7 @@ Install the base dependencies
 
 Install the base python virtualenv tools:
 
-    sudo apt-get install python-setuptools python-dev libxml2-dev libxslt1-dev libfreetype6-dev libpng12-dev
+    sudo apt-get install python-setuptools python-dev libxml2-dev libxslt1-dev libfreetype6-dev libpng12-dev python-pip
     sudo pip install virtualenv
     sudo pip install virtualenvwrapper
 
