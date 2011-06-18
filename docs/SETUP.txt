@@ -4,10 +4,6 @@ This describes how to setup the mempol2 dev environment
 Install the base dependencies
 =============================
 
-Install the couchdb server:
-
-    sudo apt-get install couchdb
-
 Install the base python virtualenv tools:
 
     sudo apt-get install python-setuptools
