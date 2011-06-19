@@ -1,4 +1,5 @@
 from django.db import models
+import meps
 
 class RepsContainerManager(models.Manager):
     """ Manager for models to which the representative model has a foreign key"""
@@ -16,7 +17,7 @@ class Party(models.Model):
 
     @property
     def meps(self):
-        return self.representative_set.filter(mep__active=True)
+        return meps.models.MEP.objects.filter(partyrepresentative__party=self, active=True)
 
 class Opinion(models.Model):
     title = models.CharField(max_length=1023, unique=True)

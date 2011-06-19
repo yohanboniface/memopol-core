@@ -40,7 +40,7 @@ Create the virtualenv for memopol:
 Your command prompt should now begin by (memopol2)
 
 To load this virtualenv later, you can run:
-    
+
     workon memopol2
 
 If you already use virtualenv/virtualenvwrapper

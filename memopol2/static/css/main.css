@@ -290,12 +290,35 @@ li {
     margin: 0.1em;
 }
 
-.groups
+ul.groups, ul.meps, ul.index, ul.party
 {
     list-style: none;
+}
+
+ul.index li
+{
+    display: inline-block;
 }
 
 ul ul, ul ol, ol ul, ol ol
 {
     margin-left: 30px;
+}
+
+table.mep-list {
+  border-width: 1px;
+  border-spacing: 0px;
+}
+
+table.mep-list tr th, table.mep-list tr td {
+  border: 1px solid black;
+  padding: 3px 6px;
+}
+
+table.mep-list tr th {
+  text-align: center;
+}
+
+table.mep-list tr td {
+  text-align: left;
 }
