@@ -1,17 +1,21 @@
 {% extends "base.html" %}
 
+{% block scripts %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/picnet.table.filter.min.js"></script>
+{% endblock %}
 {% block content %}
 
 {% include header_template %}
 
-<table class="mep-list"> 
+<table class="mep-list tablesorter"> 
   <thead>
     <tr> 
-      <th>MEP</th>
-      {% if not 'country' in hidden_fields %}<th>Country</th>{% endif %}
-      {% if not 'group' in hidden_fields %}<th>Group</th>{% endif %}
-      {% if not 'party' in hidden_fields %}<th>Party</th>{% endif %}
-      <th>Contact</th>
+      <th filter='false'>MEP</th>
+      {% if not 'country' in hidden_fields %}<th filter-type='ddl'>Country</th>{% endif %}
+      {% if not 'group' in hidden_fields %}<th filter-type='ddl'>Group</th>{% endif %}
+      {% if not 'party' in hidden_fields %}<th filter-type='ddl'>Party</th>{% endif %}
+      <th filter='false'>Contact</th>
     </tr>
   </thead>
   <tbody>
@@ -60,5 +64,7 @@
 {% block documentReady %}
 
   activateCollapsible();
+  jQuery(".mep-list").tablesorter();
+  jQuery('.mep-list').tableFilter();
 
 {% endblock %}
