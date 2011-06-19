@@ -29,7 +29,7 @@ def trends_for_mep(request, mep_id):
     def save_fig(filename):
         if not os.path.exists("/".join(filename.split("/")[:-1])):
             for i in xrange(-3, 0):
-                path = "/".join(filename.spli("/")[:i])
+                path = "/".join(filename.split("/")[:i])
                 if not os.path.exists(path):
                     os.mkdir(path)
         pyplot.savefig(filename, format="png")
