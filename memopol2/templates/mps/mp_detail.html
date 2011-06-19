@@ -10,7 +10,7 @@
 <ul id="infos" class="body">
 
 <div class="quickView">
-    <img class="mugshot" src="http://www.assemblee-nationale.fr/13/tribun/photos/{{ mp.an_id }}.jpg" onerror="onMugshotError(this);"/>
+    <img class="mugshot" src="http://www.nosdeputes.fr/depute/photo/{{ mp.first_name|lower }}-{{ mp.last_name|lower }}/192" onerror="onMugshotError(this);"/>
 <span>{{ mp.first_name }} {{ mp.last_name|upper }}  </span>
 {{ mp.group.abbreviation }}
 </div>
