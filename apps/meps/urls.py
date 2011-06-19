@@ -5,11 +5,49 @@ from meps.models import MEP, Country, Group, Committee, Delegation
 
 from reps.models import Party
 
-country_dict = {'queryset': Country.objects.all(), 'slug_field': 'code', 'template_name': 'meps/container_detail.html'}
-party_dict = {'queryset': Party.objects.all(), 'template_name': 'meps/container_detail.html'}
-group_dict = {'queryset': Group.objects.all(), 'slug_field': 'abbreviation', 'template_name': 'meps/container_detail.html'}
-delegation_dict = {'queryset': Delegation.objects.all(), 'template_name': 'meps/container_detail.html'}
-committe_dict = {'queryset': Committee.objects.all(), 'slug_field': 'abbreviation', 'template_name': 'meps/container_detail.html'}
+country_dict = {
+  'queryset': Country.objects.all(),
+  'slug_field': 'code',
+  'template_name': 'meps/container_detail.html',
+  'extra_context': {
+    'hidden_fields': ['country'],
+    'header_template': 'meps/country_header.html',
+  },
+}
+party_dict = {
+  'queryset': Party.objects.all(),
+  'template_name': 'meps/container_detail.html',
+  'extra_context': {
+    'hidden_fields': ['party'],
+    'header_template': 'meps/named_header.html',
+  },
+}
+group_dict = {
+  'queryset': Group.objects.all(),
+  'slug_field': 'abbreviation',
+  'template_name': 'meps/container_detail.html',
+  'extra_context': {
+    'hidden_fields': ['group'],
+    'header_template': 'meps/group_header.html',
+  },
+}
+delegation_dict = {
+  'queryset': Delegation.objects.all(),
+  'template_name': 'meps/container_detail.html',
+  'extra_context': {
+    'hidden_fields': [],
+    'header_template': 'meps/named_header.html',
+  },
+}
+committe_dict = {
+  'queryset': Committee.objects.all(),
+  'slug_field': 'abbreviation',
+  'template_name': 'meps/container_detail.html',
+  'extra_context': {
+    'hidden_fields': [],
+    'header_template': 'meps/named_header.html',
+  },
+}
 mep_dict = {'queryset': MEP.objects.all(), 'slug_field': 'id', 'template_object_name': 'mep'}
 
 urlpatterns = patterns('',
