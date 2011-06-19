@@ -4,13 +4,9 @@ This describes how to setup the mempol2 dev environment
 Install the base dependencies
 =============================
 
-Install the couchdb server:
+Install the base python virtualenv tools (on Ubuntu you have to enable universe):
 
-    sudo apt-get install couchdb
-
-Install the base python virtualenv tools:
-
-    sudo apt-get install python-setuptools
+    sudo apt-get install python-setuptools python-dev libxml2-dev libxslt1-dev libfreetype6-dev libpng12-dev python-pip
     sudo pip install virtualenv
     sudo pip install virtualenvwrapper
 
@@ -43,10 +39,9 @@ Create the virtualenv for memopol:
 
 Your command prompt should now begin by (memopol2)
 
-Install memopol2's dependencies:
-
-    pip install -r requirements.txt
-
+To load this virtualenv later, you can run:
+    
+    workon memopol2
 
 If you already use virtualenv/virtualenvwrapper
 -----------------------------------------------
@@ -55,7 +50,25 @@ Create the virtualenv for memopol and workon it:
 
     mkvirtualenv --no-site-packages --distribute memopol2
 
+Installation
+------------
+
+On Debian systems running Python 2.7 (like Ubuntu Natty), you must run this first:
+
+    mkdir $VIRTUAL_ENV/local
+    ln -s $VIRTUAL_ENV/lib $VIRTUAL_ENV/local/lib
+
+(more info here: http://mail.scipy.org/pipermail/numpy-discussion/2011-June/056544.html)
+
 Install memopol2's depdendencies:
+
+    pip install -r requirements.txt
+
+If you have errors with matplotlib or numpy do a:
+
+    pip install numpy==1.5.1
+
+Then
 
     pip install -r requirements.txt
 
@@ -66,9 +79,17 @@ Run the "migration" scripts
 Run syncdb then migrate, this will import the fixtures. Warning: this take a
 *LOTS* of time, arround 25min.
 
+    cd memopol2
     python manage.py syncdb
     python manage.py migrate
 
+If you have a error while running migrate telling you that the table "reps" (or
+any other table) doesn't exist. Try doing those commands in this order instead:
+
+    python manage.py migrate reps
+    python manage.py migrate meps
+    python manage.py migrate mps
+    python manage.py migrate votes
 
 Install the default welcome message (optional)
 ==============================================
@@ -78,7 +99,6 @@ Install the default welcome message (optional)
 Run the server
 ==============
 
-    cd ../memopol2
     python manage.py runserver 8080
 
 Your application is available on http://localhost:8080/

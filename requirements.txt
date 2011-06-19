@@ -1,7 +1,6 @@
 Django==1.2.5
 South==0.7.3
 Werkzeug==0.6.2
-restkit==2.3.3
 anyjson==0.3
 distribute==0.6.14
 django-annoying==0.7.6
