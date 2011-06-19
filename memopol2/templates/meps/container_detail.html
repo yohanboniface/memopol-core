@@ -2,15 +2,63 @@
 
 {% block content %}
 
-<h1>{% trans "Members of the European Parliament" %}</h1>
+{% include header_template %}
 
-    <ul class="col">
-        {% for mep in object.meps %}
-            <li>
-                <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" />
-                <a href="{% url meps:mep mep.id %}">{{ mep.last_name }} {{ mep.first_name }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+<table class="mep-list"> 
+  <thead>
+    <tr> 
+      <th>MEP</th>
+      {% if not 'country' in hidden_fields %}<th>Country</th>{% endif %}
+      {% if not 'group' in hidden_fields %}<th>Group</th>{% endif %}
+      {% if not 'party' in hidden_fields %}<th>Party</th>{% endif %}
+      <th>Contact</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for mep in object.meps %}
+    <tr> 
+      <td>
+        <a href="{% url meps:mep mep.id %}">{{ mep.last_name }} {{ mep.first_name }}</a>
+      </td>
+      {% if not 'country' in hidden_fields %}
+      <td>
+        <a href="{% url meps:index_by_country mep.country.code %}">
+          <img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/>
+          {{ mep.country.name }}
+        </a>
+      </td>
+      {% endif %}
+      {% if not 'group' in hidden_fields %}
+      <td>
+        <a href="{% url meps:index_by_group mep.group.abbreviation %}">
+          <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" />
+          {{ mep.group.abbreviation }}
+        </a>
+      </td>
+      {% endif %}
+      {% if not 'party' in hidden_fields %}
+      <td>
+        <ul class="party">
+          {% for partyrepresentative in mep.partyrepresentative_set.all %}
+          <li>{{ partyrepresentative.party.name }}</li>
+          {% endfor %}
+        </ul>
+      </td>
+      {% endif %}
+      <td>
+        <span class="collapsible collapsed">{% trans "Contact informations" %}</span>
+        <div class="body">
+          {% include "meps/mep_contact.html" %}
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
+{% block documentReady %}
+
+  activateCollapsible();
 
 {% endblock %}
