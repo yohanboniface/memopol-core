@@ -41,7 +41,7 @@ class Representative(models.Model):
     opinions = models.ManyToManyField(Opinion, through='OpinionREP')
 
     def __unicode__(self):
-        return self.full_name
+        return "%s %s" % (self.first_name, self.last_name.upper())
 
     @property
     def average_scores(self):
