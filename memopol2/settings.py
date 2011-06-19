@@ -101,7 +101,7 @@ INSTALLED_APPS = (
     # 3rd party
     'south',
     'django_extensions',
-    'debug_toolbar',
+    #'debug_toolbar',
     'flatblocks',
 
     # memopol
