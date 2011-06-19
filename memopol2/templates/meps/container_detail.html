@@ -40,7 +40,7 @@
       <td>
         <ul class="party">
           {% for partyrepresentative in mep.partyrepresentative_set.all %}
-          <li>{{ partyrepresentative.party.name }}</li>
+          <li><a href="{% url meps:index_by_party partyrepresentative.party.id %}">{{ partyrepresentative.party.name }}</a></li>
           {% endfor %}
         </ul>
       </td>
