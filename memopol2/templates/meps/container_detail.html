@@ -64,7 +64,7 @@
 {% block documentReady %}
 
   activateCollapsible();
-  jQuery(".mep-list").tablesorter();
+  jQuery(".mep-list").tablesorter({ headers: { 3: { sorter: false }, }  });
   jQuery('.mep-list').tableFilter();
 
 {% endblock %}
