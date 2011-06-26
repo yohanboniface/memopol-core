@@ -12,7 +12,8 @@ from meps.models import MEP
 current_meps = "meps.json"
 
 def clean_existant_data(mep):
-    pass
+    print "   remove links with delegations"
+    mep.delegationrole_set.all().delete()
 
 def create_mep(mep_json):
     pass
