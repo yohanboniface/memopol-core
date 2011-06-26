@@ -71,6 +71,7 @@ class Building(models.Model):
     street = models.CharField(max_length=255)
     postcode = models.CharField(max_length=255)
 
+
 class MEP(Representative):
     active = models.BooleanField()
     ep_id = models.IntegerField()
@@ -103,6 +104,7 @@ class MEP(Representative):
     class Meta:
         ordering = ['last_name']
 
+
 class DelegationRole(models.Model):
     mep = models.ForeignKey(MEP)
     delegation = models.ForeignKey(Delegation)
@@ -112,6 +114,7 @@ class DelegationRole(models.Model):
 
     def __unicode__(self):
         return u"%s : %s" % (self.mep.full_name, self.delegation)
+
 
 class CommitteeRole(models.Model):
     mep = models.ForeignKey(MEP)
