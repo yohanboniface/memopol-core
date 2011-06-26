@@ -137,6 +137,8 @@ FIXTURE_DIRS = (
     'fixtures',
 )
 
+PARLTRACK_URL = "http://parltrack.memopol2.lqdn.fr"
+
 try:
     from settings_local import *
 except ImportError:
