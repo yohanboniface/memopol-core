@@ -21,7 +21,8 @@ def create_mep(mep_json):
     pass
 
 def manage_mep(mep, mep_json):
-    pass
+    mep.active = True
+    mep.save()
 
 if __name__ == "__main__":
     print "load json"
