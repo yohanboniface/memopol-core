@@ -20,8 +20,14 @@ def clean_existant_data(mep):
 def create_mep(mep_json):
     pass
 
+def add_committees(mep, committees):
+    for committee in committees:
+        # TODO
+        pass
+
 def manage_mep(mep, mep_json):
     mep.active = True
+    add_committees(mep, mep_json["Committees"])
     mep.save()
 
 if __name__ == "__main__":
