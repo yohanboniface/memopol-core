@@ -4,12 +4,15 @@
 import os
 import sys
 import json
+from datetime import datetime
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
 
-from meps.models import MEP
+from meps.models import MEP, Delegation, DelegationRole
 
 current_meps = "meps.json"
+
+_parse_date = lambda date: datetime.strptime(date, "%Y-%m-%dT00:00:00")
 
 def clean_existant_data(mep):
     print "   remove links with delegations"
@@ -25,9 +28,22 @@ def add_committees(mep, committees):
         # TODO
         pass
 
+def add_delegations(mep, delegations):
+    for delegation in delegations:
+        db_delegation = Delegation.objects.filter(name=delegation["Organization"])
+        if db_delegation:
+            db_delegation = db_delegation[0]
+        else:
+            print "   add delegation:", delegation["Organization"]
+            db_delegation = Delegation.objects.create(name=delegation["Organization"])
+        print "   create DelegationRole to link mep to delegation"
+        DelegationRole.objects.create(mep=mep, delegation=db_delegation, role=delegation["role"], begin=_parse_date(delegation["start"]), end=_parse_date(delegation["end"]))
+
 def manage_mep(mep, mep_json):
     mep.active = True
     add_committees(mep, mep_json["Committees"])
+    add_delegations(mep, mep_json["Delegations"])
+    print "   save mep modifications"
     mep.save()
 
 if __name__ == "__main__":
