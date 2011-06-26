@@ -39,10 +39,18 @@ def add_delegations(mep, delegations):
         print "   create DelegationRole to link mep to delegation"
         DelegationRole.objects.create(mep=mep, delegation=db_delegation, role=delegation["role"], begin=_parse_date(delegation["start"]), end=_parse_date(delegation["end"]))
 
+def add_addrs(mep, addrs):
+    print "   add Brussels infos"
+    bxl = addrs["Brussels"]
+    mep.bxl_office = bxl["Address"]["Office"]
+    mep.bxl_fax = bxl["Fax"]
+    mep.bxl_phone1 = bxl["Phone"]
+
 def manage_mep(mep, mep_json):
     mep.active = True
     add_committees(mep, mep_json["Committees"])
     add_delegations(mep, mep_json["Delegations"])
+    add_addrs(mep, mep_json["Addresses"])
     print "   save mep modifications"
     mep.save()
 
