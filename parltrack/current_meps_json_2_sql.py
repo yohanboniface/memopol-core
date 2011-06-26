@@ -14,6 +14,8 @@ current_meps = "meps.json"
 def clean_existant_data(mep):
     print "   remove links with delegations"
     mep.delegationrole_set.all().delete()
+    print "   remove links with committees"
+    mep.committeerole_set.all().delete()
 
 def create_mep(mep_json):
     pass
