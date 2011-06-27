@@ -42,9 +42,17 @@ def add_delegations(mep, delegations):
 def add_addrs(mep, addrs):
     print "   add Brussels infos"
     bxl = addrs["Brussels"]
+    # TODO mep.bxl_building && mep.stg_building
     mep.bxl_office = bxl["Address"]["Office"]
     mep.bxl_fax = bxl["Fax"]
     mep.bxl_phone1 = bxl["Phone"]
+    mep.bxl_phone2 = bxl["Phone"][:-4] + "7" + bxl["Phone"][-3:]
+    print "   add Strasbourg infos"
+    stg = addrs["Strasbourg"]
+    mep.stg_office = stg["Address"]["Office"]
+    mep.stg_fax = stg["Fax"]
+    mep.stg_phone1 = stg["Phone"]
+    mep.stg_phone2 = stg["Phone"][:-4] + "7" + stg["Phone"][-3:]
 
 def manage_mep(mep, mep_json):
     mep.active = True
