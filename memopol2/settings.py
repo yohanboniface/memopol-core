@@ -105,13 +105,13 @@ INSTALLED_APPS = (
     'flatblocks',
 
     # memopol
+    'reps',
     'meps',
     'votes',
     'mps',
     'queries',
     'trends',
     'trophies',
-    'reps',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
