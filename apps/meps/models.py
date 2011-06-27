@@ -126,3 +126,7 @@ class CommitteeRole(models.Model):
     def __unicode__(self):
         return u"%s : %s" % (self.committe.abbreviation, self.mep.full_name)
 
+
+class PostalAddress(models.Model):
+    addr = models.CharField(max_length=255)
+    mep = models.ForeignKey(MEP)

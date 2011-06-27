@@ -8,7 +8,7 @@ from datetime import datetime
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
 
-from meps.models import MEP, Delegation, DelegationRole
+from meps.models import MEP, Delegation, DelegationRole, PostalAddress
 
 current_meps = "meps.json"
 
@@ -19,6 +19,8 @@ def clean_existant_data(mep):
     mep.delegationrole_set.all().delete()
     print "   remove links with committees"
     mep.committeerole_set.all().delete()
+    print "   remove old postal addrs"
+    mep.postaladdress_set.all().delete()
 
 def create_mep(mep_json):
     pass
@@ -53,6 +55,10 @@ def add_addrs(mep, addrs):
     mep.stg_fax = stg["Fax"]
     mep.stg_phone1 = stg["Phone"]
     mep.stg_phone2 = stg["Phone"][:-4] + "7" + stg["Phone"][-3:]
+    print "   adding mep's postal addresses:"
+    for addr in addrs["Postal"]:
+        print "     *", addr
+        PostalAddress.objects.create(addr=addr, mep=mep)
 
 def manage_mep(mep, mep_json):
     mep.active = True
