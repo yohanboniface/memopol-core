@@ -1,6 +1,6 @@
 from django.db import models
 
-from reps.models import Representative
+from reps.models import Representative, Party
 
 class MepsContainerManager(models.Manager):
     """ Manager for models to which the MEP model has a foreign key"""
@@ -94,7 +94,7 @@ class MEP(Representative):
     stg_phone2 = models.CharField(max_length=255)
     group = models.ForeignKey(Group)
     group_role = models.CharField(max_length=63)
-    country = models.ForeignKey(Country)
+    country = models.ManyToManyField(Country, through='CountryMEP')
     delegations = models.ManyToManyField(Delegation, through='DelegationRole')
     committees = models.ManyToManyField(Committee, through='CommitteeRole')
 
@@ -130,3 +130,11 @@ class CommitteeRole(models.Model):
 class PostalAddress(models.Model):
     addr = models.CharField(max_length=255)
     mep = models.ForeignKey(MEP)
+
+
+class CountryMEP(models.Model):
+    mep = models.ForeignKey(MEP)
+    country = models.ForeignKey(Country)
+    party = models.ForeignKey(Party)
+    begin = models.DateField()
+    end = models.DateField()

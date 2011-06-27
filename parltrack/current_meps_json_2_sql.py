@@ -8,7 +8,8 @@ from datetime import datetime
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
 
-from meps.models import MEP, Delegation, DelegationRole, PostalAddress
+from reps.models import Party, PartyRepresentative
+from meps.models import MEP, Delegation, DelegationRole, PostalAddress, Country, CountryMEP
 
 current_meps = "meps.json"
 
@@ -60,10 +61,29 @@ def add_addrs(mep, addrs):
         print "     *", addr
         PostalAddress.objects.create(addr=addr, mep=mep)
 
+def add_countries(mep, countries):
+    print "   add countries"
+    for country in countries:
+        party = Party.objects.filter(name=country["party"])
+        if party:
+            party = party[0]
+        else:
+            print "   add missing party"
+            party = Party.objects.create(name=country["party"])
+            current = False
+            # TODO set current according to the current date
+            print "   link representative to party"
+            # TODO check if not already linked
+            PartyRepresentative.objects.create(representative=mep.representative_ptr, party=party, current=current)
+        _country = Country.objects.get(name=country["country"])
+        print "   link mep to country", '"%s"' % country["country"], "for a madate"
+        CountryMEP.objects.create(mep=mep, country=_country, party=party, begin=_parse_date(country["start"]), end=_parse_date(country["end"]))
+
 def manage_mep(mep, mep_json):
     mep.active = True
     add_committees(mep, mep_json["Committees"])
     add_delegations(mep, mep_json["Delegations"])
+    add_countries(mep, mep_json["Constituencies"])
     add_addrs(mep, mep_json["Addresses"])
     print "   save mep modifications"
     mep.save()
