@@ -8,7 +8,7 @@ from datetime import datetime
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
 
-from meps.models import MEP, Delegation, DelegationRole
+from meps.models import MEP, Delegation, DelegationRole, Building
 
 current_meps = "meps.json"
 

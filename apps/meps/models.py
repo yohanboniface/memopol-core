@@ -97,6 +97,7 @@ class MEP(Representative):
     country = models.ForeignKey(Country)
     delegations = models.ManyToManyField(Delegation, through='DelegationRole')
     committees = models.ManyToManyField(Committee, through='CommitteeRole')
+    postal_addr = models.CharField(max_length=255)
 
     def __unicode__(self):
         return self.full_name
