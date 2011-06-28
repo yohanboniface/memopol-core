@@ -140,6 +140,8 @@ def manage_mep(mep, mep_json):
 def clean_old_stuff():
     print " * remove empty delegations"
     Delegation.objects.annotate(meps=Count('mep')).filter(meps=0)
+    print " * remove empty committees"
+    Committee.objects.annotate(meps=Count('mep')).filter(meps=0)
 
 if __name__ == "__main__":
     print "load json"
