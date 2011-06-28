@@ -72,6 +72,10 @@ class Building(models.Model):
     postcode = models.CharField(max_length=255)
 
 
+class Organization(models.Model):
+    name = models.CharField(max_length=255)
+
+
 class MEP(Representative):
     active = models.BooleanField()
     ep_id = models.IntegerField()
