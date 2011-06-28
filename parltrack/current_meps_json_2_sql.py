@@ -125,13 +125,13 @@ def manage_mep(mep, mep_json):
     mep.active = True
     change_mep_details(mep, mep_json)
     add_committees(mep, mep_json["Committees"])
-    add_delegations(mep, mep_json["Delegations"])
+    add_delegations(mep, mep_json.get("Delegations", []))
     add_countries(mep, mep_json["Constituencies"])
     add_addrs(mep, mep_json["Addresses"])
-    add_organizations(mep, mep_json["Staff"])
+    add_organizations(mep, mep_json.get("Staff", []))
     add_mep_email(mep, mep_json["Mail"])
     add_mep_website(mep, mep_json["Homepage"])
-    add_mep_cv(mep, mep_json["CV"])
+    add_mep_cv(mep, mep_json.get("CV", []))
     print "   save mep modifications"
     mep.save()
 
