@@ -19,10 +19,10 @@ _parse_date = lambda date: datetime.strptime(date, "%Y-%m-%dT00:00:00")
 def get_or_create(klass, **kwargs):
     object = klass.objects.filter(**kwargs)
     if object:
-        return object[0], False
+        return object[0]
     else:
         print "   add new", klass.__name__, kwargs
-        return klass.objects.create(**kwargs), True
+        return klass.objects.create(**kwargs)
 
 def clean_existant_data(mep):
     print "   remove links with delegations"
@@ -49,7 +49,7 @@ def add_committees(mep, committees):
 
 def add_delegations(mep, delegations):
     for delegation in delegations:
-        db_delegation, _ = get_or_create(Delegation, name=delegation["Organization"])
+        db_delegation = get_or_create(Delegation, name=delegation["Organization"])
         print "   create DelegationRole to link mep to delegation"
         DelegationRole.objects.create(mep=mep, delegation=db_delegation, role=delegation["role"], begin=_parse_date(delegation["start"]), end=_parse_date(delegation["end"]))
 
@@ -75,7 +75,7 @@ def add_addrs(mep, addrs):
 def add_countries(mep, countries):
     print "   add countries"
     for country in countries:
-        party, new = get_or_create(Party, name=country["party"])
+        party = get_or_create(Party, name=country["party"])
         print "   link representative to party"
         if not PartyRepresentative.objects.filter(representative=mep.representative_ptr, party=party):
             current = True if _parse_date(country["end"]).year > date.today().year else False
@@ -86,7 +86,7 @@ def add_countries(mep, countries):
 
 def add_organizations(mep, organizations):
     for organization in organizations:
-        in_db_organization, _ = get_or_create(Organization, name=organization["Organization"])
+        in_db_organization = get_or_create(Organization, name=organization["Organization"])
         print "   link mep to organization:", in_db_organization.name
         OrganizationMEP.objects.create(mep=mep, organization=in_db_organization, role=organization["role"], begin=_parse_date(organization["start"]), end=_parse_date(organization["end"]))
 
