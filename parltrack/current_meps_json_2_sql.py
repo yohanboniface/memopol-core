@@ -165,9 +165,5 @@ if __name__ == "__main__":
 
 # TODO
 # need to check all the existant building and to remove the empty one
-# same for delegations and committees
-# need to set all current mep to current = False before the importation
-# also check in reps for emails and stuff like that to remove
-# meps urls
 
 # vim:set shiftwidth=4 tabstop=4 expandtab:
