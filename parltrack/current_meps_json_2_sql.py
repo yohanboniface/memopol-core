@@ -85,8 +85,15 @@ def add_organizations(mep, organizations):
         print "   link mep to organization:", in_db_organization.name
         OrganizationMEP.objects.create(mep=mep, organization=in_db_organization, role=organization["role"], begin=_parse_date(organization["start"]), end=_parse_date(organization["end"]))
 
+def change_mep_details(mep, mep_json):
+    print "   update mep birth date"
+    mep.birth_date = _parse_date(mep_json["Birth"]["date"])
+    print "   update mep birth place"
+    mep.birth_place = mep_json["Birth"]["place"]
+
 def manage_mep(mep, mep_json):
     mep.active = True
+    change_mep_details(mep, mep_json)
     add_committees(mep, mep_json["Committees"])
     add_delegations(mep, mep_json["Delegations"])
     add_countries(mep, mep_json["Constituencies"])
