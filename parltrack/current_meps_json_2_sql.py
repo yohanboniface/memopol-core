@@ -9,7 +9,7 @@ from datetime import datetime
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
 
 from reps.models import Party, PartyRepresentative, Email, WebSite, CV
-from meps.models import MEP, Delegation, DelegationRole, PostalAddress, Country, CountryMEP, Organization, OrganizationMEP
+from meps.models import MEP, Delegation, DelegationRole, PostalAddress, Country, CountryMEP, Organization, OrganizationMEP, Committee, CommitteeRole
 
 current_meps = "meps.json"
 
@@ -35,9 +35,11 @@ def create_mep(mep_json):
     pass
 
 def add_committees(mep, committees):
+    mep.committeerole_set.all().delete()
     for committee in committees:
-        # TODO
-        pass
+        in_db_committe = Committee.objects.get(name=committee["Organization"])
+        print "   link mep to commmitte:", committee["Organization"]
+        CommitteeRole.objects.create(mep=mep, committee=in_db_committe, role=committee["role"], begin=_parse_date(committee["start"]), end=_parse_date(committee["end"]))
 
 def add_delegations(mep, delegations):
     for delegation in delegations:
@@ -127,7 +129,7 @@ if __name__ == "__main__":
     #new = 0
     #to_update = 0
     #for mep_json in meps["meps"]:
-    mep_json = json.load(open("one_mep.json", "r"))
+    mep_json = json.load(open("another_mep.json", "r"))
     in_db_mep = MEP.objects.filter(ep_id=mep_json["UserID"])
     if in_db_mep:
         mep = in_db_mep[0]
