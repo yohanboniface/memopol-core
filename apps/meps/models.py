@@ -101,7 +101,7 @@ class MEP(Representative):
     country = models.ManyToManyField(Country, through='CountryMEP')
     delegations = models.ManyToManyField(Delegation, through='DelegationRole')
     committees = models.ManyToManyField(Committee, through='CommitteeRole')
-    organizations = models.ManyToManyField(Organization, through='OrgnizationMEP')
+    organizations = models.ManyToManyField(Organization, through='OrganizationMEP')
 
     def __unicode__(self):
         return self.full_name
@@ -141,5 +141,12 @@ class CountryMEP(models.Model):
     mep = models.ForeignKey(MEP)
     country = models.ForeignKey(Country)
     party = models.ForeignKey(Party)
+    begin = models.DateField()
+    end = models.DateField()
+
+class OrganizationMEP(models.Model):
+    mep = models.ForeignKey(MEP)
+    organization = models.ForeignKey(Organization)
+    role = models.CharField(max_length=255)
     begin = models.DateField()
     end = models.DateField()
