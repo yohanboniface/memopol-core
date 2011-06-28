@@ -90,6 +90,12 @@ def change_mep_details(mep, mep_json):
     mep.birth_date = _parse_date(mep_json["Birth"]["date"])
     print "   update mep birth place"
     mep.birth_place = mep_json["Birth"]["place"]
+    print "   update mep first name"
+    mep.first_name = mep_json["Name"]["sur"]
+    print "   update mep last name"
+    mep.last_name = mep_json["Name"]["family"]
+    print "   update mep full name"
+    mep.full_name = "%s %s" %(mep_json["Name"]["sur"], mep_json["Name"]["family"])
 
 def manage_mep(mep, mep_json):
     mep.active = True
