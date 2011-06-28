@@ -138,9 +138,10 @@ def manage_mep(mep, mep_json):
     mep.save()
 
 def clean_old_stuff():
-    print " * remove empty delegations"
+    print
+    print "* remove empty delegations"
     Delegation.objects.annotate(meps=Count('mep')).filter(meps=0)
-    print " * remove empty committees"
+    print "* remove empty committees"
     Committee.objects.annotate(meps=Count('mep')).filter(meps=0)
 
 if __name__ == "__main__":
