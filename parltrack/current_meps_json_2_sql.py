@@ -114,6 +114,7 @@ def add_mep_website(mep, url):
 def add_mep_cv(mep, cv):
     _cv = []
     for c in cv:
+        # TODO also really get ride of this
         if c:
             for splited in re.split("[.;] ?", c):
                 if splited:
