@@ -38,7 +38,12 @@ def create_mep(mep_json):
 def add_committees(mep, committees):
     mep.committeerole_set.all().delete()
     for committee in committees:
-        in_db_committe = Committee.objects.get(name=committee["Organization"])
+        try:
+            in_db_committe = Committee.objects.get(name=committee["Organization"])
+        except Committee.DoesNotExist:
+            # TODO really get ride of this
+            print "WARNING: missing committee in the db:", committee["Organization"]
+            continue
         print "   link mep to commmitte:", committee["Organization"]
         CommitteeRole.objects.create(mep=mep, committee=in_db_committe, role=committee["role"], begin=_parse_date(committee["start"]), end=_parse_date(committee["end"]))
 
