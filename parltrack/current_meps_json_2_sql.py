@@ -147,6 +147,10 @@ if __name__ == "__main__":
     print "load json"
     meps = json.load(open(current_meps, "r"))
     a = 0
+    print "Set all current active mep to unactive before importing"
+    for mep in MEP.objects.filter(active=True):
+        mep.current = False
+        mep.save()
     for mep_json in meps["meps"]:
         a += 1
         print a, "-", mep_json["Name"]["full"]
