@@ -81,7 +81,6 @@ def add_countries(mep, countries):
             current = False
             # TODO set current according to the current date
             print "   link representative to party"
-            # TODO check if not already linked
             PartyRepresentative.objects.create(representative=mep.representative_ptr, party=party, current=current)
         _country = Country.objects.get(name=country["country"])
         print "   link mep to country", '"%s"' % country["country"], "for a madate"
