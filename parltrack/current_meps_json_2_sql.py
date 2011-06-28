@@ -4,7 +4,7 @@
 import os
 import sys
 import json
-from datetime import datetime
+from datetime import datetime, date
 from django.db.models import Count
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
@@ -76,10 +76,9 @@ def add_countries(mep, countries):
     print "   add countries"
     for country in countries:
         party, new = get_or_create(Party, name=country["party"])
-        if new:
-            current = False
-            # TODO set current according to the current date
-            print "   link representative to party"
+        print "   link representative to party"
+        if not PartyRepresentative.objects.filter(representative=mep.representative_ptr, party=party):
+            current = True if _parse_date(country["end"]).year > date.today().year else False
             PartyRepresentative.objects.create(representative=mep.representative_ptr, party=party, current=current)
         _country = Country.objects.get(name=country["country"])
         print "   link mep to country", '"%s"' % country["country"], "for a madate"
