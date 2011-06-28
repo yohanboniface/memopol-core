@@ -134,9 +134,9 @@ if __name__ == "__main__":
     if in_db_mep:
         mep = in_db_mep[0]
         clean_existant_data(mep)
+        manage_mep(mep, mep_json)
     else:
         mep = create_mep(mep_json)
-    manage_mep(mep, mep_json)
     #print "%i new meps, %i meps to update" % (new, to_update)
 
 # TODO
