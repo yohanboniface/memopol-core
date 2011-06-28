@@ -15,6 +15,14 @@ current_meps = "meps.json"
 
 _parse_date = lambda date: datetime.strptime(date, "%Y-%m-%dT00:00:00")
 
+def get_or_create(klass, **kwargs):
+    object = klass.objects.filter(**kwargs)
+    if object:
+        return object[0], False
+    else:
+        print "   add new", klass.__name__, kwargs
+        return klass.objects.create(**kwargs), True
+
 def clean_existant_data(mep):
     print "   remove links with delegations"
     mep.delegationrole_set.all().delete()
@@ -33,12 +41,7 @@ def add_committees(mep, committees):
 
 def add_delegations(mep, delegations):
     for delegation in delegations:
-        db_delegation = Delegation.objects.filter(name=delegation["Organization"])
-        if db_delegation:
-            db_delegation = db_delegation[0]
-        else:
-            print "   add delegation:", delegation["Organization"]
-            db_delegation = Delegation.objects.create(name=delegation["Organization"])
+        db_delegation, _ = get_or_create(Delegation, name=delegation["Organization"])
         print "   create DelegationRole to link mep to delegation"
         DelegationRole.objects.create(mep=mep, delegation=db_delegation, role=delegation["role"], begin=_parse_date(delegation["start"]), end=_parse_date(delegation["end"]))
 
@@ -64,12 +67,8 @@ def add_addrs(mep, addrs):
 def add_countries(mep, countries):
     print "   add countries"
     for country in countries:
-        party = Party.objects.filter(name=country["party"])
-        if party:
-            party = party[0]
-        else:
-            print "   add missing party"
-            party = Party.objects.create(name=country["party"])
+        party, new = get_or_create(Party, name=country["party"])
+        if new:
             current = False
             # TODO set current according to the current date
             print "   link representative to party"
