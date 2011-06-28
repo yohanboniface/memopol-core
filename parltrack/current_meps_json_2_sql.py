@@ -86,7 +86,6 @@ def add_countries(mep, countries):
         CountryMEP.objects.create(mep=mep, country=_country, party=party, begin=_parse_date(country["start"]), end=_parse_date(country["end"]))
 
 def add_organizations(mep, organizations):
-    # TODO clean existing organizations
     for organization in organizations:
         in_db_organization, _ = get_or_create(Organization, name=organization["Organization"])
         print "   link mep to organization:", in_db_organization.name
@@ -135,6 +134,8 @@ def clean_old_stuff():
     Delegation.objects.annotate(meps=Count('mep')).filter(meps=0)
     print "* remove empty committees"
     Committee.objects.annotate(meps=Count('mep')).filter(meps=0)
+    print "* remove empty organizations"
+    Organization.objects.annotate(meps=Count('mep')).filter(meps=0)
 
 if __name__ == "__main__":
     print "load json"
