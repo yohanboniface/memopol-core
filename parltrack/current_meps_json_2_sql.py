@@ -8,7 +8,7 @@ from datetime import datetime
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
 
-from reps.models import Party, PartyRepresentative, Email
+from reps.models import Party, PartyRepresentative, Email, WebSite
 from meps.models import MEP, Delegation, DelegationRole, PostalAddress, Country, CountryMEP, Organization, OrganizationMEP
 
 current_meps = "meps.json"
@@ -100,6 +100,9 @@ def change_mep_details(mep, mep_json):
 def add_mep_email(mep, email):
     get_or_create(Email, representative=mep.representative_ptr, email=email)
 
+def add_mep_website(mep, url):
+    get_or_create(WebSite, representative=mep.representative_ptr, url=url)
+
 def manage_mep(mep, mep_json):
     mep.active = True
     change_mep_details(mep, mep_json)
@@ -109,6 +112,7 @@ def manage_mep(mep, mep_json):
     add_addrs(mep, mep_json["Addresses"])
     add_organizations(mep, mep_json["Staff"])
     add_mep_email(mep, mep_json["Mail"])
+    add_mep_website(mep, mep_json["Homepage"])
     print "   save mep modifications"
     mep.save()
 
