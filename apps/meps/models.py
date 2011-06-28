@@ -96,8 +96,7 @@ class MEP(Representative):
     stg_fax = models.CharField(max_length=255)
     stg_phone1 = models.CharField(max_length=255)
     stg_phone2 = models.CharField(max_length=255)
-    group = models.ForeignKey(Group)
-    group_role = models.CharField(max_length=63)
+    group = models.ManyToManyField(Group, through='GroupMEP')
     country = models.ManyToManyField(Country, through='CountryMEP')
     delegations = models.ManyToManyField(Delegation, through='DelegationRole')
     committees = models.ManyToManyField(Committee, through='CommitteeRole')
@@ -108,6 +107,14 @@ class MEP(Representative):
 
     class Meta:
         ordering = ['last_name']
+
+
+class GroupMEP(models.Model):
+    mep = models.ForeignKey(MEP)
+    group = models.ForeignKey(Group)
+    role = models.CharField(max_length=255)
+    begin = models.DateField(null=True)
+    end = models.DateField(null=True)
 
 
 class DelegationRole(models.Model):
