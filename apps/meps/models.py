@@ -73,7 +73,7 @@ class Building(models.Model):
 
 
 class Organization(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
 
 
 class MEP(Representative):
@@ -101,6 +101,7 @@ class MEP(Representative):
     country = models.ManyToManyField(Country, through='CountryMEP')
     delegations = models.ManyToManyField(Delegation, through='DelegationRole')
     committees = models.ManyToManyField(Committee, through='CommitteeRole')
+    organizations = models.ManyToManyField(Organization, through='OrgnizationMEP')
 
     def __unicode__(self):
         return self.full_name
