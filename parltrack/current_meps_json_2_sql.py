@@ -138,8 +138,10 @@ def manage_mep(mep, mep_json):
 if __name__ == "__main__":
     print "load json"
     meps = json.load(open(current_meps, "r"))
+    a = 0
     for mep_json in meps["meps"]:
-        print mep_json["Name"]["full"]
+        a += 1
+        print a, "-", mep_json["Name"]["full"]
         in_db_mep = MEP.objects.filter(ep_id=mep_json["UserID"])
         if in_db_mep:
             mep = in_db_mep[0]
