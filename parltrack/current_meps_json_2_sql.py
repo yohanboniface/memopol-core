@@ -112,7 +112,8 @@ def add_mep_website(mep, url):
 
 def add_mep_cv(mep, cv):
     for c in cv:
-        get_or_create(CV, title=c, representative=mep.representative_ptr)
+        if c:
+            get_or_create(CV, title=c, representative=mep.representative_ptr)
 
 def manage_mep(mep, mep_json):
     mep.active = True
