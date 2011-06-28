@@ -6,6 +6,7 @@ import sys
 import json
 import re
 from datetime import datetime
+from django.db.models import Count
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
 
@@ -136,6 +137,10 @@ def manage_mep(mep, mep_json):
     print "   save mep modifications"
     mep.save()
 
+def clean_old_stuff():
+    print " * remove empty delegations"
+    Delegation.objects.annotate(meps=Count('mep')).filter(meps=0)
+
 if __name__ == "__main__":
     print "load json"
     meps = json.load(open(current_meps, "r"))
@@ -150,6 +155,7 @@ if __name__ == "__main__":
             manage_mep(mep, mep_json)
         else:
             mep = create_mep(mep_json)
+    clean_old_stuff()
 
 # TODO
 # need to check all the existant building and to remove the empty one
