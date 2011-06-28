@@ -4,7 +4,6 @@
 import os
 import sys
 import json
-import re
 from datetime import datetime
 from django.db.models import Count
 
@@ -112,14 +111,7 @@ def add_mep_website(mep, url):
     get_or_create(WebSite, representative=mep.representative_ptr, url=url)
 
 def add_mep_cv(mep, cv):
-    _cv = []
     for c in cv:
-        # TODO also really get ride of this
-        if c:
-            for splited in re.split("[.;] ?", c):
-                if splited:
-                    _cv.append(splited)
-    for c in _cv:
         get_or_create(CV, title=c, representative=mep.representative_ptr)
 
 def manage_mep(mep, mep_json):
