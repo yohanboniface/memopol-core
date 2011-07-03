@@ -151,6 +151,7 @@ class CountryMEP(models.Model):
     begin = models.DateField()
     end = models.DateField()
 
+
 class OrganizationMEP(models.Model):
     mep = models.ForeignKey(MEP)
     organization = models.ForeignKey(Organization)
