@@ -10,7 +10,7 @@ from django.db.models import Count
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
 
 from reps.models import Party, PartyRepresentative, Email, WebSite, CV
-from meps.models import MEP, Delegation, DelegationRole, PostalAddress, Country, CountryMEP, Organization, OrganizationMEP, Committee, CommitteeRole, Group, GroupMEP
+from meps.models import MEP, Delegation, DelegationRole, PostalAddress, Country, CountryMEP, Organization, OrganizationMEP, Committee, CommitteeRole, Group, GroupMEP, Building
 
 current_meps = "meps.json"
 
@@ -66,13 +66,14 @@ def add_delegations(mep, delegations):
 def add_addrs(mep, addrs):
     print "     add Brussels infos"
     bxl = addrs["Brussels"]
-    # TODO mep.bxl_building && mep.stg_building
+    mep.bxl_building = Building.objects.get(id=bxl["Address"]["building_code"])
     mep.bxl_office = bxl["Address"]["Office"]
     mep.bxl_fax = bxl["Fax"]
     mep.bxl_phone1 = bxl["Phone"]
     mep.bxl_phone2 = bxl["Phone"][:-4] + "7" + bxl["Phone"][-3:]
     print "     add Strasbourg infos"
     stg = addrs["Strasbourg"]
+    mep.stg_building = Building.objects.get(id=stg["Address"]["building_code"])
     mep.stg_office = stg["Address"]["Office"]
     mep.stg_fax = stg["Fax"]
     mep.stg_phone1 = stg["Phone"]
