@@ -21,15 +21,15 @@ def get_or_create(klass, **kwargs):
     if object:
         return object[0]
     else:
-        print "   add new", klass.__name__, kwargs
+        print "     add new", klass.__name__, kwargs
         return klass.objects.create(**kwargs)
 
 def clean_existant_data(mep):
-    print "   remove links with delegations"
+    print "     remove links with delegations"
     mep.delegationrole_set.all().delete()
-    print "   remove links with committees"
+    print "     remove links with committees"
     mep.committeerole_set.all().delete()
-    print "   remove old postal addrs"
+    print "     remove old postal addrs"
     mep.postaladdress_set.all().delete()
 
 def create_mep(mep_json):
@@ -44,62 +44,62 @@ def add_committees(mep, committees):
             # TODO really get ride of this
             print "WARNING: missing committee in the db:", committee["Organization"]
             continue
-        print "   link mep to commmitte:", committee["Organization"]
+        print "     link mep to commmitte:", committee["Organization"]
         CommitteeRole.objects.create(mep=mep, committee=in_db_committe, role=committee["role"], begin=_parse_date(committee["start"]), end=_parse_date(committee["end"]))
 
 def add_delegations(mep, delegations):
     for delegation in delegations:
         db_delegation = get_or_create(Delegation, name=delegation["Organization"])
-        print "   create DelegationRole to link mep to delegation"
+        print "     create DelegationRole to link mep to delegation"
         DelegationRole.objects.create(mep=mep, delegation=db_delegation, role=delegation["role"], begin=_parse_date(delegation["start"]), end=_parse_date(delegation["end"]))
 
 def add_addrs(mep, addrs):
-    print "   add Brussels infos"
+    print "     add Brussels infos"
     bxl = addrs["Brussels"]
     # TODO mep.bxl_building && mep.stg_building
     mep.bxl_office = bxl["Address"]["Office"]
     mep.bxl_fax = bxl["Fax"]
     mep.bxl_phone1 = bxl["Phone"]
     mep.bxl_phone2 = bxl["Phone"][:-4] + "7" + bxl["Phone"][-3:]
-    print "   add Strasbourg infos"
+    print "     add Strasbourg infos"
     stg = addrs["Strasbourg"]
     mep.stg_office = stg["Address"]["Office"]
     mep.stg_fax = stg["Fax"]
     mep.stg_phone1 = stg["Phone"]
     mep.stg_phone2 = stg["Phone"][:-4] + "7" + stg["Phone"][-3:]
-    print "   adding mep's postal addresses:"
+    print "     adding mep's postal addresses:"
     for addr in addrs["Postal"]:
-        print "     *", addr
+        print "       *", addr
         PostalAddress.objects.create(addr=addr, mep=mep)
 
 def add_countries(mep, countries):
-    print "   add countries"
+    print "     add countries"
     for country in countries:
         party = get_or_create(Party, name=country["party"])
-        print "   link representative to party"
+        print "     link representative to party"
         if not PartyRepresentative.objects.filter(representative=mep.representative_ptr, party=party):
             current = True if _parse_date(country["end"]).year > date.today().year else False
             PartyRepresentative.objects.create(representative=mep.representative_ptr, party=party, current=current)
         _country = Country.objects.get(name=country["country"])
-        print "   link mep to country", '"%s"' % country["country"], "for a madate"
+        print "     link mep to country", '"%s"' % country["country"], "for a madate"
         CountryMEP.objects.create(mep=mep, country=_country, party=party, begin=_parse_date(country["start"]), end=_parse_date(country["end"]))
 
 def add_organizations(mep, organizations):
     for organization in organizations:
         in_db_organization = get_or_create(Organization, name=organization["Organization"])
-        print "   link mep to organization:", in_db_organization.name
+        print "     link mep to organization:", in_db_organization.name
         OrganizationMEP.objects.create(mep=mep, organization=in_db_organization, role=organization["role"], begin=_parse_date(organization["start"]), end=_parse_date(organization["end"]))
 
 def change_mep_details(mep, mep_json):
-    print "   update mep birth date"
+    print "     update mep birth date"
     mep.birth_date = _parse_date(mep_json["Birth"]["date"])
-    print "   update mep birth place"
+    print "     update mep birth place"
     mep.birth_place = mep_json["Birth"]["place"]
-    print "   update mep first name"
+    print "     update mep first name"
     mep.first_name = mep_json["Name"]["sur"]
-    print "   update mep last name"
+    print "     update mep last name"
     mep.last_name = mep_json["Name"]["family"]
-    print "   update mep full name"
+    print "     update mep full name"
     mep.full_name = "%s %s" %(mep_json["Name"]["sur"], mep_json["Name"]["family"])
 
 def add_mep_email(mep, email):
@@ -124,7 +124,7 @@ def manage_mep(mep, mep_json):
     add_mep_email(mep, mep_json["Mail"])
     add_mep_website(mep, mep_json["Homepage"])
     add_mep_cv(mep, mep_json.get("CV", []))
-    print "   save mep modifications"
+    print "     save mep modifications"
     mep.save()
 
 def clean_old_stuff():
