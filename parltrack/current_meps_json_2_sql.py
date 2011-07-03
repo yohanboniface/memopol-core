@@ -45,13 +45,19 @@ def add_committees(mep, committees):
             print "WARNING: missing committee in the db:", committee["Organization"]
             continue
         print "     link mep to commmitte:", committee["Organization"]
-        CommitteeRole.objects.create(mep=mep, committee=in_db_committe, role=committee["role"], begin=_parse_date(committee["start"]), end=_parse_date(committee["end"]))
+        CommitteeRole.objects.create(mep=mep, committee=in_db_committe,
+                                     role=committee["role"],
+                                     begin=_parse_date(committee["start"]),
+                                     end=_parse_date(committee["end"]))
 
 def add_delegations(mep, delegations):
     for delegation in delegations:
         db_delegation = get_or_create(Delegation, name=delegation["Organization"])
         print "     create DelegationRole to link mep to delegation"
-        DelegationRole.objects.create(mep=mep, delegation=db_delegation, role=delegation["role"], begin=_parse_date(delegation["start"]), end=_parse_date(delegation["end"]))
+        DelegationRole.objects.create(mep=mep, delegation=db_delegation,
+                                      role=delegation["role"],
+                                      begin=_parse_date(delegation["start"]),
+                                      end=_parse_date(delegation["end"]))
 
 def add_addrs(mep, addrs):
     print "     add Brussels infos"
@@ -79,16 +85,23 @@ def add_countries(mep, countries):
         print "     link representative to party"
         if not PartyRepresentative.objects.filter(representative=mep.representative_ptr, party=party):
             current = True if _parse_date(country["end"]).year > date.today().year else False
-            PartyRepresentative.objects.create(representative=mep.representative_ptr, party=party, current=current)
+            PartyRepresentative.objects.create(representative=mep.representative_ptr,
+                                               party=party, current=current)
         _country = Country.objects.get(name=country["country"])
         print "     link mep to country", '"%s"' % country["country"], "for a madate"
-        CountryMEP.objects.create(mep=mep, country=_country, party=party, begin=_parse_date(country["start"]), end=_parse_date(country["end"]))
+        CountryMEP.objects.create(mep=mep, country=_country, party=party,
+                                  begin=_parse_date(country["start"]),
+                                  end=_parse_date(country["end"]))
 
 def add_organizations(mep, organizations):
     for organization in organizations:
         in_db_organization = get_or_create(Organization, name=organization["Organization"])
         print "     link mep to organization:", in_db_organization.name
-        OrganizationMEP.objects.create(mep=mep, organization=in_db_organization, role=organization["role"], begin=_parse_date(organization["start"]), end=_parse_date(organization["end"]))
+        OrganizationMEP.objects.create(mep=mep,
+                                       organization=in_db_organization,
+                                       role=organization["role"],
+                                       begin=_parse_date(organization["start"]),
+                                       end=_parse_date(organization["end"]))
 
 def change_mep_details(mep, mep_json):
     print "     update mep birth date"
@@ -121,7 +134,9 @@ def add_groups(mep, groups):
         print "     link mep to group", group["groupid"], group["Organization"]
         group["groupid"] = convert.get(group["groupid"], group["groupid"])
         in_db_group = Group.objects.get(abbreviation=group["groupid"])
-        GroupMEP.objects.create(mep=mep, group=in_db_group, role=group["role"], begin=_parse_date(group["start"]), end=_parse_date(group["end"]))
+        GroupMEP.objects.create(mep=mep, group=in_db_group, role=group["role"],
+                                begin=_parse_date(group["start"]),
+                                end=_parse_date(group["end"]))
 
 def manage_mep(mep, mep_json):
     mep.active = True
