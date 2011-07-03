@@ -10,7 +10,7 @@ from django.db.models import Count
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
 
 from reps.models import Party, PartyRepresentative, Email, WebSite, CV
-from meps.models import MEP, Delegation, DelegationRole, PostalAddress, Country, CountryMEP, Organization, OrganizationMEP, Committee, CommitteeRole
+from meps.models import MEP, Delegation, DelegationRole, PostalAddress, Country, CountryMEP, Organization, OrganizationMEP, Committee, CommitteeRole, Group, GroupMEP
 
 current_meps = "meps.json"
 
@@ -113,12 +113,23 @@ def add_mep_cv(mep, cv):
         if c:
             get_or_create(CV, title=c, representative=mep.representative_ptr)
 
+def add_groups(mep, groups):
+    # I don't create group if they don't exist for the moment
+    convert = {"S&D": "SD", "NA": "NI" }
+    GroupMEP.objects.filter(mep=mep).delete()
+    for group in groups:
+        print "     link mep to group", group["groupid"], group["Organization"]
+        group["groupid"] = convert.get(group["groupid"], group["groupid"])
+        in_db_group = Group.objects.get(abbreviation=group["groupid"])
+        GroupMEP.objects.create(mep=mep, group=in_db_group, role=group["role"], begin=_parse_date(group["start"]), end=_parse_date(group["end"]))
+
 def manage_mep(mep, mep_json):
     mep.active = True
     change_mep_details(mep, mep_json)
     add_committees(mep, mep_json["Committees"])
     add_delegations(mep, mep_json.get("Delegations", []))
     add_countries(mep, mep_json["Constituencies"])
+    add_groups(mep, mep_json["Groups"])
     add_addrs(mep, mep_json["Addresses"])
     add_organizations(mep, mep_json.get("Staff", []))
     add_mep_email(mep, mep_json["Mail"])
