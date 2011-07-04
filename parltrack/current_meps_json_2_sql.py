@@ -138,11 +138,7 @@ def clean_existant_data(mep):
     print "     remove old postal addrs"
     mep.postaladdress_set.all().delete()
 
-def create_mep(mep_json):
-    pass
-
 def add_committees(mep, committees):
-    mep.committeerole_set.all().delete()
     for committee in committees:
         if committee.get("committee_id"):
             try:
@@ -193,6 +189,7 @@ def add_addrs(mep, addrs):
     mep.stg_phone1 = stg["Phone"]
     mep.stg_phone2 = stg["Phone"][:-4] + "7" + stg["Phone"][-3:]
     print "     adding mep's postal addresses:"
+    mep.save()
     for addr in addrs["Postal"]:
         print "       *", addr
         PostalAddress.objects.create(addr=addr, mep=mep)
@@ -260,6 +257,7 @@ def add_groups(mep, groups):
 def manage_mep(mep, mep_json):
     mep.active = True
     change_mep_details(mep, mep_json)
+    mep.committeerole_set.all().delete()
     add_committees(mep, mep_json["Committees"])
     add_delegations(mep, mep_json.get("Delegations", []))
     add_countries(mep, mep_json["Constituencies"])
@@ -280,6 +278,29 @@ def clean_old_stuff():
     Committee.objects.annotate(meps=Count('mep')).filter(meps=0)
     print "* remove empty organizations"
     Organization.objects.annotate(meps=Count('mep')).filter(meps=0)
+
+def add_missing_details(mep, mep_json):
+    mep.ep_id = mep_json["UserID"]
+
+def create_mep(mep_json):
+    mep = MEP()
+    mep.id = create_uniq_id(mep_json)
+    mep.picture = mep.id + ".jpg"
+    mep.active = True
+    change_mep_details(mep, mep_json)
+    add_missing_details(mep, mep_json)
+    add_addrs(mep, mep_json["Addresses"])
+    mep.save()
+    add_committees(mep, mep_json["Committees"])
+    add_delegations(mep, mep_json.get("Delegations", []))
+    add_countries(mep, mep_json["Constituencies"])
+    add_groups(mep, mep_json["Groups"])
+    add_organizations(mep, mep_json.get("Staff", []))
+    add_mep_email(mep, mep_json["Mail"])
+    add_mep_website(mep, mep_json["Homepage"])
+    add_mep_cv(mep, mep_json.get("CV", []))
+    print "     save mep modifications"
+    mep.save()
 
 if __name__ == "__main__":
     print "load json"
