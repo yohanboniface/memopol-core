@@ -172,14 +172,22 @@ def add_delegations(mep, delegations):
 def add_addrs(mep, addrs):
     print "     add Brussels infos"
     bxl = addrs["Brussels"]
-    mep.bxl_building = Building.objects.get(id=bxl["Address"]["building_code"])
+    mep.bxl_building = get_or_create(Building, _id="id",
+                                     id=bxl["Address"]["building_code"],
+                                     name=bxl["Address"]["Building"],
+                                     street=bxl["Address"]["Street"],
+                                     postcode=bxl["Address"]["Zip"])
     mep.bxl_office = bxl["Address"]["Office"]
     mep.bxl_fax = bxl["Fax"]
     mep.bxl_phone1 = bxl["Phone"]
     mep.bxl_phone2 = bxl["Phone"][:-4] + "7" + bxl["Phone"][-3:]
     print "     add Strasbourg infos"
     stg = addrs["Strasbourg"]
-    mep.stg_building = Building.objects.get(id=stg["Address"]["building_code"])
+    mep.stg_building = get_or_create(Building, _id="id",
+                                     id=stg["Address"]["building_code"],
+                                     name=stg["Address"]["Building"],
+                                     street=stg["Address"]["Street"],
+                                     postcode=stg["Address"].get("Zip", stg["Address"]["Zip1"]))
     mep.stg_office = stg["Address"]["Office"]
     mep.stg_fax = stg["Fax"]
     mep.stg_phone1 = stg["Phone"]
