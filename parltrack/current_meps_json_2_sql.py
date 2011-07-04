@@ -293,6 +293,7 @@ if __name__ == "__main__":
         mep.save()
         sys.stdout.write("%3i/%i\r" % (a, count))
     sys.stdout.write("%i/%i" % (a, count))
+    sys.stdout.write("\n")
     a = 0
     for mep_json in meps["meps"]:
         a += 1
