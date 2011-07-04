@@ -16,8 +16,11 @@ current_meps = "meps.json"
 
 _parse_date = lambda date: datetime.strptime(date, "%Y-%m-%dT00:00:00")
 
-def get_or_create(klass, **kwargs):
-    object = klass.objects.filter(**kwargs)
+def get_or_create(klass, _id=None, **kwargs):
+    if _id is None:
+        object = klass.objects.filter(**kwargs)
+    else:
+        object = klass.objects.filter(**{_id : kwargs[_id]})
     if object:
         return object[0]
     else:
