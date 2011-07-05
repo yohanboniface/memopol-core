@@ -109,6 +109,9 @@ class MEP(Representative):
     def group(self):
         return self.groupmep_set.latest('end').group
 
+    @property
+    def country(self):
+        return self.countrymep_set.latest('end').country
 
     class Meta:
         ordering = ['last_name']
