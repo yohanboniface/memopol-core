@@ -28,7 +28,7 @@ def get_or_create(klass, _id=None, **kwargs):
         return klass.objects.create(**kwargs)
 
 def create_uniq_id(mep_json):
-    id = mep_json["Name"]["sur"].capitalize() + mep_json["Name"]["family"].capitalize()
+    id = mep_json["Name"]["sur"].capitalize().replace(" ", "") + mep_json["Name"]["family"].capitalize().replace(" ", "")
     id = id.replace(u"Á", u"A")
     id = id.replace(u"À", u"A")
     id = id.replace(u"Â", u"A")
