@@ -1,11 +1,18 @@
 # encoding: utf-8
+from os import path, system
 from south.v2 import SchemaMigration
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        from django.core.management import call_command
-        call_command("loaddata", "meps.json")
+        def _system(command):
+            return True if system(command) == 0 else False
+
+        rep = path.dirname(path.dirname(path.abspath(__file__)))
+        if not (_system("mv %s/models.py %s/models.py.temp" % (rep, rep)) and\
+                _system("mv %s/models_old.py %s/models.py" % (rep, rep)) and\
+                _system("rm %s/models.pyc" % rep)):
+            raise Exception
 
 
     def backwards(self, orm):
