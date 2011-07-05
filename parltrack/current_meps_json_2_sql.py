@@ -4,6 +4,7 @@
 import os
 import sys
 import json
+import re
 from datetime import datetime, date
 from django.db.models import Count
 
@@ -128,6 +129,7 @@ def create_uniq_id(mep_json):
     id = id.replace(u"ż", u"z")
     id = id.replace(u"ź", u"z")
     id = id.replace(u"ž", u"z")
+    id = re.sub("\W", lambda _: "", id)
     return id
 
 def clean_existant_data(mep):
