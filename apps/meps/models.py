@@ -105,6 +105,11 @@ class MEP(Representative):
     def __unicode__(self):
         return self.full_name
 
+    @property
+    def group(self):
+        return self.groupmep_set.latest('end').group
+
+
     class Meta:
         ordering = ['last_name']
 
