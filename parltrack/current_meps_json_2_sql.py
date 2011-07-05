@@ -310,7 +310,7 @@ if __name__ == "__main__":
     print "Set all current active mep to unactive before importing"
     for mep in MEP.objects.filter(active=True):
         a += 1
-        mep.current = False
+        mep.active = False
         mep.save()
         sys.stdout.write("%3i/%i\r" % (a, count))
     sys.stdout.write("%i/%i" % (a, count))
