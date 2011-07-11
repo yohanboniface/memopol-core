@@ -80,16 +80,10 @@ Run syncdb then migrate, this will import the fixtures. Warning: this take a
 *LOTS* of time, arround 25min.
 
     cd memopol2
-    python manage.py syncdb
-    python manage.py migrate
+    ./INIT
 
-If you have a error while running migrate telling you that the table "reps" (or
-any other table) doesn't exist. Try doing those commands in this order instead:
-
-    python manage.py migrate reps
-    python manage.py migrate meps
-    python manage.py migrate mps
-    python manage.py migrate votes
+Do *not* try to run migrate by hand or you will have a bug du to fixtures
+loading and will end up with no meps fixtures.
 
 Install the default welcome message (optional)
 ==============================================

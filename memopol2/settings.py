@@ -105,13 +105,13 @@ INSTALLED_APPS = (
     'flatblocks',
 
     # memopol
+    'reps',
     'meps',
     'votes',
     'mps',
     'queries',
     'trends',
     'trophies',
-    'reps',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
@@ -136,6 +136,8 @@ LANGUAGES = (
 FIXTURE_DIRS = (
     'fixtures',
 )
+
+PARLTRACK_URL = "http://parltrack.memopol2.lqdn.fr"
 
 try:
     from settings_local import *

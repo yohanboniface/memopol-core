@@ -1,6 +1,6 @@
 from django.db import models
 
-from reps.models import Representative, Party
+from reps.models import Representative
 
 class MepsContainerManager(models.Manager):
     """ Manager for models to which the MEP model has a foreign key"""
@@ -71,11 +71,6 @@ class Building(models.Model):
     street = models.CharField(max_length=255)
     postcode = models.CharField(max_length=255)
 
-
-class Organization(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-
-
 class MEP(Representative):
     active = models.BooleanField()
     ep_id = models.IntegerField()
@@ -96,34 +91,17 @@ class MEP(Representative):
     stg_fax = models.CharField(max_length=255)
     stg_phone1 = models.CharField(max_length=255)
     stg_phone2 = models.CharField(max_length=255)
-    groups = models.ManyToManyField(Group, through='GroupMEP')
-    countries = models.ManyToManyField(Country, through='CountryMEP')
+    group = models.ForeignKey(Group)
+    group_role = models.CharField(max_length=63)
+    country = models.ForeignKey(Country)
     delegations = models.ManyToManyField(Delegation, through='DelegationRole')
     committees = models.ManyToManyField(Committee, through='CommitteeRole')
-    organizations = models.ManyToManyField(Organization, through='OrganizationMEP')
 
     def __unicode__(self):
         return self.full_name
 
-    @property
-    def group(self):
-        return self.groupmep_set.latest('end').group
-
-    @property
-    def country(self):
-        return self.countrymep_set.latest('end').country
-
     class Meta:
         ordering = ['last_name']
-
-
-class GroupMEP(models.Model):
-    mep = models.ForeignKey(MEP)
-    group = models.ForeignKey(Group)
-    role = models.CharField(max_length=255)
-    begin = models.DateField(null=True)
-    end = models.DateField(null=True)
-
 
 class DelegationRole(models.Model):
     mep = models.ForeignKey(MEP)
@@ -135,7 +113,6 @@ class DelegationRole(models.Model):
     def __unicode__(self):
         return u"%s : %s" % (self.mep.full_name, self.delegation)
 
-
 class CommitteeRole(models.Model):
     mep = models.ForeignKey(MEP)
     committee = models.ForeignKey(Committee)
@@ -146,23 +123,3 @@ class CommitteeRole(models.Model):
     def __unicode__(self):
         return u"%s : %s" % (self.committe.abbreviation, self.mep.full_name)
 
-
-class PostalAddress(models.Model):
-    addr = models.CharField(max_length=255)
-    mep = models.ForeignKey(MEP)
-
-
-class CountryMEP(models.Model):
-    mep = models.ForeignKey(MEP)
-    country = models.ForeignKey(Country)
-    party = models.ForeignKey(Party)
-    begin = models.DateField()
-    end = models.DateField()
-
-
-class OrganizationMEP(models.Model):
-    mep = models.ForeignKey(MEP)
-    organization = models.ForeignKey(Organization)
-    role = models.CharField(max_length=255)
-    begin = models.DateField()
-    end = models.DateField()

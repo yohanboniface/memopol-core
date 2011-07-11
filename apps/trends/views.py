@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404
-from datetime import datetime
 
 import os
 
@@ -58,6 +57,5 @@ def trends_for_mep(request, mep_id):
         else:
             return HttpResponseNotFound
 
-    print "send file"
     return send_file(request,filename, content_type="image/png")
 
