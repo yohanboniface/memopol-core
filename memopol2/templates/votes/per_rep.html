@@ -14,7 +14,7 @@
             <li><em>Part</em> : {{ vote.recommendation.part }}</li>
             {% if vote.recommendation.recommendation %}<li><em>Recommendation</em> : {{ vote.recommendation.recommendation }}</li>{% endif %}
             {% if vote.recommendation.weight %}<li><em>Weight</em> : {{ vote.recommendation.weight }}</li>{% endif %}
-            <li><em>Vote</em> : {{ vote.choice }}</li>
+            <li style="background:{% if vote.recommendation.recommendation == vote.choice %}rgb(0, 255, 0){% else %}rgb(255, 0, 0){% endif %}"><em>Vote</em> : {{ vote.choice }}</li>
             </div>
         </ul>
     </li>
