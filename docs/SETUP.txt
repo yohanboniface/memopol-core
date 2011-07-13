@@ -82,7 +82,7 @@ Run syncdb then migrate, this will import the fixtures. Warning: this take a
     cd memopol2
     ./INIT
 
-Do *not* try to run migrate by hand or you will have a bug du to fixtures
+Do *not* try to run migrate by hand or you will have a bug due to fixtures
 loading and will end up with no meps fixtures.
 
 Install the default welcome message (optional)

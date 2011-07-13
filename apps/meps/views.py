@@ -1,3 +1,26 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import os
+import urllib
+from os.path import realpath
+
+from django.conf import settings
+
+from memopol2.utils import check_dir, send_file, get_content_cache
+from models import MEP
+
+UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
+
+def get_mep_picture(request, ep_id):
+    filename = realpath(u".%simg/meps/%s.jpg" % (settings.MEDIA_URL, ep_id))
+    cache = get_content_cache(request, filename, 'image/jpeg')
+    if cache:
+        return cache
+    check_dir(filename)
+    urllib.urlretrieve(UE_IMAGE_URL % ep_id, filename)
+    return send_file(request, filename, content_type='image/jpeg')
+
 def autoTrophies(mep):
     mapping = { (u'Parlement europ\u00e9en',u'Pr\u00e9sident') : (12, 'President of EP', 'pep.jpg'),
                 (u'Parlement europ\u00e9en',u'Vice-Pr\u00e9sident') : (11, 'VP of EP', 'vpep.jpg'),

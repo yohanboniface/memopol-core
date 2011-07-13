@@ -1,11 +1,8 @@
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponseNotFound
 from django.shortcuts import get_object_or_404
 
 from memopol2.utils import check_dir, send_file, get_content_cache
-
-import os
-import urllib
 
 import numpy
 import matplotlib

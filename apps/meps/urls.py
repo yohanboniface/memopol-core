@@ -64,3 +64,7 @@ urlpatterns = patterns('',
     url(r'^party/(?P<object_id>[0-9]+)/$', list_detail.object_detail, party_dict,  name='index_by_party'),
     url(r'^deputy/(?P<slug>\w+)/$', list_detail.object_detail, mep_dict, name='mep'),
 )
+urlpatterns += patterns('meps.views',
+    url(r'^mep/(?P<ep_id>[0-9]+)/picture.jpg$', 'get_mep_picture',
+        name='mep-picture'),
+)

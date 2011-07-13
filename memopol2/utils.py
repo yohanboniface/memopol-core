@@ -24,7 +24,7 @@ def send_file(request, filename, content_type='text/plain'):
 
 def get_content_cache(request, filename, content_type='image/png'):
     """
-    Return the cached image if exists and reffresh is not forced
+    Return the cached image if exists and refresh is not forced
     Otherwise return False
     """
     if request.GET.get(u'force', u'0') != u'0':
