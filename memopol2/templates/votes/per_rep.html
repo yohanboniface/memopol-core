@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Votes of {{ representative.first_name }} {{ representative.last_name }} on {{ proposal.title }}</h1>
+
+<p>{{ vote.recommendation.description }}</p>
+<ul>
+    {% for vote in votes %}
+    <li>
+        {{ vote.recommendation.description }}
+        <ul>
+            <div class="{{ vote.recommendation.recommendation }}">
+            <li><em>Part</em> : {{ vote.recommendation.part }}</li>
+            {% if vote.recommendation.recommendation %}<li><em>Recommendation</em> : {{ vote.recommendation.recommendation }}</li>{% endif %}
+            {% if vote.recommendation.weight %}<li><em>Weight</em> : {{ vote.recommendation.weight }}</li>{% endif %}
+            <li><em>Vote</em> : {{ vote.choice }}</li>
+            </div>
+        </ul>
+    </li>
+    <br>
+    {% endfor %}
+</ul>
+
+{% endblock %}
