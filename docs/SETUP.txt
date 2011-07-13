@@ -1,8 +1,8 @@
 This describes how to setup the mempol2 dev environment
 =======================================================
 
-Install the base dependencies
-=============================
+Install the base dependencies on debian-based distributions
+===========================================================
 
 Install the base python virtualenv tools (on Ubuntu you have to enable universe):
 
@@ -10,6 +10,12 @@ Install the base python virtualenv tools (on Ubuntu you have to enable universe)
     sudo pip install virtualenv
     sudo pip install virtualenvwrapper
 
+Install the base dependencies on ArchLinux
+==========================================
+
+Install the following to have the tools on Archlinux (please note that you may have to adapt the following install procedure):
+
+    pacman -S python2 libxml2 libxslt freetype2 python2-pip python2-virtualenv python-virtualenvwrapper libpng
 
 Setup your virtual environment
 ===============================
