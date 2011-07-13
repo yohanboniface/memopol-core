@@ -52,6 +52,7 @@ mep_dict = {'queryset': MEP.objects.all(), 'slug_field': 'id', 'template_object_
 
 urlpatterns = patterns('',
     url(r'^names/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=True)}, name='index_names'),
+    url(r'^inactive/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=False)}, name='index_inactive'),
     url(r'^countries/$', list_detail.object_list, {'queryset': Country.objects.with_counts()}, name='index_countries'),
     url(r'^country/(?P<slug>[a-zA-Z][a-zA-Z])/$', list_detail.object_detail, country_dict, name='index_by_country'),
     url(r'^groups/$', list_detail.object_list, {'queryset': Group.objects.with_counts()}, name='index_groups'),
