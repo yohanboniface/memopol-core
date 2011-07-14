@@ -17,8 +17,17 @@
 
 <li><i>{% if mp.gender == "F" %}{% trans "Born on (female)" %}{% else %}{% trans "Born on" %}{% endif %}</i>
 {% blocktrans with mp.birth_date.day as day and mp.birth_date.month as month and mp.birth_date.year as year and mp.birth_city as city %}{{ day }}/{{ month }}/{{ year }} <i>at</i> {{ city }}{% endblocktrans %}</li>
-<li><i>{% trans "Département:" %}</i> {{ mp.department.name }} - {{ mp.department.number }}</li>
-<li><i>{% trans "Political group: " %}</i>{{ mp.group.name }} ({{ mp.group.abbreviation }})</li>
+<li><i>{% trans "Département:" %}</i> 
+    <a href="{% url mps:index_by_department mp.department.number %}">
+	{{ mp.department.name }} - {{ mp.department.number }}
+    </a>
+</li>
+<li><i>{% trans "Political group: " %}</i>
+       <a href="{% url mps:index_by_group mp.group.abbreviation %}">
+	{{ mp.group.name }} ({{ mp.group.abbreviation }})
+        </a>
+
+</li>
 </ul>
 
 <div id="contact">
