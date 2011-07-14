@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Recommendation on {{ recommendation.subject }} for the proposal {{ proposal.title }}</h1>
+
+<ul>
+    <div class="{{ recommendation.recommendation }}">
+    <li><em>Part</em> : {{ recommendation.part }}</li>
+    {% if recommendation.recommendation %}<li><em>Recommendation</em> : {{ recommendation.recommendation }}</li>{% endif %}
+    {% if recommendation.weight %}<li><em>Weight</em> : {{ recommendation.weight }}</li>{% endif %}
+    <ul>
+      {% regroup recommendation.vote_set.all by choice as result %}
+      {% for re in result %}
+      <li><b><a href="{% url votes:recommendation_choice proposal.id recommendation.id re.grouper %}">{{ re.grouper }}</a></b>: {{ re.list|length }} </li>
+      {% endfor %}
+    </ul>
+    </div>
+</ul>
+
+{% endblock %}

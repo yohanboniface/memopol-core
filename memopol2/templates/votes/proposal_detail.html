@@ -16,7 +16,7 @@
     <ul>
         {% for v in subvote.list %}
         <li>
-            {{ v.description }}
+            <a href="{% url votes:recommendation vote.id v.id %}">{{ v.description }}</a>
             <ul>
                 <div class="{{ v.recommendation }}">
                 <li><em>Part</em> : {{ v.part }}</li>
@@ -25,7 +25,7 @@
                 <ul>
                   {% regroup v.vote_set.all by choice as result %}
                   {% for re in result %}
-                  <li><b>{{ re.grouper }}</b>: {{ re.list|length }} </li>
+                  <li><b><a href="{% url votes:recommendation_choice vote.id v.id re.grouper %}">{{ re.grouper }}</a></b>: {{ re.list|length }} </li>
                   {% endfor %}
                 </ul>
                 </div>
