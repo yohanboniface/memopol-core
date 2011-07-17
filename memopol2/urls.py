@@ -11,7 +11,7 @@ admin.autodiscover()
 urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^$', direct_to_template, {'template' : 'home.html'}, name='index'),
     url(r'^europe/parliament/', include('meps.urls', namespace='meps', app_name='meps')),
-    url(r'^france/', include('mps.urls', namespace='mps', app_name='mps')),
+    url(r'^france/assemblee/', include('mps.urls', namespace='mps', app_name='mps')),
     url(r'^votes/', include('votes.urls', namespace='votes', app_name='votes')),
     url(r'^list/', include('queries.urls', namespace='queries', app_name='queries')),
     url(r'^trends/', include('trends.urls', namespace='trends', app_name='trends')),
