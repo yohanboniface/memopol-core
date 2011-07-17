@@ -17,13 +17,14 @@ def proposal_rep(request, proposal_id, mep_id):
 def mep_recommendation(request, proposal_id, recommendation_id, recommendation):
     meps = MEP.objects.filter(vote__recommendation=get_object_or_404(Recommendation, id=recommendation_id),
                               vote__choice=recommendation)
-    return render_to_response("meps/mep_list.html", {'object_list' : meps})
+    return render_to_response("meps/mep_list.html", {'object_list' : meps}, context_instance=RequestContext(request))
 
 def vote_recommendation(request, proposal_id, recommendation_id):
     proposal = get_object_or_404(Proposal, id=proposal_id)
     recommendation = get_object_or_404(Recommendation, id=recommendation_id)
     return render_to_response("votes/recommendation_detail.html",
-                              {'proposal': proposal, 'recommendation': recommendation})
+                              {'proposal': proposal, 'recommendation': recommendation},
+                              context_instance=RequestContext(request))
 
 urlpatterns = patterns('',
     url(r'^$', list_detail.object_list, {'queryset': Proposal.objects.all()}, name='index'),
