@@ -51,6 +51,17 @@
 </div>
 {% endif %}
 
+{% if mep.organizationmep_set.all %}
+<div id="staff">
+    <h2 class="collapsible collapsed">{% trans "Staff" %}</h2>
+        <ul class="body">
+    {% for staff in mep.organizationmep_set.all %}
+    <li>{{ staff.organization.name }}: {{ staff.role }} {% trans "from" %} {{ staff.begin }} {% if staff.end == "Dec. 31, 9999" %} {% trans "to" %} {{ staff.end }}{% endif %}</li>
+    {% endfor %}
+        </ul>
+</div>
+{% endif %}
+
 {% if mep.cv_set.all %}
 <div id="cv">
     <h2 class="collapsible collapsed">{% trans "CV" %}</h2>
