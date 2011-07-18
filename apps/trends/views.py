@@ -24,22 +24,22 @@ def trends_for_mep(request, mep_id):
     mep = get_object_or_404(MEP, id=mep_id)
     score_list = sorted(mep.score_set.all(), key=lambda k: k.proposal.date)
     scores = [s.value for s in score_list]
-    if scores:
-        pyplot.plot(scores, 'bo')
-        a, b = numpy.polyfit(range(len(scores)), [int(x) for x in scores], 1)
-        pyplot.plot([a*int(x) + b for x in range(len(scores))])
-        pyplot.legend(('Scores', 'Mediane'), 'best', shadow=True)
-        pyplot.plot(scores)
-        pyplot.axis([0, len(scores) - 1, 0, 102])
-        pyplot.title("%s - Votes notes evolution over time" % (mep.full_name))
-        pyplot.xticks(range(len(scores)), [k.proposal.date for k in score_list])
-        pyplot.xlabel("Votes dates")
-        pyplot.ylabel("Scores on votes")
-        check_dir(filename)
-        pyplot.savefig(filename, format="png")
-        pyplot.clf()
-    else:
+    if not scores:
         return HttpResponseNotFound
+
+    pyplot.plot(scores, 'bo')
+    a, b = numpy.polyfit(range(len(scores)), [int(x) for x in scores], 1)
+    pyplot.plot([a*int(x) + b for x in range(len(scores))])
+    pyplot.legend(('Scores', 'Mediane'), 'best', shadow=True)
+    pyplot.plot(scores)
+    pyplot.axis([0, len(scores) - 1, 0, 102])
+    pyplot.title("%s - Votes notes evolution over time" % (mep.full_name))
+    pyplot.xticks(range(len(scores)), [k.proposal.date for k in score_list])
+    pyplot.xlabel("Votes dates")
+    pyplot.ylabel("Scores on votes")
+    check_dir(filename)
+    pyplot.savefig(filename, format="png")
+    pyplot.clf()
 
     return send_file(request,filename, content_type="image/png")
 
