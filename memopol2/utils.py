@@ -15,8 +15,6 @@ def send_file(request, filename, content_type='text/plain'):
     """
     Send a file through Django.
     """
-    ## Seems to no longer work with recent django
-    #wrapper = FileWrapper(open(filename))
     buffer = open(filename, 'rb').read()
     response = HttpResponse(buffer, content_type=content_type)
     response['Content-Length'] = os.path.getsize(filename)
