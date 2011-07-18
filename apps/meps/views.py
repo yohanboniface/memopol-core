@@ -1,14 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
 import urllib
 from os.path import realpath
 
 from django.conf import settings
 
 from memopol2.utils import check_dir, send_file, get_content_cache
-from models import MEP
 
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
 
