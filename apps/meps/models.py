@@ -145,7 +145,7 @@ class CommitteeRole(models.Model):
     end = models.DateField(null=True)
 
     def __unicode__(self):
-        return u"%s : %s" % (self.committe.abbreviation, self.mep.full_name)
+        return u"%s : %s" % (self.committee.abbreviation, self.mep.full_name)
 
 
 class PostalAddress(models.Model):

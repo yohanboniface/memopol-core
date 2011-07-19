@@ -29,12 +29,12 @@
     {% include "meps/mep_contact.html" %}
 </div>
 
-{% if mep.committerole_set.all %}
-<div id="committes">
-    <h2 class="collapsible collapsed">{% trans "Committes" %}</h2>
+{% if mep.committeerole_set.all %}
+<div id="committees">
+    <h2 class="collapsible collapsed">{% trans "Committees" %}</h2>
     <ul class="body">
-    {% for role in mep.committerole_set.all %}
-        <li><a href="{% url meps:index_by_committe role.committe.abbreviation %}">{{ role.role }} - {{ role.committe }}</a></li>
+    {% for role in mep.committeerole_set.all %}
+        <li><a href="{% url meps:index_by_committee role.committee.abbreviation %}">{{ role.role }} - {{ role.committee }}</a></li>
     {% endfor %}
     </ul>
 </div>
