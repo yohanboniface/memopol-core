@@ -9,7 +9,8 @@ class Migration(SchemaMigration):
             return True if system(command) == 0 else False
 
         from django.core.management import call_command
-        call_command("loaddata", "parltrack.json")
+        call_command("loaddata", "parltrack_reps.json")
+        call_command("loaddata", "parltrack_meps.json")
 
     def backwards(self, orm):
         pass
