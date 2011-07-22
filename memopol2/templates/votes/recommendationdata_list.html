@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{% trans "Importable votes" %}</h1>
+{% regroup object_list by proposal_name as object_list %}
+
+<ul>
+{% for rd in object_list reversed %}
+    <li>{{ rd.grouper }}
+    <ul>
+    {% for r in rd.list %}
+        <li>
+        {{ r.date|date:"d/m/Y" }} - {{ r.title }}
+        </li>
+    {% endfor %}
+    </ul>
+    <br>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

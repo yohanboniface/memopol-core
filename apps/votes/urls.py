@@ -3,7 +3,7 @@ from django.views.generic import list_detail
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 
-from votes.models import Proposal, Vote, Recommendation
+from votes.models import Proposal, Vote, Recommendation, RecommendationData
 from reps.models import Representative
 from meps.models import MEP
 
@@ -29,6 +29,7 @@ def vote_recommendation(request, proposal_id, recommendation_id):
 
 urlpatterns = patterns('',
     url(r'^$', list_detail.object_list, {'queryset': Proposal.objects.all()}, name='index'),
+    url(r'^import/$', list_detail.object_list, {'queryset': RecommendationData.objects.all()}, name='import'),
     url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<recommendation_id>\d+)/(?P<recommendation>\w+)/$', mep_recommendation, name='recommendation_choice'),
     url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<recommendation_id>\d+)/$', vote_recommendation, name='recommendation'),
     url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<mep_id>[a-zA-Z-_]+)/$', proposal_rep, name='rep'),
