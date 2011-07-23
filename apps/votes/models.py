@@ -1,3 +1,4 @@
+import json
 from django.db import models
 from reps.models import Representative
 
@@ -53,3 +54,6 @@ class RecommendationData(models.Model):
     date = models.DateField()
     data = models.TextField()
     recommendation = models.OneToOneField(Recommendation, null=True)
+
+    def data_pretty(self):
+        return json.dumps(json.loads(self.data), sort_keys=False, indent=4)

@@ -11,7 +11,7 @@
     <ul>
     {% for r in rd.list %}
         <li>
-        {{ r.date|date:"d/m/Y" }} - {{ r.title }}
+        {{ r.date|date:"d/m/Y" }} - <a href="{% url votes:import_vote r.id %}">{{ r.title }}</a>
         </li>
     {% endfor %}
     </ul>

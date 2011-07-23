@@ -30,6 +30,7 @@ def vote_recommendation(request, proposal_id, recommendation_id):
 urlpatterns = patterns('',
     url(r'^$', list_detail.object_list, {'queryset': Proposal.objects.all()}, name='index'),
     url(r'^import/$', list_detail.object_list, {'queryset': RecommendationData.objects.all()}, name='import'),
+    url(r'^import/(?P<object_id>\d+)/$', list_detail.object_detail, {'queryset': RecommendationData.objects.all()}, name='import_vote'),
     url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<recommendation_id>\d+)/(?P<recommendation>\w+)/$', mep_recommendation, name='recommendation_choice'),
     url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<recommendation_id>\d+)/$', vote_recommendation, name='recommendation'),
     url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<mep_id>[a-zA-Z-_]+)/$', proposal_rep, name='rep'),
