@@ -57,6 +57,7 @@ def create_recommendation(recommendationdata_id, choice, weight):
         for group in data[key]["groups"]:
             for mep in group["votes"]:
                 mep = mep["orig"]
+                mep = mep.replace(u"ß", "SS")
                 print settings.PARLTRACK_URL + "/mep/%s?format=json&date=%s" % (mep.encode("Utf-8"), rd.date.strftime("%Y-%m-%d"))
                 mep_ep_id = json.loads(urlopen(settings.PARLTRACK_URL + "/mep/%s?format=json&date=%s" % (mep.encode("Utf-8"), rd.date.strftime("%Y-%m-%d"))).read())["UserID"]
                 print mep_ep_id, mep, json.loads(urlopen(settings.PARLTRACK_URL + "/mep/%s?format=json&date=%s" % (mep.encode("Utf-8"), rd.date.strftime("%Y-%m-%d"))).read())["Name"]["full"]
