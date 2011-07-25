@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1>Recommendation on {{ recommendation.subject }} for the proposal {{ proposal.title }}</h1>
+<h1>Recommendation on {{ recommendation.subject }} for the proposal <a href="{% url votes:detail proposal.id %}">{{ proposal.title }}</a></h1>
 
 <ul>
     <div class="{{ recommendation.recommendation }}">
