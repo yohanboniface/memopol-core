@@ -74,7 +74,20 @@ def create_recommendation(recommendationdata_id, choice, weight):
         for vote in rec.vote_set.all():
             if vote.representative not in rep_scores.keys():
                 rep_scores[vote.representative] = [0, 0]
-            rep_scores[vote.representative][0] += vote.recommendation.weight if vote.choice == vote.recommendation.recommendation else 0
+            if vote.choice == vote.recommendation.recommendation:
+                rep_scores[vote.representative][0] += vote.recommendation.weight * 2
+            elif vote.choice == "abstention":
+                if vote.recommendation.recommendation == "against":
+                    rep_scores[vote.representative][0] += vote.recommendation.weight * 1
+                elif vote.recommendation.recommendation == "for":
+                    rep_scores[vote.representative][0] += vote.recommendation.weight * -1
+                else:
+                    raise
+            elif (vote.choice == "for" and vote.recommendation.recommendation == "against") or\
+                 (vote.choice == "against" and vote.recommendation.recommendation == "for"):
+                rep_scores[vote.representative][0] += vote.recommendation.weight * -2
+            else:
+                raise
             rep_scores[vote.representative][1] += vote.recommendation.weight
 
     z = 1
@@ -82,7 +95,7 @@ def create_recommendation(recommendationdata_id, choice, weight):
         sys.stdout.write("Creating scores %i/%i\r" % (z, len(rep_scores.keys())))
         sys.stdout.flush()
         z += 1
-        Score.objects.create(value=100*(float(rep_scores[i][0])/rep_scores[i][1]),
+        Score.objects.create(value=25*(float(rep_scores[i][0])/rep_scores[i][1]) + 50,
                              representative=i,
                              proposal=proposal,
                              date=rd.date)
