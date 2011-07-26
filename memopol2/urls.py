@@ -1,15 +1,17 @@
 import os
 
 from django.conf.urls.defaults import patterns, include, url
-from django.views.generic.simple import direct_to_template
+from django.views.generic import list_detail
 from django.conf import settings
 from django.contrib import admin
 from django.views.static import serve
 
+from votes.models import Proposal
+
 admin.autodiscover()
 
 urlpatterns = patterns('', # pylint: disable=C0103
-    url(r'^$', direct_to_template, {'template' : 'home.html'}, name='index'),
+    url(r'^$', list_detail.object_list, {'queryset': Proposal.objects.all(), 'template_name' : 'home.html'}, name='index'),
     url(r'^europe/parliament/', include('meps.urls', namespace='meps', app_name='meps')),
     url(r'^france/assemblee/', include('mps.urls', namespace='mps', app_name='mps')),
     url(r'^votes/', include('votes.urls', namespace='votes', app_name='votes')),
