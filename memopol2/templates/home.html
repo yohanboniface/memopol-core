@@ -13,9 +13,9 @@
     {% if object_list %}
         <h1>{% trans "Votes list" %}</h1>
         <ul>
-            {% for vote in object_list %}
+            {% for proposal in object_list %}
                 <li>
-                    <a href="{% url votes:detail vote.id %}">{{ vote.title }}</a>
+                    <a href="{% url votes:detail proposal.id %}">{{ proposal.title }}</a>
                 </li>
             {% endfor %}
         </ul>
