@@ -257,7 +257,6 @@ def add_groups(mep, groups):
                                 end=_parse_date(group["end"]))
 
 def manage_mep(mep, mep_json):
-    mep.active = True
     change_mep_details(mep, mep_json)
     mep.committeerole_set.all().delete()
     add_committees(mep, mep_json["Committees"])
@@ -325,6 +324,7 @@ if __name__ == "__main__":
         if in_db_mep:
             mep = in_db_mep[0]
             clean_existant_data(mep)
+            mep.active = True
             manage_mep(mep, mep_json)
         else:
             mep = create_mep(mep_json)
