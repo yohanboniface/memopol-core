@@ -1,19 +1,26 @@
 # encoding: utf-8
-from os import system
+from south.db import db
 from south.v2 import SchemaMigration
+
+from meps.models import MEP
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        def _system(command):
-            return True if system(command) == 0 else False
 
-        from django.core.management import call_command
-        call_command("loaddata", "parltrack_reps.json")
-        call_command("loaddata", "parltrack_meps.json")
+        for i in MEP.objects.all():
+            if MEP.objects.filter(ep_id=i.ep_id).count() > 1:
+                for die in MEP.objects.filter(ep_id=i.ep_id)[1:]:
+                    die.delete()
+        # Adding unique constraint on 'MEP', fields ['ep_id']
+        db.create_unique('meps_mep', ['ep_id'])
+
 
     def backwards(self, orm):
-        pass
+
+        # Removing unique constraint on 'MEP', fields ['ep_id']
+        db.delete_unique('meps_mep', ['ep_id'])
+
 
     models = {
         'meps.building': {
@@ -91,17 +98,17 @@ class Migration(SchemaMigration):
             'bxl_phone1': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'bxl_phone2': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'committees': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['meps.Committee']", 'through': "orm['meps.CommitteeRole']", 'symmetrical': 'False'}),
-            'country': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['meps.Country']", 'through': "orm['meps.CountryMEP']", 'symmetrical': 'False'}),
+            'countries': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['meps.Country']", 'through': "orm['meps.CountryMEP']", 'symmetrical': 'False'}),
             'delegations': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['meps.Delegation']", 'through': "orm['meps.DelegationRole']", 'symmetrical': 'False'}),
             'ep_debates': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
             'ep_declarations': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
-            'ep_id': ('django.db.models.fields.IntegerField', [], {}),
+            'ep_id': ('django.db.models.fields.IntegerField', [], {'unique': 'True'}),
             'ep_motions': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
             'ep_opinions': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
             'ep_questions': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
             'ep_reports': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
             'ep_webpage': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
-            'group': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['meps.Group']", 'through': "orm['meps.GroupMEP']", 'symmetrical': 'False'}),
+            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['meps.Group']", 'through': "orm['meps.GroupMEP']", 'symmetrical': 'False'}),
             'organizations': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['meps.Organization']", 'through': "orm['meps.OrganizationMEP']", 'symmetrical': 'False'}),
             'representative_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['reps.Representative']", 'unique': 'True', 'primary_key': 'True'}),
             'stg_building': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'stg_building'", 'to': "orm['meps.Building']"}),

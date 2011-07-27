@@ -79,7 +79,7 @@ class Organization(models.Model):
 
 class MEP(Representative):
     active = models.BooleanField()
-    ep_id = models.IntegerField()
+    ep_id = models.IntegerField(unique=True)
     ep_opinions = models.URLField()
     ep_debates = models.URLField()
     ep_questions = models.URLField()
