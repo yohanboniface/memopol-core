@@ -14,7 +14,7 @@
             <li><em>Part</em> : <a href="{% url votes:recommendation proposal.id vote.recommendation.id %}">{{ vote.recommendation.part }}</a></li>
             {% if vote.recommendation.recommendation %}<li><em>Recommendation</em> : <a href="{% url votes:recommendation_choice proposal.id vote.recommendation.id vote.recommendation.recommendation %}">{{ vote.recommendation.recommendation }}</a></li>{% endif %}
             {% if vote.recommendation.weight %}<li><em>Weight</em> : {{ vote.recommendation.weight }}</li>{% endif %}
-            <li style="background:{% if vote.recommendation.recommendation == vote.choice %}rgb(0, 255, 0){% else %}rgb(255, 0, 0){% endif %}"><em>Vote</em> : <a href="{% url votes:recommendation_choice proposal.id vote.recommendation.id vote.choice %}">{{ vote.choice }}</a></li>
+            <li style="background:{% if vote.recommendation.recommendation == vote.choice %}rgb(0, 255, 0){% else %}{% if vote.choice == "abstention" %}rgb(255, 165, 0){% else %}rgb(255, 0, 0){% endif %}{% endif %}"><em>Vote</em> : <a href="{% url votes:recommendation_choice proposal.id vote.recommendation.id vote.choice %}">{{ vote.choice }}</a></li>
             </div>
         </ul>
     </li>
