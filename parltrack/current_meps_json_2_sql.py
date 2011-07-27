@@ -275,11 +275,11 @@ def manage_mep(mep, mep_json):
 def clean_old_stuff():
     print
     print "* remove empty delegations"
-    Delegation.objects.annotate(meps=Count('mep')).filter(meps=0)
+    Delegation.objects.annotate(meps=Count('mep')).filter(meps=0).delete()
     print "* remove empty committees"
-    Committee.objects.annotate(meps=Count('mep')).filter(meps=0)
+    Committee.objects.annotate(meps=Count('mep')).filter(meps=0).delete()
     print "* remove empty organizations"
-    Organization.objects.annotate(meps=Count('mep')).filter(meps=0)
+    Organization.objects.annotate(meps=Count('mep')).filter(meps=0).delete()
 
 def add_missing_details(mep, mep_json):
     mep.ep_id = mep_json["UserID"]
