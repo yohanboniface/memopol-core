@@ -114,6 +114,9 @@ class MEP(Representative):
     def country(self):
         return self.countrymep_set.latest('end').country
 
+    def current_delegations(self):
+        return self.delegationrole_set.filter(end=date(9999, 12, 31))
+
     class Meta:
         ordering = ['last_name']
 

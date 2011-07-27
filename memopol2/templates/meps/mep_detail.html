@@ -40,11 +40,11 @@
 </div>
 {% endif %}
 
-{% if mep.delegationrole_set.all %}
+{% if mep.current_delegations %}
 <div id="delegations">
     <h2 class="collapsible collapsed">{% trans "Delegations" %}</h2>
     <ul class="body">
-    {% for role in mep.delegationrole_set.all %}
+    {% for role in mep.current_delegations %}
         <li><a href="{% url meps:index_by_delegation role.delegation.id %}">{{ role.role }} - {{ role.delegation }}</a></li>
     {% endfor %}
     </ul>
