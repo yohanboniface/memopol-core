@@ -14,7 +14,7 @@
 <span>{{ mep.first_name }} {{ mep.last_name|upper }} <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> </span>
 <a href="{% url meps:index_by_group mep.group.abbreviation %}"><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png"/></a><ul>{% for i in mep.achievements %}<li><img alt="{{ i.0 }}" src="{{ MEDIA_URL }}img/trophies/{{ i.1 }}" /></li>{% endfor %}</ul></div>
 
-<li><i>{% trans "Active: " %}</i>{% if mep.active %}{% trans "yes" %}{% else %}{% trans "no" %}{% endif %}
+<li><i>{% trans "Active: " %}</i><div style="background: {% if mep.active %}rgb(0, 255, 0);">{% trans "yes" %}{% else %}rgb(255, 0, 0);">{% trans "no" %}{% endif %}</div></li>
 <li><i>{% trans "Country" %}</i>:  <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.country.code %}">{{ mep.country.name }} </li></a>
 <li><i>{% trans "Political group: " %}</i><a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></li>
 {% for partyrepresentative in mep.partyrepresentative_set.all %}
