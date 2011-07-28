@@ -249,12 +249,21 @@ def add_mep_cv(mep, cv):
 
 def add_groups(mep, groups):
     # I don't create group if they don't exist for the moment
-    convert = {"S&D": "SD", "NA": "NI" }
+    convert = {"S&D": "SD", "NA": "NI", "ID": "IND/DEM"}
     GroupMEP.objects.filter(mep=mep).delete()
     for group in groups:
+        if not group.get("groupid"):
+            continue
         print "     link mep to group", group["groupid"], group["Organization"]
+        if type(group["groupid"]) is list:
+            # I really don't like that hack
+            group["groupid"] = group["groupid"][0]
         group["groupid"] = convert.get(group["groupid"], group["groupid"])
-        in_db_group = Group.objects.get(abbreviation=group["groupid"])
+        in_db_group = Group.objects.filter(abbreviation=group["groupid"])
+        if in_db_group:
+            in_db_group = in_db_group[0]
+        else:
+            in_db_group = Group.objects.create(abbreviation=group["groupid"], name=group["Organization"])
         GroupMEP.objects.create(mep=mep, group=in_db_group, role=group["role"],
                                 begin=_parse_date(group["start"]),
                                 end=_parse_date(group["end"]))
