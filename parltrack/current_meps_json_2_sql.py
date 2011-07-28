@@ -286,15 +286,6 @@ def manage_mep(mep, mep_json):
     print "     save mep modifications"
     mep.save()
 
-def clean_old_stuff():
-    print
-    print "* remove empty delegations"
-    Delegation.objects.annotate(meps=Count('mep')).filter(meps=0).delete()
-    print "* remove empty committees"
-    Committee.objects.annotate(meps=Count('mep')).filter(meps=0).delete()
-    print "* remove empty organizations"
-    Organization.objects.annotate(meps=Count('mep')).filter(meps=0).delete()
-
 def add_missing_details(mep, mep_json):
     mep.ep_id = mep_json["UserID"]
 
@@ -343,7 +334,6 @@ if __name__ == "__main__":
             manage_mep(mep, mep_json)
         else:
             mep = create_mep(mep_json)
-    clean_old_stuff()
 
 # TODO
 # need to check all the existant building and to remove the empty one
