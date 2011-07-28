@@ -275,10 +275,13 @@ def manage_mep(mep, mep_json):
     add_delegations(mep, mep_json.get("Delegations", []))
     add_countries(mep, mep_json["Constituencies"])
     add_groups(mep, mep_json["Groups"])
-    add_addrs(mep, mep_json["Addresses"])
+    if mep_json.get("Addresses"):
+        add_addrs(mep, mep_json["Addresses"])
     add_organizations(mep, mep_json.get("Staff", []))
-    add_mep_email(mep, mep_json["Mail"])
-    add_mep_website(mep, mep_json["Homepage"])
+    if mep_json.get("Mail"):
+        add_mep_email(mep, mep_json["Mail"])
+    if mep_json.get("Homepage"):
+        add_mep_website(mep, mep_json["Homepage"])
     add_mep_cv(mep, mep_json.get("CV", []))
     print "     save mep modifications"
     mep.save()
