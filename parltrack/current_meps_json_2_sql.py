@@ -224,10 +224,11 @@ def add_organizations(mep, organizations):
                                        end=_parse_date(organization["end"]))
 
 def change_mep_details(mep, mep_json):
-    print "     update mep birth date"
-    mep.birth_date = _parse_date(mep_json["Birth"]["date"])
-    print "     update mep birth place"
-    mep.birth_place = mep_json["Birth"]["place"]
+    if mep_json.get("Birth"):
+        print "     update mep birth date"
+        mep.birth_date = _parse_date(mep_json["Birth"]["date"])
+        print "     update mep birth place"
+        mep.birth_place = mep_json["Birth"]["place"]
     print "     update mep first name"
     mep.first_name = mep_json["Name"]["sur"]
     print "     update mep last name"
