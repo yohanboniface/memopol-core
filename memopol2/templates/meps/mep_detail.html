@@ -20,7 +20,7 @@
 {% for partyrepresentative in mep.partyrepresentative_set.all %}
     <li><i>{% trans "Party: " %}</i><a href="{% url meps:index_by_party partyrepresentative.party.id %}">{{ partyrepresentative.party.name }}</a></li>
 {% endfor %}
-<li><i>{% if mep.gender == "F" %}{% trans "Born on (female)" %}{% else %}{% trans "Born on" %}{% endif %}</i>
+<li><i>Born on</i>
 {% blocktrans with mep.birth_date.day as day and mep.birth_date.month as month and mep.birth_date.year as year and mep.birth_place as birth_place %}{{ day }}/{{ month }}/{{ year }}<i> at </i>{{ birth_place }}{% endblocktrans %}</li>
 </ul>
 
