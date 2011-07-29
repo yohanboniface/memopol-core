@@ -55,6 +55,10 @@ class Score(models.Model):
     def of_group(self):
         return Score.objects.filter(representative__mep__groupmep__group=self.representative.mep.group, proposal=self.proposal).aggregate(Avg('value'))['value__avg']
 
+    @property
+    def of_ep(self):
+        return Score.objects.filter(proposal=self.proposal).aggregate(Avg('value'))['value__avg']
+
 
 class RecommendationData(models.Model):
     proposal_name = models.CharField(max_length=255)

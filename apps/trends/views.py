@@ -26,6 +26,7 @@ def trends_for_mep(request, mep_id):
     scores = [s.value for s in score_list]
     of_country = [s.of_country for s in score_list]
     of_group = [s.of_group for s in score_list]
+    of_ep = [s.of_ep for s in score_list]
     if not scores:
         return HttpResponseNotFound
 
@@ -35,7 +36,8 @@ def trends_for_mep(request, mep_id):
     pyplot.plot([a*int(x) + b for x in range(len(scores))])
     # line
     pyplot.plot(of_group, 'r--')
-    pyplot.legend(('Scores', 'Median', 'Country', 'Group'), 'best', shadow=True)
+    pyplot.plot(of_ep, 'b--')
+    pyplot.legend(('Scores', 'Median', 'Country', 'Group', 'Parliament'), 'best', shadow=True)
     pyplot.plot(scores)
     pyplot.plot(of_country, 'y-')
     pyplot.axis([0, len(scores) - 1, 0, 102])
