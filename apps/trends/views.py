@@ -24,6 +24,7 @@ def trends_for_mep(request, mep_id):
     mep = get_object_or_404(MEP, id=mep_id)
     score_list = sorted(mep.score_set.all(), key=lambda k: k.proposal.date)
     scores = [s.value for s in score_list]
+    of_country = [s.of_country for s in score_list]
     if not scores:
         return HttpResponseNotFound
 
@@ -31,9 +32,10 @@ def trends_for_mep(request, mep_id):
     pyplot.plot(scores, 'bo')
     a, b = numpy.polyfit(range(len(scores)), [int(x) for x in scores], 1)
     pyplot.plot([a*int(x) + b for x in range(len(scores))])
-    pyplot.legend(('Scores', 'Mediane'), 'best', shadow=True)
     # line
     pyplot.plot(scores)
+    pyplot.plot(of_country, 'y-')
+    pyplot.legend(('Scores', 'Mediane', 'Country'), 'best', shadow=True)
     pyplot.axis([0, len(scores) - 1, 0, 102])
     pyplot.title("%s - Votes notes evolution over time" % (mep.full_name))
     pyplot.xticks(range(len(scores)), [k.proposal.date for k in score_list])
