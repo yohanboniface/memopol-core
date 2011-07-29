@@ -33,9 +33,9 @@ def trends_for_mep(request, mep_id):
     a, b = numpy.polyfit(range(len(scores)), [int(x) for x in scores], 1)
     pyplot.plot([a*int(x) + b for x in range(len(scores))])
     # line
+    pyplot.legend(('Scores', 'Median', 'Country'), 'best', shadow=True)
     pyplot.plot(scores)
     pyplot.plot(of_country, 'y-')
-    pyplot.legend(('Scores', 'Mediane', 'Country'), 'best', shadow=True)
     pyplot.axis([0, len(scores) - 1, 0, 102])
     pyplot.title("%s - Votes notes evolution over time" % (mep.full_name))
     pyplot.xticks(range(len(scores)), [k.proposal.date for k in score_list])
