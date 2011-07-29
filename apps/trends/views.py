@@ -27,10 +27,12 @@ def trends_for_mep(request, mep_id):
     if not scores:
         return HttpResponseNotFound
 
+    # blue dot
     pyplot.plot(scores, 'bo')
     a, b = numpy.polyfit(range(len(scores)), [int(x) for x in scores], 1)
     pyplot.plot([a*int(x) + b for x in range(len(scores))])
     pyplot.legend(('Scores', 'Mediane'), 'best', shadow=True)
+    # line
     pyplot.plot(scores)
     pyplot.axis([0, len(scores) - 1, 0, 102])
     pyplot.title("%s - Votes notes evolution over time" % (mep.full_name))
