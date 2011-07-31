@@ -97,6 +97,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.markup',
+    'django.contrib.comments',
 
     # 3rd party
     'south',
@@ -138,6 +139,7 @@ FIXTURE_DIRS = (
 )
 
 PARLTRACK_URL = "http://parltrack.memopol2.lqdn.fr"
+ROOT_URL = "http://memopol2.lqdn.org"
 
 try:
     from settings_local import *

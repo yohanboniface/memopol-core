@@ -1,5 +1,6 @@
 from datetime import date
 from django.db import models
+from django.contrib.comments.moderation import CommentModerator, moderator
 
 from reps.models import Representative, Party
 
@@ -167,3 +168,13 @@ class OrganizationMEP(models.Model):
     role = models.CharField(max_length=255)
     begin = models.DateField()
     end = models.DateField()
+
+class MepModerator(CommentModerator):
+    email_notification = True
+    moderate_after        = 0
+    def moderate(self, comment, content_object, request):
+        return True
+
+if MEP not in moderator._registry:
+    moderator.register(MEP, MepModerator)
+

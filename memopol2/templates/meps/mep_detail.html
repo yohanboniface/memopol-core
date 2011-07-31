@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load comments %}
 
 {% block content %}
 <article>
@@ -100,7 +101,23 @@
         {% endif %}
     </div>
 {% endif %}
-
+{% get_comment_list for mep as comment_list %}
+{% if comment_list %}
+<h2 class="collapsible collapsed">Notes</h2>
+   <div class="body">
+      {% for comment in comment_list %}
+         <div>
+            <div>{{ comment.comment }}</div>
+            {% if comment.user_url %}<div>{{ comment.user_url }}</div>{% endif %}
+            <div>{{ comment.submit_date }}</div>
+         </div>
+      {% endfor %}
+   </div>
+{% endif %}
+<h2 class="collapsible collapsed">Add note</h2>
+<div class="body">
+   {% render_comment_form for mep %}
+</div>
 </section>
 
 </article>
