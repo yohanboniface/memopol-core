@@ -1,5 +1,6 @@
 import json
 from django.db import models
+from django.db.models import Avg
 from reps.models import Representative
 
 class Proposal(models.Model):
@@ -45,6 +46,18 @@ class Score(models.Model):
         red = 255 - self.value
         green = self.value * 2.55
         return "rgb(%d, %d, 0)" % (red, green)
+
+    @property
+    def of_country(self):
+        return Score.objects.filter(representative__mep__countrymep__country=self.representative.mep.country, proposal=self.proposal).aggregate(Avg('value'))['value__avg']
+
+    @property
+    def of_group(self):
+        return Score.objects.filter(representative__mep__groupmep__group=self.representative.mep.group, proposal=self.proposal).aggregate(Avg('value'))['value__avg']
+
+    @property
+    def of_ep(self):
+        return Score.objects.filter(proposal=self.proposal).aggregate(Avg('value'))['value__avg']
 
 
 class RecommendationData(models.Model):

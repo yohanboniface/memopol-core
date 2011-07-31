@@ -6,7 +6,7 @@ Install the base dependencies on debian-based distributions
 
 Install the base python virtualenv tools (on Ubuntu you have to enable universe):
 
-    sudo apt-get install python-setuptools python-dev libxml2-dev libxslt1-dev libfreetype6-dev libpng12-dev python-pip libatlas-base-dev
+    sudo apt-get install python-setuptools python-dev libxml2-dev libxslt1-dev libfreetype6-dev libpng12-dev python-pip libatlas-base-dev g++
     sudo pip install virtualenv
     sudo pip install virtualenvwrapper
 
@@ -67,10 +67,6 @@ On Debian systems running Python 2.7 (like Ubuntu Natty), you must run this firs
 (more info here: http://mail.scipy.org/pipermail/numpy-discussion/2011-June/056544.html)
 
 Install memopol2's depdendencies:
-
-    pip install -r requirements.txt
-
-If you have errors with matplotlib or numpy do a:
 
     pip install numpy==1.5.1
 

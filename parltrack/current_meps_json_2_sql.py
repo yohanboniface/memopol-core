@@ -170,7 +170,8 @@ def add_delegations(mep, delegations):
 def add_addrs(mep, addrs):
     print "     add Brussels infos"
     bxl = addrs["Brussels"]
-    mep.bxl_building = get_or_create(Building, _id="id",
+    if bxl["Address"].get("building_code"):
+        mep.bxl_building = get_or_create(Building, _id="id",
                                      id=bxl["Address"]["building_code"],
                                      name=bxl["Address"]["Building"],
                                      street=bxl["Address"]["Street"],
@@ -181,7 +182,8 @@ def add_addrs(mep, addrs):
     mep.bxl_phone2 = bxl["Phone"][:-4] + "7" + bxl["Phone"][-3:]
     print "     add Strasbourg infos"
     stg = addrs["Strasbourg"]
-    mep.stg_building = get_or_create(Building, _id="id",
+    if stg["Address"].get("building_code"):
+        mep.stg_building = get_or_create(Building, _id="id",
                                      id=stg["Address"]["building_code"],
                                      name=stg["Address"]["Building"],
                                      street=stg["Address"]["Street"],
@@ -222,10 +224,11 @@ def add_organizations(mep, organizations):
                                        end=_parse_date(organization["end"]))
 
 def change_mep_details(mep, mep_json):
-    print "     update mep birth date"
-    mep.birth_date = _parse_date(mep_json["Birth"]["date"])
-    print "     update mep birth place"
-    mep.birth_place = mep_json["Birth"]["place"]
+    if mep_json.get("Birth"):
+        print "     update mep birth date"
+        mep.birth_date = _parse_date(mep_json["Birth"]["date"])
+        print "     update mep birth place"
+        mep.birth_place = mep_json["Birth"]["place"]
     print "     update mep first name"
     mep.first_name = mep_json["Name"]["sur"]
     print "     update mep last name"
@@ -246,40 +249,42 @@ def add_mep_cv(mep, cv):
 
 def add_groups(mep, groups):
     # I don't create group if they don't exist for the moment
-    convert = {"S&D": "SD", "NA": "NI" }
+    convert = {"S&D": "SD", "NA": "NI", "ID": "IND/DEM"}
     GroupMEP.objects.filter(mep=mep).delete()
     for group in groups:
+        if not group.get("groupid"):
+            continue
         print "     link mep to group", group["groupid"], group["Organization"]
+        if type(group["groupid"]) is list:
+            # I really don't like that hack
+            group["groupid"] = group["groupid"][0]
         group["groupid"] = convert.get(group["groupid"], group["groupid"])
-        in_db_group = Group.objects.get(abbreviation=group["groupid"])
+        in_db_group = Group.objects.filter(abbreviation=group["groupid"])
+        if in_db_group:
+            in_db_group = in_db_group[0]
+        else:
+            in_db_group = Group.objects.create(abbreviation=group["groupid"], name=group["Organization"])
         GroupMEP.objects.create(mep=mep, group=in_db_group, role=group["role"],
                                 begin=_parse_date(group["start"]),
                                 end=_parse_date(group["end"]))
 
 def manage_mep(mep, mep_json):
-    mep.active = True
     change_mep_details(mep, mep_json)
     mep.committeerole_set.all().delete()
     add_committees(mep, mep_json["Committees"])
     add_delegations(mep, mep_json.get("Delegations", []))
     add_countries(mep, mep_json["Constituencies"])
     add_groups(mep, mep_json["Groups"])
-    add_addrs(mep, mep_json["Addresses"])
+    if mep_json.get("Addresses"):
+        add_addrs(mep, mep_json["Addresses"])
     add_organizations(mep, mep_json.get("Staff", []))
-    add_mep_email(mep, mep_json["Mail"])
-    add_mep_website(mep, mep_json["Homepage"])
+    if mep_json.get("Mail"):
+        add_mep_email(mep, mep_json["Mail"])
+    if mep_json.get("Homepage"):
+        add_mep_website(mep, mep_json["Homepage"])
     add_mep_cv(mep, mep_json.get("CV", []))
     print "     save mep modifications"
     mep.save()
-
-def clean_old_stuff():
-    print
-    print "* remove empty delegations"
-    Delegation.objects.annotate(meps=Count('mep')).filter(meps=0)
-    print "* remove empty committees"
-    Committee.objects.annotate(meps=Count('mep')).filter(meps=0)
-    print "* remove empty organizations"
-    Organization.objects.annotate(meps=Count('mep')).filter(meps=0)
 
 def add_missing_details(mep, mep_json):
     mep.ep_id = mep_json["UserID"]
@@ -325,10 +330,10 @@ if __name__ == "__main__":
         if in_db_mep:
             mep = in_db_mep[0]
             clean_existant_data(mep)
+            mep.active = True
             manage_mep(mep, mep_json)
         else:
             mep = create_mep(mep_json)
-    clean_old_stuff()
 
 # TODO
 # need to check all the existant building and to remove the empty one
