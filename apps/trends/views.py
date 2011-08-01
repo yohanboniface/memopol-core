@@ -72,8 +72,8 @@ def bar_trends_for_mep(request, mep_id):
     #pyplot.plot([a*int(x) + b for x in range(len(scores))])
     # line
     pyplot.bar(map(lambda x: x+0.1, range(len(scores))), scores, width=0.2)
-    pyplot.bar(map(lambda x: x+0.3, range(len(scores))), of_group, width=0.2, color="green")
-    pyplot.bar(map(lambda x: x+0.5, range(len(scores))), of_ep, width=0.2, color="red")
+    pyplot.bar(map(lambda x: x+0.3, range(len(scores))), of_group, width=0.2, color="red")
+    pyplot.bar(map(lambda x: x+0.5, range(len(scores))), of_ep, width=0.2, color="green")
     pyplot.bar(map(lambda x: x+0.7, range(len(scores))), of_country, width=0.2, color="yellow")
     pyplot.legend(('MEP', 'Group', 'Parliament', 'Country'), 'best', shadow=True)
     pyplot.axis([0, len(scores), 0, 102])
