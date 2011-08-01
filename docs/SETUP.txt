@@ -66,6 +66,9 @@ On Debian systems running Python 2.7 (like Ubuntu Natty), you must run this firs
 
 (more info here: http://mail.scipy.org/pipermail/numpy-discussion/2011-June/056544.html)
 
+Run:
+    workon memopol2
+
 Install memopol2's depdendencies:
 
     pip install numpy==1.5.1
