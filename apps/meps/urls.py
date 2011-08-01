@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 from django.views.generic import list_detail
+from django.db.models import Avg
 
 from meps.models import MEP, Country, Group, Committee, Delegation
 
@@ -63,6 +64,7 @@ urlpatterns = patterns('',
     url(r'^delegation/(?P<object_id>[0-9]+)/$', list_detail.object_detail, delegation_dict, name='index_by_delegation'),
     url(r'^party/$', list_detail.object_list, {'queryset': Party.objects.with_counts()}, name='index_parties'),
     url(r'^party/(?P<object_id>[0-9]+)/$', list_detail.object_detail, party_dict,  name='index_by_party'),
+    url(r'^score/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=True).exclude(score__isnull=True).annotate(Avg('score__value')).order_by('-score__value__avg')}, name='scores'),
     url(r'^deputy/(?P<slug>\w+)/$', list_detail.object_detail, mep_dict, name='mep'),
 )
 urlpatterns += patterns('meps.views',
