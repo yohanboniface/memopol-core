@@ -1,10 +1,14 @@
 #!/bin/bash
 
-./manage.py syncdb
-./manage.py migrate reps
-./manage.py migrate meps 0001
-./manage.py migrate meps 0002
-./manage.py migrate meps 0003
-./manage.py migrate meps 0004
-./manage.py migrate meps 0005
-./manage.py migrate
+MANAGE="./manage.py"
+
+[ -x 'bin/django-manage' ] && MANAGE='bin/django-manage'
+
+$MANAGE syncdb
+$MANAGE migrate reps
+$MANAGE migrate meps 0001
+$MANAGE migrate meps 0002
+$MANAGE migrate meps 0003
+$MANAGE migrate meps 0004
+$MANAGE migrate meps 0005
+$MANAGE migrate
