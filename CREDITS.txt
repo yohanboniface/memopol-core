@@ -12,5 +12,10 @@ Guyzmo <guyzmo+github@m0g.net>
 Gelnior <gelnior@free.fr>
 Olivier Le Thanh Duong <olivier@lethanh.be>
 Michael Witrant <mike@lepton.fr>
+Mathieu Pasquet <mathieui@mathieui.net>
+Étienne Loks <etienne.loks@peacefrogs.net>
+Michael <michael@michael-laptop.(none)>
+Aurélien COUDERC <zecoucou@free.fr>
+tarNeFyS <tarnefys@gmail.com>
 
 Gibus <neurone2@laquadrature.net> - creator of memopol v1
