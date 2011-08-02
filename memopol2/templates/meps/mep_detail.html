@@ -15,7 +15,7 @@
 <span>{{ mep.first_name }} {{ mep.last_name|upper }} <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> </span>
 <a href="{% url meps:index_by_group mep.group.abbreviation %}"><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png"/></a><ul>{% for i in mep.achievements %}<li><img alt="{{ i.0 }}" src="{{ MEDIA_URL }}img/trophies/{{ i.1 }}" /></li>{% endfor %}</ul></div>
 
-<li><i>{% trans "Active: " %}</i><div style="background: {% if mep.active %}rgb(0, 255, 0);">{% trans "yes" %}{% else %}rgb(255, 0, 0);">{% trans "no" %}{% endif %}</div></li>
+<li><i>{% trans "Active: " %}</i><div class="{% if mep.active %}ok">{% trans "yes" %}{% else %}nok">{% trans "no" %}{% endif %}</div></li>
 <li><i>{% trans "Country" %}</i>:  <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.country.code %}">{{ mep.country.name }} </li></a>
 <li><i>{% trans "Political group: " %}</i><a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></li>
 {% for partyrepresentative in mep.partyrepresentative_set.all %}
@@ -90,9 +90,11 @@
         <h2 class="collapsible expanded">{% trans "Scores average" %} : {{ mep.average_scores|floatformat:0 }}</h2>
         <ul class="body">
         {% for score in mep.score_set.all %}
-        <li style="background:{{ score.color }}">
-
+        <li style="border-color:{{ score.color }};">
+          <div class="score-color" style="background-color:{{ score.color }};"></div>
+          <div class="inner-score">
             <a href="{% url votes:rep score.proposal.id mep.id %}">{{ score.proposal.title }}</a>: <strong>{{ score.value }}</strong> ({% trans "on" %} {{ score.date }})<br/><a href="http://www.laquadrature.net/wiki/{{ score.proposal.id }}">{% trans "Read more..." %}</a>
+          </div>
         </li>
         {% endfor %}
         </ul>
