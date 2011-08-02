@@ -78,7 +78,7 @@ class WebSite(models.Model):
     representative = models.ForeignKey(Representative)
 
     def __unicode__(self):
-        return self.url
+        return self.url or u'-'
 
 class OpinionREP(models.Model):
     representative = models.ForeignKey(Representative)
@@ -86,5 +86,5 @@ class OpinionREP(models.Model):
     date = models.DateField()
 
     def __unicode__(self):
-        return u"%s : %s" % (self.opinion, self.mep)
+        return u"%s: %s" % (self.representative, self.opinion)
 
