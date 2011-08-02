@@ -63,7 +63,7 @@ class Committee(models.Model):
 
     @property
     def meps(self):
-        return self.mep_set.filter(active=True)
+        return self.mep_set.filter(active=True, committeerole__end=date(9999, 12, 31)).distinct()
 
 
 class Building(models.Model):
