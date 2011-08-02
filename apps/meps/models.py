@@ -8,6 +8,7 @@ class MepsContainerManager(models.Manager):
     """ Manager for models to which the MEP model has a foreign key"""
     def with_counts(self):
         """ Return the models with a count property, with the count of active meps """
+        # FIXME don't work as expected now, show historical count instead of current count
         return self.get_query_set().filter(mep__active=True).annotate(count=models.Count('mep'))
 
 
