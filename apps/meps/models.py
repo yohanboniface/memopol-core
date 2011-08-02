@@ -36,7 +36,7 @@ class Group(models.Model):
 
     @property
     def meps(self):
-        return self.mep_set.filter(active=True)
+        return self.mep_set.filter(active=True, groupmep__end=date(9999, 12, 31)).distinct()
 
 
 class Delegation(models.Model):
