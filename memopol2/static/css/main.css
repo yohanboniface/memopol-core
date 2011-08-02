@@ -5,7 +5,32 @@ html, body {
 
 body {
     background-color: #BCD;
+    font: 100% "Lucida Grande",Verdana,Lucida,Helvetica,Arial,sans-serif;
 }
+
+a {
+    color: #497ED5;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+li a {
+    color: black;
+    text-decoration: underline;
+}
+
+li a:hover {
+    color: #497ED5;
+    text-decoration: underline;
+}
+
+li ul li {
+    list-style-type: square;
+}
+
 
 .container_12 {
     background-color: #FFF;
@@ -227,6 +252,8 @@ li {
 {
     float: right;
     margin-left: 1em;
+    padding-left: 0.5em;
+    background: white;
 }
 
 .quickView span
@@ -361,4 +388,43 @@ table.tablesorter thead tr .headerSortDown {
 }
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 background-color: #8dbdd8;
+}
+
+div#scores li {
+    border-style: solid;
+    border-width: thin;
+    list-style: none;
+}
+
+div#scores div.score-color {
+    opacity:1;
+    width:100%;
+    height:0.5em;
+}
+
+div#scores div.inner-score {
+    padding: 0.2em;
+}
+
+a.ok,
+div.ok {
+    background: #C3FDB8;
+    padding: 0 0.2em;
+    display:inline;
+    color: black;
+}
+
+a.nok,
+div.nok {
+    background: #FAAFBE;
+    padding: 0 0.2em;
+    display:inline;
+    color: black;
+}
+
+a.abstention {
+    background: #FBB917;
+    padding: 0 0.2em;
+    display:inline;
+    color: black;
 }
