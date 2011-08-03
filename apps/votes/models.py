@@ -11,6 +11,9 @@ class Proposal(models.Model):
     def date(self):
         return self.recommendation_set.all()[0].datetime.date()
 
+    def __unicode__(self):
+        return self.title
+
 
 class Recommendation(models.Model):
     datetime = models.DateTimeField()
@@ -21,6 +24,8 @@ class Recommendation(models.Model):
     proposal = models.ForeignKey(Proposal)
     recommendation = models.CharField(max_length=15, choices=((u'against', u'against'), (u'for', u'for')), null=True)
 
+    def __unicode__(self):
+        return self.subject
 
 class Vote(models.Model):
     choice = models.CharField(max_length=15, choices=((u'for', u'for'), (u'against', u'against'), (u'abstention', u'abstention')))
@@ -30,6 +35,9 @@ class Vote(models.Model):
 
     class Meta:
         ordering = ["choice"]
+
+    def __unicode__(self):
+        return '%s (%s)' % (self.name, self.choice)
 
 
 class Score(models.Model):
