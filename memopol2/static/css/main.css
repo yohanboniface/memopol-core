@@ -406,6 +406,48 @@ div#scores div.inner-score {
     padding: 0.2em;
 }
 
+form label {
+    display: block;
+}
+
+form input {
+    width: 50%;
+}
+
+form textarea {
+    width: 100%;
+}
+
+form p {
+    padding:0.5em;
+    margin:0.5em;
+}
+
+form p.submit {
+    background: white;
+}
+
+form p.submit input {
+    width: auto;
+    color: black;
+    border: thin solid #497ED5;
+    background: white;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    
+}
+
+form ul.errorlist li {
+    color: red;
+    margin-left: 1em;
+}
+form p.error {
+    border: thin solid red;
+    background-color: #FAAFBE;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
 a.ok,
 div.ok {
     background: #C3FDB8;

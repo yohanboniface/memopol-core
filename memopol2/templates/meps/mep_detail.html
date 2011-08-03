@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load comments %}
+{% load comments i18n %}
 
 {% block content %}
 <article>
@@ -119,7 +119,7 @@
 {% endif %}
 <h2 class="collapsible collapsed">Add note</h2>
 <div class="body">
-   {% render_comment_form for mep %}
+  {% render_comment_form for mep %}
 </div>
 </section>
 
