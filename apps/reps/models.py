@@ -86,5 +86,5 @@ class OpinionREP(models.Model):
     date = models.DateField()
 
     def __unicode__(self):
-        return u"%s : %s" % (self.opinion, self.mep)
+        return u"%s: %s" % (self.representative, self.opinion)
 
