@@ -19,5 +19,7 @@ fixtures
 settings_local.py
 *.swp
 *.swo
+matplotlib/
 memopol2/static/img/trends/meps/*
 memopol2/static/img/meps/*
+static/img/

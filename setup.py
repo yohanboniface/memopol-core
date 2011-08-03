@@ -26,8 +26,5 @@ setup(
     packages = find_packages(),
     include_package_data = True,
     scripts = find_files('bin'),
-    install_requires = open('requirements.txt').read(),
-    extras_require = {
-        'test': open('requirements-test.txt').read()
-    }
+    install_requires = [],
 )
