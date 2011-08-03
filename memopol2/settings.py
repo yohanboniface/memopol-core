@@ -12,24 +12,19 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': '/tmp/%s-memopol2.sqlite' % os.getenv('USER'),
+    },
+}
 
-# will only work for sqlite - which is what we're using for now anyway
-
+APPS_DEBUG = False
 if os.getenv('VIRTUAL_ENV'):
-    DATABASE_NAME = '%s/memopol2.sqlite' % os.getenv('VIRTUAL_ENV')
+    DATABASES['default']['NAME'] = '%s/memopol2.sqlite' % os.getenv('VIRTUAL_ENV')
     APPS_DEBUG = True
-elif os.path.isfile('bin/django-manage'):
-    DATABASE_NAME = '/tmp/%s-memopol2.sqlite' % os.getenv('USER')
-    APPS_DEBUG = False
-else:
-    DATABASE_NAME = '/tmp/%s-memopol2.sqlite' % os.getenv('USER')
+elif not os.path.isfile('bin/django-manage'):
     APPS_DEBUG = True
-
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -67,14 +62,14 @@ SECRET_KEY = 'pw93$2vi7^b_8q#-j@z2#2rc-x7e(vcqmi)ekf9%8h57)#caoy'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.load_template_source',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
-    'django.contrib.csrf.middleware.CsrfMiddleware',
+    'django.contrib.csrf.middleware.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -87,7 +82,7 @@ if APPS_DEBUG:
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
-    'django.core.context_processors.auth',
+    'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.media',
 )
 
