@@ -18,8 +18,13 @@ DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'my
 
 if os.getenv('VIRTUAL_ENV'):
     DATABASE_NAME = '%s/memopol2.sqlite' % os.getenv('VIRTUAL_ENV')
+    APPS_DEBUG = True
+elif os.path.isfile('bin/django-manage'):
+    DATABASE_NAME = '/tmp/%s-memopol2.sqlite' % os.getenv('USER')
+    APPS_DEBUG = False
 else:
     DATABASE_NAME = '/tmp/%s-memopol2.sqlite' % os.getenv('USER')
+    APPS_DEBUG = True
 
 DATABASE_USER = ''             # Not used with sqlite3.
 DATABASE_PASSWORD = ''         # Not used with sqlite3.
@@ -73,8 +78,13 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
+
+if APPS_DEBUG:
+    MIDDLEWARE_CLASSES += (
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    )
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.core.context_processors.auth',
@@ -101,7 +111,6 @@ INSTALLED_APPS = (
 
     # 3rd party
     'south',
-    'debug_toolbar',
     'flatblocks',
 
     # memopol
@@ -113,6 +122,11 @@ INSTALLED_APPS = (
     'trends',
     'trophies',
 )
+
+if APPS_DEBUG:
+    INSTALLED_APPS += (
+        'debug_toolbar',
+    )
 
 INTERNAL_IPS = ('127.0.0.1',)
 
