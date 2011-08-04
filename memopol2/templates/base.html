@@ -56,7 +56,8 @@
             {% if user.is_staff %}
             <h2>{% trans "Administration tools" %}</h2>
             <ul>
-                <li><a href="/admin">{% trans "Administration" %}</a></li>
+                <li><a href="{% url admin:index %}">{% trans "Administration" %}</a></li>
+                <li><a href="{% url admin:comments_comment_changelist %}">{% trans "Comments moderation" %}</a></li>
             </ul>
             {% endif %}
 
