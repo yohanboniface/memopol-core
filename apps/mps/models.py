@@ -5,6 +5,9 @@ class Function(models.Model):
     type = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
 
+    def __unicode__(self):
+        return u'%s: %s' % (self.type, self.title and self.title[:15]+'...' or '-')
+
 class Opinion(models.Model):
     title = models.CharField(max_length=1023, unique=True)
     url = models.URLField()
@@ -20,13 +23,22 @@ class Department(models.Model):
     def mps(self):
         return self.mp_set.filter(active=True)
 
+    def __unicode__(self):
+        return self.name
+
 class Circonscription(models.Model):
     number = models.CharField(max_length=31)
     department = models.ForeignKey(Department)
 
+    def __unicode__(self):
+        return u'%s - %s' % (self.number, self.department)
+
 class Canton(models.Model):
     name = models.CharField(max_length=511)
     circonscription = models.ForeignKey(Circonscription)
+
+    def __unicode__(self):
+        return self.name
 
 class Group(models.Model):
     abbreviation = models.CharField(max_length=31, primary_key=True)
@@ -37,6 +49,9 @@ class Group(models.Model):
 
     def mps(self):
         return self.mp_set.filter(active=True)
+
+    def __unicode__(self):
+        return self.name
 
 class MP(Representative):
     active = models.BooleanField()
@@ -74,6 +89,9 @@ class Phone(models.Model):
     type = models.CharField(max_length=5, choices=((u'phone', u'Phone'), (u'fax', u'Fax')))
     number = models.CharField(max_length=63)
     address = models.ForeignKey(Address)
+
+    def __unicode__(self):
+        return '%s: %s' % (self.type, self.number)
 
 class Mandate(models.Model):
     current = models.BooleanField()
