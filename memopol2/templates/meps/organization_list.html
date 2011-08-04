@@ -6,7 +6,7 @@
 <ul>
 {% for organization in object_list %}
     <li>
-        {{ organization.name }}
+        <a href="{% url meps:index_by_organization organization.id %}">{{ organization.name }}</a>
     </li>
 {% endfor %}
 </ul>

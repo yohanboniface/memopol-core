@@ -81,6 +81,11 @@ class Organization(models.Model):
     def __unicode__(self):
         return self.name
 
+    @property
+    def meps(self):
+        return self.mep_set.filter(active=True, organizationmep__end=date(9999, 12, 31)).distinct()
+
+
 
 class MEP(Representative):
     active = models.BooleanField()
