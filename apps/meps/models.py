@@ -106,7 +106,9 @@ class MEP(Representative):
     organizations = models.ManyToManyField(Organization, through='OrganizationMEP')
 
     def __unicode__(self):
-        return self.full_name
+        if self.full_name:
+            return self.full_name
+        return u'%s %s' (self.first_name, self.last_name)
 
     @property
     def group(self):
