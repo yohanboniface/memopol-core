@@ -5,11 +5,9 @@ import os
 from django.http import HttpResponse
 
 def check_dir(filename):
-    if not os.path.exists("/".join(filename.split("/")[:-1])):
-        for i in xrange(-3, 0):
-            path = "/".join(filename.split("/")[:i])
-            if not os.path.exists(path):
-                os.mkdir(path)
+    dirname = os.path.dirname(filename)
+    if not os.path.isdir(dirname):
+        os.makedirs(dirname)
 
 def send_file(request, filename, content_type='text/plain'):
     """

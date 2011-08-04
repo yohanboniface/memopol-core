@@ -9,14 +9,13 @@ import matplotlib
 matplotlib.use("Agg")
 from matplotlib import pyplot
 
-from os.path import realpath
+from os.path import join
 
 from meps.models import MEP
 
 def trends_for_mep(request, mep_id):
 
-    filename = realpath(".%simg/trends/meps/%s-scores.png" % (settings.MEDIA_URL,
-                                                              mep_id))
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'meps', "%s-scores.png" % mep_id)
     cache = get_content_cache(request, filename)
     if cache:
         return cache
@@ -53,8 +52,7 @@ def trends_for_mep(request, mep_id):
 
 def bar_trends_for_mep(request, mep_id):
 
-    filename = realpath(".%simg/trends/meps/%s-bar-scores.png" % (settings.MEDIA_URL,
-                                                              mep_id))
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'meps', "%s-bar-scores.png" % mep_id)
     cache = get_content_cache(request, filename)
     if cache:
         return cache

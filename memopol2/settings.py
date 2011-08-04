@@ -52,6 +52,8 @@ MEDIA_ROOT = ''
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/static/'
 
+MEDIA_DIRECTORY = os.path.join(PROJECT_PATH, MEDIA_URL.lstrip('/'))
+
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".

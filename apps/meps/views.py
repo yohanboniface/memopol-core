@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import urllib
-from os.path import realpath
+from os.path import join
 
 from django.conf import settings
 
@@ -11,7 +11,7 @@ from memopol2.utils import check_dir, send_file, get_content_cache
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
 
 def get_mep_picture(request, ep_id):
-    filename = realpath(u".%simg/meps/%s.jpg" % (settings.MEDIA_URL, ep_id))
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'meps', u"%s.jpg" % ep_id)
     cache = get_content_cache(request, filename, 'image/jpeg')
     if cache:
         return cache
