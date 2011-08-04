@@ -2,7 +2,7 @@ from django.conf.urls.defaults import patterns, url
 from django.views.generic import list_detail
 from django.db.models import Avg
 
-from meps.models import MEP, Country, Group, Committee, Delegation
+from meps.models import MEP, Country, Group, Committee, Delegation, Organization
 
 from reps.models import Party
 
@@ -54,6 +54,7 @@ mep_dict = {'queryset': MEP.objects.all(), 'slug_field': 'id', 'template_object_
 urlpatterns = patterns('',
     url(r'^names/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=True)}, name='index_names'),
     url(r'^inactive/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=False)}, name='index_inactive'),
+    url(r'^organization/$', list_detail.object_list, {'queryset': Organization.objects.all()}, name='index_organizations'),
     url(r'^country/$', list_detail.object_list, {'queryset': Country.objects.with_counts()}, name='index_countries'),
     url(r'^country/(?P<slug>[a-zA-Z][a-zA-Z])/$', list_detail.object_detail, country_dict, name='index_by_country'),
     url(r'^group/$', list_detail.object_list, {'queryset': Group.objects.with_counts()}, name='index_groups'),
