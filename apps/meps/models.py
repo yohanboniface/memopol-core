@@ -78,6 +78,9 @@ class Building(models.Model):
 class Organization(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
+    def __unicode__(self):
+        return self.name
+
 
 class MEP(Representative):
     active = models.BooleanField()
