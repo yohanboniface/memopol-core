@@ -183,6 +183,5 @@ class MepModerator(CommentModerator):
         return True
 
 
-if MEP not in moderator._registry:
-    moderator.register(MEP, MepModerator)
+moderator.register(MEP, MepModerator)
 
