@@ -12,7 +12,7 @@
     <ul>
       {% regroup recommendation.vote_set.all by choice as result %}
       {% for re in result %}
-      <li><b><a href="{% url votes:recommendation_choice proposal.id recommendation.id re.grouper %}">{{ re.grouper }}</a></b>: {{ re.list|length }} </li>
+      <li><b><a class="{% if recommendation.recommendation == re.grouper %}ok{% else %}{% if re.grouper == "abstention" %}abstention{% else %}nok{% endif %}{% endif %}" href="{% url votes:recommendation_choice proposal.id recommendation.id re.grouper %}">{{ re.grouper }}</a></b>: {{ re.list|length }} </li>
       {% endfor %}
     </ul>
     </div>

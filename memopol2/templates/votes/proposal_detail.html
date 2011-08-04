@@ -26,7 +26,9 @@
                   {% regroup v.vote_set.all by choice as result %}
                   {% for re in result %}
                   {% if re.grouper in "abstention-against-for" %}
-                  <li><b><a href="{% url votes:recommendation_choice vote.id v.id re.grouper %}">{{ re.grouper }}</a></b>: {{ re.list|length }} </li>
+                  <li><b><a 
+                      class="{% if v.recommendation == re.grouper %}ok{% else %}{% if re.grouper == "abstention" %}abstention{% else %}nok{% endif %}{% endif %}" 
+                      href="{% url votes:recommendation_choice vote.id v.id re.grouper %}">{{ re.grouper }}</a></b>: {{ re.list|length }} </li>
                   {% else %}
                   <!-- FIXME: sometimes re.grouper is a float and we cant get the correct link -->
                   <!-- FIXME: see http://localhost:8000/votes/Loi_Hadopi_Assemblee_nationale/ -->
