@@ -20,6 +20,7 @@ urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^comments/', include('django.contrib.comments.urls')),
+    url(r'^contact/', include('contact_form.urls')),
 )
 
 # hack to autodiscover static files location in dev mode

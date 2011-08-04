@@ -6,11 +6,14 @@ PROJECT_PATH = os.path.abspath(os.path.split(__file__)[0])
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+# those emails are used as the contact form recipient
 ADMINS = (
-    ('Admin Istrator', 'admin@nowhere.net'),
+    ('memopol', 'contact@lqdn.fr'),
 )
 
 MANAGERS = ADMINS
+
+DEFAULT_FROM_EMAIL='memopol@lqdn.fr'
 
 DATABASES = {
     'default': {
@@ -110,6 +113,7 @@ INSTALLED_APPS = (
     # 3rd party
     'south',
     'flatblocks',
+    'contact_form',
 
     # memopol
     'reps',

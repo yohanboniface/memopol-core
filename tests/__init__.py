@@ -3,7 +3,7 @@ import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 import unittest
 import logging
-from webtest import TestApp
+from webtest import TestApp, TestResponse
 from pyquery import PyQuery as pq
 import django.core.handlers.wsgi
 
@@ -16,7 +16,9 @@ settings.MIDDLEWARE_CLASSES += ('django.contrib.auth.middleware.RemoteUserMiddle
 settings.AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.RemoteUserBackend',
 )
+settings.EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
+from django.core import mail
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
 
@@ -27,6 +29,7 @@ class TestCase(unittest.TestCase):
     visited = set()
 
     def setUp(self):
+        mail.outbox = []
         self.app = TestApp(django_app)
 
     def visit_links(self, links):
@@ -42,12 +45,27 @@ class TestCase(unittest.TestCase):
                 except Exception, e:
                     log.warn('seems that %r is not a valid url. cant be encoded', l)
 
+    @property
+    def mails(self):
+        out = []
+        for m in mail.outbox:
+            r = TestResponse()
+            r.content_type = 'text/email'
+            r.unicode_body = u'From: %s\nTo: %s\nSubject: %s\n\n%s' % (m.from_email, ', '.join(m.to), m.subject, m.body)
+            out.append(r)
+        return out
+
+    @property
+    def mail(self):
+        return self.mails[0]
+
 class UserTestCase(TestCase):
 
     user = None
     user_data = dict(id=99, username='garage1', email='garage@lqdn.fr')
 
     def setUp(self):
+        mail.outbox = []
         self.set_user()
 
     def set_anonymous(self):
