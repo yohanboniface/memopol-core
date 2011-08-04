@@ -53,11 +53,17 @@
             </ul>
 
 
-            {% if user.is_staff %}
             <h2>{% trans "Administration tools" %}</h2>
+            {% if user.is_staff %}
             <ul>
                 <li><a href="{% url admin:index %}">{% trans "Administration" %}</a></li>
                 <li><a href="{% url admin:comments_comment_changelist %}">{% trans "Comments moderation" %}</a></li>
+                <li><a href="{% url admin:logout %}">{% trans "Logout" %}</a></li>
+            </ul>
+            {% endif %}
+            {% if user.is_anonymous %}
+            <ul>
+                <li><a href="{% url admin:index %}">{% trans "Login" %}</a></li>
             </ul>
             {% endif %}
 
