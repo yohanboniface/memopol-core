@@ -5,9 +5,11 @@
 <h1>{% trans "MEP by organizations" %}</h1>
 <ul>
 {% for organization in object_list %}
+    {% if organization.meps|length %}
     <li>
         <a href="{% url meps:index_by_organization organization.id %}">{{ organization.name }}</a>
     </li>
+    {% endif %}
 {% endfor %}
 </ul>
 
