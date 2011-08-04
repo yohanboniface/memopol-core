@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 import unittest
 import logging
 from webtest import TestApp
@@ -9,7 +10,15 @@ import django.core.handlers.wsgi
 logging.getLogger('django.db.backends').setLevel(logging.WARN)
 log = logging.getLogger('nose')
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+import settings
+
+settings.MIDDLEWARE_CLASSES += ('django.contrib.auth.middleware.RemoteUserMiddleware',)
+settings.AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.RemoteUserBackend',
+)
+
+from django.contrib.auth.models import User, Permission
+from django.contrib.contenttypes.models import ContentType
 
 django_app = django.core.handlers.wsgi.WSGIHandler()
 
@@ -31,4 +40,37 @@ class TestCase(unittest.TestCase):
                     resp = self.app.get(l)
                     log.debug('visiting %r', l)
                 except Exception, e:
-                    log.warn('seems that %r is not a valid url. cant be encoded', l) 
+                    log.warn('seems that %r is not a valid url. cant be encoded', l)
+
+class UserTestCase(TestCase):
+
+    user = None
+    user_data = dict(id=99, username='garage1', email='garage@lqdn.fr')
+
+    def setUp(self):
+        self.set_user()
+
+    def set_anonymous(self):
+        self.app = TestApp(django_app)
+
+    def set_user(self, **kwargs):
+        user, created = User.objects.get_or_create(**self.user_data)
+        user.set_password('passwd')
+        for k, v in kwargs.items():
+            setattr(user, k, v)
+        if 'is_staff' in kwargs:
+            # staff is allowed to edit comments
+            ctype = ContentType.objects.get(name='comment')
+            perms = Permission.objects.filter(content_type=ctype)
+            user.user_permissions = perms
+        else:
+            user.user_permissions = []
+        user.save()
+        self.app = TestApp(django_app, extra_environ={'REMOTE_USER': str(user.username)})
+        self.user = user
+        return user
+
+    def tearDown(self):
+        self.user.delete()
+
+
