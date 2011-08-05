@@ -8,11 +8,6 @@ class Function(models.Model):
     def __unicode__(self):
         return u'%s: %s' % (self.type, self.title and self.title[:15]+'...' or '-')
 
-class Opinion(models.Model):
-    title = models.CharField(max_length=1023, unique=True)
-    url = models.URLField()
-    content = models.TextField()
-
 class Department(models.Model):
     name = models.CharField(max_length=255, unique=True)
     number = models.CharField(max_length=3, primary_key=True)
