@@ -98,11 +98,14 @@ h2 {
 #mainheader {
     font-size: 120%;
     background: url(/static/img/logo.png) no-repeat ;
-    padding-top: 200px;
     margin-top: 6px; 
     width: 202px;
 }
 
+#mainheader a {
+    padding-top: 200px;
+    display: block;
+}
 
 #mainheader h1 {
     font-family: Palatino;

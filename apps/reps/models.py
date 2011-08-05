@@ -7,6 +7,7 @@ class RepsContainerManager(models.Manager):
         """ Return the models with a count property, with the count of active Reps """
         return self.get_query_set().filter(representative__mep__active=True).annotate(count=models.Count('representative'))
 
+
 class Party(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
@@ -19,6 +20,7 @@ class Party(models.Model):
     def meps(self):
         return meps.models.MEP.objects.filter(partyrepresentative__party=self, active=True)
 
+
 class Opinion(models.Model):
     title = models.CharField(max_length=1023, unique=True)
     content = models.TextField()
@@ -26,6 +28,7 @@ class Opinion(models.Model):
 
     def __unicode__(self):
         return self.title
+
 
 class Representative(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
@@ -50,6 +53,7 @@ class Representative(models.Model):
     class Meta:
         ordering = ['last_name']
 
+
 class PartyRepresentative(models.Model):
     representative = models.ForeignKey(Representative)
     party = models.ForeignKey(Party)
@@ -59,12 +63,14 @@ class PartyRepresentative(models.Model):
     #begin = models.DateField()
     #end = models.DateField()
 
+
 class Email(models.Model):
     email = models.EmailField()
     representative = models.ForeignKey(Representative)
 
     def __unicode__(self):
         return self.email
+
 
 class CV(models.Model):
     title = models.TextField()
@@ -73,12 +79,14 @@ class CV(models.Model):
     def __unicode__(self):
         return self.title
 
+
 class WebSite(models.Model):
     url = models.URLField()
     representative = models.ForeignKey(Representative)
 
     def __unicode__(self):
         return self.url or u'-'
+
 
 class OpinionREP(models.Model):
     representative = models.ForeignKey(Representative)

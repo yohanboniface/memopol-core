@@ -19,15 +19,9 @@
 <div class="container_12">
 
     <div class="grid_2">
-        <div id="mainheader" >{% block header %}<h1>{{ title|default:"Memopol" }}</h1>{% endblock %}</div>
+        <div id="mainheader" ><a href="/">{% block header %}<h1>{{ title|default:"Memopol" }}</h1>{% endblock %}</a></div>
 
         <div id="nav">
-            <h2>{% trans "Browsing" %}</h2>
-            <ul>
-                <li><a href="{% url index %}">{% trans "Homepage" %}</a></li>
-                {% block sidelinks %}
-                {% endblock %}
-            </ul>
 
             <h2>{% trans "MEPs" %}</h2>
             <ul>
@@ -38,6 +32,7 @@
                 <li><a href="{% url meps:index_committees %}">{% trans "By committee" %}</a></li>
                 <li><a href="{% url meps:index_delegations %}">{% trans "By delegation" %}</a></li>
                 <li><a href="{% url meps:index_parties %}">{% trans "By local party" %}</a></li>
+                <li><a href="{% url meps:index_organizations %}">{% trans "By organizations" %}</a></li>
             </ul>
 
             <h2>{% trans "Votes" %}</h2>
