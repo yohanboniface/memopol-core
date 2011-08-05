@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import patterns, url
 from django.views.generic import list_detail
 from django.db.models import Avg
+from memopol2 import utils
 
 from meps.models import MEP, Country, Group, Committee, Delegation, Organization
 
@@ -60,8 +61,10 @@ organization_dict = {
 mep_dict = {'queryset': MEP.objects.all(), 'slug_field': 'id', 'template_object_name': 'mep'}
 
 urlpatterns = patterns('',
-    url(r'^names/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=True)}, name='index_names'),
-    url(r'^inactive/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=False)}, name='index_inactive'),
+    # those view are *very* expansive. we cache them in RAM for a week
+    url(r'^names/$', utils.cached(3600*24*7)(list_detail.object_list), {'queryset': MEP.objects.filter(active=True)}, name='index_names'),
+    url(r'^inactive/$', utils.cached(3600*24*7)(list_detail.object_list), {'queryset': MEP.objects.filter(active=False)}, name='index_inactive'),
+
     url(r'^organization/$', list_detail.object_list, {'queryset': Organization.objects.all()}, name='index_organizations'),
     url(r'^organization/(?P<object_id>[0-9]+)/$', list_detail.object_detail, organization_dict, name='index_by_organization'),
     url(r'^country/$', list_detail.object_list, {'queryset': Country.objects.with_counts()}, name='index_countries'),
