@@ -19,9 +19,11 @@
 
 <li><i>{% trans "Website&nbsp;: " %}</i><a target="_" href="{{ mep.ep_webpage }}">{% trans "Page sur le site du Parlement européen" %}</a></li>
 {% for website in mep.website_set.all %}
+{% if website.url %}
 <li>
     <i>{% trans "Other website&nbsp;: " %}</i><a target="_" href="{{ website }}">{{ website }}</a>
 </li>
+{% endif %}
 {% endfor %}
 
 </ul>
