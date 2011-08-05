@@ -335,25 +335,33 @@ ul ul, ul ol, ol ul, ol ol
     margin-left: 30px;
 }
 
-table.mep-list {
+table.mep-list,
+table.mp-list {
   border-width: 1px;
   border-spacing: 0px;
 }
 
-table.mep-list tr th, table.mep-list tr td {
+table.mep-list tr th, table.mep-list tr td,
+table.mp-list tr th, table.mp-list tr td {
   border: 1px solid black;
   padding: 3px 6px;
 }
 
-table.mep-list tr th {
+table.mep-list tr th,
+table.mp-list tr th {
   text-align: center;
 }
 
-table.mep-list tr td {
+table.mep-list tr td,
+table.mp-list tr td {
   text-align: left;
 }
 
 /* tables */
+table.tablesorter .row-contact {
+    width:40%;
+}
+
 table.tablesorter {
    font-family:arial;
    background-color: #CDCDCD;
