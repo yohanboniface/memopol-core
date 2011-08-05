@@ -11,10 +11,10 @@
 <h1><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ group.code|cut:"/" }}.png" />{% trans "Members of the European Parliament" %}{% trans " from " %}  {{ group.name }}</h1>
 
 <table class="mep-list tablesorter"> 
-  {% include "meps/meps_table_thead" %}
+  {% include "meps/meps_table_thead.html" %}
   <tbody>
     {% for mep in meps %}
-      {% include "meps/meps_table_tr" %}
+      {% include "meps/meps_table_tr.html" %}
     {% endfor %}
   </tbody>
 </table>
