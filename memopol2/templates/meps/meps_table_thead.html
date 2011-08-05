@@ -1,0 +1,9 @@
+<thead>
+  <tr> 
+    <th filter='false'>MEP</th>
+    {% if not 'country' in hidden_fields %}<th filter-type='ddl'>Country</th>{% endif %}
+    {% if not 'group' in hidden_fields %}<th filter-type='ddl'>Group</th>{% endif %}
+    {% if not 'party' in hidden_fields %}<th filter-type='ddl'>Party</th>{% endif %}
+    <th filter='false'>Contact</th>
+  </tr>
+</thead>

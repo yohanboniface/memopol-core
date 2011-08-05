@@ -1,16 +1,26 @@
 {% extends "base.html" %}
+{% block scripts %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/picnet.table.filter.min.js"></script>
+{% endblock %}
 
 {% block content %}
 
 <h1>{% trans "Members of the European Parliament" %}</h1>
 
-    <ul class="col">
-        {% for mep in object_list %}
-            <li>
-                <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" />
-                <a href="{% url meps:mep mep.id %}">{{ mep.last_name }} {{ mep.first_name }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+<table class="mep-list tablesorter"> 
+  {% include "meps/meps_table_thead.html" %}
+  <tbody>
+    {% for mep in object_list %}
+      {% include "meps/meps_table_tr.html" %}
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+{% block documentReady %}
+
+  activateCollapsible();
+  jQuery(".mep-list").tablesorter({ headers: { 3: { sorter: false }, }  });
+  jQuery('.mep-list').tableFilter();
 
 {% endblock %}

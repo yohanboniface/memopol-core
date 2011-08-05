@@ -9,53 +9,10 @@
 {% include header_template %}
 
 <table class="mep-list tablesorter"> 
-  <thead>
-    <tr> 
-      <th filter='false'>MEP</th>
-      {% if not 'country' in hidden_fields %}<th filter-type='ddl'>Country</th>{% endif %}
-      {% if not 'group' in hidden_fields %}<th filter-type='ddl'>Group</th>{% endif %}
-      {% if not 'party' in hidden_fields %}<th filter-type='ddl'>Party</th>{% endif %}
-      <th filter='false'>Contact</th>
-    </tr>
-  </thead>
+  {% include "meps/meps_table_thead.html" %}
   <tbody>
     {% for mep in object.meps %}
-    <tr>
-      <td>
-        <a href="{% url meps:mep mep.id %}">{{ mep.last_name }} {{ mep.first_name }}</a>
-      </td>
-      {% if not 'country' in hidden_fields %}
-      <td>
-        <a href="{% url meps:index_by_country mep.country.code %}">
-          <img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/>
-          {{ mep.country.name }}
-        </a>
-      </td>
-      {% endif %}
-      {% if not 'group' in hidden_fields %}
-      <td>
-        <a href="{% url meps:index_by_group mep.group.abbreviation %}">
-          <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" />
-          {{ mep.group.abbreviation }}
-        </a>
-      </td>
-      {% endif %}
-      {% if not 'party' in hidden_fields %}
-      <td>
-        <ul class="party">
-          {% for partyrepresentative in mep.partyrepresentative_set.all %}
-          <li><a href="{% url meps:index_by_party partyrepresentative.party.id %}">{{ partyrepresentative.party.name }}</a></li>
-          {% endfor %}
-        </ul>
-      </td>
-      {% endif %}
-      <td>
-        <span class="collapsible collapsed">{% trans "Contact informations" %}</span>
-        <div class="body">
-          {% include "meps/mep_contact.html" %}
-        </div>
-      </td>
-    </tr>
+      {% include "meps/meps_table_tr.html" %}
     {% endfor %}
   </tbody>
 </table>
