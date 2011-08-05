@@ -12,6 +12,7 @@ log = logging.getLogger('nose')
 
 import settings
 
+settings.DEBUG_PROPAGATE_EXCEPTIONS = True
 settings.MIDDLEWARE_CLASSES += ('django.contrib.auth.middleware.RemoteUserMiddleware',)
 settings.AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.RemoteUserBackend',
