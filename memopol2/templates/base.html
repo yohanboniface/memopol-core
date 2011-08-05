@@ -22,12 +22,6 @@
         <div id="mainheader" ><a href="/">{% block header %}<h1>{{ title|default:"Memopol" }}</h1>{% endblock %}</a></div>
 
         <div id="nav">
-            <h2>{% trans "Browsing" %}</h2>
-            <ul>
-                <li><a href="{% url index %}">{% trans "Homepage" %}</a></li>
-                {% block sidelinks %}
-                {% endblock %}
-            </ul>
 
             <h2>{% trans "MEPs" %}</h2>
             <ul>
