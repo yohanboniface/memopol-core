@@ -32,31 +32,7 @@
 
 <div id="contact">
     <h2 class="collapsible expanded">{% trans "Contact" %}</h2>
-
-        <ul class="body">
-        {% for addr in mp.address_set.all %}
-        <li><b>{{ addr.title|default:"Other address" }}</b><br/>
-            {% if addr.building %} {% trans "Building" %} {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
-            {{ addr.street }}, {{ addr.postcode }} {{ addr.city }}<br/>
-            {% for phone in addr.phone_set.all %}
-            {{ phone.type|capfirst }}.: {% if phone.type == "phone" %}<a href="callto://{{ addr.phone }}">{% endif %}{{ phone.number }}{% if phone.type == "phone" %}</a>{% endif %}&nbsp;<br/>
-            {% endfor %}
-
-        </li>
-        {% endfor %}
-
-        {% for email in mp.email_set.all %}
-            <li><i>{% trans "E-mail&nbsp;: " %}</i><a href="mailto:{{ email.email }}">{{ email.email }}</a></li>
-        {% endfor %}
-
-        <li><i>{% trans "Web&nbsp;: " %}</i><a target="_" href="{{ mp.an_webpage }}">{{ mp.an_webpage }}</a></li>
-        {% for webaddr in mp.website_set.all %}
-        <li>
-            <i>{% trans "Web&nbsp;: " %}</i><a target="_" href="{{ webaddr.url }}">{{ webaddr.url }}</a>
-        </li>
-        {% endfor %}
-
-        </ul>
+    {% include "mps/mp_contact.html" %}
 </div>
 
 <div id="nosdeputes">

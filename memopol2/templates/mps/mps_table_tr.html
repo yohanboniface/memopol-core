@@ -1,0 +1,22 @@
+<tr>
+  <td>
+    <a href="{% url mps:mp mp.id %}">{{ mp.last_name }} {{ mp.first_name }}</a>
+  </td>
+  {% if not 'party' in hidden_fields %}
+  <td>
+    <ul class="party">
+      <li>
+        <a href="{% url mps:index_by_group mp.group.abbreviation %}">
+	        {{ mp.group.name }} ({{ mp.group.abbreviation }})
+        </a>
+      </li>
+    </ul>
+  </td>
+  {% endif %}
+  <td>
+    <span class="collapsible collapsed">{% trans "Contact informations" %}</span>
+    <div class="body">
+      {% include "mps/mp_contact.html" %}
+    </div>
+  </td>
+</tr>

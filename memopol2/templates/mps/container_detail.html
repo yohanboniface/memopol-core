@@ -1,15 +1,28 @@
 {% extends "base.html" %}
 
+{% block scripts %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/picnet.table.filter.min.js"></script>
+{% endblock %}
+
 {% block content %}
 
 <h1>{% trans "Members of the French AN" %}</h1>
 
-    <ul class="col">
-        {% for mp in object.mps %}
-            <li>
-                <a href="{% url mps:mp mp.id %}">{{ mp.last_name }} {{ mp.first_name }}</a> ({{ mp.group.abbreviation }})
-            </li>
-        {% endfor %}
-    </ul>
+<table class="mp-list tablesorter"> 
+  {% include "mps/mps_table_thead.html" %}
+  <tbody>
+    {% for mp in object.mps %}
+      {% include "mps/mps_table_tr.html" %}
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
+{% block documentReady %}
+
+  activateCollapsible();
+  jQuery(".mp-list").tablesorter({ headers: { 3: { sorter: false }, }  });
+  jQuery('.mp-list').tableFilter();
 
 {% endblock %}
