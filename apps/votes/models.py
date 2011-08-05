@@ -6,6 +6,7 @@ from reps.models import Representative
 class Proposal(models.Model):
     id = models.CharField(max_length=63, primary_key=True)
     title = models.CharField(max_length=255, unique=True)
+    ponderation = models.IntegerField(default=1)
 
     @property
     def date(self):

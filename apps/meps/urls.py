@@ -2,7 +2,7 @@ from django.conf.urls.defaults import patterns, url
 from django.views.generic import list_detail
 from django.db.models import Avg
 
-from meps.models import MEP, Country, Group, Committee, Delegation
+from meps.models import MEP, Country, Group, Committee, Delegation, Organization
 
 from reps.models import Party
 
@@ -49,11 +49,21 @@ committe_dict = {
     'header_template': 'meps/named_header.html',
   },
 }
+organization_dict = {
+  'queryset': Organization.objects.all(),
+  'template_name': 'meps/container_detail.html',
+  'extra_context': {
+    'hidden_fields': [],
+    'header_template': 'meps/named_header.html',
+  },
+}
 mep_dict = {'queryset': MEP.objects.all(), 'slug_field': 'id', 'template_object_name': 'mep'}
 
 urlpatterns = patterns('',
     url(r'^names/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=True)}, name='index_names'),
     url(r'^inactive/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=False)}, name='index_inactive'),
+    url(r'^organization/$', list_detail.object_list, {'queryset': Organization.objects.all()}, name='index_organizations'),
+    url(r'^organization/(?P<object_id>[0-9]+)/$', list_detail.object_detail, organization_dict, name='index_by_organization'),
     url(r'^country/$', list_detail.object_list, {'queryset': Country.objects.with_counts()}, name='index_countries'),
     url(r'^country/(?P<slug>[a-zA-Z][a-zA-Z])/$', list_detail.object_detail, country_dict, name='index_by_country'),
     url(r'^group/$', list_detail.object_list, {'queryset': Group.objects.with_counts()}, name='index_groups'),
