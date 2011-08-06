@@ -66,3 +66,5 @@ def update():
         for i in klass.objects.all():
             update_index(None, i, created=False)
 
+if __name__ == '__main__':
+    update()
