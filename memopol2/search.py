@@ -22,21 +22,28 @@ def create_index(sender=None, **kwargs):
 signals.post_syncdb.connect(create_index)
 
 def update_index(sender, instance, created, **kwargs):
-    storage = FileStorage(settings.WHOOSH_INDEX)
-    ix = storage.open_index(indexname='memopol')
-    writer = ix.writer()
+    try:
+        url = unicode(instance.get_absolute_url())
+    except Exception, e:
+        log.critical('Cant resolve url. Content %r not indexed' % instance)
+        return
+
     content = getattr(instance, 'content', None)
     if content is None:
         content = unicode(instance)
     elif callable(content):
         content = content()
+
+    storage = FileStorage(settings.WHOOSH_INDEX)
+    ix = storage.open_index(indexname='memopol')
+    writer = ix.writer()
     if created:
         writer.add_document(title=unicode(instance), content=content,
-                            url=unicode(instance.get_absolute_url()))
+                            url=url)
         writer.commit()
     else:
         writer.update_document(title=unicode(instance), content=content,
-                               url=unicode(instance.get_absolute_url()))
+                               url=url)
         writer.commit()
 
 _searchables = []
