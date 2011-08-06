@@ -25,9 +25,9 @@
 
             <h2>{% trans "MEPs" %}</h2>
             <ul>
+                <li><a href="{% url meps:index_names %}">{% trans "By name" %}</a></li>
                 <li><a href="{% url meps:index_countries %}">{% trans "By country" %}</a></li>
                 <li><a href="{% url meps:index_groups %}">{% trans "By political group" %}</a></li>
-                <li><a href="{% url meps:index_names %}">{% trans "By name" %}</a></li>
                 <li><a href="{% url meps:index_inactive %}">{% trans "By inactivity" %}</a></li>
                 <li><a href="{% url meps:index_committees %}">{% trans "By committee" %}</a></li>
                 <li><a href="{% url meps:index_delegations %}">{% trans "By delegation" %}</a></li>
