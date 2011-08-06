@@ -24,7 +24,7 @@ signals.post_syncdb.connect(create_index)
 def update_index(sender, instance, created, **kwargs):
     try:
         url = unicode(instance.get_absolute_url())
-    except Exception, e:
+    except Exception:
         log.critical('Cant resolve url. Content %r not indexed' % instance)
         return
 
