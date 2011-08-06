@@ -32,11 +32,11 @@ def update_index(sender, instance, created, **kwargs):
         content = content()
     if created:
         writer.add_document(title=unicode(instance), content=content,
-                                    url=unicode(instance.get_absolute_url()))
+                            url=unicode(instance.get_absolute_url()))
         writer.commit()
     else:
         writer.update_document(title=unicode(instance), content=content,
-                                    url=unicode(instance.get_absolute_url()))
+                               url=unicode(instance.get_absolute_url()))
         writer.commit()
 
 _searchables = []
