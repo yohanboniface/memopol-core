@@ -90,6 +90,15 @@ class MP(Representative):
     def emails(self):
         return [e.email for e in self.email_set.all()]
 
+    @property
+    def group_template(self):
+        return 'snippets/mp-%s-group.html' % self.id
+
+    @property
+    def party_template(self):
+        return 'snippets/mp-%s-party.html' % self.id
+
+
 class FunctionMP(models.Model):
     mp = models.ForeignKey(MP)
     function = models.ForeignKey(Function)

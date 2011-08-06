@@ -4,6 +4,7 @@ from django.contrib.comments.moderation import CommentModerator, moderator
 from django.core.urlresolvers import reverse
 from memopol2.utils import reify
 import search
+from memopol2.utils import snippet
 
 from reps.models import Representative, Party
 
@@ -223,6 +224,10 @@ class MEP(Representative):
         red = 255 - self.total_score
         green = self.total_score * 2.55
         return "rgb(%d, %d, 0)" % (red, green)
+
+    group_tag = snippet('group')
+    country_tag = snippet('country')
+    party_tag = snippet('party')
 
     class Meta:
         ordering = ['last_name']

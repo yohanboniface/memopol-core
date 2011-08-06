@@ -1,10 +1,10 @@
 <thead>
   <tr>
     {% if score_listing %}<th filter='false' class="cell-score">Position</th>{% endif %}
-    <th filter='false' class="cell-name">MEP</th>
-    {% if not 'country' in hidden_fields %}<th filter-type='ddl' class="cell-country">Country</th>{% endif %}
-    {% if not 'group' in hidden_fields %}<th filter-type='ddl' class="cell-group">Group</th>{% endif %}
-    {% if not 'party' in hidden_fields %}<th filter-type='ddl' class="cell-party">Party</th>{% endif %}
+    <th filter='false' class="row-name">MEP</th>
+    {% if not 'country' in hidden_fields %}<th filter-type='ddl' class="row-country">Country</th>{% endif %}
+    {% if not 'group' in hidden_fields %}<th filter-type='ddl' class="row-group">Group</th>{% endif %}
+    {% if not 'party' in hidden_fields %}<th filter-type='ddl' class="row-party">Party</th>{% endif %}
     {% if choice_listing %}<th filter-type='ddl' class="cell-choice">Choice</th>{% endif %}
     <th filter='false' class="cell-contact">Contact</th>
     {% if score_listing %}<th filter='false' class="cell-score">Scores</th>{% endif %}

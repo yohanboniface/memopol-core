@@ -14,60 +14,22 @@
   </td>
   {% if not 'country' in hidden_fields %}
   <td>
-    {% if mep.country %}
-    <a href="{% url meps:index_by_country mep.country.code %}">
-      <img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/>
-      {{ mep.country.name }}
-    </a>
-    {% else %}
-    -
-    {% endif %}
+    {{ mep.country_tag|safe }}
   </td>
   {% endif %}
   {% if not 'group' in hidden_fields %}
   <td>
-    {% if mep.group %}
-    <a href="{% url meps:index_by_group mep.group.abbreviation %}">
-      <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" />
-      {{ mep.group.abbreviation }}
-    </a>
-    {% else %}
-    -
-    {% endif %}
+    {{ mep.group_tag|safe }}
   </td>
   {% endif %}
   {% if not 'party' in hidden_fields %}
   <td>
-    <a href="{% url meps:index_by_party mep.party.id %}">{{ mep.party.name }}</a>
-  </td>
-  {% endif %}
-  {% if choice %}
-  <td>
-      <div style="background-color: {% if choice == recommendation.recommendation %}#00FF00{% else %}{% if choice == "absent" or choice == "abstention" %}#FF9900{% else %}#FF0000{% endif %}{% endif %}">
-      {{ choice }}
-      </div>
+    {{ mep.party_tag|safe }}
   </td>
   {% endif %}
   <td>
+    <span class="collapsible collapsed collapsible-contact" alt="{% url meps:mep_contact mep.id %}">{% trans "Contact informations" %}</span>
     <div class="body">
-      <ul class="body">
-        <li><b>{% trans "Brussels" %}</b>
-         {% trans "Tel." %}: <a href="callto://{{ mep.bxl_phone1|phone }}">{{ mep.bxl_phone1 }}</a>&nbsp;-&nbsp;<a href="callto://{{ mep.bxl_phone2|phone }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
-        </li>
-        <li><b>{% trans "Strasbourg" %}</b>
-        {% trans "Tel." %}: <a href="callto://{{ mep.stg_phone1|cut:" " }}">{{ mep.stg_phone1 }}</a>&nbsp;-&nbsp;<a href="callto://{{ mep.stg_phone2|cut:" " }}">{{ mep.stg_phone2 }}</a>&nbsp;<br/>
-        </li>
-        {% if mep.emails %}
-          <li>
-            <b>{% trans "E-mail" %}:</b>
-            {% for email in mep.emails %}
-              <a href="mailto:{{ email }}">{{ email }}</a>
-              {% if not forloop.last %}-{% endif %}
-            {% endfor %}
-          </li>
-        {% endif %}
-      </ul>
-      <a class="more-contact" href="{% url meps:mep_contact mep.id %}">{% trans "More informations" %}...</a>
     </div>
   </td>
   {% if score_listing %}
