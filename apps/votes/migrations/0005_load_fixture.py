@@ -56,6 +56,7 @@ class Migration(SchemaMigration):
         'votes.proposal': {
             'Meta': {'object_name': 'Proposal'},
             'id': ('django.db.models.fields.CharField', [], {'max_length': '63', 'primary_key': 'True'}),
+            'ponderation': ('django.db.models.fields.IntegerField', [], {'default': '1'}),
             'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
         },
         'votes.recommendation': {
@@ -68,6 +69,16 @@ class Migration(SchemaMigration):
             'recommendation': ('django.db.models.fields.CharField', [], {'max_length': '15', 'null': 'True'}),
             'subject': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'weight': ('django.db.models.fields.IntegerField', [], {'null': 'True'})
+        },
+        'votes.recommendationdata': {
+            'Meta': {'object_name': 'RecommendationData'},
+            'data': ('django.db.models.fields.TextField', [], {}),
+            'date': ('django.db.models.fields.DateField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'imported': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'proposal_name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'recommendation': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['votes.Recommendation']", 'unique': 'True', 'null': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         'votes.score': {
             'Meta': {'ordering': "['date']", 'object_name': 'Score'},
