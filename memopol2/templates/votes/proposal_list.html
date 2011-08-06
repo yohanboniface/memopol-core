@@ -4,7 +4,7 @@
 
 <h1>{% trans "Votes" %}</h1>
 <ul>
-    {% for vote in object_list %}
+    {% for vote in object_list|dictsortreversed:"date" %}
         <li>
             <a href="{% url votes:detail vote.id %}">{{ vote.title }}</a>
         </li>
