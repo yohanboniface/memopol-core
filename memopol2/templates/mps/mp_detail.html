@@ -102,12 +102,3 @@
 </article>
 
 {% endblock %}
-{% block documentReady %}
-
-    activateCollapsible();
-
-    onClickChangeVisibility("addPositionButton", {addPosition: true, addPositionButton: false});
-    onClickChangeVisibility("addPositionCancelButton", {addPosition: false, addPositionButton: true});
-    jQuery("#addPositionSubmitButton").click(addPositionSubmitButtonClicked);
-
-{% endblock %}

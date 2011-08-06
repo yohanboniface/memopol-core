@@ -1,93 +1,5 @@
 jQuery.noConflict();
 
-
-// shortcuts
-// -----------------------
-
-function disable(expr)
-{
-    jQuery(expr).attr('disabled', 'disabled');
-}
-
-function enable(expr)
-{
-    jQuery(expr).removeAttr('disabled');
-}
-
-// visibility helpers
-// -------------------------------------------
-
-
-function changeVisibility(groupMap)
-{
-    for (var propName in groupMap)
-    {
-        if (! groupMap[propName])
-            jQuery("#"+propName).hide("fast");
-    }
-    for (var propName in groupMap)
-    {
-        if (groupMap[propName])
-            jQuery("#"+propName).show("fast").focus();
-    }
-}
-
-
-function onClickChangeVisibility(buttonId, groupMap)
-{
-    jQuery("#" + buttonId).click(function() {
-        changeVisibility(groupMap);
-    });
-}
-
-// status messages
-// --------------------------------
-
-var msgTimer = null;
-
-
-
-
-function msg(m, d, color)
-{
-    if (! color)
-        color = "#FFFECA";
-    if (! d)
-        d = 3;
-
-    jQuery("#msg").css("background-color", color).html(m).show();
-
-    clearTimeout(msgTimer);
-    msgTimer = setTimeout("rmsg()", d*1000);
-}
-
-function rmsg()
-{
-    if (msgTimer)
-        clearTimeout(msgTimer);
-    else
-        alert("no timer");
-
-    jQuery("#msg").hide();
-}
-
-// Spinner for ajax calls
-// --------------------------------------
-
-function startSpinner(btn)
-{
-    btn.attr('disabled', 'disabled');
-    var spinner = jQuery("<img class='spinner' src='/static/img/spinner.gif'/>");
-    btn.after(spinner);
-    btn.data("spinner", spinner);
-}
-
-function stopSpinner(btn)
-{
-    btn.removeAttr('disabled');
-    btn.data("spinner").remove();
-}
-
 // replace mugshot by placeholder on errors
 // --------------------------------------
 
@@ -98,22 +10,34 @@ function onMugshotError(source) {
     return true;
 }
 
-// collapsible elements
-// --------------------------------------
+(function($) {
 
-function activateCollapsible()
-{
-    jQuery(".collapsed~.body").hide();
-    jQuery(".collapsible").click(function(){
-        if (jQuery(this).hasClass("collapsed"))
-        {
-            jQuery(this).removeClass("collapsed").addClass("expanded");
-            jQuery(this).next(".body").show("fast");
-        }
-        else
-        {
-            jQuery(this).removeClass("expanded").addClass("collapsed");
-            jQuery(this).next(".body").hide("fast");
-        }
-    });
-}
+// collapsible elements
+$(".collapsed~.body").hide();
+$(".collapsible").click(function(){
+    if ($(this).hasClass("collapsed"))
+    {
+        $(this).removeClass("collapsed").addClass("expanded");
+        $(this).next(".body").show("fast");
+    }
+    else
+    {
+        $(this).removeClass("expanded").addClass("collapsed");
+        $(this).next(".body").hide("fast");
+    }
+});
+
+// contact details
+$('span.collapsible-contact').click(function() {
+    // dynamic contact detail
+    $('div.body', $(this).parents('td')).load($(this).attr('alt'));
+});
+
+
+// table
+$("table.mep-list, table.mp-list").tablesorter({ headers: { 3: { sorter: false }, }  });
+// FIXME dont know why but sorting dont work with mp-list..
+//$('table.mep-list, table.mp-list').tableFilter();
+$('table.mep-list').tableFilter();
+
+}(jQuery));

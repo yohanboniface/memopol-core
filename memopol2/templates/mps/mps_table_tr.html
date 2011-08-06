@@ -14,9 +14,8 @@
   </td>
   {% endif %}
   <td>
-    <span class="collapsible collapsed">{% trans "Contact informations" %}</span>
+    <span class="collapsible collapsed collapsible-contact" alt="{% url mps:mp_contact mp.id %}">{% trans "Contact informations" %}</span>
     <div class="body">
-      {% include "mps/mp_contact.html" %}
     </div>
   </td>
 </tr>

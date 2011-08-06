@@ -1,6 +1,7 @@
 from datetime import date
 from django.db import models
 from django.contrib.comments.moderation import CommentModerator, moderator
+from memopol2.utils import reify
 
 from reps.models import Representative, Party
 
@@ -118,11 +119,11 @@ class MEP(Representative):
             return self.full_name
         return u'%s %s' (self.first_name, self.last_name)
 
-    @property
+    @reify
     def group(self):
         return self.groupmep_set.latest('end').group
 
-    @property
+    @reify
     def country(self):
         return self.countrymep_set.latest('end').country
 

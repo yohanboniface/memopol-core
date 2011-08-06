@@ -1,10 +1,5 @@
 {% extends "base.html" %}
 
-{% block scripts %}
-<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.tablesorter.min.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/picnet.table.filter.min.js"></script>
-{% endblock %}
-
 {% block content %}
 
 <h1>{% trans "Members of the French AN" %}</h1>
@@ -17,12 +12,5 @@
     {% endfor %}
   </tbody>
 </table>
-
-{% endblock %}
-{% block documentReady %}
-
-  activateCollapsible();
-  jQuery(".mp-list").tablesorter({ headers: { 3: { sorter: false }, }  });
-  jQuery('.mp-list').tableFilter();
 
 {% endblock %}

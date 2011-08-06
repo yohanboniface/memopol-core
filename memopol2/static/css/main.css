@@ -337,6 +337,7 @@ ul ul, ul ol, ol ul, ol ol
 
 table.mep-list,
 table.mp-list {
+  width: 100%;
   border-width: 1px;
   border-spacing: 0px;
 }
@@ -358,7 +359,7 @@ table.mp-list tr td {
 }
 
 /* tables */
-table.tablesorter .row-contact {
+table.tablesorter .cell-contact {
     width:40%;
 }
 
