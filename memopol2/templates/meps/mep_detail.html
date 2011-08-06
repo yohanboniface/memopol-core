@@ -99,8 +99,7 @@
         {% endfor %}
         </ul>
         {% if mep.score_set.all.count > 1 %}
-            <img src="{% url trends:trends mep.id %}" />
-            <img src="{% url trends:bar_trends mep.id %}" />
+            <img src="{% url trends:comparaison_trends mep.id %}" />
         {% endif %}
     </div>
 {% endif %}

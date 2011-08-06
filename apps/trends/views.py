@@ -85,3 +85,46 @@ def bar_trends_for_mep(request, mep_id):
 
     return send_file(request,filename, content_type="image/png")
 
+def comparaison_trends_for_mep(request, mep_id):
+
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'meps', "%s-comparaison-scores.png" % mep_id)
+    cache = get_content_cache(request, filename)
+    if cache:
+        return cache
+
+    mep = get_object_or_404(MEP, id=mep_id)
+    score_list = sorted(mep.score_set.all(), key=lambda k: k.proposal.date)
+    scores = [s.value * s.proposal.ponderation for s in score_list]
+    maximum = [100 * s.proposal.ponderation for s in score_list]
+    #of_country = [s.of_country for s in score_list]
+    of_group = [s.of_group * s.proposal.ponderation for s in score_list]
+    of_ep = [s.of_ep * s.proposal.ponderation for s in score_list]
+    if not scores:
+        return HttpResponseNotFound
+
+    #a, b = numpy.polyfit(range(len(scores)), [int(x) for x in scores], 1)
+    #pyplot.plot([a*int(x) + b for x in range(len(scores))])
+    # line
+    maximum_bar = pyplot.bar(map(lambda x: x+0.3, range(len(scores))), maximum, width=0.4, color="#FFFFFF")
+    for i, j in zip(map(lambda x: x+0.3, range(len(scores))), score_list):
+        mep_bar = pyplot.bar(i, j.value * j.proposal.ponderation, width=0.4, color=j.color_tuple)
+    #pyplot.bar(map(lambda x: x+0.3, range(len(scores))), scores, width=0.4, color=(1, 0, 0))
+    group_plot, = pyplot.plot(map(lambda x: x+0.5, range(len(scores))), of_group, 'bo', markersize=10)
+    ep_plot, = pyplot.plot(map(lambda x: x+0.5, range(len(scores))), of_ep, 'pg', markersize=10)
+    #pyplot.text(map(lambda x: x+0.5, range(len(scores))), maximum, [s.value for s in score_list])
+    for i, j, k in zip(map(lambda x: x[0]+0.28 if x[1] == 100.0 else x[0]+0.35, zip(range(len(scores)), [s.value for s in score_list])), maximum, [s.value for s in score_list]):
+        pyplot.text(i - .05, j + 10, str(k) + "%")
+    #pyplot.bar(map(lambda x: x+0.7, range(len(scores))), of_country, width=0.2, color="yellow")
+    pyplot.legend((maximum_bar, mep_bar, ep_plot, group_plot), ('Maximum', 'MEP', 'Parliament', 'Group'), 'best', shadow=False)
+    pyplot.axis([0, len(scores), 0, max(maximum) + 50])
+    pyplot.title("%s - Votes scores by vote importance" % (mep.full_name))
+    pyplot.yticks([])
+    pyplot.xticks(map(lambda x: x+0.5, range(len(scores))), [k.proposal.date for k in score_list])
+    pyplot.xlabel("Votes names or dates")
+    pyplot.ylabel("Score by vote importance")
+    check_dir(filename)
+    pyplot.savefig(filename, format="png")
+    pyplot.clf()
+
+    return send_file(request,filename, content_type="image/png")
+
