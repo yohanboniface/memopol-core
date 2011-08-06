@@ -1,10 +1,5 @@
 {% extends "base.html" %}
 
-{% block scripts %}
-<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.tablesorter.min.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/picnet.table.filter.min.js"></script>
-{% endblock %}
-
 {% block content %}
 
 {% if meps %}
@@ -19,12 +14,5 @@
   </tbody>
 </table>
 {% endif %}
-
-{% endblock %}
-{% block documentReady %}
-
-  activateCollapsible();
-  jQuery(".mep-list").tablesorter({ headers: { 3: { sorter: false }, }  });
-  jQuery('.mep-list').tableFilter();
 
 {% endblock %}
