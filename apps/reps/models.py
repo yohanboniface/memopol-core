@@ -10,7 +10,6 @@ class RepsContainerManager(models.Manager):
 
 class Party(models.Model):
     name = models.CharField(max_length=255, unique=True)
-
     objects = RepsContainerManager()
 
     def __unicode__(self):
