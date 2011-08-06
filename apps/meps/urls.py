@@ -57,6 +57,7 @@ organization_dict = {
   },
 }
 mep_dict = {'queryset': MEP.objects.all(), 'slug_field': 'id', 'template_object_name': 'mep'}
+mep_dict_dataporn = {'queryset': MEP.objects.all(), 'slug_field': 'id', 'template_object_name': 'mep', 'template_name': 'meps/dataporn.html'}
 
 urlpatterns = patterns('meps.views',
     # those view are *very* expansive. we cache them in RAM for a week
@@ -77,6 +78,7 @@ urlpatterns = patterns('meps.views',
     url(r'^party/(?P<object_id>[0-9]+)/$', list_detail.object_detail, party_dict,  name='index_by_party'),
     url(r'^score/$', 'score_sort', name='scores'),
     url(r'^deputy/(?P<slug>\w+)/$', list_detail.object_detail, mep_dict, name='mep'),
+    url(r'^deputy/(?P<slug>\w+)/dataporn/$', list_detail.object_detail, mep_dict_dataporn, name='mep_dataporn'),
 )
 urlpatterns += patterns('meps.views',
     url(r'^mep/(?P<ep_id>[0-9]+)/picture.jpg$', 'get_mep_picture',
