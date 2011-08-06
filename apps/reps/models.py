@@ -45,10 +45,6 @@ class Representative(models.Model):
     def __unicode__(self):
         return "%s %s" % (self.first_name, self.last_name.upper())
 
-    @property
-    def average_scores(self):
-        return self.score_set.all().aggregate(models.Avg('value'))['value__avg']
-
     class Meta:
         ordering = ['last_name']
 
