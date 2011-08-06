@@ -8,6 +8,7 @@ body {
     font: 100% "Lucida Grande",Verdana,Lucida,Helvetica,Arial,sans-serif;
 }
 
+table li a,
 a {
     color: #497ED5;
     text-decoration: none;
@@ -52,8 +53,10 @@ li ul li {
     vertical-align: middle;
     line-height: 104px;
 }
-#header .span { 
+#header a { 
     vertical-align: middle;
+    color: #ffffff;
+    text-decoration: none;
 }
 
 
@@ -481,4 +484,24 @@ a.abstention {
     padding: 0 0.2em;
     display:inline;
     color: black;
+}
+
+.clear-all {
+    height: 1px;
+    clear: both:
+}
+
+form#simple-search {
+    line-height:30px;
+}
+input#search-submit {
+    width: auto;
+    color: black;
+    border: thin solid #497ED5;
+    background: white;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+input#search-text {
+    width: 98%;
 }

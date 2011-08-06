@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form action="" method="get">
+    <input type="text" id="id_q" name="q" value="{{ query|default_if_none:"" }}" />
+    <input type="submit" value="{% trans "Search" %}"/>
+</form>
+
+{% if hits %}
+<h1>{% trans "Search results" %}</h1>
+<ul>
+    {% for hit in hits %}
+    <li><a href="{{ hit.url }}">{{ hit.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
+
