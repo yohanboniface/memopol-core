@@ -1,10 +1,8 @@
 from django.conf.urls.defaults import patterns, url
 from django.views.generic import list_detail
-from django.db.models import Avg
 from memopol2 import utils
 
 from meps.models import MEP, Country, Group, Committee, Delegation, Organization
-
 from reps.models import Party
 
 country_dict = {
@@ -60,7 +58,7 @@ organization_dict = {
 }
 mep_dict = {'queryset': MEP.objects.all(), 'slug_field': 'id', 'template_object_name': 'mep'}
 
-urlpatterns = patterns('',
+urlpatterns = patterns('meps.views',
     # those view are *very* expansive. we cache them in RAM for a week
     url(r'^names/$', utils.cached(3600*24*7)(list_detail.object_list), {'queryset': MEP.objects.filter(active=True)}, name='index_names'),
     url(r'^inactive/$', utils.cached(3600*24*7)(list_detail.object_list), {'queryset': MEP.objects.filter(active=False)}, name='index_inactive'),
@@ -77,7 +75,7 @@ urlpatterns = patterns('',
     url(r'^delegation/(?P<object_id>[0-9]+)/$', list_detail.object_detail, delegation_dict, name='index_by_delegation'),
     url(r'^party/$', list_detail.object_list, {'queryset': Party.objects.with_counts()}, name='index_parties'),
     url(r'^party/(?P<object_id>[0-9]+)/$', list_detail.object_detail, party_dict,  name='index_by_party'),
-    url(r'^score/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=True).exclude(score__isnull=True).annotate(Avg('score__value')).order_by('-score__value__avg')}, name='scores'),
+    url(r'^score/$', 'score_sort', name='scores'),
     url(r'^deputy/(?P<slug>\w+)/$', list_detail.object_detail, mep_dict, name='mep'),
 )
 urlpatterns += patterns('meps.views',
