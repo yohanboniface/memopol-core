@@ -121,6 +121,7 @@ function activateCollapsible()
 (function($) {
 
 $('span.collapsible-contact').click(function() {
+    // dynamic contact detail
     $('div.body', $(this).parents('td')).load($(this).attr('alt'));
 });
 
