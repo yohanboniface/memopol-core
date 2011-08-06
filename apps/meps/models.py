@@ -192,4 +192,3 @@ class MepModerator(CommentModerator):
 
 
 moderator.register(MEP, MepModerator)
-
