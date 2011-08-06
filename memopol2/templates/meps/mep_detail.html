@@ -19,7 +19,7 @@
 <li><i>{% trans "Country" %}</i>:  <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.country.code %}">{{ mep.country.name }} </li></a>
 <li><i>{% trans "Political group: " %}</i><a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></li>
 {% for partyrepresentative in mep.partyrepresentative_set.all %}
-    <li><i>{% trans "Party: " %}</i><a href="{% url meps:index_by_party partyrepresentative.party.id %}">{{ partyrepresentative.party.name }}</a></li>
+    <li><i>{% trans "National party: " %}</i><a href="{% url meps:index_by_party partyrepresentative.party.id %}">{{ partyrepresentative.party.name }}</a></li>
 {% endfor %}
 <li><i>Born on</i>
 {% blocktrans with mep.birth_date.day as day and mep.birth_date.month as month and mep.birth_date.year as year and mep.birth_place as birth_place %}{{ day }}/{{ month }}/{{ year }}<i> at </i>{{ birth_place }}{% endblocktrans %}</li>
@@ -74,11 +74,11 @@
 </div>
 {% endif %}
 
-{% if mep.opinionmep_set.all %}
+{% if mep.opinionrep_set.all %}
 <div id="opinions">
     <h2 class="collapsible collapsed">{% trans "Opinions (memopol v1)" %}</h2>
     <ul class="body">
-     {% for line in mep.opinionmep_set.all %}
+     {% for line in mep.opinionrep_set.all %}
          <li><b>{{ line.opinion.title }}</b> (le {{ line.date }})<br/>{% autoescape off %}{{ line.opinion.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.opinion.url }}"><br/>{% trans "Read more..." %}</a> </li>
      {% endfor %}
     </ul>
@@ -99,8 +99,7 @@
         {% endfor %}
         </ul>
         {% if mep.score_set.all.count > 1 %}
-            <img src="{% url trends:trends mep.id %}" />
-            <img src="{% url trends:bar_trends mep.id %}" />
+            <img src="{% url trends:comparaison_trends mep.id %}" />
         {% endif %}
     </div>
 {% endif %}

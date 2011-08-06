@@ -7,6 +7,7 @@ class Proposal(models.Model):
     id = models.CharField(max_length=63, primary_key=True)
     title = models.CharField(max_length=255, unique=True)
     ponderation = models.IntegerField(default=1)
+    short_name = models.CharField(max_length=25, default=None, null=True)
 
     @property
     def date(self):
@@ -55,6 +56,19 @@ class Score(models.Model):
         red = 255 - self.value
         green = self.value * 2.55
         return "rgb(%d, %d, 0)" % (red, green)
+
+    @property
+    def color_tuple(self):
+        colors = 255
+        val = int(3 * colors * (self.value/100))
+        red = green = colors
+        if val < colors:
+            green = int(2/3 * val)
+        elif val < 2 * colors:
+            green = int(2 / 3 * colors + 1 / 3 * (val / 2 - colors))
+        else:
+            red = 3 * colors - val
+        return (red / 255., green / 255., 0)
 
     @property
     def of_country(self):
