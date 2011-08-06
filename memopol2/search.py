@@ -5,11 +5,39 @@ import logging
 from django.db.models import signals
 from django.conf import settings
 from whoosh import fields, index
+from whoosh.support.charset import accent_map
+from whoosh.support.charset import charset_table_to_dict, default_charset
 from whoosh.filedb.filestore import FileStorage
+from whoosh import analysis as anal
+
 
 log = logging.getLogger(__name__)
 
-WHOOSH_SCHEMA = fields.Schema(title=fields.TEXT(stored=True),
+class MemopolFilter(anal.Filter):
+
+    def __call__(self, tokens):
+        for t in tokens:
+            if len(t.text) > 3:
+                for i in range(3, 6):
+                    nt = t.copy()
+                    nt.text = t.text[:i]
+                    yield nt
+            yield t
+
+class UniqueFilter(anal.Filter):
+
+    def __call__(self, tokens):
+        v = set()
+        for t in tokens:
+            if t.text not in v:
+                v.add(t.text)
+                yield t
+
+def MemopolAnal():
+    charmap = charset_table_to_dict(default_charset)
+    return anal.RegexTokenizer(r"\w+") | anal.LowercaseFilter() | anal.CharsetFilter(accent_map)
+
+WHOOSH_SCHEMA = fields.Schema(title=fields.TEXT(analyzer=MemopolAnal(), stored=True),
                               content=fields.TEXT,
                               url=fields.ID(stored=True, unique=True))
 
