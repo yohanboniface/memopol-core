@@ -28,11 +28,7 @@
   {% endif %}
   {% if not 'party' in hidden_fields %}
   <td>
-    <ul class="party">
-      {% for partyrepresentative in mep.partyrepresentative_set.all %}
-      <li><a href="{% url meps:index_by_party partyrepresentative.party.id %}">{{ partyrepresentative.party.name }}</a></li>
-      {% endfor %}
-    </ul>
+    <a href="{% url meps:index_by_party mep.party.id %}">{{ mep.party.name }}</a>
   </td>
   {% endif %}
   <td>
