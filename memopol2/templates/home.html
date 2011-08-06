@@ -13,7 +13,7 @@
     {% if object_list %}
         <h1>{% trans "Votes list" %}</h1>
         <ul>
-            {% for proposal in object_list %}
+            {% for proposal in object_list|dictsortreversed:"date" %}
                 <li>
                     <a href="{% url votes:detail proposal.id %}">{{ proposal.title }}</a>
                 </li>
