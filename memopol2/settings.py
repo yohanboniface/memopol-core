@@ -22,9 +22,12 @@ DATABASES = {
     },
 }
 
+WHOOSH_INDEX = '/tmp/%s-memopol2.index' % os.getenv('USER')
+
 APPS_DEBUG = False
 if os.getenv('VIRTUAL_ENV'):
     DATABASES['default']['NAME'] = '%s/memopol2.sqlite' % os.getenv('VIRTUAL_ENV')
+    WHOOSH_INDEX = '%s/memopol2.index' % os.getenv('VIRTUAL_ENV')
     APPS_DEBUG = True
 elif not os.path.isfile('bin/django-manage'):
     APPS_DEBUG = True

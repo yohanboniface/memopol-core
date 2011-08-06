@@ -4,16 +4,6 @@ distribute_setup.use_setuptools()
 import os
 from setuptools import setup, find_packages
 
-def find_files(dirname):
-    files = []
-    for entryname in os.listdir(dirname):
-        pathname = "%s/%s" % (dirname, entryname)
-        if os.path.isfile(pathname):
-            files.append(pathname)
-        elif os.path.isdir(pathname):
-            files += find_files(pathname)        
-    return files
-    
 setup(
     name='Memopol',
     version = '1.99.1',
@@ -25,6 +15,9 @@ setup(
     url = 'http://projets.lqdn.fr/projects/mempol',
     packages = find_packages(),
     include_package_data = True,
-    scripts = find_files('bin'),
     install_requires = [],
+    entry_points = """
+    [console_scripts]
+    update_search_index = memopol2.search:update
+    """
 )

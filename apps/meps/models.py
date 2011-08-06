@@ -1,7 +1,9 @@
 from datetime import date
 from django.db import models
 from django.contrib.comments.moderation import CommentModerator, moderator
+from django.core.urlresolvers import reverse
 from memopol2.utils import reify
+from memopol2 import search
 
 from reps.models import Representative, Party
 
@@ -27,6 +29,7 @@ class Country(models.Model):
         return self.mep_set.filter(active=True, countrymep__end=date(9999, 12, 31)).distinct()
 
 
+@search.searchable
 class Group(models.Model):
     abbreviation = models.CharField(max_length=10, unique=True)
     name = models.CharField(max_length=100, unique=True)
@@ -35,12 +38,16 @@ class Group(models.Model):
 
     def __unicode__(self):
         return u"%s - %s" % (self.abbreviation, self.name)
+    content = __unicode__
+
+    def get_absolute_url(self):
+        return reverse('meps:index_by_group', args=(self.abbreviation,))
 
     @property
     def meps(self):
         return self.mep_set.filter(active=True, groupmep__end=date(9999, 12, 31)).distinct()
 
-
+@search.searchable
 class Delegation(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
@@ -48,12 +55,17 @@ class Delegation(models.Model):
 
     def __unicode__(self):
         return self.name
+    content = __unicode__
+
+    def get_absolute_url(self):
+        return reverse('meps:index_by_delegation', args=(self.id,))
 
     @property
     def meps(self):
         return self.mep_set.filter(active=True, delegationrole__end=date(9999, 12, 31)).distinct()
 
 
+@search.searchable
 class Committee(models.Model):
     name = models.CharField(max_length=255, unique=True)
     abbreviation = models.CharField(max_length=30, unique=True)
@@ -62,6 +74,10 @@ class Committee(models.Model):
 
     def __unicode__(self):
         return u"%s: %s" % (self.abbreviation, self.name)
+    content = __unicode__
+
+    def get_absolute_url(self):
+        return reverse('meps:index_by_committee', args=(self.abbreviation,))
 
     @property
     def meps(self):
@@ -76,11 +92,16 @@ class Building(models.Model):
     postcode = models.CharField(max_length=255)
 
 
+@search.searchable
 class Organization(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
     def __unicode__(self):
         return self.name
+    content = __unicode__
+
+    def get_absolute_url(self):
+        return reverse('meps:index_by_organization', args=(self.id,))
 
     @property
     def meps(self):
@@ -88,6 +109,7 @@ class Organization(models.Model):
 
 
 
+@search.searchable
 class MEP(Representative):
     active = models.BooleanField()
     ep_id = models.IntegerField(unique=True)
@@ -118,6 +140,10 @@ class MEP(Representative):
         if self.full_name:
             return self.full_name
         return u'%s %s' (self.first_name, self.last_name)
+    content = __unicode__
+
+    def get_absolute_url(self):
+        return reverse('meps:mep', args=(self.id,))
 
     @reify
     def group(self):

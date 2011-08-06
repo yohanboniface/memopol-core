@@ -5,6 +5,7 @@ numpy==1.5.1
 git+http://github.com/matplotlib/matplotlib.git@3bf76b9fe6152280950168f9a3791f56c508eeed#egg=matplotlib
 hg+https://bitbucket.org/gregmuellegger/django-contact-form-i18n#egg=django-contact-form
 django-flatblocks==0.5
+whoosh
 lxml
 pyquery
 WebTest
