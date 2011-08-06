@@ -28,9 +28,10 @@ $(".collapsible").click(function(){
 });
 
 // contact details
-$('span.collapsible-contact').click(function() {
+$('a.more-contact').click(function() {
     // dynamic contact detail
-    $('div.body', $(this).parents('td')).load($(this).attr('alt'));
+    $('div.body', $(this).parents('td')).load($(this).attr('href'));
+    return false;
 });
 
 
