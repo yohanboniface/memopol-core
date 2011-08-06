@@ -4,6 +4,8 @@
 import os
 import time
 from django.http import HttpResponse
+from django.template.loader import render_to_string
+from django.template.base import TemplateSyntaxError
 
 def check_dir(filename):
     dirname = os.path.dirname(filename)
@@ -48,4 +50,19 @@ def cached(expire):
             return resp
         return wrapped
     return wrapper
+
+class snippet(property):
+
+    dirname = os.path.join(os.path.dirname(__file__), 'templates')
+
+    def __init__(self, name):
+        self.name = name
+
+    def __get__(self, instance, klass):
+        template = 'snippets/%s-%s-%s.html' % (klass.__name__.lower(), instance.id, self.name)
+        if os.path.isfile(os.path.join(self.dirname, template)):
+            return render_to_string(template)
+        else:
+            return 'x<!-- %s -->' % template
+
 

@@ -1,6 +1,7 @@
 from datetime import date
 from django.db import models
 from django.contrib.comments.moderation import CommentModerator, moderator
+from memopol2.utils import snippet
 
 from reps.models import Representative, Party
 
@@ -128,6 +129,10 @@ class MEP(Representative):
 
     def current_delegations(self):
         return self.delegationrole_set.filter(end=date(9999, 12, 31))
+
+    group_tag = snippet('group')
+    country_tag = snippet('country')
+    party_tag = snippet('party')
 
     class Meta:
         ordering = ['last_name']

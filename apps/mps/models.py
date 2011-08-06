@@ -70,6 +70,14 @@ class MP(Representative):
     group = models.ForeignKey(Group)
     group_role = models.CharField(max_length=63, null=True)
 
+    @property
+    def group_template(self):
+        return 'snippets/mp-%s-group.html' % self.id
+
+    @property
+    def party_template(self):
+        return 'snippets/mp-%s-party.html' % self.id
+
 
 class FunctionMP(models.Model):
     mp = models.ForeignKey(MP)
