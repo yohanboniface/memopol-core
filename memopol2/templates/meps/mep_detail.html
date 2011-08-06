@@ -74,11 +74,11 @@
 </div>
 {% endif %}
 
-{% if mep.opinionmep_set.all %}
+{% if mep.opinionrep_set.all %}
 <div id="opinions">
     <h2 class="collapsible collapsed">{% trans "Opinions (memopol v1)" %}</h2>
     <ul class="body">
-     {% for line in mep.opinionmep_set.all %}
+     {% for line in mep.opinionrep_set.all %}
          <li><b>{{ line.opinion.title }}</b> (le {{ line.date }})<br/>{% autoescape off %}{{ line.opinion.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.opinion.url }}"><br/>{% trans "Read more..." %}</a> </li>
      {% endfor %}
     </ul>
