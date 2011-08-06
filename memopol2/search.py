@@ -4,7 +4,7 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 import logging
 from django.db.models import signals
 from django.conf import settings
-from whoosh import fields, index
+from whoosh import fields
 from whoosh.filedb.filestore import FileStorage
 
 log = logging.getLogger(__name__)
