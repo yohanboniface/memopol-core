@@ -22,8 +22,8 @@ urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^admin/', include(admin.site.urls)),
     url(r'^comments/', include('django.contrib.comments.urls')),
     url(r'^contact/', include('contact_form.urls')),
-    url(r'^ajax_search/', views.search, {'template_name': 'search_xhr.html'}, name='search'),
-    url(r'^search/', views.search, {'template_name': 'search.html'}, name='search'),
+    url(r'^search/xhr/$', views.search, {'template_name': 'search_xhr.html'}, name='search_xhr'),
+    url(r'^search/$', views.search, {'template_name': 'search.html'}, name='search'),
 )
 
 # hack to autodiscover static files location in dev mode

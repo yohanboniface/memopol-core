@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 
-<form action="" method="get">
-    <input type="text" id="id_q" name="q" value="{{ query|default_if_none:"" }}" />
-    <input type="submit" value="{% trans "Search" %}"/>
+<h1>{% trans "Search" %}</h1>
+
+<form id="search" action="" method="get">
+    <input type="text" class="search-text" id="id_q" autocomplete="off" name="q" value="{{ query|default_if_none:"" }}" />
+    <input type="submit" class="search-submit" value="{% trans "Search" %}"/>
 </form>
 
 {% if hits %}
-<h1>{% trans "Search results" %}</h1>
+<h2>{% trans "Search results" %}</h2>
 <ul>
     {% for hit in hits %}
     <li><a href="{{ hit.url }}">{{ hit.title }}</a></li>

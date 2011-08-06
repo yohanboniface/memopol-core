@@ -44,4 +44,38 @@ $('a.more-contact').click(function() {
 // the image #call-now click get his link from a.call-now from the contact details
 $('a#call-now').attr('href', $('a.call-now').attr('href'));
 
+// live search
+var livesearch = $('#livesearch');
+$.extend($, {
+    livesearchtext: null,
+    livesearch: function(q) {
+        if ($.livesearchtext == q) {
+            $.get(livesearch.attr('alt')+'?q='+q, function(data) {
+                if (/li/.exec(data)) {
+                    livesearch.html(data);
+                    livesearch.show();
+                } else {
+                    livesearch.hide();
+                }
+            });
+        }
+    }
+});
+$('input.search-text').focus(function() {
+    var self = $(this);
+    var pos = self.offset();
+    livesearch.css('left', pos.left);
+    livesearch.css('top', pos.top+10+self.height());
+});
+$('input.search-text').keyup(function() {
+    var self = $(this);
+    var q = self.val();
+    if (q.length > 2) {
+        q += '*';
+    $.livesearchtext = q;
+    setTimeout(function() {$.livesearch(q)}, 1000);
+    }
+});
+$('body').click(function() {livesearch.hide()});
+
 }(jQuery));

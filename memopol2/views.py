@@ -32,7 +32,7 @@ def search(request, template_name='search.html'):
         if qry is not None:
             searcher = ix.searcher()
             hits = searcher.search(qry)
-
+    ix.close()
     return direct_to_template(request, template_name,
                               {'query': query, 'hits': hits})
 
