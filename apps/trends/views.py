@@ -86,7 +86,6 @@ def bar_trends_for_mep(request, mep_id):
     return send_file(request,filename, content_type="image/png")
 
 def comparaison_trends_for_mep(request, mep_id):
-
     filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'meps', "%s-comparaison-scores.png" % mep_id)
     cache = get_content_cache(request, filename)
     if cache:
@@ -127,4 +126,3 @@ def comparaison_trends_for_mep(request, mep_id):
     pyplot.clf()
 
     return send_file(request,filename, content_type="image/png")
-
