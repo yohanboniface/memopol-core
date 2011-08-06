@@ -2,7 +2,9 @@ from datetime import date
 from django.db import models
 from django.contrib.comments.moderation import CommentModerator, moderator
 from memopol2.utils import reify
+from django.db.models import Sum
 
+from votes.models import Proposal
 from reps.models import Representative, Party
 
 class MepsContainerManager(models.Manager):
@@ -133,6 +135,17 @@ class MEP(Representative):
 
     def current_delegations(self):
         return self.delegationrole_set.filter(end=date(9999, 12, 31))
+
+    @reify
+    def total_score(self):
+        proposals = Proposal.objects.all()
+        total = Proposal.objects.aggregate(Sum('ponderation'))['ponderation__sum']
+        # all the votes a mep has been involved in
+        done = [score.proposal for score in self.score_set.all()]
+        total_score = sum([score.value * score.proposal.ponderation for score in self.score_set.all()])
+        # add 50 by default to votes a meps hasn't been involved in
+        total_score += sum([50 * missing.ponderation for missing in proposals if missing not in done])
+        return total_score / float(total)
 
     class Meta:
         ordering = ['last_name']

@@ -7,10 +7,8 @@ from os.path import join
 from django.conf import settings
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.db.models import Sum
 
 from meps.models import MEP
-from votes.models import Proposal
 
 from memopol2.utils import check_dir, send_file, get_content_cache
 
@@ -62,18 +60,8 @@ def autoTrophies(mep):
     return [(x[1], x[2]) for x in sorted(res, reverse=True)]
 
 def score_sort(request):
-    meps = MEP.objects.filter(active=True).exclude(score__isnull=True)
-    proposals = Proposal.objects.all()
-    total = Proposal.objects.aggregate(Sum('ponderation'))['ponderation__sum']
-
-    def score_with_ponderation(mep):
-        # all the votes a mep has been involved in
-        done = [score.proposal for score in mep.score_set.all()]
-        total_score = sum([score.value * score.proposal.ponderation for score in mep.score_set.all()])
-        # add 50 by default to votes a meps hasn't been involved in
-        total_score += sum([50 * missing.ponderation for missing in proposals if missing not in done])
-        return total_score / float(total)
-
     return render_to_response("meps/mep_list.html",
-                              {'object_list': sorted(meps, key=score_with_ponderation, reverse=True)},
+                              {'object_list': sorted(MEP.objects.filter(active=True).exclude(score__isnull=True),
+                                                     key=lambda x: x.total_score,
+                                                     reverse=True)},
                               context_instance=RequestContext(request))
