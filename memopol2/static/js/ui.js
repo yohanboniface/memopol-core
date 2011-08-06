@@ -117,3 +117,11 @@ function activateCollapsible()
         }
     });
 }
+
+(function($) {
+
+$('span.collapsible-contact').click(function() {
+    $('div.body', $(this).parents('td')).load($(this).attr('alt'));
+});
+
+}(jQuery));
