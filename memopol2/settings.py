@@ -156,6 +156,31 @@ FIXTURE_DIRS = (
 PARLTRACK_URL = "http://parltrack.memopol2.lqdn.fr"
 ROOT_URL = "http://memopol2.lqdn.org"
 
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'handlers': {
+        'console': {
+            'level': 'WARN',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'memopol2': {
+            'handlers': ['console'],
+            'level': 'WARN',
+            'propagate': True,
+        },
+    }
+}
+
 try:
     from settings_local import *
 except ImportError:
