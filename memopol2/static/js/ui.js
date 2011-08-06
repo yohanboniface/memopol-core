@@ -27,6 +27,13 @@ $(".collapsible").click(function(){
     }
 });
 
+
+// table
+$("table.mep-list, table.mp-list").tablesorter({ headers: { 3: { sorter: false }, }  });
+// FIXME dont know why but sorting dont work with mp-list..
+//$('table.mep-list, table.mp-list').tableFilter();
+$('table.mep-list').tableFilter();
+
 // contact details
 $('a.more-contact').click(function() {
     // dynamic contact detail
@@ -34,11 +41,7 @@ $('a.more-contact').click(function() {
     return false;
 });
 
-
-// table
-$("table.mep-list, table.mp-list").tablesorter({ headers: { 3: { sorter: false }, }  });
-// FIXME dont know why but sorting dont work with mp-list..
-//$('table.mep-list, table.mp-list').tableFilter();
-$('table.mep-list').tableFilter();
+// the image #call-now click get his link from a.call-now from the contact details
+$('a#call-now').attr('href', $('a.call-now').attr('href'));
 
 }(jQuery));

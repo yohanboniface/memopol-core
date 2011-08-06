@@ -410,6 +410,16 @@ a.more-contact {
     text-align: right;
 }
 
+#contact a.highlight {
+    color: #497ED5;
+}
+
+a#call-now {
+    float: right;
+    margin-top: 20px;
+    margin-right: 30px;
+}
+
 div#scores li {
     border-style: solid;
     border-width: thin;
