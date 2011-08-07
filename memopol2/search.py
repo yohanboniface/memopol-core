@@ -79,11 +79,14 @@ def update_index(sender, instance, created, **kwargs):
                                url=url)
         writer.commit()
 
-_searchables = []
+class Searchables(list):
+    items = []
+
+
 def searchable(klass):
     if hasattr(klass, 'get_absolute_url'):
         signals.post_save.connect(update_index, sender=klass)
-        _searchables.append(klass)
+        Searchables.items.append(klass)
         if not hasattr(klass, 'content'):
             log.warn('%s is declared as searchable but has no content attribute' % klass)
     else:
@@ -97,7 +100,7 @@ def update():
     import shutil
     shutil.rmtree(settings.WHOOSH_INDEX)
     create_index()
-    for klass in _searchables:
+    for klass in Searchables.items:
         for i in klass.objects.all():
             update_index(None, i, created=False)
 
