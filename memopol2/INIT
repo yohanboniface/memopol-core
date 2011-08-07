@@ -4,6 +4,8 @@ MANAGE="./manage.py"
 
 [ -x 'bin/django-manage' ] && MANAGE='bin/django-manage'
 
+export SKIP_SEARCH_INDEX = "1"
+
 $MANAGE syncdb
 $MANAGE migrate reps
 $MANAGE migrate meps 0001
@@ -12,3 +14,5 @@ $MANAGE migrate meps 0003
 $MANAGE migrate meps 0004
 $MANAGE migrate meps 0005
 $MANAGE migrate
+
+export SKIP_SEARCH_INDEX = "0"

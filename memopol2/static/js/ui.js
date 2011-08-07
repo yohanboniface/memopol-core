@@ -59,7 +59,12 @@ $.extend($, {
     livesearch: function(self, q) {
         if ($.livesearchtext == q) {
             q = self.val();
+            q = q.replace(/\s+$/, '');
             if (!/\*$/.exec(q)) { q += '*'; }
+            if ($('#search').length) {
+                // serialize form and extract only types from qs
+                q += '&' + $('#search').serialize().replace(/q=[^&]+/, '').substring(1);
+            }
             $.get(livesearch.attr('alt')+'?limit=10&q='+q, function(data) {
                 if (/li/.exec(data)) {
                     livesearch.html(data);
@@ -79,13 +84,13 @@ $.extend($, {
         }
     }
 });
-$('input.search-text').focus(function() {
+$('input.search-text, #search #id_q').focus(function() {
     var self = $(this);
     var pos = self.offset();
     livesearch.css('left', pos.left);
     livesearch.css('top', pos.top+10+self.height());
 });
-$('input.search-text').keypress(function(e) {
+$('input.search-text, #search #id_q').keypress(function(e) {
     var self = $(this);
     var code = (e.keyCode ? e.keyCode : e.which);
     if (code == 13) {
