@@ -21,7 +21,7 @@
             {% for addr in mp.address_set.all %}
               {% for phone in addr.phone_set.all %}
               {% if phone.type == "phone" %}
-                <a href="callto://{{ addr.phone }}">{{ phone.number }}</a> -
+                <a href="callto://{{ phone.number }}">{{ phone.number }}</a> -
                 {% endif %}
               {% endfor %}
             {% endfor %}
