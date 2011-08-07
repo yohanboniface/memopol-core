@@ -50,7 +50,7 @@ $.extend($, {
     livesearchtext: null,
     livesearch: function(q) {
         if ($.livesearchtext == q) {
-            $.get(livesearch.attr('alt')+'?q='+q, function(data) {
+            $.get(livesearch.attr('alt')+'?limit=10&q='+q, function(data) {
                 if (/li/.exec(data)) {
                     livesearch.html(data);
                     livesearch.show();

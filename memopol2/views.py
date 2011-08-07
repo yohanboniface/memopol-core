@@ -17,6 +17,7 @@ def search(request, template_name='search.html'):
     ix = storage.open_index(indexname='memopol')
     hits = []
     query = request.GET.get('q', None)
+    limit = int(request.GET.get('limit', 0)) or None
     if query is not None and query != u"":
         # Whoosh don't understands '+' or '-' but we can replace
         # them with 'AND' and 'NOT'.
@@ -31,7 +32,7 @@ def search(request, template_name='search.html'):
             qry = None
         if qry is not None:
             searcher = ix.searcher()
-            hits = searcher.search(qry)
+            hits = searcher.search(qry, limit=limit)
     ix.close()
     return direct_to_template(request, template_name,
                               {'query': query, 'hits': hits})
