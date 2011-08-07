@@ -77,6 +77,18 @@ class MP(Representative):
     def get_absolute_url(self):
         return reverse('mps:mp', args=(self.id,))
 
+    @reify
+    def phones(self):
+        values = []
+        for addr in self.address_set.all():
+            values.extend(
+                [p.number for p in addr.phone_set.filter(type='phone')]
+              )
+        return values
+
+    @reify
+    def emails(self):
+        return [e.email for e in self.email_set.all()]
 
 class FunctionMP(models.Model):
     mp = models.ForeignKey(MP)
