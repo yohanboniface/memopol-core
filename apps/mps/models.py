@@ -1,5 +1,8 @@
 from django.db import models
 from reps.models import Representative
+from django.core.urlresolvers import reverse
+from memopol2.utils import reify
+from memopol2 import search
 
 class Function(models.Model):
     type = models.CharField(max_length=255)
@@ -53,6 +56,7 @@ class Group(models.Model):
         return self.name
 
 
+@search.searchable
 class MP(Representative):
     active = models.BooleanField()
     birth_department = models.CharField(max_length=255)
@@ -69,6 +73,9 @@ class MP(Representative):
     department = models.ForeignKey(Department)
     group = models.ForeignKey(Group)
     group_role = models.CharField(max_length=63, null=True)
+
+    def get_absolute_url(self):
+        return reverse('mps:mp', args=(self.id,))
 
 
 class FunctionMP(models.Model):
