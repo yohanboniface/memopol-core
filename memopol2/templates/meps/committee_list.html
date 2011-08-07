@@ -5,10 +5,12 @@
 <h1>{% trans "MEPs by committee" %}</h1>
 <ul class="committees">
 {% for committee in object_list %}
+    {% if committee.meps|length %}
     <li>
         <a href="{% url meps:index_by_committee committee.abbreviation %}">{{ committee.name }} ({{ committee.abbreviation }})</a>
-        {% blocktrans with committee.count as count %} - {{ count }} MEPs {% endblocktrans %}
+        {% blocktrans with committee.meps|length as count %} - {{ count }} MEPs {% endblocktrans %}
     </li>
+    {% endif %}
 {% endfor %}
 </ul>
 
