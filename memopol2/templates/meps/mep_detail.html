@@ -40,7 +40,7 @@
 {% if mep.committeerole_set.all %}
 <div id="committees">
     <h2 class="collapsible collapsed">{% trans "Committees" %}</h2>
-    <ul class="body">
+    <ul class="body committees">
     {% for role in mep.committeerole_set.all %}
         <li><a href="{% url meps:index_by_committee role.committee.abbreviation %}">{{ role.role }} - {{ role.committee }}</a></li>
     {% endfor %}
@@ -51,7 +51,7 @@
 {% if mep.current_delegations %}
 <div id="delegations">
     <h2 class="collapsible collapsed">{% trans "Delegations" %}</h2>
-    <ul class="body">
+    <ul class="body delegations">
     {% for role in mep.current_delegations %}
         <li><a href="{% url meps:index_by_delegation role.delegation.id %}">{{ role.role }} - {{ role.delegation }}</a></li>
     {% endfor %}
@@ -62,7 +62,7 @@
 {% if mep.organizationmep_set.all %}
 <div id="staff">
     <h2 class="collapsible collapsed">{% trans "Staff" %}</h2>
-        <ul class="body">
+        <ul class="body organisations">
     {% for staff in mep.organizationmep_set.all %}
     <li>{{ staff.organization.name }}: {{ staff.role }} {% trans "from" %} {{ staff.begin }} {% if staff.end == "Dec. 31, 9999" %} {% trans "to" %} {{ staff.end }}{% endif %}</li>
     {% endfor %}
@@ -84,7 +84,7 @@
 {% if mep.opinionrep_set.all %}
 <div id="opinions">
     <h2 class="collapsible collapsed">{% trans "Opinions (memopol v1)" %}</h2>
-    <ul class="body">
+    <ul class="body opinions">
      {% for line in mep.opinionrep_set.all %}
          <li><b>{{ line.opinion.title }}</b> (le {{ line.date }})<br/>{% autoescape off %}{{ line.opinion.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.opinion.url }}"><br/>{% trans "Read more..." %}</a> </li>
      {% endfor %}

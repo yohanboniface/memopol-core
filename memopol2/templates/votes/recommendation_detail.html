@@ -4,8 +4,9 @@
 
 <h1>Recommendation on {{ recommendation.subject }} for the proposal <a href="{% url votes:detail proposal.id %}">{{ proposal.title }}</a></h1>
 
-<ul>
-    <div class="{{ recommendation.recommendation }}">
+{% include "votes/legend.html" %}
+
+<ul class="{{ recommendation.recommendation }}">
     <li><em>Part</em> : {{ recommendation.part }}</li>
     {% if recommendation.recommendation %}<li><em>Recommendation</em> : {{ recommendation.recommendation }}</li>{% endif %}
     {% if recommendation.weight %}<li><em>Weight</em> : {{ recommendation.weight }}</li>{% endif %}
@@ -15,7 +16,6 @@
       <li><b><a class="{% if recommendation.recommendation == re.grouper %}ok{% else %}{% if re.grouper == "abstention" %}abstention{% else %}nok{% endif %}{% endif %}" href="{% url votes:recommendation_choice proposal.id recommendation.id re.grouper %}">{{ re.grouper }}</a></b>: {{ re.list|length }} </li>
       {% endfor %}
     </ul>
-    </div>
 </ul>
 
 {% endblock %}
