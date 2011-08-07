@@ -7,14 +7,14 @@ from whoosh.filedb.filestore import FileStorage
 from whoosh import index, fields
 from whoosh.qparser import QueryParser
 from memopol2.search import WHOOSH_SCHEMA
-from memopol2.search import _searchables
+from memopol2.search import Searchables
 
 from meps import models
 from mps import models
 
 log = logging.getLogger(__name__)
 
-types_choices = sorted([(k.__name__.lower(), k.__name__) for k in _searchables])
+types_choices = sorted([(k.__name__.lower(), k.__name__) for k in Searchables.items])
 
 class SearchForm(forms.Form):
     q = forms.CharField(max_length=100, required=False, label='Search',

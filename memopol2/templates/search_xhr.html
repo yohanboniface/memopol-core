@@ -1,5 +1,12 @@
 <ul>
     {% for hit in hits %}
-    <li><a href="{{ hit.url }}">[{{ hit.type }}] {{ hit.title }}</a></li>
+      <li>
+        <a class="{{hit.type}}-icon search-item" href="{{ hit.url }}">
+           <span class="search-item-title">
+            {{ hit.title }}
+           </span>
+           <span class="search-item-type">({% trans hit.type %})</span>
+        </a>
+      </li>
     {% endfor %}
 </ul>

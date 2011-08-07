@@ -567,7 +567,7 @@ div#livesearch {
     font-size: 0.8em;
 }
 
-div#livesearch ul {
+div#livesearch ul, #search-results ul {
     margin: 0px;
     list-style: none;
 }
@@ -577,6 +577,22 @@ div#livesearch li {
 }
 div#livesearch li.odd a {
     color: #497ED5;
+}
+
+a.search-item {
+    text-decoration: none;
+    padding-left: 20px;
+}
+span.search-item-type {
+    font-size: 80%;
+    color: #ccc;
+}
+
+a.mep-icon, a.mp-icon {
+    background: url("../img/icons/user.png") no-repeat top left;
+}
+a.comitee-icon, a.delegation-icon, a.group-icon, a.organisation-icon, a.party-icon {
+    background: url("../img/icons/user-group.png") no-repeat top left;
 }
 
 div#contact {
