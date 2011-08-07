@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=IM+Fell+English+SC);
+
 html, body {
     height: 100%;
 }
@@ -6,6 +8,11 @@ html, body {
 body {
     background-color: #BCD;
     font: 100% "Lucida Grande",Verdana,Lucida,Helvetica,Arial,sans-serif;
+}
+
+#content h1, #content h2 {
+    margin-bottom: 1em;
+    margin-top: 1em;
 }
 
 table li a,
@@ -45,13 +52,12 @@ li ul li {
     margin: 10px;
     border: solid 13px white;
     height: 185px;
-    font-size: 72px;
-    font-family: Palatino;
-    font-weight: bold;
-    font-variant: small-caps;
+    font-size: 100px;
+    font-family: 'IM Fell English SC', Palatino, sans-serif;
+    text-shadow:2px 2px 2px black;
     text-align: center;
     vertical-align: middle;
-    line-height: 104px;
+    line-height: 164px;
 }
 #header a { 
     vertical-align: middle;
@@ -75,8 +81,10 @@ li ul li {
     min-height: 100%;
 }
 
-#nav h1, h2 {
+#nav h1, #nav h2 {
     padding: 10px 4px 5px 4px;
+    font-family: 'IM Fell English SC', Palatino, sans-serif;
+    text-shadow:1px 1px 1px black;
 }
 
 #nav a:link, 
@@ -111,7 +119,8 @@ h2 {
 }
 
 #mainheader h1 {
-    font-family: Palatino;
+    font-family: 'IM Fell English SC', Palatino, sans-serif;
+    text-shadow:1px 1px 1px black;
     font-weight: bold;
     font-variant: small-caps;
     text-align: center;
@@ -121,6 +130,9 @@ h2 {
     border-right: 2px solid white;
     padding-top: 10px;
     color: #fff;
+}
+#mainheader a:hover {
+    text-decoration: none;
 }
 
 
@@ -405,6 +417,21 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 background-color: #8dbdd8;
 }
 
+a.more-contact {
+    display:block;
+    text-align: right;
+}
+
+#contact a.highlight {
+    color: #497ED5;
+}
+
+a#call-now {
+    float: right;
+    margin-top: 20px;
+    margin-right: 30px;
+}
+
 div#scores li {
     border-style: solid;
     border-width: thin;
@@ -490,11 +517,17 @@ a.abstention {
     height: 1px;
     clear: both:
 }
+.hidden {
+    display: none;
+}
 
 form#simple-search {
     line-height:30px;
 }
-input#search-submit {
+form#search {
+    margin-bottom: 1em;
+}
+input.search-submit {
     width: auto;
     color: black;
     border: thin solid #497ED5;
@@ -502,6 +535,22 @@ input#search-submit {
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
-input#search-text {
+input.search-text {
     width: 98%;
 }
+
+div#livesearch {
+    position: absolute;
+    z-index: 100000;
+    background:white;
+    border: thin solid black;
+    font-size: 0.8em;
+    padding: 0.5em;
+}
+
+div#livesearch ul,
+div#livesearch li {
+    margin: 0px;
+    list-style: none;
+}
+

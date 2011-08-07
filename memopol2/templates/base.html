@@ -26,8 +26,8 @@
             <h2>{% trans "Search" %}</h2>
             <div>
               <form id="simple-search" method="GET" action="{% url search %}">
-                <input type="text" id="search-text" name="q"/>
-                <input type="submit" id="search-submit" value="{% trans "GO" %}"/>
+                <input type="text" autocomplete="off" class="search-text" name="q"/>
+                <input type="submit" class="search-submit" value="{% trans "GO" %}"/>
               </form>
             </div>
 
@@ -83,16 +83,16 @@
     </div>
 
 <div id="content">
-
-    <div class="grid_10">{% block content %}{% endblock %}</div>
-    <div class="clear-all"></div>
-
-
+  <div class="grid_10">
+    {% block content %}{% endblock %}
+  </div>
+  <div class="clear">&nbsp;</div>
 </div>
 
 </div>
 
 <div id="msg"></div>
+<div id="livesearch" class="hidden" alt="{% url search_xhr %}"></div>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.tablesorter.min.js"></script>

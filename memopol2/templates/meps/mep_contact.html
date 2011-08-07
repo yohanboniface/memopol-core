@@ -1,21 +1,21 @@
 <ul class="body">
 
+<li><b>{% trans "E-mail" %}:</b> {% for email in mep.email_set.all %}<a class="highlight" href="mailto:{{ email }}">{{ email }}</a> {% endfor %}</li>
+
 <li><b>{% trans "Bruxelles" %}</b><br/>
     Building {{ mep.bxl_building.name }} {{ mep.bxl_office }}<br/>
     {{ mep.bxl_building.street }}, {{ mep.bxl_building.postcode }} Bruxelles<br/>
-    Tel.:  <a href="callto://{{ mep.bxl_phone1|cut:" " }}">{{ mep.bxl_phone1 }}</a>&nbsp;<a href="callto://{{ mep.bxl_phone2|cut:" " }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
+    Tel.:  <a class="highlight call-now" href="callto://{{ mep.bxl_phone1|cut:" " }}">{{ mep.bxl_phone1 }}</a>&nbsp;-&nbsp;<a class="highlight" href="callto://{{ mep.bxl_phone2|cut:" " }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
     Fax: {{ mep.bxl_fax }}
 </li>
 
 <li><b>{% trans "Strasbourg" %}</b><br/>
     Building {{ mep.stg_building.name }} {{ mep.stg_office }}<br/>
     {{ mep.stg_building.street }}, {{ mep.stg_building.postcode }} Strasbourg Cedex<br/>
-    Tel.:  <a href="callto://{{ mep.stg_phone1|cut:" " }}">{{ mep.stg_phone1 }}</a>&nbsp;<a href="callto://{{ mep.stg_phone2|cut:" " }}">{{ mep.stg_phone2 }}</a>&nbsp;<br/>
+    Tel.:  <a class="highlight" href="callto://{{ mep.stg_phone1|cut:" " }}">{{ mep.stg_phone1 }}</a>&nbsp;-&nbsp;<a class="highlight" href="callto://{{ mep.stg_phone2|cut:" " }}">{{ mep.stg_phone2 }}</a>&nbsp;<br/>
     Fax: {{ mep.stg_fax }}
 </li>
 
-
-<li><i>{% trans "E-mail&nbsp;: " %}</i>{% for email in mep.email_set.all %}<a href="mailto:{{ email }}">{{ email }}</a> {% endfor %}</li>
 
 <li><i>{% trans "Website&nbsp;: " %}</i><a target="_" href="{{ mep.ep_webpage }}">{% trans "Page sur le site du Parlement européen" %}</a></li>
 {% for website in mep.website_set.all %}

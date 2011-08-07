@@ -6,14 +6,19 @@
 <header><h1 id="name">{{ mep.first_name }} {{ mep.last_name|upper }}{% trans ", member of the european parliament" %}</h1></header>
 
 <section id="summary">
-<h1 class="collapsible expanded">{% trans "General information" %}</h1>
+<h2>{% trans "General information" %}</h2>
 
 <ul id="infos" class="body">
 
 <div class="quickView">
-<img class="mugshot" src="{% url meps:mep-picture mep.ep_id %}" onerror="onMugshotError(this);"/>
+<img class="mugshot" alt="{{ mep.first_name }} {{ mep.last_name|upper }}" src="{% url meps:mep-picture mep.ep_id %}" onerror="onMugshotError(this);"/>
 <span>{{ mep.first_name }} {{ mep.last_name|upper }} <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> </span>
-<a href="{% url meps:index_by_group mep.group.abbreviation %}"><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png"/></a><ul>{% for i in mep.achievements %}<li><img alt="{{ i.0 }}" src="{{ MEDIA_URL }}img/trophies/{{ i.1 }}" /></li>{% endfor %}</ul></div>
+<a href="{% url meps:index_by_group mep.group.abbreviation %}"><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png"/></a><ul>{% for i in mep.achievements %}<li><img alt="{{ i.0 }}" src="{{ MEDIA_URL }}img/trophies/{{ i.1 }}" /></li>{% endfor %}</ul>
+<a href="#" id="call-now" />
+  <img src="{{ MEDIA_URL }}img/call_now_en.png" />
+</a>
+</div>
+
 
 {% if not mep.active %}<li><div class="nok">{% trans "Former mep" %}</div></li>{% endif %}
 <li><i>{% trans "Country" %}</i>:  <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.country.code %}">{{ mep.country.name }} </li></a>
@@ -26,7 +31,7 @@
 </ul>
 
 <div id="contact">
-    <h2 class="collapsible expanded">{% trans "Contact" %}</h2>
+    <h2>{% trans "Contact" %}</h2>
     {% include "meps/mep_contact.html" %}
 </div>
 
