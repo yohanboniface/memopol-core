@@ -1,6 +1,6 @@
 <tr>
   <td>
-    <a href="{% url meps:mep mep.id %}">{{ mep.last_name }} {{ mep.first_name }}</a>
+    <a href="{{ mep.get_absolute_url }}">{{ mep.last_name|upper }} {{ mep.first_name }}</a>
   </td>
   {% if not 'country' in hidden_fields %}
   <td>

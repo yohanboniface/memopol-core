@@ -1,17 +1,20 @@
 <ul class="body">
+<li>
+<b><i>{% trans "E-mail" %}:</b>
+{% for email in mp.email_set.all %}
+<a class="highlight" href="mailto:{{ email.email }}">{{ email.email }}</a>
+{% endfor %}
+</li>
+
 {% for addr in mp.address_set.all %}
 <li><b>{{ addr.title|default:"Other address" }}</b><br/>
     {% if addr.building %} {% trans "Building" %} {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
     {{ addr.street }}, {{ addr.postcode }} {{ addr.city }}<br/>
     {% for phone in addr.phone_set.all %}
-    {{ phone.type|capfirst }}.: {% if phone.type == "phone" %}<a href="callto://{{ phone.number }}">{% endif %}{{ phone.number }}{% if phone.type == "phone" %}</a>{% endif %}&nbsp;<br/>
+    {{ phone.type|capfirst }}.: {% if phone.type == "phone" %}<a class="highlight call-now" href="callto://{{ phone.number }}">{% endif %}{{ phone.number }}{% if phone.type == "phone" %}</a>{% endif %}&nbsp;<br/>
     {% endfor %}
 
 </li>
-{% endfor %}
-
-{% for email in mp.email_set.all %}
-    <li><i>{% trans "E-mail&nbsp;: " %}</i><a href="mailto:{{ email.email }}">{{ email.email }}</a></li>
 {% endfor %}
 
 <li><i>{% trans "Web&nbsp;: " %}</i><a target="_" href="{{ mp.an_webpage }}">{{ mp.an_webpage }}</a></li>
