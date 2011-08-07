@@ -54,11 +54,17 @@ $('a#call-now').attr('href', $('a.call-now').attr('href'));
 var livesearch = $('#livesearch');
 $.extend($, {
     livesearchtext: null,
-    livesearch: function(q) {
+    livesearchindex: -1,
+    livesearchitems: null,
+    livesearch: function(self, q) {
         if ($.livesearchtext == q) {
+            q = self.val();
+            if (!/\*$/.exec(q)) { q += '*'; }
             $.get(livesearch.attr('alt')+'?limit=10&q='+q, function(data) {
                 if (/li/.exec(data)) {
                     livesearch.html(data);
+                    $.livesearchindex = -1;
+                    $.livesearchitems = $('li', livesearch);
                     livesearch.show();
                 } else {
                     livesearch.hide();
@@ -73,13 +79,38 @@ $('input.search-text').focus(function() {
     livesearch.css('left', pos.left);
     livesearch.css('top', pos.top+10+self.height());
 });
-$('input.search-text').keyup(function() {
+$('input.search-text').keypress(function(e) {
     var self = $(this);
-    var q = self.val();
-    if (q.length > 2) {
-        q += '*';
-    $.livesearchtext = q;
-    setTimeout(function() {$.livesearch(q)}, 1000);
+    var code = (e.keyCode ? e.keyCode : e.which);
+    if (code == 13) {
+        // enter
+        if ($.livesearchindex >= 0) {
+            window.location.href = $('a', $.livesearchitems[$.livesearchindex]).attr('href');
+            return false;
+        }
+    } else if (code == 40) {
+        // up
+        $.livesearchindex++;
+        if ($.livesearchindex >= $.livesearchitems.length) {
+            $.livesearchindex--;
+        }
+        $.livesearchitems.removeClass('odd');
+        $($.livesearchitems[$.livesearchindex]).addClass('odd');
+        return false;
+    } else if (code == 38) {
+        // down
+        $.livesearchindex--;
+        $.livesearchitems.removeClass('odd');
+        if ($.livesearchindex >= 0) {
+            $($.livesearchitems[$.livesearchindex]).addClass('odd');
+        }
+        return false;
+    } else {
+        var q = self.val();
+        if (q.length >= 2) {
+            $.livesearchtext = q;
+            setTimeout(function() {$.livesearch(self, q)}, 1000);
+        }
     }
 });
 $('body').click(function() {livesearch.hide()});
