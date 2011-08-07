@@ -15,6 +15,12 @@ body {
     margin-top: 1em;
 }
 
+#content h1.document-title {
+    font-size: 150%;
+    border-bottom: 1px black solid;
+}
+
+
 table li a,
 a {
     color: #497ED5;
@@ -138,14 +144,14 @@ h2 {
 
 #content {
     background-color: #fff;
-    margin: 20px;
-    padding: 20px;
-    padding-left: 200px;
+    margin: 0px 20px 20px 20px;
+    padding: 0px 20px 20px 200px;
     text-align: justify;
 }
 
-#grid_10 {
-    margin-top: 30px;
+#content .grid_10 {
+    margin-top: 0px;
+    width: 100%;
 }
 
 #msg {
@@ -209,12 +215,6 @@ button {
 
 /* meps
  */
-
-h1#name
-{
-    font-size: 150%;
-    border-bottom: 1px black solid;
-}
 
 
 ul.treelist {
