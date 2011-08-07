@@ -142,6 +142,10 @@ class MEP(Representative):
         return reverse('meps:mep', args=(self.id,))
 
     @reify
+    def emails(self):
+        return [e.email for e in self.email_set.all()]
+
+    @reify
     def group(self):
         return self.groupmep_set.latest('end').group
 

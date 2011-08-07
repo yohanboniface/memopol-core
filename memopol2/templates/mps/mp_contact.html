@@ -1,21 +1,27 @@
+{% load memopol2 i18n %}
 <ul class="body">
-<li>
-<b><i>{% trans "E-mail" %}:</b>
-{% for email in mp.email_set.all %}
-<a class="highlight" href="mailto:{{ email.email }}">{{ email.email }}</a>
-{% endfor %}
-</li>
+{% if mep.emails %}
+  <li>
+    <b>{% trans "E-mail" %}:</b>
+    {% for email in mep.emails %}
+      <a class="highlight" href="mailto:{{ email }}">{{ email }}</a>
+      {% if not forloop.last %}-{% endif %}
+    {% endfor %}
+  </li>
+{% endif %}
 
 {% for addr in mp.address_set.all %}
 <li><b>{{ addr.title|default:"Other address" }}</b><br/>
     {% if addr.building %} {% trans "Building" %} {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
     {{ addr.street }}, {{ addr.postcode }} {{ addr.city }}<br/>
     {% for phone in addr.phone_set.all %}
-    {{ phone.type|capfirst }}.: {% if phone.type == "phone" %}<a class="highlight call-now" href="callto://{{ phone.number }}">{% endif %}{{ phone.number }}{% if phone.type == "phone" %}</a>{% endif %}&nbsp;<br/>
+    {{ phone.type|capfirst }}.: {% if phone.type == "phone" %}<a class="highlight call-now" href="callto://{{ phone.number|phone }}">{% endif %}{{ phone.number }}{% if phone.type == "phone" %}</a>{% endif %}&nbsp;<br/>
     {% endfor %}
 
 </li>
+<li class="sep">&nbsp;</li>
 {% endfor %}
+
 
 <li><i>{% trans "Web&nbsp;: " %}</i><a target="_" href="{{ mp.an_webpage }}">{{ mp.an_webpage }}</a></li>
 {% for webaddr in mp.website_set.all %}

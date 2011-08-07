@@ -518,6 +518,13 @@ a.abstention {
     height: 1px;
     clear: both:
 }
+
+li.sep {
+    height: 1px;
+    border-bottom: thin solid black;
+    list-style: none;
+}
+
 .hidden {
     display: none;
 }
@@ -555,4 +562,33 @@ div#livesearch ul {
 div#livesearch li {
     margin: 0px;
     padding: 0.5em;
+}
+div#livesearch li.odd a {
+    color: #497ED5;
+}
+
+div#contact {
+    margin-right: 200px;
+    margin-top: 20px;
+    padding: 0.3em 20px 0.3em 0.3em;
+    border: thin solid black;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background-color:#F0F0F6;
+}
+div#contact h2 {
+    margin: 0px;
+    text-align: center;
+    margin-bottom: 0.5em;
+    margin-left: 20px;
+    padding-bottom: 0.3em;
+    padding-top: 0.3em;
+    font-size: 130%;
+}
+div#contact ul {
+    margin: 0px;
+    margin-left: 1em;
+}
+div#contact li {
+    list-style: none;
 }

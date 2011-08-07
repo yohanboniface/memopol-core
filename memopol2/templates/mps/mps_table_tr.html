@@ -1,3 +1,4 @@
+{% load memopol2 i18n %}
 <tr>
   <td>
     <a href="{{ mp.get_absolute_url }}">{{ mp.last_name|upper }} {{ mp.first_name }}</a>
@@ -16,23 +17,25 @@
   <td>
     <div class="body">
       <ul class="body">
-          <li>
-            <b>{% trans "Phone" %}:</b>
-            {% for addr in mp.address_set.all %}
-              {% for phone in addr.phone_set.all %}
-              {% if phone.type == "phone" %}
-                <a href="callto://{{ phone.number }}">{{ phone.number }}</a> -
-                {% endif %}
+          {% if mp.phones %}
+            <li>
+              <b>{% trans "Phone" %}:</b>
+              {% for phone in mp.phones %}
+                <a href="callto://{{ phone|phone }}">{{ phone }}</a>
+                {% if not forloop.last %}-{% endif %}
               {% endfor %}
-            {% endfor %}
-          </li>
+            </li>
+          {% endif %}
 
-          <li>
-          <b>{% trans "E-mail" %}:</b>
-          {% for email in mp.email_set.all %}
-            <a href="mailto:{{ email.email }}">{{ email.email }}</a> -
-          {% endfor %}
-          </li>
+          {% if mp.emails %}
+            <li>
+              <b>{% trans "E-mail" %}:</b>
+              {% for email in mp.emails %}
+                <a href="mailto:{{ email }}">{{ email }}</a>
+                {% if not forloop.last %}-{% endif %}
+              {% endfor %}
+            </li>
+          {% endif %}
 
       </ul>
       <a class="more-contact" href="{% url mps:mp_contact mp.id %}">{% trans "More informations" %}...</a>

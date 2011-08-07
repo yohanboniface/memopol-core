@@ -13,3 +13,9 @@ def root_url():
 def media_url():
     return settings.MEDIA_URL
 
+@register.filter
+def phone(value):
+    for v in ('(0)', ' '):
+        value = value.replace(v, '')
+    return value
+

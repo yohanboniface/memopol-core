@@ -1,3 +1,4 @@
+{% load memopol2 i18n %}
 <tr>
   <td>
     <a href="{{ mep.get_absolute_url }}">{{ mep.last_name|upper }} {{ mep.first_name }}</a>
@@ -35,15 +36,20 @@
     <div class="body">
       <ul class="body">
         <li><b>{% trans "Bruxelles" %}</b>
-         {% trans "Tel." %}: <a href="callto://{{ mep.bxl_phone1|cut:" " }}">{{ mep.bxl_phone1 }}</a>&nbsp;-&nbsp;<a href="callto://{{ mep.bxl_phone2|cut:" " }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
+         {% trans "Tel." %}: <a href="callto://{{ mep.bxl_phone1|phone }}">{{ mep.bxl_phone1 }}</a>&nbsp;-&nbsp;<a href="callto://{{ mep.bxl_phone2|phone }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
         </li>
         <li><b>{% trans "Strasbourg" %}</b>
         {% trans "Tel." %}: <a href="callto://{{ mep.stg_phone1|cut:" " }}">{{ mep.stg_phone1 }}</a>&nbsp;-&nbsp;<a href="callto://{{ mep.stg_phone2|cut:" " }}">{{ mep.stg_phone2 }}</a>&nbsp;<br/>
         </li>
-        <li>
-          <b>{% trans "E-mail" %}:</b>
-          {% for email in mep.email_set.all %}<a href="mailto:{{ email }}">{{ email }}</a> {% endfor %}
-        </li>
+        {% if mep.emails %}
+          <li>
+            <b>{% trans "E-mail" %}:</b>
+            {% for email in mep.emails %}
+              <a href="mailto:{{ email }}">{{ email }}</a>
+              {% if not forloop.last %}-{% endif %}
+            {% endfor %}
+          </li>
+        {% endif %}
       </ul>
       <a class="more-contact" href="{% url meps:mep_contact mep.id %}">{% trans "More informations" %}...</a>
     </div>

@@ -1,4 +1,6 @@
+from django.core.urlresolvers import reverse
 from django.db import models
+from memopol2 import search
 import meps
 
 class RepsContainerManager(models.Manager):
@@ -8,12 +10,17 @@ class RepsContainerManager(models.Manager):
         return self.get_query_set().filter(representative__mep__active=True).annotate(count=models.Count('representative'))
 
 
+@search.searchable
 class Party(models.Model):
     name = models.CharField(max_length=255, unique=True)
     objects = RepsContainerManager()
 
     def __unicode__(self):
         return self.name
+    content = __unicode__
+
+    def get_absolute_url(self):
+        return reverse('meps:index_by_party', args=(self.id,))
 
     @property
     def meps(self):
