@@ -22,7 +22,7 @@ $('table.mep-list').tableFilter();
 $("table.mep-list tbody tr, table.mp-list tbody tr").hover(
     function() {$(this).addClass('odd');},
     function() {$(this).removeClass('odd');}
-)
+);
 
 // collapsible elements
 $(".collapsed~.body").hide();
@@ -65,6 +65,12 @@ $.extend($, {
                     livesearch.html(data);
                     $.livesearchindex = -1;
                     $.livesearchitems = $('li', livesearch);
+                    $.livesearchitems.hover(function() {
+                        $.livesearchitems.removeClass('odd');
+                        $(this).addClass('odd');
+                    }, function() {
+                        $(this).removeClass('odd');
+                    });
                     livesearch.show();
                 } else {
                     livesearch.hide();
@@ -103,6 +109,8 @@ $('input.search-text').keypress(function(e) {
         $.livesearchitems.removeClass('odd');
         if ($.livesearchindex >= 0) {
             $($.livesearchitems[$.livesearchindex]).addClass('odd');
+        } else {
+            $.livesearchindex = -1;
         }
         return false;
     } else {

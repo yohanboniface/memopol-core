@@ -556,3 +556,6 @@ div#livesearch li {
     margin: 0px;
     padding: 0.5em;
 }
+div#livesearch li.odd a {
+    color: #497ED5;
+}
