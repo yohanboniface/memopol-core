@@ -112,9 +112,6 @@ $('input.search-text').keypress(function(e) {
             setTimeout(function() {$.livesearch(self, q)}, 1000);
         }
     }
-    window.console.log(code);
-    window.console.log(self.val());
-    window.console.log($.livesearchindex);
 });
 $('body').click(function() {livesearch.hide()});
 
