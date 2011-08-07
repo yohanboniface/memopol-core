@@ -404,6 +404,7 @@ table.tablesorter tbody td {
    background-color: #FFF;
    vertical-align: top;
 }
+#livesearch li.odd,
 table.tablesorter tbody tr.odd td {
    background-color:#F0F0F6;
 }
@@ -545,12 +546,13 @@ div#livesearch {
     background:white;
     border: thin solid black;
     font-size: 0.8em;
-    padding: 0.5em;
 }
 
-div#livesearch ul,
-div#livesearch li {
+div#livesearch ul {
     margin: 0px;
     list-style: none;
 }
-
+div#livesearch li {
+    margin: 0px;
+    padding: 0.5em;
+}
