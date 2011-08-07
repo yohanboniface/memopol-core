@@ -43,7 +43,13 @@ class Representative(models.Model):
     opinions = models.ManyToManyField(Opinion, through='OpinionREP')
 
     def __unicode__(self):
-        return "%s %s" % (self.first_name, self.last_name.upper())
+        if self.first_name and self.last_name:
+            return u'%s %s' % (self.first_name, self.last_name.upper())
+        elif self.full_name:
+            return self.full_name
+        else:
+            return self.first_name or self.last_name
+    content = __unicode__
 
     class Meta:
         ordering = ['last_name']

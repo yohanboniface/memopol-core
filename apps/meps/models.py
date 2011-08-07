@@ -138,12 +138,6 @@ class MEP(Representative):
     committees = models.ManyToManyField(Committee, through='CommitteeRole')
     organizations = models.ManyToManyField(Organization, through='OrganizationMEP')
 
-    def __unicode__(self):
-        if self.full_name:
-            return self.full_name
-        return u'%s %s' % (self.first_name, self.last_name)
-    content = __unicode__
-
     def get_absolute_url(self):
         return reverse('meps:mep', args=(self.id,))
 

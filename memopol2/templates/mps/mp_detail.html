@@ -1,17 +1,19 @@
 {% extends "base.html" %}
 
+{% block title %}{{ mp }}{% trans ", member of the french parliament" %} – Memopol{% endblock %}
+
 {% block content %}
 
-<header><h1 id="name">{{ mp.first_name }} {{ mp.last_name|upper }}{% trans ", member of the french parliament" %}</h1></header>
+<header><h1 id="name">{{ mp }}{% trans ", member of the french parliament" %}</h1></header>
 
 <section id="summary">
-<h1 class="collapsible expanded">{% trans "General information" %}</h1>
+<h2>{% trans "General information" %}</h2>
 
 <ul id="infos" class="body">
 
 <div class="quickView">
-    <img class="mugshot" src="http://www.nosdeputes.fr/depute/photo/{{ mp.first_name|slugify }}-{{ mp.last_name|slugify}}/192" onerror="onMugshotError(this);"/>
-<span>{{ mp.first_name }} {{ mp.last_name|upper }}  </span>
+  <img class="mugshot" alt="{{ mp }}" src="http://www.nosdeputes.fr/depute/photo/{{ mp.first_name|slugify }}-{{ mp.last_name|slugify}}/192" onerror="onMugshotError(this);"/>
+<span>{{ mp }}  </span>
 {{ mp.group.abbreviation }}
 </div>
 
@@ -31,7 +33,7 @@
 </ul>
 
 <div id="contact">
-    <h2 class="collapsible expanded">{% trans "Contact" %}</h2>
+    <h2>{% trans "Contact" %}</h2>
     {% include "mps/mp_contact.html" %}
 </div>
 

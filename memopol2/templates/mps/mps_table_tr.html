@@ -1,6 +1,6 @@
 <tr>
   <td>
-    <a href="{% url mps:mp mp.id %}">{{ mp.last_name }} {{ mp.first_name }}</a>
+    <a href="{{ mp.get_absolute_url }}">{{ mp.last_name|upper }} {{ mp.first_name }}</a>
   </td>
   {% if not 'party' in hidden_fields %}
   <td>
