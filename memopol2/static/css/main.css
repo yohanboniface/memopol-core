@@ -547,6 +547,18 @@ input.search-text {
     width: 98%;
 }
 
+#search li, #search li input,
+#search li label {
+    display: inline;
+    width: auto;
+}
+#search p {
+    margin: 0px;
+}
+#search p label {
+    display: none;
+}
+
 div#livesearch {
     position: absolute;
     z-index: 100000;

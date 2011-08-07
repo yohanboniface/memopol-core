@@ -38,7 +38,8 @@ def MemopolAnal():
     return anal.RegexTokenizer(r"\w+") | anal.LowercaseFilter() | anal.CharsetFilter(accent_map)
 
 WHOOSH_SCHEMA = fields.Schema(title=fields.TEXT(analyzer=MemopolAnal(), stored=True),
-                              content=fields.TEXT,
+                              content=fields.TEXT(analyzer=MemopolAnal()),
+                              type=fields.KEYWORD(scorable=False, stored=True),
                               url=fields.ID(stored=True, unique=True))
 
 def create_index(sender=None, **kwargs):
@@ -50,6 +51,8 @@ def create_index(sender=None, **kwargs):
 signals.post_syncdb.connect(create_index)
 
 def update_index(sender, instance, created, **kwargs):
+    if int(os.environ.get('SKIP_SEARCH_INDEX', '0')):
+        return
     try:
         url = unicode(instance.get_absolute_url())
     except Exception:
@@ -67,10 +70,12 @@ def update_index(sender, instance, created, **kwargs):
     writer = ix.writer()
     if created:
         writer.add_document(title=unicode(instance), content=content,
+                            type=unicode(instance.__class__.__name__.lower()),
                             url=url)
         writer.commit()
     else:
         writer.update_document(title=unicode(instance), content=content,
+                               type=unicode(instance.__class__.__name__.lower()),
                                url=url)
         writer.commit()
 
@@ -89,6 +94,8 @@ def update():
     from meps import models
     from mps import models
     from reps import models
+    import shutil
+    shutil.rmtree(settings.WHOOSH_INDEX)
     create_index()
     for klass in _searchables:
         for i in klass.objects.all():
