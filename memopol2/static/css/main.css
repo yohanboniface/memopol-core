@@ -518,6 +518,13 @@ a.abstention {
     height: 1px;
     clear: both:
 }
+
+li.sep {
+    height: 1px;
+    border-bottom: thin solid black;
+    list-style: none;
+}
+
 .hidden {
     display: none;
 }
@@ -571,6 +578,17 @@ div#contact {
 }
 div#contact h2 {
     margin: 0px;
-    padding-left: 20px;
-    padding-right: 20px;
+    text-align: center;
+    margin-bottom: 0.5em;
+    margin-left: 20px;
+    padding-bottom: 0.3em;
+    padding-top: 0.3em;
+    font-size: 130%;
+}
+div#contact ul {
+    margin: 0px;
+    margin-left: 1em;
+}
+div#contact li {
+    list-style: none;
 }

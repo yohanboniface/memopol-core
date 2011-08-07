@@ -19,7 +19,9 @@
     {% endfor %}
 
 </li>
+<li class="sep">&nbsp;</li>
 {% endfor %}
+
 
 <li><i>{% trans "Web&nbsp;: " %}</i><a target="_" href="{{ mp.an_webpage }}">{{ mp.an_webpage }}</a></li>
 {% for webaddr in mp.website_set.all %}

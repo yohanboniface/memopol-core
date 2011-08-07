@@ -10,6 +10,7 @@
     {% endfor %}
   </li>
 {% endif %}
+<li class="sep">&nbsp;</li>
 
 <li><b>{% trans "Bruxelles" %}</b><br/>
     Building {{ mep.bxl_building.name }} {{ mep.bxl_office }}<br/>
@@ -17,6 +18,7 @@
     Tel.:  <a class="highlight call-now" href="callto://{{ mep.bxl_phone1|phone }}">{{ mep.bxl_phone1 }}</a>&nbsp;-&nbsp;<a class="highlight" href="callto://{{ mep.bxl_phone2|phone }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
     Fax: {{ mep.bxl_fax }}
 </li>
+<li class="sep">&nbsp;</li>
 
 <li><b>{% trans "Strasbourg" %}</b><br/>
     Building {{ mep.stg_building.name }} {{ mep.stg_office }}<br/>
@@ -24,6 +26,7 @@
     Tel.:  <a class="highlight" href="callto://{{ mep.stg_phone1|phone }}">{{ mep.stg_phone1 }}</a>&nbsp;-&nbsp;<a class="highlight" href="callto://{{ mep.stg_phone2|phone }}">{{ mep.stg_phone2 }}</a>&nbsp;<br/>
     Fax: {{ mep.stg_fax }}
 </li>
+<li class="sep">&nbsp;</li>
 
 
 <li><i>{% trans "Website&nbsp;: " %}</i><a target="_" href="{{ mep.ep_webpage }}">{% trans "Page sur le site du Parlement européen" %}</a></li>
