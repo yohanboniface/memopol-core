@@ -12,6 +12,18 @@ function onMugshotError(source) {
 
 (function($) {
 
+$('#content h1:first').addClass('document-title');
+
+// table
+$("table.mep-list, table.mp-list").tablesorter({ headers: { 3: { sorter: false }, }  });
+// FIXME dont know why but sorting dont work with mp-list..
+//$('table.mep-list, table.mp-list').tableFilter();
+$('table.mep-list').tableFilter();
+$("table.mep-list tbody tr, table.mp-list tbody tr").hover(
+    function() {$(this).addClass('odd');},
+    function() {$(this).removeClass('odd');}
+)
+
 // collapsible elements
 $(".collapsed~.body").hide();
 $(".collapsible").click(function(){
@@ -27,12 +39,6 @@ $(".collapsible").click(function(){
     }
 });
 
-
-// table
-$("table.mep-list, table.mp-list").tablesorter({ headers: { 3: { sorter: false }, }  });
-// FIXME dont know why but sorting dont work with mp-list..
-//$('table.mep-list, table.mp-list').tableFilter();
-$('table.mep-list').tableFilter();
 
 // contact details
 $('a.more-contact').click(function() {
@@ -50,7 +56,7 @@ $.extend($, {
     livesearchtext: null,
     livesearch: function(q) {
         if ($.livesearchtext == q) {
-            $.get(livesearch.attr('alt')+'?q='+q, function(data) {
+            $.get(livesearch.attr('alt')+'?limit=10&q='+q, function(data) {
                 if (/li/.exec(data)) {
                     livesearch.html(data);
                     livesearch.show();

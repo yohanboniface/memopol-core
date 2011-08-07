@@ -9,8 +9,7 @@ class TestComments(TestCase):
         resp = self.app.get('/europe/parliament/names/')
         l = pq(resp.pyquery('a[href^="/europe/parliament/deputy/"]')[0]).attr.href
         resp = self.app.get(l)
-        self.assert_(len(resp.forms)==1, resp.forms)
-        form = resp.form # comment form is the only one
+        form = resp.forms[1]
         resp = form.submit()
         resp.mustcontain('This field is required.')
 
@@ -29,8 +28,7 @@ class TestCommentsModeration(UserTestCase):
         resp = self.app.get('/europe/parliament/names/')
         l = pq(resp.pyquery('a[href^="/europe/parliament/deputy/"]')[0]).attr.href
         resp = self.app.get(l)
-        self.assert_(len(resp.forms)==1, resp.forms)
-        form = resp.form # comment form is the only one
+        form = resp.forms[1]
 
         # user dont need name and email
         form['comment'] = 'ACTA sucks'

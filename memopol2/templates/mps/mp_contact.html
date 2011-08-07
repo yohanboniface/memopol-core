@@ -4,7 +4,7 @@
     {% if addr.building %} {% trans "Building" %} {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
     {{ addr.street }}, {{ addr.postcode }} {{ addr.city }}<br/>
     {% for phone in addr.phone_set.all %}
-    {{ phone.type|capfirst }}.: {% if phone.type == "phone" %}<a href="callto://{{ addr.phone }}">{% endif %}{{ phone.number }}{% if phone.type == "phone" %}</a>{% endif %}&nbsp;<br/>
+    {{ phone.type|capfirst }}.: {% if phone.type == "phone" %}<a href="callto://{{ phone.number }}">{% endif %}{{ phone.number }}{% if phone.type == "phone" %}</a>{% endif %}&nbsp;<br/>
     {% endfor %}
 
 </li>

@@ -21,18 +21,18 @@
             {% for addr in mp.address_set.all %}
               {% for phone in addr.phone_set.all %}
               {% if phone.type == "phone" %}
-                <a href="callto://{{ addr.phone }}">{{ phone.number }}</a> -
+                <a href="callto://{{ phone.number }}">{{ phone.number }}</a> -
                 {% endif %}
               {% endfor %}
             {% endfor %}
           </li>
 
-         {% for email in mp.email_set.all %}
-         <li>
+          <li>
           <b>{% trans "E-mail" %}:</b>
-          <a href="mailto:{{ email.email }}">{{ email.email }}</a>
-         </li>
-         {% endfor %}
+          {% for email in mp.email_set.all %}
+            <a href="mailto:{{ email.email }}">{{ email.email }}</a> -
+          {% endfor %}
+          </li>
 
       </ul>
       <a class="more-contact" href="{% url mps:mp_contact mp.id %}">{% trans "More informations" %}...</a>
