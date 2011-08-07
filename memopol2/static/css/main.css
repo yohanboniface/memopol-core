@@ -559,3 +559,18 @@ div#livesearch li {
 div#livesearch li.odd a {
     color: #497ED5;
 }
+
+div#contact {
+    margin-right: 200px;
+    margin-top: 20px;
+    padding: 0.3em 20px 0.3em 0.3em;
+    border: thin solid black;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background-color:#F0F0F6;
+}
+div#contact h2 {
+    margin: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
