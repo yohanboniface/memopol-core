@@ -2,6 +2,7 @@ import os
 
 from django.contrib.sitemaps import GenericSitemap
 from django.conf.urls.defaults import patterns, include, url
+from django.views.generic.simple import direct_to_template
 from django.views.generic import list_detail
 from django.conf import settings
 from django.contrib import admin
@@ -44,6 +45,7 @@ urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^contact/', include('contact_form.urls')),
     url(r'^search/xhr/$', views.search, {'template_name': 'search_xhr.html'}, name='search_xhr'),
     url(r'^search/$', views.search, {'template_name': 'search.html'}, name='search'),
+    url(r'^robots\.txt$', direct_to_template, {'template': 'robots.txt', 'mimetype': 'text/plain'}),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 )
 
