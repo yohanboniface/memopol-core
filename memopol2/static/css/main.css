@@ -49,7 +49,7 @@ li ul li {
 .container_12 {
     background-color: #FFF;
     min-height: 100%;
-
+    min-width: 900px;
 }
 
 #header {
@@ -58,7 +58,7 @@ li ul li {
     margin: 10px;
     border: solid 13px white;
     height: 185px;
-    font-size: 100px;
+    font-size: 60px;
     font-family: 'IM Fell English SC', Palatino, sans-serif;
     text-shadow:2px 2px 2px black;
     text-align: center;
@@ -69,6 +69,7 @@ li ul li {
     vertical-align: middle;
     color: #ffffff;
     text-decoration: none;
+    min-width: 500px;
 }
 
 
@@ -266,12 +267,21 @@ li {
     border: 0px;
 }
 
+div.map {
+    margin: auto;
+}
+
+div.map-eu {
+    border: thin solid black;
+}
+
 .quickView
 {
     float: right;
     margin-left: 1em;
     padding-left: 0.5em;
     background: white;
+    max-width: 180px;
 }
 
 .quickView span
@@ -646,9 +656,12 @@ div.legend {
     -moz-border-radius: 10px;
     border-radius: 10px;
     background-color:#F0F0F6;
-    padding: 0.3em;
+    padding: 0.5em;
     margin-bottom: 1em;
     display: inline;
+}
+div.legend label {
+    font-weight: bold;
 }
 
 ul.recommendation ul li {

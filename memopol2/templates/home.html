@@ -1,18 +1,19 @@
 {% extends "base.html" %}
 {% load flatblock_tags %}
+{% block bodyattrs %}id="home"{% endblock %}
 {% block content %}
     <div class="edito">
         {% flatblock "welcome.info" %}
     </div>
-    <h1>{% trans "MEPs by country" %}</h1>
+    <h1 class="document-title">{% trans "MEPs by country" %}</h1>
     {% include "map-eu.html" %}
-    <h1>{% trans "MEPs by political group" %}</h1>
+    <h1 class="document-title">{% trans "MEPs by political group" %}</h1>
     {% include "hemicycle-eu.html" %}
 
-    <div class="votes">
+    <div>
     {% if object_list %}
-        <h1>{% trans "Votes list" %}</h1>
-        <ul>
+        <h1 class="document-title">{% trans "Votes list" %}</h1>
+        <ul class="votes">
             {% for proposal in object_list|dictsortreversed:"date" %}
                 <li>
                     <a href="{% url votes:detail proposal.id %}">{{ proposal.title }}</a>
