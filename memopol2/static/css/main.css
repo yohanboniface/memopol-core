@@ -497,7 +497,7 @@ div.ok {
     display:inline;
     color: black;
     padding: 0 0 0 20px;
-    background: url("../img/icons/bullet-green.png") no-repeat top left;
+    background: url("../img/icons/bullet-green.png") no-repeat top left !important;
 }
 
 a.nok,
@@ -506,7 +506,7 @@ div.nok {
     display:inline;
     color: black;
     padding: 0 0 0 20px;
-    background: url("../img/icons/bullet-red.png") no-repeat top left;
+    background: url("../img/icons/bullet-red.png") no-repeat top left !important;
 }
 
 span.abstention,
@@ -514,7 +514,7 @@ a.abstention {
     display:inline;
     color: black;
     padding: 0 0 0 20px;
-    background: url("../img/icons/bullet-orange.png") no-repeat top left;
+    background: url("../img/icons/bullet-orange.png") no-repeat top left !important;
 }
 
 .clear-all {
@@ -651,6 +651,6 @@ div.legend {
     display: inline;
 }
 
-ul.against ul li, ul.for ul li {
+ul.recommendation ul li {
     list-style: none;
 }

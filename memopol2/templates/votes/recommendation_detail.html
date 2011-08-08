@@ -6,7 +6,7 @@
 
 {% include "votes/legend.html" %}
 
-<ul class="{{ recommendation.recommendation }}">
+<ul class="{{ recommendation.recommendation }} recommendation">
     <li><em>Part</em> : {{ recommendation.part }}</li>
     {% if recommendation.recommendation %}<li><em>Recommendation</em> : {{ recommendation.recommendation }}</li>{% endif %}
     {% if recommendation.weight %}<li><em>Weight</em> : {{ recommendation.weight }}</li>{% endif %}

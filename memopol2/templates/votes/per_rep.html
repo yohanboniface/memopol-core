@@ -11,7 +11,7 @@
     {% for vote in votes %}
     <li>
         {% if vote.recommendation.description %}{{ vote.recommendation.description }}{% else %}No description yet{% endif %}
-        <ul class="{{ vote.recommendation.recommendation }}">
+        <ul class="{{ vote.recommendation.recommendation }} recommendation">
             <li><em>Part</em> : <a href="{% url votes:recommendation proposal.id vote.recommendation.id %}">{{ vote.recommendation.part }}</a></li>
             {% if vote.recommendation.recommendation %}<li><em>Recommendation</em> : <a href="{% url votes:recommendation_choice proposal.id vote.recommendation.id vote.recommendation.recommendation %}">{{ vote.recommendation.recommendation }}</a></li>{% endif %}
             {% if vote.recommendation.weight %}<li><em>Weight</em> : {{ vote.recommendation.weight }}</li>{% endif %}
