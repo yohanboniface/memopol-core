@@ -3,7 +3,7 @@
 {% block content %}
 
 <h1>{% trans "Votes" %}</h1>
-<ul>
+<ul class="votes">
     {% for vote in object_list|dictsortreversed:"date" %}
         <li>
             <a href="{% url votes:detail vote.id %}">{{ vote.title }}</a>

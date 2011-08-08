@@ -3,7 +3,7 @@
 {% block content %}
 
 <h1>{% trans "French MPs by political group" %}</h1>
-<ul class="groups">
+<ul class="mp-groups">
 {% for group in object_list %}
     {% if group.count %}
     <li>

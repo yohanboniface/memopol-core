@@ -251,7 +251,7 @@ li ul.treelist li ul.treelist li ul.treelist li ul.treelist {
 
 ul, ol
 {
-	list-style: disc url(/static/img/bullet.gif);
+	list-style: disc url("../img/icons/bullet-black.png");
     list-style:circle;
     list-style-position: inside;
 }
@@ -492,26 +492,29 @@ form p.error {
 }
 
 a.ok,
+span.ok,
 div.ok {
-    background: #C3FDB8;
-    padding: 0 0.2em;
     display:inline;
     color: black;
+    padding: 0 0 0 20px;
+    background: url("../img/icons/bullet-green.png") no-repeat top left !important;
 }
 
 a.nok,
+span.nok,
 div.nok {
-    background: #FAAFBE;
-    padding: 0 0.2em;
     display:inline;
     color: black;
+    padding: 0 0 0 20px;
+    background: url("../img/icons/bullet-red.png") no-repeat top left !important;
 }
 
+span.abstention,
 a.abstention {
-    background: #FBB917;
-    padding: 0 0.2em;
     display:inline;
     color: black;
+    padding: 0 0 0 20px;
+    background: url("../img/icons/bullet-orange.png") no-repeat top left !important;
 }
 
 .clear-all {
@@ -528,6 +531,8 @@ li.sep {
 .hidden {
     display: none;
 }
+
+/* search */
 
 form#simple-search {
     line-height:30px;
@@ -567,6 +572,7 @@ div#livesearch {
     font-size: 0.8em;
 }
 
+ul.votes, ul.committees, ul.delegations, ul.organisations, ul.parties, ul.mp-groups,
 div#livesearch ul, #search-results ul {
     margin: 0px;
     list-style: none;
@@ -579,9 +585,10 @@ div#livesearch li.odd a {
     color: #497ED5;
 }
 
+ul.votes a, ul.committees a, ul.delegations a, ul.organisations a, ul.parties a, ul.mp-groups a,
 a.search-item {
     text-decoration: none;
-    padding-left: 20px;
+    padding-left: 25px;
 }
 span.search-item-type {
     font-size: 80%;
@@ -591,8 +598,19 @@ span.search-item-type {
 a.mep-icon, a.mp-icon {
     background: url("../img/icons/user.png") no-repeat top left;
 }
+ul.committees a, ul.delegations a, ul.organisations a, ul.parties a, ul.mp-groups a,
 a.comitee-icon, a.delegation-icon, a.group-icon, a.organisation-icon, a.party-icon {
     background: url("../img/icons/user-group.png") no-repeat top left;
+}
+ul.votes a {
+    background: url("../img/icons/article.png") no-repeat top left;
+}
+
+/* contact */
+
+ul#infos {
+    list-style-type: none;
+    margin: 0px;
 }
 
 div#contact {
@@ -618,5 +636,21 @@ div#contact ul {
     margin-left: 1em;
 }
 div#contact li {
+    list-style: none;
+}
+
+/* votes */
+
+div.legend {
+    border: thin solid black;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background-color:#F0F0F6;
+    padding: 0.3em;
+    margin-bottom: 1em;
+    display: inline;
+}
+
+ul.recommendation ul li {
     list-style: none;
 }

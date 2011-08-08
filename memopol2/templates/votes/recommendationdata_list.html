@@ -5,13 +5,13 @@
 <h1>{% trans "Importable votes" %}</h1>
 {% regroup object_list by proposal_name as object_list %}
 
-<ul>
+<ul class="votes">
 {% for rd in object_list reversed %}
     <li>{{ rd.grouper }}
     <ul>
     {% for r in rd.list %}
         <li>
-        {{ r.date|date:"d/m/Y" }} - <a href="{% url votes:import_vote r.id %}">{{ r.title }}</a>
+        <a href="{% url votes:import_vote r.id %}">{{ r.date|date:"d/m/Y" }} - {{ r.title }}</a>
         </li>
     {% endfor %}
     </ul>

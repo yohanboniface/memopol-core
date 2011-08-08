@@ -59,10 +59,13 @@ def search(request, template_name='search.html'):
         if qry is not None:
             searcher = ix.searcher()
             try:
-                hits = searcher.search(qry, limit=limit)
+                hits = searcher.search(qry)
             except Exception, e:
                 log.critical('Error while searching %s' % qry)
                 log.exception(e)
+            else:
+                if limit:
+                    hits = hits[:limit]
         ix.close()
     return direct_to_template(request, template_name,
                               dict(form=form, hits=hits))

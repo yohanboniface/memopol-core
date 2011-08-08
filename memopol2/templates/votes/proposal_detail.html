@@ -6,9 +6,9 @@
     <h1>{{ vote.title }}</h1>
 {% endif %}
 
-<br>
-
 {% regroup vote.recommendation_set.all by subject as subvotes %}
+
+{% include "votes/legend.html" %}
 
 <ul>
     {% for subvote in subvotes %}
@@ -17,8 +17,7 @@
         {% for v in subvote.list %}
         <li>
             <a href="{% url votes:recommendation vote.id v.id %}">{{ v.description }}</a>
-            <ul>
-                <div class="{{ v.recommendation }}">
+            <ul class="{{ v.recommendation }} recommendation">
                 <li><em>Part</em> : {{ v.part }}</li>
                 {% if v.recommendation %}<li><em>Recommendation</em> : {{ v.recommendation }}</li>{% endif %}
                 {% if v.weight %}<li><em>Weight</em> : {{ v.weight }}</li>{% endif %}
@@ -36,7 +35,6 @@
                   {% endif %}
                   {% endfor %}
                 </ul>
-                </div>
             </ul>
         </li>
         <br>
