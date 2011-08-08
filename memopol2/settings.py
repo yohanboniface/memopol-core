@@ -112,6 +112,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django.contrib.markup',
     'django.contrib.comments',
+    'django.contrib.sitemaps',
 
     # 3rd party
     'south',

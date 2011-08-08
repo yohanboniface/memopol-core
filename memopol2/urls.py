@@ -1,15 +1,35 @@
 import os
 
+from django.contrib.sitemaps import GenericSitemap
 from django.conf.urls.defaults import patterns, include, url
 from django.views.generic import list_detail
 from django.conf import settings
 from django.contrib import admin
 from django.views.static import serve
+from meps.models import MEP
+from mps.models import MP
 
 from votes.models import Proposal
 import views
 
 admin.autodiscover()
+
+sitemeps_dict = {
+    'queryset': MP.objects.all(),
+    #'date_field': 'pub_date',
+}
+
+sitemps_dict = {
+    'queryset': MP.objects.all(),
+    #'date_field': 'pub_date',
+}
+
+sitemaps = {
+    'meps': GenericSitemap(sitemeps_dict, priority=0.6),
+    'mps': GenericSitemap(sitemps_dict, priority=0.6),
+}
+
+
 
 urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^$', list_detail.object_list, {'queryset': Proposal.objects.all(), 'template_name' : 'home.html'}, name='index'),
@@ -24,6 +44,7 @@ urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^contact/', include('contact_form.urls')),
     url(r'^search/xhr/$', views.search, {'template_name': 'search_xhr.html'}, name='search_xhr'),
     url(r'^search/$', views.search, {'template_name': 'search.html'}, name='search'),
+    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 )
 
 # hack to autodiscover static files location in dev mode
