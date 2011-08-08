@@ -61,7 +61,8 @@ def autoTrophies(mep):
 
 def score_sort(request):
     return render_to_response("meps/mep_list.html",
-                              {'object_list': sorted(MEP.objects.filter(active=True).exclude(score__isnull=True),
+                              {'object_list': enumerate(sorted(MEP.objects.filter(active=True).exclude(score__isnull=True),
                                                      key=lambda x: x.total_score,
-                                                     reverse=True)},
+                                                     reverse=True), start=1),
+                               'score': True},
                               context_instance=RequestContext(request))

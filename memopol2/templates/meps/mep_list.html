@@ -7,9 +7,15 @@
 <table class="mep-list tablesorter"> 
   {% include "meps/meps_table_thead.html" %}
   <tbody>
+    {% if score %}
+    {% for place, mep in object_list %}
+      {% include "meps/meps_table_tr.html" %}
+    {% endfor %}
+    {% else %}
     {% for mep in object_list %}
       {% include "meps/meps_table_tr.html" %}
     {% endfor %}
+    {% endif %}
   </tbody>
 </table>
 {% endblock %}
