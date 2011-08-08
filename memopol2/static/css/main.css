@@ -72,6 +72,23 @@ li ul li {
     min-width: 500px;
 }
 
+#footer {
+    background-color: #497ED5;
+    color: #ffffff;
+    margin: 0px;
+    padding: 1em;
+    border: solid 13px white;
+    font-family: Palatino, sans-serif;
+    text-shadow:1px 1px 1px black;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#footer a { 
+    vertical-align: middle;
+    color: #ffffff;
+    text-decoration: underline;
+}
 
 
 #nav {
@@ -115,7 +132,7 @@ h2 {
 
 #mainheader {
     font-size: 120%;
-    background: url(/static/img/logo.png) no-repeat ;
+    background: url("../img/logo.png") no-repeat ;
     margin-top: 6px; 
     width: 202px;
 }
@@ -202,16 +219,16 @@ button {
 }
 
 .cancel {
-    background: url(/static/img/nicebutton/delete.gif) no-repeat 2px 5px;
+    background: url("../img/nicebutton/delete.gif") no-repeat 2px 5px;
 }
 
 .download {
-    background: url(/static/img/nicebutton/download.gif) no-repeat 2px 5px;
+    background: url("../img/nicebutton/download.gif") no-repeat 2px 5px;
 }
 
 .submit {
     font-weight: bold;
-    background: url(/static/img/nicebutton/add.gif) no-repeat 2px 5px;
+    background: url("../img/nicebutton/add.gif") no-repeat 2px 5px;
 }
 
 /* meps
@@ -320,7 +337,7 @@ div.map-eu {
 
 .collapsed
 {
-    background-image: url(/static/img/arrow-right.png);
+    background-image: url("../img/arrow-right.png");
     background-position: 0% 0%;
     background-repeat: no-repeat;
     padding-left: 1em;
@@ -328,7 +345,7 @@ div.map-eu {
 
 .expanded
 {
-    background-image: url(/static/img/arrow-down.png);
+    background-image: url("../img/arrow-down.png");
     background-position: 0% 0%;
     background-repeat: no-repeat;
     padding-left: 1em;
@@ -403,7 +420,7 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
    padding: 4px;
 }
 table.tablesorter thead tr .header {
-   background-image: url(/static/img/bg.gif);
+   background-image: url("../img/bg.gif");
    background-repeat: no-repeat;
    background-position: center right;
    cursor: pointer;
@@ -419,10 +436,10 @@ table.tablesorter tbody tr.odd td {
    background-color:#F0F0F6;
 }
 table.tablesorter thead tr .headerSortUp {
-   background-image: url(/static/img/asc.gif);
+   background-image: url("../img/asc.gif");
 }
 table.tablesorter thead tr .headerSortDown {
-   background-image: url(/static/img/desc.gif);
+   background-image: url("../img/desc.gif");
 }
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 background-color: #8dbdd8;
