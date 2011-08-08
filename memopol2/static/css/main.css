@@ -17,9 +17,28 @@ body {
 
 #content h1.document-title {
     font-size: 150%;
-    border-bottom: 1px black solid;
+    border-bottom: 2px #497ED5 solid;
 }
 
+#content h1#home-title {
+    font-size: 60px;
+    font-family: 'IM Fell English SC', Palatino, sans-serif;
+    border: 2px solid #497ED5;
+    background-color: #497ED5;
+    color: white;
+    text-align: center;
+    width: 70%;
+    padding: 0.5em;
+    margin: auto;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    -webkit-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+    -moz-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+    box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+    text-shadow:2px 2px 2px black;
+}
 
 table li a,
 a {
@@ -55,21 +74,20 @@ li ul li {
 #header {
     background-color: #497ED5;
     color: #ffffff;
-    margin: 10px;
+    margin: 0 6px;
+    padding: 0 5px;
     border: solid 13px white;
-    height: 185px;
-    font-size: 60px;
-    font-family: 'IM Fell English SC', Palatino, sans-serif;
-    text-shadow:2px 2px 2px black;
-    text-align: center;
+    border-bottom: none;
+    height: 25px;
+    text-align: right;
     vertical-align: middle;
-    line-height: 164px;
 }
 #header a { 
     vertical-align: middle;
     color: #ffffff;
     text-decoration: none;
-    min-width: 500px;
+    margin: 0 5px;
+    font-size: 0.7em;
 }
 
 #footer {
@@ -78,10 +96,9 @@ li ul li {
     margin: 0px;
     padding: 1em;
     border: solid 13px white;
-    font-family: Palatino, sans-serif;
-    text-shadow:1px 1px 1px black;
     text-align: center;
     vertical-align: middle;
+    font-size: 0.7em;
 }
 
 #footer a { 
@@ -101,14 +118,13 @@ li ul li {
     font-weight: bold;
     font-variant: small-caps;
     padding: 5px;
-    padding-top: 20px;
+    padding: 20px 5px 200px;
     min-height: 100%;
 }
 
 #nav h1, #nav h2 {
     padding: 10px 4px 5px 4px;
     font-family: 'IM Fell English SC', Palatino, sans-serif;
-    text-shadow:1px 1px 1px black;
 }
 
 #nav a:link, 
@@ -133,7 +149,7 @@ h2 {
 #mainheader {
     font-size: 120%;
     background: url("../img/logo.png") no-repeat ;
-    margin-top: 6px; 
+    margin-top: 0px; 
     width: 202px;
 }
 
@@ -144,7 +160,6 @@ h2 {
 
 #mainheader h1 {
     font-family: 'IM Fell English SC', Palatino, sans-serif;
-    text-shadow:1px 1px 1px black;
     font-weight: bold;
     font-variant: small-caps;
     text-align: center;
@@ -169,7 +184,7 @@ h2 {
 
 #content .grid_10 {
     margin-top: 0px;
-    width: 95%;
+    width: 100%;
 }
 
 #msg {
