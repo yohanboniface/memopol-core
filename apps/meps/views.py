@@ -5,10 +5,6 @@ import urllib
 from os.path import join
 
 from django.conf import settings
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-
-from meps.models import MEP
 
 from memopol2.utils import check_dir, send_file, get_content_cache
 
@@ -58,11 +54,3 @@ def autoTrophies(mep):
         if op['url'] == 'http://www.laquadrature.net/wiki/Written_Declaration_12/2010_signatories_list':
             res.append((5, 'signed WD12', 'wd12.jpg'))
     return [(x[1], x[2]) for x in sorted(res, reverse=True)]
-
-def score_sort(request):
-    return render_to_response("meps/mep_list.html",
-                              {'object_list': enumerate(sorted(MEP.objects.filter(active=True).exclude(score__isnull=True),
-                                                     key=lambda x: x.total_score,
-                                                     reverse=True), start=1),
-                               'score': True},
-                              context_instance=RequestContext(request))
