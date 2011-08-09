@@ -2,15 +2,16 @@
 from os import system
 from south.v2 import SchemaMigration
 
+from memopol2.utils import loaddata
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
         def _system(command):
             return True if system(command) == 0 else False
 
-        from django.core.management import call_command
-        call_command("loaddata", "parltrack_reps.json")
-        call_command("loaddata", "parltrack_meps.json")
+        loaddata(orm, "parltrack_reps.json")
+        loaddata(orm, "parltrack_meps.json")
 
     def backwards(self, orm):
         pass
@@ -169,7 +170,25 @@ class Migration(SchemaMigration):
             'local_party': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['reps.Party']", 'through': "orm['reps.PartyRepresentative']", 'symmetrical': 'False'}),
             'opinions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['reps.Opinion']", 'through': "orm['reps.OpinionREP']", 'symmetrical': 'False'}),
             'picture': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
+        },
+        'reps.cv': {
+            'Meta': {'object_name': 'CV'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'representative': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['reps.Representative']"}),
+            'title': ('django.db.models.fields.TextField', [], {})
+        },
+        'reps.email': {
+            'Meta': {'object_name': 'Email'},
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'representative': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['reps.Representative']"})
+        },
+        'reps.website': {
+            'Meta': {'object_name': 'WebSite'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'representative': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['reps.Representative']"}),
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         }
     }
 
-    complete_apps = ['meps']
+    complete_apps = ['meps', 'reps']
