@@ -143,6 +143,10 @@ class MEP(Representative):
         return reverse('meps:mep', args=(self.id,))
 
     @reify
+    def bxl_office(self):
+        return self.bxl_floor + self.bxl_office_number
+
+    @reify
     def emails(self):
         return [e.email for e in self.email_set.all()]
 
