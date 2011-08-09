@@ -121,7 +121,6 @@ class MEP(Representative):
     ep_motions = models.URLField()
     ep_webpage = models.URLField()
     bxl_building = models.ForeignKey(Building, related_name="bxl_building")
-    bxl_office = models.CharField(max_length=255)
     bxl_floor = models.CharField(max_length=255)
     bxl_office_number = models.CharField(max_length=255)
     bxl_fax = models.CharField(max_length=255)
