@@ -17,5 +17,6 @@ Mathieu Pasquet <mathieui@mathieui.net>
 Michael <michael@michael-laptop.(none)>
 Aurélien COUDERC <zecoucou@free.fr>
 tarNeFyS <tarnefys@gmail.com>
+Gael Pasgrimaud <gael@gawel.org>
 
 Gibus <neurone2@laquadrature.net> - creator of memopol v1
