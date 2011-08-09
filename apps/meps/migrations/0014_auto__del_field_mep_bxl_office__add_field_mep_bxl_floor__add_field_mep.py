@@ -1,7 +1,6 @@
 # encoding: utf-8
 from south.db import db
 from south.v2 import SchemaMigration
-from meps.models import MEP
 from sys import stdout
 
 class Migration(SchemaMigration):
@@ -14,8 +13,8 @@ class Migration(SchemaMigration):
         # Adding field 'MEP.bxl_office_number'
         db.add_column('meps_mep', 'bxl_office_number', self.gf('django.db.models.fields.CharField')(default=" ", max_length=255), keep_default=False)
 
-        a, end = 0, MEP.objects.all().count()
-        for mep in MEP.objects.all():
+        a, end = 0, orm.MEP.objects.all().count()
+        for mep in orm.MEP.objects.all():
             a += 1
             stdout.write("Spliting mep bxl office ... %i/%i\r" % (a, end))
             stdout.flush()

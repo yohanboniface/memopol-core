@@ -4,9 +4,6 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db.models import Sum
 
-from meps.models import MEP
-from votes.models import Proposal
-
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
@@ -16,8 +13,8 @@ class Migration(SchemaMigration):
         db.add_column('meps_mep', 'total_score', self.gf('django.db.models.fields.FloatField')(default=None, null=True), keep_default=False)
 
         def total_score(mep):
-            proposals = Proposal.objects.all()
-            total = Proposal.objects.aggregate(Sum('ponderation'))['ponderation__sum']
+            proposals = orm.Proposal.objects.all()
+            total = orm.Proposal.objects.aggregate(Sum('ponderation'))['ponderation__sum']
             # all the votes a mep has been involved in
             done = [score.proposal for score in mep.score_set.all()]
             total_score = sum([score.value * score.proposal.ponderation for score in mep.score_set.all()])
@@ -26,8 +23,8 @@ class Migration(SchemaMigration):
             mep.total_score = total_score / float(total)
             mep.save()
 
-        a, total_meps = 0, MEP.objects.filter(active=True).exclude(score__isnull=True).count()
-        for mep in MEP.objects.filter(active=True).exclude(score__isnull=True):
+        a, total_meps = 0, orm.MEP.objects.filter(active=True).exclude(score__isnull=True).count()
+        for mep in orm.MEP.objects.filter(active=True).exclude(score__isnull=True):
             a += 1
             stdout.write("Calculating score of meps ... %s/%s\r" % (a, total_meps))
             stdout.flush()
@@ -35,8 +32,8 @@ class Migration(SchemaMigration):
 
         stdout.write("\n")
 
-        a, total_meps = 0, MEP.objects.filter(active=True).exclude(score__isnull=True).count()
-        for mep in MEP.objects.filter(active=True).exclude(score__isnull=True).order_by('-total_score'):
+        a, total_meps = 0, orm.MEP.objects.filter(active=True).exclude(score__isnull=True).count()
+        for mep in orm.MEP.objects.filter(active=True).exclude(score__isnull=True).order_by('-total_score'):
             a += 1
             stdout.write("Setting current position of meps ... %s/%s\r" % (a, total_meps))
             stdout.flush()
