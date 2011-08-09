@@ -3,10 +3,8 @@ from django.db import models
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.core.urlresolvers import reverse
 from memopol2.utils import reify
-from django.db.models import Sum
 from memopol2 import search
 
-from votes.models import Proposal
 from reps.models import Representative, Party
 
 class MepsContainerManager(models.Manager):
