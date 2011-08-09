@@ -63,6 +63,7 @@
       <a class="more-contact" href="{% url meps:mep_contact mep.id %}">{% trans "More informations" %}...</a>
     </div>
   </td>
+  {% if score_listing %}
   <td>
       {% if mep.score_set.all %}
       <div class="scores" {% if mep.total_score %}style="background-color: {{ mep.score_color }};"{% endif %}>
@@ -76,4 +77,5 @@
       -
       {% endif %}
   </td>
+  {% endif %}
 </tr>
