@@ -1,21 +1,12 @@
 # encoding: utf-8
-from os import path, system
 from south.v2 import SchemaMigration
+
+from memopol2.utils import loaddata
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        def _system(command):
-            return True if system(command) == 0 else False
-
-        from django.core.management import call_command
-        rep = path.dirname(path.dirname(path.abspath(__file__)))
-        _system("rm %s/models.pyc" % rep)
-        if call_command("loaddata", "meps.json"):
-            print "Loading fixtures failed: revert models.py swtich"
-            _system("mv %s/models.py %s/models_old.py" % (rep, rep))
-            _system("mv %s/models.py.temp %s/models.py" % (rep, rep))
-            raise Exception
+        loaddata(orm, "meps.json")
 
 
     def backwards(self, orm):
@@ -147,4 +138,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['meps']
+    complete_apps = ['meps', 'votes']
