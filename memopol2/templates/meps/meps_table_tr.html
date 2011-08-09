@@ -63,4 +63,17 @@
       <a class="more-contact" href="{% url meps:mep_contact mep.id %}">{% trans "More informations" %}...</a>
     </div>
   </td>
+  <td>
+      {% if mep.score_set.all %}
+      <div class="scores" {% if mep.total_score %}style="background-color: {{ mep.score_color }};"{% endif %}>
+          <ul>
+          {% for score in mep.score_set.all %}
+              <li>{{ score.proposal.title }}: {{ score.value }}</li>
+          {% endfor %}
+          </ul>
+      </div>
+      {% else %}
+      -
+      {% endif %}
+  </td>
 </tr>

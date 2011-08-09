@@ -162,6 +162,12 @@ class MEP(Representative):
     def current_delegations(self):
         return self.delegationrole_set.filter(end=date(9999, 12, 31))
 
+    @property
+    def score_color(self):
+        red = 255 - self.total_score
+        green = self.total_score * 2.55
+        return "rgb(%d, %d, 0)" % (red, green)
+
     class Meta:
         ordering = ['last_name']
 
