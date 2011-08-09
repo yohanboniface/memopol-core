@@ -8,8 +8,18 @@
   {% include "meps/meps_table_thead.html" %}
   <tbody>
     {% for mep in object_list %}
+    {% if not score_listing or mep.total_score %}
       {% include "meps/meps_table_tr.html" %}
+    {% endif %}
     {% endfor %}
+
+    {% if score_listing %}
+    {% for mep in object_list %}
+      {% if not mep.total_score %}
+      {% include "meps/meps_table_tr.html" %}
+      {% endif %}
+    {% endfor %}
+    {% endif %}
   </tbody>
 </table>
 {% endblock %}

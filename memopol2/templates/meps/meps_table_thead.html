@@ -1,5 +1,6 @@
 <thead>
   <tr> 
+    {% if score_listing %}<th filter='false' class="cell-score">Position</th>{% endif %}
     <th filter='false' class="cell-name">MEP</th>
     {% if not 'country' in hidden_fields %}<th filter-type='ddl' class="cell-country">Country</th>{% endif %}
     {% if not 'group' in hidden_fields %}<th filter-type='ddl' class="cell-group">Group</th>{% endif %}

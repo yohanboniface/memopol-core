@@ -1,5 +1,14 @@
 {% load memopol2 i18n %}
 <tr>
+  {% if score_listing %}
+  <td>
+      {% if mep.position %}
+      {{ mep.position }}
+      {% else %}
+      No scores
+      {% endif %}
+  </td>
+  {% endif %}
   <td>
     <a href="{{ mep.get_absolute_url }}">{{ mep.last_name|upper }} {{ mep.first_name }}</a>
   </td>
