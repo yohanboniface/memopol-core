@@ -13,32 +13,34 @@ class Migration(SchemaMigration):
         db.add_column('meps_mep', 'total_score', self.gf('django.db.models.fields.FloatField')(default=None, null=True), keep_default=False)
 
         def total_score(mep):
-            proposals = orm.Proposal.objects.all()
-            total = orm.Proposal.objects.aggregate(Sum('ponderation'))['ponderation__sum']
+            proposals = orm['votes.Proposal'].objects.all()
+            total = orm['votes.Proposal'].objects.aggregate(Sum('ponderation'))['ponderation__sum']
             # all the votes a mep has been involved in
-            done = [score.proposal for score in mep.score_set.all()]
-            total_score = sum([score.value * score.proposal.ponderation for score in mep.score_set.all()])
+            done = [score.proposal for score in orm['votes.Score'].objects.filter(representative=mep.representative_ptr)]
+            total_score = sum([score.value * score.proposal.ponderation for score in orm['votes.Score'].objects.filter(representative=mep.representative_ptr)])
             # add 50 by default to votes a meps hasn't been involved in
             total_score += sum([50 * missing.ponderation for missing in proposals if missing not in done])
             mep.total_score = total_score / float(total)
             mep.save()
 
-        a, total_meps = 0, orm.MEP.objects.filter(active=True).exclude(score__isnull=True).count()
-        for mep in orm.MEP.objects.filter(active=True).exclude(score__isnull=True):
-            a += 1
-            stdout.write("Calculating score of meps ... %s/%s\r" % (a, total_meps))
-            stdout.flush()
-            total_score(mep)
+        a, total_meps = 0, orm.MEP.objects.filter(active=True).count()
+        for mep in orm.MEP.objects.filter(active=True):
+            #if mep.score_set.all().count():
+                a += 1
+                stdout.write("Calculating score of meps ... %s/%s\r" % (a, total_meps))
+                stdout.flush()
+                total_score(mep)
 
         stdout.write("\n")
 
-        a, total_meps = 0, orm.MEP.objects.filter(active=True).exclude(score__isnull=True).count()
-        for mep in orm.MEP.objects.filter(active=True).exclude(score__isnull=True).order_by('-total_score'):
-            a += 1
-            stdout.write("Setting current position of meps ... %s/%s\r" % (a, total_meps))
-            stdout.flush()
-            mep.position = a
-            mep.save()
+        a, total_meps = 0, orm.MEP.objects.filter(active=True).count()
+        for mep in orm.MEP.objects.filter(active=True).order_by('-total_score'):
+            #if mep.score_set.all().count():
+                a += 1
+                stdout.write("Setting current position of meps ... %s/%s\r" % (a, total_meps))
+                stdout.flush()
+                mep.position = a
+                mep.save()
 
         stdout.write("\n")
 
@@ -205,7 +207,40 @@ class Migration(SchemaMigration):
             'local_party': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['reps.Party']", 'through': "orm['reps.PartyRepresentative']", 'symmetrical': 'False'}),
             'opinions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['reps.Opinion']", 'through': "orm['reps.OpinionREP']", 'symmetrical': 'False'}),
             'picture': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
+        },
+        'votes.proposal': {
+            'Meta': {'object_name': 'Proposal'},
+            'id': ('django.db.models.fields.CharField', [], {'max_length': '63', 'primary_key': 'True'}),
+            'ponderation': ('django.db.models.fields.IntegerField', [], {'default': '1'}),
+            'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
+        },
+        'votes.recommendation': {
+            'Meta': {'object_name': 'Recommendation'},
+            'datetime': ('django.db.models.fields.DateTimeField', [], {}),
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '511'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'part': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'proposal': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['votes.Proposal']"}),
+            'recommendation': ('django.db.models.fields.CharField', [], {'max_length': '15', 'null': 'True'}),
+            'subject': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'weight': ('django.db.models.fields.IntegerField', [], {'null': 'True'})
+        },
+        'votes.score': {
+            'Meta': {'ordering': "['date']", 'object_name': 'Score'},
+            'date': ('django.db.models.fields.DateField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'proposal': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['votes.Proposal']"}),
+            'representative': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['reps.Representative']"}),
+            'value': ('django.db.models.fields.FloatField', [], {})
+        },
+        'votes.vote': {
+            'Meta': {'ordering': "['choice']", 'object_name': 'Vote'},
+            'choice': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '127'}),
+            'recommendation': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['votes.Recommendation']"}),
+            'representative': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['reps.Representative']", 'null': 'True'})
         }
     }
 
-    complete_apps = ['meps']
+    complete_apps = ['meps', 'votes']
