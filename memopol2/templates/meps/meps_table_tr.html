@@ -72,6 +72,7 @@
               <li>{{ score.proposal.title }}: {{ score.value }}</li>
           {% endfor %}
           </ul>
+      <p><b>Total score:</b> {{ mep.total_score|floatformat:1 }}</p>
       </div>
       {% else %}
       -
