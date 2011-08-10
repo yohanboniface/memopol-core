@@ -1,8 +1,11 @@
 import re
 from django import template
+from django.template.defaultfilters import stringfilter
+
 
 register = template.Library()
 
+@stringfilter
 @register.filter
 def floors_suffix(value, *args):
     value = re.sub('^[MT0]+', '', value)
