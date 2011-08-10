@@ -67,3 +67,8 @@ class BuildingDetailView(DetailView):
         context['meps'] = MEP.objects.filter(active=True, bxl_building=self.object, bxl_floor=self.kwargs["floor"])
         context['floor'] = self.kwargs['floor']
         return context
+
+
+class MEPView(DetailView):
+    model = MEP
+    context_object_name = "mep"

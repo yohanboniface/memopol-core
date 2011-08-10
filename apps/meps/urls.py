@@ -5,7 +5,7 @@ from memopol2 import utils
 from meps.models import MEP, Country, Group, Committee, Delegation, Organization, Building
 from reps.models import Party
 
-from views import BuildingDetailView
+from views import BuildingDetailView, MEPView
 
 country_dict = {
   'queryset': Country.objects.all(),
@@ -58,11 +58,6 @@ organization_dict = {
     'header_template': 'meps/named_header.html',
   },
 }
-mep_dict = {'queryset': MEP.objects.all(), 'slug_field': 'id', 'template_object_name': 'mep'}
-mep_dict_dataporn = {'queryset': MEP.objects.all(), 'slug_field': 'id', 'template_object_name': 'mep', 'template_name': 'meps/dataporn.html'}
-mep_contact_dict = {'queryset': MEP.objects.all(), 'slug_field': 'id',
-                    'template_name': 'meps/mep_contact.html',
-                    'template_object_name': 'mep'}
 
 urlpatterns = patterns('meps.views',
     # those view are *very* expansive. we cache them in RAM for a week
@@ -85,9 +80,9 @@ urlpatterns = patterns('meps.views',
     url(r'^floor/$', list_detail.object_list, {'queryset': Building.objects.all().order_by('postcode')}, name='index_floor'),
     url(r'^floor/brussels/(?P<pk>\w+)/(?P<floor>\w+)/$', BuildingDetailView.as_view(), name='bxl_floor'),
 
-    url(r'^deputy/(?P<slug>\w+)/$', list_detail.object_detail, mep_dict, name='mep'),
-    url(r'^deputy/(?P<slug>\w+)/dataporn/$', list_detail.object_detail, mep_dict_dataporn, name='mep_dataporn'),
-    url(r'^deputy/(?P<slug>\w+)/contact$', list_detail.object_detail, mep_contact_dict, name='mep_contact'),
+    url(r'^deputy/(?P<pk>\w+)/$', MEPView.as_view(), name='mep'),
+    url(r'^deputy/(?P<pk>\w+)/dataporn/$', MEPView.as_view(template_name="meps/dataporn.html"), name='mep_dataporn'),
+    url(r'^deputy/(?P<pk>\w+)/contact$', MEPView.as_view(template_name="meps/mep_contact.html"), name='mep_contact'),
 )
 
 urlpatterns += patterns('meps.views',
