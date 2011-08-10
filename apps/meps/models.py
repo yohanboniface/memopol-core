@@ -91,11 +91,11 @@ class Building(models.Model):
     street = models.CharField(max_length=255)
     postcode = models.CharField(max_length=255)
 
-    @property
+    @reify
     def _town(self):
         return "bxl" if self.postcode == "1047" else "stg"
 
-    @property
+    @reify
     def floors(self):
         floors = []
         def add(x):
