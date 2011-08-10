@@ -5,59 +5,7 @@ from memopol2 import utils
 from meps.models import MEP, Country, Group, Committee, Delegation, Organization, Building
 from reps.models import Party
 
-from views import BuildingDetailView, MEPView
-
-country_dict = {
-  'queryset': Country.objects.all(),
-  'slug_field': 'code',
-  'template_name': 'meps/container_detail.html',
-  'extra_context': {
-    'hidden_fields': ['country'],
-    'header_template': 'meps/country_header.html',
-  },
-}
-party_dict = {
-  'queryset': Party.objects.all(),
-  'template_name': 'meps/container_detail.html',
-  'extra_context': {
-    'hidden_fields': ['party'],
-    'header_template': 'meps/named_header.html',
-  },
-}
-group_dict = {
-  'queryset': Group.objects.all(),
-  'slug_field': 'abbreviation',
-  'template_name': 'meps/container_detail.html',
-  'extra_context': {
-    'hidden_fields': ['group'],
-    'header_template': 'meps/group_header.html',
-  },
-}
-delegation_dict = {
-  'queryset': Delegation.objects.all(),
-  'template_name': 'meps/container_detail.html',
-  'extra_context': {
-    'hidden_fields': [],
-    'header_template': 'meps/named_header.html',
-  },
-}
-committe_dict = {
-  'queryset': Committee.objects.all(),
-  'slug_field': 'abbreviation',
-  'template_name': 'meps/container_detail.html',
-  'extra_context': {
-    'hidden_fields': [],
-    'header_template': 'meps/named_header.html',
-  },
-}
-organization_dict = {
-  'queryset': Organization.objects.all(),
-  'template_name': 'meps/container_detail.html',
-  'extra_context': {
-    'hidden_fields': [],
-    'header_template': 'meps/named_header.html',
-  },
-}
+from views import BuildingDetailView, MEPView, MEPsFromView
 
 urlpatterns = patterns('meps.views',
     # those view are *very* expansive. we cache them in RAM for a week
@@ -66,17 +14,17 @@ urlpatterns = patterns('meps.views',
     url(r'^score/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=True).order_by('-total_score'), 'extra_context' : {'score_listing' : True}}, name='scores'),
 
     url(r'^organization/$', ListView.as_view(model=Organization), name='index_organizations'),
-    url(r'^organization/(?P<object_id>[0-9]+)/$', list_detail.object_detail, organization_dict, name='index_by_organization'),
+    url(r'^organization/(?P<pk>[0-9]+)/$', MEPsFromView.as_view(model=Organization), name='index_by_organization'),
     url(r'^country/$', ListView.as_view(model=Country), name='index_countries'),
-    url(r'^country/(?P<slug>[a-zA-Z][a-zA-Z])/$', list_detail.object_detail, country_dict, name='index_by_country'),
+    url(r'^country/(?P<slug>[a-zA-Z][a-zA-Z])/$', MEPsFromView.as_view(model=Country, slug_field='code', hidden_fields=['country'], named_header="meps/country_header.html"), name='index_by_country'),
     url(r'^group/$', ListView.as_view(model=Group), name='index_groups'),
-    url(r'^group/(?P<slug>[a-zA-Z/-]+)/$', list_detail.object_detail, group_dict,  name='index_by_group'),
+    url(r'^group/(?P<slug>[a-zA-Z/-]+)/$', MEPsFromView.as_view(model=Group, hidden_fields=['group'], slug_field="abbreviation", named_header="meps/group_header.html"),  name='index_by_group'),
     url(r'^committee/$', ListView.as_view(model=Committee), name='index_committees'),
-    url(r'^committee/(?P<slug>[A-Z]+)/$', list_detail.object_detail, committe_dict, name='index_by_committee'),
+    url(r'^committee/(?P<slug>[A-Z]+)/$', MEPsFromView.as_view(model=Committee, slug_field="abbreviation"), name='index_by_committee'),
     url(r'^delegation/$', ListView.as_view(model=Delegation), name='index_delegations'),
-    url(r'^delegation/(?P<object_id>[0-9]+)/$', list_detail.object_detail, delegation_dict, name='index_by_delegation'),
+    url(r'^delegation/(?P<pk>[0-9]+)/$', MEPsFromView.as_view(model=Delegation), name='index_by_delegation'),
     url(r'^party/$', ListView.as_view(model=Party), name='index_parties'),
-    url(r'^party/(?P<object_id>[0-9]+)/$', list_detail.object_detail, party_dict,  name='index_by_party'),
+    url(r'^party/(?P<pk>[0-9]+)/$', MEPsFromView.as_view(model=Party, hidden_fields=['party']),  name='index_by_party'),
     url(r'^floor/$', ListView.as_view(queryset=Building.objects.order_by('postcode')), name='index_floor'),
     url(r'^floor/brussels/(?P<pk>\w+)/(?P<floor>\w+)/$', BuildingDetailView.as_view(), name='bxl_floor'),
 

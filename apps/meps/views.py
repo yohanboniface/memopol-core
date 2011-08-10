@@ -72,3 +72,15 @@ class BuildingDetailView(DetailView):
 class MEPView(DetailView):
     model = MEP
     context_object_name = "mep"
+
+
+class MEPsFromView(DetailView):
+    template_name='meps/container_detail.html'
+    hidden_fields = []
+    named_header='meps/named_header.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(MEPsFromView, self).get_context_data(**kwargs)
+        context['header_template'] = self.named_header
+        context['hidden_fields'] = self.hidden_fields
+        return context
