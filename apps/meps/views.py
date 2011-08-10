@@ -5,8 +5,11 @@ import urllib
 from os.path import join
 
 from django.conf import settings
+from django.views.generic import DetailView
 
 from memopol2.utils import check_dir, send_file, get_content_cache
+
+from models import Building, MEP
 
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
 
@@ -54,3 +57,13 @@ def autoTrophies(mep):
         if op['url'] == 'http://www.laquadrature.net/wiki/Written_Declaration_12/2010_signatories_list':
             res.append((5, 'signed WD12', 'wd12.jpg'))
     return [(x[1], x[2]) for x in sorted(res, reverse=True)]
+
+class BuildingDetailView(DetailView):
+    context_object_name = "building"
+    model = Building
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(BuildingDetailView, self).get_context_data(**kwargs)
+        context['meps'] = MEP.objects.filter(active=True, bxl_building=self.object, bxl_floor=self.kwargs["floor"])
+        context['floor'] = self.kwargs['floor']
+        return context

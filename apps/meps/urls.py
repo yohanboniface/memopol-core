@@ -5,6 +5,8 @@ from memopol2 import utils
 from meps.models import MEP, Country, Group, Committee, Delegation, Organization, Building
 from reps.models import Party
 
+from views import BuildingDetailView
+
 country_dict = {
   'queryset': Country.objects.all(),
   'slug_field': 'code',
@@ -81,6 +83,7 @@ urlpatterns = patterns('meps.views',
     url(r'^party/$', list_detail.object_list, {'queryset': Party.objects.with_counts()}, name='index_parties'),
     url(r'^party/(?P<object_id>[0-9]+)/$', list_detail.object_detail, party_dict,  name='index_by_party'),
     url(r'^floor/$', list_detail.object_list, {'queryset': Building.objects.all().order_by('postcode')}, name='index_floor'),
+    url(r'^floor/brussels/(?P<pk>\w+)/(?P<floor>\w+)/$', BuildingDetailView.as_view(), name='bxl_floor'),
 
     url(r'^deputy/(?P<slug>\w+)/$', list_detail.object_detail, mep_dict, name='mep'),
     url(r'^deputy/(?P<slug>\w+)/dataporn/$', list_detail.object_detail, mep_dict_dataporn, name='mep_dataporn'),

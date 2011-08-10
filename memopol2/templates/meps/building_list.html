@@ -2,24 +2,26 @@
 
 {% block content %}
 
+{% load floors_filter %}
+
 <h1>{% trans "MEPs by floor" %}</h1>
-<ul class="building">
 {% regroup object_list by postcode as towns %}
-    {% for town in towns %}
-    <li>{% if town.grouper == "1047" %}{% trans "Brussels" %}{% else %}{% trans "Strasbourg" %}{% endif %}</li>
+{% for town in towns %}
+<h2>{% if town.grouper == "1047" %}{% trans "Brussels" %}{% else %}{% trans "Strasbourg" %}{% endif %}</h2>
+<ul>
+    {% for building in town.list %}
+    {% if building.meps|length %}
+    <li>{{ building.name }}</li>
+    {% if building.postcode == "1047" %}
     <ul>
-        {% for building in town.list %}
-        <li>{{ building.name }}</li>
-        {% if building.postcode == "1047" %}
-        <ul>
-            {% for floor in building.floors %}
-            <li>{{ floor }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+        {% for floor in building.floors %}
+        <li><a href="{% url meps:bxl_floor building.id floor %}">{{ floor }}</a></li>
         {% endfor %}
     </ul>
+    {% endif %}
+    {% endif %}
     {% endfor %}
 </ul>
+{% endfor %}
 
 {% endblock %}
