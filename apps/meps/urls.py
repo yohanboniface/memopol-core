@@ -89,6 +89,7 @@ urlpatterns = patterns('meps.views',
     url(r'^deputy/(?P<slug>\w+)/dataporn/$', list_detail.object_detail, mep_dict_dataporn, name='mep_dataporn'),
     url(r'^deputy/(?P<slug>\w+)/contact$', list_detail.object_detail, mep_contact_dict, name='mep_contact'),
 )
+
 urlpatterns += patterns('meps.views',
     url(r'^mep/(?P<ep_id>[0-9]+)/picture.jpg$', 'get_mep_picture',
         name='mep-picture'),
