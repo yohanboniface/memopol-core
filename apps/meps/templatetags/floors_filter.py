@@ -5,7 +5,7 @@ register = template.Library()
 
 @register.filter
 def floors_suffix(value, *args):
-    value = re.sub('^0', '', value)
+    value = re.sub('^[MT0]+', '', value)
     if value == "1":
         return value + 'st'
     if value == "2":
