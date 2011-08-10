@@ -91,6 +91,18 @@ class Building(models.Model):
     street = models.CharField(max_length=255)
     postcode = models.CharField(max_length=255)
 
+    @property
+    def _town(self):
+        return "bxl" if self.postcode == "1047" else "stg"
+
+    @property
+    def floors(self):
+        floors = []
+        def add(x):
+            if getattr(x, "%s_floor" % self._town) not in floors:
+                floors.append(getattr(x, "%s_floor" % self._town))
+        map(add, MEP.objects.filter(bxl_building=self).order_by("%s_floor" % self._town))
+        return floors
 
 @search.searchable
 class Organization(models.Model):

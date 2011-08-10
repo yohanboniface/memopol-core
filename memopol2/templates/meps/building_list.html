@@ -10,6 +10,13 @@
     <ul>
         {% for building in town.list %}
         <li>{{ building.name }}</li>
+        {% if building.postcode == "1047" %}
+        <ul>
+            {% for floor in building.floors %}
+            <li>{{ floor }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         {% endfor %}
     </ul>
     {% endfor %}
