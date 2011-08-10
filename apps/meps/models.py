@@ -144,6 +144,8 @@ class MEP(Representative):
     bxl_phone2 = models.CharField(max_length=255)
     stg_building = models.ForeignKey(Building, related_name="stg_building")
     stg_office = models.CharField(max_length=255)
+    stg_floor = models.CharField(max_length=255)
+    stg_office_number = models.CharField(max_length=255)
     stg_fax = models.CharField(max_length=255)
     stg_phone1 = models.CharField(max_length=255)
     stg_phone2 = models.CharField(max_length=255)
