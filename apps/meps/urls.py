@@ -1,17 +1,17 @@
 from django.conf.urls.defaults import patterns, url
-from django.views.generic import list_detail, ListView
+from django.views.generic import ListView
 from memopol2 import utils
 
-from meps.models import MEP, Country, Group, Committee, Delegation, Organization, Building
+from meps.models import Country, Group, Committee, Delegation, Organization, Building
 from reps.models import Party
 
-from views import BuildingDetailView, MEPView, MEPsFromView
+from views import BuildingDetailView, MEPView, MEPsFromView, MEPList
 
 urlpatterns = patterns('meps.views',
     # those view are *very* expansive. we cache them in RAM for a week
-    url(r'^names/$', utils.cached(3600*24*7)(list_detail.object_list), {'queryset': MEP.objects.filter(active=True)}, name='index_names'),
-    url(r'^inactive/$', utils.cached(3600*24*7)(list_detail.object_list), {'queryset': MEP.objects.filter(active=False)}, name='index_inactive'),
-    url(r'^score/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=True).order_by('-total_score'), 'extra_context' : {'score_listing' : True}}, name='scores'),
+    url(r'^names/$', utils.cached(3600*24*7)(MEPList.as_view()), name='index_names'),
+    url(r'^inactive/$', utils.cached(3600*24*7)(MEPList.as_view(active=False)), name='index_inactive'),
+    url(r'^score/$', MEPList.as_view(order_by='-total_score', score_listing=True), name='scores'),
 
     url(r'^organization/$', ListView.as_view(model=Organization), name='index_organizations'),
     url(r'^organization/(?P<pk>[0-9]+)/$', MEPsFromView.as_view(model=Organization), name='index_by_organization'),

@@ -5,7 +5,7 @@ import urllib
 from os.path import join
 
 from django.conf import settings
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
 from memopol2.utils import check_dir, send_file, get_content_cache
 
@@ -67,6 +67,21 @@ class BuildingDetailView(DetailView):
         context = super(BuildingDetailView, self).get_context_data(**kwargs)
         context['meps'] = MEP.objects.filter(active=True, bxl_building=self.object, bxl_floor=self.kwargs["floor"])
         context['floor'] = self.kwargs['floor']
+        return context
+
+
+class MEPList(ListView):
+    active=True
+    context_object_name="mep"
+    score_listing=False
+    order_by='last_name'
+
+    def get_queryset(self):
+        return MEP.objects.filter(active=self.active).order_by(self.order_by)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(MEPList, self).get_context_data(**kwargs)
+        context['score_listing'] = self.score_listing
         return context
 
 
