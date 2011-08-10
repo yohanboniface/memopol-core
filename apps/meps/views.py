@@ -58,6 +58,7 @@ def autoTrophies(mep):
             res.append((5, 'signed WD12', 'wd12.jpg'))
     return [(x[1], x[2]) for x in sorted(res, reverse=True)]
 
+
 class BuildingDetailView(DetailView):
     context_object_name = "building"
     model = Building
