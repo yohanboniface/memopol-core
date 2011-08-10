@@ -7,7 +7,6 @@ from django.views.generic import list_detail
 from django.conf import settings
 from django.contrib import admin
 from django.views.static import serve
-from meps.models import MEP
 from mps.models import MP
 
 from votes.models import Proposal
