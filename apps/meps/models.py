@@ -101,7 +101,7 @@ class Building(models.Model):
         def add(x):
             if getattr(x, "%s_floor" % self._town) not in floors:
                 floors.append(getattr(x, "%s_floor" % self._town))
-        map(add, MEP.objects.filter(active=True, bxl_building=self).order_by("%s_floor" % self._town))
+        map(add, MEP.objects.filter(active=True, **{'%s_building' % self._town: self}).order_by("%s_floor" % self._town))
         return floors
 
     @reify

@@ -12,13 +12,11 @@
     {% for building in town.list %}
     {% if building.meps|length %}
     <li>{{ building.name }}</li>
-    {% if building.postcode == "1047" %}
     <ul>
         {% for floor in building.floors %}
         <li><a href="{% url meps:bxl_floor building.id floor %}">{{ floor|floors_suffix }} floor</a></li>
         {% endfor %}
     </ul>
-    {% endif %}
     {% endif %}
     {% endfor %}
 </ul>
