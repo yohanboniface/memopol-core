@@ -15,7 +15,7 @@
     {% if building.postcode == "1047" %}
     <ul>
         {% for floor in building.floors %}
-        <li><a href="{% url meps:bxl_floor building.id floor %}">{{ floor }}</a></li>
+        <li><a href="{% url meps:bxl_floor building.id floor %}">{{ floor|floors_suffix }} floor</a></li>
         {% endfor %}
     </ul>
     {% endif %}
