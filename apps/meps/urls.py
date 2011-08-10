@@ -77,7 +77,7 @@ urlpatterns = patterns('meps.views',
     url(r'^delegation/(?P<object_id>[0-9]+)/$', list_detail.object_detail, delegation_dict, name='index_by_delegation'),
     url(r'^party/$', ListView.as_view(model=Party), name='index_parties'),
     url(r'^party/(?P<object_id>[0-9]+)/$', list_detail.object_detail, party_dict,  name='index_by_party'),
-    url(r'^floor/$', list_detail.object_list, {'queryset': Building.objects.all().order_by('postcode')}, name='index_floor'),
+    url(r'^floor/$', ListView.as_view(queryset=Building.objects.order_by('postcode')), name='index_floor'),
     url(r'^floor/brussels/(?P<pk>\w+)/(?P<floor>\w+)/$', BuildingDetailView.as_view(), name='bxl_floor'),
 
     url(r'^deputy/(?P<pk>\w+)/$', MEPView.as_view(), name='mep'),
