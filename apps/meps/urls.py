@@ -66,6 +66,7 @@ urlpatterns = patterns('meps.views',
     # those view are *very* expansive. we cache them in RAM for a week
     url(r'^names/$', utils.cached(3600*24*7)(list_detail.object_list), {'queryset': MEP.objects.filter(active=True)}, name='index_names'),
     url(r'^inactive/$', utils.cached(3600*24*7)(list_detail.object_list), {'queryset': MEP.objects.filter(active=False)}, name='index_inactive'),
+    url(r'^score/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=True).order_by('-total_score'), 'extra_context' : {'score_listing' : True}}, name='scores'),
 
     url(r'^organization/$', list_detail.object_list, {'queryset': Organization.objects.all()}, name='index_organizations'),
     url(r'^organization/(?P<object_id>[0-9]+)/$', list_detail.object_detail, organization_dict, name='index_by_organization'),
@@ -79,7 +80,7 @@ urlpatterns = patterns('meps.views',
     url(r'^delegation/(?P<object_id>[0-9]+)/$', list_detail.object_detail, delegation_dict, name='index_by_delegation'),
     url(r'^party/$', list_detail.object_list, {'queryset': Party.objects.with_counts()}, name='index_parties'),
     url(r'^party/(?P<object_id>[0-9]+)/$', list_detail.object_detail, party_dict,  name='index_by_party'),
-    url(r'^score/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=True).order_by('-total_score'), 'extra_context' : {'score_listing' : True}}, name='scores'),
+
     url(r'^deputy/(?P<slug>\w+)/$', list_detail.object_detail, mep_dict, name='mep'),
     url(r'^deputy/(?P<slug>\w+)/dataporn/$', list_detail.object_detail, mep_dict_dataporn, name='mep_dataporn'),
     url(r'^deputy/(?P<slug>\w+)/contact$', list_detail.object_detail, mep_contact_dict, name='mep_contact'),
