@@ -2,7 +2,7 @@ from django.conf.urls.defaults import patterns, url
 from django.views.generic import list_detail
 from memopol2 import utils
 
-from meps.models import MEP, Country, Group, Committee, Delegation, Organization
+from meps.models import MEP, Country, Group, Committee, Delegation, Organization, Building
 from reps.models import Party
 
 country_dict = {
@@ -80,6 +80,7 @@ urlpatterns = patterns('meps.views',
     url(r'^delegation/(?P<object_id>[0-9]+)/$', list_detail.object_detail, delegation_dict, name='index_by_delegation'),
     url(r'^party/$', list_detail.object_list, {'queryset': Party.objects.with_counts()}, name='index_parties'),
     url(r'^party/(?P<object_id>[0-9]+)/$', list_detail.object_detail, party_dict,  name='index_by_party'),
+    url(r'^floor/$', list_detail.object_list, {'queryset': Building.objects.all().order_by('postcode')}, name='index_floor'),
 
     url(r'^deputy/(?P<slug>\w+)/$', list_detail.object_detail, mep_dict, name='mep'),
     url(r'^deputy/(?P<slug>\w+)/dataporn/$', list_detail.object_detail, mep_dict_dataporn, name='mep_dataporn'),

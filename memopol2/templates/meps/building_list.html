@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{% trans "MEPs by floor" %}</h1>
+<ul class="building">
+{% regroup object_list by postcode as towns %}
+    {% for town in towns %}
+    <li>{% if town.grouper == "1047" %}{% trans "Brussels" %}{% else %}{% trans "Strasbourg" %}{% endif %}</li>
+    <ul>
+        {% for building in town.list %}
+        <li>{{ building.name }}</li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+</ul>
+
+{% endblock %}
