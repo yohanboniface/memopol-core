@@ -27,6 +27,7 @@ urlpatterns = patterns('meps.views',
     url(r'^party/(?P<pk>[0-9]+)/$', MEPsFromView.as_view(model=Party, hidden_fields=['party']),  name='index_by_party'),
     url(r'^floor/$', ListView.as_view(queryset=Building.objects.order_by('postcode')), name='index_floor'),
     url(r'^floor/brussels/(?P<pk>\w+)/(?P<floor>\w+)/$', BuildingDetailView.as_view(), name='bxl_floor'),
+    url(r'^floor/strasbourg/(?P<pk>\w+)/(?P<floor>\w+)/$', BuildingDetailView.as_view(), name='stg_floor'),
 
     url(r'^deputy/(?P<pk>\w+)/$', MEPView.as_view(), name='mep'),
     url(r'^deputy/(?P<pk>\w+)/dataporn/$', MEPView.as_view(template_name="meps/dataporn.html"), name='mep_dataporn'),

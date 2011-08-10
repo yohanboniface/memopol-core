@@ -65,7 +65,9 @@ class BuildingDetailView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(BuildingDetailView, self).get_context_data(**kwargs)
-        context['meps'] = MEP.objects.filter(active=True, bxl_building=self.object, bxl_floor=self.kwargs["floor"])
+        context['meps'] = MEP.objects.filter(active=True,
+                                             **{'%s_building' % self.object._town: self.object,
+                                                '%s_floor' % self.object._town: self.kwargs["floor"]})
         context['floor'] = self.kwargs['floor']
         return context
 
