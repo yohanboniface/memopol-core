@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import patterns, url
-from django.views.generic import list_detail
+from django.views.generic import ListView, DetailView
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 
@@ -31,11 +31,11 @@ def vote_recommendation(request, proposal_id, recommendation_id):
                               context_instance=RequestContext(request))
 
 urlpatterns = patterns('',
-    url(r'^$', list_detail.object_list, {'queryset': Proposal.objects.all()}, name='index'),
-    url(r'^import/$', list_detail.object_list, {'queryset': RecommendationData.objects.all()}, name='import'),
-    url(r'^import/(?P<object_id>\d+)/$', list_detail.object_detail, {'queryset': RecommendationData.objects.all()}, name='import_vote'),
+    url(r'^$', ListView.as_view(model=Proposal), name='index'),
+    url(r'^import/$', ListView.as_view(model=RecommendationData), name='import'),
+    url(r'^import/(?P<pk>\d+)/$', DetailView.as_view(model=RecommendationData), name='import_vote'),
     url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<recommendation_id>\d+)/(?P<recommendation>\w+)/$', mep_recommendation, name='recommendation_choice'),
     url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<recommendation_id>\d+)/$', vote_recommendation, name='recommendation'),
     url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<mep_id>[a-zA-Z-_]+)/$', proposal_rep, name='rep'),
-    url(r'^(?P<object_id>[a-zA-Z/-_]+)/$', list_detail.object_detail, {'queryset': Proposal.objects.all(), 'template_object_name': 'vote'}, name='detail'),
+    url(r'^(?P<pk>[a-zA-Z/-_]+)/$', DetailView.as_view(model=Proposal, context_object_name='vote'), name='detail'),
 )
