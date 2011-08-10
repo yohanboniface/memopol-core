@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import patterns, url
-from django.views.generic import list_detail
+from django.views.generic import list_detail, ListView
 from memopol2 import utils
 
 from meps.models import MEP, Country, Group, Committee, Delegation, Organization, Building
@@ -70,17 +70,17 @@ urlpatterns = patterns('meps.views',
     url(r'^inactive/$', utils.cached(3600*24*7)(list_detail.object_list), {'queryset': MEP.objects.filter(active=False)}, name='index_inactive'),
     url(r'^score/$', list_detail.object_list, {'queryset': MEP.objects.filter(active=True).order_by('-total_score'), 'extra_context' : {'score_listing' : True}}, name='scores'),
 
-    url(r'^organization/$', list_detail.object_list, {'queryset': Organization.objects.all()}, name='index_organizations'),
+    url(r'^organization/$', ListView.as_view(model=Organization), name='index_organizations'),
     url(r'^organization/(?P<object_id>[0-9]+)/$', list_detail.object_detail, organization_dict, name='index_by_organization'),
-    url(r'^country/$', list_detail.object_list, {'queryset': Country.objects.with_counts()}, name='index_countries'),
+    url(r'^country/$', ListView.as_view(model=Country), name='index_countries'),
     url(r'^country/(?P<slug>[a-zA-Z][a-zA-Z])/$', list_detail.object_detail, country_dict, name='index_by_country'),
-    url(r'^group/$', list_detail.object_list, {'queryset': Group.objects.with_counts()}, name='index_groups'),
+    url(r'^group/$', ListView.as_view(model=Group), name='index_groups'),
     url(r'^group/(?P<slug>[a-zA-Z/-]+)/$', list_detail.object_detail, group_dict,  name='index_by_group'),
-    url(r'^committee/$', list_detail.object_list, {'queryset': Committee.objects.with_counts()}, name='index_committees'),
+    url(r'^committee/$', ListView.as_view(model=Committee), name='index_committees'),
     url(r'^committee/(?P<slug>[A-Z]+)/$', list_detail.object_detail, committe_dict, name='index_by_committee'),
-    url(r'^delegation/$', list_detail.object_list, {'queryset': Delegation.objects.with_counts()}, name='index_delegations'),
+    url(r'^delegation/$', ListView.as_view(model=Delegation), name='index_delegations'),
     url(r'^delegation/(?P<object_id>[0-9]+)/$', list_detail.object_detail, delegation_dict, name='index_by_delegation'),
-    url(r'^party/$', list_detail.object_list, {'queryset': Party.objects.with_counts()}, name='index_parties'),
+    url(r'^party/$', ListView.as_view(model=Party), name='index_parties'),
     url(r'^party/(?P<object_id>[0-9]+)/$', list_detail.object_detail, party_dict,  name='index_by_party'),
     url(r'^floor/$', list_detail.object_list, {'queryset': Building.objects.all().order_by('postcode')}, name='index_floor'),
     url(r'^floor/brussels/(?P<pk>\w+)/(?P<floor>\w+)/$', BuildingDetailView.as_view(), name='bxl_floor'),
