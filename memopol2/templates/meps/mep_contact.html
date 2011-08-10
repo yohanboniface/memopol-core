@@ -21,7 +21,7 @@
 <li class="sep">&nbsp;</li>
 
 <li><b>{% trans "Strasbourg" %}</b><br/>
-    Building {{ mep.stg_building.name }} {{ mep.stg_office }}<br/>
+    Building {{ mep.stg_building.name }} <a href="{% url meps:stg_floor mep.stg_building.id mep.stg_floor %}">{{ mep.stg_office }}</a><br/>
     {{ mep.stg_building.street }}, {{ mep.stg_building.postcode }} Strasbourg Cedex<br/>
     Tel.:  <a class="highlight" href="callto://{{ mep.stg_phone1|phone }}">{{ mep.stg_phone1 }}</a>&nbsp;-&nbsp;<a class="highlight" href="callto://{{ mep.stg_phone2|phone }}">{{ mep.stg_phone2 }}</a>&nbsp;<br/>
     Fax: {{ mep.stg_fax }}
