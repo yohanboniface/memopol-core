@@ -42,6 +42,12 @@
     {% for role in mep.current_committees %}
         <li><a href="{% url meps:index_by_committee role.committee.abbreviation %}">{{ role.role }} of {{ role.committee }}</a></li>
     {% endfor %}
+    {% if mep.old_committees %}
+    <li>-</li>
+    {% for role in mep.old_committees %}
+        <li><i>Was {{ role.role|lower }} in {{ role.committee }} from {{ role.begin }} to {{ role.end }}</i></li>
+    {% endfor %}
+    {% endif %}
     </ul>
 </div>
 {% endif %}

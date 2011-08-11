@@ -192,6 +192,10 @@ class MEP(Representative):
         return self.committeerole_set.filter(end=date(9999, 12, 31))
 
     @reify
+    def old_committees(self):
+        return self.committeerole_set.filter(end__lt=date(9999, 12, 31)).order_by('-end')
+
+    @reify
     def current_organizations(self):
         return self.organizationmep_set.filter(end=date(9999, 12, 31))
 
