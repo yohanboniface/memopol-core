@@ -141,6 +141,7 @@ def clean_existant_data(mep):
     mep.postaladdress_set.all().delete()
 
 def add_committees(mep, committees):
+    CommitteeRole.objects.filter(mep=mep).delete()
     for committee in committees:
         if committee.get("committee_id"):
             try:
