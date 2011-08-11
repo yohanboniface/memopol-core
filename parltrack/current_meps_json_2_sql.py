@@ -194,6 +194,7 @@ def add_addrs(mep, addrs):
 
 def add_countries(mep, countries):
     PartyRepresentative.objects.filter(representative=mep.representative_ptr).delete()
+    CountryMEP.objects.filter(mep=mep).delete()
     print "     add countries"
     for country in countries:
         party = get_or_create(Party, name=country["party"])
