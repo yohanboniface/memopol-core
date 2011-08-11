@@ -9,7 +9,7 @@ from django.conf import settings
 
 from meps.models import MEP
 
-from current_meps_json_2_sql import clean_existant_data, manage_mep
+from current_meps_json_2_sql import manage_mep
 
 if __name__ == "__main__":
     print "load json"
@@ -21,7 +21,6 @@ if __name__ == "__main__":
         in_db_mep = MEP.objects.filter(ep_id=mep_json["UserID"])
         if in_db_mep:
             mep = in_db_mep[0]
-            clean_existant_data(mep)
             manage_mep(mep, mep_json)
 
 # vim:set shiftwidth=4 tabstop=4 expandtab:
