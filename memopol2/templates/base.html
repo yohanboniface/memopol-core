@@ -42,7 +42,7 @@
               </form>
             </div>
 
-            <h2>{% trans "MEPs" %}</h2>
+            <h2>{% trans "Eurodeputies" %}</h2>
             <ul>
                 <li><a href="{% url meps:index_names %}">{% trans "By name" %}</a></li>
                 <li><a href="{% url meps:index_countries %}">{% trans "By country" %}</a></li>
@@ -56,12 +56,12 @@
                 <li><a href="{% url meps:index_inactive %}">{% trans "Former eurodeputies" %}</a></li>
             </ul>
 
-            <h2>{% trans "Votes" %}</h2>
+            <h2>{% trans "Tracked votes" %}</h2>
             <ul>
                 <li><a href="{% url votes:index %}">{% trans "By vote's name" %}</a></li>
             </ul>
 
-            <h2>{% trans "French MPs" %}</h2>
+            <h2>{% trans "French deputies" %}</h2>
             <ul>
                 <li><a href="{% url mps:index %}">{% trans "By name" %}</a></li>
                 <li><a href="{% url mps:index_groups %}">{% trans "By political group" %}</a></li>
