@@ -156,7 +156,7 @@ def add_committees(mep, committees):
                                          begin=_parse_date(committee["start"]),
                                          end=_parse_date(committee["end"]))
         else:
-            # TODO fix this in parltrack
+            # FIXME create or how abbreviations ? Or are they really important ? or create a new class ?
             print "WARNING: committe without abbreviation:", committee["Organization"]
 
 def add_delegations(mep, delegations):
