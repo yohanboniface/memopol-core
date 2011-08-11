@@ -268,7 +268,7 @@ def add_groups(mep, groups):
 def manage_mep(mep, mep_json):
     change_mep_details(mep, mep_json)
     mep.committeerole_set.all().delete()
-    add_committees(mep, mep_json["Committees"])
+    add_committees(mep, mep_json.get("Committees", []))
     add_delegations(mep, mep_json.get("Delegations", []))
     add_countries(mep, mep_json["Constituencies"])
     add_groups(mep, mep_json["Groups"])
@@ -295,7 +295,7 @@ def create_mep(mep_json):
     add_missing_details(mep, mep_json)
     add_addrs(mep, mep_json["Addresses"])
     mep.save()
-    add_committees(mep, mep_json["Committees"])
+    add_committees(mep, mep_json.get("Committees", []))
     add_delegations(mep, mep_json.get("Delegations", []))
     add_countries(mep, mep_json["Constituencies"])
     add_groups(mep, mep_json["Groups"])
