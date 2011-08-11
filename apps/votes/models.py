@@ -60,12 +60,12 @@ class Score(models.Model):
     @property
     def color_tuple(self):
         colors = 255
-        val = int(3 * colors * (self.value/100))
+        val = int(3 * colors * (self.value/100.))
         red = green = colors
         if val < colors:
-            green = int(2/3 * val)
+            green = int(2./3. * val)
         elif val < 2 * colors:
-            green = int(2 / 3 * colors + 1 / 3 * (val / 2 - colors))
+            green = int((2. / 3.) * colors + (1. / 3.) * (val / 2. - colors))
         else:
             red = 3 * colors - val
         return (red / 255., green / 255., 0)
