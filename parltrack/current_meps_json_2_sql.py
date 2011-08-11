@@ -131,14 +131,6 @@ def create_uniq_id(mep_json):
     id = re.sub("\W", lambda _: "", id)
     return id
 
-def clean_existant_data(mep):
-    print "     remove links with delegations"
-    mep.delegationrole_set.all().delete()
-    print "     remove links with committees"
-    mep.committeerole_set.all().delete()
-    print "     remove old postal addrs"
-    mep.postaladdress_set.all().delete()
-
 def add_committees(mep, committees):
     CommitteeRole.objects.filter(mep=mep).delete()
     for committee in committees:
@@ -331,7 +323,6 @@ if __name__ == "__main__":
         in_db_mep = MEP.objects.filter(ep_id=mep_json["UserID"])
         if in_db_mep:
             mep = in_db_mep[0]
-            clean_existant_data(mep)
             mep.active = True
             manage_mep(mep, mep_json)
         else:
