@@ -35,6 +35,16 @@
     {% include "meps/mep_contact.html" %}
 </div>
 
+{% if mep.previous_mandates %}
+<div id="mandates">
+    <h2 class="collapsible collapsed">{% trans "Previous mandates" %}</h2>
+    <ul class="body mandates">
+    {% for role in mep.previous_mandates %}
+        <li><img src="{{ MEDIA_URL }}img/countries/small/{{ role.country.code }}.png"/><i> Was MEP of {{ role.country.name }} for {{ role.party }} form {{ role.begin }} to {{ role.end }}</i></li>
+    {% endfor %}
+</div>
+{% endif %}
+
 {% if mep.current_committees %}
 <div id="committees">
     <h2 class="collapsible collapsed">{% trans "Committees" %}</h2>
