@@ -159,6 +159,7 @@ def add_committees(mep, committees):
             print "WARNING: committe without abbreviation:", committee["Organization"]
 
 def add_delegations(mep, delegations):
+    DelegationRole.objects.filter(mep=mep).delete()
     for delegation in delegations:
         db_delegation = get_or_create(Delegation, name=delegation["Organization"])
         print "     create DelegationRole to link mep to delegation"
