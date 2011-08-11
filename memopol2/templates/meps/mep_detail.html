@@ -37,11 +37,11 @@
     {% include "meps/mep_contact.html" %}
 </div>
 
-{% if mep.committeerole_set.all %}
+{% if mep.current_committees %}
 <div id="committees">
     <h2 class="collapsible collapsed">{% trans "Committees" %}</h2>
     <ul class="body committees">
-    {% for role in mep.committeerole_set.all %}
+    {% for role in mep.current_committees %}
         <li><a href="{% url meps:index_by_committee role.committee.abbreviation %}">{{ role.role }} - {{ role.committee }}</a></li>
     {% endfor %}
     </ul>

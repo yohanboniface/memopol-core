@@ -187,6 +187,10 @@ class MEP(Representative):
     def current_delegations(self):
         return self.delegationrole_set.filter(end=date(9999, 12, 31))
 
+    @reify
+    def current_committees(self):
+        return self.committeerole_set.filter(end=date(9999, 12, 31))
+
     @property
     def score_color(self):
         red = 255 - self.total_score
