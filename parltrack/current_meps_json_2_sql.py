@@ -7,6 +7,8 @@ import json
 import re
 from datetime import datetime, date
 
+from django.db.models import Count
+
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
 
 from reps.models import Party, PartyRepresentative, Email, WebSite, CV
@@ -306,6 +308,11 @@ def create_mep(mep_json):
     print "     save mep modifications"
     mep.save()
 
+def clean():
+    Delegation.objects.annotate(mep_count=Count('mep')).filter(mep_count=0).delete()
+    Committee.objects.annotate(mep_count=Count('mep')).filter(mep_count=0).delete()
+    Organization.objects.annotate(mep_count=Count('mep')).filter(mep_count=0).delete()
+
 if __name__ == "__main__":
     print "load json"
     meps = json.load(open(current_meps, "r"))
@@ -330,6 +337,7 @@ if __name__ == "__main__":
             manage_mep(mep, mep_json)
         else:
             mep = create_mep(mep_json)
+    clean()
 
 # TODO
 # need to check all the existant building and to remove the empty one
