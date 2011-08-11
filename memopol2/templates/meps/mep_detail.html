@@ -59,6 +59,12 @@
     {% for role in mep.current_delegations %}
         <li><a href="{% url meps:index_by_delegation role.delegation.id %}">{{ role.role }} of {{ role.delegation }}</a></li>
     {% endfor %}
+    {% if mep.old_delegations %}
+    <li>-</li>
+    {% for role in mep.old_delegations %}
+        <li><i>Was {{ role.role|lower }} in {{ role.delegation }} from {{ role.begin }} to {{ role.end }}</i></li>
+    {% endfor %}
+    {% endif %}
     </ul>
 </div>
 {% endif %}

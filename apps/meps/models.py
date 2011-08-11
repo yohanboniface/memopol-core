@@ -188,6 +188,10 @@ class MEP(Representative):
         return self.delegationrole_set.filter(end=date(9999, 12, 31))
 
     @reify
+    def old_delegations(self):
+        return self.delegationrole_set.filter(end__lt=date(9999, 12, 31)).order_by('-end')
+
+    @reify
     def current_committees(self):
         return self.committeerole_set.filter(end=date(9999, 12, 31))
 
