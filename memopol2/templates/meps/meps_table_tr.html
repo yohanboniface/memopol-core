@@ -69,7 +69,7 @@
       <div class="scores" {% if mep.total_score %}style="background-color: {{ mep.score_color }};"{% endif %}>
           <ul>
           {% for score in mep.score_set.all %}
-              <li>{{ score.proposal.title }}: {{ score.value }}</li>
+              <li style="background-color: {{ score.color }}">{% if score.proposal.short_name %}{{ score.proposal.short_name }}{% else %}{{ score.proposal.title }}{% endif %}: {{ score.value }}</li>
           {% endfor %}
           </ul>
       <p><b>Total score:</b> {{ mep.total_score|floatformat:1 }}</p>
