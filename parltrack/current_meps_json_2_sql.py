@@ -193,6 +193,7 @@ def add_addrs(mep, addrs):
         PostalAddress.objects.create(addr=addr, mep=mep)
 
 def add_countries(mep, countries):
+    PartyRepresentative.objects.filter(representative=mep.representative_ptr).delete()
     print "     add countries"
     for country in countries:
         party = get_or_create(Party, name=country["party"])
