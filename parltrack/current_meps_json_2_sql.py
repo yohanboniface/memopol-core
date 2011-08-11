@@ -214,6 +214,7 @@ def add_countries(mep, countries):
                                   end=_parse_date(country["end"]))
 
 def add_organizations(mep, organizations):
+    OrganizationMEP.objects.filter(mep=mep).delete()
     for organization in organizations:
         in_db_organization = get_or_create(Organization, name=organization["Organization"])
         print "     link mep to organization:", in_db_organization.name
