@@ -6,7 +6,6 @@ import sys
 import json
 import re
 from datetime import datetime, date
-from django.db.models import Count
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
 
