@@ -12,7 +12,7 @@
 {% endif %}
 <li class="sep">&nbsp;</li>
 
-<li><b>{% trans "Bruxelles" %}</b><br/>
+<li><b>{% trans "Brussels" %}</b><br/>
     Building {{ mep.bxl_building.name }} <a href="{% url meps:bxl_floor mep.bxl_building.id mep.bxl_floor %}">{{ mep.bxl_office }}</a><br/>
     {{ mep.bxl_building.street }}, {{ mep.bxl_building.postcode }} Bruxelles<br/>
     Tel.:  <a class="highlight call-now" href="callto://{{ mep.bxl_phone1|phone }}">{{ mep.bxl_phone1 }}</a>&nbsp;-&nbsp;<a class="highlight" href="callto://{{ mep.bxl_phone2|phone }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
