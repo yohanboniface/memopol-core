@@ -40,7 +40,7 @@
     <h2 class="collapsible collapsed">{% trans "Previous mandates" %}</h2>
     <ul class="body mandates">
     {% for role in mep.previous_mandates %}
-        <li><img src="{{ MEDIA_URL }}img/countries/small/{{ role.country.code }}.png"/><i> Was MEP of {{ role.country.name }} for {{ role.party }} form {{ role.begin }} to {{ role.end }}</i></li>
+        <li><img src="{{ MEDIA_URL }}img/countries/small/{{ role.country.code }}.png"/><i> Was MEP of {{ role.country.name }} for {{ role.party }} form {{ role.begin|date:"d/m/y" }} to {{ role.end|date:"d/m/y" }}</i></li>
     {% endfor %}
 </div>
 {% endif %}
@@ -55,7 +55,7 @@
     {% if mep.old_committees %}
     <li>-</li>
     {% for role in mep.old_committees %}
-        <li><i>Was {{ role.role|lower }} in {{ role.committee }} from {{ role.begin }} to {{ role.end }}</i></li>
+        <li><i>Was {{ role.role|lower }} in {{ role.committee }} from {{ role.begin|date:"d/m/y" }} to {{ role.end|date:"d/m/y" }}</i></li>
     {% endfor %}
     {% endif %}
     </ul>
@@ -72,7 +72,7 @@
     {% if mep.old_delegations %}
     <li>-</li>
     {% for role in mep.old_delegations %}
-        <li><i>Was {{ role.role|lower }} in {{ role.delegation }} from {{ role.begin }} to {{ role.end }}</i></li>
+        <li><i>Was {{ role.role|lower }} in {{ role.delegation }} from {{ role.begin|date:"d/m/y" }} to {{ role.end|date:"d/m/y" }}</i></li>
     {% endfor %}
     {% endif %}
     </ul>
