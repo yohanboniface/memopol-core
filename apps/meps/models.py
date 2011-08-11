@@ -183,6 +183,7 @@ class MEP(Representative):
     def party(self):
         return self.countrymep_set.latest('end').party
 
+    @reify
     def current_delegations(self):
         return self.delegationrole_set.filter(end=date(9999, 12, 31))
 
