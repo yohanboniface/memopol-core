@@ -10,7 +10,7 @@
   </td>
   {% endif %}
   <td>
-    <a href="{{ mep.get_absolute_url }}">{{ mep.last_name|upper }} {{ mep.first_name }}</a>
+    <a href="{{ mep.get_absolute_url }}">{{ mep.first_name }} {{ mep.last_name|upper }}</a>
   </td>
   {% if not 'country' in hidden_fields %}
   <td>
