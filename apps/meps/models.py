@@ -48,7 +48,8 @@ class Group(models.Model):
         return self.mep_set.filter(active=True, groupmep__end=date(9999, 12, 31)).distinct()
 
     def meps_on_date(self, date):
-        return self.mep_set.filter(groupmep__end__gte=date, groupmep__begin__lte=date)
+        return self.mep_set.filter(groupmep__end__gte=date, groupmep__begin__lte=date).distinct()
+
 
 
 @search.searchable
