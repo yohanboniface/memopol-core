@@ -6,4 +6,5 @@ urlpatterns = patterns('trends.views',
     url(r'^mep/(?P<mep_id>\w+).png$', 'trends_for_mep', name='trends'),
     url(r'^recommendation/(?P<recommendation_id>[0-9]+)-group.png$', 'recommendation_group', name='recommendation_group'),
     url(r'^recommendation/(?P<recommendation_id>[0-9]+)-countries.png$', 'recommendation_countries', name='recommendation_countries'),
+    url(r'^recommendation/(?P<recommendation_id>[0-9]+)-countries-absolute.png$', 'recommendation_countries_absolute', name='recommendation_countries_absolute'),
 )
