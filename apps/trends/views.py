@@ -11,7 +11,8 @@ from matplotlib import pyplot
 
 from os.path import join
 
-from meps.models import MEP
+from meps.models import MEP, Group
+from votes.models import Recommendation, Vote
 
 def trends_for_mep(request, mep_id):
 
@@ -125,4 +126,48 @@ def comparaison_trends_for_mep(request, mep_id):
     pyplot.savefig(filename, format="png")
     pyplot.clf()
 
-    return send_file(request,filename, content_type="image/png")
+    return send_file(request, filename, content_type="image/png")
+
+def recommendation_group(request, recommendation_id):
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'recommendations', "%s-group.png" % recommendation_id)
+    cache = get_content_cache(request, filename)
+    if cache:
+        return cache
+
+    recommendation = get_object_or_404(Recommendation, id=recommendation_id)
+
+    if recommendation.recommendation == "for":
+        for_color = "#00FF00"
+        against_color = "#FF0000"
+    else:
+        against_color = "#00FF00"
+        for_color = "#FF0000"
+
+    groups = []
+    a = 0
+    for group in Group.objects.order_by('abbreviation'):
+        votes = Vote.objects.filter(recommendation=recommendation, representative__mep__groupmep__group=group, representative__mep__groupmep__begin__lte=recommendation.proposal.date, representative__mep__groupmep__end__gte=recommendation.proposal.date)
+        if votes.count():
+            total = votes.count()
+            _for = votes.filter(choice="for").count()
+            abstention = votes.filter(choice="abstention").count()
+            pyplot.bar(a + 0.1, group.meps_on_date(recommendation.proposal.date).count(), width=0.8, color="#AAAAAA")
+            # against
+            pyplot.bar(a + 0.1, total, width=0.8, color=against_color)
+            # abstention
+            pyplot.bar(a + 0.1, _for + abstention, width=0.8, color="#FF8800")
+            # for
+            pyplot.bar(a + 0.1, _for, width=0.8, color=for_color)
+            groups.append(group.abbreviation)
+            a += 1
+
+    pyplot.legend(('Not present', 'against', 'abstention', 'for'), 'best', shadow=False)
+    pyplot.title("Group vote repartition")
+    pyplot.xticks(map(lambda x: x+0.5, range(len(groups))), groups)
+    pyplot.xlabel("Groups")
+    pyplot.ylabel("Number of meps")
+    check_dir(filename)
+    pyplot.savefig(filename, format="png")
+    pyplot.clf()
+
+    return send_file(request, filename, content_type="image/png")
