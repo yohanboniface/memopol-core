@@ -30,7 +30,7 @@ class Recommendation(models.Model):
         return self.subject
 
 class Vote(models.Model):
-    choice = models.CharField(max_length=15, choices=((u'for', u'for'), (u'against', u'against'), (u'abstention', u'abstention')))
+    choice = models.CharField(max_length=15, choices=((u'for', u'for'), (u'against', u'against'), (u'abstention', u'abstention'), (u'abstent', u'abstent')))
     name = models.CharField(max_length=127)
     recommendation = models.ForeignKey(Recommendation)
     representative = models.ForeignKey(Representative, null=True)
