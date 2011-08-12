@@ -28,6 +28,9 @@ class Country(models.Model):
     def meps(self):
         return self.mep_set.filter(active=True, countrymep__end=date(9999, 12, 31)).distinct()
 
+    def meps_on_date(self, date):
+        return self.mep_set.filter(groupmep__end__gte=date, groupmep__begin__lte=date).distinct()
+
 
 @search.searchable
 class Group(models.Model):
