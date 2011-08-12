@@ -6,6 +6,8 @@
 
 {% include "votes/legend.html" %}
 
+<p><b>{{ recommendation.description }}</b></p>
+
 <ul class="{{ recommendation.recommendation }} recommendation">
     <li><em>Part</em> : {{ recommendation.part }}</li>
     {% if recommendation.recommendation %}<li><em>Recommendation</em> : {{ recommendation.recommendation }}</li>{% endif %}
