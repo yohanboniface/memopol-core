@@ -13,6 +13,7 @@ from current_meps_json_2_sql import manage_mep, clean
 
 if __name__ == "__main__":
     print "load json"
+    print "fetch json from %s" % settings.PARLTRACK_URL +  "/search?s_meps=on&q=+&format=json"
     meps = json.load(urlopen(settings.PARLTRACK_URL + "/search?s_meps=on&q=+&format=json"))
     a = 0
     for mep_json in meps["items"]:
