@@ -14,31 +14,17 @@
   </td>
   {% if not 'country' in hidden_fields %}
   <td>
-    {% if mep.country %}
-    <a href="{% url meps:index_by_country mep.country.code %}">
-      <img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/>
-      {{ mep.country.name }}
-    </a>
-    {% else %}
-    -
-    {% endif %}
+    {{ mep.country_tag|safe }}
   </td>
   {% endif %}
   {% if not 'group' in hidden_fields %}
   <td>
-    {% if mep.group %}
-    <a href="{% url meps:index_by_group mep.group.abbreviation %}">
-      <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" />
-      {{ mep.group.abbreviation }}
-    </a>
-    {% else %}
-    -
-    {% endif %}
+    {{ mep.group_tag|safe }}
   </td>
   {% endif %}
   {% if not 'party' in hidden_fields %}
   <td>
-    <a href="{% url meps:index_by_party mep.party.id %}">{{ mep.party.name }}</a>
+    {{ mep.party_tag|safe }}
   </td>
   {% endif %}
   <td>

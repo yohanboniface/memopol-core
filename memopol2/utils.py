@@ -4,6 +4,11 @@
 import os
 import time
 from django.http import HttpResponse
+from django.template.loader import render_to_string
+from django.template import Context, Template
+from django.template.base import TemplateSyntaxError
+from django.conf import settings
+from django.core.cache import cache
 
 def check_dir(filename):
     dirname = os.path.dirname(filename)
@@ -135,3 +140,32 @@ def loaddata(orm, fixture_name):
             call_command("loaddata", fixture_name)
 
 # end of code from dingus and more http://stackoverflow.com/questions/5472925/django-loading-data-from-fixture-after-backward-migration-loaddata-is-using-mod/5906258#5906258
+
+class snippet(property):
+
+    dirname = os.path.join(os.path.dirname(__file__), 'templates')
+
+    def __init__(self, name):
+        self.name = name
+
+    def __get__(self, instance, klass):
+        name = klass.__name__.lower()
+        key = '%s-%s-%s' % (name, self.name, instance.id)
+        value = cache.get(key)
+        if not value:
+            template = '%ss/snippets/%s.html' % (klass.__name__.lower(), self.name)
+            if name == 'mep':
+                ctx = dict(instance=instance,
+                           country=instance.countrymep_set.latest('end').country,
+                           group=instance.groupmep_set.latest('end').group,
+                           MEDIA_URL=settings.MEDIA_URL)
+            elif name == 'mp':
+                ctx = dict(instance=instance,
+                           group=instance.group,
+                           MEDIA_URL=settings.MEDIA_URL)
+            value = render_to_string(template, ctx)
+            cache.set(key, value, settings.SNIPPETS_CACHE_DELAY)
+            print key
+        return value
+
+

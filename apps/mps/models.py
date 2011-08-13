@@ -2,6 +2,7 @@ from django.db import models
 from reps.models import Representative
 from django.core.urlresolvers import reverse
 from memopol2.utils import reify
+from memopol2.utils import snippet
 import search
 
 class Function(models.Model):
@@ -85,10 +86,6 @@ class MP(Representative):
                 [p.number for p in addr.phone_set.filter(type='phone')]
               )
         return values
-
-    @reify
-    def emails(self):
-        return [e.email for e in self.email_set.all()]
 
 class FunctionMP(models.Model):
     mp = models.ForeignKey(MP)

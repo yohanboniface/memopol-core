@@ -1,0 +1,7 @@
+{% if group %}
+<a href="{% url mps:index_by_group group.abbreviation %}">
+  {{ group.abbreviation }}
+</a>
+{% else %}
+-
+{% endif %}

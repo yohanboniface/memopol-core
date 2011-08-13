@@ -1,0 +1,5 @@
+<ul class="party">
+{% for partyrepresentative in instance.partyrepresentative_set.all %}
+<li><a href="{% url meps:index_by_party partyrepresentative.party.id %}">{{ partyrepresentative.party.name }}</a></li>
+{% endfor %}
+</ul>

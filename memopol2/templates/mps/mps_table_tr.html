@@ -5,13 +5,7 @@
   </td>
   {% if not 'party' in hidden_fields %}
   <td>
-    <ul class="party">
-      <li>
-        <a href="{% url mps:index_by_group mp.group.abbreviation %}">
-	        {{ mp.group.name }} ({{ mp.group.abbreviation }})
-        </a>
-      </li>
-    </ul>
+    {{ mp.group_tag|safe }}
   </td>
   {% endif %}
   <td>
@@ -36,7 +30,6 @@
               {% endfor %}
             </li>
           {% endif %}
-
       </ul>
       <a class="more-contact" href="{% url mps:mp_contact mp.id %}">{% trans "More informations" %}...</a>
     </div>
