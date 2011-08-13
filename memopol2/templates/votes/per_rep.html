@@ -10,9 +10,9 @@
 <ul>
     {% for vote in votes %}
     <li>
-        {% if vote.recommendation.description %}{{ vote.recommendation.description }}{% else %}No description yet{% endif %}
+        <a href="{% url votes:recommendation proposal.id vote.recommendation.id %}">{% if vote.recommendation.description %}{{ vote.recommendation.description }}{% else %}No description yet{% endif %}</a>
         <ul class="{{ vote.recommendation.recommendation }} recommendation">
-            <li><em>Part</em> : <a href="{% url votes:recommendation proposal.id vote.recommendation.id %}">{{ vote.recommendation.part }}</a></li>
+            <li><em>Part</em> : {{ vote.recommendation.part }}</li>
             {% if vote.recommendation.recommendation %}<li><em>Recommendation</em> : <a href="{% url votes:recommendation_choice proposal.id vote.recommendation.id vote.recommendation.recommendation %}">{{ vote.recommendation.recommendation }}</a></li>{% endif %}
             {% if vote.recommendation.weight %}<li><em>Weight</em> : {{ vote.recommendation.weight }}</li>{% endif %}
             <li><em>Vote</em> : <a class="{% if vote.recommendation.recommendation == vote.choice %}ok{% else %}{% if vote.choice == "abstention" or vote.choice == "absent" %}abstention{% else %}nok{% endif %}{% endif %}" href="{% url votes:recommendation_choice proposal.id vote.recommendation.id vote.choice %}">{{ vote.choice }}</a></li>

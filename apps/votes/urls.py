@@ -19,9 +19,10 @@ def proposal_rep(request, proposal_id, mep_id):
     return render_to_response('votes/per_rep.html', context, context_instance=RequestContext(request))
 
 def mep_recommendation(request, proposal_id, recommendation_id, recommendation):
-    meps = MEP.objects.filter(vote__recommendation=get_object_or_404(Recommendation, id=recommendation_id),
+    _recommendation = get_object_or_404(Recommendation, id=recommendation_id)
+    meps = MEP.objects.filter(vote__recommendation=_recommendation,
                               vote__choice=recommendation)
-    return render_to_response("meps/mep_list.html", {'object_list' : meps}, context_instance=RequestContext(request))
+    return render_to_response("meps/mep_list.html", {'recommendation': _recommendation, 'choice': recommendation, 'object_list' : meps, 'header_template' : 'votes/header_mep_list.html'}, context_instance=RequestContext(request))
 
 def vote_recommendation(request, proposal_id, recommendation_id):
     proposal = get_object_or_404(Proposal, id=proposal_id)

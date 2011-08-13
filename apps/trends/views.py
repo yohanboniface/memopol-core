@@ -1,5 +1,7 @@
+import re
 from django.conf import settings
-from django.http import HttpResponseNotFound
+from django.db.models import Avg
+from django.http import HttpResponseNotFound, HttpResponse
 from django.shortcuts import get_object_or_404
 
 from memopol2.utils import check_dir, send_file, get_content_cache
@@ -12,7 +14,7 @@ from matplotlib import pyplot
 from os.path import join
 
 from meps.models import MEP, Group, Country
-from votes.models import Recommendation, Vote
+from votes.models import Recommendation, Vote, Score, Proposal
 
 def trends_for_mep(request, mep_id):
 
@@ -220,6 +222,52 @@ def recommendation_countries(request, recommendation_id):
     pyplot.clf()
 
     return send_file(request, filename, content_type="image/png")
+
+def proposal_countries_map(request, proposal_id):
+    def color(score):
+        colors = 255
+        val = int(3 * colors * (score/100.))
+        red = green = colors
+        if val < colors:
+            green = int(2./3. * val)
+        elif val < 2 * colors:
+            green = int((2. / 3.) * colors + (1. / 3.) * (val / 2. - colors))
+        else:
+            red = 3 * colors - val
+        return "rgb(%d, %d, 0)" % (red, green)
+
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'proposal', "%s-countries-map.svg" % proposal_id)
+    cache = get_content_cache(request, filename)
+    if cache:
+        return HttpResponse(cache)
+
+    proposal = get_object_or_404(Proposal, id=proposal_id)
+
+    countries = {}
+
+    for country in Country.objects.order_by('code'):
+        countries[country.code] = Score.objects.filter(proposal=proposal, representative__mep__countrymep__country=country).aggregate(average_score=Avg('value'))['average_score']
+
+    current_country = None
+    out = ""
+    for line in open(join(settings.MEDIA_DIRECTORY, "grey_europe_map.svg"), "r").readlines():
+
+        if 'id="' in line:
+            get = re.match('.*id="([a-z]+)"', line)
+            if get and get.group(1).upper() in countries.keys():
+                current_country = get.group(1).upper()
+
+        if current_country and "style=" in line:
+            if countries[current_country]:
+                line = re.sub("fill:#[0-9a-f]{6};", "fill:%s;" % color(countries[current_country]), line)
+            else:
+                line = re.sub("fill:#[0-9a-f]{6};", "fill:c0c0c0;", line)
+            current_country = None
+
+        out += line
+
+    open(filename, "w").write(out)
+    return HttpResponse(out)
 
 def recommendation_countries_absolute(request, recommendation_id):
     filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'recommendations', "%s-countries-absolute.png" % recommendation_id)

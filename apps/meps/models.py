@@ -31,6 +31,9 @@ class Country(models.Model):
     def meps_on_date(self, date):
         return self.mep_set.filter(groupmep__end__gte=date, groupmep__begin__lte=date).distinct()
 
+    class Meta:
+        ordering = ["code"]
+
 
 @search.searchable
 class Group(models.Model):
