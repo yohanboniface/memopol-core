@@ -1,1 +1,1 @@
-<h1>MEPs that have voted "{{ choice }}" on {{ recommendation.part }} of {{ recommendation.proposal.title }}</h1>
+<h1>MEPs that have voted "{{ choice }}" on <a href="{% url votes:recommendation recommendation.proposal.id recommendation.id %}">{{ recommendation.part }}</a> of <a href="{% url votes:detail recommendation.proposal.id %}">{{ recommendation.proposal.title }}</a></h1>
