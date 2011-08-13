@@ -6,7 +6,7 @@ class TestMisc(TestCase):
     def test_home_links(self):
         """test all home links like a monkey"""
         resp = self.app.get('/')
-        resp.mustcontain('<h1>MEPs by country</h1>')
+        resp.mustcontain('<h1 class="document-title">MEPs by country</h1>')
         self.visit_links(resp.pyquery('#nav a'))
 
     def test_meps_deputies(self):
