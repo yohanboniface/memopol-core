@@ -2,7 +2,7 @@ from django.db import models
 from reps.models import Representative
 from django.core.urlresolvers import reverse
 from memopol2.utils import reify
-from memopol2 import search
+import search
 
 class Function(models.Model):
     type = models.CharField(max_length=255)

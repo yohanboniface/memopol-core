@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'queries',
     'trends',
     'trophies',
+    'search',
 )
 
 if APPS_DEBUG:
@@ -180,6 +181,11 @@ LOGGING = {
         'memopol2': {
             'handlers': ['console'],
             'level': 'WARN',
+            'propagate': True,
+        },
+        'search': {
+            'handlers': ['console'],
+            'level': 'ERROR',
             'propagate': True,
         },
     }

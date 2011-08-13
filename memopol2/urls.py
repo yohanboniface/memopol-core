@@ -10,7 +10,6 @@ from django.views.static import serve
 from mps.models import MP
 
 from votes.models import Proposal
-import views
 
 admin.autodiscover()
 
@@ -38,12 +37,11 @@ urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^votes/', include('votes.urls', namespace='votes', app_name='votes')),
     url(r'^list/', include('queries.urls', namespace='queries', app_name='queries')),
     url(r'^trends/', include('trends.urls', namespace='trends', app_name='trends')),
+    url(r'^search/', include('search.urls')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^comments/', include('django.contrib.comments.urls')),
     url(r'^contact/', include('contact_form.urls')),
-    url(r'^search/xhr/$', views.search, {'template_name': 'search_xhr.html'}, name='search_xhr'),
-    url(r'^search/$', views.search, {'template_name': 'search.html'}, name='search'),
     url(r'^robots\.txt$', direct_to_template, {'template': 'robots.txt', 'mimetype': 'text/plain'}),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 )

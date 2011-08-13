@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.db import models
-from memopol2 import search
+import search
 import meps
 
 class RepsContainerManager(models.Manager):
