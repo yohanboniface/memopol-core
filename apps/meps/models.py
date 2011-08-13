@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.core.urlresolvers import reverse
 from memopol2.utils import reify
-from memopol2 import search
+import search
 
 from reps.models import Representative, Party
 
