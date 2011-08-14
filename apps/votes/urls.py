@@ -28,7 +28,7 @@ def vote_recommendation(request, proposal_id, recommendation_id):
     proposal = get_object_or_404(Proposal, id=proposal_id)
     recommendation = get_object_or_404(Recommendation, id=recommendation_id)
     return render_to_response("votes/recommendation_detail.html",
-                              {'proposal': proposal, 'recommendation': recommendation},
+                              {'proposal': proposal, 'recommendation': recommendation, 'choice_listing': True},
                               context_instance=RequestContext(request))
 
 urlpatterns = patterns('',

@@ -2,6 +2,7 @@ import json
 from django.db import models
 from django.db.models import Avg
 from reps.models import Representative
+from meps.models import MEP
 
 class Proposal(models.Model):
     id = models.CharField(max_length=63, primary_key=True)
@@ -25,6 +26,10 @@ class Recommendation(models.Model):
     weight = models.IntegerField(null=True)
     proposal = models.ForeignKey(Proposal)
     recommendation = models.CharField(max_length=15, choices=((u'against', u'against'), (u'for', u'for')), null=True)
+
+    def meps_with_votes(self):
+        for mep in MEP.objects.filter(vote__recommendation=self):
+            yield mep, mep.vote_set.get(recommendation=self).choice
 
     def __unicode__(self):
         return self.subject

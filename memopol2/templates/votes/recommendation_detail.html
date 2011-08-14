@@ -26,4 +26,14 @@
 <br />
 <img src="{% url trends:recommendation_countries_absolute recommendation.id %}" />
 
+
+<table class="mep-list tablesorter">
+  {% include "meps/meps_table_thead.html" %}
+  <tbody>
+    {% for mep, choice in recommendation.meps_with_votes %}
+    {% include "meps/meps_table_tr.html" %}
+    {% endfor %}
+  </tbody>
+</table>
+
 {% endblock %}

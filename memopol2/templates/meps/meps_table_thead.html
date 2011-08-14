@@ -5,6 +5,7 @@
     {% if not 'country' in hidden_fields %}<th filter-type='ddl' class="cell-country">Country</th>{% endif %}
     {% if not 'group' in hidden_fields %}<th filter-type='ddl' class="cell-group">Group</th>{% endif %}
     {% if not 'party' in hidden_fields %}<th filter-type='ddl' class="cell-party">Party</th>{% endif %}
+    {% if choice_listing %}<th filter-type='ddl' class="cell-choice">Choice</th>{% endif %}
     <th filter='false' class="cell-contact">Contact</th>
     {% if score_listing %}<th filter='false' class="cell-score">Scores</th>{% endif %}
   </tr>
