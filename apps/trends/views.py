@@ -257,6 +257,7 @@ def proposal_countries_map(request, proposal_id):
             if get and get.group(1).upper() in countries.keys():
                 current_country = get.group(1).upper()
 
+        # HAHAHAHA blam those who can't write a human uzable xml lib for python
         if current_country and "style=" in line:
             if countries[current_country]:
                 line = re.sub("fill:#[0-9a-f]{6};", "fill:%s;" % color(countries[current_country]), line)
