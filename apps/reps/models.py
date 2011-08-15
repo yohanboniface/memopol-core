@@ -1,6 +1,10 @@
 from django.core.urlresolvers import reverse
+from django.core.cache import cache
+from django.conf import settings
 from django.db import models
-from memopol2 import search
+from memopol2.utils import reify
+from memopol2.utils import snippet
+import search
 import meps
 
 class RepsContainerManager(models.Manager):
@@ -60,6 +64,17 @@ class Representative(models.Model):
 
     class Meta:
         ordering = ['last_name']
+
+    @reify
+    def emails(self):
+        key = 'emails_%s' % self.id
+        value = cache.get(key)
+        if not value:
+            value = [e.email for e in self.email_set.all()]
+            cache.set(key, value, setting.SNIPPETS_CACHE_DELAY)
+        return value
+
+    group_tag = snippet('group')
 
 
 class PartyRepresentative(models.Model):

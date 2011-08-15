@@ -13,3 +13,4 @@ $MANAGE migrate votes
 $MANAGE migrate
 
 export SKIP_SEARCH_INDEX="0"
+$MANAGE update_memopol_index

@@ -32,6 +32,7 @@ if os.getenv('VIRTUAL_ENV'):
 elif not os.path.isfile('bin/django-manage'):
     APPS_DEBUG = True
 
+SNIPPETS_CACHE_DELAY = 3600*60*24
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -127,6 +128,7 @@ INSTALLED_APPS = (
     'queries',
     'trends',
     'trophies',
+    'search',
 )
 
 if APPS_DEBUG:
@@ -180,6 +182,11 @@ LOGGING = {
         'memopol2': {
             'handlers': ['console'],
             'level': 'WARN',
+            'propagate': True,
+        },
+        'search': {
+            'handlers': ['console'],
+            'level': 'ERROR',
             'propagate': True,
         },
     }

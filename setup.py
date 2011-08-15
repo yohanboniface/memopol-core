@@ -18,6 +18,5 @@ setup(
     install_requires = [],
     entry_points = """
     [console_scripts]
-    update_search_index = memopol2.search:update
     """
 )

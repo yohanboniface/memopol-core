@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 import logging
 from django.db.models import signals
 from django.conf import settings
@@ -93,16 +92,3 @@ def searchable(klass):
         log.warn('%s is declared as searchable but has no get_absolute_url' % klass)
     return klass
 
-def update():
-    from meps import models
-    from mps import models
-    from reps import models
-    import shutil
-    shutil.rmtree(settings.WHOOSH_INDEX)
-    create_index()
-    for klass in Searchables.items:
-        for i in klass.objects.all():
-            update_index(None, i, created=False)
-
-if __name__ == '__main__':
-    update()

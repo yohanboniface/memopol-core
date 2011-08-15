@@ -3,7 +3,8 @@ from django.db import models
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.core.urlresolvers import reverse
 from memopol2.utils import reify
-from memopol2 import search
+from memopol2.utils import snippet
+import search
 
 from reps.models import Representative, Party
 
@@ -179,10 +180,6 @@ class MEP(Representative):
         return self.stg_floor + self.stg_office_number
 
     @reify
-    def emails(self):
-        return [e.email for e in self.email_set.all()]
-
-    @reify
     def group(self):
         return self.groupmep_set.latest('end').group
 
@@ -223,6 +220,9 @@ class MEP(Representative):
         red = 255 - self.total_score
         green = self.total_score * 2.55
         return "rgb(%d, %d, 0)" % (red, green)
+
+    country_tag = snippet('country')
+    party_tag = snippet('party')
 
     class Meta:
         ordering = ['last_name']

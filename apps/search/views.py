@@ -6,8 +6,8 @@ from django.views.generic.simple import direct_to_template
 from whoosh.filedb.filestore import FileStorage
 from whoosh import index, fields
 from whoosh.qparser import QueryParser
-from memopol2.search import WHOOSH_SCHEMA
-from memopol2.search import Searchables
+from search import WHOOSH_SCHEMA
+from search import Searchables
 
 from meps import models
 from mps import models
