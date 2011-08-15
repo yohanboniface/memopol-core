@@ -1,11 +1,12 @@
 # encoding: utf-8
 from south.v2 import SchemaMigration
 
+from memopol2.utils import loaddata
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        from django.core.management import call_command
-        call_command("loaddata", "votes.json")
+        loaddata(orm, "votes.json")
 
 
     def backwards(self, orm):
