@@ -71,7 +71,7 @@ class Representative(models.Model):
         value = cache.get(key)
         if not value:
             value = [e.email for e in self.email_set.all()]
-            cache.set(key, value, setting.SNIPPETS_CACHE_DELAY)
+            cache.set(key, value, settings.SNIPPETS_CACHE_DELAY)
         return value
 
     group_tag = snippet('group')
