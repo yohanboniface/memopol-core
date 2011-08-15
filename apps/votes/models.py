@@ -1,3 +1,4 @@
+# -*- coding:Utf-8 -*-
 import json
 from django.db import models
 from django.db.models import Avg
@@ -9,6 +10,7 @@ class Proposal(models.Model):
     title = models.CharField(max_length=255, unique=True)
     ponderation = models.IntegerField(default=1)
     short_name = models.CharField(max_length=25, default=None, null=True)
+    institution = models.CharField(max_length=63, choices=((u'EU', 'european parliament'), (u'FR', 'assemblée nationale française')))
 
     @property
     def date(self):
