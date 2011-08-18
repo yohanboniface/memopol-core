@@ -20,26 +20,6 @@ body {
     border-bottom: 2px #497ED5 solid;
 }
 
-#content h1#home-title {
-    font-size: 60px;
-    font-family: 'IM Fell English SC', Palatino, sans-serif;
-    border: 2px solid #497ED5;
-    background-color: #497ED5;
-    color: white;
-    text-align: center;
-    width: 70%;
-    padding: 0.5em;
-    margin: auto;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-    -moz-border-radius: 50px;
-    border-radius: 50px;
-    -webkit-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
-    -moz-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
-    box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
-    text-shadow:2px 2px 2px black;
-}
-
 table li a,
 a {
     color: #497ED5;
@@ -74,14 +54,19 @@ li ul li {
 #header {
     background-color: #497ED5;
     color: #ffffff;
-    margin: 0 6px;
-    padding: 0 5px;
-    border: solid 13px white;
-    border-bottom: none;
-    height: 25px;
+    margin-bottom: 20px;
+    padding: 0 20px;
+    border-bottom: 3px dashed #fff;
+    height: 50px;
+	line-height: 45px;
     text-align: right;
     vertical-align: middle;
 }
+
+#header h1 {
+    float: left;
+}
+
 #header a { 
     vertical-align: middle;
     color: #ffffff;
