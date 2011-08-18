@@ -53,10 +53,12 @@ li ul li {
 
 #header {
     background-color: #497ED5;
+    background: -webkit-gradient(linear, left top, left bottom, from(#729bdf), to(#497ED5));
+    background: -moz-linear-gradient(top,#729bdf,#497ED5);
     color: #ffffff;
     margin-bottom: 20px;
     padding: 0 20px;
-    border-bottom: 3px dashed #fff;
+    border-bottom: 3px solid #295cb1;
     height: 50px;
 	line-height: 45px;
     text-align: right;
