@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.core.urlresolvers import reverse
 from memopol2.utils import reify
-from memopol2.utils import snippet
+from snippets import snippet
 import search
 
 from reps.models import Representative, Party
@@ -221,8 +221,13 @@ class MEP(Representative):
         green = self.total_score * 2.55
         return "rgb(%d, %d, 0)" % (red, green)
 
-    country_tag = snippet('country')
-    party_tag = snippet('party')
+    @snippet(template='meps/snippets/country.html')
+    def country_tag(self):
+        return dict(country=self.countrymep_set.latest('end').country)
+
+    @snippet(template='meps/snippets/party.html')
+    def party_tag(self):
+        return dict(group=self.groupmep_set.latest('end').group)
 
     class Meta:
         ordering = ['last_name']
