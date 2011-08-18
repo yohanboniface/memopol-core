@@ -24,19 +24,21 @@ def mep_recommendation(request, proposal_id, recommendation_id, recommendation):
                               vote__choice=recommendation)
     return render_to_response("meps/mep_list.html", {'recommendation': _recommendation, 'choice': recommendation, 'object_list' : meps, 'header_template' : 'votes/header_mep_list.html'}, context_instance=RequestContext(request))
 
-def vote_recommendation(request, proposal_id, recommendation_id):
-    proposal = get_object_or_404(Proposal, id=proposal_id)
-    recommendation = get_object_or_404(Recommendation, id=recommendation_id)
-    return render_to_response("votes/recommendation_detail.html",
-                              {'proposal': proposal, 'recommendation': recommendation, 'choice_listing': True},
-                              context_instance=RequestContext(request))
+class VoteRecommendation(DetailView):
+    template_name='votes/recommendation_detail.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(VoteRecommendation, self).get_context_data(**kwargs)
+        context['choice_listing'] = True
+        context['proposal'] = get_object_or_404(Proposal, id=self.kwargs['proposal_id'])
+        return context
 
 urlpatterns = patterns('',
     url(r'^$', ListView.as_view(model=Proposal), name='index'),
     url(r'^import/$', ListView.as_view(model=RecommendationData), name='import'),
     url(r'^import/(?P<pk>\d+)/$', DetailView.as_view(model=RecommendationData), name='import_vote'),
     url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<recommendation_id>\d+)/(?P<recommendation>\w+)/$', mep_recommendation, name='recommendation_choice'),
-    url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<recommendation_id>\d+)/$', vote_recommendation, name='recommendation'),
+    url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<pk>\d+)/$', VoteRecommendation.as_view(model=Recommendation), name='recommendation'),
     url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<mep_id>[a-zA-Z-_]+)/$', proposal_rep, name='rep'),
     url(r'^(?P<pk>[a-zA-Z/-_]+)/$', DetailView.as_view(model=Proposal, context_object_name='vote'), name='detail'),
 )
