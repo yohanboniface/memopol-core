@@ -2,6 +2,8 @@ from django.conf.urls.defaults import patterns, url
 from django.views.generic import ListView, DetailView
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 from votes.models import Proposal, Vote, Recommendation, RecommendationData
 from reps.models import Representative
@@ -30,8 +32,13 @@ class VoteRecommendation(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(VoteRecommendation, self).get_context_data(**kwargs)
         context['choice_listing'] = True
-        context['proposal'] = get_object_or_404(Proposal, id=self.kwargs['proposal_id'])
+        context['proposal'] = self.object.proposal
         return context
+
+    def render_to_response(self, context):
+        if self.kwargs["proposal_id"] != self.object.proposal.id:
+            return HttpResponseRedirect(reverse("votes:recommendation", args=[self.object.proposal.id, self.object.id]))
+        return DetailView.render_to_response(self, context)
 
 urlpatterns = patterns('',
     url(r'^$', ListView.as_view(model=Proposal), name='index'),
