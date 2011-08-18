@@ -96,32 +96,37 @@ li ul li {
 
 
 #nav {
-    background-color: #497ED5;
-    color: #ffffff;
+    /*background-color: #497ED5;
+    color: #ffffff;*/
     font-size: 80%;
     margin-left: 6px;
     width: 175px;
     font-family: Palatino;
     font-weight: bold;
     font-variant: small-caps;
+    text-align: right;
     padding: 5px;
     padding: 20px 5px 200px;
     min-height: 100%;
 }
 
 #nav h1, #nav h2 {
-    padding: 10px 4px 5px 4px;
-    font-family: 'IM Fell English SC', Palatino, sans-serif;
+    padding: 20px 4px 5px 4px;
+    font: 18px 'Lucida Grande', Verdana, Lucida, Helvetica, Arial, sans-serif;
+}
+
+#nav ul {
+    list-style: none;
 }
 
 #nav a:link, 
 #nav a:visited, 
 #nav a:active {
     text-decoration: none;
-    color: #fff;
+    /*color: #fff;*/
 }
 #nav a:hover {
-    text-decoration: underline overline; color: white; 
+    border-bottom: 1px dashed #497ED5; color: #497ED5;
 }
 
 h1 {
@@ -130,7 +135,6 @@ h1 {
 
 h2 {
     font-size: 110%;
-
 }
 
 #mainheader {
