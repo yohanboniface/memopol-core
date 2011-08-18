@@ -1,5 +1,3 @@
-@import url(http://fonts.googleapis.com/css?family=IM+Fell+English+SC);
-
 html, body {
     height: 100%;
 }
@@ -149,7 +147,6 @@ h2 {
 }
 
 #mainheader h1 {
-    font-family: 'IM Fell English SC', Palatino, sans-serif;
     font-weight: bold;
     font-variant: small-caps;
     text-align: center;
@@ -157,7 +154,8 @@ h2 {
     margin-left: 6px;
     margin-right: 9px;
     border-right: 2px solid white;
-    padding-top: 10px;
+    height: 40px;
+    line-height: 40px;
     color: #fff;
 }
 #mainheader a:hover {
