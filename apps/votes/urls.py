@@ -11,6 +11,7 @@ from views import VoteRecommendation, VoteRecommendationChoice
 def proposal_rep(request, proposal_id, mep_id):
     representative = get_object_or_404(Representative, id=mep_id)
     proposal = get_object_or_404(Proposal, id=proposal_id)
+    # dirty query because we don't store absent vote
     votes = [Vote.objects.get(representative=representative, recommendation=r)
              if Vote.objects.filter(representative=representative, recommendation=r)
              else {'choice': 'absent', 'recommendation': r, 'representative': representative}
