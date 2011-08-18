@@ -6,6 +6,8 @@ import time
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.template.base import TemplateSyntaxError
+from django.conf import settings
+>>>>>>> 41b1e61... [mod] remove useless imports
 
 def check_dir(filename):
     dirname = os.path.dirname(filename)
