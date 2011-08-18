@@ -7,7 +7,7 @@
 {% for party in object_list %}
     {% if party.meps|length %}
     <li>
-        <a href="{% url meps:index_by_party party.id %}">{{ party.name }}</a>
+        <a href="{% url meps:index_by_party party.id party.name|slugify %}">{{ party.name }}</a>
         {% blocktrans with party.meps|length as count %} - {{ count }} MEPs {% endblocktrans %}
     </li>
     {% endif %}
