@@ -3,7 +3,7 @@ from django.core.cache import cache
 from django.conf import settings
 from django.db import models
 from memopol2.utils import reify
-from memopol2.utils import snippet
+from snippets import snippet
 import search
 import meps
 
@@ -74,7 +74,7 @@ class Representative(models.Model):
             cache.set(key, value, settings.SNIPPETS_CACHE_DELAY)
         return value
 
-    group_tag = snippet('group')
+    group_tag = snippet(name='group')
 
 
 class PartyRepresentative(models.Model):
