@@ -30,6 +30,24 @@
   <td>
     <span class="collapsible collapsed collapsible-contact" alt="{% url meps:mep_contact mep.id %}">{% trans "Contact informations" %}</span>
     <div class="body">
+      <ul class="body">
+        <li><b>{% trans "Brussels" %}</b>
+         {% trans "Tel." %}: <a href="callto://{{ mep.bxl_phone1|phone }}">{{ mep.bxl_phone1 }}</a>&nbsp;-&nbsp;<a href="callto://{{ mep.bxl_phone2|phone }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
+        </li>
+        <li><b>{% trans "Strasbourg" %}</b>
+        {% trans "Tel." %}: <a href="callto://{{ mep.stg_phone1|cut:" " }}">{{ mep.stg_phone1 }}</a>&nbsp;-&nbsp;<a href="callto://{{ mep.stg_phone2|cut:" " }}">{{ mep.stg_phone2 }}</a>&nbsp;<br/>
+        </li>
+        {% if mep.emails %}
+          <li>
+            <b>{% trans "E-mail" %}:</b>
+            {% for email in mep.emails %}
+              <a href="mailto:{{ email }}">{{ email }}</a>
+              {% if not forloop.last %}-{% endif %}
+            {% endfor %}
+          </li>
+        {% endif %}
+      </ul>
+      <a class="more-contact" href="{% url meps:mep_contact mep.id %}">{% trans "More information" %}...</a>
     </div>
   </td>
   {% if score_listing %}
