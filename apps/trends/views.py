@@ -10,6 +10,9 @@ import numpy
 import matplotlib
 matplotlib.use("Agg")
 from matplotlib import pyplot
+from matplotlib.patches import Ellipse
+
+from math import sqrt
 
 from os.path import join
 
@@ -474,6 +477,101 @@ def group_proposal_score_stacked(request, proposal_id):
     pyplot.xticks(range(11), range(0, 110, 10))
     pyplot.xlabel("Score range 10 by 10")
     pyplot.ylabel("MEPs per group")
+    #pyplot.axis([0, 10.1, 0, maxeu + 3])
+    check_dir(filename)
+    pyplot.savefig(filename, format="png")
+    pyplot.figure(figsize=(8, 6))
+    pyplot.clf()
+
+    return send_file(request, filename, content_type="image/png")
+def group_proposal_score_heatmap(request, proposal_id):
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', "groups-%s-repartition-heatmap.png" % proposal_id)
+    cache = get_content_cache(request, filename)
+    if cache:
+        return cache
+
+    proposal = get_object_or_404(Proposal, id=proposal_id)
+    countries= proposal.countries
+    groups = proposal.groups
+
+    fig = pyplot.figure(figsize=(len(countries) / 2, len(groups) / 2))
+    ax = fig.add_subplot(111)
+    ax.set_xlim(0, len(proposal.countries))
+    ax.set_ylim(0, len(groups))
+
+    biggest_group_of_a_country = 0
+    for country in countries:
+        for group in groups:
+            meps = MEP.objects.filter(score__proposal=proposal,
+                                      groupmep__end__gte=proposal.date,
+                                      groupmep__begin__lte=proposal.date,
+                                      countrymep__begin__lte=proposal.date,
+                                      countrymep__end__gte=proposal.date,
+                                      countrymep__country=country,
+                                      groupmep__group=group).distinct().count()
+
+            if meps > biggest_group_of_a_country:
+                biggest_group_of_a_country = meps
+
+    biggest_group_of_a_country = float(biggest_group_of_a_country)
+
+    a = 0
+    for country in countries:
+        b = 0
+        for group in groups:
+            meps = MEP.objects.filter(score__proposal=proposal,
+                                      groupmep__end__gte=proposal.date,
+                                      groupmep__begin__lte=proposal.date,
+                                      countrymep__begin__lte=proposal.date,
+                                      countrymep__end__gte=proposal.date,
+                                      countrymep__country=country,
+                                      groupmep__group=group).distinct().count()
+
+            score = Score.objects.filter(proposal=proposal,
+                                         representative__mep__groupmep__group=group,
+                                         representative__mep__groupmep__begin__lte=proposal.date,
+                                         representative__mep__groupmep__end__gte=proposal.date,
+                                         representative__mep__countrymep__country=country,
+                                         representative__mep__countrymep__begin__lte=proposal.date,
+                                         representative__mep__countrymep__end__gte=proposal.date).aggregate(Avg('value'))['value__avg']
+
+            if score:
+                # I'm doing sqrt here because I'm reducing the surface of the circle, not the len of the radius
+                el = Ellipse((a + 0.5,b + 0.5), 1./
+                             sqrt(biggest_group_of_a_country/meps), 1. /
+                             sqrt(biggest_group_of_a_country/meps),
+                             facecolor=map(lambda x: x/255., color(score)),
+                             alpha=0.5)
+
+                ax.add_artist(el)
+            b += 1
+        a += 1
+
+    #group_bar = {}
+    #scores = []
+
+    #maxeu = 0
+    #for score_range in range(0, 100, 10):
+        #meps = MEP.objects.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 10 if score_range != 90 else 101, score__value__gte=score_range).distinct().count()
+        #if meps > maxeu:
+            #maxeu = meps
+        #scores.append(meps)
+
+    #for mep in MEP.objects.filter(score__proposal=proposal, groupmep__group=group):
+    #for group in proposal.groups:
+        #for score_range in range(0, 100, 10):
+            #meps = group.mep_set.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 10 if score_range != 90 else 101, score__value__gte=score_range).distinct().count()
+            #scores[score_range/10] -= meps
+            #group_bar[group.abbreviation] = pyplot.bar(score_range/10 + 0.1, meps + scores[score_range/10], width=0.8, color=group_color.get(group.abbreviation, '#FFFFFF'))
+
+    #a, b = zip(*group_bar.items())
+    #pyplot.legend(list(b), list(a), 'best', shadow=False)
+    pyplot.title("Heatmap of group/country on %s" % proposal.short_name if proposal.short_name else proposal.title)
+    #pyplot.xticks(range(11), range(0, 110, 10))
+    pyplot.xticks(map(lambda x: x + 0.5, range(len(countries))), map(lambda x: x.code, countries))
+    pyplot.yticks(map(lambda x: x + 0.5, range(len(groups))), map(lambda x: x.abbreviation, groups))
+    #pyplot.xlabel("Score range 10 by 10")
+    #pyplot.ylabel("MEPs per group")
     #pyplot.axis([0, 10.1, 0, maxeu + 3])
     check_dir(filename)
     pyplot.savefig(filename, format="png")
