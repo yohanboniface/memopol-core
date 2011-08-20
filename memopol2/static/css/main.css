@@ -91,21 +91,19 @@ li ul li {
 
 
 #nav {
-    /*background-color: #497ED5;
-    color: #ffffff;*/
+    background-color: #eee;
     font-size: 80%;
     margin-left: 6px;
     width: 175px;
-    font-family: Palatino;
-    font-weight: bold;
-    font-variant: small-caps;
     text-align: right;
+    text-transform: lowercase;
     padding: 5px;
     padding: 20px 5px 200px;
     min-height: 100%;
 }
 
 #nav h1, #nav h2 {
+    text-transform: capitalize;
     padding: 20px 4px 5px 4px;
     font: 18px 'Lucida Grande', Verdana, Lucida, Helvetica, Arial, sans-serif;
 }
