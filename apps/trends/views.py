@@ -228,17 +228,17 @@ def recommendation_countries(request, recommendation_id):
     countries = []
     a = 0
     for country in Country.objects.order_by('code'):
-        votes = Vote.objects.filter(recommendation=recommendation, representative__mep__countrymep__country=country, representative__mep__countrymep__begin__lte=recommendation.proposal.date, representative__mep__countrymep__end__gte=recommendation.proposal.date)
+        votes = Vote.objects.filter(recommendation=recommendation, representative__mep__countrymep__country=country, representative__mep__countrymep__begin__lte=recommendation.proposal.date, representative__mep__countrymep__end__gte=recommendation.proposal.date).distinct()
         if votes.count():
-            all_meps = country.meps_on_date(recommendation.proposal.date).count()
+            all_meps = country.meps_on_date(recommendation.proposal.date).distinct().count()
             if all_meps > max_total:
                 max_total = all_meps
-            total = votes.count()
-            _for = votes.filter(choice="for").count()
-            abstention = votes.filter(choice="abstention").count()
+            _for = votes.filter(choice="for").distinct().count()
+            abstention = votes.filter(choice="abstention").distinct().count()
+            against = votes.filter(choice="against").distinct().count()
             pyplot.bar(a + 0.1, all_meps, width=0.8, color="#AAAAAA")
             ## against
-            pyplot.bar(a + 0.1, total, width=0.8, color=against_color)
+            pyplot.bar(a + 0.1, _for + abstention + against, width=0.8, color=against_color)
             ## abstention
             pyplot.bar(a + 0.1, _for + abstention, width=0.8, color="#FF8800")
             ## for
@@ -276,15 +276,15 @@ def recommendation_countries_absolute(request, recommendation_id):
     countries = []
     a = 0
     for country in Country.objects.order_by('code'):
-        votes = Vote.objects.filter(recommendation=recommendation, representative__mep__countrymep__country=country, representative__mep__countrymep__begin__lte=recommendation.proposal.date, representative__mep__countrymep__end__gte=recommendation.proposal.date)
+        votes = Vote.objects.filter(recommendation=recommendation, representative__mep__countrymep__country=country, representative__mep__countrymep__begin__lte=recommendation.proposal.date, representative__mep__countrymep__end__gte=recommendation.proposal.date).distinct()
         if votes.count():
-            all_meps = country.meps_on_date(recommendation.proposal.date).count()
-            total = votes.count()
-            _for = votes.filter(choice="for").count()
-            abstention = votes.filter(choice="abstention").count()
+            all_meps = country.meps_on_date(recommendation.proposal.date).distinct().count()
+            _for = votes.filter(choice="for").distinct().count()
+            against = votes.filter(choice="against").distinct().count()
+            abstention = votes.filter(choice="abstention").distinct().count()
             pyplot.bar(a + 0.1, 100, width=0.8, color="#AAAAAA")
             ## against
-            pyplot.bar(a + 0.1, total * 100 / all_meps, width=0.8, color=against_color)
+            pyplot.bar(a + 0.1, (_for + against + abstention) * 100 / all_meps, width=0.8, color=against_color)
             ## abstention
             pyplot.bar(a + 0.1, (_for + abstention) * 100 / all_meps, width=0.8, color="#FF8800")
             ## for
