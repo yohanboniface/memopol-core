@@ -3,7 +3,7 @@ import json
 from django.db import models
 from django.db.models import Avg
 from reps.models import Representative
-from meps.models import MEP
+from meps.models import MEP, Group, Country
 from memopol2.utils import color
 
 class Proposal(models.Model):
@@ -12,6 +12,14 @@ class Proposal(models.Model):
     ponderation = models.IntegerField(default=1)
     short_name = models.CharField(max_length=25, default=None, null=True)
     institution = models.CharField(max_length=63, choices=((u'EU', 'european parliament'), (u'FR', 'assemblée nationale française')))
+
+    @property
+    def groups(self):
+        return Group.objects.filter(groupmep__mep__score__proposal=self, groupmep__begin__lte=self.date, groupmep__end__gte=self.date).distinct().order_by('abbreviation')
+
+    @property
+    def countries(self):
+        return Country.objects.filter(countrymep__mep__score__proposal=self, countrymep__begin__lte=self.date, countrymep__end__gte=self.date).distinct().order_by('code')
 
     @property
     def date(self):
