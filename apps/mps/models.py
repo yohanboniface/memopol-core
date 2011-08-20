@@ -2,7 +2,6 @@ from django.db import models
 from reps.models import Representative
 from django.core.urlresolvers import reverse
 from memopol2.utils import reify
-from memopol2.utils import snippet
 import search
 
 class Function(models.Model):
