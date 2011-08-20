@@ -23,4 +23,5 @@ matplotlib/
 django-contact-form/
 memopol2/static/img/trends/meps/*
 memopol2/static/img/meps/*
+memopol2/templates/snippets/*
 static/img/

@@ -1,5 +1,3 @@
 <ul class="party">
-{% for partyrepresentative in object.partyrepresentative_set.all %}
-<li><a href="{% url meps:index_by_party partyrepresentative.party.id %}">{{ partyrepresentative.party.name }}</a></li>
-{% endfor %}
+<a href="{% url meps:index_by_party object.party.id object.party.name|slugify %}">{{ object.party.name }}</a>
 </ul>

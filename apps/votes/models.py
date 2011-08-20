@@ -3,7 +3,8 @@ import json
 from django.db import models
 from django.db.models import Avg
 from reps.models import Representative
-from meps.models import MEP
+from meps.models import MEP, Group, Country
+from memopol2.utils import color
 
 class Proposal(models.Model):
     id = models.CharField(max_length=63, primary_key=True)
@@ -11,6 +12,14 @@ class Proposal(models.Model):
     ponderation = models.IntegerField(default=1)
     short_name = models.CharField(max_length=25, default=None, null=True)
     institution = models.CharField(max_length=63, choices=((u'EU', 'european parliament'), (u'FR', 'assemblée nationale française')))
+
+    @property
+    def groups(self):
+        return Group.objects.filter(groupmep__mep__score__proposal=self, groupmep__begin__lte=self.date, groupmep__end__gte=self.date).distinct().order_by('abbreviation')
+
+    @property
+    def countries(self):
+        return Country.objects.filter(countrymep__mep__score__proposal=self, countrymep__begin__lte=self.date, countrymep__end__gte=self.date).distinct().order_by('code')
 
     @property
     def date(self):
@@ -60,22 +69,12 @@ class Score(models.Model):
 
     @property
     def color(self):
-        red = 255 - self.value
-        green = self.value * 2.55
+        red, green, _ = color(self.value)
         return "rgb(%d, %d, 0)" % (red, green)
 
     @property
     def color_tuple(self):
-        colors = 255
-        val = int(3 * colors * (self.value/100.))
-        red = green = colors
-        if val < colors:
-            green = int(2./3. * val)
-        elif val < 2 * colors:
-            green = int((2. / 3.) * colors + (1. / 3.) * (val / 2. - colors))
-        else:
-            red = 3 * colors - val
-        return (red / 255., green / 255., 0)
+        return color(self.value)
 
     @property
     def of_country(self):

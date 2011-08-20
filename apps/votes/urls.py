@@ -5,12 +5,13 @@ from django.template import RequestContext
 
 from votes.models import Proposal, Vote, Recommendation, RecommendationData
 from reps.models import Representative
-from meps.models import MEP
+from views import VoteRecommendation, VoteRecommendationChoice
 
 # TODO: refactor those 3 functions, should probably be moved to generic views if possible
 def proposal_rep(request, proposal_id, mep_id):
     representative = get_object_or_404(Representative, id=mep_id)
     proposal = get_object_or_404(Proposal, id=proposal_id)
+    # dirty query because we don't store absent vote
     votes = [Vote.objects.get(representative=representative, recommendation=r)
              if Vote.objects.filter(representative=representative, recommendation=r)
              else {'choice': 'absent', 'recommendation': r, 'representative': representative}
@@ -18,25 +19,12 @@ def proposal_rep(request, proposal_id, mep_id):
     context = {'representative': representative, 'proposal': proposal, 'votes': votes}
     return render_to_response('votes/per_rep.html', context, context_instance=RequestContext(request))
 
-def mep_recommendation(request, proposal_id, recommendation_id, recommendation):
-    _recommendation = get_object_or_404(Recommendation, id=recommendation_id)
-    meps = MEP.objects.filter(vote__recommendation=_recommendation,
-                              vote__choice=recommendation)
-    return render_to_response("meps/mep_list.html", {'recommendation': _recommendation, 'choice': recommendation, 'object_list' : meps, 'header_template' : 'votes/header_mep_list.html'}, context_instance=RequestContext(request))
-
-def vote_recommendation(request, proposal_id, recommendation_id):
-    proposal = get_object_or_404(Proposal, id=proposal_id)
-    recommendation = get_object_or_404(Recommendation, id=recommendation_id)
-    return render_to_response("votes/recommendation_detail.html",
-                              {'proposal': proposal, 'recommendation': recommendation, 'choice_listing': True},
-                              context_instance=RequestContext(request))
-
 urlpatterns = patterns('',
     url(r'^$', ListView.as_view(model=Proposal), name='index'),
     url(r'^import/$', ListView.as_view(model=RecommendationData), name='import'),
     url(r'^import/(?P<pk>\d+)/$', DetailView.as_view(model=RecommendationData), name='import_vote'),
-    url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<recommendation_id>\d+)/(?P<recommendation>\w+)/$', mep_recommendation, name='recommendation_choice'),
-    url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<recommendation_id>\d+)/$', vote_recommendation, name='recommendation'),
+    url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<pk>\d+)/(?P<recommendation>\w+)/$', VoteRecommendationChoice.as_view(model=Recommendation), name='recommendation_choice'),
+    url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<pk>\d+)/$', VoteRecommendation.as_view(model=Recommendation), name='recommendation'),
     url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<mep_id>[a-zA-Z-_]+)/$', proposal_rep, name='rep'),
     url(r'^(?P<pk>[a-zA-Z/-_]+)/$', DetailView.as_view(model=Proposal, context_object_name='vote'), name='detail'),
 )

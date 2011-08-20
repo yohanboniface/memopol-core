@@ -28,7 +28,7 @@ class Party(models.Model):
 
     @property
     def meps(self):
-        return meps.models.MEP.objects.filter(partyrepresentative__party=self, active=True)
+        return meps.models.MEP.objects.filter(partyrepresentative__party=self, active=True).distinct()
 
 
 class Opinion(models.Model):

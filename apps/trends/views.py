@@ -4,12 +4,15 @@ from django.db.models import Avg
 from django.http import HttpResponseNotFound, HttpResponse
 from django.shortcuts import get_object_or_404
 
-from memopol2.utils import check_dir, send_file, get_content_cache
+from memopol2.utils import check_dir, send_file, get_content_cache, color
 
 import numpy
 import matplotlib
 matplotlib.use("Agg")
 from matplotlib import pyplot
+from matplotlib.patches import Ellipse
+
+from math import sqrt
 
 from os.path import join
 
@@ -109,7 +112,7 @@ def comparaison_trends_for_mep(request, mep_id):
     # line
     maximum_bar = pyplot.bar(map(lambda x: x+0.3, range(len(scores))), maximum, width=0.4, color="#FFFFFF")
     for i, j in zip(map(lambda x: x+0.3, range(len(scores))), score_list):
-        mep_bar = pyplot.bar(i, j.value * j.proposal.ponderation, width=0.4, color=j.color_tuple)
+        mep_bar = pyplot.bar(i, j.value * j.proposal.ponderation, width=0.4, color=map(lambda x: x/255., j.color_tuple))
     #pyplot.bar(map(lambda x: x+0.3, range(len(scores))), scores, width=0.4, color=(1, 0, 0))
     group_plot, = pyplot.plot(map(lambda x: x+0.5, range(len(scores))), of_group, 'bo', markersize=10)
     ep_plot, = pyplot.plot(map(lambda x: x+0.5, range(len(scores))), of_ep, 'pg', markersize=10)
@@ -174,68 +177,7 @@ def recommendation_group(request, recommendation_id):
 
     return send_file(request, filename, content_type="image/png")
 
-def recommendation_countries(request, recommendation_id):
-    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'recommendations', "%s-countries.png" % recommendation_id)
-    cache = get_content_cache(request, filename)
-    if cache:
-        return cache
-
-    recommendation = get_object_or_404(Recommendation, id=recommendation_id)
-
-    if recommendation.recommendation == "for":
-        for_color = "#00FF00"
-        against_color = "#FF0000"
-    else:
-        against_color = "#00FF00"
-        for_color = "#FF0000"
-
-    max_total = 0
-    countries = []
-    a = 0
-    for country in Country.objects.order_by('code'):
-        votes = Vote.objects.filter(recommendation=recommendation, representative__mep__countrymep__country=country, representative__mep__countrymep__begin__lte=recommendation.proposal.date, representative__mep__countrymep__end__gte=recommendation.proposal.date)
-        if votes.count():
-            all_meps = country.meps_on_date(recommendation.proposal.date).count()
-            if all_meps > max_total:
-                max_total = all_meps
-            total = votes.count()
-            _for = votes.filter(choice="for").count()
-            abstention = votes.filter(choice="abstention").count()
-            pyplot.bar(a + 0.1, all_meps, width=0.8, color="#AAAAAA")
-            ## against
-            pyplot.bar(a + 0.1, total, width=0.8, color=against_color)
-            ## abstention
-            pyplot.bar(a + 0.1, _for + abstention, width=0.8, color="#FF8800")
-            ## for
-            pyplot.bar(a + 0.1, _for, width=0.8, color=for_color)
-            countries.append(country.code)
-            a += 1
-
-    pyplot.legend(('Not present', 'against', 'abstention', 'for'), 'best', shadow=False)
-    pyplot.title("Countries vote repartition")
-    pyplot.xticks(map(lambda x: x+0.5, range(len(countries))), countries)
-    pyplot.xlabel("Countries")
-    pyplot.ylabel("Number of meps")
-    pyplot.axis([0, len(countries), 0, max_total + 2])
-    check_dir(filename)
-    pyplot.savefig(filename, format="png")
-    pyplot.clf()
-
-    return send_file(request, filename, content_type="image/png")
-
 def proposal_countries_map(request, proposal_id):
-    def color(score):
-        colors = 255
-        val = int(3 * colors * (score/100.))
-        red = green = colors
-        if val < colors:
-            green = int(2./3. * val)
-        elif val < 2 * colors:
-            green = int((2. / 3.) * colors + (1. / 3.) * (val / 2. - colors))
-        else:
-            red = 3 * colors - val
-        return "rgb(%d, %d, 0)" % (red, green)
-
     filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'proposal', "%s-countries-map.svg" % proposal_id)
     cache = get_content_cache(request, filename)
     if cache:
@@ -260,7 +202,7 @@ def proposal_countries_map(request, proposal_id):
         # HAHAHAHA blam those who can't write a human uzable xml lib for python
         if current_country and "style=" in line:
             if countries[current_country]:
-                line = re.sub("fill:#[0-9a-f]{6};", "fill:%s;" % color(countries[current_country]), line)
+                line = re.sub("fill:#[0-9a-f]{6};", "fill:rgb(%s, %s, %s);" % color(countries[current_country]), line)
             else:
                 line = re.sub("fill:#[0-9a-f]{6};", "fill:c0c0c0;", line)
             current_country = None
@@ -269,6 +211,55 @@ def proposal_countries_map(request, proposal_id):
 
     open(filename, "w").write(out)
     return HttpResponse(out)
+
+def recommendation_countries(request, recommendation_id):
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'recommendations', "%s-countries.png" % recommendation_id)
+    cache = get_content_cache(request, filename)
+    if cache:
+        return cache
+
+    recommendation = get_object_or_404(Recommendation, id=recommendation_id)
+
+    if recommendation.recommendation == "for":
+        for_color = "#00FF00"
+        against_color = "#FF0000"
+    else:
+        against_color = "#00FF00"
+        for_color = "#FF0000"
+
+    max_total = 0
+    countries = []
+    a = 0
+    for country in Country.objects.order_by('code'):
+        votes = Vote.objects.filter(recommendation=recommendation, representative__mep__countrymep__country=country, representative__mep__countrymep__begin__lte=recommendation.proposal.date, representative__mep__countrymep__end__gte=recommendation.proposal.date).distinct()
+        if votes.count():
+            all_meps = country.meps_on_date(recommendation.proposal.date).distinct().count()
+            if all_meps > max_total:
+                max_total = all_meps
+            _for = votes.filter(choice="for").distinct().count()
+            abstention = votes.filter(choice="abstention").distinct().count()
+            against = votes.filter(choice="against").distinct().count()
+            pyplot.bar(a + 0.1, all_meps, width=0.8, color="#AAAAAA")
+            ## against
+            pyplot.bar(a + 0.1, _for + abstention + against, width=0.8, color=against_color)
+            ## abstention
+            pyplot.bar(a + 0.1, _for + abstention, width=0.8, color="#FF8800")
+            ## for
+            pyplot.bar(a + 0.1, _for, width=0.8, color=for_color)
+            countries.append(country.code)
+            a += 1
+
+    pyplot.legend(('Not present', 'against', 'abstention', 'for'), 'best', shadow=False)
+    pyplot.title("Countries vote repartition on %s for %s" % (recommendation.part, recommendation.proposal.short_name if recommendation.proposal.short_name else recommendation.proposal.title))
+    pyplot.xticks(map(lambda x: x+0.5, range(len(countries))), countries)
+    pyplot.xlabel("Countries")
+    pyplot.ylabel("Number of meps")
+    pyplot.axis([0, len(countries), 0, max_total + 2])
+    check_dir(filename)
+    pyplot.savefig(filename, format="png")
+    pyplot.clf()
+
+    return send_file(request, filename, content_type="image/png")
 
 def recommendation_countries_absolute(request, recommendation_id):
     filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'recommendations', "%s-countries-absolute.png" % recommendation_id)
@@ -288,15 +279,15 @@ def recommendation_countries_absolute(request, recommendation_id):
     countries = []
     a = 0
     for country in Country.objects.order_by('code'):
-        votes = Vote.objects.filter(recommendation=recommendation, representative__mep__countrymep__country=country, representative__mep__countrymep__begin__lte=recommendation.proposal.date, representative__mep__countrymep__end__gte=recommendation.proposal.date)
+        votes = Vote.objects.filter(recommendation=recommendation, representative__mep__countrymep__country=country, representative__mep__countrymep__begin__lte=recommendation.proposal.date, representative__mep__countrymep__end__gte=recommendation.proposal.date).distinct()
         if votes.count():
-            all_meps = country.meps_on_date(recommendation.proposal.date).count()
-            total = votes.count()
-            _for = votes.filter(choice="for").count()
-            abstention = votes.filter(choice="abstention").count()
+            all_meps = country.meps_on_date(recommendation.proposal.date).distinct().count()
+            _for = votes.filter(choice="for").distinct().count()
+            against = votes.filter(choice="against").distinct().count()
+            abstention = votes.filter(choice="abstention").distinct().count()
             pyplot.bar(a + 0.1, 100, width=0.8, color="#AAAAAA")
             ## against
-            pyplot.bar(a + 0.1, total * 100 / all_meps, width=0.8, color=against_color)
+            pyplot.bar(a + 0.1, (_for + against + abstention) * 100 / all_meps, width=0.8, color=against_color)
             ## abstention
             pyplot.bar(a + 0.1, (_for + abstention) * 100 / all_meps, width=0.8, color="#FF8800")
             ## for
@@ -305,13 +296,286 @@ def recommendation_countries_absolute(request, recommendation_id):
             a += 1
 
     #pyplot.legend(('Not present', 'against', 'abstention', 'for'), 'best', shadow=False)
-    pyplot.title("Normalized countries vote repartition")
+    pyplot.title("Normalized countries vote repartition on %s for %s" % (recommendation.part, recommendation.proposal.short_name if recommendation.proposal.short_name else recommendation.proposal.title))
     pyplot.xticks(map(lambda x: x+0.5, range(len(countries))), countries)
     pyplot.xlabel("Countries")
     pyplot.ylabel("% of choices")
     pyplot.axis([0, len(countries), 0, 100])
     check_dir(filename)
     pyplot.savefig(filename, format="png")
+    pyplot.clf()
+
+    return send_file(request, filename, content_type="image/png")
+
+def group_proposal_score_repartition(request, group_abbreviation, proposal_id):
+    group_id = group_abbreviation
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', "%s-%s-repartition.png" % (group_id, proposal_id))
+    cache = get_content_cache(request, filename)
+    if cache:
+        return cache
+
+    group = get_object_or_404(Group, abbreviation=group_id)
+    proposal = get_object_or_404(Proposal, id=proposal_id)
+
+    maxeu = 0
+    #for mep in MEP.objects.filter(score__proposal=proposal, groupmep__group=group):
+    scores = []
+    for score_range in range(0, 100, 5):
+        meps = group.mep_set.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 5, score__value__gte=score_range).distinct().count()
+        if meps > maxeu:
+            maxeu = meps
+        #pyplot.bar(score_range/10 + 0.1, meps, color=map(lambda x: x/255., color(score_range + 5)))
+        scores.append((score_range, meps))
+
+    scores.append((100, group.mep_set.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value=100).distinct().count()))
+    pyplot.plot(*zip(*scores))
+
+    #pyplot.legend(('MEPs',), 'best', shadow=False)
+    pyplot.title("Score repartition for %s on %s" % (group.abbreviation, proposal.short_name if proposal.short_name else proposal.title))
+    pyplot.xticks(range(0, 105, 5), range(0, 105, 5))
+    pyplot.xlabel("Score range 5 by 5")
+    pyplot.ylabel("MEPs")
+    #pyplot.axis([0, 20.1, 0, maxeu + 3])
+    check_dir(filename)
+    pyplot.savefig(filename, format="png")
+    pyplot.clf()
+
+    return send_file(request, filename, content_type="image/png")
+
+def proposal_score_repartition(request, proposal_id):
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', "%s-repartition.png" % proposal_id)
+    cache = get_content_cache(request, filename)
+    if cache:
+        return cache
+
+    proposal = get_object_or_404(Proposal, id=proposal_id)
+
+    maxeu = 0
+    #scores = [(0, MEP.objects.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value=0).distinct().count())]
+    scores = []
+    #for mep in MEP.objects.filter(score__proposal=proposal, groupmep__group=group):
+    for score_range in range(0, 100, 5):
+        meps = MEP.objects.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 5, score__value__gte=score_range).distinct().count()
+        if meps > maxeu:
+            maxeu = meps
+        scores.append((score_range, meps))
+        #pyplot.bar(score_range/10 + 0.1, meps, color=map(lambda x: x/255., color(score_range + 5)))
+
+    scores.append((100, MEP.objects.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value=100).distinct().count()))
+    pyplot.plot(*zip(*scores))
+
+    #pyplot.legend(('MEPs',), 'best', shadow=False)
+    pyplot.title("Score repartition on %s" % proposal.short_name if proposal.short_name else proposal.title)
+    pyplot.xticks(range(0, 105, 5), range(0, 105, 5))
+    pyplot.xlabel("Score range 5 by 5")
+    pyplot.ylabel("MEPs")
+    #pyplot.axis([0, 10.1, 0, maxeu + 3])
+    check_dir(filename)
+    pyplot.savefig(filename, format="png")
+    pyplot.clf()
+
+    return send_file(request, filename, content_type="image/png")
+
+def group_proposal_score(request, proposal_id):
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', "groups-%s-repartition.png" % proposal_id)
+    cache = get_content_cache(request, filename)
+    if cache:
+        return cache
+
+    proposal = get_object_or_404(Proposal, id=proposal_id)
+
+    group_color = {'ALDE': '#FFFF00',
+                   'ELDR': '#FFFF00',
+                   'ECR': '#000084',
+                   'EFD': '#9A0000',
+                   'GUE/NGL': '#9C0000',
+                   'IND/DEM': '#FF9900',
+                   'EDD': '#FF9900',
+                   'NI': '#848284',
+                   'PPE': '#319AFF',
+                   'PPE-DE': '#319AFF',
+                   'SD': '#FF0000',
+                   'PSE': '#FF0000',
+                   'Verts/ALE': '#009A00',
+                   'ITS': '#000000',
+                   'UEN': '#05FBEE'}
+
+    group_bar = {}
+
+    for group in proposal.groups:
+        if not group_color.get(group.abbreviation):
+            print group
+    maxeu = 0
+    #for mep in MEP.objects.filter(score__proposal=proposal, groupmep__group=group):
+    a = 0.1
+    for group in proposal.groups:
+        for score_range in range(0, 100, 10):
+            meps = group.mep_set.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 10 if score_range != 90 else 101, score__value__gte=score_range).distinct().count()
+            if meps > maxeu:
+                maxeu = meps
+            group_bar[group.abbreviation] = pyplot.bar(score_range/10 + a, meps, width=0.1, color=group_color.get(group.abbreviation, '#FFFFFF'))
+        a += .1
+
+    a, b = zip(*group_bar.items())
+    pyplot.legend(list(b), list(a), 'best', shadow=False)
+    pyplot.title("Score repartition for groups on %s" % proposal.short_name if proposal.short_name else proposal.title)
+    pyplot.xticks(range(11), range(0, 110, 10))
+    pyplot.xlabel("Score range 10 by 10")
+    pyplot.ylabel("MEPs per group")
+    pyplot.axis([0, 10.1, 0, maxeu + 3])
+    check_dir(filename)
+    pyplot.savefig(filename, format="png")
+    pyplot.clf()
+
+    return send_file(request, filename, content_type="image/png")
+
+def group_proposal_score_stacked(request, proposal_id):
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', "groups-%s-repartition-stacked.png" % proposal_id)
+    pyplot.figure(figsize=(8, 8))
+    cache = get_content_cache(request, filename)
+    if cache:
+        return cache
+
+    proposal = get_object_or_404(Proposal, id=proposal_id)
+
+    group_color = {'ALDE': '#FFFF00',
+                   'ELDR': '#FFFF00',
+                   'ECR': '#000084',
+                   'EFD': '#9A0000',
+                   'GUE/NGL': '#9C0000',
+                   'IND/DEM': '#FF9900',
+                   'EDD': '#FF9900',
+                   'NI': '#848284',
+                   'PPE': '#319AFF',
+                   'PPE-DE': '#319AFF',
+                   'SD': '#FF0000',
+                   'PSE': '#FF0000',
+                   'Verts/ALE': '#009A00',
+                   'ITS': '#000000',
+                   'UEN': '#05FBEE'}
+
+    group_bar = {}
+    scores = []
+
+    maxeu = 0
+    for score_range in range(0, 100, 10):
+        meps = MEP.objects.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 10 if score_range != 90 else 101, score__value__gte=score_range).distinct().count()
+        if meps > maxeu:
+            maxeu = meps
+        scores.append(meps)
+
+    #for mep in MEP.objects.filter(score__proposal=proposal, groupmep__group=group):
+    for group in proposal.groups:
+        for score_range in range(0, 100, 10):
+            meps = group.mep_set.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 10 if score_range != 90 else 101, score__value__gte=score_range).distinct().count()
+            scores[score_range/10] -= meps
+            group_bar[group.abbreviation] = pyplot.bar(score_range/10 + 0.1, meps + scores[score_range/10], width=0.8, color=group_color.get(group.abbreviation, '#FFFFFF'))
+
+    a, b = zip(*group_bar.items())
+    pyplot.legend(list(b), list(a), 'best', shadow=False)
+    pyplot.title("Score repartition for groups on %s" % proposal.short_name if proposal.short_name else proposal.title)
+    pyplot.xticks(range(11), range(0, 110, 10))
+    pyplot.xlabel("Score range 10 by 10")
+    pyplot.ylabel("MEPs per group")
+    #pyplot.axis([0, 10.1, 0, maxeu + 3])
+    check_dir(filename)
+    pyplot.savefig(filename, format="png")
+    pyplot.figure(figsize=(8, 6))
+    pyplot.clf()
+
+    return send_file(request, filename, content_type="image/png")
+def group_proposal_score_heatmap(request, proposal_id):
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', "groups-%s-repartition-heatmap.png" % proposal_id)
+    cache = get_content_cache(request, filename)
+    if cache:
+        return cache
+
+    proposal = get_object_or_404(Proposal, id=proposal_id)
+    countries= proposal.countries
+    groups = proposal.groups
+
+    fig = pyplot.figure(figsize=(len(countries) / 2, len(groups) / 2))
+    ax = fig.add_subplot(111)
+    ax.set_xlim(0, len(proposal.countries))
+    ax.set_ylim(0, len(groups))
+
+    biggest_group_of_a_country = 0
+    for country in countries:
+        for group in groups:
+            meps = MEP.objects.filter(score__proposal=proposal,
+                                      groupmep__end__gte=proposal.date,
+                                      groupmep__begin__lte=proposal.date,
+                                      countrymep__begin__lte=proposal.date,
+                                      countrymep__end__gte=proposal.date,
+                                      countrymep__country=country,
+                                      groupmep__group=group).distinct().count()
+
+            if meps > biggest_group_of_a_country:
+                biggest_group_of_a_country = meps
+
+    biggest_group_of_a_country = float(biggest_group_of_a_country)
+
+    a = 0
+    for country in countries:
+        b = 0
+        for group in groups:
+            meps = MEP.objects.filter(score__proposal=proposal,
+                                      groupmep__end__gte=proposal.date,
+                                      groupmep__begin__lte=proposal.date,
+                                      countrymep__begin__lte=proposal.date,
+                                      countrymep__end__gte=proposal.date,
+                                      countrymep__country=country,
+                                      groupmep__group=group).distinct().count()
+
+            score = Score.objects.filter(proposal=proposal,
+                                         representative__mep__groupmep__group=group,
+                                         representative__mep__groupmep__begin__lte=proposal.date,
+                                         representative__mep__groupmep__end__gte=proposal.date,
+                                         representative__mep__countrymep__country=country,
+                                         representative__mep__countrymep__begin__lte=proposal.date,
+                                         representative__mep__countrymep__end__gte=proposal.date).aggregate(Avg('value'))['value__avg']
+
+            if score:
+                # I'm doing sqrt here because I'm reducing the surface of the circle, not the len of the radius
+                el = Ellipse((a + 0.5,b + 0.5), 1./
+                             sqrt(biggest_group_of_a_country/meps), 1. /
+                             sqrt(biggest_group_of_a_country/meps),
+                             facecolor=map(lambda x: x/255., color(score)),
+                             alpha=0.5)
+
+                ax.add_artist(el)
+            b += 1
+        a += 1
+
+    #group_bar = {}
+    #scores = []
+
+    #maxeu = 0
+    #for score_range in range(0, 100, 10):
+        #meps = MEP.objects.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 10 if score_range != 90 else 101, score__value__gte=score_range).distinct().count()
+        #if meps > maxeu:
+            #maxeu = meps
+        #scores.append(meps)
+
+    #for mep in MEP.objects.filter(score__proposal=proposal, groupmep__group=group):
+    #for group in proposal.groups:
+        #for score_range in range(0, 100, 10):
+            #meps = group.mep_set.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 10 if score_range != 90 else 101, score__value__gte=score_range).distinct().count()
+            #scores[score_range/10] -= meps
+            #group_bar[group.abbreviation] = pyplot.bar(score_range/10 + 0.1, meps + scores[score_range/10], width=0.8, color=group_color.get(group.abbreviation, '#FFFFFF'))
+
+    #a, b = zip(*group_bar.items())
+    #pyplot.legend(list(b), list(a), 'best', shadow=False)
+    pyplot.title("Heatmap of group/country on %s" % proposal.short_name if proposal.short_name else proposal.title)
+    #pyplot.xticks(range(11), range(0, 110, 10))
+    pyplot.xticks(map(lambda x: x + 0.5, range(len(countries))), map(lambda x: x.code, countries))
+    pyplot.yticks(map(lambda x: x + 0.5, range(len(groups))), map(lambda x: x.abbreviation, groups))
+    #pyplot.xlabel("Score range 10 by 10")
+    #pyplot.ylabel("MEPs per group")
+    #pyplot.axis([0, 10.1, 0, maxeu + 3])
+    check_dir(filename)
+    pyplot.savefig(filename, format="png")
+    pyplot.figure(figsize=(8, 6))
     pyplot.clf()
 
     return send_file(request, filename, content_type="image/png")
