@@ -1,3 +1,3 @@
 <ul class="party">
-<a href="{% url meps:index_by_party instance.party.id instance.party.name|slugify %}">{{ instance.party.name }}</a>
+<a href="{% url meps:index_by_party object.party.id object.party.name|slugify %}">{{ object.party.name }}</a>
 </ul>
