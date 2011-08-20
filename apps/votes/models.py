@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models import Avg
 from reps.models import Representative
 from meps.models import MEP
+from memopol2.utils import color
 
 class Proposal(models.Model):
     id = models.CharField(max_length=63, primary_key=True)
@@ -60,22 +61,12 @@ class Score(models.Model):
 
     @property
     def color(self):
-        red = 255 - self.value
-        green = self.value * 2.55
+        red, green, _ = color(self.value)
         return "rgb(%d, %d, 0)" % (red, green)
 
     @property
     def color_tuple(self):
-        colors = 255
-        val = int(3 * colors * (self.value/100.))
-        red = green = colors
-        if val < colors:
-            green = int(2./3. * val)
-        elif val < 2 * colors:
-            green = int((2. / 3.) * colors + (1. / 3.) * (val / 2. - colors))
-        else:
-            red = 3 * colors - val
-        return (red / 255., green / 255., 0)
+        return color(self.value)
 
     @property
     def of_country(self):

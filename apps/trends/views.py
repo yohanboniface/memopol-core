@@ -4,7 +4,7 @@ from django.db.models import Avg
 from django.http import HttpResponseNotFound, HttpResponse
 from django.shortcuts import get_object_or_404
 
-from memopol2.utils import check_dir, send_file, get_content_cache
+from memopol2.utils import check_dir, send_file, get_content_cache, color
 
 import numpy
 import matplotlib
@@ -109,7 +109,7 @@ def comparaison_trends_for_mep(request, mep_id):
     # line
     maximum_bar = pyplot.bar(map(lambda x: x+0.3, range(len(scores))), maximum, width=0.4, color="#FFFFFF")
     for i, j in zip(map(lambda x: x+0.3, range(len(scores))), score_list):
-        mep_bar = pyplot.bar(i, j.value * j.proposal.ponderation, width=0.4, color=j.color_tuple)
+        mep_bar = pyplot.bar(i, j.value * j.proposal.ponderation, width=0.4, color=map(lambda x: x/255., j.color_tuple))
     #pyplot.bar(map(lambda x: x+0.3, range(len(scores))), scores, width=0.4, color=(1, 0, 0))
     group_plot, = pyplot.plot(map(lambda x: x+0.5, range(len(scores))), of_group, 'bo', markersize=10)
     ep_plot, = pyplot.plot(map(lambda x: x+0.5, range(len(scores))), of_ep, 'pg', markersize=10)
