@@ -304,6 +304,75 @@ def recommendation_countries_absolute(request, recommendation_id):
 
     return send_file(request, filename, content_type="image/png")
 
+def group_proposal_score_repartition(request, group_abbreviation, proposal_id):
+    group_id = group_abbreviation
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', "%s-%s-repartition.png" % (group_id, proposal_id))
+    cache = get_content_cache(request, filename)
+    if cache:
+        return cache
+
+    group = get_object_or_404(Group, abbreviation=group_id)
+    proposal = get_object_or_404(Proposal, id=proposal_id)
+
+    maxeu = 0
+    #for mep in MEP.objects.filter(score__proposal=proposal, groupmep__group=group):
+    scores = []
+    for score_range in range(0, 100, 5):
+        meps = group.mep_set.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 5, score__value__gte=score_range).distinct().count()
+        if meps > maxeu:
+            maxeu = meps
+        #pyplot.bar(score_range/10 + 0.1, meps, color=map(lambda x: x/255., color(score_range + 5)))
+        scores.append((score_range, meps))
+
+    scores.append((100, group.mep_set.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value=100).distinct().count()))
+    pyplot.plot(*zip(*scores))
+
+    #pyplot.legend(('MEPs',), 'best', shadow=False)
+    pyplot.title("Score repartition for %s on %s" % (group.abbreviation, proposal.short_name if proposal.short_name else proposal.title))
+    pyplot.xticks(range(0, 105, 5), range(0, 105, 5))
+    pyplot.xlabel("Score range 5 by 5")
+    pyplot.ylabel("MEPs")
+    #pyplot.axis([0, 20.1, 0, maxeu + 3])
+    check_dir(filename)
+    pyplot.savefig(filename, format="png")
+    pyplot.clf()
+
+    return send_file(request, filename, content_type="image/png")
+
+def proposal_score_repartition(request, proposal_id):
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', "%s-repartition.png" % proposal_id)
+    cache = get_content_cache(request, filename)
+    if cache:
+        return cache
+
+    proposal = get_object_or_404(Proposal, id=proposal_id)
+
+    maxeu = 0
+    #scores = [(0, MEP.objects.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value=0).distinct().count())]
+    scores = []
+    #for mep in MEP.objects.filter(score__proposal=proposal, groupmep__group=group):
+    for score_range in range(0, 100, 5):
+        meps = MEP.objects.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 5, score__value__gte=score_range).distinct().count()
+        if meps > maxeu:
+            maxeu = meps
+        scores.append((score_range, meps))
+        #pyplot.bar(score_range/10 + 0.1, meps, color=map(lambda x: x/255., color(score_range + 5)))
+
+    scores.append((100, MEP.objects.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value=100).distinct().count()))
+    pyplot.plot(*zip(*scores))
+
+    #pyplot.legend(('MEPs',), 'best', shadow=False)
+    pyplot.title("Score repartition on %s" % proposal.short_name if proposal.short_name else proposal.title)
+    pyplot.xticks(range(0, 105, 5), range(0, 105, 5))
+    pyplot.xlabel("Score range 5 by 5")
+    pyplot.ylabel("MEPs")
+    #pyplot.axis([0, 10.1, 0, maxeu + 3])
+    check_dir(filename)
+    pyplot.savefig(filename, format="png")
+    pyplot.clf()
+
+    return send_file(request, filename, content_type="image/png")
+
 def group_proposal_score(request, proposal_id):
     filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', "groups-%s-repartition.png" % proposal_id)
     cache = get_content_cache(request, filename)

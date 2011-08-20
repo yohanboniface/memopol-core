@@ -52,6 +52,10 @@
 <img src="{% url trends:group_proposal_score vote.id %}">
 
 <img src="{% url trends:group_proposal_score_stacked vote.id %}">
+
+{% for group in vote.groups %}
+    <img src="{% url trends:group_proposal_score_repartition group.abbreviation vote.id %}">
+{% endfor %}
 </center>
 
 {% endblock %}
