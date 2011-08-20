@@ -247,7 +247,7 @@ def recommendation_countries(request, recommendation_id):
             a += 1
 
     pyplot.legend(('Not present', 'against', 'abstention', 'for'), 'best', shadow=False)
-    pyplot.title("Countries vote repartition")
+    pyplot.title("Countries vote repartition on %s for %s" % (recommendation.part, recommendation.proposal.short_name if recommendation.proposal.short_name else recommendation.proposal.title))
     pyplot.xticks(map(lambda x: x+0.5, range(len(countries))), countries)
     pyplot.xlabel("Countries")
     pyplot.ylabel("Number of meps")
@@ -293,7 +293,7 @@ def recommendation_countries_absolute(request, recommendation_id):
             a += 1
 
     #pyplot.legend(('Not present', 'against', 'abstention', 'for'), 'best', shadow=False)
-    pyplot.title("Normalized countries vote repartition")
+    pyplot.title("Normalized countries vote repartition on %s for %s" % (recommendation.part, recommendation.proposal.short_name if recommendation.proposal.short_name else recommendation.proposal.title))
     pyplot.xticks(map(lambda x: x+0.5, range(len(countries))), countries)
     pyplot.xlabel("Countries")
     pyplot.ylabel("% of choices")
