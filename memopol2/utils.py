@@ -30,6 +30,18 @@ def get_content_cache(request, filename, content_type='image/png'):
         return False
     return send_file(request, filename, content_type=content_type)
 
+def color(score):
+    colors = 255
+    val = int(3 * colors * (score/100.))
+    red = green = colors
+    if val < colors:
+        green = int(2./3. * val)
+    elif val < 2 * colors:
+        green = int((2. / 3.) * colors + (1. / 3.) * (val / 2. - colors))
+    else:
+        red = 3 * colors - val
+    return (red, green, 0)
+
 global _cache
 _cache = {}
 
