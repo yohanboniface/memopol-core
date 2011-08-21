@@ -89,12 +89,13 @@ li ul li {
     text-decoration: underline;
 }
 
+#sidebar {
+    width: 185px;
+}
 
 #nav {
     background-color: #eee;
     font-size: 80%;
-    margin-left: 6px;
-    width: 175px;
     text-align: right;
     text-transform: lowercase;
     padding: 5px;
@@ -105,7 +106,7 @@ li ul li {
 #nav h1, #nav h2 {
     text-transform: capitalize;
     padding: 20px 4px 5px 4px;
-    font: 18px 'Lucida Grande', Verdana, Lucida, Helvetica, Arial, sans-serif;
+    font-size: 18px;
 }
 
 #nav ul {
@@ -133,7 +134,6 @@ h2 {
     font-size: 120%;
     background: url("../img/logo.png") no-repeat ;
     margin-top: 0px; 
-    width: 202px;
 }
 
 #mainheader a {
@@ -146,9 +146,6 @@ h2 {
     font-variant: small-caps;
     text-align: center;
     background-color: #497ED5;
-    margin-left: 6px;
-    margin-right: 9px;
-    border-right: 2px solid white;
     height: 40px;
     line-height: 40px;
     color: #fff;
