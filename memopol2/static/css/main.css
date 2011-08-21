@@ -384,7 +384,8 @@ table.mp-list {
 
 table.mep-list tr th, table.mep-list tr td,
 table.mp-list tr th, table.mp-list tr td {
-  border: 1px solid black;
+  min-width: 50px;
+  border: 1px solid #999;
   padding: 3px 6px;
 }
 
@@ -413,9 +414,8 @@ table.tablesorter {
 }
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
    background-color: #e6EEEE;
-   border: 1px solid #000;
+   border: 1px solid #999;
    font-size: 8pt;
-   padding: 4px;
 }
 table.tablesorter thead tr .header {
    background-image: url("../img/bg.gif");
@@ -479,11 +479,19 @@ form label {
 }
 
 form input {
+    padding: 6px;
     width: 50%;
 }
 
 form textarea {
     width: 100%;
+}
+
+form input, form textarea {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15) inset;
+    border: 1px solid #ccc;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
 }
 
 form p {
@@ -516,10 +524,11 @@ form ul.errorlist li {
     margin-left: 1em;
 }
 form p.error {
-    border: thin solid red;
-    background-color: #FAAFBE;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+    border: thin solid #f66f8a;
+    background-color: #fccfd8;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 a.ok,
@@ -581,7 +590,7 @@ form#search {
     border-radius: 5px;
 }*/
 input.search-text {
-    width: 98%;
+    width: 90%;
 }
 
 #search li, #search li input,
