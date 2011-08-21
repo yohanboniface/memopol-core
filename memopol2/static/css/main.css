@@ -157,21 +157,10 @@ h2 {
     text-decoration: none;
 }
 
-
-#content {
-    background-color: #fff;
-    margin: 0px 20px 20px 20px;
-    padding: 0px 20px 20px 200px;
-    text-align: justify;
-}
-
-#content .grid_10 {
-    margin-top: 0px;
-    width: 90%;
-}
-
 #msg {
+    border: 2px solid #fffc53;
     background: #FFFECA;
+    padding: 0.5em;
     position: fixed;
     bottom: 0;
     font-size: 18px;
