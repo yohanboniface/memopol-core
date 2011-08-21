@@ -555,7 +555,8 @@ a.abstention {
 
 li.sep {
     height: 1px;
-    border-bottom: thin solid black;
+    border-bottom: thin solid #aaa;
+    margin: 0.5em 0em;
     list-style: none;
 }
 
@@ -647,10 +648,11 @@ ul#infos {
 div#contact {
     margin-right: 200px;
     margin-top: 20px;
-    padding: 0.3em 20px 0.3em 0.3em;
-    border: thin solid black;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
+    padding: 0.5em 1em 1em 1em;
+    border: thin solid #aaa;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    -moz-border-radius: 5px;
+    border-radius: 5px;
     background-color:#F0F0F6;
 }
 div#contact h2 {
@@ -664,7 +666,6 @@ div#contact h2 {
 }
 div#contact ul {
     margin: 0px;
-    margin-left: 1em;
 }
 div#contact li {
     list-style: none;
