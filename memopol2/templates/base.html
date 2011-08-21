@@ -29,6 +29,13 @@
           <a href="{% url admin:index %}">{% trans "Login" %}</a>
       {% endif %}
     </div>
+    
+    <div id="content" class="grid_12">
+        <div class="contentwraper">
+        {% block content %}{% endblock %}
+        </div>
+    	<div class="clear"></div>
+    </div>
 
     <div id="sidebar" class="grid_2">
         <div id="mainheader" ><a href="/">{% block header %}<h1>{{ title|default:"Memopol" }}</h1>{% endblock %}</a></div>
@@ -77,10 +84,6 @@
 
     </div>
 
-<div id="content" class="grid_10">
-    {% block content %}{% endblock %}
-		<div class="clear"></div>
-</div>
 <div class="clear"></div>
 
 <div id="footer">

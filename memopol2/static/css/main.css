@@ -8,6 +8,10 @@ body {
     font: 100% "Lucida Grande",Verdana,Lucida,Helvetica,Arial,sans-serif;
 }
 
+.contentwraper {
+    margin-left: 200px;
+}
+
 #content h1, #content h2 {
     margin-bottom: 1em;
     margin-top: 1em;
@@ -91,6 +95,8 @@ li ul li {
 
 #sidebar {
     width: 185px;
+    margin-left: -100%;
+    padding-left: 15px;
 }
 
 #nav {
@@ -106,15 +112,15 @@ li ul li {
 #nav h1, #nav h2 {
     text-transform: capitalize;
     padding: 20px 4px 5px 4px;
-    font-size: 18px;
+    font-size: 17px;
 }
 
 #nav ul {
     list-style: none;
 }
 
-#nav a:link, 
-#nav a:visited, 
+#nav a:link,
+#nav a:visited,
 #nav a:active {
     text-decoration: none;
 }
@@ -640,9 +646,10 @@ div#contact li {
 /* votes */
 
 div.legend {
-    border: thin solid black;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    border: 1px solid #999;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
     background-color:#F0F0F6;
     padding: 0.5em;
     margin-bottom: 1em;
