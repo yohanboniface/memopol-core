@@ -154,16 +154,6 @@ h2 {
     text-decoration: none;
 }
 
-#msg {
-    border: 2px solid #fffc53;
-    background: #FFFECA;
-    padding: 0.5em;
-    position: fixed;
-    bottom: 0;
-    font-size: 18px;
-    cursor: pointer;
-}
-
 .clickable {
     cursor: pointer;
 }
