@@ -77,8 +77,8 @@ li ul li {
     background-color: #497ED5;
     color: #ffffff;
     margin: 0px;
+    margin-top: 2em;
     padding: 1em;
-    border: solid 13px white;
     text-align: center;
     vertical-align: middle;
     font-size: 0.7em;
@@ -171,25 +171,6 @@ h2 {
     -webkit-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
     -moz-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
     box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
-}
-
-
-
-
-button {
-	text-decoration:none;
-    padding: 5px 5px 5px 30px;
-
-    /* border-radius */
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    /* box-shadow */
-    -webkit-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
-    -moz-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
-    box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
-
-    cursor: pointer;
 }
 
 .cancel {
@@ -479,7 +460,7 @@ form p.submit {
     background: white;
 }
 
-input.search-submit, form p.submit input {
+input.search-submit, form p.submit input, button {
     padding: 3px 15px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(255, 255, 255, 0.8) inset;
     background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#d8d8d8)) #d8d8d8;
@@ -491,7 +472,7 @@ input.search-submit, form p.submit input {
     border-radius: 3px;    
 }
 
-input.search-submit:hover, form p.submit input:hover {
+input.search-submit:hover, form p.submit input:hover, button:hover {
     color: #555;
 }
 
