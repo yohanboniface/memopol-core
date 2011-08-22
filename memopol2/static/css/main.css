@@ -9,7 +9,7 @@ body {
 }
 
 .contentwraper {
-    margin-left: 200px;
+    margin-left: 220px;
 }
 
 .top_space_2 {
@@ -74,6 +74,10 @@ li ul li {
     float: left;
 }
 
+#header h1 a {
+    font-size: 1em;
+}
+
 #header a { 
     vertical-align: middle;
     color: #ffffff;
@@ -115,7 +119,7 @@ li ul li {
 
 #nav h1, #nav h2 {
     text-transform: capitalize;
-    padding: 20px 4px 5px 4px;
+    padding: 20px 4px 5px 0px;
     font-size: 17px;
 }
 
