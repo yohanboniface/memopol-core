@@ -113,14 +113,14 @@ li ul li {
     text-align: right;
     text-transform: lowercase;
     padding: 5px;
-    padding: 20px 5px 200px;
+    padding: 20px 5px 200px 0px;
     min-height: 100%;
 }
 
 #nav h1, #nav h2 {
     text-transform: capitalize;
     padding: 20px 4px 5px 0px;
-    font-size: 17px;
+    font-size: 16px;
 }
 
 #nav ul {
