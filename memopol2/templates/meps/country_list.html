@@ -4,6 +4,7 @@
 
 <h1>{% trans "MEPs by country" %}</h1>
 {% include "map-eu.html" %}
+<div class="prefix_2 grid_8 suffix_2 top_space_2">
 <ul class="col">
 {% for country in object_list %}
     <li>
@@ -14,5 +15,6 @@
     </li>
 {% endfor %}
 </ul>
+</div>
 
 {% endblock %}

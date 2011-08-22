@@ -12,6 +12,10 @@ body {
     margin-left: 200px;
 }
 
+.top_space_2 {
+    padding-top: 2em;
+}
+
 #content h1, #content h2 {
     margin-bottom: 1em;
     margin-top: 1em;
@@ -313,14 +317,23 @@ div.map-eu {
 }
 
 .col {
+    overflow: hidden;
+    background: #F5F5F5;
+    padding: 1em;
     list-style: none;
 }
 
 .col li
 {
     float: left;
-    width: 25em;
-    margin: 0.1em;
+    width: 50%;
+    display: inline;
+    margin: 0;
+    padding: 0.3em 0;
+}
+
+.col li:hover {
+    background: #eee;
 }
 
 ul.groups, ul.meps, ul.index, ul.party
