@@ -34,6 +34,7 @@ meps_templates = dict(
     '''),
 )
 
+
 def gen_templates():
     import settings
     dirname = os.path.dirname(__file__)
@@ -50,4 +51,3 @@ def gen_templates():
             value = tmpl.render(ctx)
             filename = os.path.join(dirname, 'mep-%s-%s.html' % (mep.id, name))
             open(filename, 'w').write(value.encode('utf-8'))
-

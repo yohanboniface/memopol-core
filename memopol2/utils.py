@@ -10,6 +10,7 @@ from django.template.base import TemplateSyntaxError
 from django.conf import settings
 from django.core.cache import cache
 
+
 def check_dir(filename):
     dirname = os.path.dirname(filename)
     if not os.path.isdir(dirname):
@@ -37,10 +38,10 @@ def get_content_cache(request, filename, content_type='image/png'):
 
 def color(score):
     colors = 255
-    val = int(3 * colors * (score/100.))
+    val = int(3 * colors * (score / 100.))
     red = green = colors
     if val < colors:
-        green = int(2./3. * val)
+        green = int(2. / 3. * val)
     elif val < 2 * colors:
         green = int((2. / 3.) * colors + (1. / 3.) * (val / 2. - colors))
     else:
@@ -152,4 +153,3 @@ def loaddata(orm, fixture_name):
             call_command("loaddata", fixture_name)
 
 # end of code from dingus and more http://stackoverflow.com/questions/5472925/django-loading-data-from-fixture-after-backward-migration-loaddata-is-using-mod/5906258#5906258
-

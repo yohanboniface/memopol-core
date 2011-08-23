@@ -29,9 +29,8 @@ sitemaps = {
 }
 
 
-
 urlpatterns = patterns('', # pylint: disable=C0103
-    url(r'^$', list_detail.object_list, {'queryset': Proposal.objects.all(), 'template_name' : 'home.html'}, name='index'),
+    url(r'^$', list_detail.object_list, {'queryset': Proposal.objects.all(), 'template_name': 'home.html'}, name='index'),
     url(r'^europe/parliament/', include('meps.urls', namespace='meps', app_name='meps')),
     url(r'^france/assemblee/', include('mps.urls', namespace='mps', app_name='mps')),
     url(r'^votes/', include('votes.urls', namespace='votes', app_name='votes')),
