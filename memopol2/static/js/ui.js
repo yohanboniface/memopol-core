@@ -15,10 +15,9 @@ function onMugshotError(source) {
 $('#content h1:first').addClass('document-title');
 
 // table
-$("table.mep-list, table.mp-list").tablesorter({ headers: { 4: { sorter: false }, }  });
-// FIXME dont know why but sorting dont work with mp-list..
-//$('table.mep-list, table.mp-list').tableFilter();
-$('table.mep-list').tableFilter();
+$("table.mep-list").tablesorter({ headers: { 4: { sorter: false }, }  });
+$("table.mp-list").tablesorter({ headers: { 2: { sorter: false }, }  });
+$('table.mep-list, table.mp-list').tableFilter();
 $("table.mep-list tbody tr, table.mp-list tbody tr").hover(
     function() {$(this).addClass('odd');},
     function() {$(this).removeClass('odd');}
