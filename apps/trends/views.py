@@ -194,17 +194,16 @@ def proposal_countries_map(request, proposal_id):
     out = ""
     for line in open(join(settings.MEDIA_DIRECTORY, "grey_europe_map.svg"), "r").readlines():
 
-        if 'id="' in line:
-            get = re.match('.*id="([a-z]+)"', line)
+        if '         {}' in line:
+            get = re.match('.*([a-z][a-z]).*', line)
+            
             if get and get.group(1).upper() in countries.keys():
                 current_country = get.group(1).upper()
-
+        
         # HAHAHAHA blam those who can't write a human uzable xml lib for python
-        if current_country and "style=" in line:
+        if current_country:
             if countries[current_country]:
-                line = re.sub("fill:#[0-9a-f]{6};", "fill:rgb(%s, %s, %s);" % color(countries[current_country]), line)
-            else:
-                line = re.sub("fill:#[0-9a-f]{6};", "fill:c0c0c0;", line)
+                line = re.sub("{}", "{fill:rgb(%s, %s, %s);}" % color(countries[current_country]), line)
             current_country = None
 
         out += line
