@@ -181,7 +181,7 @@ def proposal_countries_map(request, proposal_id):
     filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'proposal', "%s-countries-map.svg" % proposal_id)
     cache = get_content_cache(request, filename)
     if cache:
-        return HttpResponse(cache)
+        return HttpResponse(cache, mimetype="image/svg+xml")
 
     proposal = get_object_or_404(Proposal, id=proposal_id)
 
@@ -210,7 +210,7 @@ def proposal_countries_map(request, proposal_id):
         out += line
 
     open(filename, "w").write(out)
-    return HttpResponse(out)
+    return HttpResponse(out, mimetype="image/svg+xml")
 
 def recommendation_countries(request, recommendation_id):
     filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'recommendations', "%s-countries.png" % recommendation_id)
