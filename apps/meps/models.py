@@ -231,12 +231,12 @@ class MEP(Representative):
 
     @reify
     def important_posts(self):
-        all_roles = [list(OrganizationMEP.objects.filter(mep=self, end__gt=date.today()))]
+        all_roles = list(OrganizationMEP.objects.filter(mep=self, end__gt=date.today()))
         for i in (GroupMEP, CommitteeRole, DelegationRole):
             roles = i.objects.filter(mep=self, end__gt=date.today()).exclude(role="Member").exclude(role="Substitute")
             if roles:
-                all_roles.append(list(roles))
-        return roles
+                all_roles += list(roles)
+        return all_roles
 
     class Meta:
         ordering = ['last_name']
