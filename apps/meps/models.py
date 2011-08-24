@@ -215,6 +215,10 @@ class MEP(Representative):
     def current_organizations(self):
         return self.organizationmep_set.filter(end=date(9999, 12, 31))
 
+    @reify
+    def old_organizations(self):
+        return self.organizationmep_set.exclude(end=date(9999, 12, 31)).order_by('-end')
+
     @property
     def score_color(self):
         red = 255 - self.total_score
