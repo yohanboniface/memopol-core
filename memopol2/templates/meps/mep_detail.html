@@ -48,7 +48,7 @@
 </div>
 {% endif %}
 
-{% if mep.current_committees %}
+{% if mep.committeerole_set.all %}
 <div id="committees">
     <h2 class="collapsible collapsed">{% trans "Committees" %}</h2>
     <ul class="body committees">
@@ -65,7 +65,7 @@
 </div>
 {% endif %}
 
-{% if mep.current_delegations %}
+{% if mep.delegationrole_set.all %}
 <div id="delegations">
     <h2 class="collapsible collapsed">{% trans "Delegations" %}</h2>
     <ul class="body delegations">
@@ -82,7 +82,7 @@
 </div>
 {% endif %}
 
-{% if mep.current_organizations %}
+{% if mep.organizationmep_set.all %}
 <div id="staff">
     <h2 class="collapsible collapsed">{% trans "Staff" %}</h2>
         <ul class="body organisations">
