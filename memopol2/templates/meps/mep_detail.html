@@ -53,9 +53,9 @@
         <li><a href="{% url meps:index_by_committee role.committee.abbreviation %}">{{ role.role }} of {{ role.committee }}</a></li>
     {% endfor %}
     {% if mep.old_committees %}
-    <li>-</li>
+    <li class="noicon">-</li>
     {% for role in mep.old_committees %}
-        <li><i>Was {{ role.role|lower }} in {{ role.committee }} from {{ role.begin|date:"d/m/y" }} to {{ role.end|date:"d/m/y" }}</i></li>
+        <li class="old"><i>Was {{ role.role|lower }} in {{ role.committee }} from {{ role.begin|date:"d/m/y" }} to {{ role.end|date:"d/m/y" }}</i></li>
     {% endfor %}
     {% endif %}
     </ul>
@@ -70,9 +70,9 @@
         <li><a href="{% url meps:index_by_delegation role.delegation.id %}">{{ role.role }} of {{ role.delegation }}</a></li>
     {% endfor %}
     {% if mep.old_delegations %}
-    <li>-</li>
+    <li class="noicon">-</li>
     {% for role in mep.old_delegations %}
-        <li><i>Was {{ role.role|lower }} in {{ role.delegation }} from {{ role.begin|date:"d/m/y" }} to {{ role.end|date:"d/m/y" }}</i></li>
+        <li class="old"><i>Was {{ role.role|lower }} in {{ role.delegation }} from {{ role.begin|date:"d/m/y" }} to {{ role.end|date:"d/m/y" }}</i></li>
     {% endfor %}
     {% endif %}
     </ul>

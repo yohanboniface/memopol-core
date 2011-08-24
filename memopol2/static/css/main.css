@@ -595,8 +595,6 @@ div#livesearch {
 
 ul.votes, ul.committees, ul.delegations, ul.organisations, ul.parties, ul.mp-groups,
 div#livesearch ul, #search-results ul {
-    margin: 0px;
-    list-style: none;
 }
 div#livesearch li {
     margin: 0px;
@@ -609,7 +607,6 @@ div#livesearch li.odd a {
 ul.votes a, ul.committees a, ul.delegations a, ul.organisations a, ul.parties a, ul.mp-groups a,
 a.search-item {
     text-decoration: none;
-    padding-left: 25px;
 }
 span.search-item-type {
     font-size: 80%;
@@ -619,13 +616,26 @@ span.search-item-type {
 a.mep-icon, a.mp-icon {
     background: url("../img/icons/user.png") no-repeat top left;
 }
-ul.committees a, ul.delegations a, ul.organisations a, ul.parties a, ul.mp-groups a,
-a.comitee-icon, a.delegation-icon, a.group-icon, a.organisation-icon, a.party-icon {
-    background: url("../img/icons/user-group.png") no-repeat top left;
+
+ul.committees li, ul.delegations li, ul.organisations li, ul.parties li, ul.mp-groups li {
+     list-style: disc url("../img/icons/user-group.png") outside;
+     margin-left: 2em;
 }
-ul.votes a {
-    background: url("../img/icons/article.png") no-repeat top left;
+
+ul.committees li.old, ul.delegations li.old, ul.organisations li.old, ul.parties li.old, ul.mp-groups li.old {
+     list-style: disc url("../img/icons/user-group-old.png") outside;
+     margin-left: 2em;
 }
+
+ul.committees li.noicon, ul.delegations li.noicon, ul.organisations li.noicon, ul.parties li.noicon, ul.mp-groups li.noicon {
+    list-style: none;
+}
+
+ul.votes li {
+    list-style: disc url("../img/icons/article.png") outside;
+    margin-left: 2em;
+}
+
 
 /* contact */
 
