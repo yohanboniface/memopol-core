@@ -239,7 +239,8 @@ def add_mep_email(mep, email):
     get_or_create(Email, representative=mep.representative_ptr, email=email)
 
 def add_mep_website(mep, url):
-    get_or_create(WebSite, representative=mep.representative_ptr, url=url)
+    if url:
+        get_or_create(WebSite, representative=mep.representative_ptr, url=url)
 
 def add_mep_cv(mep, cv):
     for c in cv:
@@ -279,6 +280,7 @@ def manage_mep(mep, mep_json):
     add_organizations(mep, mep_json.get("Staff", []))
     if mep_json.get("Mail"):
         add_mep_email(mep, mep_json["Mail"])
+    mep.website_set.filter(url="").delete()
     if mep_json.get("Homepage"):
         add_mep_website(mep, mep_json["Homepage"])
     add_mep_cv(mep, mep_json.get("CV", []))
