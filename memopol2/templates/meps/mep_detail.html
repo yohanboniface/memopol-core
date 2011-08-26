@@ -25,6 +25,9 @@
 {% if not mep.active %}<li><div class="nok">{% trans "Former mep" %}</div></li>{% endif %}
 <li><i>{% trans "Country" %}</i>:  <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.country.code %}">{{ mep.country.name }} </li></a>
 <li><i>{% trans "Political group: " %}</i><a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></li>
+{% for post in mep.important_posts %}
+<li><b>{{ post.role }} of {{ post.instance.name }} since {{ post.begin }}</b></li>
+{% endfor %}
 <li><i>{% trans "National party: " %}</i><a href="{% url meps:index_by_party mep.party.id mep.party.name|slugify %}">{{ mep.party.name }}</a></li>
 <li><i>Born on</i>
 {% blocktrans with mep.birth_date.day as day and mep.birth_date.month as month and mep.birth_date.year as year and mep.birth_place as birth_place %}{{ day }}/{{ month }}/{{ year }}<i> at </i>{{ birth_place }}{% endblocktrans %}</li>
@@ -45,7 +48,7 @@
 </div>
 {% endif %}
 
-{% if mep.current_committees %}
+{% if mep.committeerole_set.all %}
 <div id="committees">
     <h2 class="collapsible collapsed">{% trans "Committees" %}</h2>
     <ul class="body committees">
@@ -62,7 +65,7 @@
 </div>
 {% endif %}
 
-{% if mep.current_delegations %}
+{% if mep.delegationrole_set.all %}
 <div id="delegations">
     <h2 class="collapsible collapsed">{% trans "Delegations" %}</h2>
     <ul class="body delegations">
@@ -79,12 +82,12 @@
 </div>
 {% endif %}
 
-{% if mep.current_organizations %}
+{% if mep.old_organizations %}
 <div id="staff">
-    <h2 class="collapsible collapsed">{% trans "Staff" %}</h2>
+    <h2 class="collapsible collapsed">{% trans "Old staff" %}</h2>
         <ul class="body organisations">
-    {% for staff in mep.current_organizations %}
-    <li>{{ staff.organization.name }}: {{ staff.role }} {% trans "from" %} {{ staff.begin }} {% if staff.end == "Dec. 31, 9999" %} {% trans "to" %} {{ staff.end }}{% endif %}</li>
+    {% for staff in mep.old_organizations %}
+    <li><i>Was {{ staff.role }} in {{ staff.organization.name }} {% trans "from" %} {{ staff.begin }} {% trans "to" %} {{ staff.end }}</i></li>
     {% endfor %}
         </ul>
 </div>
@@ -130,6 +133,7 @@
         {% endif %}
     </div>
 {% endif %}
+
 {% get_comment_list for mep as comment_list %}
 {% if comment_list %}
 <h2 class="collapsible collapsed">Notes</h2>

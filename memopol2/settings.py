@@ -159,7 +159,7 @@ FIXTURE_DIRS = (
     'fixtures',
 )
 
-PARLTRACK_URL = "http://parltrack.memopol2.lqdn.fr"
+PARLTRACK_URL = "http://parltrack.euwiki.org"
 ROOT_URL = "http://memopol2.lqdn.org"
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for

@@ -215,6 +215,10 @@ class MEP(Representative):
     def current_organizations(self):
         return self.organizationmep_set.filter(end=date(9999, 12, 31))
 
+    @reify
+    def old_organizations(self):
+        return self.organizationmep_set.exclude(end=date(9999, 12, 31)).order_by('-end')
+
     @property
     def score_color(self):
         red = 255 - self.total_score
@@ -229,6 +233,15 @@ class MEP(Representative):
     def party_tag(self):
         return dict(group=self.groupmep_set.latest('end').group)
 
+    @reify
+    def important_posts(self):
+        all_roles = list(OrganizationMEP.objects.filter(mep=self, end__gt=date.today()))
+        for i in (GroupMEP, CommitteeRole, DelegationRole):
+            roles = i.objects.filter(mep=self, end__gt=date.today()).exclude(role="Member").exclude(role="Substitute")
+            if roles:
+                all_roles += list(roles)
+        return all_roles
+
     class Meta:
         ordering = ['last_name']
 
@@ -240,6 +253,10 @@ class GroupMEP(models.Model):
     begin = models.DateField(null=True)
     end = models.DateField(null=True)
 
+    @reify
+    def instance(self):
+        return self.group
+
 
 class DelegationRole(models.Model):
     mep = models.ForeignKey(MEP)
@@ -247,6 +264,10 @@ class DelegationRole(models.Model):
     role = models.CharField(max_length=255)
     begin = models.DateField(null=True)
     end = models.DateField(null=True)
+
+    @reify
+    def instance(self):
+        return self.delegation
 
     def __unicode__(self):
         return u"%s : %s" % (self.mep.full_name, self.delegation)
@@ -258,6 +279,10 @@ class CommitteeRole(models.Model):
     role = models.CharField(max_length=255)
     begin = models.DateField(null=True)
     end = models.DateField(null=True)
+
+    @reify
+    def instance(self):
+        return self.committee
 
     def __unicode__(self):
         return u"%s : %s" % (self.committee.abbreviation, self.mep.full_name)
@@ -282,6 +307,10 @@ class OrganizationMEP(models.Model):
     role = models.CharField(max_length=255)
     begin = models.DateField()
     end = models.DateField()
+
+    @reify
+    def instance(self):
+        return self.organization
 
 
 class MepModerator(CommentModerator):
