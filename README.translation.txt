@@ -1,25 +1,25 @@
-
 How to translate Memopol2 ?
+===========================
 
-- go to the source folder (the same folder where this readme is located)
+- Go to the source folder (the same folder where this README file is located)
 
-- check that you don't already have your translation in locale/<your language code>
+- Check that you don't already have your translation in locale/<your language code>
 
-if not : 
+If not : 
 
-- create locale directory if needed : 
+- Create locale directory if needed : 
   mkdir locale
 
-- create messages for your language (for french)
+- Create messages for your language (ex for french)
   django-admin.py makemessages -l fr
 
-- go to the po file directory : 
+- Go to the po file directory : 
   cd locale/fr/LC_MESSAGES
 
-- edit the po file : 
+- Edit the po file : 
   emacs django.po
 
-- translate the "msgid" (don't touch them) in the "msgstr" strings
+- Translate the "msgid" (don't touch them) in the "msgstr" strings
 
-- send us the .po file either through git or by mail.
+- Send us the .po file either through git or by mail.
 
