@@ -526,29 +526,21 @@ form p.error {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
-a.ok,
-span.ok,
-div.ok {
+a.ok, span.ok, div.ok, a.nok, span.nok, div.nok, span.abstention, a.abstention, div.abstention {
     display:inline;
+    padding: 6px 0 0 20px;
     color: black;
-    padding: 0 0 0 20px;
+}
+
+a.ok, span.ok, div.ok {
     background: url("../img/icons/bullet-green.png") no-repeat top left !important;
 }
 
-a.nok,
-span.nok,
-div.nok {
-    display:inline;
-    color: black;
-    padding: 0 0 0 20px;
+a.nok,span.nok, div.nok {
     background: url("../img/icons/bullet-red.png") no-repeat top left !important;
 }
 
-span.abstention,
-a.abstention {
-    display:inline;
-    color: black;
-    padding: 0 0 0 20px;
+span.abstention, a.abstention, div.abstention {
     background: url("../img/icons/bullet-orange.png") no-repeat top left !important;
 }
 
