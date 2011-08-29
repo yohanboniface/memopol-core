@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from memopol2 import utils
 
 from meps.models import Country, Group, Committee, Delegation, Organization, Building
-from reps.models import Party
+from reps.models import Party, Opinion
 
 from views import BuildingDetailView, MEPView, MEPsFromView, MEPList
 
@@ -25,6 +25,7 @@ urlpatterns = patterns('meps.views',
     url(r'^inactive/$', utils.cached(3600*24*7)(MEPList.as_view(active=False)), name='index_inactive'),
     url(r'^score/$', utils.cached(3600*24*7)(MEPList.as_view(order_by='-total_score', score_listing=True)), name='scores'),
 
+    url(r'^opinions/$', ListView.as_view(model=Opinion), name='index_opinions'),
     url(r'^organization/$', ListView.as_view(model=Organization), name='index_organizations'),
     url(r'^organization/(?P<pk>[0-9]+)/$', MEPsFromView.as_view(model=Organization), name='index_by_organization'),
     url(r'^country/$', ListView.as_view(model=Country), name='index_countries'),
