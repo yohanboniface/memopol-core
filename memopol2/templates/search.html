@@ -13,8 +13,8 @@
 <div id="search-results">
   <ul>
       {% for hit in hits %}
-      <li>
-        <a class="{{hit.type}}-icon search-item" href="{{ hit.url }}">
+      <li class="{{hit.type}}-icon">
+        <a class="search-item" href="{{ hit.url }}">
            <span class="search-item-title">
             {{ hit.title }}
            </span>
