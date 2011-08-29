@@ -36,6 +36,9 @@ class Opinion(models.Model):
     content = models.TextField()
     url = models.URLField()
 
+    def meps(self):
+        return meps.models.MEP.objects.filter(opinionrep__opinion=self)
+
     def __unicode__(self):
         return self.title
 
