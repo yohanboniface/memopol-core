@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{% trans "MEPs by committe" %}</h1>
+<ul class="parties">
+{% for opinion in object_list %}
+    <li>
+        <a href="{% url meps:index_by_opinions opinion.id %}">{{ opinion.title }}</a>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}
