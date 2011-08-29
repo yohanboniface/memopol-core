@@ -567,6 +567,8 @@ form#simple-search {
 }
 form#search {
     margin-bottom: 1em;
+    padding: 1em;
+    background-color: #f5f5f5;
 }
 
 input.search-text {
@@ -611,7 +613,7 @@ a.search-item {
 }
 span.search-item-type {
     font-size: 80%;
-    color: #ccc;
+    color: #999;
 }
 
 a.mep-icon, a.mp-icon {
