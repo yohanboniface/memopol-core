@@ -48,7 +48,8 @@
     <object type="image/svg+xml" data="{% url trends:recommendation_countries_map vote.id %}" type="image/svg+xml" width="680" height="520"></object>
 </div>
 
-<center>
+<h2 class="collapsible collapsed">Score repartition</h2>
+<center class="body">
 <img src="{% url trends:group_proposal_score vote.id %}">
 
 <img src="{% url trends:group_proposal_score_stacked vote.id %}">

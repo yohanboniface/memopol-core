@@ -89,7 +89,7 @@ $('input.search-text, #search #id_q').focus(function() {
     livesearch.css('left', pos.left);
     livesearch.css('top', pos.top+10+self.height());
 });
-$('input.search-text, #search #id_q').keypress(function(e) {
+$('input.search-text, #search #id_q').keydown(function(e) {
     var self = $(this);
     var code = (e.keyCode ? e.keyCode : e.which);
     if (code == 13) {
