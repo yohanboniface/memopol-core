@@ -7,6 +7,7 @@ from memopol2 import utils
 
 from meps.models import Country, Group, Committee, Delegation, Organization, Building
 from reps.models import Party, Opinion
+from votes.models import Proposal
 
 from views import BuildingDetailView, MEPView, MEPsFromView, MEPList
 
@@ -42,6 +43,8 @@ urlpatterns = patterns('meps.views',
     url(r'^floor/$', ListView.as_view(queryset=Building.objects.order_by('postcode')), name='index_floor'),
     url(r'^floor/brussels/(?P<pk>\w+)/(?P<floor>\w+)/$', BuildingDetailView.as_view(), name='bxl_floor'),
     url(r'^floor/strasbourg/(?P<pk>\w+)/(?P<floor>\w+)/$', BuildingDetailView.as_view(), name='stg_floor'),
+
+    url(r'^votes/$', ListView.as_view(queryset=Proposal.objects.filter(institution="EU")), name='index_votes'),
 
     url(r'^deputy/(?P<pk>\w+)/$', MEPView.as_view(), name='mep'),
     url(r'^deputy/(?P<pk>\w+)/dataporn/$', MEPView.as_view(template_name="meps/dataporn.html"), name='mep_dataporn'),
