@@ -32,7 +32,7 @@ class Party(models.Model):
 
 
 class Opinion(models.Model):
-    title = models.CharField(max_length=1023, unique=True)
+    title = models.CharField(max_length=1023)
     content = models.TextField()
     url = models.URLField()
 

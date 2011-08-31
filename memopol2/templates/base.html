@@ -18,7 +18,7 @@
 
 <div class="container_12">
     <div id="header">
-      <h1><a href="/">Memopol — political memory</a></h1>
+        <h1><a href="/">The Political Memory of la Quadrature du Net</a></h1>
       <a href="{% url contact_form %}">Contact</a>
       {% if user.is_staff %}
           <a href="{% url admin:index %}">{% trans "Administration" %}</a>
@@ -61,12 +61,12 @@
                 <li><a href="{% url meps:index_organizations %}">{% trans "By instances" %}</a></li>
                 <li><a href="{% url meps:index_floor %}">{% trans "By floor" %}</a></li>
                 <li><a href="{% url meps:scores %}">{% trans "By total score" %}</a></li>
+                <li><a href="{% url meps:index_votes %}">{% trans "Tracked votes" %}</a></li>
                 <li><a href="{% url meps:index_inactive %}">{% trans "Former eurodeputies" %}</a></li>
             </ul>
 
             <h2>{% trans "Tracked votes" %}</h2>
             <ul>
-                <li><a href="{% url votes:index %}">{% trans "By vote's name" %}</a></li>
                 <li><a href="{% url meps:index_opinions %}">{% trans "Expressed opinions" %}</a></li>
             </ul>
 
@@ -75,6 +75,7 @@
                 <li><a href="{% url mps:index %}">{% trans "By name" %}</a></li>
                 <li><a href="{% url mps:index_groups %}">{% trans "By political group" %}</a></li>
                 <li><a href="{% url mps:index_departments %}">{% trans "By departments" %}</a></li>
+                <li><a href="{% url mps:index_votes %}">{% trans "Tracked votes" %}</a></li>
             </ul>
 
 

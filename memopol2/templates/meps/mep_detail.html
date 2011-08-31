@@ -87,7 +87,7 @@
     <h2 class="collapsible collapsed">{% trans "Old staff" %}</h2>
         <ul class="body organisations">
     {% for staff in mep.old_organizations %}
-    <li><i>Was {{ staff.role }} in {{ staff.organization.name }} {% trans "from" %} {{ staff.begin }} {% trans "to" %} {{ staff.end }}</i></li>
+    <li class="old"><i>Was {{ staff.role }} in {{ staff.organization.name }} {% trans "from" %} {{ staff.begin }} {% trans "to" %} {{ staff.end }}</i></li>
     {% endfor %}
         </ul>
 </div>
