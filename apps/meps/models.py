@@ -17,7 +17,7 @@ class MepsContainerManager(models.Manager):
 
 
 class Country(models.Model):
-    code = models.CharField(max_length=2, unique=True)
+    code = models.CharField(max_length=2, primary_key=True)
     name = models.CharField(max_length=30, unique=True)
 
     objects = MepsContainerManager()
@@ -38,7 +38,7 @@ class Country(models.Model):
 
 @search.searchable
 class Group(models.Model):
-    abbreviation = models.CharField(max_length=10, unique=True)
+    abbreviation = models.CharField(max_length=10, primary_key=True)
     name = models.CharField(max_length=100, unique=True)
 
     objects = MepsContainerManager()
@@ -80,7 +80,7 @@ class Delegation(models.Model):
 @search.searchable
 class Committee(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    abbreviation = models.CharField(max_length=30, unique=True)
+    abbreviation = models.CharField(max_length=30, primary_key=True)
 
     objects = MepsContainerManager()
 
