@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block javascript %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/chosen.jquery.min.js"></script>
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/chosen.css" />
+<script type="text/javascript">
+$(document).ready(function(){
+   $("select").chosen();
+});
+</script>
+{% endblock %}
+{% block content %}
+<form action="/campaign/edit/{{campaign.id}}/" method="post">{% csrf_token %}
+   {{ form.as_p }}
+   <input type="submit" value="Submit" />
+</form>
+<hr />
+<table>
+   <thead>
+      <th>Score</th>
+      <th>MEP</th>
+   </thead>
+   {% for mepscore in campaign.mepscore_set.all %}
+      {% if mepscore.score > 0 %}
+         <tr><td>{{mepscore.score}}</td><td>{{mepscore.mep}}</td></tr>
+      {% endif %}
+   {% endfor %}
+</table>
+{% endblock %}
