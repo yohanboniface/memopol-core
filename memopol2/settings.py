@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     'queries',
     'trends',
     'trophies',
+    'campaign',
     'search',
 )
 
