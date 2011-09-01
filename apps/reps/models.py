@@ -1,3 +1,4 @@
+from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.core.cache import cache
 from django.conf import settings
@@ -24,7 +25,7 @@ class Party(models.Model):
     content = __unicode__
 
     def get_absolute_url(self):
-        return reverse('meps:index_by_party', args=(self.id,))
+        return reverse('meps:index_by_party', args=(self.id, slugify(self.name)))
 
     @property
     def meps(self):
