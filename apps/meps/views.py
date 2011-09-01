@@ -79,7 +79,9 @@ class MEPList(ListView):
     order_by='last_name'
 
     def get_queryset(self):
-        return MEP.objects.filter(active=self.active).order_by(self.order_by)
+        if not self.queryset:
+            return MEP.objects.filter(active=self.active).order_by(self.order_by)
+        return self.queryset
 
     def get_context_data(self, *args, **kwargs):
         context = super(MEPList, self).get_context_data(**kwargs)
