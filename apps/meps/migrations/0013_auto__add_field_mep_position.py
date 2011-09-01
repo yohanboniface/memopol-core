@@ -23,8 +23,8 @@ class Migration(SchemaMigration):
             mep.total_score = total_score / float(total)
             mep.save()
 
-        a, total_meps = 0, orm.MEP.objects.filter(active=True).count()
-        for mep in orm.MEP.objects.filter(active=True):
+        a, total_meps = 0, orm.MEP.objects.filter().count()
+        for mep in orm.MEP.objects.filter():
             #if mep.score_set.all().count():
                 a += 1
                 stdout.write("Calculating score of meps ... %s/%s\r" % (a, total_meps))
