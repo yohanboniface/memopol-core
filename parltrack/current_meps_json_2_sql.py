@@ -171,7 +171,8 @@ def add_addrs(mep, addrs):
                                      name=bxl["Address"]["Building"],
                                      street=bxl["Address"]["Street"],
                                      postcode=bxl["Address"]["Zip"])
-    mep.bxl_office = bxl["Address"]["Office"]
+    mep.bxl_floor = bxl["Address"]["Office"][:3]
+    mep.bxl_office_number = bxl["Address"]["Office"][3:]
     mep.bxl_fax = bxl["Fax"]
     mep.bxl_phone1 = bxl["Phone"]
     mep.bxl_phone2 = bxl["Phone"][:-4] + "7" + bxl["Phone"][-3:]
@@ -183,7 +184,8 @@ def add_addrs(mep, addrs):
                                      name=stg["Address"]["Building"],
                                      street=stg["Address"]["Street"],
                                      postcode=stg["Address"].get("Zip", stg["Address"]["Zip1"]))
-    mep.stg_office = stg["Address"]["Office"]
+    mep.stg_floor = stg["Address"]["Office"][:3]
+    mep.stg_office_number = stg["Address"]["Office"][3:]
     mep.stg_fax = stg["Fax"]
     mep.stg_phone1 = stg["Phone"]
     mep.stg_phone2 = stg["Phone"][:-4] + "7" + stg["Phone"][-3:]
