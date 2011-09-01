@@ -82,7 +82,6 @@ def getCampaignMeps(request, pk):
     if request.GET.get('format')=='json':
         return HttpResponse(json.dumps(chosen),
                             mimetype="application/json")
-
-    return render_to_response('meps/mep_list.html',
+    return render_to_response('campaign/list.html',
                               { 'object_list': [MEP.objects.get(pk=x) for x in chosen] },
                               context_instance = RequestContext(request))
