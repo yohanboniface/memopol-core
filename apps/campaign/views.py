@@ -78,7 +78,11 @@ def getCampaignMeps(request, pk):
     smeps=set([x[1] for x in scoredmeps])
     allmeps=set([x['id'] for x in MEP.objects.filter(active=True).values('id')])
     zmeps=[(1, x) for x in allmeps-smeps]
-    chosen=randomsubset(zmeps+scoredmeps, request.GET.get('limit',10))
+    try:
+        limit=int(request.GET.get('limit'))
+    except:
+        limit=10
+    chosen=randomsubset(zmeps+scoredmeps, limit)
     if request.GET.get('format')=='json':
         return HttpResponse(json.dumps(chosen),
                             mimetype="application/json")
