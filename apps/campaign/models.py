@@ -24,6 +24,7 @@ class ScoreRule(models.Model):
     campaign = models.ForeignKey('Campaign')
     rule = models.CharField(max_length=4096)
     score = models.IntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
 
     class Admin:
         pass
@@ -43,3 +44,24 @@ class Campaign(models.Model):
     def __unicode__(self):
         return u"%s" % (self.title)
 
+
+class Debriefing(models.Model):
+    CONTACT_TYPES = (
+        ('I', 'Personal'),
+        ('P', 'Phone'),
+        ('E', 'Email'),
+        ('F', 'FAX'),
+        ('L', 'Letter'),
+    )
+    RESPONSES = (
+        ('-', 'Negative'),
+        ('0', 'Neutral'),
+        ('+', 'Positive'),
+        ('?', 'No contact'),
+    )
+    campaign = models.ForeignKey(Campaign)
+    mep = models.ForeignKey(MEP)
+    type = models.CharField(max_length=1, choices=CONTACT_TYPES)
+    response = models.CharField(max_length=1, choices=RESPONSES)
+    when = models.DateTimeField()
+    text = models.TextField(blank=True)

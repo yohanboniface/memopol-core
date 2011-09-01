@@ -4,4 +4,5 @@ from meps.models import Country, Group, Committee, Delegation, Organization, Bui
 
 urlpatterns = patterns('campaign.views',
     url(r'^edit/(?P<pk>\w+)/$', CampaignView.editCampaign, ),
+    url(r'^view/(?P<pk>\w+)/$', CampaignView.getCampaignMeps, ),
 )
