@@ -2,7 +2,7 @@
 from sys import stdout
 from south.db import db
 from south.v2 import SchemaMigration
-from meps.utils import update_total_score_of_mep
+from meps.utils import update_total_score_of_all_meps
 
 class Migration(SchemaMigration):
 
@@ -12,15 +12,7 @@ class Migration(SchemaMigration):
         db.add_column('meps_mep', 'position', self.gf('django.db.models.fields.IntegerField')(default=None, null=True), keep_default=False)
         db.add_column('meps_mep', 'total_score', self.gf('django.db.models.fields.FloatField')(default=None, null=True), keep_default=False)
 
-        a, total_meps = 0, orm.MEP.objects.filter().count()
-        for mep in orm.MEP.objects.filter():
-            #if mep.score_set.all().count():
-                a += 1
-                stdout.write("Calculating score of meps ... %s/%s\r" % (a, total_meps))
-                stdout.flush()
-                update_total_score_of_mep(mep, score=orm['votes.Score'], proposal=orm['votes.Proposal'])
-
-        stdout.write("\n")
+        update_total_score_of_all_meps(score=orm['votes.Score'], mep=orm.MEP, proposal=orm['votes.Proposal'], verbose=True)
 
         a, total_meps = 0, orm.MEP.objects.filter(active=True).count()
         for mep in orm.MEP.objects.filter(active=True).order_by('-total_score'):
