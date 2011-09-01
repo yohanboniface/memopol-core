@@ -2,7 +2,7 @@
 from sys import stdout
 from south.db import db
 from south.v2 import SchemaMigration
-from django.db.models import Sum
+from meps.utils import update_total_score_of_mep
 
 class Migration(SchemaMigration):
 
@@ -12,24 +12,13 @@ class Migration(SchemaMigration):
         db.add_column('meps_mep', 'position', self.gf('django.db.models.fields.IntegerField')(default=None, null=True), keep_default=False)
         db.add_column('meps_mep', 'total_score', self.gf('django.db.models.fields.FloatField')(default=None, null=True), keep_default=False)
 
-        def total_score(mep):
-            proposals = orm['votes.Proposal'].objects.all()
-            total = orm['votes.Proposal'].objects.aggregate(Sum('ponderation'))['ponderation__sum']
-            # all the votes a mep has been involved in
-            done = [score.proposal for score in orm['votes.Score'].objects.filter(representative=mep.representative_ptr)]
-            total_score = sum([score.value * score.proposal.ponderation for score in orm['votes.Score'].objects.filter(representative=mep.representative_ptr)])
-            # add 50 by default to votes a meps hasn't been involved in
-            total_score += sum([50 * missing.ponderation for missing in proposals if missing not in done])
-            mep.total_score = total_score / float(total)
-            mep.save()
-
         a, total_meps = 0, orm.MEP.objects.filter().count()
         for mep in orm.MEP.objects.filter():
             #if mep.score_set.all().count():
                 a += 1
                 stdout.write("Calculating score of meps ... %s/%s\r" % (a, total_meps))
                 stdout.flush()
-                total_score(mep)
+                update_total_score_of_mep(mep, score=orm['votes.Score'], proposal=orm['votes.Proposal'])
 
         stdout.write("\n")
 
