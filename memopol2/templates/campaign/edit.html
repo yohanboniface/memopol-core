@@ -10,20 +10,23 @@ $(document).ready(function(){
 </script>
 {% endblock %}
 {% block content %}
-<form action="/campaign/edit/{{campaign.id}}/" method="post">{% csrf_token %}
-   {{ form.as_p }}
-   <input type="submit" value="Submit" />
-</form>
-<hr />
-<table>
-   <thead>
-      <th>Score</th>
-      <th>MEP</th>
-   </thead>
-   {% for mepscore in campaign.mepscore_set.all %}
-      {% if mepscore.score > 0 %}
-         <tr><td>{{mepscore.score}}</td><td>{{mepscore.mep}}</td></tr>
-      {% endif %}
-   {% endfor %}
-</table>
+<div>
+   <a href="/admin/campaign/mepscore/">Edit individual MEPs scores</a>
+   <form action="/campaign/edit/{{campaign.id}}/" method="post">{% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Submit" />
+   </form>
+   <hr />
+   <table>
+      <thead>
+         <th>Score</th>
+         <th>MEP</th>
+      </thead>
+      {% for mepscore in campaign.mepscore_set.all %}
+         {% if mepscore.score > 0 %}
+            <tr><td>{{mepscore.score}}</td><td>{{mepscore.mep}}</td></tr>
+         {% endif %}
+      {% endfor %}
+   </table>
+</div>
 {% endblock %}
