@@ -27,3 +27,16 @@ def update_total_score_of_mep(mep, proposal=Proposal, score=Score):
     total_score += sum([50 * missing.ponderation for missing in proposals if missing not in done])
     mep.total_score = total_score / float(total)
     mep.save()
+
+def update_meps_positions(verbose=False, mep=MEP):
+    a, total_meps = 0, mep.objects.filter(active=True).count()
+    for _mep in mep.objects.filter(active=True).order_by('-total_score'):
+        a += 1
+        if verbose:
+            stdout.write("Setting current position of meps ... %s/%s\r" % (a, total_meps))
+        stdout.flush()
+        _mep.position = a
+        _mep.save()
+
+    if verbose:
+        stdout.write("\n")

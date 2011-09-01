@@ -1,8 +1,7 @@
 # encoding: utf-8
-from sys import stdout
 from south.db import db
 from south.v2 import SchemaMigration
-from meps.utils import update_total_score_of_all_meps
+from meps.utils import update_total_score_of_all_meps, update_meps_positions
 
 class Migration(SchemaMigration):
 
@@ -13,17 +12,7 @@ class Migration(SchemaMigration):
         db.add_column('meps_mep', 'total_score', self.gf('django.db.models.fields.FloatField')(default=None, null=True), keep_default=False)
 
         update_total_score_of_all_meps(score=orm['votes.Score'], mep=orm.MEP, proposal=orm['votes.Proposal'], verbose=True)
-
-        a, total_meps = 0, orm.MEP.objects.filter(active=True).count()
-        for mep in orm.MEP.objects.filter(active=True).order_by('-total_score'):
-            #if mep.score_set.all().count():
-                a += 1
-                stdout.write("Setting current position of meps ... %s/%s\r" % (a, total_meps))
-                stdout.flush()
-                mep.position = a
-                mep.save()
-
-        stdout.write("\n")
+        update_meps_positions(mep=orm.MEP, verbose=True)
 
     def backwards(self, orm):
 
