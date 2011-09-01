@@ -347,7 +347,4 @@ if __name__ == "__main__":
     print
     update_meps_positions(verbose=True)
 
-# TODO
-# need to check all the existant building and to remove the empty one
-
 # vim:set shiftwidth=4 tabstop=4 expandtab:
