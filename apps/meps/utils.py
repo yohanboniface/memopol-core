@@ -21,8 +21,12 @@ def update_total_score_of_mep(mep, proposal=Proposal, score=Score):
     proposals = proposal.objects.all()
     total = proposal.objects.aggregate(Sum('ponderation'))['ponderation__sum']
     # all the votes a mep has been involved in
-    done = [score.proposal for score in score.objects.filter(representative=mep.representative_ptr)]
-    total_score = sum([score.value * score.proposal.ponderation for score in score.objects.filter(representative=mep.representative_ptr)])
+    done = [_score.proposal for _score in score.objects.filter(representative=mep.representative_ptr)]
+    if not done:
+        mep.total_score = None
+        mep.save()
+        return
+    total_score = sum([_score.value * _score.proposal.ponderation for _score in score.objects.filter(representative=mep.representative_ptr)])
     # add 50 by default to votes a meps hasn't been involved in
     total_score += sum([50 * missing.ponderation for missing in proposals if missing not in done])
     mep.total_score = total_score / float(total)
@@ -33,6 +37,8 @@ def update_meps_positions(verbose=False, mep=MEP):
     previous_score = None
     for _mep in mep.objects.filter(active=True).order_by('-total_score'):
         # else, scores are equal -> same position
+        if not _mep.total_score:
+            pass
         if previous_score != _mep.total_score:
             a += 1
         if verbose:
