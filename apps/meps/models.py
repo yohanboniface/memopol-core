@@ -168,6 +168,12 @@ class MEP(Representative):
     position = models.IntegerField(default=None, null=True)
     total_score = models.FloatField(default=None, null=True)
 
+    @reify
+    def get_ep_webpage(self):
+        if self.active:
+            return self.ep_webpage
+        return "http://www.europarl.europa.eu/members/expert/inOut/viewOutgoing.do?language=FR&id=%s" % self.ep_id
+
     def get_absolute_url(self):
         return reverse('meps:mep', args=(self.id,))
 
