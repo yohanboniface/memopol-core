@@ -10,6 +10,7 @@ from datetime import datetime, time
 
 from django.conf import settings
 
+from meps.utils import update_total_score_of_all_meps
 from meps.models import MEP
 from votes.models import RecommendationData, Proposal, Recommendation, Vote, Score
 
@@ -116,5 +117,7 @@ if __name__ == "__main__":
         print >>sys.stderr, "Recommendation should be either 'for' or 'against'"
         sys.exit(1)
     create_recommendation(*sys.argv[1:])
+    sys.stdout.write("Update total score of all meps now\n")
+    update_total_score_of_all_meps(verbose=True)
 
 # vim:set shiftwidth=4 tabstop=4 expandtab:
