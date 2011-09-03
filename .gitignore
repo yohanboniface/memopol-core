@@ -15,7 +15,6 @@ pip-log.txt
 pylint.out
 .tox
 env
-fixtures
 settings_local.py
 *.swp
 *.swo
