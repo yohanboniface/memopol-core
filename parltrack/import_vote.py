@@ -100,6 +100,7 @@ def create_recommendation(recommendationdata_id, choice, weight):
                              proposal=proposal,
                              date=rd.date)
 
+    sys.stdout.write("\n")
     rd.imported = True
     rd.save()
 
