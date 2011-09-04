@@ -1,10 +1,9 @@
 # Create your views here.
 
 from models import Campaign
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from campaign.forms import ScoreForm
 from campaign.models import MEPScore, ScoreRule
-from django.template import RequestContext
 from django.http import HttpResponse #, HttpResponseRedirect, Http404
 from meps.models import MEP
 from datetime import date
@@ -62,9 +61,7 @@ def editCampaign(request, pk):
     else:
         updateCampaignScores(form, pk, c)
     data['form']=form
-    return render_to_response('campaign/edit.html',
-                              data,
-                              context_instance = RequestContext(request))
+    return render(request, 'campaign/edit.html', data)
 
 def randomsubset(l, n):
     res=[]
@@ -86,6 +83,6 @@ def getCampaignMeps(request, pk):
     if request.GET.get('format')=='json':
         return HttpResponse(json.dumps(chosen),
                             mimetype="application/json")
-    return render_to_response('campaign/list.html',
-                              { 'object_list': [MEP.objects.get(pk=x) for x in chosen] },
-                              context_instance = RequestContext(request))
+    return render(request,
+                  'campaign/list.html',
+                  { 'object_list': [MEP.objects.get(pk=x) for x in chosen] })
