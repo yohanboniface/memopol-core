@@ -67,5 +67,3 @@ def search(request, template_name='search.html'):
         ix.close()
     return direct_to_template(request, template_name,
                               dict(form=form, hits=hits))
-
-
