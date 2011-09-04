@@ -4,9 +4,7 @@ from django import forms
 from django.conf import settings
 from django.views.generic.simple import direct_to_template
 from whoosh.filedb.filestore import FileStorage
-from whoosh import index, fields
 from whoosh.qparser import QueryParser
-from search import WHOOSH_SCHEMA
 from search import Searchables
 
 from meps import models
