@@ -10,79 +10,84 @@ from datetime import date
 import random, json
 
 def updateCampaignScores(form, pk, c):
-    #meps=[]
     query={}
+
     if form.cleaned_data['group']:
-        query['groupmep__group__abbreviation__in']=form.cleaned_data['group']
-        query['groupmep__end']=date(9999, 12, 31)
+        query['groupmep__group__abbreviation__in'] = form.cleaned_data['group']
+        query['groupmep__end'] = date(9999, 12, 31)
+
         if form.cleaned_data['groupRole']:
-            query['groupmep__role__in']=form.cleaned_data['groupRole']
-            query['groupmep__end']=date(9999, 12, 31)
+            query['groupmep__role__in'] = form.cleaned_data['groupRole']
+            query['groupmep__end'] = date(9999, 12, 31)
 
     if form.cleaned_data['delegation']:
-        query['delegationrole__delegation__name__in']=form.cleaned_data['delegation']
-        query['delegationrole__end']=date(9999, 12, 31)
+        query['delegationrole__delegation__name__in'] = form.cleaned_data['delegation']
+        query['delegationrole__end'] = date(9999, 12, 31)
+
         if form.cleaned_data['delegationRole']:
-            query['delegationrole__role__in']=form.cleaned_data['delegationRole']
-            query['delegationrole__end']=date(9999, 12, 31)
+            query['delegationrole__role__in'] = form.cleaned_data['delegationRole']
+            query['delegationrole__end'] = date(9999, 12, 31)
 
     if form.cleaned_data['staff']:
-        query['organizationmep__organization__name__in']=form.cleaned_data['staff']
-        query['organizationmep__end']=date(9999, 12, 31)
+        query['organizationmep__organization__name__in'] = form.cleaned_data['staff']
+        query['organizationmep__end'] = date(9999, 12, 31)
+
         if form.cleaned_data['staffRole']:
-            query['organizationmep__role__in']=form.cleaned_data['staffRole']
-            query['organizationmep__end']=date(9999, 12, 31)
-        #meps.extend([x.mep for x in query])
+            query['organizationmep__role__in'] = form.cleaned_data['staffRole']
+            query['organizationmep__end'] = date(9999, 12, 31)
 
     if form.cleaned_data['committee']:
-        query['committeerole__committee__name__in']=form.cleaned_data['committee']
-        query['committeerole__end']=date(9999, 12, 31)
+        query['committeerole__committee__name__in'] = form.cleaned_data['committee']
+        query['committeerole__end'] = date(9999, 12, 31)
+
         if form.cleaned_data['committeeRole']:
-            query['committeerole__role__in']=form.cleaned_data['committeeRole']
-            query['committeerole__end']=date(9999, 12, 31)
+            query['committeerole__role__in'] = form.cleaned_data['committeeRole']
+            query['committeerole__end'] = date(9999, 12, 31)
 
     print ', '.join(["%s = %s" % (k,v) for k,v in query.items()])
+
     if query:
         # for the record
         ScoreRule(campaign=c,
                   rule=', '.join(["%s = %s" % (k,v) for k,v in query.items()]),
                   score=form.cleaned_data['weight']).save()
+
         for mep in MEP.objects.filter(**query).distinct():
-            ms=MEPScore.objects.get_or_create(mep=mep, campaign=c)[0]
-            ms.score+=form.cleaned_data['weight']
+            ms = MEPScore.objects.get_or_create(mep=mep, campaign=c)[0]
+            ms.score += form.cleaned_data['weight']
             ms.save()
 
 def editCampaign(request, pk):
-    c=get_object_or_404(Campaign, pk=pk)
-    data={ 'campaign': c }
+    c = get_object_or_404(Campaign, pk=pk)
+    data = { 'campaign': c }
     form = ScoreForm(request.POST)
     if not form.is_valid():
         form = ScoreForm()
     else:
         updateCampaignScores(form, pk, c)
-    data['form']=form
+    data['form'] = form
     return render(request, 'campaign/edit.html', data)
 
 def randomsubset(l, n):
-    res=[]
+    res = []
     for _ in xrange(n):
         res.append(random.choice([x for li in [[x[1]] * x[0] for x in l if x[1] not in res] for x in li]))
     return res
 
 def getCampaignMeps(request, pk):
-    c=get_object_or_404(Campaign, pk=pk)
-    scoredmeps=[(x['score'],x['mep']) for x in MEPScore.objects.filter(campaign=c).values('mep','score')]
-    smeps=set([x[1] for x in scoredmeps])
-    allmeps=set([x['id'] for x in MEP.objects.filter(active=True).values('id')])
-    zmeps=[(1, x) for x in allmeps-smeps]
+    c = get_object_or_404(Campaign, pk=pk)
+    scoredmeps = [(x['score'], x['mep']) for x in MEPScore.objects.filter(campaign=c).values('mep','score')]
+    smeps = set([x[1] for x in scoredmeps])
+    allmeps = set([x['id'] for x in MEP.objects.filter(active=True).values('id')])
+    zmeps = [(1, x) for x in allmeps-smeps]
     try:
-        limit=int(request.GET.get('limit'))
+        limit = int(request.GET.get('limit'))
     except:
-        limit=10
-    chosen=randomsubset(zmeps+scoredmeps, limit)
-    if request.GET.get('format')=='json':
+        limit = 10
+    chosen = randomsubset(zmeps+scoredmeps, limit)
+    if request.GET.get('format') == 'json':
         return HttpResponse(json.dumps(chosen),
                             mimetype="application/json")
     return render(request,
                   'campaign/list.html',
-                  { 'object_list': [MEP.objects.get(pk=x) for x in chosen] })
+                  {'object_list': [MEP.objects.get(pk=x) for x in chosen]})
