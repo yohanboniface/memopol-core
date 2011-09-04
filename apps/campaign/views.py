@@ -6,7 +6,7 @@ from campaign.forms import ScoreForm
 from campaign.models import MEPScore, ScoreRule
 from django.template import RequestContext
 from django.http import HttpResponse #, HttpResponseRedirect, Http404
-from meps.models import MEP, OrganizationMEP
+from meps.models import MEP
 from datetime import date
 import random, json
 
