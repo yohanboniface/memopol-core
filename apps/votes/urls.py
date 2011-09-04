@@ -1,7 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 from django.views.generic import ListView, DetailView
-from django.shortcuts import get_object_or_404, render_to_response
-from django.template import RequestContext
+from django.shortcuts import get_object_or_404, render
 
 from votes.models import Proposal, Vote, Recommendation, RecommendationData
 from reps.models import Representative
@@ -17,7 +16,7 @@ def proposal_rep(request, proposal_id, mep_id):
              else {'choice': 'absent', 'recommendation': r, 'representative': representative}
              for r in proposal.recommendation_set.all()]
     context = {'representative': representative, 'proposal': proposal, 'votes': votes}
-    return render_to_response('votes/per_rep.html', context, context_instance=RequestContext(request))
+    return render(request, 'votes/per_rep.html', context)
 
 urlpatterns = patterns('',
     url(r'^$', ListView.as_view(model=Proposal), name='index'),
