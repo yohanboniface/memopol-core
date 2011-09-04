@@ -31,7 +31,7 @@ def get_proposal(proposal_name):
             proposal = proposal[0]
         else:
             print "Create new proposal"
-            proposal = Proposal.objects.create(title=proposal_name, id=_id)
+            proposal = Proposal.objects.create(title=proposal_name, id=_id, institution="EU")
     return proposal
 
 def create_recommendation(recommendationdata_id, choice, weight):
