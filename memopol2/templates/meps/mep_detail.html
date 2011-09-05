@@ -15,7 +15,7 @@
 <div class="quickView">
 <img class="mugshot" alt="{{ mep }}" src="{% url meps:mep-picture mep.ep_id %}" onerror="onMugshotError(this);"/>
 <span>{{ mep }} <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> </span>
-<a href="{% url meps:index_by_group mep.group.abbreviation %}"><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png"/></a><ul>{% for i in mep.achievements %}<li><img alt="{{ i.0 }}" src="{{ MEDIA_URL }}img/trophies/{{ i.1 }}" /></li>{% endfor %}</ul>
+<a href="{% url meps:index_by_group mep.group.abbreviation %}" title="show the {{ mep.group.abbreviation }} group"><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" alt="{{ mep.group.abbreviation }}"/></a><ul>{% for i in mep.achievements %}<li><img alt="{{ i.0 }}" src="{{ MEDIA_URL }}img/trophies/{{ i.1 }}" /></li>{% endfor %}</ul>
 <a href="#" id="call-now" />
   <img src="{{ MEDIA_URL }}img/call_now_en.png" />
 </a>
