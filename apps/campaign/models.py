@@ -37,6 +37,8 @@ class Campaign(models.Model):
     title = models.CharField(max_length=1024, unique=True)
     created = models.DateTimeField(auto_now_add=True)
     finished = models.DateTimeField(null=True, blank=True)
+    intro = models.TextField(blank=True)
+    details = models.TextField(blank=True)
 
     class Admin:
         pass
@@ -63,5 +65,10 @@ class Debriefing(models.Model):
     mep = models.ForeignKey(MEP)
     type = models.CharField(max_length=1, choices=CONTACT_TYPES)
     response = models.CharField(max_length=1, choices=RESPONSES)
-    when = models.DateTimeField()
+    usercontact = models.CharField(max_length=1024, null=True)
+    when = models.DateTimeField(auto_now_add=True)
     text = models.TextField(blank=True)
+    valid = models.CharField(max_length=64, blank=True)
+
+    class Admin:
+        pass

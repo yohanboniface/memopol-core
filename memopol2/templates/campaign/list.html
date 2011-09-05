@@ -3,45 +3,20 @@
 
 {% block content %}
 
-{% if not header_template %}
-<h1>{% trans "Members of the European Parliament" %}</h1>
-{% else %}
-{% include header_template %}
+<h1>{% trans "Campaigns" %}</h1>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
 {% endif %}
 
-<table class="mep-list tablesorter"> 
-  {% include "meps/meps_table_thead.html" %}
-  <tbody>
-    {% for mep in object_list %}
-       <tr>
-         <td><a href="{{ mep.get_absolute_url }}">{{ mep.first_name }} {{ mep.last_name|upper }}</a></td>
-         <td>{{ mep.country_tag|safe }}</td>
-         <td>{{ mep.group_tag|safe }}</td>
-         <td>{{ mep.party_tag|safe }}</td>
-         <td>
-           <div class="body">
-             <ul class="body">
-               <li><b>{% trans "Brussels" %}</b>
-                {% trans "Tel." %}: <a href="callto://{{ mep.bxl_phone1|phone }}">{{ mep.bxl_phone1 }}</a>&nbsp;-&nbsp;<a href="callto://{{ mep.bxl_phone2|phone }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
-               </li>
-               <li><b>{% trans "Strasbourg" %}</b>
-               {% trans "Tel." %}: <a href="callto://{{ mep.stg_phone1|cut:" " }}">{{ mep.stg_phone1 }}</a>&nbsp;-&nbsp;<a href="callto://{{ mep.stg_phone2|cut:" " }}">{{ mep.stg_phone2 }}</a>&nbsp;<br/>
-               </li>
-               {% if mep.emails %}
-                 <li>
-                   <b>{% trans "E-mail" %}:</b>
-                   {% for email in mep.emails %}
-                     <a href="mailto:{{ email }}">{{ email }}</a>
-                     {% if not forloop.last %}-{% endif %}
-                   {% endfor %}
-                 </li>
-               {% endif %}
-             </ul>
-             <a class="more-contact" href="{% url meps:mep_contact mep.id %}">{% trans "More information" %}...</a>
-           </div>
-         </td>
-       </tr>
-    {% endfor %}
-  </tbody>
-</table>
+{% for c in object_list %}
+    {%if loop.first %}<ul>{%endif%}
+       <li><a href="/campaign/view/{{c.id}}/">{{c.title}}</a></li>
+    {%if loop.first %}</ul>{%endif%}
+{% empty %}
+   No campaigns yet. {% if not user.is_authenticated %}<a href="{% url admin:index %}">{% trans "Login" %}</a> and create one{% else %}<a href="/admin/campaign/campaign/add/">Create one.</a>{% endif %}
+{% endfor %}
 {% endblock %}

@@ -1,14 +1,24 @@
 # Create your views here.
 
-from models import Campaign
-from django.shortcuts import render_to_response, get_object_or_404
-from campaign.forms import ScoreForm
+from models import Campaign, Debriefing
+from campaign.forms import ScoreForm, DebriefingForm
 from campaign.models import MEPScore, ScoreRule
-from django.template import RequestContext
-from django.http import HttpResponse #, HttpResponseRedirect, Http404
 from meps.models import MEP, OrganizationMEP
+
+from django.shortcuts import render_to_response, get_object_or_404
+from django.conf import settings
+from django.template import RequestContext
+from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.http import HttpResponse, HttpResponseRedirect #, Http404
+from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ObjectDoesNotExist
+
 from datetime import date
-import random, json
+from itertools import izip
+from email.mime.text import MIMEText
+import random, json, hashlib, smtplib
 
 def updateCampaignScores(form, pk, c):
     #meps=[]
@@ -42,7 +52,7 @@ def updateCampaignScores(form, pk, c):
             query['committeerole__role__in']=form.cleaned_data['committeeRole']
             query['committeerole__end']=date(9999, 12, 31)
 
-    print ', '.join(["%s = %s" % (k,v) for k,v in query.items()])
+    #print ', '.join(["%s = %s" % (k,v) for k,v in query.items()])
     if query:
         # for the record
         ScoreRule(campaign=c,
@@ -74,18 +84,104 @@ def randomsubset(l, n):
 
 def getCampaignMeps(request, pk):
     c=get_object_or_404(Campaign, pk=pk)
-    scoredmeps=[(x['score'],x['mep']) for x in MEPScore.objects.filter(campaign=c).values('mep','score')]
-    smeps=set([x[1] for x in scoredmeps])
-    allmeps=set([x['id'] for x in MEP.objects.filter(active=True).values('id')])
-    zmeps=[(1, x) for x in allmeps-smeps]
-    try:
-        limit=int(request.GET.get('limit'))
-    except:
-        limit=10
-    chosen=randomsubset(zmeps+scoredmeps, limit)
+    if not 'chosen' in request.session:
+        request.session['chosen']={}
+    if not c in request.session['chosen'] or request.GET.get('force'):
+        scoredmeps=[(x['score'],x['mep']) for x in MEPScore.objects.filter(campaign=c).values('mep','score')]
+        smeps=set([x[1] for x in scoredmeps])
+        allmeps=set([x['id'] for x in MEP.objects.filter(active=True).values('id')])
+        zmeps=[(1, x) for x in allmeps-smeps]
+        try:
+            limit=int(request.GET.get('limit'))
+        except:
+            limit=3
+        chosen=randomsubset(zmeps+scoredmeps, limit)
+        request.session['chosen'][c]=chosen
+        request.session.modified = True
+        return HttpResponseRedirect("/campaign/view/%s/" % c.id)
+    else:
+        chosen=request.session['chosen'][c]
     if request.GET.get('format')=='json':
         return HttpResponse(json.dumps(chosen),
                             mimetype="application/json")
+
+    chosen=[MEP.objects.get(pk=x) for x in chosen]
+    forms = [DebriefingForm(instance=Debriefing(mep=mep,campaign=c)) for mep in chosen]
+    dbriefs = [Debriefing.objects.filter(mep=mep,campaign=c) for mep in chosen]
+    return render_to_response('campaign/view.html',
+                              { 'object_list': izip(chosen,forms, dbriefs ),
+                                'campaign': c, },
+                              context_instance = RequestContext(request))
+
+def getCampaigns(request):
+    c=Campaign.objects.all()
     return render_to_response('campaign/list.html',
-                              { 'object_list': [MEP.objects.get(pk=x) for x in chosen] },
+                              { 'object_list': c, },
+                              context_instance = RequestContext(request))
+
+def feedback(request):
+    feedback = DebriefingForm(request.POST)
+    try:
+        feedback.full_clean()
+    except ValidationError, e:
+        return HttpResponse(str(e.message_dict))
+    feedback = feedback.save(commit=False)
+    tmp=Debriefing.objects.filter(mep=feedback.mep,
+                                  campaign=feedback.campaign,
+                                  usercontact=feedback.usercontact,
+                                  type=feedback.type,
+                                  response=feedback.response,
+                                  text=feedback.text).count()
+    if tmp>0:
+        return HttpResponse("known.")
+    feedback.save()
+    to=[x.email for x in User.objects.filter(is_staff=True)]
+    actid=sendverifymail(feedback,to)
+    feedback.valid=actid
+    feedback.save()
+    return HttpResponse("Thank you.")
+
+def sendverifymail(feedback,to):
+    actid = hashlib.sha1(''.join([chr(random.randint(32, 122))
+                                  for x in range(12)])).hexdigest()
+    msg = MIMEText(_("Someone sent feedback on a campaign\nYour verification key is %s/campaign/feedback/%s/%s\n\nfrom: %s\nabout %s\ntype: %s\nresult: %s\ncomment: %s")
+                   % (settings.ROOT_URL or 'http://localhost:8001/',
+                      feedback.id,
+                      actid,
+                      feedback.usercontact,
+                      feedback.mep, feedback.type,
+                      feedback.response,
+                      feedback.text))
+    msg['Subject'] = _('Memopol2 feedback moderation')
+    msg['From'] = 'memopol2@memopol2.lqdn.fr'
+    msg['To'] = ', '.join(to)
+    s = smtplib.SMTP('localhost')
+    s.sendmail('memopol2@memopol2.lqdn.fr', [to], msg.as_string())
+    s.quit()
+    return actid
+
+def confirm(request, id, key):
+    feedback=None
+    try:
+        feedback=Debriefing.objects.get(pk=id, valid=key)
+    except ObjectDoesNotExist:
+        messages.add_message(request,
+                             messages.INFO,
+                             "Thank you! Either already confirmed, or object doesn't exist")
+        return HttpResponseRedirect('/campaign/list/')
+    feedback.valid=''
+    feedback.save()
+    messages.add_message(request,
+                         messages.INFO,
+                         'Thank you for your confirmation')
+    return HttpResponseRedirect('/campaign/view/%s/' % feedback.campaign.id)
+
+def report(request, pk):
+    c=get_object_or_404(Campaign, pk=pk)
+    chosen=MEP.objects.filter(debriefing__campaign=c).distinct()
+    forms = [DebriefingForm(instance=Debriefing(mep=mep,campaign=c)) for mep in chosen]
+    dbriefs = [Debriefing.objects.filter(mep=mep,campaign=c) for mep in chosen]
+    return render_to_response('campaign/view.html',
+                              { 'object_list': izip(chosen,forms, dbriefs ),
+                                'campaign': c, },
                               context_instance = RequestContext(request))

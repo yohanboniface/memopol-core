@@ -10,6 +10,18 @@ $(document).ready(function(){
 </script>
 {% endblock %}
 {% block content %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h2>{{campaign.title}}</h2>
+{{campaign.intro}}
+
 <div>
    <a href="/admin/campaign/mepscore/">Edit individual MEPs scores</a>
    <form action="/campaign/edit/{{campaign.id}}/" method="post">{% csrf_token %}

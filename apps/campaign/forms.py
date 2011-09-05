@@ -1,8 +1,11 @@
 from django import forms
 from datetime import datetime
 from django.conf import settings
+from django.forms import ModelForm
 from django.utils.translation import ugettext as _
 from meps.models import GroupMEP, CommitteeRole, DelegationRole, OrganizationMEP, MEP, Committee, Group, Organization, Delegation
+from models import Debriefing
+from captcha.fields import CaptchaField
 
 class ScoreForm(forms.Form):
    weight = forms.IntegerField(required=True)
@@ -30,3 +33,14 @@ class ScoreForm(forms.Form):
    delegationRole = forms.MultipleChoiceField(required=False,
                                               choices=(('',''),)+tuple([(x['role'], x['role'])
                                                                         for x in DelegationRole.objects.filter(mep__active=True).values('role').distinct()]))
+
+class DebriefingForm(ModelForm):
+   captcha = CaptchaField(label=_("Unfortunately we must protect against automatic attacks, please forgive us this inconvenience."))
+   class Meta:
+      model = Debriefing
+      exclude = ( 'when', 'valid' )
+      widgets = {
+         'campaign': forms.HiddenInput(),
+         'mep': forms.HiddenInput(),
+         'text': forms.Textarea(attrs={'cols': 40, 'rows': 5}),
+         }

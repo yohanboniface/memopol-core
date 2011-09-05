@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% load memopol2 i18n %}
+
+{% block javascript %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+   $(".toggle-feedback").click(function() {
+      $(this).parent().parent().next(".feedback_form_tr").toggleClass('hidden');
+   });
+});
+</script>
+{% endblock %}
+
+{% block content %}
+
+{% if not header_template %}
+<h1>{% trans "Members of the European Parliament" %}</h1>
+{% else %}
+{% include header_template %}
+{% endif %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h2><a href="/campaign/view/{{campaign.id}}/">{{campaign.title}}</a></h2>
+<div class="campaign-intro">{{campaign.intro}}</div>
+
+<div>Have you contacted the MEP? Wanna get credit? Tell us how it went!</div>
+
+<div><a href="{% addurlparameter force 1 %}">Get a new set of MEPs</a></div>
+
+<table class="mep-list tablesorter">
+  <thead>
+    <tr>
+      <th filter='false' class="row-feedback">Feedback</th>
+      <th filter='false' class="row-name">MEP</th>
+      <th filter-type='ddl' class="row-country">Country</th>
+      <th filter-type='ddl' class="row-group">Group</th>
+      <th filter-type='ddl' class="row-party">Party</th>
+      <th filter='false' class="cell-contact">Contact</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for mep, form, feedbacks in object_list %}
+       <tr>
+         <td>
+             <span class="toggle-feedback button clickable">Feedback!</span>
+             <div class="campaign-feedback">
+                {% for feedback in  feedbacks %}
+                <span class="feedback-icon feedback-{% if feedback.response == '0'%}neutral{% else %}{%if feedback.response == '+' %}positive{% else%}{%if feedback.response == '?'%}nocont{%else%}negative{% endif %}{% endif %}{% endif %}">
+                   {{feedback.response}}
+                   <div class="feedback-popup hidden">
+                      <div>type: {{feedback.type}}</div>
+                      <div>text: {{feedback.text}}</div>
+                   </div>
+                </span>
+                {% endfor %}
+             </div>
+         </td>
+         <td><a href="{{ mep.get_absolute_url }}">{{ mep.first_name }} {{ mep.last_name|upper }}</a></td>
+         <td>{{ mep.country_tag|safe }}</td>
+         <td>{{ mep.group_tag|safe }}</td>
+         <td>{{ mep.party_tag|safe }}</td>
+         <td>
+           <div class="body">
+             <ul class="body">
+               <li><b>{% trans "Brussels" %}</b>
+                {% trans "Tel." %}: <a href="callto://{{ mep.bxl_phone1|phone }}">{{ mep.bxl_phone1 }}</a>&nbsp;-&nbsp;<a href="callto://{{ mep.bxl_phone2|phone }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
+               </li>
+               <li><b>{% trans "Strasbourg" %}</b>
+               {% trans "Tel." %}: <a href="callto://{{ mep.stg_phone1|cut:" " }}">{{ mep.stg_phone1 }}</a>&nbsp;-&nbsp;<a href="callto://{{ mep.stg_phone2|cut:" " }}">{{ mep.stg_phone2 }}</a>&nbsp;<br/>
+               </li>
+               {% if mep.emails %}
+                 <li>
+                   <b>{% trans "E-mail" %}:</b>
+                   {% for email in mep.emails %}
+                     <a href="mailto:{{ email }}">{{ email }}</a>
+                     {% if not forloop.last %}-{% endif %}
+                   {% endfor %}
+                 </li>
+               {% endif %}
+             </ul>
+             <a class="more-contact" href="{% url meps:mep_contact mep.id %}">{% trans "More information" %}...</a>
+           </div>
+         </td>
+       </tr>
+       <tr class="hidden feedback_form_tr">
+          <td colspan="8">
+             <form action="/campaign/feedback/" method="Post">
+                {% csrf_token %}
+                {{ form.campaign }}
+                {{ form.mep }}
+                <span style="float: left">
+                   {{ form.non_field_errors }}
+                   <div class="fieldWrapper">
+                      {{ form.type.errors }}
+                      <label for="id_type">Contact Type:</label>
+                      {{ form.type }}
+                   </div>
+                   <div class="fieldWrapper">
+                      {{ form.response.errors }}
+                      <label for="id_response">Meps response:</label>
+                      {{ form.response }}
+                   </div>
+                   <div class="fieldWrapper">
+                      {{ form.usercontact.errors }}
+                      <label for="id_usercontact">how to contact you?</label>
+                      {{ form.usercontact }}
+                   </div>
+                </span>
+                <span style="float: left">
+                   <div class="fieldWrapper">
+                      {{ form.text.errors }}
+                      <label for="id_text">Feedback - crap will be moderated and gives you bad karma!</label>
+                      {{ form.text }}
+                   </div>
+                </span>
+                <span style="float: left">
+                   <div class="fieldWrapper">
+                      {{ form.captcha.errors }}
+                      {{ form.captcha }}
+                   </div>
+                   <input type="submit" class="feedback-submit" value="send <3 datalove" />
+                </span>
+             </form>
+       </td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h3>Campaign Details</h3>
+<div class="campaign-details">{{campaign.details}}</div>
+
+{% endblock %}

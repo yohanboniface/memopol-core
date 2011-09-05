@@ -498,7 +498,7 @@ form p.submit {
     background: white;
 }
 
-input.search-submit, form p.submit input, button {
+input.search-submit, form p.submit input, button, .button {
     padding: 3px 15px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(255, 255, 255, 0.8) inset;
     background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#d8d8d8)) #d8d8d8;
@@ -510,7 +510,7 @@ input.search-submit, form p.submit input, button {
     border-radius: 3px;    
 }
 
-input.search-submit:hover, form p.submit input:hover, button:hover {
+input.search-submit:hover, form p.submit input:hover, button:hover, .button:hover {
     color: #555;
 }
 
@@ -692,3 +692,13 @@ div.legend label {
 ul.recommendation ul li {
     list-style: none;
 }
+
+.captcha { vertical-align: middle; margin: 0 10px; }
+.feedback-submit { margin: 0 10px; }
+.campaign-feedback { margin-top: 5px; }
+.feedback-negative { background: red; color: white; }
+.feedback-positive { background: green; color: white; }
+.feedback-neutral { background: yellow; color: black; }
+.feedback-nocont { background: grey; color: white;}
+.feedback-icon:hover > div.feedback-popup { display: block; }
+.feedback-popup { position: absolute; border: 1px solid #454545; background: white; padding: 5px; color: black; }
