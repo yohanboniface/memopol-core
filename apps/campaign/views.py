@@ -109,7 +109,7 @@ def getCampaignMeps(request, pk):
 
     chosen=[MEP.objects.get(pk=x) for x in chosen]
     forms = [DebriefingForm(instance=Debriefing(mep=mep,campaign=c)) for mep in chosen]
-    dbriefs = [Debriefing.objects.filter(mep=mep,campaign=c) for mep in chosen]
+    dbriefs = [Debriefing.objects.filter(mep=mep,campaign=c,valid="") for mep in chosen]
     return render_to_response('campaign/view.html',
                               { 'object_list': izip(chosen,forms, dbriefs ),
                                 'campaign': c, },
@@ -180,9 +180,9 @@ def confirm(request, id, key):
 
 def report(request, pk):
     c=get_object_or_404(Campaign, pk=pk)
-    chosen=MEP.objects.filter(debriefing__campaign=c).distinct()
-    forms = [DebriefingForm(instance=Debriefing(mep=mep,campaign=c)) for mep in chosen]
-    dbriefs = [Debriefing.objects.filter(mep=mep,campaign=c) for mep in chosen]
+    chosen=MEP.objects.filter(debriefing__campaign=c,debriefing__valid="").distinct()
+    forms = [DebriefingForm(instance=Debriefing(mep=mep,campaign=c,valid="")) for mep in chosen]
+    dbriefs = [Debriefing.objects.filter(mep=mep,campaign=c,valid="") for mep in chosen]
     return render_to_response('campaign/view.html',
                               { 'object_list': izip(chosen,forms, dbriefs ),
                                 'campaign': c, },
