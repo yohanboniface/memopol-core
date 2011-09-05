@@ -196,10 +196,10 @@ def proposal_countries_map(request, proposal_id):
 
         if '         {}' in line:
             get = re.match('.*([a-z][a-z]).*', line)
-            
+
             if get and get.group(1).upper() in countries.keys():
                 current_country = get.group(1).upper()
-        
+
         # HAHAHAHA blam those who can't write a human uzable xml lib for python
         if current_country:
             if countries[current_country]:
