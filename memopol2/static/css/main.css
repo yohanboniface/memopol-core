@@ -696,6 +696,7 @@ ul.recommendation ul li {
 .captcha { vertical-align: middle; margin: 0 10px; }
 .feedback-submit { margin: 0 10px; }
 .campaign-feedback { margin-top: 5px; }
+.campaign-over { background: #eee; }
 .feedback-negative { background: red; color: white; }
 .feedback-positive { background: green; color: white; }
 .feedback-neutral { background: yellow; color: black; }
