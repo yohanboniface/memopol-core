@@ -15,15 +15,16 @@ if __name__ == "__main__":
     RecommendationData.objects.all().delete()
     print "read file"
     lines = open("ep_votes.json").readlines()
-    a = len(lines)
+    a = 1
     for vote in lines:
         jayson = loads(vote)
-        print jayson.get("report", None), jayson["title"], jayson["ts"]["$date"]
+        #print jayson.get("report", None), jayson["title"], jayson["ts"]["$date"]
         RecommendationData.objects.create(proposal_name=jayson.get("report", jayson["title"]),
                                          title=jayson["title"],
                                          data=vote,
                                          date=date.fromtimestamp(int(str(jayson["ts"]["$date"])[:-3])))
-        print a
-        a -= 1
+        sys.stdout.write("%s/%s\r" % (a, len(lines)))
+        sys.stdout.flush()
+        a += 1
 
 # vim:set shiftwidth=4 tabstop=4 expandtab:

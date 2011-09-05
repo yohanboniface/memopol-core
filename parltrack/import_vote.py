@@ -10,12 +10,14 @@ from datetime import datetime, time
 
 from django.conf import settings
 
+from meps.utils import update_total_score_of_all_meps
 from meps.models import MEP
+from votes.utils import clean_all_trends
 from votes.models import RecommendationData, Proposal, Recommendation, Vote, Score
 
 from check_vote import check_recommendationdata
 
-def get_proposal(proposal_name):
+def get_proposal(proposal_name, proposal_ponderation):
     proposal = Proposal.objects.filter(title=proposal_name)
     if proposal:
         proposal = proposal[0]
@@ -29,10 +31,10 @@ def get_proposal(proposal_name):
             proposal = proposal[0]
         else:
             print "Create new proposal"
-            proposal = Proposal.objects.create(title=proposal_name, id=_id)
+            proposal = Proposal.objects.create(title=proposal_name, id=_id, institution="EU", ponderation=int(proposal_ponderation))
     return proposal
 
-def create_recommendation(recommendationdata_id, choice, weight):
+def create_recommendation(recommendationdata_id, choice, weight, proposal_ponderation=1):
     rd = RecommendationData.objects.get(id=recommendationdata_id)
     data = json.loads(rd.data)
     Recommendation.objects.filter(datetime=datetime.combine(rd.date, time()),
@@ -40,7 +42,7 @@ def create_recommendation(recommendationdata_id, choice, weight):
                                   part=data["issue_type"],
                                   weight=int(weight),
                                   recommendation=choice).delete()
-    proposal = get_proposal(rd.proposal_name)
+    proposal = get_proposal(rd.proposal_name, proposal_ponderation)
     print "Creating recommendation"
     r = Recommendation.objects.create(datetime=datetime.combine(rd.date, time()),
                                   subject="".join(rd.title.split("-")[:-1]),
@@ -100,20 +102,25 @@ def create_recommendation(recommendationdata_id, choice, weight):
                              proposal=proposal,
                              date=rd.date)
 
+    sys.stdout.write("\n")
     rd.imported = True
     rd.save()
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print >>sys.stderr, "Usage: %s <recommendationdata id> <{for,against}> <weight>" % __file__
+    if len(sys.argv) not in (4, 5):
+        print >>sys.stderr, "Usage: %s <recommendationdata id> <{for,against}> <recommendation weight> <proposal ponderation=1 by default>" % __file__
         sys.exit(1)
-    recommendationdata_id, recommendation, weight = sys.argv[1:]
+    recommendationdata_id, recommendation, weight, proposal_ponderation = sys.argv[1:]
+    if recommendation not in ("for", "against"):
+        print >>sys.stderr, "Recommendation should be either 'for' or 'against'"
+        sys.exit(1)
     if len(check_recommendationdata(recommendationdata_id)) != 0:
         print >>sys.stderr, "I didn't managed to get all the meps :("
         sys.exit(1)
-    if sys.argv[-2] not in ("for", "against"):
-        print >>sys.stderr, "Recommendation should be either 'for' or 'against'"
-        sys.exit(1)
     create_recommendation(*sys.argv[1:])
+    sys.stdout.write("Update total score of all meps now\n")
+    update_total_score_of_all_meps(verbose=True)
+    sys.stdout.write("Clean all deprecated trends\n")
+    clean_all_trends()
 
 # vim:set shiftwidth=4 tabstop=4 expandtab:

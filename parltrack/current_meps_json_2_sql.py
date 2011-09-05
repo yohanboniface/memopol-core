@@ -253,7 +253,7 @@ def add_mep_cv(mep, cv):
 
 def add_groups(mep, groups):
     # I don't create group if they don't exist for the moment
-    convert = {"S&D": "SD", "NA": "NI", "ID": "IND/DEM"}
+    convert = {"S&D": "SD", "NA": "NI", "ID": "IND/DEM", "PPE": "EPP", "Verts/ALE": "Greens/EFA"}
     GroupMEP.objects.filter(mep=mep).delete()
     for group in groups:
         if not group.get("groupid"):

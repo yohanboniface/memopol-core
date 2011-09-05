@@ -196,10 +196,10 @@ def proposal_countries_map(request, proposal_id):
 
         if '         {}' in line:
             get = re.match('.*([a-z][a-z]).*', line)
-            
+
             if get and get.group(1).upper() in countries.keys():
                 current_country = get.group(1).upper()
-        
+
         # HAHAHAHA blam those who can't write a human uzable xml lib for python
         if current_country:
             if countries[current_country]:
@@ -208,6 +208,7 @@ def proposal_countries_map(request, proposal_id):
 
         out += line
 
+    check_dir(filename)
     open(filename, "w").write(out)
     return HttpResponse(out, mimetype="image/svg+xml")
 
@@ -391,11 +392,11 @@ def group_proposal_score(request, proposal_id):
                    'IND/DEM': '#FF9900',
                    'EDD': '#FF9900',
                    'NI': '#848284',
-                   'PPE': '#319AFF',
+                   'EPP': '#319AFF',
                    'PPE-DE': '#319AFF',
                    'SD': '#FF0000',
                    'PSE': '#FF0000',
-                   'Verts/ALE': '#009A00',
+                   'Greens/EFA': '#009A00',
                    'ITS': '#000000',
                    'UEN': '#05FBEE'}
 
@@ -445,11 +446,11 @@ def group_proposal_score_stacked(request, proposal_id):
                    'IND/DEM': '#FF9900',
                    'EDD': '#FF9900',
                    'NI': '#848284',
-                   'PPE': '#319AFF',
+                   'EPP': '#319AFF',
                    'PPE-DE': '#319AFF',
                    'SD': '#FF0000',
                    'PSE': '#FF0000',
-                   'Verts/ALE': '#009A00',
+                   'Greens/EFA': '#009A00',
                    'ITS': '#000000',
                    'UEN': '#05FBEE'}
 
