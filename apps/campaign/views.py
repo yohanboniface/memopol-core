@@ -116,7 +116,7 @@ def getCampaignMeps(request, pk):
                               context_instance = RequestContext(request))
 
 def getCampaigns(request):
-    c=Campaign.objects.all()
+    c=[(c, MEP.objects.filter(debriefing__campaign=c).distinct().count()) for c in Campaign.objects.all()]
     return render_to_response('campaign/list.html',
                               { 'object_list': c, },
                               context_instance = RequestContext(request))

@@ -12,10 +12,25 @@
 </ul>
 {% endif %}
 
-{% for c in object_list %}
-    {%if loop.first %}<ul>{%endif%}
-       <li><a href="/campaign/view/{{c.id}}/">{{c.title}}</a></li>
-    {%if loop.first %}</ul>{%endif%}
+{% for c, mepcnt in object_list %}
+  {%if forloop.first %}
+  <table class="tablesorter">
+     <thead>
+        <tr>
+           <th>Name</th>
+           <th>Results</th>
+        </tr>
+     </thead>
+     <tbody>
+  {%endif%}
+  <tr{% if c.finished %} class="campaign-over"{%endif%}>
+     <td><a href="/campaign/view/{{c.id}}/">{{c.title}}</a></td>
+     <td><a href="/campaign/report/{{c.id}}/">{{c.debriefing_set.count}} responses for {{ mepcnt }} MEP(s)</td>
+  </tr>
+  {%if forloop.last %}
+     </tbody>
+  </table>
+  {%endif%}
 {% empty %}
    No campaigns yet. {% if not user.is_authenticated %}<a href="{% url admin:index %}">{% trans "Login" %}</a> and create one{% else %}<a href="/admin/campaign/campaign/add/">Create one.</a>{% endif %}
 {% endfor %}
