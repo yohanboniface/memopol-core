@@ -123,10 +123,9 @@ def getCampaigns(request):
 
 def feedback(request):
     feedback = DebriefingForm(request.POST)
-    try:
-        feedback.full_clean()
-    except ValidationError, e:
-        return HttpResponse(str(e.message_dict))
+    feedback.full_clean()
+    if feedback.errors:
+        return HttpResponse(str(feedback.errors))
     feedback = feedback.save(commit=False)
     tmp=Debriefing.objects.filter(mep=feedback.mep,
                                   campaign=feedback.campaign,

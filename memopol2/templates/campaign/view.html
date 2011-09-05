@@ -8,6 +8,25 @@ $(document).ready(function(){
    $(".toggle-feedback").click(function() {
       $(this).parent().parent().next(".feedback_form_tr").toggleClass('hidden');
    });
+   $('.feedback-form').submit(function() {
+       var data={ 
+          csrfmiddlewaretoken: $(this).find('input[name=csrfmiddlewaretoken]').attr('value'),
+          campaign: $(this).find('input[name=campaign]').attr('value'),
+          mep: $(this).find('input[name=mep]').attr('value'),
+          type: $(this).find('select[name=type]').attr('value'),
+          usercontact: $(this).find('input[name=usercontact]').attr('value'),
+          response: $(this).find('select[name=response]').attr('value'),
+          text: $(this).find('textarea[name=text]').attr('value'),
+          captcha_0: $(this).find('input[name=captcha_0]').attr('value'),
+          captcha_1: $(this).find('input[name=captcha_1]').attr('value'),
+       };
+       var self=this;
+       console.log(data);
+       $.post('{% url campaign:feedback %}', data, function(res) {
+            $(self).find('.form-messages').html(res);
+          });
+       return false;
+   });
 });
 </script>
 {% endblock %}
@@ -91,7 +110,8 @@ $(document).ready(function(){
        </tr>
        <tr class="hidden feedback_form_tr">
           <td colspan="8">
-             <form action="/campaign/feedback/" method="Post">
+             <form class="feedback-form" action="/campaign/feedback/" method="Post">
+                <div class="form-messages"></div>
                 {% csrf_token %}
                 {{ form.campaign }}
                 {{ form.mep }}
