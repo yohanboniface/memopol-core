@@ -44,6 +44,7 @@ urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^contact/', include('contact_form.urls')),
     url(r'^robots\.txt$', direct_to_template, {'template': 'robots.txt', 'mimetype': 'text/plain'}),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
+    url(r'^captcha/', include('captcha.urls')),
 )
 
 # hack to autodiscover static files location in dev mode

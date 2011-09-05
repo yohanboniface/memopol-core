@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'south',
     'flatblocks',
     'contact_form',
+    'captcha',
 
     # memopol
     'reps',
@@ -192,6 +193,9 @@ LOGGING = {
         },
     }
 }
+
+CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
 
 try:
     from settings_local import *
