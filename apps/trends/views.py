@@ -208,6 +208,7 @@ def proposal_countries_map(request, proposal_id):
 
         out += line
 
+    check_dir(filename)
     open(filename, "w").write(out)
     return HttpResponse(out, mimetype="image/svg+xml")
 
