@@ -93,6 +93,7 @@ if APPS_DEBUG:
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.contrib.auth.context_processors.auth',
+    'campaign.context_processor.campaigns',
     'django.core.context_processors.media',
 )
 

@@ -70,6 +70,13 @@
                 <li><a href="{% url meps:index_opinions %}">{% trans "Expressed opinions" %}</a></li>
             </ul>
 
+            <h2><a href="{% url campaign:list %}">{% trans "Campaigns" %}</a></h2>
+            <ul>
+                {% for c in campaigns %}
+                <li><a href="{% url campaign:view pk=c.id %}">{{c.title}}</a></li>
+                {% endfor %}
+            </ul>
+
             <h2>{% trans "French deputies " %}<img src="{{ MEDIA_URL }}/img/countries/small/FR.png" alt="FR flag"/></h2>
             <ul>
                 <li><a href="{% url mps:index %}">{% trans "By name" %}</a></li>
