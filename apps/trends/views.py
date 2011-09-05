@@ -391,11 +391,11 @@ def group_proposal_score(request, proposal_id):
                    'IND/DEM': '#FF9900',
                    'EDD': '#FF9900',
                    'NI': '#848284',
-                   'PPE': '#319AFF',
+                   'EPP': '#319AFF',
                    'PPE-DE': '#319AFF',
                    'SD': '#FF0000',
                    'PSE': '#FF0000',
-                   'Verts/ALE': '#009A00',
+                   'Greens/EFA': '#009A00',
                    'ITS': '#000000',
                    'UEN': '#05FBEE'}
 
@@ -445,11 +445,11 @@ def group_proposal_score_stacked(request, proposal_id):
                    'IND/DEM': '#FF9900',
                    'EDD': '#FF9900',
                    'NI': '#848284',
-                   'PPE': '#319AFF',
+                   'EPP': '#319AFF',
                    'PPE-DE': '#319AFF',
                    'SD': '#FF0000',
                    'PSE': '#FF0000',
-                   'Verts/ALE': '#009A00',
+                   'Greens/EFA': '#009A00',
                    'ITS': '#000000',
                    'UEN': '#05FBEE'}
 
