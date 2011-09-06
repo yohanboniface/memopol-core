@@ -1,4 +1,5 @@
 {% load memopol2 i18n %}
+{% load meps_organizations %}
 <tr>
   {% if score_listing %}
   <td>
@@ -30,6 +31,11 @@
   {% if choice_listing %}
   <td>
       <div class="{% if choice == recommendation.recommendation %}ok{% else %}{% if choice == "abstention" %}abstention{% else %}nok{% endif %}{% endif %}">{{ choice }}</div>
+  </td>
+  {% endif %}
+  {% if organization_role %}
+  <td>
+      {% current_organization_role mep object %}
   </td>
   {% endif %}
   <td>
