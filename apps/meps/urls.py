@@ -1,24 +1,12 @@
-from django.template.defaultfilters import slugify
 from django.conf.urls.defaults import patterns, url
-from django.core.urlresolvers import reverse
 from django.views.generic import ListView
-from django.http import HttpResponseRedirect
 from memopol2 import utils
 
 from meps.models import Country, Group, Committee, Delegation, Organization, Building, MEP
 from reps.models import Party, Opinion
 from votes.models import Proposal
 
-from views import BuildingDetailView, MEPView, MEPsFromView, MEPList
-
-class PartyView(MEPsFromView):
-    model=Party
-    hidden_fields=['party']
-
-    def render_to_response(self, context):
-        if self.kwargs['slugified_name'] != slugify(self.object.name):
-            return HttpResponseRedirect(reverse('meps:index_by_party', args=[self.object.id, slugify(self.object.name)]))
-        return MEPsFromView.render_to_response(self, context)
+from views import BuildingDetailView, MEPView, MEPsFromView, MEPList, PartyView
 
 urlpatterns = patterns('meps.views',
     # those view are *very* expansive. we cache them in RAM for a week

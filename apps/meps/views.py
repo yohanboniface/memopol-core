@@ -6,10 +6,14 @@ from os.path import join
 
 from django.conf import settings
 from django.views.generic import DetailView, ListView
+from django.template.defaultfilters import slugify
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 
 from memopol2.utils import check_dir, send_file, get_content_cache
 
 from models import Building, MEP
+from reps.models import Party
 
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
 
@@ -112,3 +116,12 @@ class MEPsFromView(DetailView):
         context['committee_role'] = self.committee_role
         context['delegation_role'] = self.delegation_role
         return context
+
+class PartyView(MEPsFromView):
+    model=Party
+    hidden_fields=['party']
+
+    def render_to_response(self, context):
+        if self.kwargs['slugified_name'] != slugify(self.object.name):
+            return HttpResponseRedirect(reverse('meps:index_by_party', args=[self.object.id, slugify(self.object.name)]))
+        return MEPsFromView.render_to_response(self, context)
