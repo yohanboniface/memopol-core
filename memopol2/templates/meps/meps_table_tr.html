@@ -1,5 +1,5 @@
 {% load memopol2 i18n %}
-{% load meps_organizations %}
+{% load meps_role %}
 <tr>
   {% if score_listing %}
   <td>
@@ -41,6 +41,11 @@
   {% if group_role %}
   <td>
       {{ mep.groupmep.role }}
+  </td>
+  {% endif %}
+  {% if committee_role %}
+  <td>
+      {% current_committee_role mep object %}
   </td>
   {% endif %}
   <td>

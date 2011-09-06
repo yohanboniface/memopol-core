@@ -100,6 +100,7 @@ class MEPsFromView(DetailView):
     named_header='meps/named_header.html'
     organization_role=False
     group_role=False
+    committee_role=False
 
     def get_context_data(self, *args, **kwargs):
         context = super(MEPsFromView, self).get_context_data(**kwargs)
@@ -107,4 +108,5 @@ class MEPsFromView(DetailView):
         context['hidden_fields'] = self.hidden_fields
         context['organization_role'] = self.organization_role
         context['group_role'] = self.group_role
+        context['committee_role'] = self.committee_role
         return context
