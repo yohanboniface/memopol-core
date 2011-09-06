@@ -69,6 +69,11 @@ def updateCampaignScores(form, pk, c):
 
 def editCampaign(request, pk):
     c = get_object_or_404(Campaign, pk=pk)
+    if not request.user.is_authenticated():
+        messages.add_message(request,
+                             messages.ERROR,
+                             "You should login to edit the campaign.")
+        return HttpResponseRedirect("/campaign/view/%s/" % c.id)
     data = { 'campaign': c }
     form = ScoreForm(request.POST)
     if not form.is_valid():

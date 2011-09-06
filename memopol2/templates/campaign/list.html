@@ -19,13 +19,15 @@
         <tr>
            <th>Name</th>
            <th>Results</th>
+           {% if user.is_authenticated %}<th>Actions</th>{% endif %}
         </tr>
      </thead>
      <tbody>
   {%endif%}
   <tr{% if c.finished %} class="campaign-over"{%endif%}>
      <td><a href="/campaign/view/{{c.id}}/">{{c.title}}</a></td>
-     <td><a href="/campaign/report/{{c.id}}/">{{c.debriefing_set.count}} responses for {{ mepcnt }} MEP(s)</td>
+     <td><a href="/campaign/report/{{c.id}}/">{{c.debriefing_set.count}} responses for {{ mepcnt }} MEP(s)</a></td>
+           {% if user.is_authenticated %}<td><a href="/campaign/edit/{{c.id}}/">Edit influence</a></td>{% endif %}
   </tr>
   {%if forloop.last %}
      </tbody>

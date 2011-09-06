@@ -81,6 +81,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
@@ -93,8 +94,9 @@ if APPS_DEBUG:
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.contrib.auth.context_processors.auth',
-    'campaign.context_processor.campaigns',
     'django.core.context_processors.media',
+    'django.contrib.messages.context_processors.messages',
+    'campaign.context_processor.campaigns',
 )
 
 ROOT_URLCONF = 'memopol2.urls'
@@ -115,6 +117,7 @@ INSTALLED_APPS = (
     'django.contrib.markup',
     'django.contrib.comments',
     'django.contrib.sitemaps',
+    'django.contrib.messages',
 
     # 3rd party
     'south',
@@ -197,6 +200,8 @@ LOGGING = {
 
 CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 try:
     from settings_local import *
