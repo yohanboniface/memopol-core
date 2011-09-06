@@ -200,9 +200,7 @@ h2 {
     background: url("../img/nicebutton/add.gif") no-repeat 2px 5px;
 }
 
-/* meps
- */
-
+/* meps */
 
 ul.treelist {
     padding-left: 0px;
@@ -289,8 +287,7 @@ div.map-eu {
     margin-right: 10px;
 }
 
-/* collapsible items
- */
+/* collapsible items */
 
 .collapsible
 {
@@ -357,11 +354,11 @@ ul ul, ul ol, ol ul, ol ol
 
 table.mep-list,
 table.mp-list {
-  width: 100%;
-  border-width: 1px;
-  border-spacing: 0px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  border: 1px solid #ccc;
+    width: 100%;
+    border-width: 1px;
+    border-spacing: 0px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    border: 1px solid #ccc;
 }
 
 table thead {
@@ -370,22 +367,22 @@ table thead {
 
 table.mep-list tr th, table.mep-list tr td,
 table.mp-list tr th, table.mp-list tr td {
-  min-width: 75px;
-  padding: 1em;
+    min-width: 75px;
+    padding: 1em;
 }
 
 table.mep-list tr th,
 table.mp-list tr th {
-  text-align: center;
+    text-align: center;
 }
 
 table.mep-list tr td,
 table.mp-list tr td {
-  text-align: left;
+    text-align: left;
 }
 
 table thead tr th {
-   border: 1px solid #ccc;
+    border: 1px solid #ccc;
 }
 
 /* Tables w/ sorting */
@@ -394,24 +391,24 @@ table.tablesorter .cell-contact {
 }
 
 table.tablesorter {
-   font-family:arial;
-   margin:10px 0pt 15px;
-   font-size: 8pt;
-   width: 100%;
-   text-align: left;
+    font-family:arial;
+    margin:10px 0pt 15px;
+    font-size: 8pt;
+    width: 100%;
+    text-align: left;
 }
 
 table.tablesorter thead tr .header {
-   background-image: url("../img/bg.gif");
-   background-repeat: no-repeat;
-   background-position: center right;
-   cursor: pointer;
+    background-image: url("../img/bg.gif");
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
 }
 table.tablesorter tbody td {
-   color: #3D3D3D;
-   padding: 4px;
-   background-color: #FFF;
-   vertical-align: top;
+    color: #3D3D3D;
+    padding: 4px;
+    background-color: #FFF;
+    vertical-align: top;
 }
 
 tr.filters {
@@ -619,13 +616,13 @@ a.mep-icon, a.mp-icon {
 }
 
 div#livesearch ul li, div#search-results ul li, ul.committees li, ul.delegations li, ul.organisations li, ul.parties li, ul.mp-groups li {
-     list-style: disc url("../img/icons/user-group.png") outside;
-     margin-left: 2em;
+    list-style: disc url("../img/icons/user-group.png") outside;
+    margin-left: 2em;
 }
 
 ul.committees li.old, ul.delegations li.old, ul.organisations li.old, ul.parties li.old, ul.mp-groups li.old {
-     list-style: disc url("../img/icons/user-group-old.png") outside;
-     margin-left: 2em;
+    list-style: disc url("../img/icons/user-group-old.png") outside;
+    margin-left: 2em;
 }
 
 ul.committees li.noicon, ul.delegations li.noicon, ul.organisations li.noicon, ul.parties li.noicon, ul.mp-groups li.noicon {
