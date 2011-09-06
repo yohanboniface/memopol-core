@@ -57,6 +57,7 @@ class Migration(SchemaMigration):
         'votes.proposal': {
             'Meta': {'object_name': 'Proposal'},
             'id': ('django.db.models.fields.CharField', [], {'max_length': '63', 'primary_key': 'True'}),
+            'institution': ('django.db.models.fields.CharField', [], {'max_length': '63'}),
             'ponderation': ('django.db.models.fields.IntegerField', [], {'default': '1'}),
             'short_name': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '25', 'null': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
