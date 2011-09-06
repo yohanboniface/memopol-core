@@ -101,6 +101,7 @@ class MEPsFromView(DetailView):
     organization_role=False
     group_role=False
     committee_role=False
+    delegation_role=False
 
     def get_context_data(self, *args, **kwargs):
         context = super(MEPsFromView, self).get_context_data(**kwargs)
@@ -109,4 +110,5 @@ class MEPsFromView(DetailView):
         context['organization_role'] = self.organization_role
         context['group_role'] = self.group_role
         context['committee_role'] = self.committee_role
+        context['delegation_role'] = self.delegation_role
         return context

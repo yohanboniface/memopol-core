@@ -48,6 +48,11 @@
       {% current_committee_role mep object %}
   </td>
   {% endif %}
+  {% if delegation_role %}
+  <td>
+      {% current_delegation_role mep object %}
+  </td>
+  {% endif %}
   <td>
     <div class="body">
       <ul class="body">
