@@ -8,8 +8,7 @@ export SKIP_SEARCH_INDEX="1"
 
 $MANAGE syncdb
 $MANAGE migrate reps
-$MANAGE migrate meps 0012
-$MANAGE migrate votes
+$MANAGE migrate meps
 $MANAGE migrate
 
 export SKIP_SEARCH_INDEX="0"
