@@ -76,7 +76,9 @@ def editCampaign(request, pk):
     else:
         updateCampaignScores(form, pk, c)
     data['form'] = form
-    return render(request, 'campaign/edit.html', data)
+    return render_to_response('campaign/edit.html',
+                              data,
+                              context_instance = RequestContext(request))
 
 def randomsubset(l, n):
     res = []
