@@ -12,17 +12,9 @@
 
 <h2 class="collapsible collapsed">Score repartition</h2>
 <center class="body">
-<img src="{% url trends:group_proposal_score vote.id %}">
-
 <img src="{% url trends:group_proposal_score_stacked vote.id %}">
 
 <img src="{% url trends:group_proposal_score_heatmap vote.id %}">
-
-<img src="{% url trends:proposal_score_repartition vote.id %}">
-
-{% for group in vote.groups %}
-    <img src="{% url trends:group_proposal_score_repartition group.abbreviation vote.id %}">
-{% endfor %}
 </center>
 
 <br/>
