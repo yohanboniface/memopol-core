@@ -184,5 +184,6 @@ def report(request, pk):
     dbriefs = [Debriefing.objects.filter(mep=mep,campaign=c,valid="") for mep in chosen]
     return render_to_response('campaign/view.html',
                               { 'object_list': izip(chosen,forms, dbriefs ),
+                                'mepscores': MEPScore.objects.filter(campaign=c).exclude(mep__in=chosen),
                                 'campaign': c, },
                               context_instance = RequestContext(request))
