@@ -14,6 +14,7 @@ from meps.utils import update_total_score_of_all_meps
 from meps.models import MEP
 from votes.utils import clean_all_trends
 from votes.models import RecommendationData, Proposal, Recommendation, Vote, Score
+from memopol2.utils import update_search_index
 
 from check_vote import check_recommendationdata
 
@@ -122,5 +123,6 @@ if __name__ == "__main__":
     update_total_score_of_all_meps(verbose=True)
     sys.stdout.write("Clean all deprecated trends\n")
     clean_all_trends()
+    update_search_index()
 
 # vim:set shiftwidth=4 tabstop=4 expandtab:
