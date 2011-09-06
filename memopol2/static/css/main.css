@@ -65,7 +65,7 @@ li ul li {
     padding: 0 20px;
     border-bottom: 3px solid #295cb1;
     height: 50px;
-	line-height: 45px;
+    line-height: 45px;
     text-align: right;
     vertical-align: middle;
 }
@@ -78,7 +78,7 @@ li ul li {
     font-size: 1em;
 }
 
-#header a { 
+#header a {
     vertical-align: middle;
     color: #ffffff;
     margin: 0 5px;
@@ -96,7 +96,7 @@ li ul li {
     font-size: 0.7em;
 }
 
-#footer a { 
+#footer a {
     color: #ffffff;
     text-decoration: underline;
 }
@@ -147,7 +147,7 @@ h2 {
 #mainheader {
     font-size: 120%;
     background: url("../img/logo.png") no-repeat ;
-    margin-top: 0px; 
+    margin-top: 0px;
 }
 
 #mainheader a {
@@ -226,25 +226,23 @@ li ul.treelist li ul.treelist li ul.treelist li ul.treelist {
 
 #summary
 {
-	margin: 1em;
-	
+    margin: 1em;
 }
 
 #summary ul
 {
-	margin-left: 2em;
-	
+    margin-left: 2em;
 }
 
 ul, ol
 {
-	list-style: disc url("../img/icons/bullet-black.png");
+    list-style: disc url("../img/icons/bullet-black.png");
     list-style:circle;
     list-style-position: inside;
 }
 
 li {
-	margin: .3em;
+    margin: .3em;
 }
 
 
@@ -282,7 +280,7 @@ div.map-eu {
     display: block;
 }
 
-.grouplogo 
+.grouplogo
 {
     width: 30px;
     height: 30px;
@@ -507,7 +505,7 @@ input.search-submit, form p.submit input, button, .button {
     color: black;
     border: 1px solid #ababab;
     -moz-border-radius: 5px;
-    border-radius: 3px;    
+    border-radius: 3px;
 }
 
 input.search-submit:hover, form p.submit input:hover, button:hover, .button:hover {
