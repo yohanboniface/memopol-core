@@ -12,3 +12,4 @@ pyquery
 WebTest
 nose
 django-simple-captcha
+pil
