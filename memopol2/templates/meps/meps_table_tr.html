@@ -38,6 +38,11 @@
       {% current_organization_role mep object %}
   </td>
   {% endif %}
+  {% if group_role %}
+  <td>
+      {{ mep.groupmep.role }}
+  </td>
+  {% endif %}
   <td>
     <div class="body">
       <ul class="body">

@@ -190,6 +190,10 @@ class MEP(Representative):
         return self.groupmep_set.latest('end').group
 
     @reify
+    def groupmep(self):
+        return self.groupmep_set.latest('end')
+
+    @reify
     def country(self):
         return self.countrymep_set.latest('end').country
 
