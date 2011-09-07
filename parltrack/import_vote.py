@@ -69,6 +69,23 @@ def create_recommendation(recommendationdata_id, choice, weight, proposal_ponder
                 Vote.objects.create(choice=choice, recommendation=r, representative=representative, name=rd.proposal_name)
                 a += 1
 
+    # if there is only one proposal this doesn't make any sens, we won't have
+    # absent votes
+    if proposal.recommendation_set.count() != 1:
+        z = 0
+        print "Creating absent votes"
+        # creating absent
+        for mep in MEP.objects.filter(score__proposal=proposal):
+            for recommendation in proposal.recommendation_set.all():
+                if not mep.vote_set.filter(recommendation=recommendation):
+                    Vote.objects.create(representative=mep.representative_ptr,
+                                        choice="absent",
+                                        recommendation=recommendation)
+                    z += 1
+                    sys.stdout.write("%i\r" % z)
+                    sys.stdout.flush()
+        sys.stdout.write("\n")
+
     # clean scores before adding new one
     proposal.score_set.all().delete()
 
@@ -79,7 +96,7 @@ def create_recommendation(recommendationdata_id, choice, weight, proposal_ponder
                 rep_scores[vote.representative] = [0, 0]
             if vote.choice == vote.recommendation.recommendation:
                 rep_scores[vote.representative][0] += vote.recommendation.weight * 2
-            elif vote.choice == "abstention":
+            elif vote.choice in ("abstention", "absent"):
                 if vote.recommendation.recommendation == "against":
                     rep_scores[vote.representative][0] += vote.recommendation.weight * 1
                 elif vote.recommendation.recommendation == "for":
