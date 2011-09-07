@@ -128,7 +128,11 @@ if __name__ == "__main__":
     if len(sys.argv) not in (4, 5):
         print >>sys.stderr, "Usage: %s <recommendationdata id> <{for,against}> <recommendation weight> <proposal ponderation=1 by default>" % __file__
         sys.exit(1)
-    recommendationdata_id, recommendation, weight, proposal_ponderation = sys.argv[1:]
+    if len(sys.argv) == 5:
+        recommendationdata_id, recommendation, weight, proposal_ponderation = sys.argv[1:]
+    else:
+        recommendationdata_id, recommendation, weight = sys.argv[1:]
+        proposal_ponderation = 1
     if recommendation not in ("for", "against"):
         print >>sys.stderr, "Recommendation should be either 'for' or 'against'"
         sys.exit(1)
