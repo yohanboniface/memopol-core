@@ -29,7 +29,7 @@ class Proposal(models.Model):
 
     def save(self, *args, **kwargs):
         # if I'm modifyed and not created
-        if Recommendation.objects.filter(pk=self.pk):
+        if Proposal.objects.filter(id=self.id):
             clean_all_trends()
         super(Proposal, self).save(*args, **kwargs)
 
