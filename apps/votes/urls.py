@@ -6,7 +6,7 @@ from votes.models import Proposal, Vote, Recommendation, RecommendationData
 from reps.models import Representative
 from views import VoteRecommendation, VoteRecommendationChoice
 
-# TODO: refactor those 3 functions, should probably be moved to generic views if possible
+# TODO: refactor this function, should probably be moved to class based generic views if possible
 def proposal_rep(request, proposal_id, mep_id):
     representative = get_object_or_404(Representative, id=mep_id)
     proposal = get_object_or_404(Proposal, id=proposal_id)
