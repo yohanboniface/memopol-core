@@ -57,4 +57,13 @@
     {% endfor %}
 </ul>
 
+<table class="mep-list tablesorter">
+  {% include "meps/meps_table_thead.html" %}
+  <tbody>
+    {% for mep in vote.meps %}
+      {% include "meps/meps_table_tr.html" %}
+    {% endfor %}
+  </tbody>
+</table>
+
 {% endblock %}

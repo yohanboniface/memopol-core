@@ -6,7 +6,7 @@ from django.db.models import Avg
 from utils import clean_all_trends
 from reps.models import Representative
 from meps.models import MEP, Group, Country
-from memopol2.utils import color
+from memopol2.utils import color, reify
 
 class Proposal(models.Model):
     id = models.CharField(max_length=63, primary_key=True)
@@ -32,6 +32,10 @@ class Proposal(models.Model):
         if Proposal.objects.filter(id=self.id):
             clean_all_trends()
         super(Proposal, self).save(*args, **kwargs)
+
+    @reify
+    def meps(self):
+        return MEP.objects.filter(score__proposal=self)
 
     def __unicode__(self):
         return self.title
