@@ -37,9 +37,9 @@
                 <ul>
                   {% regroup v.vote_set.all by choice as result %}
                   {% for re in result %}
-                  {% if re.grouper in "abstention-against-for" %}
+                  {% if re.grouper in "absent-abstention-against-for" %}
                   <li><b><a
-                      class="{% if v.recommendation == re.grouper %}ok{% else %}{% if re.grouper == "abstention" %}abstention{% else %}nok{% endif %}{% endif %}"
+                      class="{% if v.recommendation == re.grouper %}ok{% else %}{% if re.grouper == "abstention" or re.grouper == "absent" %}abstention{% else %}nok{% endif %}{% endif %}"
                       href="{% url votes:recommendation_choice vote.id v.id re.grouper %}">{{ re.grouper }}</a></b>: {{ re.list|length }} </li>
                   {% else %}
                   <!-- FIXME: sometimes re.grouper is a float and we cant get the correct link -->
