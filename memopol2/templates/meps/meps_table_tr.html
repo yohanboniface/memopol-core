@@ -1,5 +1,6 @@
 {% load memopol2 i18n %}
 {% load meps_role %}
+{% load votes_tags %}
 <tr>
   {% if score_listing %}
   <td>
@@ -89,6 +90,14 @@
       {% else %}
       -
       {% endif %}
+  </td>
+  {% endif %}
+  {% if proposal_votes_listing %}
+  <td>
+      {% mep_votes_list_on_proposal mep vote %}
+      {% for vote in mep_votes %}
+      <p><a class="{% if vote.recommendation.recommendation == vote.choice %}ok{% else %}{% if vote.choice == "abstention" or vote.choice == "absent" %}abstention{% else %}nok{% endif %}{% endif %}" href="{% url votes:recommendation vote.id vote.recommendation.id %}"> {{ vote.choice }} on {{ vote.recommendation.part }}</a></p>
+      {% endfor %}
   </td>
   {% endif %}
 </tr>

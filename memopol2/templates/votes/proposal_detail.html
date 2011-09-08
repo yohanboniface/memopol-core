@@ -57,6 +57,7 @@
     {% endfor %}
 </ul>
 
+{% with proposal_votes_listing="True" %}
 <table class="mep-list tablesorter">
   {% include "meps/meps_table_thead.html" %}
   <tbody>
@@ -65,5 +66,6 @@
     {% endfor %}
   </tbody>
 </table>
+{% endwith %}
 
 {% endblock %}
