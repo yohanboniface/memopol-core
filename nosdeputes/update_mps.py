@@ -37,7 +37,6 @@ if __name__ == "__main__":
     mps = load(urlopen("http://www.nosdeputes.fr/deputes/json"))
 
     set_mps_unactives()
-
     a = 0
     for depute in mps["deputes"]:
         a += 1
