@@ -15,8 +15,8 @@
         <h1 class="document-title">{% trans "Votes list" %}</h1>
         <ul class="votes">
             {% for proposal in object_list|dictsortreversed:"date" %}
-                <li>
-                    <a href="{% url votes:detail proposal.id %}">{{ proposal.title }}</a>
+                <li style="list-style: none; margin-left: 15px;">
+                <img src="{{ MEDIA_URL }}img/countries/small/{{ proposal.institution }}.png" /> <a href="{% url votes:detail proposal.id %}">{{ proposal.title }}</a>
                 </li>
             {% endfor %}
         </ul>

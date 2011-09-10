@@ -6,6 +6,19 @@
     <h1>{{ vote.title }}</h1>
 {% endif %}
 
+<div class="map map-eu" style="height: 520px; width: 680px;">
+    <object type="image/svg+xml" data="{% url trends:recommendation_countries_map vote.id %}" type="image/svg+xml" width="680" height="520"></object>
+</div>
+
+<h2 class="collapsible collapsed">Score repartition</h2>
+<center class="body">
+<img src="{% url trends:group_proposal_score_stacked vote.id %}">
+
+<img src="{% url trends:group_proposal_score_heatmap vote.id %}">
+</center>
+
+<br/>
+
 {% regroup vote.recommendation_set.all by subject as subvotes %}
 
 {% include "votes/legend.html" %}
@@ -23,10 +36,10 @@
                 {% if v.weight %}<li><em>Weight</em> : {{ v.weight }}</li>{% endif %}
                 <ul>
                   {% regroup v.vote_set.all by choice as result %}
-                  {% for re in result %}
-                  {% if re.grouper in "abstention-against-for" %}
-                  <li><b><a 
-                      class="{% if v.recommendation == re.grouper %}ok{% else %}{% if re.grouper == "abstention" %}abstention{% else %}nok{% endif %}{% endif %}" 
+                  {% for re in result reversed %}
+                  {% if re.grouper in "absent-abstention-against-for" %}
+                  <li><b><a
+                      class="{% if v.recommendation == re.grouper %}ok{% else %}{% if re.grouper == "abstention" or re.grouper == "absent" %}abstention{% else %}nok{% endif %}{% endif %}"
                       href="{% url votes:recommendation_choice vote.id v.id re.grouper %}">{{ re.grouper }}</a></b>: {{ re.list|length }} </li>
                   {% else %}
                   <!-- FIXME: sometimes re.grouper is a float and we cant get the correct link -->
@@ -44,23 +57,15 @@
     {% endfor %}
 </ul>
 
-<div class="map map-eu" style="height: 520px; width: 680px;">
-    <object type="image/svg+xml" data="{% url trends:recommendation_countries_map vote.id %}" type="image/svg+xml" width="680" height="520"></object>
-</div>
-
-<h2 class="collapsible collapsed">Score repartition</h2>
-<center class="body">
-<img src="{% url trends:group_proposal_score vote.id %}">
-
-<img src="{% url trends:group_proposal_score_stacked vote.id %}">
-
-<img src="{% url trends:group_proposal_score_heatmap vote.id %}">
-
-<img src="{% url trends:proposal_score_repartition vote.id %}">
-
-{% for group in vote.groups %}
-    <img src="{% url trends:group_proposal_score_repartition group.abbreviation vote.id %}">
-{% endfor %}
-</center>
+{% with proposal_votes_listing="True" %}
+<table class="mep-list tablesorter">
+  {% include "meps/meps_table_thead.html" %}
+  <tbody>
+    {% for mep in vote.meps %}
+      {% include "meps/meps_table_tr.html" %}
+    {% endfor %}
+  </tbody>
+</table>
+{% endwith %}
 
 {% endblock %}

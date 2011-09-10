@@ -4,12 +4,10 @@
 import os
 import time
 from django.http import HttpResponse
-from django.template.loader import render_to_string
-from django.template import Context, Template
-from django.template.base import TemplateSyntaxError
-from django.conf import settings
-from django.core.cache import cache
+from django.core.management import call_command
 
+def update_search_index():
+    call_command("update_memopol_index")
 
 def check_dir(filename):
     dirname = os.path.dirname(filename)

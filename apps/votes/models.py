@@ -2,9 +2,11 @@
 import json
 from django.db import models
 from django.db.models import Avg
+
+from utils import clean_all_trends
 from reps.models import Representative
 from meps.models import MEP, Group, Country
-from memopol2.utils import color
+from memopol2.utils import color, reify
 
 class Proposal(models.Model):
     id = models.CharField(max_length=63, primary_key=True)
@@ -25,6 +27,16 @@ class Proposal(models.Model):
     def date(self):
         return self.recommendation_set.all()[0].datetime.date()
 
+    def save(self, *args, **kwargs):
+        # if I'm modifyed and not created
+        if Proposal.objects.filter(id=self.id):
+            clean_all_trends()
+        super(Proposal, self).save(*args, **kwargs)
+
+    @reify
+    def meps(self):
+        return MEP.objects.filter(score__proposal=self)
+
     def __unicode__(self):
         return self.title
 
@@ -37,6 +49,12 @@ class Recommendation(models.Model):
     weight = models.IntegerField(null=True)
     proposal = models.ForeignKey(Proposal)
     recommendation = models.CharField(max_length=15, choices=((u'against', u'against'), (u'for', u'for')), null=True)
+
+    def save(self, *args, **kwargs):
+        # if I'm modifyed and not created
+        if Recommendation.objects.filter(pk=self.pk):
+            clean_all_trends()
+        super(Recommendation, self).save(*args, **kwargs)
 
     def meps_with_votes(self):
         for mep in MEP.objects.filter(vote__recommendation=self):
@@ -51,6 +69,12 @@ class Vote(models.Model):
     recommendation = models.ForeignKey(Recommendation)
     representative = models.ForeignKey(Representative, null=True)
 
+    def save(self, *args, **kwargs):
+        # if I'm modifyed and not created
+        if Recommendation.objects.filter(pk=self.pk):
+            clean_all_trends()
+        super(Vote, self).save(*args, **kwargs)
+
     class Meta:
         ordering = ["choice"]
 
@@ -63,6 +87,12 @@ class Score(models.Model):
     representative = models.ForeignKey(Representative)
     proposal = models.ForeignKey(Proposal)
     date = models.DateField()
+
+    def save(self, *args, **kwargs):
+        # if I'm modifyed and not created
+        if Recommendation.objects.filter(pk=self.pk):
+            clean_all_trends()
+        super(Score, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ['date']

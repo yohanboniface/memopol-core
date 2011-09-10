@@ -8,6 +8,7 @@ from urllib import urlopen
 from django.conf import settings
 
 from meps.models import MEP
+from memopol2.utils import update_search_index
 
 from current_meps_json_2_sql import manage_mep, clean
 
@@ -24,5 +25,6 @@ if __name__ == "__main__":
             mep = in_db_mep[0]
             manage_mep(mep, mep_json)
     clean()
+    update_search_index()
 
 # vim:set shiftwidth=4 tabstop=4 expandtab:

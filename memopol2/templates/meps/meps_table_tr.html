@@ -1,4 +1,6 @@
 {% load memopol2 i18n %}
+{% load meps_role %}
+{% load votes_tags %}
 <tr>
   {% if score_listing %}
   <td>
@@ -30,6 +32,26 @@
   {% if choice_listing %}
   <td>
       <div class="{% if choice == recommendation.recommendation %}ok{% else %}{% if choice == "abstention" %}abstention{% else %}nok{% endif %}{% endif %}">{{ choice }}</div>
+  </td>
+  {% endif %}
+  {% if organization_role %}
+  <td>
+      {% current_organization_role mep object %}
+  </td>
+  {% endif %}
+  {% if group_role %}
+  <td>
+      {{ mep.groupmep.role }}
+  </td>
+  {% endif %}
+  {% if committee_role %}
+  <td>
+      {% current_committee_role mep object %}
+  </td>
+  {% endif %}
+  {% if delegation_role %}
+  <td>
+      {% current_delegation_role mep object %}
   </td>
   {% endif %}
   <td>
@@ -68,6 +90,14 @@
       {% else %}
       -
       {% endif %}
+  </td>
+  {% endif %}
+  {% if proposal_votes_listing %}
+  <td>
+      {% mep_votes_list_on_proposal mep vote %}
+      {% for vote in mep_votes %}
+      <p><a class="{% if vote.recommendation.recommendation == vote.choice %}ok{% else %}{% if vote.choice == "abstention" or vote.choice == "absent" %}abstention{% else %}nok{% endif %}{% endif %}" href="{% url votes:recommendation vote.id vote.recommendation.id %}"> {{ vote.choice }} on {{ vote.recommendation.part }}</a></p>
+      {% endfor %}
   </td>
   {% endif %}
 </tr>

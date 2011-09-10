@@ -14,6 +14,7 @@ from meps.utils import update_total_score_of_all_meps
 from meps.models import MEP
 from votes.utils import clean_all_trends
 from votes.models import RecommendationData, Proposal, Recommendation, Vote, Score
+from memopol2.utils import update_search_index
 
 from check_vote import check_recommendationdata
 
@@ -68,6 +69,23 @@ def create_recommendation(recommendationdata_id, choice, weight, proposal_ponder
                 Vote.objects.create(choice=choice, recommendation=r, representative=representative, name=rd.proposal_name)
                 a += 1
 
+    # if there is only one proposal this doesn't make any sens, we won't have
+    # absent votes
+    if proposal.recommendation_set.count() != 1:
+        z = 0
+        print "Creating absent votes"
+        # creating absent
+        for mep in MEP.objects.filter(score__proposal=proposal):
+            for recommendation in proposal.recommendation_set.all():
+                if not mep.vote_set.filter(recommendation=recommendation):
+                    Vote.objects.create(representative=mep.representative_ptr,
+                                        choice="absent",
+                                        recommendation=recommendation)
+                    z += 1
+                    sys.stdout.write("%i\r" % z)
+                    sys.stdout.flush()
+        sys.stdout.write("\n")
+
     # clean scores before adding new one
     proposal.score_set.all().delete()
 
@@ -78,7 +96,7 @@ def create_recommendation(recommendationdata_id, choice, weight, proposal_ponder
                 rep_scores[vote.representative] = [0, 0]
             if vote.choice == vote.recommendation.recommendation:
                 rep_scores[vote.representative][0] += vote.recommendation.weight * 2
-            elif vote.choice == "abstention":
+            elif vote.choice in ("abstention", "absent"):
                 if vote.recommendation.recommendation == "against":
                     rep_scores[vote.representative][0] += vote.recommendation.weight * 1
                 elif vote.recommendation.recommendation == "for":
@@ -110,7 +128,11 @@ if __name__ == "__main__":
     if len(sys.argv) not in (4, 5):
         print >>sys.stderr, "Usage: %s <recommendationdata id> <{for,against}> <recommendation weight> <proposal ponderation=1 by default>" % __file__
         sys.exit(1)
-    recommendationdata_id, recommendation, weight, proposal_ponderation = sys.argv[1:]
+    if len(sys.argv) == 5:
+        recommendationdata_id, recommendation, weight, proposal_ponderation = sys.argv[1:]
+    else:
+        recommendationdata_id, recommendation, weight = sys.argv[1:]
+        proposal_ponderation = 1
     if recommendation not in ("for", "against"):
         print >>sys.stderr, "Recommendation should be either 'for' or 'against'"
         sys.exit(1)
@@ -122,5 +144,6 @@ if __name__ == "__main__":
     update_total_score_of_all_meps(verbose=True)
     sys.stdout.write("Clean all deprecated trends\n")
     clean_all_trends()
+    update_search_index()
 
 # vim:set shiftwidth=4 tabstop=4 expandtab:
