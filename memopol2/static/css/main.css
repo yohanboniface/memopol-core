@@ -16,14 +16,17 @@ body {
     padding-top: 2em;
 }
 
-#content h1, #content h2 {
-    margin-bottom: 1em;
-    margin-top: 1em;
+#content h1, #content h2, #content h3 {
+    margin: 1em 0;
 }
 
 #content h1.document-title {
     font-size: 150%;
     border-bottom: 2px #497ED5 solid;
+}
+
+p {
+    margin-bottom: 0.6em;
 }
 
 table li a,
@@ -638,16 +641,17 @@ ul#infos {
     margin: 0px;
 }
 
-div#contact {
+div.rounded_box {
     margin-right: 200px;
     margin-top: 20px;
     padding: 0.5em 1em 1em 1em;
-    border: thin solid #aaa;
+    border: thin solid #ddd;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    background-color:#F0F0F6;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #f5f5f5;
 }
+
 div#contact h2 {
     margin: 0px;
     text-align: center;
@@ -684,10 +688,20 @@ ul.recommendation ul li {
     list-style: none;
 }
 
-.captcha { vertical-align: middle; margin: 0 10px; }
-.feedback-submit { margin: 0 10px; }
+/* campaigns */
+
+.campaign-intro {
+    padding: 0.1em 1em 1em 1em;
+    margin: 1em;
+    background: #f5f5f5;
+}
+
 .campaign-feedback { margin-top: 5px; }
 .campaign-over { background: #eee; }
+
+.captcha { vertical-align: middle; margin: 0 10px; }
+.feedback-submit { margin: 0 10px; }
+
 .feedback-negative { background: red; color: white; }
 .feedback-positive { background: green; color: white; }
 .feedback-neutral { background: yellow; color: black; }
