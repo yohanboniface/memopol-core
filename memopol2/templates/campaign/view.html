@@ -51,7 +51,6 @@ $(document).ready(function(){
 {% if not mepscores %}
 <div>
     <p>Have you contacted a MEP? Wanna get credit? Tell us how it went!</p>
-    <p><a href="{% addurlparameter force 1 %}">Get a new set of MEPs</a></p>
 </div>
 {% endif %}
 
@@ -156,6 +155,11 @@ $(document).ready(function(){
     {% endfor %}
   </tbody>
 </table>
+{% if not mepscores %}
+<div>
+    <p><a class="button" href="{% addurlparameter force 1 %}">Get a new set of MEPs</a></p>
+</div>
+{% endif %}
 
 <h3>Campaign Details</h3>
 <div class="campaign-details">{{campaign.details}}</div>
