@@ -33,7 +33,7 @@
 {% blocktrans with mep.birth_date.day as day and mep.birth_date.month as month and mep.birth_date.year as year and mep.birth_place as birth_place %}{{ day }}/{{ month }}/{{ year }}<i> at </i>{{ birth_place }}{% endblocktrans %}</li>
 </ul>
 
-<div id="contact">
+<div class="rounded_box" id="contact">
     <h2>{% trans "Contact" %}</h2>
     {% include "meps/mep_contact.html" %}
 </div>

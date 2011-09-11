@@ -20,11 +20,12 @@ $(document).ready(function(){
 </ul>
 {% endif %}
 
-<h2>{{campaign.title}}</h2>
+<div class="rounded_box">
+<h2>{{campaign.title}} (<a href="/admin/campaign/mepscore/">Edit individual MEPs scores</a>)</h2>
 {{campaign.intro}}
+</div>
 
 <div>
-   <a href="/admin/campaign/mepscore/">Edit individual MEPs scores</a>
    <form action="/campaign/edit/{{campaign.id}}/" method="post">{% csrf_token %}
       {{ form.as_p }}
       <input type="submit" value="Submit" />
@@ -78,7 +79,7 @@ $(document).ready(function(){
           </tr>
           <tr class="hidden feedback_form_tr">
              <td colspan="8">
-                <form class="feedback-form" action="/campaign/feedback/" method="Post">
+                <form class="grid_12 feedback-form" action="/campaign/feedback/" method="Post">
                    <div class="form-messages"></div>
                    {% csrf_token %}
                    {{ form.campaign }}
@@ -113,7 +114,7 @@ $(document).ready(function(){
                          {{ form.captcha.errors }}
                          {{ form.captcha }}
                       </div>
-                      <input type="submit" class="feedback-submit" value="send <3 datalove" />
+                      <input type="submit" class="feedback-submit button" value="send <3 datalove" />
                    </span>
                 </form>
           </td></tr>
