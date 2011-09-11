@@ -352,8 +352,7 @@ ul ul, ul ol, ol ul, ol ol
 
 /* Tables */
 
-table.mep-list,
-table.mp-list {
+table {
     width: 100%;
     border-width: 1px;
     border-spacing: 0px;
@@ -365,19 +364,16 @@ table thead {
     background-color: #e6EEEE;
 }
 
-table.mep-list tr th, table.mep-list tr td,
-table.mp-list tr th, table.mp-list tr td {
+table tr th, table tr td {
     min-width: 75px;
     padding: 1em;
 }
 
-table.mep-list tr th,
-table.mp-list tr th {
+table tr th, table tr th {
     text-align: center;
 }
 
-table.mep-list tr td,
-table.mp-list tr td {
+table tr td, table tr td {
     text-align: left;
 }
 
