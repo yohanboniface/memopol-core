@@ -455,21 +455,16 @@ def group_proposal_score_stacked(request, proposal_id):
                    'UEN': '#05FBEE'}
 
     group_bar = {}
-    scores = []
 
     maxeu = 0
-    for score_range in range(0, 100, 10):
-        meps = MEP.objects.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 10 if score_range != 90 else 101, score__value__gte=score_range).distinct().count()
-        if meps > maxeu:
-            maxeu = meps
-        scores.append(meps)
 
     #for mep in MEP.objects.filter(score__proposal=proposal, groupmep__group=group):
-    for group in proposal.groups:
-        for score_range in range(0, 100, 10):
+    for score_range in range(0, 100, 10):
+        limit=0
+        for group in proposal.groups:
             meps = group.mep_set.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 10 if score_range != 90 else 101, score__value__gte=score_range).distinct().count()
-            scores[score_range/10] -= meps
-            group_bar[group.abbreviation] = pyplot.bar(score_range/10 + 0.1, meps + scores[score_range/10], width=0.8, color=group_color.get(group.abbreviation, '#FFFFFF'))
+            group_bar[group.abbreviation] = pyplot.bar(score_range/10 + 0.1, meps, width=0.8, bottom=limit, color=group_color.get(group.abbreviation, '#FFFFFF'))
+            limit+=meps
 
     a, b = zip(*group_bar.items())
     pyplot.legend(list(b), list(a), 'best', shadow=False)
