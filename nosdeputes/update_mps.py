@@ -4,7 +4,7 @@ from urllib2 import urlopen
 
 from memopol2.utils import get_or_create
 
-from reps.models import Email
+from reps.models import Email, WebSite
 from mps.models import MP
 
 if __name__ == "__main__":
@@ -37,4 +37,6 @@ if __name__ == "__main__":
             _mp.profession = mp["profession"]
             for email in mp["emails"]:
                 get_or_create(Email, email=email["email"], representative=_mp.representative_ptr)
+            if mp["site_web"]:
+                get_or_create(WebSite, url=mp["site_web"], representative=_mp.representative_ptr)
             _mp.save()
