@@ -30,4 +30,5 @@ if __name__ == "__main__":
                 _mp.active = True
             _mp.full_name = mp["nom"]
             _mp.last_name = mp["nom_de_famille"]
+            _mp.an_webpage = mp["url_an"]
             _mp.save()
