@@ -413,10 +413,11 @@ def group_proposal_score(request, proposal_id):
             meps = group.mep_set.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 10 if score_range != 90 else 101, score__value__gte=score_range).distinct().count()
             if meps > maxeu:
                 maxeu = meps
-            group_bar[group.abbreviation] = pyplot.bar(score_range/10 + a, meps, width=0.1, color=group_color.get(group.abbreviation, '#FFFFFF'), label='%s' % group.abbreviation)
+            group_bar[group.abbreviation] = pyplot.bar(score_range/10 + a, meps, width=0.1, color=group_color.get(group.abbreviation, '#FFFFFF'))
         a += .1
 
-    pyplot.legend()
+    a, b = zip(*group_bar.items())
+    pyplot.legend(list(b), list(a), 'best', shadow=False)
     pyplot.title("Score repartition for groups on %s" % proposal.short_name if proposal.short_name else proposal.title)
     pyplot.xticks(range(11), range(0, 110, 10))
     pyplot.xlabel("Score range 10 by 10")
