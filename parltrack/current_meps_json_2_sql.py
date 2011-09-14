@@ -12,7 +12,7 @@ from django.db.models import Count
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
 
 from meps.utils import update_total_score_of_all_meps, update_meps_positions
-from memopol2.utils import update_search_index
+from memopol2.utils import update_search_index, get_or_create
 
 from reps.models import Party, PartyRepresentative, Email, WebSite, CV
 from meps.models import MEP, Delegation, DelegationRole, PostalAddress, Country, CountryMEP, Organization, OrganizationMEP, Committee, CommitteeRole, Group, GroupMEP, Building
@@ -20,17 +20,6 @@ from meps.models import MEP, Delegation, DelegationRole, PostalAddress, Country,
 current_meps = "meps.json"
 
 _parse_date = lambda date: datetime.strptime(date, "%Y-%m-%dT00:00:00")
-
-def get_or_create(klass, _id=None, **kwargs):
-    if _id is None:
-        object = klass.objects.filter(**kwargs)
-    else:
-        object = klass.objects.filter(**{_id : kwargs[_id]})
-    if object:
-        return object[0]
-    else:
-        print "     add new", klass.__name__, kwargs
-        return klass.objects.create(**kwargs)
 
 def create_uniq_id(mep_json):
     id = mep_json["Name"]["sur"].capitalize().replace(" ", "") + mep_json["Name"]["family"].capitalize().replace(" ", "")
