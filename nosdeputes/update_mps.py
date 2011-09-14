@@ -31,4 +31,5 @@ if __name__ == "__main__":
             _mp.full_name = mp["nom"]
             _mp.last_name = mp["nom_de_famille"]
             _mp.an_webpage = mp["url_an"]
+            _mp.profession = mp["profession"]
             _mp.save()
