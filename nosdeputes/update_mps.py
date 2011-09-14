@@ -26,6 +26,8 @@ if __name__ == "__main__":
         _mp = MP.objects.filter(an_id=mp["url_an"].split("/")[-1].split(".")[0])
         if _mp:
             _mp = _mp[0]
-            if not depute["depute"].get("ancien_depute"):
+            if depute["depute"].get("ancien_depute") == 1:
                 _mp.active = True
+            _mp.full_name = mp["nom"]
+            _mp.last_name = mp["nom_de_famille"]
             _mp.save()
