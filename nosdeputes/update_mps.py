@@ -45,7 +45,7 @@ if __name__ == "__main__":
         _mp = MP.objects.filter(an_id=mp["url_an"].split("/")[-1].split(".")[0])
         if _mp:
             _mp = _mp[0]
-            if not depute["depute"].get("ancien_depute"):
+            if depute["depute"].get("ancien_depute") == 1:
                 _mp.active = True
             update_personal_informations(_mp, mp)
             get_new_emails(mp, _mp)
