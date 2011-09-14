@@ -6,6 +6,17 @@ import time
 from django.http import HttpResponse
 from django.core.management import call_command
 
+def get_or_create(klass, _id=None, **kwargs):
+    if _id is None:
+        object = klass.objects.filter(**kwargs)
+    else:
+        object = klass.objects.filter(**{_id : kwargs[_id]})
+    if object:
+        return object[0]
+    else:
+        print "     add new", klass.__name__, kwargs
+        return klass.objects.create(**kwargs)
+
 def update_search_index():
     call_command("update_memopol_index")
 
