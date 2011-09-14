@@ -11,7 +11,7 @@ from django.db.models import Count
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
 
-from meps.utils import update_total_score_of_all_meps, update_meps_positions
+from meps.utils import update_meps_positions
 from memopol2.utils import update_search_index, get_or_create
 
 from reps.models import Party, PartyRepresentative, Email, WebSite, CV
