@@ -2,6 +2,9 @@ import sys
 from json import load
 from urllib2 import urlopen
 
+from memopol2.utils import get_or_create
+
+from reps.models import Email
 from mps.models import MP
 
 if __name__ == "__main__":
@@ -32,4 +35,6 @@ if __name__ == "__main__":
             _mp.last_name = mp["nom_de_famille"]
             _mp.an_webpage = mp["url_an"]
             _mp.profession = mp["profession"]
+            for email in mp["emails"]:
+                get_or_create(Email, email=email["email"], representative=_mp.representative_ptr)
             _mp.save()
