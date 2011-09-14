@@ -50,4 +50,12 @@ if __name__ == "__main__":
             update_personal_informations(_mp, mp)
             get_new_emails(mp, _mp)
             get_new_websites(mp, _mp)
+            _mp.full_name = mp["nom"]
+            _mp.last_name = mp["nom_de_famille"]
+            _mp.an_webpage = mp["url_an"]
+            _mp.profession = mp["profession"]
+            for email in mp["emails"]:
+                get_or_create(Email, email=email["email"], representative=_mp.representative_ptr)
+            if mp["site_web"]:
+                get_or_create(WebSite, url=mp["site_web"], representative=_mp.representative_ptr)
             _mp.save()
