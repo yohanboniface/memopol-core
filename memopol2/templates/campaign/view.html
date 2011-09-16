@@ -2,7 +2,7 @@
 {% load memopol2 i18n %}
 
 {% block javascript %}
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.6.3.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
    $(".toggle-feedback").click(function() {
@@ -46,13 +46,12 @@ $(document).ready(function(){
 </ul>
 {% endif %}
 
-<h2><a href="/campaign/view/{{campaign.id}}/">{{campaign.title}}</a></h2>
-<div class="campaign-intro">{{campaign.intro}}</div>
+<div class="rounded_box campaign-intro"><h2><a href="/campaign/view/{{campaign.id}}/">{{campaign.title}}</a></h2>{{campaign.intro}}</div>
 
 {% if not mepscores %}
-<div>Have you contacted a MEP? Wanna get credit? Tell us how it went!</div>
-
-<div><a href="{% addurlparameter force 1 %}">Get a new set of MEPs</a></div>
+<div>
+    <p>Have you contacted a MEP? Wanna get credit? Tell us how it went!</p>
+</div>
 {% endif %}
 
 <h3>MEPs with campaign feedback</h3>
@@ -113,12 +112,12 @@ $(document).ready(function(){
        </tr>
        <tr class="hidden feedback_form_tr">
           <td colspan="8">
-             <form class="feedback-form" action="/campaign/feedback/" method="Post">
+             <form class="grid_12 feedback-form" action="/campaign/feedback/" method="Post">
                 <div class="form-messages"></div>
                 {% csrf_token %}
                 {{ form.campaign }}
                 {{ form.mep }}
-                <span style="float: left">
+                <div class="grid_2">
                    {{ form.non_field_errors }}
                    <div class="fieldWrapper">
                       {{ form.type.errors }}
@@ -132,29 +131,35 @@ $(document).ready(function(){
                    </div>
                    <div class="fieldWrapper">
                       {{ form.usercontact.errors }}
-                      <label for="id_usercontact">how to contact you?</label>
+                      <label for="id_usercontact">How to contact you?</label>
                       {{ form.usercontact }}
                    </div>
-                </span>
-                <span style="float: left">
+                </div>
+                <div class="grid_6">
                    <div class="fieldWrapper">
                       {{ form.text.errors }}
                       <label for="id_text">Feedback - crap will be moderated and gives you bad karma!</label>
                       {{ form.text }}
                    </div>
-                </span>
-                <span style="float: left">
+                </div>
+                <div class="grid_2">
                    <div class="fieldWrapper">
+                      <label for="id_captcha_1">Enter the result:</label>
                       {{ form.captcha.errors }}
                       {{ form.captcha }}
                    </div>
-                   <input type="submit" class="feedback-submit" value="send <3 datalove" />
-                </span>
+                   <input type="submit" class="feedback-submit button" value="send <3 datalove" />
+                </div>
              </form>
        </td></tr>
     {% endfor %}
   </tbody>
 </table>
+{% if not mepscores %}
+<div>
+    <p><a class="button" href="{% addurlparameter force 1 %}">Get a new set of MEPs</a></p>
+</div>
+{% endif %}
 
 <h3>Campaign Details</h3>
 <div class="campaign-details">{{campaign.details}}</div>
@@ -207,12 +212,12 @@ $(document).ready(function(){
           </tr>
           <tr class="hidden feedback_form_tr">
              <td colspan="8">
-                <form class="feedback-form" action="/campaign/feedback/" method="Post">
+                <form class="grid_12 feedback-form" action="/campaign/feedback/" method="Post">
                    <div class="form-messages"></div>
                    {% csrf_token %}
                    {{ form.campaign }}
                    {{ form.mep }}
-                   <span style="float: left">
+                   <div class="grid_2">
                       {{ form.non_field_errors }}
                       <div class="fieldWrapper">
                          {{ form.type.errors }}
@@ -226,24 +231,25 @@ $(document).ready(function(){
                       </div>
                       <div class="fieldWrapper">
                          {{ form.usercontact.errors }}
-                         <label for="id_usercontact">how to contact you?</label>
+                         <label for="id_usercontact">How to contact you?</label>
                          {{ form.usercontact }}
                       </div>
-                   </span>
-                   <span style="float: left">
+                   </div>
+                   <div class="grid_6">
                       <div class="fieldWrapper">
                          {{ form.text.errors }}
                          <label for="id_text">Feedback - crap will be moderated and gives you bad karma!</label>
                          {{ form.text }}
                       </div>
-                   </span>
-                   <span style="float: left">
+                   </div>
+                   <div class="grid_2">
                       <div class="fieldWrapper">
+                         <label for="id_captcha_1">Enter the result:</label>
                          {{ form.captcha.errors }}
                          {{ form.captcha }}
                       </div>
                       <input type="submit" class="feedback-submit" value="send <3 datalove" />
-                   </span>
+                   </div>
                 </form>
           </td></tr>
        {% endfor %}

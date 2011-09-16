@@ -16,14 +16,17 @@ body {
     padding-top: 2em;
 }
 
-#content h1, #content h2 {
-    margin-bottom: 1em;
-    margin-top: 1em;
+#content h1, #content h2, #content h3 {
+    margin: 1em 0;
 }
 
 #content h1.document-title {
     font-size: 150%;
     border-bottom: 2px #497ED5 solid;
+}
+
+p {
+    margin-bottom: 0.6em;
 }
 
 table li a,
@@ -352,8 +355,7 @@ ul ul, ul ol, ol ul, ol ol
 
 /* Tables */
 
-table.mep-list,
-table.mp-list {
+table {
     width: 100%;
     border-width: 1px;
     border-spacing: 0px;
@@ -365,19 +367,16 @@ table thead {
     background-color: #e6EEEE;
 }
 
-table.mep-list tr th, table.mep-list tr td,
-table.mp-list tr th, table.mp-list tr td {
+table tr th, table tr td {
     min-width: 75px;
     padding: 1em;
 }
 
-table.mep-list tr th,
-table.mp-list tr th {
+table tr th, table tr th {
     text-align: center;
 }
 
-table.mep-list tr td,
-table.mp-list tr td {
+table tr td, table tr td {
     text-align: left;
 }
 
@@ -493,7 +492,7 @@ form p.submit {
     background: white;
 }
 
-input.search-submit, form p.submit input, button, .button {
+input[type="submit"], input.search-submit, form p.submit input, button, .button {
     padding: 3px 15px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(255, 255, 255, 0.8) inset;
     background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#d8d8d8)) #d8d8d8;
@@ -505,7 +504,7 @@ input.search-submit, form p.submit input, button, .button {
     border-radius: 3px;
 }
 
-input.search-submit:hover, form p.submit input:hover, button:hover, .button:hover {
+input[type="submit"]:hover, input.search-submit:hover, form p.submit input:hover, button:hover, .button:hover {
     color: #555;
 }
 
@@ -642,16 +641,17 @@ ul#infos {
     margin: 0px;
 }
 
-div#contact {
+div.rounded_box {
     margin-right: 200px;
     margin-top: 20px;
     padding: 0.5em 1em 1em 1em;
-    border: thin solid #aaa;
+    border: thin solid #ddd;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    background-color:#F0F0F6;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #f5f5f5;
 }
+
 div#contact h2 {
     margin: 0px;
     text-align: center;
@@ -688,10 +688,23 @@ ul.recommendation ul li {
     list-style: none;
 }
 
-.captcha { vertical-align: middle; margin: 0 10px; }
-.feedback-submit { margin: 0 10px; }
+/* campaigns */
+
+.campaign-intro {
+    padding: 0.1em 1em 1em 1em;
+    margin: 1em;
+    background: #f5f5f5;
+}
+
+.feedback-form {
+    margin-left: 2em;
+    padding: 1em;
+    background-color: #f5f5f5;
+}
+
 .campaign-feedback { margin-top: 5px; }
 .campaign-over { background: #eee; }
+
 .feedback-negative { background: red; color: white; }
 .feedback-positive { background: green; color: white; }
 .feedback-neutral { background: yellow; color: black; }
