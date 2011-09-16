@@ -170,7 +170,7 @@ class MEP(Representative):
 
     @reify
     def get_ep_webpage(self):
-        if self.active:
+        if self.active and self.ep_webpage:
             return self.ep_webpage
         return "http://www.europarl.europa.eu/members/expert/inOut/viewOutgoing.do?language=FR&id=%s" % self.ep_id
 
