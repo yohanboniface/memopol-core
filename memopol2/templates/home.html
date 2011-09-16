@@ -12,7 +12,7 @@
 
     <div>
     {% if object_list %}
-        <h1 class="document-title">{% trans "Votes list" %}</h1>
+        <h1 class="document-title">{% trans "Last tracked votes" %}</h1>
         <ul class="votes">
             {% for proposal in object_list|dictsortreversed:"date" %}
                 <li style="list-style: none; margin-left: 15px;">
