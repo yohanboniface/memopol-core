@@ -1,5 +1,4 @@
-Memopol2 is a django+couchdb rewrite of the incredibly useful Memoire
-Politique tool.
+Memopol2 is a django rewrite of the incredibly useful Memoire Politique tool.
 
 Installation
 ============
@@ -54,7 +53,7 @@ Memopol V2
 ==========
 
 The main goals are to fix what I described in the limitations. A new
-python/django/couchdb system has already been developed, but some
+python/django system has already been developed, but some
 features are still missing to reach the V1, so we have to catchup. I
 attached a very nasty text file which explains where we are and
 propose some "around applications". Also, I want to state that another
