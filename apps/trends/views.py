@@ -287,13 +287,13 @@ def recommendation_countries_absolute(request, recommendation_id):
             _for = votes.filter(choice="for").distinct().count()
             against = votes.filter(choice="against").distinct().count()
             abstention = votes.filter(choice="abstention").distinct().count()
-            pyplot.bar(a + 0.1, 100, width=0.8, color="#AAAAAA")
+            pyplot.bar(a + 0.1, 100, width=0.8, bottom= (against + abstention + _for) * 100. / all_meps, color="#AAAAAA")
             ## against
-            pyplot.bar(a + 0.1, (_for + against + abstention) * 100 / all_meps, width=0.8, color=against_color)
+            pyplot.bar(a + 0.1, against * 100. / all_meps, width=0.8, bottom= (abstention + _for) * 100. / all_meps, color=against_color)
             ## abstention
-            pyplot.bar(a + 0.1, (_for + abstention) * 100 / all_meps, width=0.8, color="#FF8800")
+            pyplot.bar(a + 0.1, abstention * 100. / all_meps, width=0.8, bottom= _for * 100. / all_meps, color="#FF8800")
             ## for
-            pyplot.bar(a + 0.1, _for * 100 / all_meps, width=0.8, color=for_color)
+            pyplot.bar(a + 0.1, _for * 100. / all_meps, width=0.8, color=for_color)
             countries.append(country.code)
             a += 1
 
