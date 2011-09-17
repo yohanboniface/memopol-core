@@ -156,18 +156,18 @@ def recommendation_group(request, recommendation_id):
             _for = votes.filter(choice="for").count()
             abstention = votes.filter(choice="abstention").count()
             against = votes.filter(choice="against").count()
-            # for
-            pyplot.bar(a + 0.1, _for, width=0.8, color=for_color)
-            # abstention
-            pyplot.bar(a + 0.1, abstention, width=0.8, bottom=_for, color="#FF8800")
-            # against
-            pyplot.bar(a + 0.1, against, width=0.8, bottom=abstention + _for, color=against_color)
             # not present
             pyplot.bar(a + 0.1, group.meps_on_date(recommendation.proposal.date).count() - against - _for - abstention, width=0.8, bottom=against + abstention + _for, color="#AAAAAA")
+            # against
+            pyplot.bar(a + 0.1, against, width=0.8, bottom=abstention + _for, color=against_color)
+            # abstention
+            pyplot.bar(a + 0.1, abstention, width=0.8, bottom=_for, color="#FF8800")
+            # for
+            pyplot.bar(a + 0.1, _for, width=0.8, color=for_color)
             groups.append(group.abbreviation)
             a += 1
 
-    pyplot.legend(('for', 'abstention', 'against', 'Not present'), 'best', shadow=False)
+    pyplot.legend(('Not present','against','abstention','for'), 'best', shadow=False)
     pyplot.title("Group vote repartition")
     pyplot.xticks(map(lambda x: x+0.5, range(len(groups))), groups, rotation=12)
     pyplot.xlabel("Groups")
