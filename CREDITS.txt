@@ -18,5 +18,6 @@ Michael <michael@michael-laptop.(none)>
 Aurélien COUDERC <zecoucou@free.fr>
 tarNeFyS <tarnefys@gmail.com>
 Gael Pasgrimaud <gael@gawel.org>
+Pablo Martin-Gomez <pablo.martin-gomez@laposte.net>
 
 Gibus <neurone2@laquadrature.net> - creator of memopol v1
