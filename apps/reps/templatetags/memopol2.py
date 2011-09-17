@@ -15,6 +15,9 @@ def media_url():
 def phone(value):
     for v in ('(0)', ' '):
         value = value.replace(v, '')
+    # for numbers of the french mps
+    if value[0] == "0":
+        value = "+33" + value[1:]
     return value
 
 class AddParameter(Node):
