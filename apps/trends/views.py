@@ -240,11 +240,12 @@ def recommendation_countries(request, recommendation_id):
             _for = votes.filter(choice="for").distinct().count()
             abstention = votes.filter(choice="abstention").distinct().count()
             against = votes.filter(choice="against").distinct().count()
-            pyplot.bar(a + 0.1, all_meps, width=0.8, color="#AAAAAA")
+            ## not present
+            pyplot.bar(a + 0.1, all_meps - _for - abstention - against, width=0.8, bottom=_for + abstention + against , color="#AAAAAA")
             ## against
-            pyplot.bar(a + 0.1, _for + abstention + against, width=0.8, color=against_color)
+            pyplot.bar(a + 0.1, against, width=0.8, bottom=_for + abstention, color=against_color)
             ## abstention
-            pyplot.bar(a + 0.1, _for + abstention, width=0.8, color="#FF8800")
+            pyplot.bar(a + 0.1, abstention, width=0.8, bottom=_for, color="#FF8800")
             ## for
             pyplot.bar(a + 0.1, _for, width=0.8, color=for_color)
             countries.append(country.code)
