@@ -17,7 +17,73 @@ $('#content h1:first').addClass('document-title');
 // table
 $("table.mep-list").tablesorter();
 $("table.mp-list").tablesorter({ headers: { 2: { sorter: false }, }  });
-$('table.mep-list, table.mp-list').tableFilter();
+$("table.mp-list, table.mep-list").tableFilter({
+    filteredRows: function() {
+        $("table.mp-list, table.mep-list").trigger('filteredRows');
+    }
+});
+
+
+function FilterExtension(table) {
+    this.table = table;
+    var filtersBackup = this.filtersBackup = [];
+    this.table.find('.filters .filter').each(function(index, filter) {
+        filtersBackup[index] = $(filter).children().clone();
+    });
+    this.table.bind('filteredRows', $.proxy(this, 'refresh'));
+    this.refresh(true);
+}
+
+FilterExtension.prototype.refresh = function(keepEmptyOptions) {
+    this.table.find('.filters .filter').each($.proxy(function(index, filter) {
+        var $filter = $(filter);
+
+        // reset select from previous state
+        var filterValue = $filter.val();
+        $filter.empty().append(this.filtersBackup[index].clone()).val(filterValue);
+        
+        this.displayCounts($filter, this.countEntries($filter), keepEmptyOptions);
+    }, this));
+};
+
+FilterExtension.prototype.isSelected = function(filter) {
+    var filterValue = filter.val();
+    return $.trim(filterValue) || filterValue != new picnet.ui.filter.TableFilterOptions().selectOptionLabel;
+};
+
+FilterExtension.prototype.countEntries = function(filter) {
+    var counts = {};
+    var index = filter.parent().prevAll().length;
+    var cells = this.table.find('tbody tr[filtermatch!=false] td:nth-child(' + (index + 1) + ')');
+    cells.each(function(index, cell) {
+        var html = $(cell).html();
+        counts[html] = (counts[html] || 0) + 1;
+    });
+    return this.stripKeys(counts);
+};
+
+FilterExtension.prototype.displayCounts = function(filter, counts, keepEmptyOptions) {
+    filter.find('option[value]').each($.proxy(function(index, option) {
+        $option = $(option);
+        count = counts[$.trim($option.val())] || 0;
+        
+        $option.html($option.html() + ' (' + count + ')');
+        if (!count && !this.isSelected(filter)){
+            $option.remove();
+        }
+    }, this));
+};
+
+FilterExtension.prototype.stripKeys = function(counts) {
+    var stripedCounts = {};
+    for (html in counts) {
+        stripedCounts[jQuery.trim(html.replace(/<\/?[^>]+>/gi, ''))] = counts[html];
+    }
+    return stripedCounts;
+};
+
+var filterExtension = new FilterExtension($("table.mep-list"));
+
 $("table.mep-list tbody tr, table.mp-list tbody tr").hover(
     function() {$(this).addClass('odd');},
     function() {$(this).removeClass('odd');}
