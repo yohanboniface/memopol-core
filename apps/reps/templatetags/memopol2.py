@@ -1,7 +1,5 @@
-from django.template import Library, Variable, Node, resolve_variable, TemplateSyntaxError
+from django.template import Library, Node, resolve_variable, TemplateSyntaxError
 from django.conf import settings
-from django import template
-import random
 
 register = Library()
 
