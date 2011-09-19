@@ -534,14 +534,10 @@ def group_proposal_score_heatmap(request, proposal_id):
                                          representative__mep__countrymep__end__gte=proposal.date).aggregate(Avg('value'))['value__avg']
 
             if score:
-                # I'm doing sqrt here because I'm reducing the surface of the circle, not the len of the radius
-                el = Ellipse((a + 0.5,b + 0.5), 1./
-                             sqrt(biggest_group_of_a_country/meps), 1. /
-                             sqrt(biggest_group_of_a_country/meps),
-                             facecolor=map(lambda x: x/255., color(score)),
+                ax.scatter(a + 0.5,b + 0.5, s=250*(meps/biggest_group_of_a_country),
+                             c=map(lambda x: x/255., color(score)),
                              alpha=0.5)
 
-                ax.add_artist(el)
             b += 1
         a += 1
 
