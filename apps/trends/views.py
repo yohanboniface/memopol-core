@@ -572,7 +572,7 @@ def group_proposal_score_heatmap(request, proposal_id):
     #pyplot.ylabel("MEPs per group")
     #pyplot.axis([0, 10.1, 0, maxeu + 3])
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.figure(figsize=(8, 6))
     pyplot.clf()
 
