@@ -492,7 +492,7 @@ def group_proposal_score_heatmap(request, proposal_id):
     countries= proposal.countries
     groups = proposal.groups
 
-    fig = pyplot.figure(figsize=(len(countries) / 2, len(groups) / 2))
+    fig = pyplot.figure(figsize=(len(countries) / 2.8, len(groups) / 2.8))
     ax = fig.add_subplot(111)
     ax.set_xlim(0, len(proposal.countries))
     ax.set_ylim(0, len(groups))
