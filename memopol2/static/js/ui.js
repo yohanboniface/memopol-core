@@ -48,7 +48,7 @@ FilterExtension.prototype.refresh = function(keepEmptyOptions) {
 
 FilterExtension.prototype.isSelected = function(filter) {
     var filterValue = filter.val();
-    return $.trim(filterValue) || filterValue != new picnet.ui.filter.TableFilterOptions().selectOptionLabel;
+    return $.trim(filterValue) && filterValue != new picnet.ui.filter.TableFilterOptions().selectOptionLabel;
 };
 
 FilterExtension.prototype.countEntries = function(filter) {
