@@ -18,6 +18,7 @@ $('#content h1:first').addClass('document-title');
 $("table.mep-list").tablesorter();
 $("table.mp-list").tablesorter({ headers: { 2: { sorter: false }, }  });
 $("table.mp-list, table.mep-list").tableFilter({
+    enableCookies: false,
     filteredRows: function() {
         $("table.mp-list, table.mep-list").trigger('filteredRows');
     }
