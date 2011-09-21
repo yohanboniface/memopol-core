@@ -1,6 +1,7 @@
 import sys
+import time
 from json import load
-from urllib2 import urlopen
+from urllib2 import urlopen, HTTPError
 
 from memopol2.utils import get_or_create
 
@@ -40,7 +41,17 @@ if __name__ == "__main__":
     a = 0
     for depute in mps["deputes"]:
         a += 1
-        mp = load(urlopen(depute["depute"]["api_url"]))["depute"]
+        try:
+            mp = load(urlopen(depute["depute"]["api_url"]))["depute"]
+        except HTTPError:
+            try:
+                print "Warning, failed to get a deputy, retrying in one seconde (url: %s)" % depute["depute"]["api_url"]
+                time.sleep(1)
+                mp = load(urlopen(depute["depute"]["api_url"]))["depute"]
+            except HTTPError:
+                print "Didn't managed to get this deputy, abort"
+                print "Go repport the bug on irc.freenode.net#regardscitoyens"
+                sys.exit(1)
         print a, "-", mp["nom"]
         _mp = MP.objects.filter(an_id=mp["url_an"].split("/")[-1].split(".")[0])
         if _mp:
