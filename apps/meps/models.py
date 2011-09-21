@@ -172,7 +172,7 @@ class MEP(Representative):
     def get_ep_webpage(self):
         if self.active and self.ep_webpage:
             return self.ep_webpage
-        return "http://www.europarl.europa.eu/members/expert/inOut/viewOutgoing.do?language=FR&id=%s" % self.ep_id
+        return None
 
     def get_absolute_url(self):
         return reverse('meps:mep', args=(self.id,))

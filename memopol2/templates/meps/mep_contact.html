@@ -29,7 +29,8 @@
 <li class="sep">&nbsp;</li>
 
 
-<li><i>{% trans "Website&nbsp;: " %}</i><a target="_" href="{{ mep.get_ep_webpage }}">{% trans "Page on the website of the European Parliament" %}</a></li>
+<li><i>{% trans "Website&nbsp;: " %}</i><a target="_" href="http://www.europarl.europa.eu/members/expert/inOut/viewOutgoing.do?language=FR&id={{ mep.ep_id }}">{% trans "Page on the website of the European Parliament" %}</a></li>
+{% if mep.get_ep_webpage %}<li><i>{% trans "Website&nbsp;: " %}</i><a target="_" href="{{ mep.get_ep_webpage }}">{% trans "Current mandate page on the website of the European Parliament" %}</a></li>{% endif %}
 {% for website in mep.website_set.all %}
 {% if website.url %}
 <li>
