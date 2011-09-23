@@ -12,7 +12,7 @@ urlpatterns = patterns('meps.views',
     # those view are *very* expansive. we cache them in RAM for a week
     url(r'^names/$', utils.cached(3600*24*7)(MEPList.as_view()), name='index_names'),
     url(r'^inactive/$', utils.cached(3600*24*7)(MEPList.as_view(active=False)), name='index_inactive'),
-    url(r'^score/$', MEPList.as_view(queryset=MEP.objects.filter(active=True).exclude(total_score__isnull=True).order_by('-position'), score_listing=True), name='scores'),
+    url(r'^score/$', MEPList.as_view(queryset=MEP.objects.filter(active=True).exclude(total_score__isnull=True).order_by('position'), score_listing=True), name='scores'),
 
     url(r'^opinion/$', ListView.as_view(model=Opinion), name='index_opinions'),
     url(r'^opinion/(?P<pk>[0-9]+)/$', MEPsFromView.as_view(model=Opinion, named_header="reps/opinion_header.html"), name='index_by_opinions'),
