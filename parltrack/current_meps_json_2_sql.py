@@ -240,8 +240,9 @@ def change_mep_details(mep, mep_json):
     print "     update mep full name"
     mep.full_name = "%s %s" %(mep_json["Name"]["sur"], mep_json["Name"]["family"])
 
-def add_mep_email(mep, email):
-    get_or_create(Email, representative=mep.representative_ptr, email=email)
+def add_mep_email(mep, emails):
+    for email in emails:
+        get_or_create(Email, representative=mep.representative_ptr, email=email)
 
 def add_mep_website(mep, url):
     if url:
