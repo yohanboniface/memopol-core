@@ -252,14 +252,6 @@ li {
     border: 0px;
 }
 
-div.map {
-    margin: auto;
-}
-
-div.map-eu {
-    border: thin solid black;
-}
-
 .quickView
 {
     float: right;
@@ -713,8 +705,18 @@ ul.recommendation ul li {
 .feedback-popup { position: absolute; border: 1px solid #454545; background: white; padding: 5px; color: black; }
 
 /* Home europe map*/
-#europe-map { border: 1px solid black;}
-#europe-map * { fill:none; font-family: helvetica;}
+
+.map {
+    margin: auto;
+}
+
+.map-eu {
+    border: thin solid black;
+    display: block;
+}
+
+
+#europe-map * { fill:none; font-family: helvetica; display: block; }
 #europe-map rect { fill:#EEEEF2; }
 #europe-map path { fill:#FFFFFF; stroke:#000; stroke-width:8; } 
 #europe-map a.eu path { fill:#CDCDFF; border: 2px;}
