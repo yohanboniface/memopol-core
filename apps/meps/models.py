@@ -142,6 +142,42 @@ class Organization(models.Model):
 
 
 
+class HistoryManager(models.Manager):
+    date = None
+
+    def at(self, date):
+        self.date = date
+        return self
+    
+    def get_query_set(self):
+        query = super(HistoryManager, self).get_query_set()
+        today = date.today()
+        
+        for m2m_name, foreign_keys in self.relations.items():
+            m2m = getattr(self.model, m2m_name)
+            relation_name = m2m.through._meta.module_name
+            relation_table = m2m.through._meta.db_table
+            
+            if self.date is None:
+                query = query.filter(**{'%s__end__gt' % relation_name: today})
+            else:
+                query = query.filter(**{'%s__end__gt' % relation_name: self.date, '%s__begin__lt' % relation_name: self.date})
+            
+            for fk in foreign_keys:
+                query = query.extra(select={'current_%s' % fk: '%s.%s' % (relation_table, fk)})
+
+        return query
+    
+
+class MEPHistoryManager(HistoryManager):
+    
+    relations = {
+        'countries': ['country_id', 'party_id'],
+        'groups': ['group_id']
+    }
+    
+
+
 @search.searchable
 class MEP(Representative):
     active = models.BooleanField()
@@ -172,7 +208,9 @@ class MEP(Representative):
     organizations = models.ManyToManyField(Organization, through='OrganizationMEP')
     position = models.IntegerField(default=None, null=True)
     total_score = models.FloatField(default=None, null=True)
-
+    
+    objects = MEPHistoryManager()
+    
     @reify
     def get_ep_webpage(self):
         if self.active and self.ep_webpage:
@@ -191,19 +229,25 @@ class MEP(Representative):
         return self.stg_floor + self.stg_office_number
 
     @reify
-    def group(self):
-        return self.groupmep_set.latest('end').group
-
-    @reify
     def groupmep(self):
         return self.groupmep_set.latest('end')
 
     @reify
+    def group(self):
+        if hasattr(self, 'current_group_id'):
+            return Group.objects.get(pk=self.current_group_id)
+        return self.groupmep_set.latest('end').group
+
+    @reify
     def country(self):
+        if hasattr(self, 'current_country_id'):
+            return Country.objects.get(pk=self.current_country_id)
         return self.countrymep_set.latest('end').country
 
     @reify
     def party(self):
+        if hasattr(self, 'current_party_id'):
+            return Party.objects.get(pk=self.current_party_id)
         return self.countrymep_set.latest('end').party
 
     @reify
@@ -242,11 +286,11 @@ class MEP(Representative):
 
     @snippet(template='meps/snippets/country.html')
     def country_tag(self):
-        return dict(country=self.countrymep_set.latest('end').country)
+        return dict(country=self.country)
 
     @snippet(template='meps/snippets/party.html')
     def party_tag(self):
-        return dict(group=self.groupmep_set.latest('end').group)
+        return dict(group=self.group)
 
     @reify
     def important_posts(self):

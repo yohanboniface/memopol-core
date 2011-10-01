@@ -29,7 +29,7 @@ class VoteRecommendationChoice(VoteRecommendation):
         context = super(VoteRecommendationChoice, self).get_context_data(**kwargs)
         context['choice'] = self.kwargs['recommendation']
         context['header_template'] = 'votes/header_mep_list.html'
-        context['object_list'] = MEP.objects.filter(vote__recommendation=self.object,
+        context['object_list'] = MEP.objects.at(self.object.datetime.date()).filter(vote__recommendation=self.object,
                                   vote__choice=self.kwargs['recommendation'])
         self.redirect_args += [self.kwargs['recommendation']]
         return context

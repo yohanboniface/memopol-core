@@ -57,7 +57,7 @@ class Recommendation(models.Model):
         super(Recommendation, self).save(*args, **kwargs)
 
     def meps_with_votes(self):
-        for mep in MEP.objects.filter(vote__recommendation=self):
+        for mep in MEP.objects.at(self.datetime.date()).filter(vote__recommendation=self):
             yield mep, mep.vote_set.get(recommendation=self).choice
 
     def __unicode__(self):
