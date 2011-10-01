@@ -84,7 +84,20 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'johnny.middleware.LocalStoreClearMiddleware',
+    'johnny.middleware.QueryCacheMiddleware',
 )
+
+ENABLE_CACHING = not DEBUG
+
+CACHES = {
+    'default' : dict(
+        BACKEND = 'django.core.cache.backends.%s' % ('locmem.LocMemCache' if ENABLE_CACHING else 'dummy.DummyCache'),
+        JOHNNY_CACHE = True,
+    )
+}
+
+JOHNNY_MIDDLEWARE_KEY_PREFIX='cache_memopol2'
 
 if APPS_DEBUG:
     MIDDLEWARE_CLASSES += (
