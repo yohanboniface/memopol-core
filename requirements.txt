@@ -13,3 +13,4 @@ WebTest
 nose
 django-simple-captcha
 pil
+johnny-cache
