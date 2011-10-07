@@ -339,7 +339,7 @@ def group_proposal_score_repartition(request, group_abbreviation, proposal_id):
     pyplot.ylabel("MEPs")
     #pyplot.axis([0, 20.1, 0, maxeu + 3])
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
 
     return send_file(request, filename, content_type="image/png")
