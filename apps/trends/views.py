@@ -82,7 +82,7 @@ def bar_trends_for_mep(request, mep_id):
     pyplot.legend(('MEP', 'Group', 'Parliament', 'Country'), 'best', shadow=True)
     pyplot.axis([0, len(scores), 0, 102])
     pyplot.title("%s - Votes scores evolution over time" % (mep.full_name))
-    pyplot.xticks(map(lambda x: x+0.5, range(len(scores))), [k.proposal.short_name if k.proposal.short_name else k.proposal.date for k in score_list])
+    pyplot.xticks(map(lambda x: x+0.5, range(len(scores))), [k.proposal.short_name if k.proposal.short_name else k.proposal.date for k in score_list], rotation=-17)
     pyplot.xlabel("Votes names or dates")
     pyplot.ylabel("Scores on votes")
     check_dir(filename)
