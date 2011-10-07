@@ -169,7 +169,7 @@ def recommendation_group(request, recommendation_id):
 
     pyplot.legend(('Not present','against','abstention','for'), 'best', shadow=False)
     pyplot.title("Group vote repartition")
-    pyplot.xticks(map(lambda x: x+0.5, range(len(groups))), groups, rotation=12)
+    pyplot.xticks(map(lambda x: x+0.5, range(len(groups))), groups, rotation=-17)
     pyplot.xlabel("Groups")
     pyplot.ylabel("Number of meps")
     check_dir(filename)
