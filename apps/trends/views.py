@@ -47,7 +47,7 @@ def trends_for_mep(request, mep_id):
     pyplot.plot(scores)
     pyplot.axis([0, len(scores) - 1, 0, 102])
     pyplot.title("%s - Votes scores evolution over time" % (mep.full_name))
-    pyplot.xticks(range(len(scores)), [k.proposal.short_name if k.proposal.short_name else k.proposal.date for k in score_list])
+    pyplot.xticks(range(len(scores)), [k.proposal.short_name if k.proposal.short_name else k.proposal.date for k in score_list], rotation=-17)
     pyplot.xlabel("Votes names or dates")
     pyplot.ylabel("Scores on votes")
     check_dir(filename)
