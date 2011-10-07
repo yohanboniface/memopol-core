@@ -304,7 +304,7 @@ def recommendation_countries_absolute(request, recommendation_id):
     pyplot.ylabel("% of choices")
     pyplot.axis([0, len(countries), 0, 100])
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
 
     return send_file(request, filename, content_type="image/png")
