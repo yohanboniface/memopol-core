@@ -86,7 +86,7 @@ def bar_trends_for_mep(request, mep_id):
     pyplot.xlabel("Votes names or dates")
     pyplot.ylabel("Scores on votes")
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
 
     return send_file(request,filename, content_type="image/png")
