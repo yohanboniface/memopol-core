@@ -476,7 +476,7 @@ def group_proposal_score_stacked(request, proposal_id):
     pyplot.ylabel("Number of MEPs (by political group) with X points (for this vote)")
     #pyplot.axis([0, 10.1, 0, maxeu + 3])
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.figure(figsize=(8, 6))
     pyplot.clf()
 
