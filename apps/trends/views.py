@@ -124,7 +124,7 @@ def comparaison_trends_for_mep(request, mep_id):
     pyplot.axis([0, len(scores), 0, max(maximum) + 50])
     pyplot.title("%s - Votes scores by vote importance" % (mep.full_name))
     pyplot.yticks([])
-    pyplot.xticks(map(lambda x: x+0.5, range(len(scores))), [k.proposal.short_name if k.proposal.short_name else k.proposal.date for k in score_list])
+    pyplot.xticks(map(lambda x: x+0.5, range(len(scores))), [k.proposal.short_name if k.proposal.short_name else k.proposal.date for k in score_list], rotation=-17)
     pyplot.xlabel("Votes names or dates")
     pyplot.ylabel("Score by vote importance")
     check_dir(filename)
