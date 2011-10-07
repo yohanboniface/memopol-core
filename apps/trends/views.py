@@ -258,7 +258,7 @@ def recommendation_countries(request, recommendation_id):
     pyplot.ylabel("Number of meps")
     pyplot.axis([0, len(countries), 0, max_total + 2])
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
 
     return send_file(request, filename, content_type="image/png")
