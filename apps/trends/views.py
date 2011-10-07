@@ -173,7 +173,7 @@ def recommendation_group(request, recommendation_id):
     pyplot.xlabel("Groups")
     pyplot.ylabel("Number of meps")
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
 
     return send_file(request, filename, content_type="image/png")
