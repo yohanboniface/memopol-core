@@ -57,7 +57,7 @@ class Recommendation(models.Model):
         super(Recommendation, self).save(*args, **kwargs)
 
     def meps_with_votes(self):
-        for mep in MEP.objects.filter(vote__recommendation=self):
+        for mep in MEP.objects.at(self.datetime.date()).filter(vote__recommendation=self):
             yield mep, mep.vote_set.get(recommendation=self).choice
 
     def __unicode__(self):
@@ -67,7 +67,7 @@ class Recommendation(models.Model):
         ordering = ['datetime']
 
 class Vote(models.Model):
-    choice = models.CharField(max_length=15, choices=((u'for', u'for'), (u'against', u'against'), (u'abstention', u'abstention'), (u'abstent', u'abstent')))
+    choice = models.CharField(max_length=15, choices=((u'for', u'for'), (u'against', u'against'), (u'abstention', u'abstention'), (u'absent', u'absent')))
     name = models.CharField(max_length=127)
     recommendation = models.ForeignKey(Recommendation)
     representative = models.ForeignKey(Representative, null=True)
