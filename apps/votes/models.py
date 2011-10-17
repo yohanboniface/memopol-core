@@ -132,3 +132,6 @@ class RecommendationData(models.Model):
 
     def data_pretty(self):
         return json.dumps(json.loads(self.data), sort_keys=False, indent=4)
+
+    class Meta:
+        ordering = ['date', 'proposal_name']
