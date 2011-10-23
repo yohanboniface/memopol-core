@@ -14,10 +14,12 @@ function onMugshotError(source) {
 
 $('#content h1:first').addClass('document-title');
 
+var FILTERS_SELECT_LABEL = "Select...";// FIXME: not suitable for I18n
 // table
 $("table.mep-list").tablesorter();
 $("table.mp-list").tablesorter({ headers: { 2: { sorter: false }, }  });
 $("table.mp-list, table.mep-list").tableFilter({
+    selectOptionLabel: FILTERS_SELECT_LABEL, 
     enableCookies: false,
     filteredRows: function() {
         $("table.mp-list, table.mep-list").trigger('filteredRows');
@@ -51,7 +53,7 @@ FilterExtension.prototype.refresh = function(keepEmptyOptions) {
 
 FilterExtension.prototype.isSelected = function(filter) {
     var filterValue = filter.val();
-    return $.trim(filterValue) && filterValue != new picnet.ui.filter.TableFilterOptions().selectOptionLabel;
+    return $.trim(filterValue) && filterValue != FILTERS_SELECT_LABEL;
 };
 
 FilterExtension.prototype.countEntries = function(filter) {
