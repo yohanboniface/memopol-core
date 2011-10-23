@@ -40,10 +40,12 @@ FilterExtension.prototype.refresh = function(keepEmptyOptions) {
         var $filter = $(filter);
 
         // reset select from previous state
-        var filterValue = $filter.val();
-        $filter.empty().append(this.filtersBackup[index].clone()).val(filterValue);
+        if (!this.isSelected($filter)) {
+            var filterValue = $filter.val();
+            $filter.empty().append(this.filtersBackup[index].clone()).val(filterValue);
         
-        this.displayCounts($filter, this.countEntries($filter), keepEmptyOptions);
+            this.displayCounts($filter, this.countEntries($filter), keepEmptyOptions);
+        }
     }, this));
 };
 
