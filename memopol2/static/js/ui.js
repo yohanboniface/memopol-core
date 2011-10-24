@@ -49,9 +49,9 @@ function FilterExtension(table) {
         filtersBackup[index] = $(filter).children().clone();
     });
     this.table.bind('filteredRows', $.proxy(this, 'refresh'));
-    
+    this.buildIndexes();
     this.refresh(false);
-    
+
     var callback =  $.proxy(this, 'onQueryChanged');
     $(document).ready(callback)
     $(window).bind('hashchange', callback);
@@ -61,6 +61,20 @@ FilterExtension.prototype.BASE_HASH = '#!filters?';
 
 FilterExtension.prototype.BASE_HASH_RE = /^#!filters\?/;
 
+FilterExtension.prototype.buildIndexes = function() {
+    var nameIndex = this.nameIndex = {};
+    var filterIndex = this.filterIndex = {};
+    var $table = this.table;
+    $table.find('thead th').each(function(index, header) {
+        var match = $(header).attr('class').match(/row-(\w+)/);
+        if (match) {
+            var name = match[1];
+            nameIndex[index] = name;
+            filterIndex[name] = index;
+        }
+    });
+};
+
 FilterExtension.prototype.onQueryChanged = function() {
     var hash = window.location.hash;
     if (!hash.match(this.BASE_HASH_RE)) return false;
@@ -68,12 +82,12 @@ FilterExtension.prototype.onQueryChanged = function() {
 
     for (var name in filters) {
         if (filters.hasOwnProperty(name)) {
-            $('thead tr.filters #' + name + '.filter').val(filters[name]);
+            var filter = this.table.find('#filter_' + this.filterIndex[name]);
+            filter.val(filters[name]);
         }
     }
     this.table.tableFilterRefresh();
 };
-
 
 FilterExtension.prototype.refresh = function(updateHash) {
     var hash = {};
@@ -86,7 +100,8 @@ FilterExtension.prototype.refresh = function(updateHash) {
 
             this.displayCounts($filter, this.countEntries($filter));
         } else {
-            hash[$filter.attr('id')] = $filter.val();
+            var filterIndex = parseInt($filter.attr('id').replace(/[^\d]+/, ''), 10);
+            hash[this.nameIndex[filterIndex]] = $filter.val();
         }
     }, this));
     
