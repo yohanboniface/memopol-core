@@ -29,7 +29,6 @@ def updateCampaignScores(form, pk, c):
 
         if form.cleaned_data['groupRole']:
             query['groupmep__role__in'] = form.cleaned_data['groupRole']
-            query['groupmep__end'] = date(9999, 12, 31)
 
     if form.cleaned_data['delegation']:
         query['delegationrole__delegation__name__in'] = form.cleaned_data['delegation']
@@ -37,7 +36,6 @@ def updateCampaignScores(form, pk, c):
 
         if form.cleaned_data['delegationRole']:
             query['delegationrole__role__in'] = form.cleaned_data['delegationRole']
-            query['delegationrole__end'] = date(9999, 12, 31)
 
     if form.cleaned_data['staff']:
         query['organizationmep__organization__name__in'] = form.cleaned_data['staff']
@@ -45,7 +43,6 @@ def updateCampaignScores(form, pk, c):
 
         if form.cleaned_data['staffRole']:
             query['organizationmep__role__in'] = form.cleaned_data['staffRole']
-            query['organizationmep__end'] = date(9999, 12, 31)
 
     if form.cleaned_data['committee']:
         query['committeerole__committee__name__in'] = form.cleaned_data['committee']
@@ -53,7 +50,6 @@ def updateCampaignScores(form, pk, c):
 
         if form.cleaned_data['committeeRole']:
             query['committeerole__role__in'] = form.cleaned_data['committeeRole']
-            query['committeerole__end'] = date(9999, 12, 31)
 
     #print ', '.join(["%s = %s" % (k,v) for k,v in query.items()])
     if query:
