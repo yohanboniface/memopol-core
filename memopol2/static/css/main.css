@@ -360,7 +360,7 @@ table thead {
 }
 
 table tr th, table tr td {
-    min-width: 75px;
+    min-width: 69px;
     padding: 1em;
 }
 
@@ -377,11 +377,13 @@ table thead tr th {
 }
 
 /* Tables w/ sorting */
-table.tablesorter .cell-contact {
+table.mep-list .cell-contact,
+table.table .cell-contact {
     width:40%;
 }
 
-table.tablesorter {
+table.mep-list,
+table.table {
     font-family:arial;
     margin:10px 0pt 15px;
     font-size: 8pt;
@@ -389,13 +391,15 @@ table.tablesorter {
     text-align: left;
 }
 
-table.tablesorter thead tr .header {
+table.mep-list thead tr .header,
+table.table thead tr .header {
     background-image: url("../img/bg.gif");
     background-repeat: no-repeat;
     background-position: center right;
     cursor: pointer;
 }
-table.tablesorter tbody td {
+table.mep-list tbody td,
+table.table tbody td {
     color: #3D3D3D;
     padding: 4px;
     background-color: #FFF;
@@ -689,7 +693,7 @@ ul.recommendation ul li {
 }
 
 .feedback-form {
-    margin-left: 2em;
+    margin-left: 0em;
     padding: 1em;
     background-color: #f5f5f5;
 }
