@@ -185,8 +185,11 @@ def report(request, pk):
     chosen=MEP.objects.filter(debriefing__campaign=c,debriefing__valid="").distinct()
     forms = [DebriefingForm(instance=Debriefing(mep=mep,campaign=c,valid="")) for mep in chosen]
     dbriefs = [Debriefing.objects.filter(mep=mep,campaign=c,valid="") for mep in chosen]
+    mepscores = MEPScore.objects.filter(campaign=c)
+    mepsforms = [DebriefingForm(instance=Debriefing(mep=mep,campaign=c,valid=""))
+                 for mep in MEP.objects.filter(mepscore__campaign=c)]
     return render_to_response('campaign/view.html',
                               { 'object_list': izip(chosen,forms, dbriefs ),
-                                'mepscores': MEPScore.objects.filter(campaign=c).exclude(mep__in=chosen),
+                                'mepscores': izip(mepscores,mepsforms),
                                 'campaign': c, },
                               context_instance = RequestContext(request))
