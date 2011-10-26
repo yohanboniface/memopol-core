@@ -34,13 +34,15 @@ var FILTERS_SELECT_LABEL = "Select...";// FIXME: not suitable for I18n
 // table
 $("table.mep-list").tablesorter();
 $("table.mp-list").tablesorter({ headers: { 2: { sorter: false }, }  });
-$("table.mp-list, table.mep-list").tableFilter({
-    selectOptionLabel: FILTERS_SELECT_LABEL, 
-    enableCookies: false,
-    filteredRows: function() {
-        $("table.mp-list, table.mep-list").trigger('filteredRows');
-    }
-});
+try {
+   $("table.mp-list, table.mep-list").tableFilter({
+       selectOptionLabel: FILTERS_SELECT_LABEL,
+       enableCookies: false,
+       filteredRows: function() {
+           $("table.mp-list, table.mep-list").trigger('filteredRows');
+       }
+   });
+} catch(err) {}
 
 function FilterExtension(table) {
     this.table = $(table);

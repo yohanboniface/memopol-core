@@ -55,7 +55,7 @@ $(document).ready(function(){
 {% endif %}
 
 <h3>MEPs with campaign feedback</h3>
-<table class="mep-list tablesorter">
+<table class="table">
   <thead>
     <tr>
       <th filter='false' class="row-feedback">Feedback</th>
@@ -166,7 +166,7 @@ $(document).ready(function(){
 
 {% if mepscores %}
    <h3>Notable MEPs in this campaign</h3>
-   <table class="mep-list tablesorter">
+   <table class="table">
      <thead>
        <tr>
          <th filter='false' class="row-influence">Influence</th>
@@ -179,7 +179,7 @@ $(document).ready(function(){
        </tr>
      </thead>
      <tbody>
-       {% for ms in mepscores %}
+       {% for ms, form in mepscores %}
           <tr>
             <td>{{ms.score}}</td>
             <td><span class="toggle-feedback button clickable">Feedback!</span></td>

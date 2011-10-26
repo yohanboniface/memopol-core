@@ -29,7 +29,6 @@ def updateCampaignScores(form, pk, c):
 
         if form.cleaned_data['groupRole']:
             query['groupmep__role__in'] = form.cleaned_data['groupRole']
-            query['groupmep__end'] = date(9999, 12, 31)
 
     if form.cleaned_data['delegation']:
         query['delegationrole__delegation__name__in'] = form.cleaned_data['delegation']
@@ -37,7 +36,6 @@ def updateCampaignScores(form, pk, c):
 
         if form.cleaned_data['delegationRole']:
             query['delegationrole__role__in'] = form.cleaned_data['delegationRole']
-            query['delegationrole__end'] = date(9999, 12, 31)
 
     if form.cleaned_data['staff']:
         query['organizationmep__organization__name__in'] = form.cleaned_data['staff']
@@ -45,7 +43,6 @@ def updateCampaignScores(form, pk, c):
 
         if form.cleaned_data['staffRole']:
             query['organizationmep__role__in'] = form.cleaned_data['staffRole']
-            query['organizationmep__end'] = date(9999, 12, 31)
 
     if form.cleaned_data['committee']:
         query['committeerole__committee__name__in'] = form.cleaned_data['committee']
@@ -53,7 +50,6 @@ def updateCampaignScores(form, pk, c):
 
         if form.cleaned_data['committeeRole']:
             query['committeerole__role__in'] = form.cleaned_data['committeeRole']
-            query['committeerole__end'] = date(9999, 12, 31)
 
     #print ', '.join(["%s = %s" % (k,v) for k,v in query.items()])
     if query:
@@ -189,8 +185,11 @@ def report(request, pk):
     chosen=MEP.objects.filter(debriefing__campaign=c,debriefing__valid="").distinct()
     forms = [DebriefingForm(instance=Debriefing(mep=mep,campaign=c,valid="")) for mep in chosen]
     dbriefs = [Debriefing.objects.filter(mep=mep,campaign=c,valid="") for mep in chosen]
+    mepscores = MEPScore.objects.filter(campaign=c)
+    mepsforms = [DebriefingForm(instance=Debriefing(mep=mep,campaign=c,valid=""))
+                 for mep in MEP.objects.filter(mepscore__campaign=c)]
     return render_to_response('campaign/view.html',
                               { 'object_list': izip(chosen,forms, dbriefs ),
-                                'mepscores': MEPScore.objects.filter(campaign=c).exclude(mep__in=chosen),
+                                'mepscores': izip(mepscores,mepsforms),
                                 'campaign': c, },
                               context_instance = RequestContext(request))
