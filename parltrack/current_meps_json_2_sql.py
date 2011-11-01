@@ -294,7 +294,7 @@ def manage_mep(mep, mep_json):
     mep.save()
 
 def add_missing_details(mep, mep_json):
-    mep.ep_id = mep_json["UserID"]
+    mep.ep_id = int(mep_json["UserID"])
 
 def create_mep(mep_json):
     mep = MEP()
@@ -338,7 +338,7 @@ if __name__ == "__main__":
     for mep_json in meps["meps"]:
         a += 1
         print a, "-", mep_json["Name"]["full"]
-        in_db_mep = MEP.objects.filter(ep_id=mep_json["UserID"])
+        in_db_mep = MEP.objects.filter(ep_id=int(mep_json["UserID"]))
         if in_db_mep:
             mep = in_db_mep[0]
             mep.active = True
