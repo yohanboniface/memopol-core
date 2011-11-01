@@ -126,7 +126,7 @@ class RecommendationData(models.Model):
     proposal_name = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     imported = models.BooleanField(default=False)
-    date = models.DateField()
+    date = models.DateTimeField()
     data = models.TextField()
     recommendation = models.OneToOneField(Recommendation, null=True)
 

@@ -1,16 +1,19 @@
 # encoding: utf-8
+from south.db import db
 from south.v2 import SchemaMigration
-
-from memopol2.utils import loaddata
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        loaddata(orm, "votes.json")
+
+        # Changing field 'RecommendationData.date'
+        db.alter_column('votes_recommendationdata', 'date', self.gf('django.db.models.fields.DateTimeField')())
 
 
     def backwards(self, orm):
-        pass
+
+        # Changing field 'RecommendationData.date'
+        db.alter_column('votes_recommendationdata', 'date', self.gf('django.db.models.fields.DateField')())
 
 
     models = {
@@ -18,7 +21,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Opinion'},
             'content': ('django.db.models.fields.TextField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '1023'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '1023'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         },
         'reps.opinionrep': {
@@ -74,9 +77,9 @@ class Migration(SchemaMigration):
             'weight': ('django.db.models.fields.IntegerField', [], {'null': 'True'})
         },
         'votes.recommendationdata': {
-            'Meta': {'object_name': 'RecommendationData'},
+            'Meta': {'ordering': "['date', 'proposal_name']", 'object_name': 'RecommendationData'},
             'data': ('django.db.models.fields.TextField', [], {}),
-            'date': ('django.db.models.fields.DateField', [], {}),
+            'date': ('django.db.models.fields.DateTimeField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'imported': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'proposal_name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),

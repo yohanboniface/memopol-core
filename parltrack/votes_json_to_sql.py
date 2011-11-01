@@ -3,7 +3,7 @@
 
 import os
 import sys
-from datetime import date
+from datetime import datetime
 from json import loads
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
@@ -22,9 +22,10 @@ if __name__ == "__main__":
         RecommendationData.objects.create(proposal_name=jayson.get("report", jayson["title"]),
                                          title=jayson["title"],
                                          data=vote,
-                                         date=date.fromtimestamp(int(str(jayson["ts"]["$date"])[:-3])))
+                                         date=datetime.fromtimestamp(int(str(jayson["ts"]["$date"])[:-3])))
         sys.stdout.write("%s/%s\r" % (a, len(lines)))
         sys.stdout.flush()
         a += 1
+    sys.stdout.write("\n")
 
 # vim:set shiftwidth=4 tabstop=4 expandtab:
