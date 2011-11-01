@@ -49,11 +49,11 @@ class Campaign(models.Model):
 
 class Debriefing(models.Model):
     CONTACT_TYPES = (
-        ('I', 'Personal'),
-        ('P', 'Phone'),
-        ('E', 'Email'),
-        ('F', 'FAX'),
-        ('L', 'Letter'),
+        ('Personal', 'Personal'),
+        ('Phone', 'Phone'),
+        ('Email', 'Email'),
+        ('FAX', 'FAX'),
+        ('Letter', 'Letter'),
     )
     RESPONSES = (
         ('-', 'Negative'),
