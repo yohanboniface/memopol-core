@@ -150,11 +150,11 @@ h2 {
 #mainheader {
     font-size: 120%;
     background: url("../img/logo.png") no-repeat ;
-    margin-top: 0px;
+    margin-top: -10px;
 }
 
 #mainheader a {
-    padding-top: 200px;
+    padding-top: 160px;
     display: block;
 }
 
