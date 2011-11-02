@@ -173,6 +173,14 @@ class MEP(Representative):
     position = models.IntegerField(default=None, null=True)
     total_score = models.FloatField(default=None, null=True)
 
+    def age(self):
+        if date.today().month > self.birth_date.month:
+            return date.today().year - self.birth_date.year
+        elif date.today().month == self.birth_date.month and date.today().day > self.birth_date.day:
+            return date.today().year - self.birth_date.year
+        else:
+            return date.today().year - self.birth_date.year + 1
+
     @reify
     def get_ep_webpage(self):
         if self.active and self.ep_webpage:
