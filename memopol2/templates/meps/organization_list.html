@@ -1,8 +1,10 @@
 {% extends "base.html" %}
+{% load flatblock_tags %}
 
 {% block content %}
 
 <h1>{% trans "MEP by instances" %}</h1>
+{% flatblock "by_instances.info" %}
 <ul class="organisations">
 {% for organization in object_list %}
     {% if organization.meps|length %}
