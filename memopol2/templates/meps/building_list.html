@@ -1,10 +1,12 @@
 {% extends "base.html" %}
+{% load flatblock_tags %}
 
 {% block content %}
 
 {% load floors_filter %}
 
 <h1>{% trans "MEPs by floor" %}</h1>
+{% flatblock "by_floor.info" %}
 {% regroup object_list by postcode as towns %}
 {% for town in towns %}
 <h2>{% if town.grouper == "1047" %}{% trans "Brussels" %}{% else %}{% trans "Strasbourg" %}{% endif %}</h2>
