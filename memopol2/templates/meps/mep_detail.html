@@ -75,7 +75,7 @@ $(document).ready(function() {
     <h2 class="collapsible collapsed">{% trans "Previous mandates" %}</h2>
     <ul class="body mandates">
     {% for role in mep.previous_mandates %}
-        <li><img src="{{ MEDIA_URL }}img/countries/small/{{ role.country.code }}.png"/><i> Was MEP of {{ role.country.name }} for {{ role.party }} from {{ role.begin|date:"d/m/y" }} to {{ role.end|date:"d/m/y" }}</i></li>
+        <li><img src="{{ MEDIA_URL }}img/countries/small/{{ role.country.code }}.png"/><i> Was MEP of {{ role.country.name }} for {{ role.party }} from {{ role.begin|date:"d F y" }} to {{ role.end|date:"d F y" }}</i></li>
     {% endfor %}
 </div>
 {% endif %}
@@ -100,7 +100,7 @@ $(document).ready(function() {
     {% if mep.old_committees %}
     <li class="noicon">-</li>
     {% for role in mep.old_committees %}
-        <li class="old"><i>Was {{ role.role|lower }} in {{ role.committee }} from {{ role.begin|date:"d/m/y" }} to {{ role.end|date:"d/m/y" }}</i></li>
+        <li class="old"><i>Was {{ role.role|lower }} in {{ role.committee }} from {{ role.begin|date:"d F y" }} to {{ role.end|date:"d F y" }}</i></li>
     {% endfor %}
     {% endif %}
     </ul>
@@ -117,7 +117,7 @@ $(document).ready(function() {
     {% if mep.old_delegations %}
     <li class="noicon">-</li>
     {% for role in mep.old_delegations %}
-        <li class="old"><i>Was {{ role.role|lower }} in {{ role.delegation }} from {{ role.begin|date:"d/m/y" }} to {{ role.end|date:"d/m/y" }}</i></li>
+        <li class="old"><i>Was {{ role.role|lower }} in {{ role.delegation }} from {{ role.begin|date:"d F y" }} to {{ role.end|date:"d F y" }}</i></li>
     {% endfor %}
     {% endif %}
     </ul>
