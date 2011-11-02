@@ -12,7 +12,11 @@
 {% if score_listing %}
     {% flatblock "by_total_score.info" %}
 {% else %}
-    {% flatblock "by_name.info" %}
+    {% if active %}
+        {% flatblock "by_name.info" %}
+    {% else %}
+        {% flatblock "by_former_eurodeputies.info" %}
+    {% endif %}
 {% endif %}
 
 <table class="mep-list tablesorter"> 
