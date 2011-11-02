@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load flatblock_tags %}
 
 {% block content %}
 
@@ -7,6 +8,8 @@
 {% else %}
 {% include header_template %}
 {% endif %}
+
+{% flatblock "by_name.info" %}
 
 <table class="mep-list tablesorter"> 
   {% include "meps/meps_table_thead.html" %}
