@@ -1,8 +1,10 @@
 {% extends "base.html" %}
+{% load flatblock_tags %}
 
 {% block content %}
 
 <h1>{% trans "MEPs by committee" %}</h1>
+{% flatblock "by_committee.info" %}
 <ul class="committees">
 {% for committee in object_list %}
     {% if committee.meps|length %}
