@@ -1,10 +1,13 @@
 {% extends "base.html" %}
+{% load flatblock_tags %}
 
 {% block content %}
 
 <h1>{% trans "MEPs by country" %}</h1>
 {% include "map-eu.html" %}
+
 <div class="prefix_2 grid_8 suffix_2 top_space_2">
+<div style="text-align: center;">{% flatblock "by_country.info" %}</div>
 <ul class="col">
 {% for country in object_list %}
     <li>
