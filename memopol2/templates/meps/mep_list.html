@@ -9,7 +9,11 @@
 {% include header_template %}
 {% endif %}
 
-{% flatblock "by_name.info" %}
+{% if score_listing %}
+    {% flatblock "by_total_score.info" %}
+{% else %}
+    {% flatblock "by_name.info" %}
+{% endif %}
 
 <table class="mep-list tablesorter"> 
   {% include "meps/meps_table_thead.html" %}
