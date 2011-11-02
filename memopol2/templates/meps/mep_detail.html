@@ -80,6 +80,16 @@ $(document).ready(function() {
 </div>
 {% endif %}
 
+{% if mep.old_groups %}
+<div id="mandates">
+    <h2 class="collapsible collapsed">{% trans "Previous groups" %}</h2>
+    <ul class="body mandates">
+    {% for group in mep.old_groups %}
+    <li><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" alt="{{ mep.group.abbreviation }}"/><i>Was MEP for <a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a> from {{ group.begin|date:"d F y" }} to {{ group.end|date:"d F y" }}</i></li>
+    {% endfor %}
+</div>
+{% endif %}
+
 {% if mep.committeerole_set.all %}
 <div id="committees">
     <h2 class="collapsible collapsed">{% trans "Committees" %}</h2>
