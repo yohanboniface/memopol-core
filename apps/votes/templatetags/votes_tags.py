@@ -9,6 +9,6 @@ def mep_votes_list_on_proposal(context, mep, proposal):
     return ''
 
 @register.simple_tag(takes_context=True)
-def mep_scrore_on_vote(context, mep, proposal):
+def mep_score_on_vote(context, mep, proposal):
     context['mep_score'] = Score.objects.get(representative=mep, proposal=proposal)
     return ''

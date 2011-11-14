@@ -40,7 +40,7 @@ Limitations
 
 - The database is hard to maintain: changes on official sources must
 be noticed by someone, otherwise the DB is not up to date; the
-modifications themselves are done a very few set of people which can
+modifications themselves are done by a very few set of people which can
 induce another lag
 - Some tools are missing or need polishing. For instance, we have a
 simple way to know which parliamentarian we should contact for an
@@ -61,4 +61,3 @@ propose some "around applications". Also, I want to state that another
 goal is clearly to switch from an internal tool to a bundled
 application, allowing it to be reusable, extensible and all the
 goodness of the community based efforts.
-
