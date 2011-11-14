@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load votes_tags %}
+
 {% block content %}
 
 {% if vote %}
@@ -34,6 +36,8 @@
                 <li><em>Part</em> : {{ v.part }}</li>
                 {% if v.recommendation %}<li><em>Recommendation</em> : {{ v.recommendation }}</li>{% endif %}
                 {% if v.weight %}<li><em>Weight</em> : {{ v.weight }}</li>{% endif %}
+                {% significant_votes v %}
+                <li>Votes ({{ significant_votes.count }} significant) (<a href="{% url votes:recommendation vote.id v.id %}">full list</a>)</li>
                 <ul>
                   {% regroup v.vote_set.all by choice as result %}
                   {% for re in result reversed %}
@@ -57,6 +61,7 @@
     {% endfor %}
 </ul>
 
+{% comment %}
 {% with proposal_votes_listing="True" %}
 <table class="mep-list tablesorter">
   {% include "meps/meps_table_thead.html" %}
@@ -67,5 +72,6 @@
   </tbody>
 </table>
 {% endwith %}
+{% endcomment %}
 
 {% endblock %}
