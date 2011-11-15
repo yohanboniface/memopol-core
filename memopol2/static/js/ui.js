@@ -51,7 +51,7 @@ function Filter(table, input) {
 
     this.index = this.input.parent().prevAll().length + 1;
     this.position = ':nth-child(' + this.index + ')';
-    this.name = this.table.find('thead th' + this.position).attr('class').match(/row-(\w+)/)[1];
+    this.name = this.table.find('thead th' + this.position).attr('data-column-name');
     this.cells = this.table.find('tbody td' + this.position);
     this.display(this.count());
 }
