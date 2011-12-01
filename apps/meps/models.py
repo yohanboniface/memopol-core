@@ -256,9 +256,7 @@ class MEP(Representative):
     def country_tag(self):
         return dict(country=self.countrymep_set.latest('end').country)
 
-    @snippet(template='meps/snippets/party.html')
-    def party_tag(self):
-        return dict(group=self.groupmep_set.latest('end').group)
+    party_tag = snippet(name='party', template='meps/snippets/party.html')
 
     @reify
     def important_posts(self):
