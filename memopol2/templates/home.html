@@ -7,14 +7,16 @@
     </div>
     <h1 class="document-title">{% trans "MEPs by country" %}</h1>
     {% include "map-eu.html" %}
+    <h1 class="document-title">{% trans "MEPs by committee" %}</h1>
+    {% include "committees-eu.html" %}
     <h1 class="document-title">{% trans "MEPs by political group" %}</h1>
     {% include "hemicycle-eu.html" %}
 
     <div>
-    {% if object_list %}
+    {% if proposals %}
         <h1 class="document-title">{% trans "Last tracked votes" %}</h1>
         <ul class="votes">
-            {% for proposal in object_list|dictsortreversed:"date" %}
+            {% for proposal in proposals|dictsortreversed:"date" %}
                 <li style="list-style: none; margin-left: 15px;">
                 <img src="{{ MEDIA_URL }}img/countries/small/{{ proposal.institution }}.png" /> <a href="{% url votes:detail proposal.id %}">{{ proposal.title }}</a>
                 </li>

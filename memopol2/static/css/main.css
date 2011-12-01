@@ -727,3 +727,21 @@ ul.recommendation ul li {
 #europe-map a:hover {  text-decoration: none;}
 #europe-map a.eu:hover path { fill:#DDDDFF; stroke-width: 24px;}
 #europe-map a.eu:hover text { font-weight: bolder; }
+
+/* Home committees list */
+
+#committees-list ul {
+    list-style: none;
+}
+
+.committee-abbreviation {
+    color: white;
+    padding-top: 3px;
+    padding-bottom: 2px;
+    margin-right: 5px;
+    display: inline-block;
+    width: 60px;    
+    text-align: center;
+    font-weight: bold;
+    background-color: #E65B23;
+}

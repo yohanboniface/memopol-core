@@ -8,6 +8,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.views.static import serve
 from mps.models import MP
+from meps.models import Committee
 
 from votes.models import Proposal
 
@@ -28,9 +29,13 @@ sitemaps = {
     'mps': GenericSitemap(sitemps_dict, priority=0.6),
 }
 
+home = {
+    'committees': Committee.objects.order_by('abbreviation').all(),
+    'proposals': Proposal.objects.all()
+}
 
 urlpatterns = patterns('', # pylint: disable=C0103
-    url(r'^$', ListView.as_view(model=Proposal, template_name="home.html"), name='index'),
+    url(r'^$', direct_to_template, {'template': 'home.html', 'extra_context': home}, name='index'),
     url(r'^europe/parliament/', include('meps.urls', namespace='meps', app_name='meps')),
     url(r'^france/assemblee/', include('mps.urls', namespace='mps', app_name='mps')),
     url(r'^votes/', include('votes.urls', namespace='votes', app_name='votes')),
