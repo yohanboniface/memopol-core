@@ -3,6 +3,8 @@
 
 import urllib
 from os.path import join
+from time import time
+import logging
 
 from django.conf import settings
 from django.views.generic import DetailView, ListView
@@ -12,10 +14,12 @@ from django.http import HttpResponseRedirect
 
 from memopol2.utils import check_dir, send_file, get_content_cache
 
-from models import Building, MEP
-from reps.models import Party
+from models import Building, MEP, CountryMEP, GroupMEP
+from reps.models import Party, Email, PartyRepresentative
 
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
+
+logger = logging.getLogger(__name__)
 
 def get_mep_picture(request, ep_id):
     filename = join(settings.MEDIA_DIRECTORY, 'img', 'meps', u"%s.jpg" % ep_id)
@@ -89,6 +93,37 @@ class MEPList(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(MEPList, self).get_context_data(**kwargs)
+        
+        """
+        The following piece of code could be remove once the prefetch_related()
+        feature becomes available in Django ORM [1].
+        Since Django cannot yet follow oneToMany and ManyToMany relations,
+        we populate MEP objects manually in python. It does not hurt kittens
+        and boosts performance, greatly.
+        
+        [1] https://docs.djangoproject.com/en/dev/topics/db/optimization/#use-queryset-select-related-and-prefetch-related
+        """
+        start = time()
+        country_mep = {}
+        for country in CountryMEP.objects.select_related('mep', 'country').order_by('mep', 'end').all():
+            country_mep[country.mep.id] = country.country
+        group_mep = {}
+        for group in GroupMEP.objects.select_related('mep', 'group').order_by('mep', 'end').all():
+            group_mep[group.mep.id] = group.group
+        party_mep = {}
+        for party in PartyRepresentative.objects.select_related('representative', 'party').order_by('representative').all():
+            party_mep[party.representative.id] = party.party        
+        emails_mep = {}
+        for email in Email.objects.select_related('representative').all():
+            emails_mep.setdefault(email.representative.id, []).append(email.email)
+        # Overwrite MEP attributes
+        for mep in context['object_list']:
+            mep.country = country_mep.get(mep.id)
+            mep.group = group_mep.get(mep.id)
+            mep.emails = emails_mep.get(mep.id)
+            mep.party = party_mep.get(mep.id)
+        logger.debug("MEPList relationships took %.2fsec to build." % (time() - start))
+        
         context['score_listing'] = self.score_listing
         return context
 
