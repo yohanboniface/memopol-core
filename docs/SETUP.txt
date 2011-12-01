@@ -31,7 +31,7 @@ Install the following to have the tools on Fedora (please note that you may have
 Setup your virtual environment
 ===============================
 
-If you don't alreasy use virtualenv/virtualenvwrapper
+If you don't already use virtualenv/virtualenvwrapper
 -----------------------------------------------------
 
 Create a directory to hold the virtual environments:
@@ -80,7 +80,7 @@ On Debian systems running Python 2.7 (like Ubuntu Natty), you must run this firs
 Run:
     workon memopol2
 
-Install memopol2's depdendencies:
+Install memopol2's dependencies:
 
     pip install numpy==1.5.1
 
