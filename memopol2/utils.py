@@ -53,10 +53,14 @@ def cached(expire):
         def wrapped(request, **kwargs):
             user = 'anon' if request.user.is_anonymous() else 'auth'
             path = '%s:%s' % (user, request.path)
-            resp = cache.get(path)
-            if resp is None:
+            content = cache.get(path)
+            if content is None:
                 resp = func(request, **kwargs)
-                cache.set(path, resp, expire)
+                if not resp.is_rendered:
+                    resp.render()
+                cache.set(path, resp.content, expire)
+            else:
+                resp = HttpResponse(content)
             return resp
         return wrapped
     return wrapper
