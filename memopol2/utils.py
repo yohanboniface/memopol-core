@@ -61,6 +61,7 @@ def cached(expire):
                 cache.set(path, resp.content, expire)
             else:
                 resp = HttpResponse(content)
+                resp['X-Cached'] = '1'
             return resp
         return wrapped
     return wrapper
