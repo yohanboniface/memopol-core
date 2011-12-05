@@ -54,11 +54,16 @@ def cached(expire):
             user = 'anon' if request.user.is_anonymous() else 'auth'
             path = '%s:%s' % (user, request.path)
             content = cache.get(path)
+            print 'Fetched', content and len(content)
             if content is None:
                 resp = func(request, **kwargs)
                 if not resp.is_rendered:
                     resp.render()
-                cache.set(path, resp.content, expire)
+                content = resp.content.replace('   ', '')
+                print 'Caching', len(content)
+                cache.set(path, content, timeout=expire)
+                resp = HttpResponse(content)
+                resp['X-Cached'] = '0'
             else:
                 resp = HttpResponse(content)
                 resp['X-Cached'] = '1'
