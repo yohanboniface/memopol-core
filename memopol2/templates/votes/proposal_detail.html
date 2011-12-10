@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load votes_tags %}
+{% load cache %}
 
 {% block content %}
 
@@ -21,6 +22,7 @@
 
 <br/>
 
+{% cache 6000000 proposal.votes.recommendation request.META.PATH_INFO %}
 {% regroup vote.recommendation_set.all by subject as subvotes %}
 
 {% include "votes/legend.html" %}
@@ -60,7 +62,9 @@
     </li>
     {% endfor %}
 </ul>
+{% endcache %}
 
+{% cache 6000000 proposal.votes.meps request.META.PATH_INFO %}
 {% with proposal_votes_listing="True" %}
 <table class="mep-list tablesorter">
   {% include "meps/meps_table_thead.html" %}
@@ -71,5 +75,6 @@
   </tbody>
 </table>
 {% endwith %}
+{% endcache %}
 
 {% endblock %}
