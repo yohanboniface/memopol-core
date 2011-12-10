@@ -97,6 +97,9 @@ CACHES = {
     'default' : dict(
         BACKEND = 'django.core.cache.backends.%s' % ('locmem.LocMemCache' if ENABLE_CACHING else 'dummy.DummyCache'),
         JOHNNY_CACHE = True,
+        OPTIONS = {
+            'MAX_ENTRIES': 1000000000,
+        }
     )
 }
 
