@@ -93,14 +93,14 @@ class MEPList(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(MEPList, self).get_context_data(**kwargs)
-        
+
         """
         The following piece of code could be remove once the prefetch_related()
         feature becomes available in Django ORM [1].
         Since Django cannot yet follow oneToMany and ManyToMany relations,
         we populate MEP objects manually in python. It does not hurt kittens
         and boosts performance, greatly.
-        
+
         [1] https://docs.djangoproject.com/en/dev/topics/db/optimization/#use-queryset-select-related-and-prefetch-related
         """
         start = time()
@@ -112,7 +112,7 @@ class MEPList(ListView):
             group_mep[group.mep.id] = group.group
         party_mep = {}
         for party in PartyRepresentative.objects.select_related('representative', 'party').order_by('representative').all():
-            party_mep[party.representative.id] = party.party        
+            party_mep[party.representative.id] = party.party
         emails_mep = {}
         for email in Email.objects.select_related('representative').all():
             emails_mep.setdefault(email.representative.id, []).append(email.email)
@@ -123,7 +123,7 @@ class MEPList(ListView):
             mep.emails = emails_mep.get(mep.id)
             mep.party = party_mep.get(mep.id)
         logger.debug("MEPList relationships took %.2fsec to build." % (time() - start))
-        
+
         context['score_listing'] = self.score_listing
         return context
 
