@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load flatblock_tags %}
+{% load cache %}
 
 {% block content %}
 
@@ -19,7 +20,8 @@
     {% endif %}
 {% endif %}
 
-<table class="mep-list tablesorter"> 
+{% cache 6000000 meps_listing request.META.PATH_INFO %}
+<table class="mep-list tablesorter">
   {% include "meps/meps_table_thead.html" %}
   <tbody>
     {% for mep in object_list %}
@@ -37,4 +39,6 @@
     {% endif %}
   </tbody>
 </table>
+{% endcache %}
+
 {% endblock %}

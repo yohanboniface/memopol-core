@@ -1,10 +1,12 @@
 {% extends "base.html" %}
+{% load cache %}
 
 {% block content %}
 
 {% include header_template %}
 
-<table class="mep-list tablesorter"> 
+{% cache 6000000 meps.listing_from_container request.META.PATH_INFO %}
+<table class="mep-list tablesorter">
   {% include "meps/meps_table_thead.html" %}
   <tbody>
     {% for mep in object.meps %}
@@ -12,5 +14,6 @@
     {% endfor %}
   </tbody>
 </table>
+{% endcache %}
 
 {% endblock %}
