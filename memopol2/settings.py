@@ -90,6 +90,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
+# WARNING just setting up DEBUG = False in settings_local won't change the cache settings!
 ENABLE_CACHING = not DEBUG
 
 CACHES = {
