@@ -40,7 +40,7 @@ class Migration(SchemaMigration):
             'role': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         'meps.country': {
-            'Meta': {'object_name': 'Country'},
+            'Meta': {'ordering': "['code']", 'object_name': 'Country'},
             'code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '2'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
@@ -52,7 +52,7 @@ class Migration(SchemaMigration):
             'end': ('django.db.models.fields.DateField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'mep': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['meps.MEP']"}),
-            'party': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['reps.Party']"})
+            'party': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['meps.LocalParty']"})
         },
         'meps.delegation': {
             'Meta': {'object_name': 'Delegation'},
@@ -82,6 +82,11 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'mep': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['meps.MEP']"}),
             'role': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+        },
+        'meps.localparty': {
+            'Meta': {'object_name': 'LocalParty', '_ormbases': ['reps.Party']},
+            'country': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['meps.Country']", 'null': 'True'}),
+            'party_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['reps.Party']", 'unique': 'True', 'primary_key': 'True'})
         },
         'meps.mep': {
             'Meta': {'ordering': "['last_name']", 'object_name': 'MEP', '_ormbases': ['reps.Representative']},
@@ -139,7 +144,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Opinion'},
             'content': ('django.db.models.fields.TextField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '1023'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '1023'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         },
         'reps.opinionrep': {
@@ -152,7 +157,7 @@ class Migration(SchemaMigration):
         'reps.party': {
             'Meta': {'object_name': 'Party'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         'reps.partyrepresentative': {
             'Meta': {'object_name': 'PartyRepresentative'},
@@ -174,64 +179,6 @@ class Migration(SchemaMigration):
             'local_party': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['reps.Party']", 'through': "orm['reps.PartyRepresentative']", 'symmetrical': 'False'}),
             'opinions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['reps.Opinion']", 'through': "orm['reps.OpinionREP']", 'symmetrical': 'False'}),
             'picture': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
-        },
-        'reps.opinion': {
-            'Meta': {'object_name': 'Opinion'},
-            'content': ('django.db.models.fields.TextField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '1023'}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
-        },
-        'reps.opinionrep': {
-            'Meta': {'object_name': 'OpinionREP'},
-            'date': ('django.db.models.fields.DateField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'opinion': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['reps.Opinion']"}),
-            'representative': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['reps.Representative']"})
-        },
-        'reps.party': {
-            'Meta': {'object_name': 'Party'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
-        },
-        'reps.partyrepresentative': {
-            'Meta': {'object_name': 'PartyRepresentative'},
-            'current': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'party': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['reps.Party']"}),
-            'representative': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['reps.Representative']"}),
-            'role': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'})
-        },
-        'reps.representative': {
-            'Meta': {'ordering': "['last_name']", 'object_name': 'Representative'},
-            'birth_date': ('django.db.models.fields.DateField', [], {}),
-            'birth_place': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'full_name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
-            'gender': ('django.db.models.fields.CharField', [], {'max_length': '2'}),
-            'id': ('django.db.models.fields.CharField', [], {'max_length': '255', 'primary_key': 'True'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'local_party': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['reps.Party']", 'through': "orm['reps.PartyRepresentative']", 'symmetrical': 'False'}),
-            'opinions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['reps.Opinion']", 'through': "orm['reps.OpinionREP']", 'symmetrical': 'False'}),
-            'picture': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
-        },
-        'reps.cv': {
-            'Meta': {'object_name': 'CV'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'representative': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['reps.Representative']"}),
-            'title': ('django.db.models.fields.TextField', [], {})
-        },
-        'reps.email': {
-            'Meta': {'object_name': 'Email'},
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'representative': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['reps.Representative']"})
-        },
-        'reps.website': {
-            'Meta': {'object_name': 'WebSite'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'representative': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['reps.Representative']"}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         }
     }
 
