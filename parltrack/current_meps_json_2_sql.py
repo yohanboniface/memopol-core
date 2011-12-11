@@ -239,6 +239,8 @@ def change_mep_details(mep, mep_json):
     mep.last_name = mep_json["Name"]["family"]
     print "     update mep full name"
     mep.full_name = "%s %s" %(mep_json["Name"]["sur"], mep_json["Name"]["family"])
+    print "     update mep gender"
+    mep.gender = mep_json["Gender"]
 
 def add_mep_email(mep, emails):
     for email in emails:
