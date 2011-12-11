@@ -11,11 +11,11 @@ from django.db.models import Count
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
 
-from meps.utils import update_total_score_of_all_meps, update_meps_positions
+from meps.utils import update_meps_positions
 from memopol2.utils import update_search_index
 
-from reps.models import Party, PartyRepresentative, Email, WebSite, CV
-from meps.models import MEP, Delegation, DelegationRole, PostalAddress, Country, CountryMEP, Organization, OrganizationMEP, Committee, CommitteeRole, Group, GroupMEP, Building
+from reps.models import PartyRepresentative, Email, WebSite, CV
+from meps.models import LocalParty, MEP, Delegation, DelegationRole, PostalAddress, Country, CountryMEP, Organization, OrganizationMEP, Committee, CommitteeRole, Group, GroupMEP, Building
 
 current_meps = "meps.json"
 
@@ -204,14 +204,14 @@ def add_countries(mep, countries):
     CountryMEP.objects.filter(mep=mep).delete()
     print "     add countries"
     for country in countries:
-        party = get_or_create(Party, name=country["party"])
+        _country = Country.objects.get(name=country["country"])
+        print "     link mep to country", '"%s"' % country["country"], "for a madate"
+        party = get_or_create(LocalParty, name=country["party"], country=_country)
         print "     link representative to party"
         if not PartyRepresentative.objects.filter(representative=mep.representative_ptr, party=party):
             current = True if _parse_date(country["end"]).year > date.today().year else False
             PartyRepresentative.objects.create(representative=mep.representative_ptr,
                                                party=party, current=current)
-        _country = Country.objects.get(name=country["country"])
-        print "     link mep to country", '"%s"' % country["country"], "for a madate"
         CountryMEP.objects.create(mep=mep, country=_country, party=party,
                                   begin=_parse_date(country["start"]),
                                   end=_parse_date(country["end"]))

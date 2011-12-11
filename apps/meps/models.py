@@ -37,6 +37,10 @@ class Country(models.Model):
         ordering = ["code"]
 
 
+class LocalParty(Party):
+    country = models.ForeignKey(Country, null=True)
+
+
 @search.searchable
 class Group(models.Model):
     abbreviation = models.CharField(max_length=10, unique=True)
@@ -321,7 +325,7 @@ class PostalAddress(models.Model):
 class CountryMEP(models.Model):
     mep = models.ForeignKey(MEP)
     country = models.ForeignKey(Country)
-    party = models.ForeignKey(Party)
+    party = models.ForeignKey(LocalParty)
     begin = models.DateField()
     end = models.DateField()
 

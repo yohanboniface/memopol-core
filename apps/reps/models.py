@@ -17,7 +17,7 @@ class RepsContainerManager(models.Manager):
 
 @search.searchable
 class Party(models.Model):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
     objects = RepsContainerManager()
 
     def __unicode__(self):

@@ -14,8 +14,8 @@ from django.http import HttpResponseRedirect
 
 from memopol2.utils import check_dir, send_file, get_content_cache
 
-from models import Building, MEP, CountryMEP, GroupMEP
-from reps.models import Party, Email, PartyRepresentative
+from models import LocalParty, Building, MEP, CountryMEP, GroupMEP
+from reps.models import Email, PartyRepresentative
 
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
 
@@ -153,7 +153,7 @@ class MEPsFromView(DetailView):
         return context
 
 class PartyView(MEPsFromView):
-    model=Party
+    model=LocalParty
     hidden_fields=['party']
 
     def render_to_response(self, context):
