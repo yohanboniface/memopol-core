@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block htmlattrs %}xmlns="http://www.w3.org/1999/xhtml"{% endblock %}
+{% block htmlattrs %}xmlns="http://www.w3.org/1999/xhtml" {{ block.super }}{% endblock %}
 {% load flatblock_tags %}
 {% block bodyattrs %}id="home"{% endblock %}
 {% block content %}
