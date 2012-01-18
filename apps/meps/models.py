@@ -161,12 +161,12 @@ class MEP(Representative):
     ep_reports = models.URLField()
     ep_motions = models.URLField()
     ep_webpage = models.URLField()
-    bxl_building = models.ForeignKey(Building, related_name="bxl_building")
-    bxl_floor = models.CharField(max_length=255)
-    bxl_office_number = models.CharField(max_length=255)
-    bxl_fax = models.CharField(max_length=255)
-    bxl_phone1 = models.CharField(max_length=255)
-    bxl_phone2 = models.CharField(max_length=255)
+    bxl_building = models.ForeignKey(Building, related_name="bxl_building", null=True)
+    bxl_floor = models.CharField(max_length=255, null=True)
+    bxl_office_number = models.CharField(max_length=255, null=True)
+    bxl_fax = models.CharField(max_length=255, null=True)
+    bxl_phone1 = models.CharField(max_length=255, null=True)
+    bxl_phone2 = models.CharField(max_length=255, null=True)
     stg_building = models.ForeignKey(Building, related_name="stg_building")
     stg_floor = models.CharField(max_length=255)
     stg_office_number = models.CharField(max_length=255)
@@ -330,16 +330,16 @@ class CountryMEP(models.Model):
     mep = models.ForeignKey(MEP)
     country = models.ForeignKey(Country)
     party = models.ForeignKey(LocalParty)
-    begin = models.DateField()
-    end = models.DateField()
+    begin = models.DateField(null=True)
+    end = models.DateField(null=True)
 
 
 class OrganizationMEP(models.Model):
     mep = models.ForeignKey(MEP)
     organization = models.ForeignKey(Organization)
     role = models.CharField(max_length=255)
-    begin = models.DateField()
-    end = models.DateField()
+    begin = models.DateField(null=True)
+    end = models.DateField(null=True)
 
     @reify
     def instance(self):
