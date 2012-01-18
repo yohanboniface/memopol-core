@@ -164,6 +164,7 @@ INSTALLED_APPS = (
     'trophies',
     'campaign',
     'search',
+    'gunicorn',
 )
 
 if APPS_DEBUG:
