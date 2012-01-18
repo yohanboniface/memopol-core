@@ -327,7 +327,8 @@ if __name__ == "__main__":
     print "load json"
     meps = json.load(open(current_meps, "r"))
     a = 0
-    count = meps["count"]
+    #count = meps["count"]
+    count = len(meps)
     print "Set all current active mep to unactive before importing"
     for mep in MEP.objects.filter(active=True):
         a += 1
@@ -337,7 +338,8 @@ if __name__ == "__main__":
     sys.stdout.write("%i/%i" % (a, count))
     sys.stdout.write("\n")
     a = 0
-    for mep_json in meps["meps"]:
+    #for mep_json in meps["meps"]:
+    for mep_json in meps:
         a += 1
         print a, "-", mep_json["Name"]["full"]
         in_db_mep = MEP.objects.filter(ep_id=int(mep_json["UserID"]))
