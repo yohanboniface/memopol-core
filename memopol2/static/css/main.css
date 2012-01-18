@@ -596,6 +596,10 @@ div#livesearch li.odd a {
     color: #497ED5;
 }
 
+.parties {
+    margin-bottom: 30px;
+}
+
 ul.votes a, ul.committees a, ul.delegations a, ul.organisations a, ul.parties a, ul.mp-groups a,
 a.search-item {
     text-decoration: none;
