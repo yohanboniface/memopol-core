@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding:Utf-8 -*-
 
+from os import path
 import json
 
 from urllib import urlopen
@@ -15,7 +16,9 @@ from current_meps_json_2_sql import manage_mep, clean
 if __name__ == "__main__":
     print "load json"
     print "fetch json from %s" % settings.PARLTRACK_URL +  "/search?s_meps=on&q=+&format=json"
-    meps = json.load(urlopen(settings.PARLTRACK_URL + "/search?s_meps=on&q=+&format=json"))
+    if not path.exists("all_meps.json"):
+        open("all_meps.json", "w").write(urlopen(settings.PARLTRACK_URL + "/search?s_meps=on&q=+&format=json").read())
+    meps = json.load(open("all_meps.json"))
     a = 0
     for mep_json in meps["items"]:
         a += 1
