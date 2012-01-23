@@ -166,19 +166,20 @@ def add_delegations(mep, delegations):
                                       end=_parse_date(delegation["end"]))
 
 def add_addrs(mep, addrs):
-    print "     add Brussels infos"
-    bxl = addrs["Brussels"]
-    if bxl["Address"].get("building_code"):
-        mep.bxl_building = get_or_create(Building, _id="id",
-                                     id=bxl["Address"]["building_code"],
-                                     name=bxl["Address"]["Building"],
-                                     street=bxl["Address"]["Street"],
-                                     postcode=bxl["Address"]["Zip"])
-    mep.bxl_floor = bxl["Address"]["Office"][:2]
-    mep.bxl_office_number = bxl["Address"]["Office"][2:]
-    mep.bxl_fax = bxl["Fax"]
-    mep.bxl_phone1 = bxl["Phone"]
-    mep.bxl_phone2 = bxl["Phone"][:-4] + "7" + bxl["Phone"][-3:]
+    if addrs.get("Brussels"):
+        print "     add Brussels infos"
+        bxl = addrs["Brussels"]
+        if bxl["Address"].get("building_code"):
+            mep.bxl_building = get_or_create(Building, _id="id",
+                                         id=bxl["Address"]["building_code"],
+                                         name=bxl["Address"]["Building"],
+                                         street=bxl["Address"]["Street"],
+                                         postcode=bxl["Address"]["Zip"])
+        mep.bxl_floor = bxl["Address"]["Office"][:2]
+        mep.bxl_office_number = bxl["Address"]["Office"][2:]
+        mep.bxl_fax = bxl["Fax"]
+        mep.bxl_phone1 = bxl["Phone"]
+        mep.bxl_phone2 = bxl["Phone"][:-4] + "7" + bxl["Phone"][-3:]
     print "     add Strasbourg infos"
     stg = addrs["Strasbourg"]
     if stg["Address"].get("building_code"):
