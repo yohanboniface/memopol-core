@@ -19,7 +19,7 @@ from meps.models import LocalParty, MEP, Delegation, DelegationRole, PostalAddre
 
 current_meps = "meps.json"
 
-_parse_date = lambda date: datetime.strptime(date, "%Y-%m-%dT00:00:00")
+_parse_date = lambda date: datetime.strptime(date, "%Y-%m-%dT00:%H:00")
 
 def get_or_create(klass, _id=None, **kwargs):
     if _id is None:
