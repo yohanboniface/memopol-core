@@ -306,7 +306,8 @@ def create_mep(mep_json):
     mep.active = True
     change_mep_details(mep, mep_json)
     add_missing_details(mep, mep_json)
-    add_addrs(mep, mep_json["Addresses"])
+    if mep_json.get("Addresses"):
+        add_addrs(mep, mep_json["Addresses"])
     mep.save()
     add_committees(mep, mep_json.get("Committees", []))
     add_delegations(mep, mep_json.get("Delegations", []))
