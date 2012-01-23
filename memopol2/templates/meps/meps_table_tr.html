@@ -57,12 +57,16 @@
   <td>
     <div class="body">
       <ul class="body">
+          {% if mep.bxl_phone1 %}
         <li><b>{% trans "Brussels" %}</b>
          {% trans "Tel." %}: <a href="callto://{{ mep.bxl_phone1|phone }}">{{ mep.bxl_phone1 }}</a>&nbsp;-&nbsp;<a href="callto://{{ mep.bxl_phone2|phone }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
         </li>
+        {% endif %}
+        {% if mep.stg_phone1 %}
         <li><b>{% trans "Strasbourg" %}</b>
         {% trans "Tel." %}: <a href="callto://{{ mep.stg_phone1|cut:" " }}">{{ mep.stg_phone1 }}</a>&nbsp;-&nbsp;<a href="callto://{{ mep.stg_phone2|cut:" " }}">{{ mep.stg_phone2 }}</a>&nbsp;<br/>
         </li>
+        {% endif %}
         {% if mep.emails %}
           <li>
             <b>{% trans "E-mail" %}:</b>
