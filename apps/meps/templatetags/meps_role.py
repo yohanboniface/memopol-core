@@ -1,4 +1,3 @@
-from datetime import date
 from meps.models import OrganizationMEP, CommitteeRole, DelegationRole
 from django import template
 
