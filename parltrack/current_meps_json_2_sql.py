@@ -196,7 +196,7 @@ def add_addrs(mep, addrs):
     print "     adding mep's postal addresses:"
     mep.save()
     PostalAddress.objects.filter(mep=mep).delete()
-    for addr in addrs["Postal"]:
+    for addr in addrs.get("Postal", []):
         print "       *", addr
         PostalAddress.objects.create(addr=addr, mep=mep)
 
