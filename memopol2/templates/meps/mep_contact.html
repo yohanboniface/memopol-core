@@ -9,9 +9,12 @@
       {% if not forloop.last %}-{% endif %}
     {% endfor %}
   </li>
+{% else %}
+<li>We don't have any email address for this european deputy</li>
 {% endif %}
 <li class="sep">&nbsp;</li>
 
+{% if mep.bxl_building %}
 <li><b>{% trans "Brussels" %}</b><br/>
     Building {{ mep.bxl_building.name }} <a class="highlight" href="{% url meps:bxl_floor mep.bxl_building.id mep.bxl_floor %}">{{ mep.bxl_office }}</a><br/>
     {{ mep.bxl_building.street }}, {{ mep.bxl_building.postcode }} Bruxelles<br/>
@@ -19,7 +22,9 @@
     Fax: {{ mep.bxl_fax }}
 </li>
 <li class="sep">&nbsp;</li>
+{% endif %}
 
+{% if mep.stg_building %}
 <li><b>{% trans "Strasbourg" %}</b><br/>
     Building {{ mep.stg_building.name }} <a class="highlight" href="{% url meps:stg_floor mep.stg_building.id mep.stg_floor %}">{{ mep.stg_office }}</a><br/>
     {{ mep.stg_building.street }}, {{ mep.stg_building.postcode }} Strasbourg Cedex<br/>
@@ -27,7 +32,12 @@
     Fax: {{ mep.stg_fax }}
 </li>
 <li class="sep">&nbsp;</li>
+{% endif %}
 
+{% if not mep.stg_building and not mep.bxl_building %}
+<li>We don't have any contact information on this european deputy</li>
+<li class="sep">&nbsp;</li>
+{% endif %}
 
 <li><i>{% trans "Website&nbsp;: " %}</i><a class="highlight" target="_" href="http://www.europarl.europa.eu/members/expert/inOut/viewOutgoing.do?language=FR&id={{ mep.ep_id }}">{% trans "Page on the website of the European Parliament" %}</a></li>
 {% if mep.get_ep_webpage %}<li><i>{% trans "Website&nbsp;: " %}</i><a class="highlight" target="_" href="{{ mep.get_ep_webpage }}">{% trans "Current mandate page on the website of the European Parliament" %}</a></li>{% endif %}
