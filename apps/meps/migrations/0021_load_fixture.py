@@ -159,6 +159,24 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
+        'reps.website': {
+            'Meta': {'object_name': 'WebSite'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'representative': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['reps.Representative']"}),
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
+        },
+        'reps.cv': {
+            'Meta': {'object_name': 'CV'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'representative': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['reps.Representative']"}),
+            'title': ('django.db.models.fields.TextField', [], {})
+        },
+        'reps.email': {
+            'Meta': {'object_name': 'Email'},
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'representative': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['reps.Representative']"})
+        },
         'reps.partyrepresentative': {
             'Meta': {'object_name': 'PartyRepresentative'},
             'current': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
