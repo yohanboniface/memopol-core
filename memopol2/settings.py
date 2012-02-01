@@ -165,6 +165,7 @@ INSTALLED_APPS = (
     'campaign',
     'search',
     'gunicorn',
+    'positions',
 )
 
 if APPS_DEBUG:
@@ -232,6 +233,8 @@ CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
+COMMENTS_APP = 'positions'
 
 try:
     from settings_local import *

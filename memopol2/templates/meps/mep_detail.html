@@ -180,7 +180,7 @@ $(document).ready(function() {
 
 {% get_comment_list for mep as comment_list %}
 {% if comment_list %}
-<h2 class="collapsible collapsed">Notes</h2>
+<h2>Public Positions</h2>
    <div class="body">
       {% for comment in comment_list %}
          <div>
@@ -191,7 +191,8 @@ $(document).ready(function() {
       {% endfor %}
    </div>
 {% endif %}
-<h2 class="collapsible collapsed">Add note</h2>
+<h2>Add a public position</h2>
+<p>Help us keep track of the public positions taken by this MEP</p>
 <div class="body">
   {% render_comment_form for mep %}
 </div>
