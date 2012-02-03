@@ -105,7 +105,7 @@ class Committee(models.Model):
 
     @classmethod
     def ordered_by_meps_count(cls):
-        return cls.objects.distinct().filter(committeerole__mep__active=True, committeerole__end=date(9999, 12, 31)).annotate(meps_count=Count('committeerole__mep', distinct=True)).order_by('-meps_count')
+        return cls.objects.distinct().filter(committeerole__mep__active=True).annotate(meps_count=Count('committeerole__mep', distinct=True)).order_by('-meps_count')
 
 
 class Building(models.Model):

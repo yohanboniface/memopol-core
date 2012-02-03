@@ -198,7 +198,7 @@ def add_addrs(mep, addrs):
     mep.save()
     PostalAddress.objects.filter(mep=mep).delete()
     for addr in addrs.get("Postal", []):
-        print "       *", addr
+        print "       *", addr.encode("Utf-8")
         PostalAddress.objects.create(addr=addr, mep=mep)
 
 def add_countries(mep, countries):
@@ -206,10 +206,11 @@ def add_countries(mep, countries):
     CountryMEP.objects.filter(mep=mep).delete()
     print "     add countries"
     for country in countries:
-        _country = Country.objects.get(name=country["country"])
+        print country
         print "     link mep to country", '"%s"' % country["country"], "for a madate"
-        party = get_or_create(LocalParty, name=country["party"], country=_country)
+        _country = Country.objects.get(name=country["country"])
         print "     link representative to party"
+        party = get_or_create(LocalParty, name=country["party"], country=_country)
         if not PartyRepresentative.objects.filter(representative=mep.representative_ptr, party=party):
             current = True if _parse_date(country["end"]).year > date.today().year else False
             PartyRepresentative.objects.create(representative=mep.representative_ptr,
