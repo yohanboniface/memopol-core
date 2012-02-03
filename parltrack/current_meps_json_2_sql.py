@@ -181,23 +181,24 @@ def add_addrs(mep, addrs):
         mep.bxl_phone1 = bxl["Phone"]
         mep.bxl_phone2 = bxl["Phone"][:-4] + "7" + bxl["Phone"][-3:]
     print "     add Strasbourg infos"
-    stg = addrs["Strasbourg"]
-    if stg["Address"].get("building_code"):
-        mep.stg_building = get_or_create(Building, _id="id",
-                                     id=stg["Address"]["building_code"],
-                                     name=stg["Address"]["Building"],
-                                     street=stg["Address"]["Street"],
-                                     postcode=stg["Address"].get("Zip", stg["Address"]["Zip1"]))
-    mep.stg_floor = stg["Address"]["Office"][:3]
-    mep.stg_office_number = stg["Address"]["Office"][3:]
-    mep.stg_fax = stg["Fax"]
-    mep.stg_phone1 = stg["Phone"]
-    mep.stg_phone2 = stg["Phone"][:-4] + "7" + stg["Phone"][-3:]
-    print "     adding mep's postal addresses:"
+    if addrs.get("Strasbourg"):
+        stg = addrs["Strasbourg"]
+        if stg["Address"].get("building_code"):
+            mep.stg_building = get_or_create(Building, _id="id",
+                                         id=stg["Address"]["building_code"],
+                                         name=stg["Address"]["Building"],
+                                         street=stg["Address"]["Street"],
+                                         postcode=stg["Address"].get("Zip", stg["Address"]["Zip1"]))
+        mep.stg_floor = stg["Address"]["Office"][:3]
+        mep.stg_office_number = stg["Address"]["Office"][3:]
+        mep.stg_fax = stg["Fax"]
+        mep.stg_phone1 = stg["Phone"]
+        mep.stg_phone2 = stg["Phone"][:-4] + "7" + stg["Phone"][-3:]
+        print "     adding mep's postal addresses:"
     mep.save()
     PostalAddress.objects.filter(mep=mep).delete()
     for addr in addrs.get("Postal", []):
-        print "       *", addr
+        print "       *", addr.encode("Utf-8")
         PostalAddress.objects.create(addr=addr, mep=mep)
 
 def add_countries(mep, countries):
@@ -205,10 +206,11 @@ def add_countries(mep, countries):
     CountryMEP.objects.filter(mep=mep).delete()
     print "     add countries"
     for country in countries:
-        _country = Country.objects.get(name=country["country"])
+        print country
         print "     link mep to country", '"%s"' % country["country"], "for a madate"
-        party = get_or_create(LocalParty, name=country["party"], country=_country)
+        _country = Country.objects.get(name=country["country"])
         print "     link representative to party"
+        party = get_or_create(LocalParty, name=country["party"], country=_country)
         if not PartyRepresentative.objects.filter(representative=mep.representative_ptr, party=party):
             current = True if _parse_date(country["end"]).year > date.today().year else False
             PartyRepresentative.objects.create(representative=mep.representative_ptr,
