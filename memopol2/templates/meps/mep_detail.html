@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load comments i18n %}
 
-{% block title %}{{ mep }}{% trans ", member of the european parliament" %} - Memopol{% endblock %}
+{% block title %}{% trans "Political Memory: " %}{{ mep }}{% trans ", member of the european parliament" %} - Memopol{% endblock %}
 
 {% block javascript %}
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.6.3.min.js"></script>
