@@ -35,7 +35,7 @@ class Party(models.Model):
 class Opinion(models.Model):
     title = models.CharField(max_length=1023)
     content = models.TextField()
-    url = models.URLField()
+    url = models.URLField(max_length=400)
 
     def meps(self):
         return meps.models.MEP.objects.filter(opinionrep__opinion=self)
