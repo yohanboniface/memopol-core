@@ -17,7 +17,7 @@ from memopol2.utils import update_search_index
 from reps.models import PartyRepresentative, Email, WebSite, CV
 from meps.models import LocalParty, MEP, Delegation, DelegationRole, PostalAddress, Country, CountryMEP, Organization, OrganizationMEP, Committee, CommitteeRole, Group, GroupMEP, Building
 
-current_meps = "meps.json"
+current_meps = "ep_meps_current.json"
 
 _parse_date = lambda date: datetime.strptime(date, "%Y-%m-%dT00:%H:00")
 
@@ -147,10 +147,15 @@ def add_committees(mep, committees):
                 in_db_committe = Committee.objects.create(name=committee["Organization"],
                                                           abbreviation=committee["committee_id"])
             print "     link mep to commmitte:", committee["Organization"]
+            params={}
+            if committee.get("start"):
+                params['begin']=_parse_date(committee.get("start"))
+            if committee.get("end"):
+                params['end']=_parse_date(committee.get("end"))
             CommitteeRole.objects.create(mep=mep, committee=in_db_committe,
-                                         role=committee["role"],
-                                         begin=_parse_date(committee["start"]),
-                                         end=_parse_date(committee["end"]))
+                                         role=committee["role"], **params)
+                                         #begin=_parse_date(committee.get("start")),
+                                         #end=_parse_date(committee.get("end")))
         else:
             # FIXME create or how abbreviations ? Or are they really important ? or create a new class ?
             print "WARNING: committe without abbreviation:", committee["Organization"]
@@ -160,10 +165,15 @@ def add_delegations(mep, delegations):
     for delegation in delegations:
         db_delegation = get_or_create(Delegation, name=delegation["Organization"])
         print "     create DelegationRole to link mep to delegation"
+        params={}
+        if delegation.get("start"):
+            params['begin']=_parse_date(delegation["start"])
+        if delegation.get("end"):
+            params['end']=_parse_date(delegation["end"])
         DelegationRole.objects.create(mep=mep, delegation=db_delegation,
-                                      role=delegation["role"],
-                                      begin=_parse_date(delegation["start"]),
-                                      end=_parse_date(delegation["end"]))
+                                      role=delegation["role"], **params)
+                                      #begin=_parse_date(delegation["start"]),
+                                      #end=_parse_date(delegation["end"]))
 
 def add_addrs(mep, addrs):
     if addrs.get("Brussels"):
@@ -210,25 +220,38 @@ def add_countries(mep, countries):
         print "     link mep to country", '"%s"' % country["country"], "for a madate"
         _country = Country.objects.get(name=country["country"])
         print "     link representative to party"
-        party = get_or_create(LocalParty, name=country["party"], country=_country)
-        if not PartyRepresentative.objects.filter(representative=mep.representative_ptr, party=party):
-            current = True if _parse_date(country["end"]).year > date.today().year else False
-            PartyRepresentative.objects.create(representative=mep.representative_ptr,
-                                               party=party, current=current)
-        CountryMEP.objects.create(mep=mep, country=_country, party=party,
-                                  begin=_parse_date(country["start"]),
-                                  end=_parse_date(country["end"]))
+        if "party" in country:
+            party = get_or_create(LocalParty, name=country["party"], country=_country)
+            if not PartyRepresentative.objects.filter(representative=mep.representative_ptr, party=party):
+                #current = True if _parse_date(country["end"]).year > date.today().year else False
+                current = 'end' not in country
+                PartyRepresentative.objects.create(representative=mep.representative_ptr,
+                                                   party=party, current=current)
+        else: party=get_or_create(LocalParty, name="unknown", country=_country)
+        params={}
+        if country.get("start"):
+            params['begin']=_parse_date(country["start"])
+        if country.get("end"):
+            params['end']=_parse_date(country["end"])
+        CountryMEP.objects.create(mep=mep, country=_country, party=party, **params)
+                                  #begin=_parse_date(country["start"]),
+                                  #end=_parse_date(country["end"]))
 
 def add_organizations(mep, organizations):
     OrganizationMEP.objects.filter(mep=mep).delete()
     for organization in organizations:
         in_db_organization = get_or_create(Organization, name=organization["Organization"])
         print "     link mep to organization:", in_db_organization.name
+        params={}
+        if organization.get("start"):
+            params['begin']=_parse_date(organization["start"])
+        if organization.get("end"):
+            params['end']=_parse_date(organization["end"])
         OrganizationMEP.objects.create(mep=mep,
                                        organization=in_db_organization,
-                                       role=organization["role"],
-                                       begin=_parse_date(organization["start"]),
-                                       end=_parse_date(organization["end"]))
+                                       role=organization["role"], **params)
+                                       #begin=_parse_date(organization["start"]),
+                                       #end=_parse_date(organization["end"]))
 
 def change_mep_details(mep, mep_json):
     if mep_json.get("Birth"):
@@ -275,9 +298,14 @@ def add_groups(mep, groups):
             in_db_group = in_db_group[0]
         else:
             in_db_group = Group.objects.create(abbreviation=group["groupid"], name=group["Organization"])
-        GroupMEP.objects.create(mep=mep, group=in_db_group, role=group["role"],
-                                begin=_parse_date(group["start"]),
-                                end=_parse_date(group["end"]))
+        params={}
+        if group.get("start"):
+            params['begin']=_parse_date(group["start"])
+        if group.get("end"):
+            params['end']=_parse_date(group["end"])
+        GroupMEP.objects.create(mep=mep, group=in_db_group, role=group["role"])
+                                #begin=_parse_date(group["start"]),
+                                #end=_parse_date(group["end"]))
 
 def manage_mep(mep, mep_json):
     change_mep_details(mep, mep_json)
@@ -318,7 +346,9 @@ def create_mep(mep_json):
     add_organizations(mep, mep_json.get("Staff", []))
     if mep_json.get("Mail"):
         add_mep_email(mep, mep_json["Mail"])
-    add_mep_website(mep, mep_json["Homepage"])
+                
+    if mep_json.get("Homepage"):
+        add_mep_website(mep, mep_json["Homepage"])
     add_mep_cv(mep, mep_json.get("CV", []))
     print "     save mep modifications"
     mep.save()
@@ -350,7 +380,7 @@ if __name__ == "__main__":
         in_db_mep = MEP.objects.filter(ep_id=int(mep_json["UserID"]))
         if in_db_mep:
             mep = in_db_mep[0]
-            mep.active = True
+            mep.active = mep_json['active']
             manage_mep(mep, mep_json)
         else:
             mep = create_mep(mep_json)
