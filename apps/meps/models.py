@@ -224,35 +224,35 @@ class MEP(Representative):
 
     @reify
     def previous_mandates(self):
-        return self.countrymep_set.filter(end__lt=date(9999, 12, 31)).order_by('-end')
+        return self.countrymep_set.filter(end__isnull=False).order_by('-end')
 
     @reify
     def current_delegations(self):
-        return self.delegationrole_set.filter(end=date(9999, 12, 31))
+        return self.delegationrole_set.filter(end__isnull=True)
 
     @reify
     def old_delegations(self):
-        return self.delegationrole_set.filter(end__lt=date(9999, 12, 31)).order_by('-end')
+        return self.delegationrole_set.filter(end__isnull=False).order_by('-end')
 
     @reify
     def current_committees(self):
-        return self.committeerole_set.filter(end=date(9999, 12, 31))
+        return self.committeerole_set.filter(end__isnull=True)
 
     @reify
     def old_committees(self):
-        return self.committeerole_set.filter(end__lt=date(9999, 12, 31)).order_by('-end')
+        return self.committeerole_set.filter(end__isnull=False).order_by('-end')
 
     @reify
     def current_organizations(self):
-        return self.organizationmep_set.filter(end=date(9999, 12, 31))
+        return self.organizationmep_set.filter(end__isnull=True)
 
     @reify
     def old_organizations(self):
-        return self.organizationmep_set.exclude(end=date(9999, 12, 31)).order_by('-end')
+        return self.organizationmep_set.filter(end__isnull=False).order_by('-end')
 
     @reify
     def old_groups(self):
-        return self.groupmep_set.exclude(end=date(9999, 12, 31)).order_by('-end')
+        return self.groupmep_set.filter(end__isnull=False).order_by('-end')
 
     @property
     def score_color(self):
