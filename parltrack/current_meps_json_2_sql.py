@@ -272,8 +272,8 @@ def add_mep_email(mep, emails):
     for email in emails:
         get_or_create(Email, representative=mep.representative_ptr, email=email)
 
-def add_mep_website(mep, url):
-    if url:
+def add_mep_website(mep, urls):
+    for url in urls:
         get_or_create(WebSite, representative=mep.representative_ptr, url=url)
 
 def add_mep_cv(mep, cv):
