@@ -346,7 +346,7 @@ def create_mep(mep_json):
     add_organizations(mep, mep_json.get("Staff", []))
     if mep_json.get("Mail"):
         add_mep_email(mep, mep_json["Mail"])
-                
+
     if mep_json.get("Homepage"):
         add_mep_website(mep, mep_json["Homepage"])
     add_mep_cv(mep, mep_json.get("CV", []))
