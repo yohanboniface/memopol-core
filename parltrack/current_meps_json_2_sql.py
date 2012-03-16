@@ -361,17 +361,8 @@ def clean():
 if __name__ == "__main__":
     print "load json"
     meps = json.load(open(current_meps, "r"))
-    a = 0
-    #count = meps["count"]
-    count = len(meps)
     print "Set all current active mep to unactive before importing"
-    for mep in MEP.objects.filter(active=True):
-        a += 1
-        mep.active = False
-        mep.save()
-        sys.stdout.write("%3i/%i\r" % (a, count))
-    sys.stdout.write("%i/%i" % (a, count))
-    sys.stdout.write("\n")
+    MEP.objects.filter(active=True).update(active=False)
     a = 0
     #for mep_json in meps["meps"]:
     for mep_json in meps:
