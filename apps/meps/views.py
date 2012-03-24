@@ -15,7 +15,7 @@ from django.http import HttpResponse
 
 from memopol2.utils import check_dir, send_file, get_content_cache
 
-from models import LocalParty, Building, MEP, CountryMEP, GroupMEP
+from models import LocalParty, Building, MEP, CountryMEP, GroupMEP, Committee
 from reps.models import Email, PartyRepresentative
 
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
@@ -73,6 +73,31 @@ def autoTrophies(mep):
 def render_to_csv(view, context, **response_kwargs):
     response = HttpResponse(mimetype='text/plain')
 
+    header = [
+            'name',
+            'gender',
+            'country',
+            'group',
+            'bxl building id',
+            'bxl building name',
+            'bxl floor',
+            'bxl office number',
+            'bxl fax',
+            'bxl phone1',
+            'bxl phone2',
+            'stg building id',
+            'stg building name',
+            'stg floor',
+            'stg office number',
+            'stg fax',
+            'stg phone1',
+            'stg phone2',
+    ]
+
+    committees = sorted([c.abbreviation for c in Committee.objects.all()])
+
+    header += committees
+
     meps = []
 
     if 'object' in context:
@@ -80,11 +105,14 @@ def render_to_csv(view, context, **response_kwargs):
         meps = getattr(obj, 'meps', [])
 
     writer = csv.writer(response)
+    writer.writerow(header)
+
     for mep in meps:
         row = [
-            mep.gender,
             unicode(mep),
-            mep.party.name,
+            mep.gender,
+            mep.country.code,
+            mep.group.abbreviation,
             mep.bxl_building.id,
             mep.bxl_building.name,
             mep.bxl_floor,
@@ -105,6 +133,15 @@ def render_to_csv(view, context, **response_kwargs):
             if isinstance(v, unicode):
                 v = v.encode('utf-8')
             str_row.append(v)
+
+        mep_committees = {}
+        roles = mep.committeerole_set.all()
+        for role in roles:
+            abbr = role.committee.abbreviation
+            mep_committees.setdefault(abbr, set([])).add(role.role)
+        for c in committees:
+            str_row.append(' - '.join(sorted(mep_committees.get(c, []))))
+
         writer.writerow(str_row)
 
     return response
