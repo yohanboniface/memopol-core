@@ -6,7 +6,7 @@ MANAGE="./manage.py"
 
 export SKIP_SEARCH_INDEX="1"
 
-$MANAGE syncdb
+$MANAGE syncdb --noinput
 $MANAGE migrate reps
 $MANAGE migrate meps
 $MANAGE migrate
