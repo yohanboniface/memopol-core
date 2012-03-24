@@ -76,6 +76,7 @@ def render_to_csv(view, context, **response_kwargs):
     header = [
             'name',
             'gender',
+            'score',
             'country',
             'group',
             'bxl building id',
@@ -111,6 +112,7 @@ def render_to_csv(view, context, **response_kwargs):
         row = [
             unicode(mep),
             mep.gender,
+            mep.total_score,
             mep.country.code,
             mep.group.abbreviation,
             mep.bxl_building.id,
@@ -135,6 +137,8 @@ def render_to_csv(view, context, **response_kwargs):
             str_row.append(v)
 
         mep_committees = {}
+        # FIXME: this should use current_committees but it look like its broken
+        # or no longer valid
         roles = mep.committeerole_set.all()
         for role in roles:
             abbr = role.committee.abbreviation
