@@ -39,7 +39,11 @@
   {% endif %}
   {% if group_role %}
   <td>
+    {% if mep.groupmep.role != 'Member' %}
       {{ mep.groupmep.role }}
+    {% else %}
+      &nbsp;
+    {% endif %}
   </td>
   {% endif %}
   {% if committee_role %}
