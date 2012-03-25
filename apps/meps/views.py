@@ -71,12 +71,16 @@ def autoTrophies(mep):
 
 
 def render_to_csv(view, context, **response_kwargs):
-    response = HttpResponse(mimetype='text/plain')
+    params = view.request.GET
+    response = HttpResponse(mimetype='text/csv')
+    name = view.request.path.strip('/').replace('/', '_')
+    response['Content-Disposition'] = 'attachment; filename=%s.csv' % name
 
     header = [
             'name',
             'gender',
             'score',
+            'emails',
             'country',
             'group',
             'bxl building id',
@@ -101,19 +105,46 @@ def render_to_csv(view, context, **response_kwargs):
 
     meps = []
 
+    max_score = int(params.get('max_score', 100))
+    min_score = int(params.get('min_score', -100))
+
     if 'object' in context:
         obj = context['object']
         meps = getattr(obj, 'meps', [])
 
-    writer = csv.writer(response)
+    if hasattr(meps, 'query'):
+        # got a queryset
+        meps = meps.select_related().distinct()
+        if 'group' in params:
+            meps = meps.filter(groups__abbreviation=params['group'])
+        if 'country' in params:
+            meps = meps.filter(countries__name=params['country'])
+
+    writer = csv.writer(response, delimiter=';',
+                                  quotechar='"',
+                                  doublequote=True)
     writer.writerow(header)
 
     for mep in meps:
+
+        # re-filter in case of non queryset objects
+        if 'group' in params and \
+            mep.group.abbreviation != params['group']:
+            continue
+        if 'country' in params and \
+            params['country'] not in (mep.country.name,
+                                      mep.country.code):
+            continue
+        if mep.total_score < min_score or \
+           mep.total_score > max_score:
+            continue
+
         row = [
             unicode(mep),
             mep.gender,
-            mep.total_score,
-            mep.country.code,
+            int(mep.total_score),
+            u' - '.join(mep.emails),
+            mep.country.name,
             mep.group.abbreviation,
             mep.bxl_building.id,
             mep.bxl_building.name,
@@ -146,6 +177,7 @@ def render_to_csv(view, context, **response_kwargs):
         for c in committees:
             str_row.append(' - '.join(sorted(mep_committees.get(c, []))))
 
+        assert len(str_row) == len(header)
         writer.writerow(str_row)
 
     return response

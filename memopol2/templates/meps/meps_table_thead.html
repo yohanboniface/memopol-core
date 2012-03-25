@@ -1,10 +1,10 @@
 <thead>
   <tr>
-    {% if score_listing %}<th filter='false' class="cell-score">Position</th>{% endif %}
+    {% if score_listing %}<th filter='false' class="cell-position">Position</th>{% endif %}
+    <th filter='false' class="cell-score">Score</th>
     <th filter='false' class="row-name">MEP</th>
     {% if not 'country' in hidden_fields %}<th filter-type='ddl' data-column-name="country" class="row-country">Country</th>{% endif %}
     {% if not 'group' in hidden_fields %}<th filter-type='ddl' data-column-name="group" class="row-group">Group</th>{% endif %}
-    {% if not 'party' in hidden_fields %}<th filter-type='ddl' data-column-name="party" class="row-party">Party</th>{% endif %}
     {% if choice_listing %}<th filter-type='ddl' data-column-name="choice" class="cell-choice">Choice</th>{% endif %}
     {% if organization_role %}<th filter-type='ddl' data-column-name="organization-role" class="cell-choice">Role</th>{% endif %}
     {% if group_role %}<th filter-type='ddl' data-column-name="group-role" class="cell-choice">Role</th>{% endif %}

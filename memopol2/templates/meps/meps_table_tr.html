@@ -11,6 +11,9 @@
       {% endif %}
   </td>
   {% endif %}
+  <td class="cell-score" style="background-color: {{ mep.score_color }};">
+    {{ mep.total_score|floatformat:1 }}
+  </td>
   <td>
     <a href="{{ mep.get_absolute_url }}">{{ mep.last_name|upper }} {{ mep.first_name }}</a>
   </td>
@@ -22,11 +25,6 @@
   {% if not 'group' in hidden_fields %}
   <td>
     {{ mep.group_tag|safe }}
-  </td>
-  {% endif %}
-  {% if not 'party' in hidden_fields %}
-  <td>
-    {{ mep.party_tag|safe }}
   </td>
   {% endif %}
   {% if choice_listing %}

@@ -382,6 +382,11 @@ table.table .cell-contact {
     width:40%;
 }
 
+table .cell-score {
+    min-width:29px;
+    width: 5%;
+}
+
 table.mep-list,
 table.table {
     font-family:arial;
@@ -412,6 +417,12 @@ tr.filters {
 
 table tr.filters td{
     padding: 0.5em;
+}
+
+#csv {
+    float: right;
+    display: block;
+    clear: both;
 }
 
 #livesearch li.odd,

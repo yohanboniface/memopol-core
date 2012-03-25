@@ -156,6 +156,18 @@ FilterExtension.prototype.onFilteredRows = function() {
 
 var filterExtension = new FilterExtension($("table.mep-list"));
 
+$('#csv').click(function() {
+    var self = $(this),
+        url = window.location.href;
+    if (/filter/.exec(url)) {
+        url = url.replace(FilterExtension.prototype.BASE_HASH, '?csv=true&');
+    } else {
+        url = url.replace(/#.*/, '?csv=true');
+    }
+    self.attr('href', url);
+    return true;
+});
+
 $("table.mep-list tbody tr, table.mp-list tbody tr").hover(
     function() {$(this).addClass('odd');},
     function() {$(this).removeClass('odd');}
