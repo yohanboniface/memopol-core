@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <title>Eurodeputes DE - La Quadrature du Net</title>
-    <link media="screen" type="text/css" href="{{ STATIC_URL }}/static/css/queries.css" rel="stylesheet"/>
+    <link media="screen" type="text/css" href="{{ MEDIA_URL }}/static/css/queries.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -52,8 +52,8 @@
             {% for mep in meps %}
             <li class="mp odd">
                 <ul>
-                    <li><img src="{{ STATIC_URL }}/static/img/countries/small/{{ mep.infos.constituency.country.code }}.png"/></li>
-                    <li><img class="grouplogo" src="{{ STATIC_URL }}/static/img/groups/eu/{{ mep.infos.group.abbreviation|cut:"/" }}.png" /></li>
+                    <li><img src="{{ MEDIA_URL }}/static/img/countries/small/{{ mep.infos.constituency.country.code }}.png"/></li>
+                    <li><img class="grouplogo" src="{{ MEDIA_URL }}/static/img/groups/eu/{{ mep.infos.group.abbreviation|cut:"/" }}.png" /></li>
                     <li class="Name"><a href="{% url meps:mep mep.infos.name.wiki %}">{{ mep.infos.name.first }} {{ mep.infos.name.last|upper }}</a></li>
                     <li class="eMail"><a href="mailto:{{ mep.contact.email.text }}">{{ mep.contact.email.text }}</a></li>
                     <li class="Strasbourg">

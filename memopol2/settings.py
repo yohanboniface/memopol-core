@@ -58,9 +58,9 @@ MEDIA_ROOT = ''
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/static/'
 
-MEDIA_DIRECTORY = ''
+MEDIA_DIRECTORY = os.path.join(PROJECT_PATH, MEDIA_URL.lstrip('/'))
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -113,7 +113,6 @@ if APPS_DEBUG:
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.static',
     'django.core.context_processors.media',
     'django.contrib.messages.context_processors.messages',
     'campaign.context_processor.campaigns',
@@ -124,14 +123,6 @@ ROOT_URLCONF = 'memopol2.urls'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, "templates"),
-)
-
-STATIC_ROOT = os.path.join(PROJECT_PATH, "static_deploy/static")
-
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_PATH, "static"),
 )
 
 INSTALLED_APPS = (
@@ -146,7 +137,6 @@ INSTALLED_APPS = (
     'django.contrib.comments',
     'django.contrib.sitemaps',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
 
     # 3rd party
     'south',

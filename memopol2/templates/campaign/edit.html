@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load memopol2 i18n %}
 {% block javascript %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.6.3.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/chosen.jquery.min.js"></script>
-<link rel="stylesheet" href="{{ STATIC_URL }}css/chosen.css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.6.3.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/chosen.jquery.min.js"></script>
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/chosen.css" />
 <script type="text/javascript">
 $(document).ready(function(){
    $("select").chosen();

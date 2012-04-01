@@ -4,8 +4,8 @@
 {% block title %}{% trans "Political Memory: " %}{{ mep }}{% trans ", member of the european parliament" %} - Memopol{% endblock %}
 
 {% block javascript %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.6.3.min.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/tinymce/tiny_mce.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.6.3.min.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}/js/tinymce/tiny_mce.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
    tinyMCE.init({
@@ -46,16 +46,16 @@ $(document).ready(function() {
 
 <div class="quickView">
 <img class="mugshot" alt="{{ mep }}" src="{% url meps:mep-picture mep.ep_id %}" onerror="onMugshotError(this);"/>
-<span>{{ mep }} <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ STATIC_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> </span>
-<a href="{% url meps:index_by_group mep.group.abbreviation %}" title="show the {{ mep.group.abbreviation }} group"><img class="grouplogo" src="{{ STATIC_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" alt="{{ mep.group.abbreviation }}"/></a><ul>{% for i in mep.achievements %}<li><img alt="{{ i.0 }}" src="{{ STATIC_URL }}img/trophies/{{ i.1 }}" /></li>{% endfor %}</ul>
+<span>{{ mep }} <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> </span>
+<a href="{% url meps:index_by_group mep.group.abbreviation %}" title="show the {{ mep.group.abbreviation }} group"><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" alt="{{ mep.group.abbreviation }}"/></a><ul>{% for i in mep.achievements %}<li><img alt="{{ i.0 }}" src="{{ MEDIA_URL }}img/trophies/{{ i.1 }}" /></li>{% endfor %}</ul>
 <a href="#" id="call-now" />
-  <img src="{{ STATIC_URL }}img/call_now_en.png" />
+  <img src="{{ MEDIA_URL }}img/call_now_en.png" />
 </a>
 </div>
 
 
 {% if not mep.active %}<li><div class="nok">{% trans "Former mep" %}</div></li>{% endif %}
-<li><i>{% trans "Country" %}</i>:  <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ STATIC_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.country.code %}">{{ mep.country.name }} </li></a>
+<li><i>{% trans "Country" %}</i>:  <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.country.code %}">{{ mep.country.name }} </li></a>
 <li><i>{% trans "Political group: " %}</i><a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></li>
 {% for post in mep.important_posts %}
 <li><b>{{ post.role }} of <a href="{{ post.instance.get_absolute_url }}">{{ post.instance.name }}</a> since {{ post.begin }}</b></li>
@@ -77,7 +77,7 @@ $(document).ready(function() {
     <h2 class="collapsible collapsed">{% trans "Previous mandates" %}</h2>
     <ul class="body mandates">
     {% for role in mep.previous_mandates %}
-    <li><img src="{{ STATIC_URL }}img/countries/small/{{ role.country.code }}.png"/><i> Was MEP of <a href="{% url meps:index_by_country mep.country.code %}">{{ role.country.name }}</a> for <a href="{% url meps:index_by_party mep.party.id mep.party.name|slugify %}">{{ role.party }}</a> from {{ role.begin|date:"d F y" }} to {{ role.end|date:"d F y" }}</i></li>
+        <li><img src="{{ MEDIA_URL }}img/countries/small/{{ role.country.code }}.png"/><i> Was MEP of <a href="{% url meps:index_by_country mep.country.code %}">{{ role.country.name }}</a> for <a href="{% url meps:index_by_party mep.party.id mep.party.name|slugify %}">{{ role.party }}</a> from {{ role.begin|date:"d F y" }} to {{ role.end|date:"d F y" }}</i></li>
     {% endfor %}
 </div>
 {% endif %}
@@ -87,7 +87,7 @@ $(document).ready(function() {
     <h2 class="collapsible collapsed">{% trans "Previous groups" %}</h2>
     <ul class="body mandates">
     {% for group in mep.old_groups %}
-    <li><img class="grouplogo" src="{{ STATIC_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" alt="{{ mep.group.abbreviation }}"/><i>Was MEP for <a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a> from {{ group.begin|date:"d F y" }} to {{ group.end|date:"d F y" }}</i></li>
+    <li><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" alt="{{ mep.group.abbreviation }}"/><i>Was MEP for <a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a> from {{ group.begin|date:"d F y" }} to {{ group.end|date:"d F y" }}</i></li>
     {% endfor %}
 </div>
 {% endif %}
