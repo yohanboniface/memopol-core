@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_mep_picture(request, ep_id):
-    filename = join(settings.STATICFILES_DIRS[0], 'img', 'meps', u"%s.jpg" % ep_id)
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'meps', u"%s.jpg" % ep_id)
     cache = get_content_cache(request, filename, 'image/jpeg')
     if cache:
         return cache
