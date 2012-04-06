@@ -8,6 +8,7 @@ import re
 from datetime import datetime, date
 
 from django.db.models import Count
+from django.db import transaction
 
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
 
@@ -362,20 +363,21 @@ if __name__ == "__main__":
     print "load json"
     meps = json.load(open(current_meps, "r"))
     print "Set all current active mep to unactive before importing"
-    MEP.objects.filter(active=True).update(active=False)
-    a = 0
-    #for mep_json in meps["meps"]:
-    for mep_json in meps:
-        a += 1
-        print a, "-", mep_json["Name"]["full"]
-        in_db_mep = MEP.objects.filter(ep_id=int(mep_json["UserID"]))
-        if in_db_mep:
-            mep = in_db_mep[0]
-            mep.active = mep_json['active']
-            manage_mep(mep, mep_json)
-        else:
-            mep = create_mep(mep_json)
-    clean()
+    with transaction.commit_on_success():
+        MEP.objects.filter(active=True).update(active=False)
+        a = 0
+        #for mep_json in meps["meps"]:
+        for mep_json in meps:
+            a += 1
+            print a, "-", mep_json["Name"]["full"]
+            in_db_mep = MEP.objects.filter(ep_id=int(mep_json["UserID"]))
+            if in_db_mep:
+                mep = in_db_mep[0]
+                mep.active = mep_json['active']
+                manage_mep(mep, mep_json)
+            else:
+                mep = create_mep(mep_json)
+        clean()
     print
     update_meps_positions(verbose=True)
     update_search_index()
