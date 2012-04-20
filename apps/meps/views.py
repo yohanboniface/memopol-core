@@ -135,14 +135,15 @@ def render_to_csv(view, context, **response_kwargs):
             params['country'] not in (mep.country.name,
                                       mep.country.code):
             continue
-        if mep.total_score < min_score or \
-           mep.total_score > max_score:
+        if mep.total_score and\
+               (mep.total_score < min_score or \
+               mep.total_score > max_score):
             continue
 
         row = [
             unicode(mep),
             mep.gender,
-            int(mep.total_score),
+            int(mep.total_score) if mep.total_score else '',
             u' - '.join(mep.emails),
             mep.country.name,
             mep.group.abbreviation,
