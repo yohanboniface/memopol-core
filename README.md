@@ -119,4 +119,4 @@ reference.
 Licence
 =======
 
-The Political is licenced under aGPLv3+. The original idea is from [gibus](http://gibuskro.lautre.net/).
+The Political is licenced under aGPLv3+. The original idea is from [gibus](http://gibus.sedrati-dinet.net/).
