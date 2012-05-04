@@ -19,6 +19,21 @@ Links
 * [dev blog](http://memopol.org)
 * [mailing list](http://laquadrature.net/cgi-bin/mailman/listinfo/mempol2)
 
+How to contribute
+=================
+
+Like in any free software project:
+
+* clone it
+* install it
+* code
+* optional: talk to us about it on irc or on the mailing list
+* send a pull request either on [gitorious](http://gitorious.org/memopol2-0) or [github](https://github.com/Psycojoker/memopol2)
+* hit us with a stick if we don't react (shouldn't happen)
+* we merge your code, everyone is happy
+* party hard
+* start again
+
 Installation
 ============
 
