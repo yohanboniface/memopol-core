@@ -18,16 +18,16 @@ DEFAULT_FROM_EMAIL = 'memopol@lqdn.fr'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/tmp/%s-memopol2.sqlite' % os.getenv('USER'),
+        'NAME': '%s/memopol2.sqlite' % PROJECT_PATH,
     },
 }
 
-WHOOSH_INDEX = '/tmp/%s-memopol2.index' % os.getenv('USER')
+WHOOSH_INDEX = '%s/memopol2.index' % PROJECT_PATH,
 
 APPS_DEBUG = False
 if os.getenv('VIRTUAL_ENV'):
-    DATABASES['default']['NAME'] = '%s/memopol2.sqlite' % os.getenv('VIRTUAL_ENV')
-    WHOOSH_INDEX = '%s/memopol2.index' % os.getenv('VIRTUAL_ENV')
+    DATABASES['default']['NAME'] = '%s/memopol2.sqlite' % PROJECT_PATH
+    WHOOSH_INDEX = '%s/memopol2.index' % PROJECT_PATH
     APPS_DEBUG = True
 elif not os.path.isfile('bin/django-manage'):
     APPS_DEBUG = True
