@@ -1,23 +1,23 @@
 Installation
 ============
 
-Install the base dependencies on debian-based distributions
------------------------------------------------------------
+Debian and debian-based
+-----------------------
 
 Install the base python virtualenv tools (on Ubuntu you have to enable universe):
 
     sudo apt-get install python-setuptools python-dev libxml2-dev libxslt1-dev libfreetype6-dev libpng12-dev python-pip libatlas-base-dev g++ mercurial git
     sudo pip install virtualenv
 
-Install the base dependencies on ArchLinux
-------------------------------------------
+Archlinux
+---------
 
 Install the following to have the tools on Archlinux (please note that you may have to adapt the following install procedure):
 
     pacman -S python2 libxml2 libxslt freetype2 python-lxml python2-pip python2-virtualenv libpng mercurial git
 
-Install the base dependencies on Fedora
----------------------------------------
+Fedora
+------
 
 Install the following to have the tools on Fedora (please note that you may have to adapt the following install procedure):
 
