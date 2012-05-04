@@ -36,6 +36,8 @@ Like in any free software project:
 * party hard
 * start again
 
+You can see the list of our awesome contributors in CREDITS.txt
+
 Installation
 ============
 
