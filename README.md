@@ -19,6 +19,8 @@ Links
 * [dev blog](http://memopol.org)
 * [mailing list](http://laquadrature.net/cgi-bin/mailman/listinfo/mempol2)
 
+We also have an irc channel: irc.freenode.net#lqdn-memopol (english speaking but if you only know french we can deal with that) where you will be very welcome
+
 How to contribute
 =================
 
