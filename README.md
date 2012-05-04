@@ -95,7 +95,7 @@ Run syncdb then migrate, this will import the fixtures. Warning: this take a
     ./INIT
 
 Do *not* try to run migrate by hand or you will have a bug due to fixtures
-loading and will end up with no meps fixtures.
+loading and will end up with no eurodeputies fixtures.
 
 Run the server
 --------------
