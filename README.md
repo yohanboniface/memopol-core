@@ -1,3 +1,15 @@
+Introduction
+============
+
+The Political Memory is a tool build by [la Quadrature du Net](http://lqdn.fr).
+It follow several objectives: being a campaign tool, being able to display how
+well the elected representatives have followed the voting recommendations of la
+Quadrature du Net, increase the political cost of the decisions of elected
+representatives, gather official positions taken by elected representatives
+and, the most important one, inform citizens.
+
+This is the second version of the tool.
+
 Installation
 ============
 
