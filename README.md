@@ -105,6 +105,15 @@ Run the server
 
 Your application is available on http://localhost:8000/
 
+Small lexicon
+=============
+
+We try not to use it too much but you'll eventually end up on it so here is a
+reference.
+
+* "mep" == member of the European Parliament
+* "mp" == member of the Parliament, here it's deputies of the French national assemble
+
 Licence
 =======
 
