@@ -10,6 +10,15 @@ and, the most important one, inform citizens.
 
 This is the second version of the tool.
 
+Links
+=====
+
+* [code](http://gitorious.org/memopol2-0) (and there is also a mirror on [github](https://github.com/Psycojoker/memopol2))
+* [official la Quadrature du Net's instance](https://memopol.lqdn.fr)
+* [Bug tracker](https://projets.lqdn.fr/projects/mempol)
+* [dev blog](http://memopol.org)
+* [mailing list](http://laquadrature.net/cgi-bin/mailman/listinfo/mempol2)
+
 Installation
 ============
 
