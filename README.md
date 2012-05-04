@@ -66,3 +66,8 @@ Run the server
     python manage.py runserver
 
 Your application is available on http://localhost:8000/
+
+Licence
+=======
+
+The Political is licenced under aGPLv3+. The original idea is from [gibus](http://gibuskro.lautre.net/).
