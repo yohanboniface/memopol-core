@@ -21,5 +21,6 @@ Gael Pasgrimaud <gael@gawel.org>
 Pablo Martin-Gomez <pablo.martin-gomez@laposte.net>
 Manu1400 for all his bug reports and help
 Jean Boussier <jean.boussier@gmail.com>
+Julien Miotte <mike.perdide@gmail.com>
 
 Gibus <neurone2@laquadrature.net> - creator of memopol v1
