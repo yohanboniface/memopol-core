@@ -13,11 +13,15 @@
     <object type="image/svg+xml" data="{% url trends:recommendation_countries_map vote.id %}" type="image/svg+xml" width="680" height="520"></object>
 </div>
 
+<p style="text-align: center;"><i><a href="{% url trends:documentation %}#countries_map">Trends explaination</a></i></p>
+
 <h2 class="collapsible collapsed">Score repartition</h2>
 <center class="body">
 <img src="{% url trends:group_proposal_score_stacked vote.id %}">
+<p style="text-align: center;"><i><a href="{% url trends:documentation %}#groups">Trends explaination</a></i></p>
 
 <img src="{% url trends:group_proposal_score_heatmap vote.id %}">
+<p style="text-align: center;"><i><a href="{% url trends:documentation %}#heatmap">Trends explaination</a></i></p>
 </center>
 
 <br/>
