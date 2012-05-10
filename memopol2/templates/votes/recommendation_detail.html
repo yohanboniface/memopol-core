@@ -21,10 +21,13 @@
 </ul>
 
 <img src="{% url trends:recommendation_group recommendation.id %}" />
+<p style="text-align: center;"><i><a href="{% url trends:documentation %}#vote_group">Trends explaination</a></i></p>
 <br />
 <img src="{% url trends:recommendation_countries recommendation.id %}" />
+<p style="text-align: center;"><i><a href="{% url trends:documentation %}#vote_countries">Trends explaination</a></i></p>
 <br />
 <img src="{% url trends:recommendation_countries_absolute recommendation.id %}" />
+<p style="text-align: center;"><i><a href="{% url trends:documentation %}#vote_countries_normalized">Trends explaination</a></i></p>
 
 
 <table class="mep-list tablesorter">
