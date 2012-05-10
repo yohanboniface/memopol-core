@@ -1,6 +1,8 @@
 from django.conf.urls.defaults import patterns, url
+from django.views.generic import TemplateView
 
 urlpatterns = patterns('trends.views',
+    url(r'documentation/$', TemplateView.as_view(template_name="trends-documentation.html"), name="documentation"),
     url(r'^mep/(?P<mep_id>\w+)-comparaison.png$', 'comparaison_trends_for_mep', name='comparaison_trends'),
     url(r'^mep/(?P<mep_id>\w+)-bar.png$', 'bar_trends_for_mep', name='bar_trends'),
     url(r'^mep/(?P<mep_id>\w+).png$', 'trends_for_mep', name='trends'),
