@@ -173,7 +173,7 @@ $(document).ready(function() {
         {% endfor %}
         </ul>
         {% if mep.score_set.all.count > 1 %}
-            <img src="{% url trends:comparaison_trends mep.id %}" />
+            <center><img src="{% url trends:comparaison_trends mep.id %}" /></center>
         {% endif %}
     </div>
 {% endif %}
