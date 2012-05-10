@@ -242,6 +242,7 @@ class MEPList(ListView):
         logger.debug("MEPList relationships took %.2fsec to build." % (time() - start))
 
         context['score_listing'] = self.score_listing
+        context['active'] = self.active
         return context
 
     def render_to_response(self, context, **response_kwargs):
