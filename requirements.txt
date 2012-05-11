@@ -15,3 +15,5 @@ django-simple-captcha
 pil
 johnny-cache
 gunicorn
+django-extensions
+werkzeug

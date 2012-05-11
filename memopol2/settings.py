@@ -143,6 +143,7 @@ INSTALLED_APPS = (
     'flatblocks',
     'contact_form',
     'captcha',
+    'django_extensions',
 
     # memopol
     'reps',
