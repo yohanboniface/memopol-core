@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2><a name="mep"><a href="#mep">Member of the European Parliament chart</a></a></h2>
+<h2><a name="mep" href="#mep">Member of the European Parliament chart</a></h2>
 <center><img src="/trends/mep/IvoBelet-comparaison.png" /></center>
 
 <p>This chart gives a quick evaluation of a MEP's scores on votes regarding rights and freedoms of citizens on the internet as seen by la Quadrature du Net, and its evolution.</p>
@@ -10,7 +10,7 @@
 <p>The blue circle represents the average score of the MEP political group, the green pentagone represents the parliament's average score.</p>
 <p>The figure at the top of the bar is the score.</p>
 
-<h2><a name="countries_map"><a href="#countries_map">Vote breakdown by countries</a></a></h2>
+<h2><a name="countries_map" href="#countries_map">Vote breakdown by countries</a></h2>
 <div class="map map-eu" style="height: 520px; width: 680px;">
     <object type="image/svg+xml" data="{% url trends:recommendation_countries_map "ACTA_resolution" %}" type="image/svg+xml" width="680" height="520"></object>
 </div>
@@ -19,7 +19,7 @@
 <p>This chart shows which countries have, in average, MEPs defending online freedoms in the European Parliament.</p>
 <p>Color represents the average scores of each country's MEPs (the greener the better).</p>
 
-<h2><a name="groups"><a href="#groups">Groups breakdown by score</a></a></h2>
+<h2><a name="groups" href="#groups">Groups breakdown by score</a></h2>
 <center><img src="/trends/proposal/groups-ACTA_resolution-repartition-stacked.png" /></center>
 
 <p>This chart shows which political groups are defending online freedoms in the European Parliament.</p>
@@ -28,7 +28,7 @@
 
 How to read : On ACTA, around 240 EPP members (almost all of them) have a score between 0 and 10
 
-<h2><a name="heatmap"><a href="#heatmap">Heatmap of votes by political group (for each country)</a></a></h2>
+<h2><a name="heatmap" href="#heatmap">Heatmap of votes by political group (for each country)</a></h2>
 <center><img src="/trends/proposal/groups-ACTA_resolution-repartition-heatmap.png" /></center>
 
 <p>This chart allows you to compare votes from different groups of the same country, or from different countries in the same group.</p>
@@ -39,7 +39,7 @@ How to read : On ACTA, around 240 EPP members (almost all of them) have a score 
 
 How to read : On ACTA's resolution, UK's Socialists &amp; Democrats have a bad score compared to the rest of the S&amp;D.
 
-<h2><a name="vote_group"><a href="#vote_group">Vote breakdown (for each group)</a></a></h2>
+<h2><a name="vote_group" href="#vote_group">Vote breakdown (for each group)</a></h2>
 <center><img src="/trends/recommendation/697-group.png" /></center>
 
 <p>This chart represents the breakdown of a vote (for/against/abstention/absent) within each political group.</p>
@@ -47,13 +47,13 @@ How to read : On ACTA's resolution, UK's Socialists &amp; Democrats have a bad s
 
 How to read : 90% of EPP voted against La Quadrature's recommendation.
 
-<h2><a name="vote_countries"><a href="#vote_countries">Vote breakdown by country</a></a></h2>
+<h2><a name="vote_countries" href="#vote_countries">Vote breakdown by country</a></h2>
 <center><img src="/trends/recommendation/697-countries.png" /></center>
 
 <p>This chart represents the breakdown of a vote (for/against/abstention/absent) within each country.</p>
 <p>La Quadrature du Net's recommendation appears in green.</p>
 
-<h2><a name="vote_countries_normalized"><a href="#vote_countries_normalized">Vote breakdown (percentage)</a></a></h2>
+<h2><a name="vote_countries_normalized" href="#vote_countries_normalized">Vote breakdown (percentage)</a></h2>
 <center><img src="/trends/recommendation/697-countries-absolute.png" /></center>
 
 <p>This chart represents the breakdown of a vote (for/against/abstention/absent) within each country, in percents.</p>
