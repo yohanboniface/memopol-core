@@ -42,6 +42,11 @@ class RobotsTxt(TemplateView):
         response_kwargs['mimetype'] = 'text/plain'
         return super(TemplateView, self).render_to_response(context, **response_kwargs)
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(RobotsTxt, self).get_context_data(**kwargs)
+        context["DEBUG"] = settings.DEBUG
+        return context
+
 
 urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^$', direct_to_template, {'template': 'home.html', 'extra_context': home}, name='index'),
