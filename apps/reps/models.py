@@ -1,3 +1,4 @@
+# -*- coding:Utf-8 -*-
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.core.cache import cache
@@ -36,6 +37,7 @@ class Opinion(models.Model):
     title = models.CharField(max_length=1023)
     content = models.TextField()
     url = models.URLField(max_length=400)
+    institution = models.CharField(max_length=63, choices=((u'EU', 'european parliament'), (u'FR', 'assemblée nationale française')))
 
     def meps(self):
         return meps.models.MEP.objects.filter(opinionrep__opinion=self)
