@@ -71,7 +71,7 @@
             {% if campaigns %}
             <ul>
                 {% for c in campaigns %}
-                <li><a href="{% url campaign:view pk=c.id %}">{{c.title}}</a></li>
+                <li><a href="{% url campaign:view pk=c.id %}">{{ c.title }}</a></li>
                 {% endfor %}
             </ul>
             {% endif %}
