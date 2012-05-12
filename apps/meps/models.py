@@ -9,19 +9,9 @@ import search
 
 from reps.models import Representative, Party
 
-class MepsContainerManager(models.Manager):
-    """ Manager for models to which the MEP model has a foreign key"""
-    def with_counts(self):
-        """ Return the models with a count property, with the count of active meps """
-        # FIXME don't work as expected now, show historical count instead of current count
-        return self.get_query_set().filter(mep__active=True).annotate(count=models.Count('mep'))
-
-
 class Country(models.Model):
     code = models.CharField(max_length=2, unique=True)
     name = models.CharField(max_length=30, unique=True)
-
-    objects = MepsContainerManager()
 
     def __unicode__(self):
         return u"%s - %s" % (self.code, self.name)
@@ -47,8 +37,6 @@ class Group(models.Model):
     abbreviation = models.CharField(max_length=10, unique=True)
     name = models.CharField(max_length=100, unique=True)
 
-    objects = MepsContainerManager()
-
     def __unicode__(self):
         return u"%s - %s" % (self.abbreviation, self.name)
     content = __unicode__
@@ -70,8 +58,6 @@ class Group(models.Model):
 class Delegation(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
-    objects = MepsContainerManager()
-
     def __unicode__(self):
         return self.name
     content = __unicode__
@@ -89,8 +75,6 @@ class Delegation(models.Model):
 class Committee(models.Model):
     name = models.CharField(max_length=255, unique=True)
     abbreviation = models.CharField(max_length=30, unique=True)
-
-    objects = MepsContainerManager()
 
     def __unicode__(self):
         return u"%s: %s" % (self.abbreviation, self.name)
