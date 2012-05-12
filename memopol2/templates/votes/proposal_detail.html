@@ -44,6 +44,7 @@
                 {% if v.weight %}<li><em>Weight</em> : {{ v.weight }}</li>{% endif %}
                 {% significant_votes v %}
                 <li>Votes ({{ significant_votes.count }} significant) (<a href="{% url votes:recommendation vote.id v.id %}">full list</a>)</li>
+                <li>
                 <ul>
                   {% regroup v.vote_set.all by choice as result %}
                   {% for re in result reversed %}
@@ -58,6 +59,7 @@
                   {% endif %}
                   {% endfor %}
                 </ul>
+                </li>
             </ul>
         </li>
         <br>
