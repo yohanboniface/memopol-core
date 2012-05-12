@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: memopol 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-12 05:37+0200\n"
+"POT-Creation-Date: 2012-05-12 05:47+0200\n"
 "PO-Revision-Date: 2011-02-25 01:50+0100\n"
 "Last-Translator: Benjamin Sonntag <benjamin@sonntag.fr>\n"
 "Language-Team: <mempol2@laquadrature.net>\n"
@@ -70,6 +70,10 @@ msgstr "Groupe politique&nbsp;: "
 #: apps/queries/forms.py:9
 msgid "Commitee"
 msgstr ""
+
+#: memopol2/templates/base.html:21
+msgid "The Political Memory of la Quadrature du Net"
+msgstr "Le Mémoire Politique de la Quadrature du Net"
 
 #: memopol2/templates/base.html:24
 msgid "Administration"
