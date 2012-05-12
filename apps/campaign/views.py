@@ -3,12 +3,11 @@
 from models import Campaign, Debriefing
 from campaign.forms import ScoreForm, DebriefingForm
 from campaign.models import MEPScore, ScoreRule
-from meps.models import MEP, OrganizationMEP
+from meps.models import MEP
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.conf import settings
 from django.template import RequestContext
-from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect #, Http404
