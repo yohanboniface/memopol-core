@@ -147,14 +147,15 @@ def feedback(request):
 def sendverifymail(feedback,to):
     actid = hashlib.sha1(''.join([chr(random.randint(32, 122))
                                   for x in range(12)])).hexdigest()
-    msg = MIMEText(_("Someone sent feedback on a campaign\nYour verification key is %s/campaign/feedback/%s/%s\n\nfrom: %s\nabout %s\ntype: %s\nresult: %s\ncomment: %s")
-                   % (settings.ROOT_URL or 'http://localhost:8001/',
-                      feedback.id,
-                      actid,
-                      feedback.usercontact,
-                      feedback.mep, feedback.type,
-                      feedback.response,
-                      feedback.text))
+    msg = MIMEText(_("Someone sent feedback on a campaign\nYour verification key is %(root_url)s/campaign/feedback/%(feedback_id)s/%(actid)s\n\nfrom: %(from)s\nabout %(mep)s\ntype: %(type)s\nresult: %(result)s\ncomment: %(comment)s")
+                   % {"root_url": settings.ROOT_URL or 'http://localhost:8001/',
+                      "feedback_id": feedback.id,
+                      "actid": actid,
+                      "from": feedback.usercontact,
+                      "mep": feedback.mep,
+                      "type": feedback.type,
+                      "result": feedback.response,
+                      "comment": feedback.text})
     msg['Subject'] = _('Memopol2 feedback moderation')
     msg['From'] = 'memopol2@memopol2.lqdn.fr'
     msg['To'] = ', '.join(to)
