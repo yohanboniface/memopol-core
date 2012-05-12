@@ -21,7 +21,7 @@ If not :
   cd locale/fr/LC_MESSAGES
 
 - Edit the po file :
-  emacs django.po
+  vi django.po
 
 - Translate the "msgid" (don't touch them) in the "msgstr" strings
 
