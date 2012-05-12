@@ -2,6 +2,7 @@
 
 import os
 PROJECT_PATH = os.path.abspath(os.path.split(__file__)[0])
+SUBPROJECT_PATH = os.path.split(PROJECT_PATH)[0]
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -181,6 +182,10 @@ DEBUG_TOOLBAR_PANELS = (
 LANGUAGES = (
   ('fr', 'French'),
   ('en', 'English'),
+)
+
+LOCALE_PATHS = (
+    SUBPROJECT_PATH + '/locale',
 )
 
 FIXTURE_DIRS = (
