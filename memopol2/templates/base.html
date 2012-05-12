@@ -68,11 +68,13 @@
 
 
             <h2><a href="{% url campaign:list %}">{% trans "Campaigns" %}</a></h2>
+            {% if campaigns %}
             <ul>
                 {% for c in campaigns %}
                 <li><a href="{% url campaign:view pk=c.id %}">{{c.title}}</a></li>
                 {% endfor %}
             </ul>
+            {% endif %}
 
             <h2>{% trans "French deputies " %}<img src="{{ MEDIA_URL }}/img/countries/small/FR.png" alt="FR flag"/></h2>
             <ul>
