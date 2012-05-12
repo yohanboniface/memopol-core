@@ -27,3 +27,5 @@ If not :
 
 - Send us the .po file either through git or by mail.
 
+- You can also compile your translations to test them:
+  django-admin.py compilemessages
