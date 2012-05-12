@@ -13,6 +13,10 @@ If not :
 - Create messages for your language (ex for french)
   django-admin.py makemessages -l fr
 
+- if you have conflicts with your virtualenv use the "--ignore" option of
+  makemessages like this (supposing your virtualenv is named "ve"):
+  django-admin.py makemessages -l fr --ignore="ve/*"
+
 - Go to the po file directory :
   cd locale/fr/LC_MESSAGES
 
