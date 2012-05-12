@@ -62,13 +62,10 @@
                 <li><a href="{% url meps:index_floor %}">{% trans "By floor" %}</a></li>
                 <li><a href="{% url meps:scores %}">{% trans "By total score" %}</a></li>
                 <li><a href="{% url meps:index_votes %}">{% trans "Tracked votes" %}</a></li>
+                <li><a href="{% url meps:index_opinions %}">{% trans "Expressed opinions" %}</a></li>
                 <li><a href="{% url meps:index_inactive %}">{% trans "Former eurodeputies" %}</a></li>
             </ul>
 
-            <h2>{% trans "Tracked votes" %}</h2>
-            <ul>
-                <li><a href="{% url meps:index_opinions %}">{% trans "Expressed opinions" %}</a></li>
-            </ul>
 
             <h2><a href="{% url campaign:list %}">{% trans "Campaigns" %}</a></h2>
             <ul>
@@ -83,6 +80,7 @@
                 <li><a href="{% url mps:index_groups %}">{% trans "By political group" %}</a></li>
                 <li><a href="{% url mps:index_departments %}">{% trans "By departments" %}</a></li>
                 <li><a href="{% url mps:index_votes %}">{% trans "Tracked votes" %}</a></li>
+                <li><a href="{% url mps:index_opinions %}">{% trans "Expressed opinions" %}</a></li>
             </ul>
 
 

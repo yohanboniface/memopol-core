@@ -3,7 +3,7 @@ import os
 from django.contrib.sitemaps import GenericSitemap
 from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template
-from django.views.generic import ListView
+from django.views.generic import TemplateView
 from django.conf import settings
 from django.contrib import admin
 from django.views.static import serve
@@ -34,6 +34,20 @@ home = {
     'proposals': Proposal.objects.all()
 }
 
+
+class RobotsTxt(TemplateView):
+    template_name="robots.txt"
+
+    def render_to_response(self, context, **response_kwargs):
+        response_kwargs['mimetype'] = 'text/plain'
+        return super(TemplateView, self).render_to_response(context, **response_kwargs)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(RobotsTxt, self).get_context_data(**kwargs)
+        context["DEBUG"] = settings.DEBUG
+        return context
+
+
 urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^$', direct_to_template, {'template': 'home.html', 'extra_context': home}, name='index'),
     url(r'^europe/parliament/', include('meps.urls', namespace='meps', app_name='meps')),
@@ -47,7 +61,7 @@ urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^admin/', include(admin.site.urls)),
     url(r'^comments/', include('django.contrib.comments.urls')),
     url(r'^contact/', include('contact_form.urls')),
-    url(r'^robots\.txt$', direct_to_template, {'template': 'robots.txt', 'mimetype': 'text/plain'}),
+    url(r'^robots\.txt$', RobotsTxt.as_view()),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
     url(r'^captcha/', include('captcha.urls')),
 )
