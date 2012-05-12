@@ -1,6 +1,6 @@
 {% load i18n %}
 <!doctype html>
-<html lang="fr">
+<html {% block htmlattrs %}lang="fr"{% endblock %}>
 <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="{{ MEDIA_URL }}img/favicon.ico" />
