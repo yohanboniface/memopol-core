@@ -177,6 +177,8 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.sql.SQLDebugPanel',
     'debug_toolbar.panels.signals.SignalDebugPanel',
     'debug_toolbar.panels.logger.LoggingPanel',
+    'debug_toolbar.panels.state.StateDebugPanel',
+    'debug_toolbar.panels.htmlvalidator.HTMLValidationDebugPanel',
 )
 
 LANGUAGES = (

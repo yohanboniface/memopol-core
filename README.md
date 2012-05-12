@@ -46,7 +46,7 @@ Debian and debian-based
 
 Install the base python virtualenv tools (on Ubuntu you have to enable universe):
 
-    sudo apt-get install python-setuptools python-dev libxml2-dev libxslt1-dev libfreetype6-dev libpng12-dev python-pip libatlas-base-dev g++ mercurial git
+    sudo apt-get install python-setuptools python-dev libxml2-dev libxslt1-dev libfreetype6-dev libpng12-dev python-pip libatlas-base-dev g++ mercurial git libtidy-dev
     sudo pip install virtualenv
 
 Archlinux
