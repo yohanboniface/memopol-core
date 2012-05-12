@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from os import mkdir
 from os.path import exists
 from BeautifulSoup import BeautifulSoup
 from urllib import urlopen
@@ -55,6 +57,8 @@ def handle_reps_set(set_name, section):
     return opinions
 
 if __name__ == "__main__":
+    if not exists('dumps'):
+        mkdir("dumps")
     opinions = handle_reps_set("mp_list", "fr")
     opinions += handle_reps_set("mep_list", "eu")
 
