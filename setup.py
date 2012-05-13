@@ -1,7 +1,6 @@
 import distribute_setup
 distribute_setup.use_setuptools()
 
-import os
 from setuptools import setup, find_packages
 
 setup(
