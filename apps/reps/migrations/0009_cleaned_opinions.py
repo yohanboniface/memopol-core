@@ -63,7 +63,7 @@ class Migration(DataMigration):
             if "Merci d'enrichir cette partie en y rapportant les prises de positions de " in op["body"]:
                 raise Exception
 
-            OpinionREP.objects.create(representative=rep, opinion=opinion, date=parse(op.get("date")).date())
+            OpinionREP.objects.create(representative=rep, opinion=opinion, date=parse(op["date"]).date() if op.get("date") else None)
             sys.stdout.write("%s/%s\r" % (a, size))
             a += 1
 
