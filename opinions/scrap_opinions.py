@@ -35,7 +35,7 @@ def handle_reps_set(set_name, section):
     for a, i in enumerate(open(set_name, "r"), 1):
         i = i.replace('\n', '')
         print "[%s/%s]" % (a, size), i
-        soup = read_or_dl("http://www.laquadrature.net/wiki/index.php?title=%s/fr" % i, i)
+        soup = read_or_dl("http://www.laquadrature.net/wiki/%s?test=true" % i, i)
         if soup.find('div', id='bodyContent').h5 is None:
             continue
         opinion = {}
