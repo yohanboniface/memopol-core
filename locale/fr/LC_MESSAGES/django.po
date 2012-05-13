@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: memopol 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-12 05:47+0200\n"
+"POT-Creation-Date: 2012-05-13 15:05+0200\n"
 "PO-Revision-Date: 2011-02-25 01:50+0100\n"
 "Last-Translator: Benjamin Sonntag <benjamin@sonntag.fr>\n"
 "Language-Team: <mempol2@laquadrature.net>\n"
@@ -71,118 +71,118 @@ msgstr "Groupe politique&nbsp;: "
 msgid "Commitee"
 msgstr ""
 
-#: memopol2/templates/base.html:21
+#: memopol2/templates/base.html:22
 msgid "The Political Memory of la Quadrature du Net"
 msgstr "Le Mémoire Politique de la Quadrature du Net"
 
-#: memopol2/templates/base.html:24
+#: memopol2/templates/base.html:25
 msgid "Administration"
 msgstr "Administration"
 
-#: memopol2/templates/base.html:25
+#: memopol2/templates/base.html:26
 #, fuzzy
 msgid "Comments moderation"
 msgstr "Modération"
 
-#: memopol2/templates/base.html:26
+#: memopol2/templates/base.html:27
 msgid "Logout"
 msgstr ""
 
-#: memopol2/templates/base.html:29 memopol2/templates/campaign/list.html:37
+#: memopol2/templates/base.html:30 memopol2/templates/campaign/list.html:37
 msgid "Login"
 msgstr ""
 
-#: memopol2/templates/base.html:45 memopol2/templates/search.html:4
+#: memopol2/templates/base.html:46 memopol2/templates/search.html:4
 #: memopol2/templates/search.html.py:8
 msgid "Search"
 msgstr ""
 
-#: memopol2/templates/base.html:49
+#: memopol2/templates/base.html:50
 msgid "GO"
 msgstr ""
 
-#: memopol2/templates/base.html:53
+#: memopol2/templates/base.html:54
 msgid "Eurodeputies "
 msgstr ""
 
-#: memopol2/templates/base.html:55 memopol2/templates/base.html.py:79
+#: memopol2/templates/base.html:56 memopol2/templates/base.html.py:82
 msgid "By name"
 msgstr "Par nom"
 
-#: memopol2/templates/base.html:56
+#: memopol2/templates/base.html:57
 msgid "By country"
 msgstr "Par pays"
 
-#: memopol2/templates/base.html:57 memopol2/templates/base.html.py:80
+#: memopol2/templates/base.html:58 memopol2/templates/base.html.py:83
 msgid "By political group"
 msgstr "Par groupes parlementaires"
 
-#: memopol2/templates/base.html:58
+#: memopol2/templates/base.html:59
 msgid "By committee"
 msgstr ""
 
-#: memopol2/templates/base.html:59
+#: memopol2/templates/base.html:60
 #, fuzzy
 msgid "By delegation"
 msgstr "Modération"
 
-#: memopol2/templates/base.html:60
+#: memopol2/templates/base.html:61
 msgid "By local party"
 msgstr ""
 
-#: memopol2/templates/base.html:61
+#: memopol2/templates/base.html:62
 msgid "By instances"
 msgstr ""
 
-#: memopol2/templates/base.html:62
+#: memopol2/templates/base.html:63
 msgid "By floor"
 msgstr ""
 
-#: memopol2/templates/base.html:63
+#: memopol2/templates/base.html:64
 msgid "By total score"
 msgstr ""
 
-#: memopol2/templates/base.html:64 memopol2/templates/base.html.py:82
+#: memopol2/templates/base.html:65 memopol2/templates/base.html.py:85
 msgid "Tracked votes"
 msgstr ""
 
-#: memopol2/templates/base.html:65 memopol2/templates/base.html.py:83
+#: memopol2/templates/base.html:66 memopol2/templates/base.html.py:86
 msgid "Expressed opinions"
 msgstr ""
 
-#: memopol2/templates/base.html:66
+#: memopol2/templates/base.html:67
 msgid "Former eurodeputies"
 msgstr ""
 
-#: memopol2/templates/base.html:70 memopol2/templates/campaign/list.html:6
+#: memopol2/templates/base.html:71 memopol2/templates/campaign/list.html:6
 msgid "Campaigns"
 msgstr ""
 
-#: memopol2/templates/base.html:77
+#: memopol2/templates/base.html:80
 msgid "French deputies "
 msgstr ""
 
-#: memopol2/templates/base.html:81
+#: memopol2/templates/base.html:84
 msgid "By departments"
 msgstr ""
 
-#: memopol2/templates/home.html:8 memopol2/templates/index.html:20
+#: memopol2/templates/home.html:9 memopol2/templates/index.html:20
 #: memopol2/templates/meps/country_list.html:6
 msgid "MEPs by country"
 msgstr "Eurodéputés par pays"
 
-#: memopol2/templates/home.html:10
+#: memopol2/templates/home.html:11
 #: memopol2/templates/meps/committee_list.html:6
 #, fuzzy
 msgid "MEPs by committee"
 msgstr "Eurodéputés par pays"
 
-#: memopol2/templates/home.html:12 memopol2/templates/index.html:46
+#: memopol2/templates/home.html:13 memopol2/templates/index.html:46
 #: memopol2/templates/meps/group_list.html:6
 msgid "MEPs by political group"
 msgstr "Eurodéputés par groupe parlementaire"
 
-#: memopol2/templates/home.html:17
+#: memopol2/templates/home.html:18
 msgid "Last tracked votes"
 msgstr ""
 
@@ -202,8 +202,6 @@ msgstr ""
 #: memopol2/templates/meps/delegation_list.html:13
 #: memopol2/templates/meps/group_list.html:18
 #: memopol2/templates/meps/localparty_list.html:17
-#: memopol2/templates/mps/department_list.html:13
-#: memopol2/templates/mps/group_list.html:13
 #, python-format
 msgid " - %(count)s MEPs "
 msgstr " - %(count)s députés "
@@ -221,21 +219,21 @@ msgstr ""
 msgid "Memopol2 Administration"
 msgstr "Administration de Memopol2"
 
-#: memopol2/templates/admin/login.html:7
+#: memopol2/templates/admin/login.html:6
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
 msgstr[0] ""
 msgstr[1] ""
 
-#: memopol2/templates/admin/login.html:23
+#: memopol2/templates/admin/login.html:22
 msgid "Username:"
 msgstr ""
 
-#: memopol2/templates/admin/login.html:27
+#: memopol2/templates/admin/login.html:26
 msgid "Password:"
 msgstr ""
 
-#: memopol2/templates/admin/login.html:32
+#: memopol2/templates/admin/login.html:31
 msgid "Log in"
 msgstr ""
 
@@ -274,8 +272,6 @@ msgstr ""
 #: memopol2/templates/campaign/view.html:201
 #: memopol2/templates/meps/mep_contact.html:6
 #: memopol2/templates/meps/meps_table_tr.html:74
-#: memopol2/templates/mps/mp_contact.html:5
-#: memopol2/templates/mps/mps_table_tr.html:26
 #, fuzzy
 msgid "E-mail"
 msgstr "E-mail&nbsp;: "
@@ -289,43 +285,43 @@ msgid "More information"
 msgstr "Informations générales"
 
 #: memopol2/templates/comments/form.html:19
-#: memopol2/templates/comments/preview.html:34
+#: memopol2/templates/comments/preview.html:33
 msgid "Post"
 msgstr ""
 
 #: memopol2/templates/comments/form.html:20
-#: memopol2/templates/comments/preview.html:35
+#: memopol2/templates/comments/preview.html:34
 msgid "Preview"
 msgstr ""
 
-#: memopol2/templates/comments/posted.html:4
+#: memopol2/templates/comments/posted.html:3
 msgid "Thanks for contributing"
 msgstr ""
 
-#: memopol2/templates/comments/posted.html:7
+#: memopol2/templates/comments/posted.html:6
 msgid "Thank you for your contribution"
 msgstr ""
 
-#: memopol2/templates/comments/preview.html:4
-#: memopol2/templates/comments/preview.html:13
+#: memopol2/templates/comments/preview.html:3
+#: memopol2/templates/comments/preview.html:12
 msgid "Preview the public position"
 msgstr ""
 
-#: memopol2/templates/comments/preview.html:11
+#: memopol2/templates/comments/preview.html:10
 msgid "Please correct the error below"
 msgid_plural "Please correct the errors below"
 msgstr[0] ""
 msgstr[1] ""
 
-#: memopol2/templates/comments/preview.html:16
+#: memopol2/templates/comments/preview.html:15
 msgid "and"
 msgstr ""
 
-#: memopol2/templates/comments/preview.html:16
+#: memopol2/templates/comments/preview.html:15
 msgid "Post the position"
 msgstr ""
 
-#: memopol2/templates/comments/preview.html:16
+#: memopol2/templates/comments/preview.html:15
 msgid "or make changes"
 msgstr ""
 
@@ -394,7 +390,6 @@ msgid ", member of the european parliament"
 msgstr ", eurodéputé"
 
 #: memopol2/templates/meps/mep_detail.html:43
-#: memopol2/templates/mps/mp_detail.html:10
 msgid "General information"
 msgstr "Informations générales"
 
@@ -407,7 +402,6 @@ msgid "Country"
 msgstr "Pays"
 
 #: memopol2/templates/meps/mep_detail.html:59
-#: memopol2/templates/mps/mp_detail.html:31
 msgid "Political group: "
 msgstr "Groupe politique&nbsp;: "
 
@@ -422,7 +416,6 @@ msgid ""
 msgstr "%(day)s/%(month)s/%(year)s <i>à</i> %(city)s"
 
 #: memopol2/templates/meps/mep_detail.html:71
-#: memopol2/templates/mps/mp_detail.html:40
 msgid "Contact"
 msgstr "Contact"
 
@@ -455,14 +448,11 @@ msgid "CV"
 msgstr "CV"
 
 #: memopol2/templates/meps/mep_detail.html:153
-#: memopol2/templates/mps/mp_detail.html:78
 msgid "Opinions (memopol v1)"
 msgstr "Prises de position (memopol v1)"
 
 #: memopol2/templates/meps/mep_detail.html:156
 #: memopol2/templates/meps/mep_detail.html:170
-#: memopol2/templates/mps/mp_detail.html:81
-#: memopol2/templates/mps/mp_detail.html:95
 msgid "Read more..."
 msgstr "En savoir plus..."
 
@@ -487,106 +477,6 @@ msgstr "Informations générales"
 #: memopol2/templates/meps/organization_list.html:6
 msgid "MEP by instances"
 msgstr ""
-
-#: memopol2/templates/mps/container_detail.html:5
-#, fuzzy
-msgid "Members of the French AN"
-msgstr "Eurodéputés"
-
-#: memopol2/templates/mps/department_list.html:5
-msgid "Departments"
-msgstr ""
-
-#: memopol2/templates/mps/group_list.html:5
-#, fuzzy
-msgid "French MPs by political group"
-msgstr "Eurodéputés par groupe parlementaire"
-
-#: memopol2/templates/mps/index.html:6
-msgid "MEPs"
-msgstr "MEPs"
-
-#: memopol2/templates/mps/mp_contact.html:15
-msgid "Building"
-msgstr "Bâtiment"
-
-#: memopol2/templates/mps/mp_contact.html:26
-#: memopol2/templates/mps/mp_contact.html:29
-msgid "Web&nbsp;: "
-msgstr "Site Web&nbsp;: "
-
-#: memopol2/templates/mps/mp_detail.html:3
-#: memopol2/templates/mps/mp_detail.html:7
-#, fuzzy
-msgid ", member of the french parliament"
-msgstr ", eurodéputé"
-
-#: memopol2/templates/mps/mp_detail.html:24
-msgid "Born on (female)"
-msgstr "Née le"
-
-#: memopol2/templates/mps/mp_detail.html:24
-msgid "Born on"
-msgstr "Né le"
-
-#: memopol2/templates/mps/mp_detail.html:25
-#, python-format
-msgid "%(day)s/%(month)s/%(year)s <i>at</i> %(city)s"
-msgstr "%(day)s/%(month)s/%(year)s <i>à</i> %(city)s"
-
-#: memopol2/templates/mps/mp_detail.html:26
-msgid "Département:"
-msgstr ""
-
-#: memopol2/templates/mps/mp_detail.html:45
-msgid "NosDéputés.fr"
-msgstr ""
-
-#: memopol2/templates/mps/mp_detail.html:52
-msgid "Présences enregistrées ou relevées"
-msgstr ""
-
-#: memopol2/templates/mps/mp_detail.html:53
-msgid "Participations"
-msgstr ""
-
-#: memopol2/templates/mps/mp_detail.html:54
-msgid "Mots prononcés"
-msgstr ""
-
-#: memopol2/templates/mps/mp_detail.html:55
-msgid "Questions orales"
-msgstr ""
-
-#: memopol2/templates/mps/mp_detail.html:56
-msgid "Vacances parlementaires"
-msgstr ""
-
-#: memopol2/templates/mps/mp_detail.html:59
-msgid "Informations generated by"
-msgstr ""
-
-#: memopol2/templates/mps/mp_detail.html:66
-msgid "Functions"
-msgstr ""
-
-#: memopol2/templates/mps/mp_detail.html:89
-#, fuzzy
-msgid "Scores average"
-msgstr "Scores"
-
-#: memopol2/templates/mps/mp_list.html:5
-msgid "French deputies"
-msgstr ""
-
-#: memopol2/templates/mps/mps_table_tr.html:16
-msgid "Phone"
-msgstr ""
-
-#: memopol2/templates/mps/mps_table_tr.html:34
-#, fuzzy
-msgid "More informations"
-msgstr "Informations générales"
 
 #: memopol2/templates/reps/opinion_list.html:5
 #, fuzzy
@@ -616,6 +506,44 @@ msgstr "Votes"
 #: memopol2/templates/votes/recommendationdata_list.html:5
 msgid "Importable votes"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Members of the French AN"
+#~ msgstr "Eurodéputés"
+
+#, fuzzy
+#~ msgid "French MPs by political group"
+#~ msgstr "Eurodéputés par groupe parlementaire"
+
+#~ msgid "MEPs"
+#~ msgstr "MEPs"
+
+#~ msgid "Building"
+#~ msgstr "Bâtiment"
+
+#~ msgid "Web&nbsp;: "
+#~ msgstr "Site Web&nbsp;: "
+
+#, fuzzy
+#~ msgid ", member of the french parliament"
+#~ msgstr ", eurodéputé"
+
+#~ msgid "Born on (female)"
+#~ msgstr "Née le"
+
+#~ msgid "Born on"
+#~ msgstr "Né le"
+
+#~ msgid "%(day)s/%(month)s/%(year)s <i>at</i> %(city)s"
+#~ msgstr "%(day)s/%(month)s/%(year)s <i>à</i> %(city)s"
+
+#, fuzzy
+#~ msgid "Scores average"
+#~ msgstr "Scores"
+
+#, fuzzy
+#~ msgid "More informations"
+#~ msgstr "Informations générales"
 
 #~ msgid "Browsing"
 #~ msgstr "Navigation"
