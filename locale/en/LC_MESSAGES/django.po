@@ -1,27 +1,29 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: memopol 2.0\n"
+"Project-Id-Version: The Political Memory of La Quadrature du Net\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-13 15:05+0200\n"
-"PO-Revision-Date: 2011-02-25 01:50+0100\n"
-"Last-Translator: Benjamin Sonntag <benjamin@sonntag.fr>\n"
+"POT-Creation-Date: 2012-05-13 19:37+0200\n"
+"PO-Revision-Date: 2012-05-12 05:13+0000\n"
+"Last-Translator: psycojoker <psycojoker@gmail.com>\n"
 "Language-Team: <mempol2@laquadrature.net>\n"
-"Language: English\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n>1;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: apps/campaign/forms.py:38
 msgid ""
 "Unfortunately we must protect against automatic attacks, please forgive us "
 "this inconvenience."
 msgstr ""
+"Unfortunately we must protect against automatic attacks, please forgive us "
+"this inconvenience."
 
 #: apps/campaign/views.py:150
 #, python-format
@@ -36,160 +38,196 @@ msgid ""
 "result: %(result)s\n"
 "comment: %(comment)s"
 msgstr ""
+"Someone sent feedback on a campaign\n"
+"Your verification key is %(root_url)s/campaign/feedback/%(feedback_id)s/"
+"%(actid)s\n"
+"\n"
+"from: %(from)s\n"
+"about %(mep)s\n"
+"type: %(type)s\n"
+"result: %(result)s\n"
+"comment: %(comment)s"
 
 #: apps/campaign/views.py:159
 msgid "Memopol2 feedback moderation"
-msgstr ""
+msgstr "Memopol2 feedback moderation"
 
-#: apps/positions/forms.py:9
+#: apps/positions/forms.py:9 memopol2/templates/campaign/list.html:20
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: apps/positions/forms.py:10
 msgid "Email address"
-msgstr ""
+msgstr "Email address"
 
 #: apps/positions/forms.py:11
 msgid "Source"
-msgstr ""
+msgstr "Source"
 
 #: apps/positions/forms.py:12
 msgid "Position"
-msgstr ""
+msgstr "Position"
 
 #: apps/queries/forms.py:7
 msgid "Constituent Country"
-msgstr ""
+msgstr "Constituent Country"
 
 #: apps/queries/forms.py:8
 msgid "Political Group"
-msgstr ""
+msgstr "Political Group"
 
 #: apps/queries/forms.py:9
 msgid "Commitee"
+msgstr "Commitee"
+
+#: memopol2/templates/404.html:3
+msgid "Page Not Found"
+msgstr ""
+
+#: memopol2/templates/404.html:4
+msgid "What you were looking for is just not there."
+msgstr ""
+
+#: memopol2/templates/500.html:3
+msgid "Internal Error 500"
 msgstr ""
 
 #: memopol2/templates/base.html:22
-msgid "The Political Memory of la Quadrature du Net"
-msgstr ""
+#, fuzzy
+msgid "The Political Memory of La Quadrature du Net"
+msgstr "The Political Memory of la Quadrature du Net"
 
 #: memopol2/templates/base.html:25
 msgid "Administration"
-msgstr ""
+msgstr "Administration"
 
 #: memopol2/templates/base.html:26
 msgid "Comments moderation"
-msgstr ""
+msgstr "Comments moderation"
 
 #: memopol2/templates/base.html:27
 msgid "Logout"
-msgstr ""
+msgstr "Logout"
 
 #: memopol2/templates/base.html:30 memopol2/templates/campaign/list.html:37
 msgid "Login"
-msgstr ""
+msgstr "Login"
 
 #: memopol2/templates/base.html:46 memopol2/templates/search.html:4
 #: memopol2/templates/search.html.py:8
 msgid "Search"
-msgstr ""
+msgstr "Search"
 
 #: memopol2/templates/base.html:50
 msgid "GO"
-msgstr ""
+msgstr "GO"
 
 #: memopol2/templates/base.html:54
 msgid "Eurodeputies "
-msgstr ""
+msgstr "Eurodeputies "
 
 #: memopol2/templates/base.html:56 memopol2/templates/base.html.py:82
 msgid "By name"
-msgstr ""
+msgstr "By name"
 
 #: memopol2/templates/base.html:57
 msgid "By country"
-msgstr ""
+msgstr "By country"
 
 #: memopol2/templates/base.html:58 memopol2/templates/base.html.py:83
 msgid "By political group"
-msgstr ""
+msgstr "By political group"
 
 #: memopol2/templates/base.html:59
 msgid "By committee"
-msgstr ""
+msgstr "By committee"
 
 #: memopol2/templates/base.html:60
 msgid "By delegation"
-msgstr ""
+msgstr "By delegation"
 
 #: memopol2/templates/base.html:61
 msgid "By local party"
-msgstr ""
+msgstr "By local party"
 
 #: memopol2/templates/base.html:62
 msgid "By instances"
-msgstr ""
+msgstr "By instances"
 
 #: memopol2/templates/base.html:63
 msgid "By floor"
-msgstr ""
+msgstr "By floor"
 
 #: memopol2/templates/base.html:64
 msgid "By total score"
-msgstr ""
+msgstr "By total score"
 
 #: memopol2/templates/base.html:65 memopol2/templates/base.html.py:85
 msgid "Tracked votes"
-msgstr ""
+msgstr "Tracked votes"
 
 #: memopol2/templates/base.html:66 memopol2/templates/base.html.py:86
 msgid "Expressed opinions"
-msgstr ""
+msgstr "Expressed opinions"
 
 #: memopol2/templates/base.html:67
 msgid "Former eurodeputies"
-msgstr ""
+msgstr "Former eurodeputies"
 
 #: memopol2/templates/base.html:71 memopol2/templates/campaign/list.html:6
 msgid "Campaigns"
-msgstr ""
+msgstr "Campaigns"
 
 #: memopol2/templates/base.html:80
 msgid "French deputies "
-msgstr ""
+msgstr "French deputies "
 
 #: memopol2/templates/base.html:84
 msgid "By departments"
+msgstr "By departments"
+
+#: memopol2/templates/base.html:101
+msgid ""
+" Memopol is free software <a href=\"https://gitorious.org/"
+"memopol2-0\">released</a> under the terms of the\n"
+"      <a href=\"http://www.gnu.org/licenses/agpl.html\">GNU aGPLV3+</a> - <a "
+"href=\"https://projets.lqdn.fr/projects/mempol\">Bug tracking system</a> - "
+"<a href=\"https://projets.lqdn.fr/projects/mempol/issues/new\">Report a bug</"
+"a>"
+msgstr ""
+
+#: memopol2/templates/base.html:105
+msgid "Provided by"
 msgstr ""
 
 #: memopol2/templates/home.html:9 memopol2/templates/index.html:20
 #: memopol2/templates/meps/country_list.html:6
 msgid "MEPs by country"
-msgstr ""
+msgstr "MEPs by country"
 
 #: memopol2/templates/home.html:11
 #: memopol2/templates/meps/committee_list.html:6
 msgid "MEPs by committee"
-msgstr ""
+msgstr "MEPs by committee"
 
 #: memopol2/templates/home.html:13 memopol2/templates/index.html:46
 #: memopol2/templates/meps/group_list.html:6
 msgid "MEPs by political group"
-msgstr ""
+msgstr "MEPs by political group"
 
 #: memopol2/templates/home.html:18
 msgid "Last tracked votes"
-msgstr ""
+msgstr "Last tracked votes"
 
 #: memopol2/templates/index.html:7 memopol2/templates/campaign/view.html:37
 #: memopol2/templates/meps/by_group.html:6
 #: memopol2/templates/meps/mep_list.html:8
 msgid "Members of the European Parliament"
-msgstr ""
+msgstr "Members of the European Parliament"
 
 #: memopol2/templates/index.html:7 memopol2/templates/meps/mep_detail.html:134
 msgid "from"
-msgstr ""
+msgstr "from"
 
 #: memopol2/templates/index.html:28 memopol2/templates/index.html.py:56
 #: memopol2/templates/meps/committee_list.html:13
@@ -199,37 +237,50 @@ msgstr ""
 #: memopol2/templates/meps/localparty_list.html:17
 #, python-format
 msgid " - %(count)s MEPs "
-msgstr ""
+msgstr " - %(count)s MEPs "
 
 #: memopol2/templates/index.html:35
 msgid "List of Votes"
-msgstr ""
+msgstr "List of Votes"
 
 #: memopol2/templates/search.html:12
 msgid "Search results"
-msgstr ""
+msgstr "Search results"
 
 #: memopol2/templates/admin/base_site.html:3
 #: memopol2/templates/admin/base_site.html:6
 msgid "Memopol2 Administration"
-msgstr ""
+msgstr "Memopol2 Administration"
 
 #: memopol2/templates/admin/login.html:6
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Please correct the error below."
+msgstr[1] "Please correct the errors below."
 
 #: memopol2/templates/admin/login.html:22
 msgid "Username:"
-msgstr ""
+msgstr "Username:"
 
 #: memopol2/templates/admin/login.html:26
 msgid "Password:"
-msgstr ""
+msgstr "Password:"
 
 #: memopol2/templates/admin/login.html:31
 msgid "Log in"
+msgstr "Log in"
+
+#: memopol2/templates/campaign/edit.html:24
+msgid "Edit individual MEPs scores"
+msgstr ""
+
+#: memopol2/templates/campaign/edit.html:31
+msgid "Submit"
+msgstr ""
+
+#: memopol2/templates/campaign/edit.html:35
+#: memopol2/templates/campaign/view.html:168
+msgid "Notable MEPs in this campaign"
 msgstr ""
 
 #: memopol2/templates/campaign/edit.html:60
@@ -239,7 +290,7 @@ msgstr ""
 #: memopol2/templates/meps/mep_contact.html:18
 #: memopol2/templates/meps/meps_table_tr.html:63
 msgid "Brussels"
-msgstr ""
+msgstr "Brussels"
 
 #: memopol2/templates/campaign/edit.html:61
 #: memopol2/templates/campaign/edit.html:64
@@ -250,7 +301,7 @@ msgstr ""
 #: memopol2/templates/meps/meps_table_tr.html:64
 #: memopol2/templates/meps/meps_table_tr.html:69
 msgid "Tel."
-msgstr ""
+msgstr "Tel."
 
 #: memopol2/templates/campaign/edit.html:63
 #: memopol2/templates/campaign/view.html:96
@@ -259,7 +310,7 @@ msgstr ""
 #: memopol2/templates/meps/mep_contact.html:28
 #: memopol2/templates/meps/meps_table_tr.html:68
 msgid "Strasbourg"
-msgstr ""
+msgstr "Strasbourg"
 
 #: memopol2/templates/campaign/edit.html:68
 #: memopol2/templates/campaign/view.html:101
@@ -267,226 +318,403 @@ msgstr ""
 #: memopol2/templates/meps/mep_contact.html:6
 #: memopol2/templates/meps/meps_table_tr.html:74
 msgid "E-mail"
-msgstr ""
+msgstr "E-mail"
 
 #: memopol2/templates/campaign/edit.html:76
 #: memopol2/templates/campaign/view.html:109
 #: memopol2/templates/campaign/view.html:209
 #: memopol2/templates/meps/meps_table_tr.html:84
 msgid "More information"
+msgstr "More information"
+
+#: memopol2/templates/campaign/edit.html:108
+#: memopol2/templates/campaign/view.html:141
+#: memopol2/templates/campaign/view.html:241
+msgid "Feedback - crap will be moderated and gives you bad karma!"
+msgstr ""
+
+#: memopol2/templates/campaign/list.html:21
+msgid "Results"
+msgstr ""
+
+#: memopol2/templates/campaign/list.html:22
+#, fuzzy
+msgid "Actions"
+msgstr "Functions"
+
+#: memopol2/templates/campaign/list.html:29
+#, python-format
+msgid ""
+"<td><a href=\"/campaign/report/%(c.id)s/\">%(c.debriefing_set.count)s "
+"responses for %(mepcnt)s MEP(s)</a></td>"
+msgstr ""
+
+#: memopol2/templates/campaign/list.html:30
+msgid "Edit influence"
+msgstr ""
+
+#: memopol2/templates/campaign/list.html:37
+#, fuzzy
+msgid "No campaigns yet."
+msgstr "Campaigns"
+
+#: memopol2/templates/campaign/list.html:37
+msgid "and create one"
+msgstr ""
+
+#: memopol2/templates/campaign/list.html:37
+msgid "Create one."
+msgstr ""
+
+#: memopol2/templates/campaign/view.html:53
+msgid "Have you contacted a MEP? Wanna get credit? Tell us how it went!"
+msgstr ""
+
+#: memopol2/templates/campaign/view.html:57
+msgid "MEPs with campaign feedback"
+msgstr ""
+
+#: memopol2/templates/campaign/view.html:61
+#: memopol2/templates/campaign/view.html:173
+msgid "Feedback"
+msgstr ""
+
+#: memopol2/templates/campaign/view.html:62
+#: memopol2/templates/campaign/view.html:174
+#, fuzzy
+msgid "MEP"
+msgstr "MEPs"
+
+#: memopol2/templates/campaign/view.html:63
+#: memopol2/templates/campaign/view.html:175
+#: memopol2/templates/meps/mep_detail.html:58
+msgid "Country"
+msgstr "Country"
+
+#: memopol2/templates/campaign/view.html:64
+#: memopol2/templates/campaign/view.html:176
+msgid "Group"
+msgstr ""
+
+#: memopol2/templates/campaign/view.html:65
+#: memopol2/templates/campaign/view.html:177
+msgid "Party"
+msgstr ""
+
+#: memopol2/templates/campaign/view.html:66
+#: memopol2/templates/campaign/view.html:178
+#: memopol2/templates/meps/mep_detail.html:71
+msgid "Contact"
+msgstr "Contact"
+
+#: memopol2/templates/campaign/view.html:124
+#: memopol2/templates/campaign/view.html:224
+#, fuzzy
+msgid "Contact Type:"
+msgstr "Contact"
+
+#: memopol2/templates/campaign/view.html:129
+#: memopol2/templates/campaign/view.html:229
+msgid "Meps response:"
+msgstr ""
+
+#: memopol2/templates/campaign/view.html:134
+#: memopol2/templates/campaign/view.html:234
+msgid "How to contact you?"
+msgstr ""
+
+#: memopol2/templates/campaign/view.html:147
+#: memopol2/templates/campaign/view.html:247
+#, fuzzy
+msgid "Enter the result:"
+msgstr "Search results"
+
+#: memopol2/templates/campaign/view.html:151
+#: memopol2/templates/campaign/view.html:251
+msgid "send <3 datalove"
+msgstr ""
+
+#: memopol2/templates/campaign/view.html:160
+msgid "Get a new set of MEPs"
+msgstr ""
+
+#: memopol2/templates/campaign/view.html:164
+#, fuzzy
+msgid "Campaign Details"
+msgstr "Campaigns"
+
+#: memopol2/templates/campaign/view.html:172
+msgid "Influence"
+msgstr ""
+
+#: memopol2/templates/campaign/view.html:185
+msgid "Feedback!"
 msgstr ""
 
 #: memopol2/templates/comments/form.html:19
 #: memopol2/templates/comments/preview.html:33
 msgid "Post"
-msgstr ""
+msgstr "Post"
 
 #: memopol2/templates/comments/form.html:20
 #: memopol2/templates/comments/preview.html:34
 msgid "Preview"
-msgstr ""
+msgstr "Preview"
 
 #: memopol2/templates/comments/posted.html:3
 msgid "Thanks for contributing"
-msgstr ""
+msgstr "Thanks for contributing"
 
 #: memopol2/templates/comments/posted.html:6
 msgid "Thank you for your contribution"
-msgstr ""
+msgstr "Thank you for your contribution"
 
 #: memopol2/templates/comments/preview.html:3
 #: memopol2/templates/comments/preview.html:12
 msgid "Preview the public position"
-msgstr ""
+msgstr "Preview the public position"
 
 #: memopol2/templates/comments/preview.html:10
 msgid "Please correct the error below"
 msgid_plural "Please correct the errors below"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Please correct the error below"
+msgstr[1] "Please correct the errors below"
 
 #: memopol2/templates/comments/preview.html:15
 msgid "and"
-msgstr ""
+msgstr "and"
 
 #: memopol2/templates/comments/preview.html:15
 msgid "Post the position"
-msgstr ""
+msgstr "Post the position"
 
 #: memopol2/templates/comments/preview.html:15
 msgid "or make changes"
-msgstr ""
+msgstr "or make changes"
 
 #: memopol2/templates/contact_form/contact_form.html:4
 msgid "Contact form"
-msgstr ""
+msgstr "Contact form"
 
 #: memopol2/templates/contact_form/contact_form.html:9
 msgid "Send"
-msgstr ""
+msgstr "Send"
 
 #: memopol2/templates/meps/building_detail.html:5
 #, python-format
 msgid "MEP in %(building.name)s of the %(floor)sth floor"
-msgstr ""
+msgstr "MEP in %(building.name)s of the %(floor)sth floor"
 
 #: memopol2/templates/meps/building_list.html:8
 msgid "MEPs by floor"
-msgstr ""
+msgstr "MEPs by floor"
 
 #: memopol2/templates/meps/by_group.html:6
 msgid " from "
-msgstr ""
+msgstr " from "
 
 #: memopol2/templates/meps/delegation_list.html:6
 msgid "MEPs by delegation"
-msgstr ""
+msgstr "MEPs by delegation"
 
 #: memopol2/templates/meps/localparty_list.html:6
 msgid "MEPs by local party"
-msgstr ""
+msgstr "MEPs by local party"
 
 #: memopol2/templates/meps/mep_contact.html:42
 #: memopol2/templates/meps/mep_contact.html:43
 msgid "Website&nbsp;: "
-msgstr ""
+msgstr "Website&nbsp;: "
 
 #: memopol2/templates/meps/mep_contact.html:42
 msgid "Page on the website of the European Parliament"
-msgstr ""
+msgstr "Page on the website of the European Parliament"
 
 #: memopol2/templates/meps/mep_contact.html:43
 msgid "Current mandate page on the website of the European Parliament"
-msgstr ""
+msgstr "Current mandate page on the website of the European Parliament"
 
 #: memopol2/templates/meps/mep_contact.html:47
 msgid "Other website&nbsp;: "
-msgstr ""
+msgstr "Other website&nbsp;: "
 
 #: memopol2/templates/meps/mep_detail.html:4
 msgid "Political Memory: "
-msgstr ""
+msgstr "Political Memory: "
 
 #: memopol2/templates/meps/mep_detail.html:4
 #: memopol2/templates/meps/mep_detail.html:40
 msgid ", member of the european parliament"
-msgstr ""
+msgstr ", member of the european parliament"
 
 #: memopol2/templates/meps/mep_detail.html:43
 msgid "General information"
-msgstr ""
+msgstr "General information"
 
 #: memopol2/templates/meps/mep_detail.html:57
 msgid "Former mep"
-msgstr ""
-
-#: memopol2/templates/meps/mep_detail.html:58
-msgid "Country"
-msgstr ""
+msgstr "Former mep"
 
 #: memopol2/templates/meps/mep_detail.html:59
 msgid "Political group: "
-msgstr ""
+msgstr "Political group: "
 
 #: memopol2/templates/meps/mep_detail.html:63
 msgid "National party: "
-msgstr ""
+msgstr "National party: "
 
 #: memopol2/templates/meps/mep_detail.html:66
 #, python-format
 msgid ""
 "%(day)s %(month)s %(year)s<i> at </i>%(birth_place)s, %(age)s years old."
 msgstr ""
-
-#: memopol2/templates/meps/mep_detail.html:71
-msgid "Contact"
-msgstr ""
+"%(day)s %(month)s %(year)s<i> at </i>%(birth_place)s, %(age)s years old."
 
 #: memopol2/templates/meps/mep_detail.html:77
 msgid "Previous mandates"
-msgstr ""
+msgstr "Previous mandates"
 
 #: memopol2/templates/meps/mep_detail.html:87
 msgid "Previous groups"
-msgstr ""
+msgstr "Previous groups"
 
 #: memopol2/templates/meps/mep_detail.html:97
 msgid "Committees"
-msgstr ""
+msgstr "Committees"
 
 #: memopol2/templates/meps/mep_detail.html:114
 msgid "Delegations"
-msgstr ""
+msgstr "Delegations"
 
 #: memopol2/templates/meps/mep_detail.html:131
 msgid "Old staff"
-msgstr ""
+msgstr "Old staff"
 
 #: memopol2/templates/meps/mep_detail.html:134
 msgid "to"
-msgstr ""
+msgstr "to"
 
 #: memopol2/templates/meps/mep_detail.html:142
 msgid "CV"
-msgstr ""
+msgstr "CV"
 
 #: memopol2/templates/meps/mep_detail.html:153
 msgid "Opinions (memopol v1)"
-msgstr ""
+msgstr "Opinions (memopol v1)"
 
 #: memopol2/templates/meps/mep_detail.html:156
 #: memopol2/templates/meps/mep_detail.html:170
 msgid "Read more..."
-msgstr ""
+msgstr "Read more..."
 
 #: memopol2/templates/meps/mep_detail.html:164
 msgid "Total score"
-msgstr ""
+msgstr "Total score"
 
 #: memopol2/templates/meps/mep_detail.html:170
 #: memopol2/templates/mps/mp_detail.html:95
 msgid "on"
-msgstr ""
+msgstr "on"
 
 #: memopol2/templates/meps/mep_raw.html:17
 msgid "Back to normal view"
-msgstr ""
+msgstr "Back to normal view"
 
 #: memopol2/templates/meps/meps_table_tr.html:85
 msgid "Less information"
-msgstr ""
+msgstr "Less information"
 
 #: memopol2/templates/meps/organization_list.html:6
 msgid "MEP by instances"
-msgstr ""
+msgstr "MEP by instances"
 
 #: memopol2/templates/reps/opinion_list.html:5
 msgid "MEPs by opinions"
-msgstr ""
+msgstr "MEPs by opinions"
 
 #: memopol2/templates/votes/legend.html:2
 msgid "Legend"
-msgstr ""
+msgstr "Legend"
 
 #: memopol2/templates/votes/legend.html:3
 msgid "Good vote"
-msgstr ""
+msgstr "Good vote"
 
 #: memopol2/templates/votes/legend.html:4
 msgid "Bad vote"
-msgstr ""
+msgstr "Bad vote"
 
 #: memopol2/templates/votes/legend.html:5
 msgid "Abstention or absent"
-msgstr ""
+msgstr "Abstention or absent"
 
 #: memopol2/templates/votes/proposal_list.html:6
 msgid "Votes"
-msgstr ""
+msgstr "Votes"
 
 #: memopol2/templates/votes/recommendationdata_list.html:5
 msgid "Importable votes"
-msgstr ""
+msgstr "Importable votes"
+
+#~ msgid "Members of the French AN"
+#~ msgstr "Members of the French AN"
+
+#~ msgid "Departments"
+#~ msgstr "Departments"
+
+#~ msgid "French MPs by political group"
+#~ msgstr "French MPs by political group"
+
+#~ msgid "Building"
+#~ msgstr "Building"
+
+#~ msgid "Web&nbsp;: "
+#~ msgstr "Web&nbsp;: "
+
+#~ msgid ", member of the french parliament"
+#~ msgstr ", member of the french parliament"
 
 #~ msgid "Born on (female)"
 #~ msgstr "Born on"
+
+#~ msgid "Born on"
+#~ msgstr "Born on"
+
+#~ msgid "%(day)s/%(month)s/%(year)s <i>at</i> %(city)s"
+#~ msgstr "%(day)s/%(month)s/%(year)s <i>at</i> %(city)s"
+
+#~ msgid "Département:"
+#~ msgstr "Département:"
+
+#~ msgid "NosDéputés.fr"
+#~ msgstr "NosDéputés.fr"
+
+#~ msgid "Présences enregistrées ou relevées"
+#~ msgstr "Présences enregistrées ou relevées"
+
+#~ msgid "Participations"
+#~ msgstr "Participations"
+
+#~ msgid "Mots prononcés"
+#~ msgstr "Mots prononcés"
+
+#~ msgid "Questions orales"
+#~ msgstr "Questions orales"
+
+#~ msgid "Vacances parlementaires"
+#~ msgstr "Vacances parlementaires"
+
+#~ msgid "Informations generated by"
+#~ msgstr "Informations generated by"
+
+#~ msgid "Scores average"
+#~ msgstr "Scores average"
+
+#~ msgid "French deputies"
+#~ msgstr "French deputies"
+
+#~ msgid "Phone"
+#~ msgstr "Phone"
+
+#~ msgid "More informations"
+#~ msgstr "More informations"
