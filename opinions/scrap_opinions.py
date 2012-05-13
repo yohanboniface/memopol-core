@@ -12,6 +12,7 @@ def read_or_dl(url, name):
     open('dumps/%s' % name, 'w').write(html)
     return BeautifulSoup(html)
 
+
 def handle_reps_set(set_name, section):
     opinions = []
     size = len(open(set_name, "r").read().split('\n'))
@@ -51,6 +52,7 @@ def handle_reps_set(set_name, section):
                 opinion['body'] = []
             else:
                 opinion['body'] += [unicode(x.text if hasattr(x, 'text') else x)]
+
         print dumps(opinion)
         opinions.append(opinion)
 
