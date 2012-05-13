@@ -12,7 +12,7 @@
       <ul class="body">
           {% if mp.phones %}
             <li>
-              <b>{% trans "Phone" %}:</b>
+              <b>Téléphone :</b>
               {% for phone in mp.phones %}
                 <a href="callto://{{ phone|phone }}">{{ phone }}</a>
                 {% if not forloop.last %}-{% endif %}
@@ -22,7 +22,7 @@
 
           {% if mp.emails %}
             <li>
-              <b>{% trans "E-mail" %}:</b>
+              <b>Courriel:</b>
               {% for email in mp.emails %}
                 <a href="mailto:{{ email }}">{{ email }}</a>
                 {% if not forloop.last %}-{% endif %}
@@ -30,7 +30,7 @@
             </li>
           {% endif %}
       </ul>
-      <a class="more-contact" href="{% url mps:mp_contact mp.id %}">{% trans "More informations" %}...</a>
+      <a class="more-contact" href="{% url mps:mp_contact mp.id %}">Plus d'informations ...</a>
     </div>
   </td>
 </tr>

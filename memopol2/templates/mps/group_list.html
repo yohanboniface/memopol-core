@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1>{% trans "French MPs by political group" %}</h1>
+<h1>Députés Français par groupe politique</h1>
 <ul class="mp-groups">
 {% for group in object_list %}
     {% if group.count %}
@@ -10,7 +10,7 @@
         <a href="{% url mps:index_by_group group.abbreviation %}">
             {{ group.name }} ({{ group.abbreviation }})
         </a>
-        {% blocktrans with group.count as count %} - {{ count }} MEPs {% endblocktrans %}
+        - {{ count }} Députés
     </li>
     {% endif %}
 {% endfor %}

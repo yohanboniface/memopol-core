@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1>{% trans "Departments" %}</h1>
+<h1>Départements</h1>
 <ul class="groups">
 {% for department in object_list %}
     {% if department.count %}
@@ -10,7 +10,7 @@
         <a href="{% url mps:index_by_department department.number %}">
             {{ department.name }} ({{ department.number }})
         </a>
-        {% blocktrans with department.count as count %} - {{ count }} MEPs {% endblocktrans %}
+        - {{ count }} Députés
     </li>
     {% endif %}
 {% endfor %}
