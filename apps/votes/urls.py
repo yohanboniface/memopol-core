@@ -29,5 +29,5 @@ urlpatterns = patterns('',
     url(r'^(?P<pk>[a-zA-Z/-_]+)/dataporn/$', DetailView.as_view(model=Proposal, context_object_name='vote', template_name="votes/proposal_dataporn.html"), name='detail_dataporn'),
     url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<mep_id>.+)/$', proposal_rep, name='rep'),
     url(r'^(?P<pk>[a-zA-Z/-_]+)/$', DetailView.as_view(model=Proposal, context_object_name='vote'), name='detail'),
-    url(r'^latest/feed', LatestProposalsFeed()),
+    url(r'^latest/feed', LatestProposalsFeed(), name='lastest-rss'),
 )

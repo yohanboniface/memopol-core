@@ -15,7 +15,7 @@
 
     <div>
     {% if proposals %}
-        <h1 class="document-title">{% trans "Last tracked votes" %}</h1>
+        <h1 class="document-title">{% trans "Last tracked votes" %} <a href="{% url votes:lastest-rss %}"><img src="/static/img/rss.png" /></a></h1>
         <ul class="votes">
             {% for proposal in proposals|dictsortreversed:"date" %}
                 <li style="list-style: none; margin-left: 15px;">
