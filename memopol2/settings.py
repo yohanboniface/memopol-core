@@ -91,6 +91,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
+if APPS_DEBUG:
+    MIDDLEWARE_CLASSES += (
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    )
+
 # WARNING just setting up DEBUG = False in settings_local won't change the cache settings!
 ENABLE_CACHING = not DEBUG
 
@@ -105,11 +110,6 @@ CACHES = {
 }
 
 JOHNNY_MIDDLEWARE_KEY_PREFIX='cache_memopol2'
-
-if APPS_DEBUG:
-    MIDDLEWARE_CLASSES += (
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-    )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
