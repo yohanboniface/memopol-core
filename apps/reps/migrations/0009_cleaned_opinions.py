@@ -5,6 +5,7 @@ from dateutil.parser import parse
 from json import load
 from south.v2 import DataMigration
 from django.conf import settings
+from south.db import db
 
 def get_or_create(klass, _id=None, **kwargs):
     if _id is None:
@@ -29,6 +30,7 @@ def clean_text(text):
 class Migration(DataMigration):
 
     def forwards(self, orm):
+        db.alter_column('reps_opinionrep', 'date', self.gf('django.db.models.fields.DateField')(null=True))
         "Write your forwards methods here."
         Opinion = orm["reps.opinion"]
         OpinionREP = orm["reps.opinionrep"]
@@ -68,6 +70,7 @@ class Migration(DataMigration):
 
     def backwards(self, orm):
         "Write your backwards methods here."
+        db.alter_column('reps_opinionrep', 'date', self.gf('django.db.models.fields.DateField')())
 
 
     models = {
