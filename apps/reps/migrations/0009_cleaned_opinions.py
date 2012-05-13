@@ -70,6 +70,8 @@ class Migration(DataMigration):
 
     def backwards(self, orm):
         "Write your backwards methods here."
+        OpinionREP = orm["reps.opinionrep"]
+        OpinionREP.objects.filter(date__isnull=True).delete()
         db.alter_column('reps_opinionrep', 'date', self.gf('django.db.models.fields.DateField')())
 
 
