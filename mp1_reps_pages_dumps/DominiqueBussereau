@@ -143,7 +143,7 @@ Template argument size: 20/2097152 bytes
 Expensive parser function count: 0/100
 -->
 
-<!-- Saved in parser cache with key pi_wiki:pcache:idhash:9179-0!*!0!!en!2!* and timestamp 20120203041704 -->
+<!-- Saved in parser cache with key pi_wiki:pcache:idhash:9179-0!*!0!!en!2!* and timestamp 20120513162655 -->
 <div class="printfooter">
 Retrieved from "<a href="http://www.laquadrature.net/wiki/DominiqueBussereau">http://www.laquadrature.net/wiki/DominiqueBussereau</a>"</div>
 		<div id='catlinks' class='catlinks'><div id="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Category</a>: <span dir='ltr'><a href="/wiki/Category:D%C3%A9put%C3%A9s" title="Category:Députés">Députés</a></span></div></div>		<!-- end content -->
@@ -166,7 +166,7 @@ Retrieved from "<a href="http://www.laquadrature.net/wiki/DominiqueBussereau">ht
 		<h5>Personal tools</h5>
 		<div class="pBody">
 			<ul>
-				<li id="pt-login"><a href="/wiki/index.php?title=Special:UserLogin&amp;returnto=DominiqueBussereau" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in / create account</a></li>
+				<li id="pt-login"><a href="/wiki/index.php?title=Special:UserLogin&amp;returnto=DominiqueBussereau&amp;returntoquery=test%3Dtrue" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in / create account</a></li>
 			</ul>
 		</div>
 	</div>
@@ -174,7 +174,7 @@ Retrieved from "<a href="http://www.laquadrature.net/wiki/DominiqueBussereau">ht
 		<a style="background-image: url(http://www.laquadrature.net/files/laquadrature_logo_wiki.png);" href="/wiki/Main_Page" title="Visit the main page"></a>
 	</div>
 	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
-	<div class='generated-sidebar portlet' id='p-navigation'>
+	<div class='generated-sidebar portlet' id='p-Navigation'>
 		<h5>Navigation</h5>
 		<div class='pBody'>
 			<ul>
@@ -197,29 +197,6 @@ Retrieved from "<a href="http://www.laquadrature.net/wiki/DominiqueBussereau">ht
 			</ul>
 		</div>
 	</div>
-	<div class='generated-sidebar portlet' id='p-LOPPSI'>
-		<h5>LOPPSI</h5>
-		<div class='pBody'>
-			<ul>
-				<li id="n-DossierLOPPSI"><a href="http://www.laquadrature.net/fr/filtrage-du-net">Net Filtering Dossier</a></li>
-				<li id="n-Projet-de-loi"><a href="http://www.laquadrature.net/wiki/LOPPSI_projet_de_loi_du_gouvernement">Projet de loi</a></li>
-				<li id="n-Contacter-son-d.C3.A9put.C3.A9"><a href="http://www.laquadrature.net/wiki/LOPPSI_contacter-son-depute_HOWTO">Contacter son député</a></li>
-				<li id="n-Best-of-des-s.C3.A9ances-.C3.A0-l.27AN"><a href="http://www.laquadrature.net/wiki/LOPPSI_Best_Of">Best of des séances à l'AN</a></li>
-			</ul>
-		</div>
-	</div>
-	<div class='generated-sidebar portlet' id='p-politicalmemory'>
-		<h5>Political memory</h5>
-		<div class='pBody'>
-			<ul>
-				<li id="n-mainpage"><a href="/wiki/Political_Memory" title="Visit the main page [z]" accesskey="z">Main Page</a></li>
-				<li id="n-Frenchdeputies"><a href="http://www.laquadrature.net/wiki/Deputes_par_nom">French MPs (fr)</a></li>
-				<li id="n-MEPsbycountry"><a href="/wiki/MEPs_by_country">MEPs by country</a></li>
-				<li id="n-MEPsbygroup"><a href="/wiki/MEPs_by_group">MEPs by group</a></li>
-				<li id="n-allvoterecords"><a href="/wiki/Vote_List">All vote records</a></li>
-			</ul>
-		</div>
-	</div>
 	<div id="p-search" class="portlet">
 		<h5><label for="searchInput">Search</label></h5>
 		<div id="searchBody" class="pBody">
@@ -238,7 +215,7 @@ Retrieved from "<a href="http://www.laquadrature.net/wiki/DominiqueBussereau">ht
 				<li id="t-whatlinkshere"><a href="/wiki/Special:WhatLinksHere/DominiqueBussereau" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
 				<li id="t-recentchangeslinked"><a href="/wiki/Special:RecentChangesLinked/DominiqueBussereau" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
 <li id="t-specialpages"><a href="/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
-				<li id="t-print"><a href="/wiki/index.php?title=DominiqueBussereau&amp;printable=yes" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="/wiki/index.php?title=DominiqueBussereau&amp;oldid=147607" title="Permanent link to this revision of the page">Permanent link</a></li>			</ul>
+				<li id="t-print"><a href="/wiki/index.php?title=DominiqueBussereau&amp;test=true&amp;printable=yes" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="/wiki/index.php?title=DominiqueBussereau&amp;oldid=147607" title="Permanent link to this revision of the page">Permanent link</a></li>			</ul>
 		</div>
 	</div>
 </div><!-- end of the left (by default at least) column -->
@@ -249,7 +226,7 @@ Retrieved from "<a href="http://www.laquadrature.net/wiki/DominiqueBussereau">ht
 	</div>
 	<ul id="f-list">
 		<li id="lastmod"> This page was last modified on 26 September 2011, at 16:11.</li>
-		<li id="viewcount">This page has been accessed 1,345 times.</li>
+		<li id="viewcount">This page has been accessed 1,406 times.</li>
 		<li id="copyright">Content is available under <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.fr" class="external ">Creative Commons Attribution-ShareAlike License</a>.</li>
 		<li id="privacy"><a href="/wiki/La_Quadrature_du_Net:Privacy_policy" title="La Quadrature du Net:Privacy policy">Privacy policy</a></li>
 		<li id="about"><a href="/wiki/La_Quadrature_du_Net:About" title="La Quadrature du Net:About">About La Quadrature du Net</a></li>
@@ -260,7 +237,7 @@ Retrieved from "<a href="http://www.laquadrature.net/wiki/DominiqueBussereau">ht
 
 <script src="/wiki/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=monobook&amp;*"></script>
 <script>if ( window.mediaWiki ) {
-	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "DominiqueBussereau", "wgTitle": "DominiqueBussereau", "wgAction": "view", "wgArticleId": 9179, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 147607, "wgCategories": ["Députés"], "wgBreakFrames": false, "wgRestrictionEdit": ["autoconfirmed"], "wgRestrictionMove": ["autoconfirmed"]});
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "DominiqueBussereau", "wgTitle": "DominiqueBussereau", "wgAction": "view", "wgArticleId": 9179, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 147607, "wgCategories": ["Députés"], "wgBreakFrames": false, "wgRestrictionEdit": ["autoconfirmed"], "wgRestrictionMove": ["autoconfirmed"], "wgWikiEditorEnabledModules": {"toolbar": true, "dialogs": true, "templateEditor": false, "templates": false, "addMediaWizard": false, "preview": true, "previewDialog": false, "publish": false, "toc": false}});
 }
 </script>
 <script>if ( window.mediaWiki ) {
@@ -272,6 +249,6 @@ Retrieved from "<a href="http://www.laquadrature.net/wiki/DominiqueBussereau">ht
 <script src="/wiki/load.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=monobook&amp;*"></script>
 <script>if ( window.mediaWiki ) {
 	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"monobook","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
-	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false});;mediaWiki.loader.state({"user.options":"ready"});
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"usebetatoolbar":1,"usebetatoolbar-cgd":1,"wikieditor-preview":1,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false});;mediaWiki.loader.state({"user.options":"ready"});
 }
-</script><!-- Served in 0.282 secs. --></body></html>
+</script><!-- Served in 0.177 secs. --></body></html>
