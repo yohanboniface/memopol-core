@@ -18,3 +18,4 @@ gunicorn
 django-extensions
 werkzeug
 pytidylib
+django-tastypie
