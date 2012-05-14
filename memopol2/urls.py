@@ -9,8 +9,9 @@ from django.contrib import admin
 from django.views.static import serve
 from mps.models import MP
 from meps.models import Committee
-
 from votes.models import Proposal
+
+from memopol2.api import v1_api
 
 admin.autodiscover()
 
@@ -33,10 +34,10 @@ home = {
     'committees': Committee.objects.order_by('abbreviation').all(),
     'proposals': Proposal.objects.all()
 }
+
 home_mimetype = 'application/xhtml+xml'  # required for embedded SVG
 if settings.APPS_DEBUG:
     home_mimetype = 'text/html'  # compliant with django-debug-toolbar (debug mode)
-
 
 
 class RobotsTxt(TemplateView):
@@ -68,6 +69,7 @@ urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^robots\.txt$', RobotsTxt.as_view()),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
     url(r'^captcha/', include('captcha.urls')),
+    url(r'^api/', include(v1_api.urls)),
 )
 
 # hack to autodiscover static files location in dev mode
