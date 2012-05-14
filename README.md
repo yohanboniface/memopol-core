@@ -90,8 +90,7 @@ Install memopol2's dependencies (yes you need to build numpy alone first):
 Run the "migration" scripts
 ---------------------------
 
-Run syncdb then migrate, this will import the fixtures. Warning: this take a
-*LOTS* of time, around 15min.
+Warning: this might take a *LOTS* of time, around 15min.
 
     cd memopol2
     ./INIT
