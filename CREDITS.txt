@@ -23,6 +23,7 @@ Manu1400 for all his bug reports and help
 Jean Boussier <jean.boussier@gmail.com>
 Mathieu Leplatre <mathieu.leplatre@makina-corpus.com>
 Julien Miotte <mike.perdide@gmail.com>
+Julien Rabier <taziden@flexiden.org>
 
 Gibus <neurone2@laquadrature.net> - creator of memopol v1
 
