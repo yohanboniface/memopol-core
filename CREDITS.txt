@@ -25,3 +25,5 @@ Mathieu Leplatre <mathieu.leplatre@makina-corpus.com>
 Julien Miotte <mike.perdide@gmail.com>
 
 Gibus <neurone2@laquadrature.net> - creator of memopol v1
+
+Translators can be see in the *.po files.
