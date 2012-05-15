@@ -4,6 +4,7 @@
 # 
 # Translators:
 # Translators:
+#   <adoutte@gmail.com>, 2012.
 #   <hydraze+transifex@hydraze.org>, 2012.
 # Julien Rabier <>, 2012.
 # Oriane  <>, 2012.
@@ -13,8 +14,8 @@ msgstr ""
 "Project-Id-Version: The Political Memory of La Quadrature du Net\n"
 "Report-Msgid-Bugs-To: https://projets.lqdn.fr/projects/mempol\n"
 "POT-Creation-Date: 2012-05-13 23:51+0200\n"
-"PO-Revision-Date: 2012-05-14 13:48+0000\n"
-"Last-Translator: yost3d <>\n"
+"PO-Revision-Date: 2012-05-15 10:31+0000\n"
+"Last-Translator: adoutte <adoutte@gmail.com>\n"
 "Language-Team: French (http://www.transifex.net/projects/p/memopol2/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,7 +40,7 @@ msgid ""
 "type: %(type)s\n"
 "result: %(result)s\n"
 "comment: %(comment)s"
-msgstr "Quelqu'un a envoyé du retour sur une campagne\nVotre clé de vérification key est %(root_url)s/campaign/feedback/%(feedback_id)s/%(actid)s\n\nexpéditeur: %(from)s\nà propos de %(mep)s\ntype: %(type)s\nrésultat: %(result)s\ncommentaire: %(comment)s"
+msgstr "Quelqu'un a envoyé un retour sur une campagne\nVotre clé de vérification key est %(root_url)s/campaign/feedback/%(feedback_id)s/%(actid)s\n\nexpéditeur: %(from)s\nà propos de %(mep)s\ntype: %(type)s\nrésultat: %(result)s\ncommentaire: %(comment)s"
 
 #: apps/campaign/views.py:159
 msgid "Memopol2 feedback moderation"
@@ -63,7 +64,7 @@ msgstr "Position"
 
 #: apps/queries/forms.py:7
 msgid "Constituent Country"
-msgstr ""
+msgstr "Pays"
 
 #: apps/queries/forms.py:8
 msgid "Political Group"
@@ -128,7 +129,7 @@ msgstr "Par pays"
 
 #: memopol2/templates/base.html:58 memopol2/templates/base.html.py:83
 msgid "By political group"
-msgstr "Par groupes parlementaires"
+msgstr "Par groupe parlementaire"
 
 #: memopol2/templates/base.html:59
 msgid "By committee"
@@ -182,7 +183,7 @@ msgstr "Par département"
 msgid ""
 " Memopol is free software <a href=\"https://gitorious.org/memopol2-0\">released</a> under the terms of the\n"
 "      <a href=\"http://www.gnu.org/licenses/agpl.html\">GNU aGPLV3+</a> - <a href=\"https://projets.lqdn.fr/projects/mempol\">Bug tracking system</a> - <a href=\"https://projets.lqdn.fr/projects/mempol/issues/new\">Report a bug</a>"
-msgstr ""
+msgstr " Memopol est un logiciel libre <a href=\"https://gitorious.org/memopol2-0\">publié</a> sous licence⏎\n      <a href=\"http://www.gnu.org/licenses/agpl.html\">GNU aGPLV3+</a> - <a href=\"https://projets.lqdn.fr/projects/mempol\">Outil de suivi des bugs</a> - <a href=\"https://projets.lqdn.fr/projects/mempol/issues/new\">Signaler un bug</a>"
 
 #: memopol2/templates/base.html:105
 msgid "Provided by"
@@ -229,7 +230,7 @@ msgstr " - %(count)s députés "
 
 #: memopol2/templates/index.html:35
 msgid "List of Votes"
-msgstr "Liste de votes"
+msgstr "Liste des votes"
 
 #: memopol2/templates/search.html:12
 msgid "Search results"
@@ -334,7 +335,7 @@ msgstr "Fonctions"
 msgid ""
 "<td><a href=\"/campaign/report/%(c.id)s/\">%(c.debriefing_set.count)s "
 "responses for %(mepcnt)s MEP(s)</a></td>"
-msgstr ""
+msgstr "<td><a href=\"/campaign/report/%(c.id)s/\">%(c.debriefing_set.count)s réponses pour %(mepcnt)s Eurodéputé(s)</a></td>"
 
 #: memopol2/templates/campaign/list.html:30
 msgid "Edit influence"
@@ -354,11 +355,11 @@ msgstr ""
 
 #: memopol2/templates/campaign/view.html:53
 msgid "Have you contacted a MEP? Wanna get credit? Tell us how it went!"
-msgstr ""
+msgstr "Vous avez contacté votre Eurodéputé ? Racontez-nous !"
 
 #: memopol2/templates/campaign/view.html:57
 msgid "MEPs with campaign feedback"
-msgstr ""
+msgstr "Eurodéputés avec un retour de campagne"
 
 #: memopol2/templates/campaign/view.html:61
 #: memopol2/templates/campaign/view.html:173
