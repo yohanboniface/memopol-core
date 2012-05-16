@@ -40,7 +40,6 @@
 {% endif %}
 
 <li><i>{% trans "Website&nbsp;: " %}</i><a class="highlight" target="_" href="http://www.europarl.europa.eu/meps/en/{{ mep.ep_id }}/{{ mep.first_name|slugify|capfirst }}_{{ mep.last_name|upper }}.html">{% trans "Page on the website of the European Parliament" %}</a></li>
-{% if mep.get_ep_webpage %}<li><i>{% trans "Website&nbsp;: " %}</i><a class="highlight" target="_" href="{{ mep.get_ep_webpage }}">{% trans "Current mandate page on the website of the European Parliament" %}</a></li>{% endif %}
 {% for website in mep.website_set.all %}
 {% if website.url %}
 <li>

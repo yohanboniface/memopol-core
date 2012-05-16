@@ -5,6 +5,7 @@ import urllib
 from os.path import join
 from time import time
 import logging
+import datetime
 
 from django.conf import settings
 from django.views.generic import DetailView, ListView
@@ -254,6 +255,10 @@ class MEPList(ListView):
 class MEPView(DetailView):
     model = MEP
     context_object_name = "mep"
+    def get_context_data(self, *args, **kwargs):
+        context = super(MEPView, self).get_context_data(**kwargs)
+        context['now'] = datetime.date.today()
+        return context
 
 
 class MEPsFromView(DetailView):
