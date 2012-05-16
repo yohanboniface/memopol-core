@@ -73,7 +73,7 @@ $(document).ready(function() {
 
 {% if mep.previous_mandates %}
 <div id="mandates">
-    <h2 class="collapsible collapsed">{% trans "Previous mandates" %}</h2>
+    <h2 class="collapsible collapsed">{% trans "Mandates" %}</h2>
     <ul class="body mandates">
     {% for role in mep.previous_mandates %}
         <li><img src="{{ MEDIA_URL }}img/countries/small/{{ role.country.code }}.png"/><i> {% if now > role.end %}Was{%else%}Is{%endif%} MEP of <a href="{% url meps:index_by_country mep.country.code %}">{{ role.country.name }}</a> for <a href="{% url meps:index_by_party mep.party.id mep.party.name|slugify %}">{{ role.party }}</a> from {{ role.begin|date:"d F Y" }}{%if now > role.end%} to {{ role.end|date:"d F Y" }}{%endif%}</i></li>
@@ -82,9 +82,9 @@ $(document).ready(function() {
 {% endif %}
 
 {% if mep.old_groups %}
-<div id="mandates">
-    <h2 class="collapsible collapsed">{% trans "Previous groups" %}</h2>
-    <ul class="body mandates">
+<div id="groups">
+    <h2 class="collapsible collapsed">{% trans "Groups" %}</h2>
+    <ul class="body groups">
     {% for group in mep.old_groups %}
     <li><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" alt="{{ mep.group.abbreviation }}"/><i>{% if now > group.end%}Was{%else%}Is{%endif%} MEP for <a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a> from {{ group.begin|date:"d F Y" }}{%if now > group.end%} to {{ group.end|date:"d F Y" }}{%endif%}</i></li>
     {% endfor %}
