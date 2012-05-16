@@ -41,7 +41,6 @@ $(document).ready(function() {
 
 <section id="summary">
 <h2>{% trans "General information" %}</h2>
-
 <ul id="infos" class="body">
 
 <div class="quickView">
@@ -77,7 +76,7 @@ $(document).ready(function() {
     <h2 class="collapsible collapsed">{% trans "Previous mandates" %}</h2>
     <ul class="body mandates">
     {% for role in mep.previous_mandates %}
-        <li><img src="{{ MEDIA_URL }}img/countries/small/{{ role.country.code }}.png"/><i> Was MEP of <a href="{% url meps:index_by_country mep.country.code %}">{{ role.country.name }}</a> for <a href="{% url meps:index_by_party mep.party.id mep.party.name|slugify %}">{{ role.party }}</a> from {{ role.begin|date:"d F y" }} to {{ role.end|date:"d F y" }}</i></li>
+        <li><img src="{{ MEDIA_URL }}img/countries/small/{{ role.country.code }}.png"/><i> {% if now > role.end %}Was{%else%}Is{%endif%} MEP of <a href="{% url meps:index_by_country mep.country.code %}">{{ role.country.name }}</a> for <a href="{% url meps:index_by_party mep.party.id mep.party.name|slugify %}">{{ role.party }}</a> from {{ role.begin|date:"d F Y" }}{%if now > role.end%} to {{ role.end|date:"d F Y" }}{%endif%}</i></li>
     {% endfor %}
 </div>
 {% endif %}
@@ -87,7 +86,7 @@ $(document).ready(function() {
     <h2 class="collapsible collapsed">{% trans "Previous groups" %}</h2>
     <ul class="body mandates">
     {% for group in mep.old_groups %}
-    <li><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" alt="{{ mep.group.abbreviation }}"/><i>Was MEP for <a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a> from {{ group.begin|date:"d F y" }} to {{ group.end|date:"d F y" }}</i></li>
+    <li><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" alt="{{ mep.group.abbreviation }}"/><i>{% if now > group.end%}Was{%else%}Is{%endif%} MEP for <a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a> from {{ group.begin|date:"d F Y" }}{%if now > group.end%} to {{ group.end|date:"d F Y" }}{%endif%}</i></li>
     {% endfor %}
 </div>
 {% endif %}
@@ -100,9 +99,8 @@ $(document).ready(function() {
         <li><a href="{% url meps:index_by_committee role.committee.abbreviation %}">{{ role.role }} of {{ role.committee }}</a></li>
     {% endfor %}
     {% if mep.old_committees %}
-    <li class="noicon">-</li>
     {% for role in mep.old_committees %}
-        <li class="old"><i>Was {{ role.role|lower }} in {{ role.committee }} from {{ role.begin|date:"d F y" }} to {{ role.end|date:"d F y" }}</i></li>
+        <li class="old"><i>{% if now > role.end%}Was{%else%}Is{%endif%} {{ role.role|lower }} in {{ role.committee }} from {{ role.begin|date:"d F Y" }}{%if now > role.end%} to {{ role.end|date:"d F Y" }}{%endif%}</i></li>
     {% endfor %}
     {% endif %}
     </ul>
@@ -117,9 +115,8 @@ $(document).ready(function() {
         <li><a href="{% url meps:index_by_delegation role.delegation.id %}">{{ role.role }} of {{ role.delegation }}</a></li>
     {% endfor %}
     {% if mep.old_delegations %}
-    <li class="noicon">-</li>
     {% for role in mep.old_delegations %}
-        <li class="old"><i>Was {{ role.role|lower }} in {{ role.delegation }} from {{ role.begin|date:"d F y" }} to {{ role.end|date:"d F y" }}</i></li>
+        <li class="old"><i>{% if now > role.end%}Was{%else%}Is{%endif%} {{ role.role|lower }} in {{ role.delegation }} from {{ role.begin|date:"d F Y" }}{%if now > role.end%} to {{ role.end|date:"d F Y" }}{%endif%}</i></li>
     {% endfor %}
     {% endif %}
     </ul>
@@ -131,7 +128,7 @@ $(document).ready(function() {
     <h2 class="collapsible collapsed">{% trans "Old staff" %}</h2>
         <ul class="body organisations">
     {% for staff in mep.old_organizations %}
-    <li class="old"><i>Was {{ staff.role }} in {{ staff.organization.name }} {% trans "from" %} {{ staff.begin }} {% trans "to" %} {{ staff.end }}</i></li>
+    <li class="old"><i>{% if now > role.end%}Was{%else%}Is{%endif%} {{ staff.role }} in {{ staff.organization.name }} {% trans "from" %} {{ staff.begin }} {% trans "to" %} {{ staff.end }}</i></li>
     {% endfor %}
         </ul>
 </div>
