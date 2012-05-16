@@ -624,7 +624,7 @@ a.mep-icon, a.mp-icon {
     background: url("../img/icons/user.png") no-repeat top left;
 }
 
-div#livesearch ul li, div#search-results ul li, ul.committees li, ul.delegations li, ul.organisations li, ul.parties li, ul.mp-groups li {
+div#livesearch ul li, div#search-results ul li, ul.mandates li, ul.groups li, ul.committees li, ul.delegations li, ul.organisations li, ul.parties li, ul.mp-groups li {
     list-style: disc url("../img/icons/user-group.png") outside;
     margin-left: 2em;
 }
