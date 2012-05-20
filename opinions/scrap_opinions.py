@@ -29,13 +29,13 @@ def read_or_dl(url, name):
     return BeautifulSoup(html)
 
 
-def handle_reps_set(set_name, section):
+def handle_reps_set(set_name, section, url_pattern):
     opinions = []
     size = len(open(set_name, "r").read().split('\n'))
     for a, i in enumerate(open(set_name, "r"), 1):
         i = i.replace('\n', '')
         print "[%s/%s]" % (a, size), i
-        soup = read_or_dl("http://www.laquadrature.net/wiki/%s?test=true" % i, i)
+        soup = read_or_dl(url_pattern % i, i)
         if soup.find('div', id='bodyContent').h5 is None:
             continue
         opinion = {}
@@ -120,10 +120,11 @@ def handle_reps_set(set_name, section):
 
     return opinions
 
+
 if __name__ == "__main__":
     if not exists('dumps'):
         mkdir("dumps")
-    opinions = handle_reps_set("mp_list", "fr")
-    opinions += handle_reps_set("mep_list", "eu")
+    opinions = handle_reps_set("mp_list", "fr", "http://www.laquadrature.net/wiki/%s?test=true")
+    opinions += handle_reps_set("mep_list", "eu", "http://www.laquadrature.net/wiki/index.php?title=%s/fr")
 
     open('opinions.json', 'w').write(dumps(opinions, indent=4))
