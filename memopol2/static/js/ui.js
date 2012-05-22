@@ -162,7 +162,7 @@ $('#csv').click(function() {
     if (/filter/.exec(url)) {
         url = url.replace(FilterExtension.prototype.BASE_HASH, '?csv=true&');
     } else {
-        url = url.replace(/#.*/, '?csv=true');
+        url += '?csv=true';
     }
     self.attr('href', url);
     return true;
