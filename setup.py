@@ -9,7 +9,7 @@ setup(
     author = 'The memopol project',
     author_email = 'deubeulyou@gmail.com',
     description = 'Memoire Politique',
-    long_description = open('README.txt').read(),
+    long_description = open('README.md').read(),
     license = 'LICENSE.txt',
     url = 'http://projets.lqdn.fr/projects/mempol',
     packages = find_packages(),
