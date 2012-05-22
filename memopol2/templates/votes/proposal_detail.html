@@ -43,7 +43,8 @@
                 {% if v.recommendation %}<li><em>{% trans "Recommendation" %}</em> : {{ v.recommendation }}</li>{% endif %}
                 {% if v.weight %}<li><em>{% trans "Weight" %}</em> : {{ v.weight }}</li>{% endif %}
                 {% significant_votes v %}
-                <li>{% blocktrans %}Votes ({{ significant_votes.count }} significant) (<a href="{% url votes:recommendation vote.id v.id %}">full list</a>){% endblocktrans %}</li>
+                {% url votes:recommendation vote.id v.id as recommendation_url %}
+                <li>{% blocktrans %}Votes ({{ significant_votes.count }} significant) (<a href="{{ recommendation_url }}">full list</a>){% endblocktrans %}</li>
                 <li>
                 <ul>
                   {% regroup v.vote_set.all by choice as result %}
