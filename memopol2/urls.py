@@ -35,7 +35,7 @@ home = {
     'proposals': Proposal.objects.all()
 }
 
-home_mimetype = 'application/xhtml+xml'  # required for embedded SVG
+#home_mimetype = 'application/xhtml+xml'  # required for embedded SVG
 if settings.APPS_DEBUG:
     home_mimetype = 'text/html'  # compliant with django-debug-toolbar (debug mode)
 
@@ -54,7 +54,7 @@ class RobotsTxt(TemplateView):
 
 
 urlpatterns = patterns('', # pylint: disable=C0103
-    url(r'^$', direct_to_template, {'template': 'home.html', 'extra_context': home, 'mimetype': home_mimetype}, name='index'),
+    url(r'^$', direct_to_template, {'template': 'home.html', 'extra_context': home}, name='index'),
     url(r'^europe/parliament/', include('meps.urls', namespace='meps', app_name='meps')),
     url(r'^france/assemblee/', include('mps.urls', namespace='mps', app_name='mps')),
     url(r'^votes/', include('votes.urls', namespace='votes', app_name='votes')),
