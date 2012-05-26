@@ -704,6 +704,14 @@ msgstr "Groupe politique&nbsp;: "
 msgid "National party: "
 msgstr "Parti local :"
 
+#: memopol2/templates/meps/mep_detail.html:63
+msgid "Born on (female)"
+msgstr "Née le"
+
+#: memopol2/templates/meps/mep_detail.html:63
+msgid "Born on"
+msgstr "Né le"
+
 #: memopol2/templates/meps/mep_detail.html:65
 #, python-format
 msgid ""
@@ -955,12 +963,6 @@ msgstr "Votes à importer"
 
 #~ msgid ", member of the french parliament"
 #~ msgstr ", member of the french parliament"
-
-#~ msgid "Born on (female)"
-#~ msgstr "Born on"
-
-#~ msgid "Born on"
-#~ msgstr "Born on"
 
 #~ msgid "%(day)s/%(month)s/%(year)s <i>at</i> %(city)s"
 #~ msgstr "%(day)s/%(month)s/%(year)s <i>at</i> %(city)s"
