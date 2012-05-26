@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 {% url meps:mep representative.id as mep_url %}
 {% url votes:detail proposal.id as proposal_url %}
-<h1>{% blocktrans %}Votes of <a href="{{ mep_url }}">{{ representative.first_name }} {{ representative.last_name }}</a> on <a href="{{ proposal_url }">{{ proposal.title }}</a>{% endblocktrans %}</h1>
+<h1>{% blocktrans with representative.first_name as representative_first_name and representative.last_name as representative_last_name and proposal.title as proposal_title %}Votes of <a href="{{ mep_url }}">{{ representative_first_name }} {{ representative_last_name }}</a> on <a href="{{ proposal_url }}">{{ proposal_title }}</a>{% endblocktrans %}</h1>
 
 {% include "votes/legend.html" %}
 
