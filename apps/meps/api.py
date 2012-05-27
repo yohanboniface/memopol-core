@@ -86,6 +86,8 @@ class MEPCommitteeRoleResource(ModelResource):
 
 
 class MEPPostalAddressResource(ModelResource):
+    mep = fields.ForeignKey(MEPMEPResource, "mep")
+
     class Meta:
         queryset = PostalAddress.objects.all()
 
