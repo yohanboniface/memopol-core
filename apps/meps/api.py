@@ -1,3 +1,4 @@
+from tastypie import fields
 from tastypie.resources import ModelResource
 from meps.models import Country,\
                         LocalParty,\
@@ -21,6 +22,7 @@ class MEPCountryResource(ModelResource):
 
 
 class MEPLocalPartyResource(ModelResource):
+    country = fields.ForeignKey(MEPCountryResource, "country")
     class Meta:
         queryset = LocalParty.objects.all()
 
