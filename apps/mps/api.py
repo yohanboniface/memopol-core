@@ -28,6 +28,8 @@ class MPDepartmentResource(ModelResource):
 
 
 class MPCirconscriptionResource(ModelResource):
+    department = fields.ForeignKey(MPDepartmentResource, "department")
+
     class Meta:
         queryset = Circonscription.objects.all()
 
