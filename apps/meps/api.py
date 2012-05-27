@@ -38,6 +38,8 @@ class MEPGroupResource(ModelResource):
 
 
 class MEPDelegationResource(ModelResource):
+    delegationrole_set = fields.ToManyField("meps.api.MEPDelegationRoleResource", "delegationrole_set")
+
     class Meta:
         queryset = Delegation.objects.all()
 
