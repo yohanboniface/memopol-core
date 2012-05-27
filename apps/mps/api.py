@@ -42,6 +42,8 @@ class MPCantonResource(ModelResource):
 
 
 class MPGroupResource(ModelResource):
+    mp_set = fields.ToManyField("mps.api.MPMPResource", "mp_set")
+
     class Meta:
         queryset = Group.objects.all()
 
