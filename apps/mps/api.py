@@ -35,6 +35,8 @@ class MPCirconscriptionResource(ModelResource):
 
 
 class MPCantonResource(ModelResource):
+    circonscription = fields.ForeignKey(MPCirconscriptionResource, "circonscription")
+
     class Meta:
         queryset = Canton.objects.all()
 
