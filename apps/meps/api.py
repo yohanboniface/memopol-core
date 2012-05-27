@@ -17,6 +17,8 @@ from meps.models import Country,\
 
 
 class MEPCountryResource(ModelResource):
+    countrymep_set = fields.ToManyField("meps.api.MEPCountryMEPResource", "countrymep_set")
+
     class Meta:
         queryset = Country.objects.all()
 
