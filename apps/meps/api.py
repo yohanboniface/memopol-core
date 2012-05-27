@@ -32,6 +32,7 @@ class MEPLocalPartyResource(ModelResource):
 
 
 class MEPGroupResource(ModelResource):
+    groupmep_set = fields.ToManyField("meps.api.MEPGroupMEPResource", "groupmep_set")
     class Meta:
         queryset = Group.objects.all()
 
