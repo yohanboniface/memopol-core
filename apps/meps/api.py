@@ -78,6 +78,9 @@ class MEPDelegationRoleResource(ModelResource):
 
 
 class MEPCommitteeRoleResource(ModelResource):
+    mep = fields.ForeignKey(MEPMEPResource, "mep")
+    committee = fields.ForeignKey(MEPCommitteeResource, "committee")
+
     class Meta:
         queryset = CommitteeRole.objects.all()
 
