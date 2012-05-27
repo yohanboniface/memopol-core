@@ -45,6 +45,8 @@ class MEPDelegationResource(ModelResource):
 
 
 class MEPCommitteeResource(ModelResource):
+    committeerole_set = fields.ToManyField("meps.api.MEPCommitteeRoleResource", "committeerole_set")
+
     class Meta:
         queryset = Committee.objects.all()
 
