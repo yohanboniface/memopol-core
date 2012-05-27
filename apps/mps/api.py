@@ -20,6 +20,7 @@ class MPFunctionResource(ModelResource):
 
 
 class MPDepartmentResource(ModelResource):
+    mp_set = fields.ToManyField("mps.api.MPMPResource", "mp_set")
     class Meta:
         queryset = Department.objects.all()
 
