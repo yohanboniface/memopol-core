@@ -66,6 +66,11 @@ class MEPOrganizationResource(ModelResource):
 class MEPMEPResource(ModelResource):
     bxl_building = fields.ForeignKey(MEPBuildingResource, "bxl_building")
     stg_building = fields.ForeignKey(MEPBuildingResource, "stg_building")
+    countrymep_set = fields.ToManyField("meps.api.MEPCountryMEPResource", "countrymep_set")
+    groupmep_set = fields.ToManyField("meps.api.MEPGroupMEPResource", "groupmep_set")
+    delegationrole_set = fields.ToManyField("meps.api.MEPDelegationRoleResource", "delegationrole_set")
+    committeerole_set = fields.ToManyField("meps.api.MEPCommitteeRoleResource", "committeerole_set")
+    organizationmep_set = fields.ToManyField("meps.api.MEPOrganizationMEPResource", "organizationmep_set")
 
     class Meta:
         queryset = MEP.objects.all()
