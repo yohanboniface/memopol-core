@@ -23,6 +23,7 @@ class MEPCountryResource(ModelResource):
 
 class MEPLocalPartyResource(ModelResource):
     country = fields.ForeignKey(MEPCountryResource, "country")
+
     class Meta:
         queryset = LocalParty.objects.all()
 
@@ -55,6 +56,7 @@ class MEPOrganizationResource(ModelResource):
 class MEPMEPResource(ModelResource):
     bxl_building = fields.ForeignKey(MEPBuildingResource, "bxl_building")
     stg_building = fields.ForeignKey(MEPBuildingResource, "stg_building")
+
     class Meta:
         queryset = MEP.objects.all()
 
@@ -62,6 +64,7 @@ class MEPMEPResource(ModelResource):
 class MEPGroupMEPResource(ModelResource):
     group = fields.ForeignKey(MEPGroupResource, "group")
     mep = fields.ForeignKey(MEPMEPResource, "mep")
+
     class Meta:
         queryset = GroupMEP.objects.all()
 
@@ -69,6 +72,7 @@ class MEPGroupMEPResource(ModelResource):
 class MEPDelegationRoleResource(ModelResource):
     mep = fields.ForeignKey(MEPMEPResource, "mep")
     delegation = fields.ForeignKey(MEPDelegationResource, "delegation")
+
     class Meta:
         queryset = DelegationRole.objects.all()
 
