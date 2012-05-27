@@ -21,6 +21,8 @@ class MPFunctionResource(ModelResource):
 
 class MPDepartmentResource(ModelResource):
     mp_set = fields.ToManyField("mps.api.MPMPResource", "mp_set")
+    circonscription_set = fields.ToManyField("mps.api.MPCirconscriptionResource", "circonscription_set")
+
     class Meta:
         queryset = Department.objects.all()
 
