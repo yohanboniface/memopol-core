@@ -93,6 +93,10 @@ class MEPPostalAddressResource(ModelResource):
 
 
 class MEPCountryMEPResource(ModelResource):
+    mep = fields.ForeignKey(MEPMEPResource, "mep")
+    country = fields.ForeignKey(MEPCountryResource, "country")
+    party = fields.ForeignKey(MEPLocalPartyResource, "party")
+
     class Meta:
         queryset = CountryMEP.objects.all()
 
