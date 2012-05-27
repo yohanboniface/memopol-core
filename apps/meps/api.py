@@ -67,6 +67,8 @@ class MEPGroupMEPResource(ModelResource):
 
 
 class MEPDelegationRoleResource(ModelResource):
+    mep = fields.ForeignKey(MEPMEPResource, "mep")
+    delegation = fields.ForeignKey(MEPDelegationResource, "delegation")
     class Meta:
         queryset = DelegationRole.objects.all()
 
