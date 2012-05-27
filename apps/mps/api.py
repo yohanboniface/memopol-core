@@ -8,7 +8,8 @@ from mps.models import Function,\
                        FunctionMP,\
                        Address,\
                        Phone,\
-                       Mandate
+                       Mandate,\
+                       MP
 
 
 class MPFunctionResource(ModelResource):
@@ -36,6 +37,11 @@ class MPCantonResource(ModelResource):
 class MPGroupResource(ModelResource):
     class Meta:
         queryset = Group.objects.all()
+
+
+class MPMPResource(ModelResource):
+    class Meta:
+        queryset = MP.objects.all()
 
 
 class MPFunctionMPResource(ModelResource):

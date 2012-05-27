@@ -23,7 +23,8 @@ from mps.api import MPFunctionResource,\
                     MPFunctionMPResource,\
                     MPAddressResource,\
                     MPPhoneResource,\
-                    MPMandateResource
+                    MPMandateResource,\
+                    MPMPResource
 
 from votes.api import ProposalResource,\
                       RecommendationResource,\
@@ -66,6 +67,7 @@ v1_api.register(MPFunctionMPResource())
 v1_api.register(MPAddressResource())
 v1_api.register(MPPhoneResource())
 v1_api.register(MPMandateResource())
+v1_api.register(MPMPResource())
 
 v1_api.register(ProposalResource())
 v1_api.register(RecommendationResource())
