@@ -24,6 +24,7 @@ class MEPCountryResource(ModelResource):
 
 
 class MEPLocalPartyResource(ModelResource):
+    countrymep_set = fields.ToManyField("meps.api.MEPCountryMEPResource", "countrymep_set")
     country = fields.ForeignKey(MEPCountryResource, "country")
 
     class Meta:
