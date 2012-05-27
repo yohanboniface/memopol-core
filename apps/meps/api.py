@@ -102,5 +102,8 @@ class MEPCountryMEPResource(ModelResource):
 
 
 class MEPOrganizationMEPResource(ModelResource):
+    mep = fields.ForeignKey(MEPMEPResource, "mep")
+    organization = fields.ForeignKey(MEPOrganizationResource, "organization")
+
     class Meta:
         queryset = OrganizationMEP.objects.all()
