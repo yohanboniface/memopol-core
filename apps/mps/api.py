@@ -1,3 +1,4 @@
+from tastypie import fields
 from tastypie.resources import ModelResource
 from mps.models import Function,\
                        Department,\
@@ -11,6 +12,8 @@ from mps.models import Function,\
 
 
 class MPFunctionResource(ModelResource):
+    functionmp_set = fields.ToManyField("mps.api.MPFunctionMPResource", "functionmp_set")
+
     class Meta:
         queryset = Function.objects.all()
 
