@@ -53,6 +53,8 @@ class MEPOrganizationResource(ModelResource):
 
 
 class MEPMEPResource(ModelResource):
+    bxl_building = fields.ForeignKey(MEPBuildingResource, "bxl_building")
+    stg_building = fields.ForeignKey(MEPBuildingResource, "stg_building")
     class Meta:
         queryset = MEP.objects.all()
 
