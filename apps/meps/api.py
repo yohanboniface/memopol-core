@@ -60,6 +60,8 @@ class MEPMEPResource(ModelResource):
 
 
 class MEPGroupMEPResource(ModelResource):
+    group = fields.ForeignKey(MEPGroupResource, "group")
+    mep = fields.ForeignKey(MEPMEPResource, "mep")
     class Meta:
         queryset = GroupMEP.objects.all()
 
