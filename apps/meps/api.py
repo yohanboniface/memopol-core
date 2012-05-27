@@ -57,6 +57,8 @@ class MEPBuildingResource(ModelResource):
 
 
 class MEPOrganizationResource(ModelResource):
+    organizationmep_set = fields.ToManyField("meps.api.MEPOrganizationMEPResource", "organizationmep_set")
+
     class Meta:
         queryset = Organization.objects.all()
 
