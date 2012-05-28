@@ -59,5 +59,8 @@ class REPWebSiteResource(ModelResource):
 
 
 class REPOpinionREPResource(ModelResource):
+    representative = fields.ForeignKey(REPRepresentativeResource, "representative")
+    opinion = fields.ForeignKey(REPOpinionResource, "opinion")
+
     class Meta:
         queryset = OpinionREP.objects.all()
