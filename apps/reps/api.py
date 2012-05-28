@@ -30,6 +30,8 @@ class REPRepresentativeResource(ModelResource):
     website_set = fields.ToManyField("reps.api.REPWebSiteResource", "website_set")
     cv_set = fields.ToManyField("reps.api.REPCVResource", "cv_set")
     partyrepresentative_set = fields.ToManyField("reps.api.REPPartyRepresentativeResource", "partyrepresentative_set")
+    score_set = fields.ToManyField("votes.api.ScoreResource", "score_set")
+    vote_set = fields.ToManyField("votes.api.VoteResource", "vote_set")
 
     class Meta:
         queryset = Representative.objects.all()
