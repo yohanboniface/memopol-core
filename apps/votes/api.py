@@ -16,6 +16,8 @@ class ProposalResource(ModelResource):
 
 
 class RecommendationResource(ModelResource):
+    vote_set = fields.ToManyField("votes.api.VoteResource", "vote_set")
+
     class Meta:
         queryset = Recommendation.objects.all()
 
