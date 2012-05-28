@@ -76,6 +76,8 @@ class MPAddressResource(ModelResource):
 
 
 class MPPhoneResource(ModelResource):
+    address = fields.ForeignKey(MPAddressResource, "address")
+
     class Meta:
         queryset = Phone.objects.all()
 
