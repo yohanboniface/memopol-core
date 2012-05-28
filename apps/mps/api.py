@@ -60,6 +60,9 @@ class MPMPResource(ModelResource):
 
 
 class MPFunctionMPResource(ModelResource):
+    mp = fields.ForeignKey(MPMPResource, "mp")
+    function = fields.ForeignKey(MPFunctionResource, "function")
+
     class Meta:
         queryset = FunctionMP.objects.all()
 
