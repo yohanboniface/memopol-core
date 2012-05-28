@@ -68,6 +68,9 @@ class MPFunctionMPResource(ModelResource):
 
 
 class MPAddressResource(ModelResource):
+    mp = fields.ForeignKey(MPMPResource, "mp")
+    phone_set = fields.ToManyField("mps.api.MPPhoneResource", "phone_set")
+
     class Meta:
         queryset = Address.objects.all()
 
