@@ -83,5 +83,7 @@ class MPPhoneResource(ModelResource):
 
 
 class MPMandateResource(ModelResource):
+    mp = fields.ForeignKey(MPMPResource, "mp")
+
     class Meta:
         queryset = Mandate.objects.all()
