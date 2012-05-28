@@ -71,6 +71,7 @@ class MEPMEPResource(ModelResource):
     delegationrole_set = fields.ToManyField("meps.api.MEPDelegationRoleResource", "delegationrole_set")
     committeerole_set = fields.ToManyField("meps.api.MEPCommitteeRoleResource", "committeerole_set")
     organizationmep_set = fields.ToManyField("meps.api.MEPOrganizationMEPResource", "organizationmep_set")
+    representative_ptr = fields.ForeignKey("reps.api.REPRepresentativeResource", "representative_ptr")
 
     class Meta:
         queryset = MEP.objects.all()
