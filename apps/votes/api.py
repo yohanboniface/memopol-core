@@ -24,6 +24,9 @@ class RecommendationResource(ModelResource):
 
 
 class VoteResource(ModelResource):
+    representative = fields.ForeignKey("reps.api.REPRepresentativeResource", "representative")
+    recommendation = fields.ForeignKey(RecommendationResource, "recommendation")
+
     class Meta:
         queryset = Vote.objects.all()
 
