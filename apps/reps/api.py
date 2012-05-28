@@ -45,6 +45,8 @@ class REPEmailResource(ModelResource):
 
 
 class REPCVResource(ModelResource):
+    representative = fields.ForeignKey(REPRepresentativeResource, "representative")
+
     class Meta:
         queryset = CV.objects.all()
 
