@@ -30,6 +30,9 @@ class REPRepresentativeResource(ModelResource):
 
 
 class REPPartyRepresentativeResource(ModelResource):
+    representative = fields.ForeignKey(REPRepresentativeResource, "representative")
+    party = fields.ForeignKey(REPPartyResource, "party")
+
     class Meta:
         queryset = PartyRepresentative.objects.all()
 
