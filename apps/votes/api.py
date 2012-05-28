@@ -32,6 +32,9 @@ class VoteResource(ModelResource):
 
 
 class ScoreResource(ModelResource):
+    representative = fields.ForeignKey("reps.api.REPRepresentativeResource", "representative")
+    proposal = fields.ForeignKey(ProposalResource, "proposal")
+
     class Meta:
         queryset = Score.objects.all()
 
