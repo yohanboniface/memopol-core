@@ -52,6 +52,8 @@ class REPCVResource(ModelResource):
 
 
 class REPWebSiteResource(ModelResource):
+    representative = fields.ForeignKey(REPRepresentativeResource, "representative")
+
     class Meta:
         queryset = WebSite.objects.all()
 
