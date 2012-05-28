@@ -38,6 +38,8 @@ class REPPartyRepresentativeResource(ModelResource):
 
 
 class REPEmailResource(ModelResource):
+    representative = fields.ForeignKey(REPRepresentativeResource, "representative")
+
     class Meta:
         queryset = Email.objects.all()
 
