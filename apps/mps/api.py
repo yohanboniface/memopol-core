@@ -54,6 +54,7 @@ class MPMPResource(ModelResource):
     group = fields.ForeignKey(MPGroupResource, "group")
     mandate_set = fields.ToManyField("mps.api.MPMandateResource", "mandate_set")
     address_set = fields.ToManyField("mps.api.MPAddressResource", "address_set")
+    representative_ptr = fields.ForeignKey("reps.api.REPRepresentativeResource", "representative_ptr")
 
     class Meta:
         queryset = MP.objects.all()
