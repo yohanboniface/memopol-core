@@ -1,3 +1,4 @@
+from tastypie import fields
 from tastypie.resources import ModelResource
 from reps.models import Party,\
                         Opinion,\
@@ -10,6 +11,8 @@ from reps.models import Party,\
 
 
 class REPPartyResource(ModelResource):
+    partyrepresentative_set = fields.ToManyField("reps.api.REPPartyRepresentativeResource", "partyrepresentative_set")
+
     class Meta:
         queryset = Party.objects.all()
 
