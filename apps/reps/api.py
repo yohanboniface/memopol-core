@@ -18,6 +18,8 @@ class REPPartyResource(ModelResource):
 
 
 class REPOpinionResource(ModelResource):
+    opinionrep_set = fields.ToManyField("reps.api.REPOpinionREPResource", "opinionrep_set")
+
     class Meta:
         queryset = Opinion.objects.all()
 
