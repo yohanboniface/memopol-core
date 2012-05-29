@@ -9,20 +9,21 @@
 # Julien Rabier <>, 2012.
 # Oriane  <>, 2012.
 # yost3d  <>, 2012.
+# Benjamin Sonntag <benjamin@sonntag.fr>, 2012.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: The Political Memory of La Quadrature du Net\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-22 06:11+0200\n"
-"PO-Revision-Date: 2012-05-15 10:31+0000\n"
-"Last-Translator: adoutte <adoutte@gmail.com>\n"
-"Language-Team: French (http://www.transifex.net/projects/p/memopol2/language/"
-"fr/)\n"
+"POT-Creation-Date: 2012-05-29 19:43+0200\n"
+"PO-Revision-Date: 2012-05-29 19:33+0200\n"
+"Last-Translator: Benjamin Sonntag <benjamin@sonntag.fr>\n"
+"Language-Team: français <team@alternc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Content-Transfer-Encoding: 8bits\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #: apps/campaign/forms.py:38
 msgid ""
@@ -57,7 +58,7 @@ msgstr ""
 
 #: apps/campaign/views.py:159
 msgid "Memopol2 feedback moderation"
-msgstr "Modération des retours sur Memopol"
+msgstr "Modération des retours sur Memopol2"
 
 #: apps/positions/forms.py:9 memopol2/templates/campaign/list.html:20
 msgid "Name"
@@ -65,7 +66,7 @@ msgstr "Nom"
 
 #: apps/positions/forms.py:10
 msgid "Email address"
-msgstr "Adresse e-mail"
+msgstr "Adresse email"
 
 #: apps/positions/forms.py:11
 msgid "Source"
@@ -75,6 +76,7 @@ msgstr "Source"
 msgid "Position"
 msgstr "Position"
 
+# better ? 
 #: apps/queries/forms.py:7
 msgid "Constituent Country"
 msgstr "Pays"
@@ -87,120 +89,6 @@ msgstr "Groupe politique"
 msgid "Commitee"
 msgstr "Commission"
 
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/admin/__init__.py:127
-#: build/django-extensions/django_extensions/admin/__init__.py:127
-#: memopol2/templates/comments/preview.html:15
-msgid "and"
-msgstr "et"
-
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/admin/__init__.py:129
-#: build/django-extensions/django_extensions/admin/__init__.py:129
-#, python-format
-msgid ""
-"Use the left field to do %(model_name)s lookups in the fields %(field_list)s."
-msgstr ""
-
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:16
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:17
-#: build/django-extensions/django_extensions/db/models.py:16
-#: build/django-extensions/django_extensions/mongodb/models.py:17
-msgid "created"
-msgstr ""
-
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:17
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:18
-#: build/django-extensions/django_extensions/db/models.py:17
-#: build/django-extensions/django_extensions/mongodb/models.py:18
-msgid "modified"
-msgstr ""
-
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:30
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:28
-#: build/django-extensions/django_extensions/db/models.py:30
-#: build/django-extensions/django_extensions/mongodb/models.py:28
-msgid "title"
-msgstr ""
-
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:31
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:29
-#: build/django-extensions/django_extensions/db/models.py:31
-#: build/django-extensions/django_extensions/mongodb/models.py:29
-msgid "slug"
-msgstr ""
-
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:32
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:30
-#: build/django-extensions/django_extensions/db/models.py:32
-#: build/django-extensions/django_extensions/mongodb/models.py:30
-#, fuzzy
-msgid "description"
-msgstr "Position"
-
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:57
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:52
-#: build/django-extensions/django_extensions/db/models.py:57
-#: build/django-extensions/django_extensions/mongodb/models.py:52
-msgid "Inactive"
-msgstr ""
-
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:58
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:53
-#: build/django-extensions/django_extensions/db/models.py:58
-#: build/django-extensions/django_extensions/mongodb/models.py:53
-#, fuzzy
-msgid "Active"
-msgstr "Fonctions"
-
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:60
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:55
-#: build/django-extensions/django_extensions/db/models.py:60
-#: build/django-extensions/django_extensions/mongodb/models.py:55
-msgid "status"
-msgstr ""
-
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:63
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:58
-#: build/django-extensions/django_extensions/db/models.py:63
-#: build/django-extensions/django_extensions/mongodb/models.py:58
-msgid "keep empty for an immediate activation"
-msgstr ""
-
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:65
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:60
-#: build/django-extensions/django_extensions/db/models.py:65
-#: build/django-extensions/django_extensions/mongodb/models.py:60
-msgid "keep empty for indefinite activation"
-msgstr ""
-
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/management/commands/show_urls.py:50
-#: build/django-extensions/django_extensions/management/commands/show_urls.py:50
-#, python-format
-msgid "%s does not appear to be a urlpattern object"
-msgstr ""
-
-#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/fields/__init__.py:21
-#: build/django-extensions/django_extensions/mongodb/fields/__init__.py:21
-#, python-format
-msgid "String (up to %(max_length)s)"
-msgstr ""
-
-#: build/django-extensions/django_extensions/templates/django_extensions/widgets/foreignkey_searchinput.html:4
-msgid "Lookup"
-msgstr ""
-
-#: build/django-tastypie/tastypie/authentication.py:324
-#, python-format
-msgid "Invalid access token: %s"
-msgstr ""
-
-#: build/django-tastypie/tastypie/authentication.py:335
-msgid "You are not allowed to access this resource."
-msgstr ""
-
-#: build/django-tastypie/tastypie/authentication.py:337
-msgid "Invalid request parameters."
-msgstr ""
-
 #: memopol2/templates/404.html:3
 msgid "Page Not Found"
 msgstr "Page introuvable"
@@ -209,7 +97,7 @@ msgstr "Page introuvable"
 msgid "What you were looking for is just not there."
 msgstr "Ce que vous recherchez ne se trouve pas ici."
 
-#: memopol2/templates/500.html:3
+#: memopol2/templates/500.html:1
 msgid "Internal Error 500"
 msgstr "Erreur Interne 500"
 
@@ -299,7 +187,7 @@ msgid "Campaigns"
 msgstr "Campagnes"
 
 #: memopol2/templates/base.html:80
-msgid "French deputies "
+msgid "French deputies"
 msgstr "Députés français"
 
 #: memopol2/templates/base.html:84
@@ -351,7 +239,7 @@ msgstr "Derniers votes suivis"
 msgid "Members of the European Parliament"
 msgstr "Eurodéputés"
 
-#: memopol2/templates/index.html:7 memopol2/templates/meps/mep_detail.html:131
+#: memopol2/templates/index.html:7 memopol2/templates/meps/mep_detail.html:165
 msgid "from"
 msgstr "de"
 
@@ -398,7 +286,7 @@ msgstr "Se connecter"
 
 #: memopol2/templates/campaign/edit.html:24
 msgid "Edit individual MEPs scores"
-msgstr "Éditer le score de l'eurodéputé "
+msgstr "Modifier le score de l'eurodéputé "
 
 #: memopol2/templates/campaign/edit.html:31
 msgid "Submit"
@@ -469,10 +357,10 @@ msgid "Actions"
 msgstr "Fonctions"
 
 #: memopol2/templates/campaign/list.html:29
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"<td><a href=\"/campaign/report/%(c.id)s/\">%(c.debriefing_set.count)s "
-"responses for %(mepcnt)s MEP(s)</a></td>"
+"<a href=\"/campaign/report/%(c.id)s/\">%(c.debriefing_set.count)s responses "
+"for %(mepcnt)s MEP(s)</a>"
 msgstr ""
 "<td><a href=\"/campaign/report/%(c.id)s/\">%(c.debriefing_set.count)s "
 "réponses pour %(mepcnt)s Eurodéputé(s)</a></td>"
@@ -486,12 +374,12 @@ msgid "No campaigns yet."
 msgstr "Campagnes"
 
 #: memopol2/templates/campaign/list.html:37
-msgid "and create one"
-msgstr ""
+msgid "and create a campaign"
+msgstr "et créez une campagne"
 
 #: memopol2/templates/campaign/list.html:37
-msgid "Create one."
-msgstr ""
+msgid "Create a campaign."
+msgstr "Créer une campagne."
 
 #: memopol2/templates/campaign/view.html:53
 msgid "Have you contacted a MEP? Wanna get credit? Tell us how it went!"
@@ -532,7 +420,7 @@ msgstr "Parti"
 
 #: memopol2/templates/campaign/view.html:66
 #: memopol2/templates/campaign/view.html:178
-#: memopol2/templates/meps/mep_detail.html:70
+#: memopol2/templates/meps/mep_detail.html:71
 #: memopol2/templates/meps/meps_table_thead.html:14
 msgid "Contact"
 msgstr "Contact"
@@ -608,6 +496,10 @@ msgstr[0] "Veuillez corriger l'erreur suivante"
 msgstr[1] "Veuiller corriger les erreurs suivantes"
 
 #: memopol2/templates/comments/preview.html:15
+msgid "and"
+msgstr "et"
+
+#: memopol2/templates/comments/preview.html:15
 msgid "Post the position"
 msgstr "Envoyer la position"
 
@@ -668,14 +560,16 @@ msgid "We don't have any contact information on this european deputy"
 msgstr ""
 
 #: memopol2/templates/meps/mep_contact.html:42
+#, fuzzy
 msgid "Website&nbsp;: "
-msgstr "Site web :"
+msgstr "Web&nbsp;: "
 
 #: memopol2/templates/meps/mep_contact.html:42
 msgid "Page on the website of the European Parliament"
 msgstr "Page sur le site web du Parlement Européen"
 
 #: memopol2/templates/meps/mep_contact.html:46
+#, fuzzy
 msgid "Other website&nbsp;: "
 msgstr "Autre site web :"
 
@@ -684,8 +578,12 @@ msgid "Political Memory: "
 msgstr "Mémoire Politique :"
 
 #: memopol2/templates/meps/mep_detail.html:4
-#: memopol2/templates/meps/mep_detail.html:40
 msgid ", member of the european parliament"
+msgstr ", eurodéputé"
+
+#: memopol2/templates/meps/mep_detail.html:40
+#, fuzzy, python-format
+msgid "%(mep)s, member of the european parliament"
 msgstr ", eurodéputé"
 
 #: memopol2/templates/meps/mep_detail.html:43
@@ -697,73 +595,180 @@ msgid "Former mep"
 msgstr "Ancien eurodéputé"
 
 #: memopol2/templates/meps/mep_detail.html:58
+#, fuzzy
 msgid "Political group: "
 msgstr "Groupe politique&nbsp;: "
 
-#: memopol2/templates/meps/mep_detail.html:62
+#: memopol2/templates/meps/mep_detail.html:63
+#, fuzzy
 msgid "National party: "
 msgstr "Parti local :"
 
-#: memopol2/templates/meps/mep_detail.html:63
-msgid "Born on (female)"
-msgstr "Née le"
-
-#: memopol2/templates/meps/mep_detail.html:63
+#: memopol2/templates/meps/mep_detail.html:66
 msgid "Born on"
-msgstr "Né le"
+msgstr "Born on"
 
-#: memopol2/templates/meps/mep_detail.html:65
+#: memopol2/templates/meps/mep_detail.html:66
+msgid "Born on (female)"
+msgstr "Born on"
+
+#: memopol2/templates/meps/mep_detail.html:66
 #, python-format
 msgid ""
 "%(day)s %(month)s %(year)s<i> at </i>%(birth_place)s, %(age)s years old."
 msgstr "%(day)s %(month)s %(year)s<i> à </i>%(birth_place)s, %(age)s ans."
 
-#: memopol2/templates/meps/mep_detail.html:76
+#: memopol2/templates/meps/mep_detail.html:77
 msgid "Mandates"
 msgstr ""
 
 #: memopol2/templates/meps/mep_detail.html:86
+#, python-format
+msgid ""
+"Was MEP of <a href=\"%(countryurl)s\">%(role.country.name)s</a> for <a href="
+"\"%(partyurl)s\">%(role.party)s</a> from %(rolebegin)s to %(roleend)s"
+msgstr ""
+
+#: memopol2/templates/meps/mep_detail.html:88
+#, python-format
+msgid ""
+"Was MEP of <a href=\"%(countryurl)s\">%(role.country.name)s</a> from "
+"%(rolebegin)s to %(roleend)s"
+msgstr ""
+
+#: memopol2/templates/meps/mep_detail.html:92
+#, python-format
+msgid ""
+"Is MEP of <a href=\"%(countryurl)s\">%(role.country.name)s</a> for <a href="
+"\"%(partyurl)s\">%(role.party)s</a> from %(rolebegin)s"
+msgstr ""
+
+#: memopol2/templates/meps/mep_detail.html:94
+#, python-format
+msgid ""
+"Is MEP of <a href=\"%(countryurl)s\">%(role.country.name)s</a> from "
+"%(rolebegin)s"
+msgstr ""
+
+#: memopol2/templates/meps/mep_detail.html:103
 #, fuzzy
 msgid "Groups"
 msgstr "Groupe"
 
-#: memopol2/templates/meps/mep_detail.html:96
+#: memopol2/templates/meps/mep_detail.html:109
+#, python-format
+msgid ""
+"Was MEP for <a href=\"%(groupurl)s\">%(mep.group.name)s "
+"(%(mep.group.abbreviation)s)</a> from %(groupbegin)s to %(groupend)s"
+msgstr ""
+
+#: memopol2/templates/meps/mep_detail.html:111
+#, python-format
+msgid ""
+"Is MEP for <a href=\"%(groupurl)s\">%(mep.group.name)s "
+"(%(mep.group.abbreviation)s)</a> from %(groupbegin)s"
+msgstr ""
+
+#: memopol2/templates/meps/mep_detail.html:119
 msgid "Committees"
 msgstr "Comités"
 
-#: memopol2/templates/meps/mep_detail.html:112
+#: memopol2/templates/meps/mep_detail.html:128
+#, python-format
+msgid "Was %(role)s in %(role.committee)s from %(rolebegin)s to %(roleend)s"
+msgstr ""
+
+#: memopol2/templates/meps/mep_detail.html:130
+#, python-format
+msgid "Is %(role)s in %(role.committee)s from %(rolebegin)s"
+msgstr ""
+
+#: memopol2/templates/meps/mep_detail.html:140
 msgid "Delegations"
 msgstr "Délégations"
 
-#: memopol2/templates/meps/mep_detail.html:128
+#: memopol2/templates/meps/mep_detail.html:149
+#, python-format
+msgid "Was %(role)s in %(role.delegation)s from %(rolebegin)s to %(roleend)s"
+msgstr ""
+
+#: memopol2/templates/meps/mep_detail.html:151
+#, python-format
+msgid "Is %(role)s in %(role.delegation)s from %(rolebegin)s"
+msgstr ""
+
+#: memopol2/templates/meps/mep_detail.html:161
 msgid "Old staff"
 msgstr "Ancienne équipe"
 
-#: memopol2/templates/meps/mep_detail.html:131
+#: memopol2/templates/meps/mep_detail.html:165
 msgid "to"
 msgstr "à"
 
-#: memopol2/templates/meps/mep_detail.html:139
+#: memopol2/templates/meps/mep_detail.html:167
+#, python-format
+msgid ""
+"Was %(staff.role)s in %(staff.organization.name)s from %(staff.begin)s to "
+"%(staff.end)s"
+msgstr ""
+
+#: memopol2/templates/meps/mep_detail.html:169
+#, python-format
+msgid "Is %(staff.role)s in %(staff.organization.name)s from %(staff.begin)s"
+msgstr ""
+
+#: memopol2/templates/meps/mep_detail.html:179
 msgid "CV"
 msgstr "CV"
 
-#: memopol2/templates/meps/mep_detail.html:150
+#: memopol2/templates/meps/mep_detail.html:190
 msgid "Opinions (memopol v1)"
 msgstr "Prises de position (memopol v1)"
 
-#: memopol2/templates/meps/mep_detail.html:153
-#: memopol2/templates/meps/mep_detail.html:167
+#: memopol2/templates/meps/mep_detail.html:193
+#, python-format
+msgid "(on %(line.date)s)"
+msgstr ""
+
+#: memopol2/templates/meps/mep_detail.html:193
+#: memopol2/templates/meps/mep_detail.html:207
 msgid "Read more..."
 msgstr "En savoir plus..."
 
-#: memopol2/templates/meps/mep_detail.html:161
-msgid "Total score"
+#: memopol2/templates/meps/mep_detail.html:201
+#: memopol2/templates/meps/meps_table_tr.html:97
+#, fuzzy
+msgid "Total score:"
 msgstr "Score total"
 
-#: memopol2/templates/meps/mep_detail.html:167
-#: memopol2/templates/mps/mp_detail.html:95
-msgid "on"
-msgstr "sur"
+#: memopol2/templates/meps/mep_detail.html:207
+#, python-format
+msgid "(on %(score.date)s)"
+msgstr ""
+
+#: memopol2/templates/meps/mep_detail.html:214
+#: memopol2/templates/votes/proposal_detail.html:16
+#: memopol2/templates/votes/proposal_detail.html:21
+#: memopol2/templates/votes/proposal_detail.html:24
+#: memopol2/templates/votes/recommendation_detail.html:25
+#: memopol2/templates/votes/recommendation_detail.html:28
+#: memopol2/templates/votes/recommendation_detail.html:31
+msgid "Trends explanation"
+msgstr ""
+
+#: memopol2/templates/meps/mep_detail.html:221
+#, fuzzy
+msgid "Public Positions"
+msgstr "Position"
+
+#: memopol2/templates/meps/mep_detail.html:232
+#, fuzzy
+msgid "Add a public position"
+msgstr "Prévisualiser la position publique"
+
+#: memopol2/templates/meps/mep_detail.html:233
+msgid "Help us keep track of the public positions taken by this MEP"
+msgstr ""
 
 #: memopol2/templates/meps/mep_raw.html:17
 msgid "Back to normal view"
@@ -803,11 +808,6 @@ msgstr "Score total"
 msgid "Less information"
 msgstr "Résumé"
 
-#: memopol2/templates/meps/meps_table_tr.html:97
-#, fuzzy
-msgid "Total score:"
-msgstr "Score total"
-
 #: memopol2/templates/meps/meps_table_tr.html:107
 msgid "Score :"
 msgstr ""
@@ -815,6 +815,10 @@ msgstr ""
 #: memopol2/templates/meps/organization_list.html:6
 msgid "MEP by instances"
 msgstr "Eurodéputés par instance"
+
+#: memopol2/templates/mps/mp_detail.html:95
+msgid "on"
+msgstr "sur"
 
 #: memopol2/templates/reps/opinion_list.html:5
 msgid "MEPs by opinions"
@@ -844,44 +848,35 @@ msgstr "Mauvais vote"
 msgid "Abstention or absent"
 msgstr "Abstention ou absence"
 
-#: memopol2/templates/votes/per_rep.html:7
+#: memopol2/templates/votes/per_rep.html:6
 #, python-format
 msgid ""
-"Votes of <a href=\"%(mep_url)s\">%(representative.first_name)s "
-"%(representative.last_name)s</a> on <a href="
-"\"%(proposal_url }\">{{ proposal.title)s</a>"
+"Votes of <a href=\"%(mep_url)s\">%(representative_first_name)s "
+"%(representative_last_name)s</a> on <a href=\"%(proposal_url)s\">"
+"%(proposal_title)s</a>"
 msgstr ""
 
-#: memopol2/templates/votes/per_rep.html:15
+#: memopol2/templates/votes/per_rep.html:14
 #, fuzzy
 msgid "No description yet"
 msgstr "Campagnes"
 
-#: memopol2/templates/votes/per_rep.html:17
+#: memopol2/templates/votes/per_rep.html:16
 #: memopol2/templates/votes/proposal_detail.html:42
 #, fuzzy
 msgid "Part"
 msgstr "Parti"
 
-#: memopol2/templates/votes/per_rep.html:18
+#: memopol2/templates/votes/per_rep.html:17
 #: memopol2/templates/votes/proposal_detail.html:43
 #, fuzzy
 msgid "Recommendation"
 msgstr "Modération des commentaires"
 
-#: memopol2/templates/votes/per_rep.html:20
+#: memopol2/templates/votes/per_rep.html:19
 #, fuzzy
 msgid "Vote"
 msgstr "Votes"
-
-#: memopol2/templates/votes/proposal_detail.html:16
-#: memopol2/templates/votes/proposal_detail.html:21
-#: memopol2/templates/votes/proposal_detail.html:24
-#: memopol2/templates/votes/recommendation_detail.html:25
-#: memopol2/templates/votes/recommendation_detail.html:28
-#: memopol2/templates/votes/recommendation_detail.html:31
-msgid "Trends explanation"
-msgstr ""
 
 #: memopol2/templates/votes/proposal_detail.html:40
 #, fuzzy
@@ -940,14 +935,39 @@ msgstr ""
 msgid "Importable votes"
 msgstr "Votes à importer"
 
+#, fuzzy
+#~ msgid "from group"
+#~ msgstr "Groupes précédents"
+
+#, fuzzy
+#~ msgid "Tel.:"
+#~ msgstr "Tel."
+
+#, fuzzy
+#~ msgid "Website:"
+#~ msgstr "Site web :"
+
+#, fuzzy
+#~ msgid ""
+#~ "Political Memory: %(mep)s, member of the european parliament - Memopol"
+#~ msgstr ", eurodéputé"
+
+#~ msgid "Total score"
+#~ msgstr "Score total"
+
+#, fuzzy
+#~ msgid "description"
+#~ msgstr "Position"
+
+#, fuzzy
+#~ msgid "Active"
+#~ msgstr "Fonctions"
+
 #~ msgid "Current mandate page on the website of the European Parliament"
 #~ msgstr "Page du mandat actuel sur le site du Parlement européen"
 
 #~ msgid "Previous mandates"
 #~ msgstr "Précédents mandats"
-
-#~ msgid "Previous groups"
-#~ msgstr "Groupes précédents"
 
 #~ msgid "Members of the French AN"
 #~ msgstr "Members of the French AN"
@@ -957,9 +977,6 @@ msgstr "Votes à importer"
 
 #~ msgid "French MPs by political group"
 #~ msgstr "French MPs by political group"
-
-#~ msgid "Web&nbsp;: "
-#~ msgstr "Web&nbsp;: "
 
 #~ msgid ", member of the french parliament"
 #~ msgstr ", member of the french parliament"
@@ -990,9 +1007,6 @@ msgstr "Votes à importer"
 
 #~ msgid "Informations generated by"
 #~ msgstr "Informations generated by"
-
-#~ msgid "French deputies"
-#~ msgstr "French deputies"
 
 #~ msgid "Phone"
 #~ msgstr "Phone"
