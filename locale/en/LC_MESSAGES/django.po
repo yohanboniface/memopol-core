@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: The Political Memory of La Quadrature du Net\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-29 19:44+0200\n"
+"POT-Creation-Date: 2012-05-30 17:22+0200\n"
 "PO-Revision-Date: 2012-05-12 05:13+0000\n"
 "Last-Translator: psycojoker <psycojoker@gmail.com>\n"
 "Language-Team: <mempol2@laquadrature.net>\n"
@@ -92,101 +92,138 @@ msgstr ""
 msgid "Internal Error 500"
 msgstr ""
 
+#: memopol2/templates/api.html:4
+#, python-format
+msgid ""
+"\n"
+"<p>Memopol2 offers a simple Rest API to access nearly all its data. "
+"Following the Restful principles it is self describing, starting at the root "
+"you'll be able to get everywhere via urls.</p>\n"
+"\n"
+"<p>You can access the api here:</p>\n"
+"\n"
+"<p>\n"
+"<code>\n"
+"    %(root_url)s/api/v1/\n"
+"</code>\n"
+"</p>\n"
+"\n"
+"<p>The best way to play with it is to use curl:</p>\n"
+"\n"
+"<p>\n"
+"<code>\n"
+"    curl \"%(root_url)s/api/v1/?format=json\" | python -m json.tool\n"
+"</code>\n"
+"</p>\n"
+"\n"
+"<p>Note: you can change \"json\" with either \"xml\" or \"yaml\".</p>\n"
+"\n"
+"<p>This API is generated using <a href=\"http://tastypieapi.org/\">tastypie</"
+"a>, you can read the usage documentation <a href=\"http://django-tastypie."
+"readthedocs.org/\">here</a>.</p>\n"
+"\n"
+"<p>If you aren't interested in Memopol2-related data maybe the <a href="
+"\"http://parltrack.euwiki.org/dumps/\">dumps from parltarck</a> will be "
+"better for you for the European Parliament part or <a href=\"http://cpc."
+"regardscitoyens.org/trac/wiki/API\">nosdeputes.fr dumps</a> for the french "
+"side.</p>\n"
+msgstr ""
+
 #: memopol2/templates/base.html:22
 #, fuzzy
 msgid "The Political Memory of La Quadrature du Net"
 msgstr "The Political Memory of la Quadrature du Net"
 
-#: memopol2/templates/base.html:25
+#: memopol2/templates/base.html:26
 msgid "Administration"
 msgstr "Administration"
 
-#: memopol2/templates/base.html:26
+#: memopol2/templates/base.html:27
 msgid "Comments moderation"
 msgstr "Comments moderation"
 
-#: memopol2/templates/base.html:27
+#: memopol2/templates/base.html:28
 msgid "Logout"
 msgstr "Logout"
 
-#: memopol2/templates/base.html:30 memopol2/templates/campaign/list.html:37
+#: memopol2/templates/base.html:31 memopol2/templates/campaign/list.html:37
 msgid "Login"
 msgstr "Login"
 
-#: memopol2/templates/base.html:46 memopol2/templates/search.html:4
+#: memopol2/templates/base.html:47 memopol2/templates/search.html:4
 #: memopol2/templates/search.html.py:8
 msgid "Search"
 msgstr "Search"
 
-#: memopol2/templates/base.html:50
+#: memopol2/templates/base.html:51
 msgid "GO"
 msgstr "GO"
 
-#: memopol2/templates/base.html:54
+#: memopol2/templates/base.html:55
 msgid "Eurodeputies "
 msgstr "Eurodeputies "
 
-#: memopol2/templates/base.html:56 memopol2/templates/base.html.py:82
+#: memopol2/templates/base.html:57 memopol2/templates/base.html.py:83
 msgid "By name"
 msgstr "By name"
 
-#: memopol2/templates/base.html:57
+#: memopol2/templates/base.html:58
 msgid "By country"
 msgstr "By country"
 
-#: memopol2/templates/base.html:58 memopol2/templates/base.html.py:83
+#: memopol2/templates/base.html:59 memopol2/templates/base.html.py:84
 msgid "By political group"
 msgstr "By political group"
 
-#: memopol2/templates/base.html:59
+#: memopol2/templates/base.html:60
 msgid "By committee"
 msgstr "By committee"
 
-#: memopol2/templates/base.html:60
+#: memopol2/templates/base.html:61
 msgid "By delegation"
 msgstr "By delegation"
 
-#: memopol2/templates/base.html:61
+#: memopol2/templates/base.html:62
 msgid "By local party"
 msgstr "By local party"
 
-#: memopol2/templates/base.html:62
+#: memopol2/templates/base.html:63
 msgid "By instances"
 msgstr "By instances"
 
-#: memopol2/templates/base.html:63
+#: memopol2/templates/base.html:64
 msgid "By floor"
 msgstr "By floor"
 
-#: memopol2/templates/base.html:64
+#: memopol2/templates/base.html:65
 msgid "By total score"
 msgstr "By total score"
 
-#: memopol2/templates/base.html:65 memopol2/templates/base.html.py:85
+#: memopol2/templates/base.html:66 memopol2/templates/base.html.py:86
 msgid "Tracked votes"
 msgstr "Tracked votes"
 
-#: memopol2/templates/base.html:66 memopol2/templates/base.html.py:86
+#: memopol2/templates/base.html:67 memopol2/templates/base.html.py:87
 msgid "Expressed opinions"
 msgstr "Expressed opinions"
 
-#: memopol2/templates/base.html:67
+#: memopol2/templates/base.html:68
 msgid "Former eurodeputies"
 msgstr "Former eurodeputies"
 
-#: memopol2/templates/base.html:71 memopol2/templates/campaign/list.html:6
+#: memopol2/templates/base.html:72 memopol2/templates/campaign/list.html:6
 msgid "Campaigns"
 msgstr "Campaigns"
 
-#: memopol2/templates/base.html:80
+#: memopol2/templates/base.html:81
 msgid "French deputies"
 msgstr "French deputies"
 
-#: memopol2/templates/base.html:84
+#: memopol2/templates/base.html:85
 msgid "By departments"
 msgstr "By departments"
 
-#: memopol2/templates/base.html:101
+#: memopol2/templates/base.html:102
 msgid ""
 " Memopol is free software <a href=\"https://gitorious.org/"
 "memopol2-0\">released</a> under the terms of the\n"
@@ -196,7 +233,7 @@ msgid ""
 "a>"
 msgstr ""
 
-#: memopol2/templates/base.html:105
+#: memopol2/templates/base.html:106
 msgid "Provided by"
 msgstr ""
 
@@ -794,8 +831,9 @@ msgid "Less information"
 msgstr "Less information"
 
 #: memopol2/templates/meps/meps_table_tr.html:107
-msgid "Score :"
-msgstr ""
+#, fuzzy
+msgid "Score:"
+msgstr "Scores average"
 
 #: memopol2/templates/meps/organization_list.html:6
 msgid "MEP by instances"
@@ -812,7 +850,7 @@ msgstr "MEPs by opinions"
 #: memopol2/templates/votes/header_mep_list.html:3
 #, python-format
 msgid ""
-" MEPs that have voted \"%(choice)s\" on <a href=\"%(recommendation)s\">"
+"MEPs that have voted \"%(choice)s\" on <a href=\"%(recommendation)s\">"
 "%(recommendation.part)s</a> of <a href=\"%(vote_detail)s\">"
 "%(recommendation.proposal.title)s</a>"
 msgstr ""
@@ -842,6 +880,7 @@ msgid ""
 msgstr ""
 
 #: memopol2/templates/votes/per_rep.html:14
+#: memopol2/templates/votes/proposal_detail.html:40
 #, fuzzy
 msgid "No description yet"
 msgstr "Campaigns"
@@ -862,11 +901,6 @@ msgstr "Comments moderation"
 msgid "Vote"
 msgstr "Votes"
 
-#: memopol2/templates/votes/proposal_detail.html:40
-#, fuzzy
-msgid "No description yet."
-msgstr "Campaigns"
-
 #: memopol2/templates/votes/proposal_detail.html:44
 msgid "Weight"
 msgstr ""
@@ -886,16 +920,16 @@ msgid ""
 msgstr ""
 
 #: memopol2/templates/votes/recommendation_detail.html:13
-msgid "Part :"
+msgid "Part:"
 msgstr ""
 
 #: memopol2/templates/votes/recommendation_detail.html:14
 #, fuzzy
-msgid "Recommendation :"
+msgid "Recommendation:"
 msgstr "Comments moderation"
 
 #: memopol2/templates/votes/recommendation_detail.html:15
-msgid "Weight :"
+msgid "Weight:"
 msgstr ""
 
 #: memopol2/templates/votes/recommendationdata_detail.html:21
@@ -917,6 +951,10 @@ msgstr ""
 #: memopol2/templates/votes/recommendationdata_list.html:5
 msgid "Importable votes"
 msgstr "Importable votes"
+
+#, fuzzy
+#~ msgid "No description yet."
+#~ msgstr "Campaigns"
 
 #, fuzzy
 #~ msgid "description"
