@@ -760,3 +760,11 @@ ul.recommendation ul li {
     font-weight: bold;
     background-color: #E65B23;
 }
+
+code {
+    margin-left: 15px;
+    margin-bottom: 20px;
+    padding: 5px;
+    border: solid 1px #BBBBBB;
+    background-color: #EEEEEE;
+}
