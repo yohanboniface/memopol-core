@@ -13,6 +13,7 @@ from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
+from django.shortcuts import render
 
 from memopol2.utils import check_dir, send_file, get_content_cache
 
@@ -22,6 +23,42 @@ from reps.models import Email, PartyRepresentative
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
 
 logger = logging.getLogger(__name__)
+
+
+generic_operations = {
+    "active": lambda queryset, argument: queryset.filter(active=argument),
+    "country": lambda queryset, argument: queryset.filter(countrymep__country__code=argument.upper()),
+    "group": lambda queryset, argument: queryset.filter(groupmep__group__abbreviation=argument.upper()),
+    "committee": lambda queryset, argument: queryset.filter(committeerole__committee__abbreviation=argument.upper()),
+    "delegation": lambda queryset, argument: queryset.filter(delegationrole__delegation__id=argument),
+    "score_min": lambda queryset, argument: queryset.filter(total_score__gt=argument),
+    "score_max": lambda queryset, argument: queryset.filter(total_score__lt=argument),
+    "last_name": lambda queryset, argument: queryset.filter(last_name=argument.upper()),
+    "bxl_floor": lambda queryset, argument: queryset.filter(bxl_floor=argument.upper()),
+    "bxl_building": lambda queryset, argument: queryset.filter(bxl_building=argument.upper()),
+    "stg_floor": lambda queryset, argument: queryset.filter(stg_floor=argument.upper()),
+    "stg_building": lambda queryset, argument: queryset.filter(stg_building=argument.upper()),
+    "organization": lambda queryset, argument: queryset.filter(organizationmep__organization__id=argument),
+}
+
+convert_arguments_table = {
+    "true": True,
+    "false": False,
+}
+
+
+def convert_argument(argument):
+    return convert_arguments_table.get(argument, argument)
+
+
+def generic(request):
+    GET_arguments_in_generic_operations = filter(lambda x: x in generic_operations.keys(), request.GET)
+
+    queryset = MEP.objects.all()
+    for i in GET_arguments_in_generic_operations:
+        queryset = generic_operations[i](queryset, convert_argument(request.GET[i]))
+
+    return render(request, "meps/generic.html", {"meps": queryset, "fields": generic_operations.keys()})
 
 
 def get_mep_picture(request, ep_id):

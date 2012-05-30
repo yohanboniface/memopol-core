@@ -1,0 +1,14 @@
+<h1>Ohai, this is a dummy prototype for generic views</h1>
+
+<p>Fields available are: {{ fields }}</p>
+
+<p>Example url: <a href="/europe/parliament/generic/?active=true&country=fr&committee=juri&group=epp">europe/parliament/generic/?active=true&country=fr&committee=juri&group=epp</a></p>
+
+<table class="mep-list tablesorter">
+  {% include "meps/meps_table_thead.html" %}
+  <tbody>
+    {% for mep in meps %}
+      {% include "meps/meps_table_tr.html" %}
+    {% endfor %}
+  </tbody>
+</table>
