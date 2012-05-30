@@ -58,6 +58,7 @@ def generic(request):
     for i in GET_arguments_in_generic_operations:
         queryset = generic_operations[i](queryset, convert_argument(request.GET[i]))
 
+    queryset = queryset.distinct()
     return render(request, "meps/generic.html", {"meps": queryset, "fields": generic_operations.keys()})
 
 
