@@ -19,3 +19,4 @@ django-extensions
 werkzeug
 pytidylib
 django-tastypie
+pyyaml
