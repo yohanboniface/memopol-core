@@ -6,7 +6,12 @@ jQuery.noConflict();
         var args = [];
         $("div.filter").each(function()
             {
-                args.push($(this).find(".key").val() + "=" + $(this).find(".value").val());
+                var key = $(this).find(".key").val();
+                var value = $(this).find(".value").val();
+                if (key && value)
+                {
+                    args.push(key + "=" + value);
+                }
             });
 
         var url = "/europe/parliament/generic/";
