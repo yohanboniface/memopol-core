@@ -19,6 +19,7 @@ jQuery.noConflict();
         {
             url += "?" + args.join("&");
         }
+        $("span#show_query").html(url);
         $("#query").html("Loading...");
         $.get(url, function(data){
             $("#query").html(data);
