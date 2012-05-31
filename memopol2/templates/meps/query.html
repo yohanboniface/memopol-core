@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Filters</h3>
+
+<div id="filter_list">
+<div class="filter">
+    <input class="key" value="active">
+    <input class="value" value="true">
+    <button class="remove">Remove</button>
+</div>
+<div class="filter">
+    <input class="key" value="country">
+    <input class="value" value="FR">
+    <button class="remove">Remove</button>
+</div>
+</div>
+
+<button id="add">Add</button>
+<button id="apply_filter">Filter</button>
+
+<div id="query">
+    Loading...
+</div>
+
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/generic_queries.js"></script>
+{% endblock %}
