@@ -267,7 +267,10 @@ def change_mep_details(mep, mep_json):
     print "     update mep full name"
     mep.full_name = "%s %s" %(mep_json["Name"]["sur"], mep_json["Name"]["family"])
     print "     update mep gender"
-    mep.gender = mep_json["Gender"]
+    if mep_json["Gender"] == u'n/a':
+        mep.gender = None
+    else:
+        mep.gender = mep_json["Gender"]
 
 def add_mep_email(mep, emails):
     for email in emails:
