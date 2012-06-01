@@ -768,3 +768,10 @@ code {
     border: solid 1px #BBBBBB;
     background-color: #EEEEEE;
 }
+
+option.visible {
+}
+
+option.not_visible {
+    display: none;
+}
