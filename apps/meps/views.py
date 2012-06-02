@@ -78,7 +78,11 @@ filters = {
 
 
 def get_filter(request, name):
-    return HttpResponse(dumps(filters[name]()) if filters.get(name) else '')
+    if filters.get(name):
+        return HttpResponse(dumps(filters[name]()))
+    else:
+        return HttpResponse('')
+
 
 def get_mep_picture(request, ep_id):
     filename = join(settings.MEDIA_DIRECTORY, 'img', 'meps', u"%s.jpg" % ep_id)
