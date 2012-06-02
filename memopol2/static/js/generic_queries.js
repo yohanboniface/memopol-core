@@ -10,7 +10,7 @@ jQuery.noConflict();
                 var value = $(this).find(".value").val();
                 if (key && value)
                 {
-                    args.push(key + "=" + value);
+                    args.push(key + "=" + encodeURIComponent(value));
                 }
             });
 
