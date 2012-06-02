@@ -282,24 +282,7 @@ class MEPList(ListView):
         [1] https://docs.djangoproject.com/en/dev/topics/db/optimization/#use-queryset-select-related-and-prefetch-related
         """
         start = time()
-        country_mep = {}
-        for country in CountryMEP.objects.select_related('mep', 'country').order_by('mep', 'end').all():
-            country_mep[country.mep.id] = country.country
-        group_mep = {}
-        for group in GroupMEP.objects.select_related('mep', 'group').order_by('mep', 'end').all():
-            group_mep[group.mep.id] = group.group
-        party_mep = {}
-        for party in PartyRepresentative.objects.select_related('representative', 'party').order_by('representative').all():
-            party_mep[party.representative.id] = party.party
-        emails_mep = {}
-        for email in Email.objects.select_related('representative').all():
-            emails_mep.setdefault(email.representative.id, []).append(email.email)
-        # Overwrite MEP attributes
-        for mep in context['object_list']:
-            mep.country = country_mep.get(mep.id)
-            mep.group = group_mep.get(mep.id)
-            mep.emails = emails_mep.get(mep.id)
-            mep.party = party_mep.get(mep.id)
+        optimise_mep_query(context["object_list"])
         logger.debug("MEPList relationships took %.2fsec to build." % (time() - start))
 
         context['score_listing'] = self.score_listing
@@ -311,6 +294,28 @@ class MEPList(ListView):
             return render_to_csv(self, context, **response_kwargs)
         return super(MEPList, self).render_to_response(context,
                                                        **response_kwargs)
+
+def optimise_mep_query(queryset):
+    country_mep = {}
+    for country in CountryMEP.objects.select_related('mep', 'country').order_by('mep', 'end').all():
+        country_mep[country.mep.id] = country.country
+    group_mep = {}
+    for group in GroupMEP.objects.select_related('mep', 'group').order_by('mep', 'end').all():
+        group_mep[group.mep.id] = group.group
+    party_mep = {}
+    for party in PartyRepresentative.objects.select_related('representative', 'party').order_by('representative').all():
+        party_mep[party.representative.id] = party.party
+    emails_mep = {}
+    for email in Email.objects.select_related('representative').all():
+        emails_mep.setdefault(email.representative.id, []).append(email.email)
+    # Overwrite MEP attributes
+    for mep in queryset:
+        mep.country = country_mep.get(mep.id)
+        mep.group = group_mep.get(mep.id)
+        mep.emails = emails_mep.get(mep.id)
+        mep.party = party_mep.get(mep.id)
+    return queryset
+
 
 class MEPView(DetailView):
     model = MEP
