@@ -116,6 +116,10 @@ class Building(models.Model):
     def meps(self):
         return MEP.objects.filter(active=True, **{'%s_building' % self._town: self})
 
+    def __unicode__(self):
+        return u"%s - %s - %s - %s" % (self.id, self.name, self.street, self.postcode)
+
+
 @search.searchable
 class Organization(models.Model):
     name = models.CharField(max_length=255, unique=True)
