@@ -6,6 +6,7 @@ from os.path import join
 from time import time
 import logging
 import datetime
+from json import dumps
 
 from django.conf import settings
 from django.views.generic import DetailView, ListView
@@ -17,7 +18,7 @@ from django.shortcuts import render
 
 from memopol2.utils import check_dir, send_file, get_content_cache
 
-from models import LocalParty, Building, MEP, CountryMEP, GroupMEP, Committee
+from models import LocalParty, Building, MEP, CountryMEP, GroupMEP, Committee, Group, Country, Organization, Delegation
 from reps.models import Email, PartyRepresentative
 
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
@@ -61,6 +62,23 @@ def generic(request):
     queryset = queryset.distinct()
     return render(request, "meps/generic.html", {"meps": queryset, "fields": generic_operations.keys()})
 
+
+filters = {
+    "active": lambda: [["true", "true"], ["false", "false"]],
+    "country": lambda: [[x.code, x.name] for x in Country.objects.all()],
+    "group": lambda: [[x.abbreviation, "(%s) " % x.abbreviation + x.name] for x in Group.objects.all()],
+    "committee": lambda: [[x.abbreviation, "(%s) " % x.abbreviation + x.name] for x in Committee.objects.all()],
+    "delegation": lambda: [[x.id, x.name[:85] + ("..." if len(x.name) > 84 else "")] for x in Delegation.objects.all()],
+    "bxl_floor": lambda: [[x, x] for x in sorted(filter(None, set(map(lambda x: x.bxl_floor, MEP.objects.all()))))],
+    "bxl_building": lambda: [[x.id, "(%s) %s" % (x.id, x.name)] for x in filter(lambda x: x._town == "bxl", Building.objects.all())],
+    "stg_floor": lambda: [[x, x] for x in sorted(filter(None, set(map(lambda x: x.stg_floor, MEP.objects.all()))))],
+    "stg_building": lambda: [[x.id, "(%s) %s" % (x.id, x.name)] for x in filter(lambda x: x._town == "stg", Building.objects.all())],
+    "organization": lambda: [[x.id, x.name] for x in Organization.objects.all()],
+}
+
+
+def get_filter(request, name):
+    return HttpResponse(dumps(filters[name]()) if filters.get(name) else '')
 
 def get_mep_picture(request, ep_id):
     filename = join(settings.MEDIA_DIRECTORY, 'img', 'meps', u"%s.jpg" % ep_id)

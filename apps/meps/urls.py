@@ -11,6 +11,7 @@ urlpatterns = patterns('meps.views',
     # those view are *very* expansive. we cache them in RAM for a week
     url(r'^generic/$', 'generic', name="generic"),
     url(r'^query/$', TemplateView.as_view(template_name="meps/query.html"), name="generic"),
+    url(r'^filter/(?P<name>[a-z_]+)/$', 'get_filter', name="filter"),
     url(r'^names/$', MEPList.as_view(), name='index_names'),
     url(r'^inactive/$', MEPList.as_view(active=False), name='index_inactive'),
     url(r'^score/$', MEPList.as_view(queryset=MEP.objects.filter(active=True).exclude(total_score__isnull=True).order_by('position'), score_listing=True), name='scores'),
