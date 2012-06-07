@@ -273,8 +273,11 @@ def change_mep_details(mep, mep_json):
         mep.gender = mep_json["Gender"]
 
 def add_mep_email(mep, emails):
-    for email in emails:
-        get_or_create(Email, representative=mep.representative_ptr, email=email)
+    if isinstance(emails, list):
+        for email in emails:
+            get_or_create(Email, representative=mep.representative_ptr, email=email)
+    else:
+        get_or_create(Email, representative=mep.representative_ptr, email=emails)
 
 def add_mep_website(mep, urls):
     for url in urls:
