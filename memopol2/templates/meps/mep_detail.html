@@ -194,7 +194,7 @@ $(document).ready(function() {
     <h2 class="collapsible collapsed">{% trans "Opinions (memopol v1)" %}</h2>
     <ul class="body opinions">
      {% for line in mep.opinionrep_set.all %}
-     <li><b><a href="{{ line.opinion.get_absolute_url }}">{{ line.opinion.title }}</b></a> {% blocktrans %}(on {{ line.date }}){% endblocktrans %}<br/>{% autoescape off %}{{ line.opinion.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.opinion.url }}"><br/>{% trans "Read more..." %}</a> </li>
+     <li><b><a href="{{ line.opinion.get_absolute_url }}">{{ line.opinion.title }}</b></a> {% blocktrans with line.date as opinion_date %}(on {{ opinion_date }}){% endblocktrans %}<br/>{% autoescape off %}{{ line.opinion.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.opinion.url }}"><br/>{% trans "Read more..." %}</a> </li>
      {% endfor %}
     </ul>
 </div>
