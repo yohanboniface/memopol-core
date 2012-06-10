@@ -40,7 +40,6 @@ $(document).ready(function() {
 <header><h1 class="document-title" id="name">{% blocktrans %}{{ mep }}, member of the european parliament{% endblocktrans %}</h1></header>
 
 <section id="summary">
-<h2>{% trans "General information" %}</h2>
 <ul id="infos" class="body">
 
 <div class="quickView">
@@ -55,6 +54,7 @@ $(document).ready(function() {
 </div>
 
 
+<h2>{% trans "General information" %}</h2>
 {% if not mep.active %}<li><div class="nok">{% trans "Former mep" %}</div></li>{% endif %}
 <li><i>{% trans "Country" %}</i>:  <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.country.code %}">{{ mep.country.name }} </li></a>
 {% if mep.group %}
