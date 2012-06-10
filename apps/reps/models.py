@@ -40,6 +40,9 @@ class Opinion(models.Model):
     url = models.URLField(max_length=400)
     institution = models.CharField(max_length=63, choices=((u'EU', 'european parliament'), (u'FR', 'assemblée nationale française')))
 
+    def date(self):
+        return self.opinionrep_set.all()[0].date
+
     def meps(self):
         return meps.models.MEP.objects.filter(opinionrep__opinion=self)
 

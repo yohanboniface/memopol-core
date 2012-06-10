@@ -6,7 +6,7 @@
 {% with mep=opinion.meps|first %}
 <article>
 {% url meps:mep mep.pk as mep_url %}
-<h1 class="document-title">{% blocktrans with opinion.title as opinion_title %}"{{ opinion_title }}", opinion expressed by <a href="{{ mep_url }}">{{ mep }}{% endblocktrans %}</a></h1>
+<h1 class="document-title">{% blocktrans with opinion.title as opinion_title and opinion.date as opinion_date %}"{{ opinion_title }}", opinion expressed by <a href="{{ mep_url }}">{{ mep }}</a> on {{ opinion_date }}{% endblocktrans %}</h1>
 
 <section id="summary">
 <ul id="infos" class="body">

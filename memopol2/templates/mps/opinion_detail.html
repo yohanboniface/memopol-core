@@ -2,7 +2,7 @@
 
 {% block content %}
 {% with opinion.mps|first as mp %}
-<h1>« {{ opinion.title }} », opinion exprimé par <a href="{% url mps:mp mp.pk %}">{{ mp }}</a></h1>
+<h1>« {{ opinion.title }} », opinion exprimé par <a href="{% url mps:mp mp.pk %}">{{ mp }}</a> le {{ opinion.date }}</h1>
 
 <section id="summary">
 
