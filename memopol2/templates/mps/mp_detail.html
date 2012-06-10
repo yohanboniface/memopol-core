@@ -104,6 +104,7 @@ $.get('/france/assemblee/nosdeputes/' + $('a#widget-nosdeputes').attr('class') +
     $('div#nosdeputes').find('ul.body').html(data);
     $('div.nosdeputes_widget').find('h2').first().remove();
     $('div.photo_depute').remove();
+    $('div.barre_activite').find("ul").attr("style", "margin-left: 0px");
 });
 }(jQuery));
 </script>
