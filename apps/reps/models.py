@@ -46,6 +46,14 @@ class Opinion(models.Model):
     def mps(self):
         return mps.models.MP.objects.filter(opinionrep__opinion=self)
 
+    def authors(self):
+        if self.institution == "FR":
+            return self.mps()
+        return self.meps()
+
+    def author(self):
+        return self.authors()[0]
+
     def get_absolute_url(self):
         if self.institution == "FR":
             return reverse("mps:index_by_opinions", args=[self.id])
