@@ -8,6 +8,7 @@ from memopol2.utils import reify
 from snippets import snippet
 import search
 import meps
+import mps
 
 class RepsContainerManager(models.Manager):
     """ Manager for models to which the representative model has a foreign key"""
@@ -41,6 +42,9 @@ class Opinion(models.Model):
 
     def meps(self):
         return meps.models.MEP.objects.filter(opinionrep__opinion=self)
+
+    def mps(self):
+        return mps.models.MP.objects.filter(opinionrep__opinion=self)
 
     def get_absolute_url(self):
         if self.institution == "FR":
