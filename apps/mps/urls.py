@@ -6,7 +6,7 @@ from mps.models import MP, Group, Department
 from votes.models import Proposal
 from reps.models import Opinion
 
-urlpatterns = patterns('',
+urlpatterns = patterns('mps.views',
     # the /names view is *very* expansive. we cache it in RAM for a week
     url(r'^$', utils.cached(3600*24*7)(ListView.as_view(queryset=MP.objects.filter(active=True))), name='index'),
 
@@ -19,4 +19,5 @@ urlpatterns = patterns('',
     url(r'^opinion/$', ListView.as_view(queryset=Opinion.objects.filter(institution="FR")), name='index_opinions'),
 
     url(r'^votes/$', ListView.as_view(queryset=Proposal.objects.filter(institution="FR")), name='index_votes'),
+    url(r'^nosdeputes/(?P<pk>.+)/$', 'get_nosdeputes_widget')
 )

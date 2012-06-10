@@ -42,22 +42,9 @@
 </div>
 
 <div id="nosdeputes">
-    <h2 class="collapsible expanded"> NosDéputés.fr</h2>
+    <h2 class="collapsible expanded">NosDéputés.fr</h2>
     <ul class="body">
-        <li> <i>NosDéputés.fr&nbsp;: </i><a href="http://www.nosdeputes.fr/{{ mp.first_name|slugify }}-{{ mp.last_name|slugify }}">{{ mp.first_name }} {{ mp.last_name }}</a><br>
-    <a href="http://www.nosdeputes.fr/{{ mp.first_name|slugify }}-{{ mp.last_name|slugify }}/graphes/lastyear"><img src="http://www.nosdeputes.fr/{{ mp.first_name|slugify }}-{{ mp.last_name|slugify }}/graphes/lastyear/total?questions=true&link=true&mapId=Map_9521.map" /></a>
-    </li>
-    <li>
-    <p style="font-size: small;"><span style='background-color: rgb(255,0,0);'>&nbsp;</span>
-    &nbsp;Présences enregistrées ou relevées&nbsp;&nbsp;&nbsp;
-    <span style='background-color: rgb(255,200,0);'>&nbsp;</span>&nbsp;Participations&nbsp;&nbsp;&nbsp;
-    <span style='background-color: rgb(0,255,0);'>&nbsp;</span>&nbsp;Mots prononcés (x&nbsp;10&nbsp;000)&nbsp;&nbsp;&nbsp;
-    <span style='background-color: rgb(0,0,255);'>&nbsp;</span>&nbsp;Questions orales&nbsp;&nbsp;&nbsp;
-    <span style='background-color: rgb(150,150,150);'>&nbsp;</span>&nbsp;Vacances parlementaires
-    </li>
-    <li>
-    Informations générées par <a href="http://www.nosdeputes.fr">NosDéputés.Fr</a>
-    </li>
+    <a id="widget-nosdeputes" class="{{ mp.id }}" href="http://www.nosdeputes.fr/widget/{{ mp.first_name|slugify }}-{{ mp.last_name|slugify }}">Widget de NosDéputés.fr</a>
     </ul>
 </div>
 
@@ -104,7 +91,20 @@
 
 {% endif %}
 
-
 </article>
+{% endblock %}
 
+{% block javascript %}
+<script type="text/javascript">
+jQuery.noConflict();
+(function($) {
+console.debug("pouet");
+$.get('/france/assemblee/nosdeputes/' + $('a#widget-nosdeputes').attr('class') + '/', function(data) {
+    console.debug("o");
+    $('div#nosdeputes').find('ul.body').html(data);
+    $('div.nosdeputes_widget').find('h2').first().remove();
+    $('div.photo_depute').remove();
+});
+}(jQuery));
+</script>
 {% endblock %}
