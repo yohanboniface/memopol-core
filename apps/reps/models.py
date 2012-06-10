@@ -42,6 +42,11 @@ class Opinion(models.Model):
     def meps(self):
         return meps.models.MEP.objects.filter(opinionrep__opinion=self)
 
+    def get_absolute_url(self):
+        if self.institution == "FR":
+            return reverse("mps:index_by_opinions", args=[self.id])
+        return reverse("meps:index_by_opinions", args=[self.id])
+
     def __unicode__(self):
         return self.title
 

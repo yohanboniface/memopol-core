@@ -7,7 +7,6 @@
 <header><h1 class="document-title" id="name">{{ mp }}, Député à l'Assemblée Nationale</h1></header>
 
 <section id="summary">
-<h2>Informations générales</h0>
 
 <ul id="infos" class="body">
 
@@ -20,6 +19,8 @@
 </a>
 
 </div>
+
+<h2>Informations générales</h0>
 
 <li><i>{% if mp.gender == "F" %}Née{% else %}Né{% endif %} le</i>
 {{ mp.birth_date.day }}/{{ mp.birth_date.month }}/{{ mp.birth_date.year }} <i>à</i> {{ mp.birth_department }}</li>

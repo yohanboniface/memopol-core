@@ -17,6 +17,7 @@ urlpatterns = patterns('mps.views',
     url(r'^department/$', ListView.as_view(queryset=Department.objects.order_by('number')), name='index_departments'),
     url(r'^department/(?P<pk>.+)/$', DetailView.as_view(model=Department, template_name='mps/container_detail.html'), name='index_by_department'),
     url(r'^opinion/$', ListView.as_view(queryset=Opinion.objects.filter(institution="FR")), name='index_opinions'),
+    url(r'^opinion/(?P<pk>[0-9]+)/$', DetailView.as_view(model=Opinion, template_name="mps/opinion_detail.html"), name='index_by_opinions'),
 
     url(r'^votes/$', ListView.as_view(queryset=Proposal.objects.filter(institution="FR")), name='index_votes'),
     url(r'^nosdeputes/(?P<pk>.+)/$', 'get_nosdeputes_widget')

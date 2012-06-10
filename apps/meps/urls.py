@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import patterns, url
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, DetailView
 
 from meps.models import LocalParty, Country, Group, Committee, Delegation, Organization, Building, MEP
 from reps.models import Opinion
@@ -17,7 +17,7 @@ urlpatterns = patterns('meps.views',
     url(r'^score/$', MEPList.as_view(queryset=MEP.objects.filter(active=True).exclude(total_score__isnull=True).order_by('position'), score_listing=True), name='scores'),
 
     url(r'^opinion/$', ListView.as_view(queryset=Opinion.objects.filter(institution="EU")), name='index_opinions'),
-    url(r'^opinion/(?P<pk>[0-9]+)/$', MEPsFromView.as_view(model=Opinion, named_header="reps/opinion_header.html"), name='index_by_opinions'),
+    url(r'^opinion/(?P<pk>[0-9]+)/$', DetailView.as_view(model=Opinion, template_name="meps/opinion_detail.html"), name='index_by_opinions'),
     url(r'^organization/$', ListView.as_view(model=Organization), name='index_organizations'),
     url(r'^organization/(?P<pk>[0-9]+)/$', MEPsFromView.as_view(model=Organization, organization_role=True), name='index_by_organization'),
     url(r'^country/$', ListView.as_view(model=Country), name='index_countries'),

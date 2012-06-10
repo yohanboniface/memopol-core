@@ -6,7 +6,7 @@
 <ul class="parties">
 {% for opinion in object_list %}
     <li>
-        <a href="{% url meps:index_by_opinions opinion.id %}">{{ opinion.title }}</a>
+        <a href="{{ opinion.get_absolute_url }}">{{ opinion.title }}</a>
     </li>
 {% endfor %}
 </ul>
