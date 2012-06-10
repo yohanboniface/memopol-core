@@ -3,7 +3,7 @@
 {% block content %}
 
 <h1>{% trans "MEPs by opinions" %}</h1>
-<ul class="parties">
+<ul class="opinions">
 {% for opinion in object_list %}
     <li>
     <a href="{{ opinion.get_absolute_url }}">{{ opinion.title }}</a> expressed by {% if opinion.authors.count == 1 %}<a href="{{ opinion.author.get_absolute_url }}">{{ opinion.authors|first }}</a>{% else %}{{ opinion.authors.count }} representatives{% endif %}
