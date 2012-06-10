@@ -1,4 +1,6 @@
 # -*- coding:Utf-8 -*-
+from datetime import date
+
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.core.cache import cache
@@ -41,7 +43,7 @@ class Opinion(models.Model):
     institution = models.CharField(max_length=63, choices=((u'EU', 'european parliament'), (u'FR', 'assemblée nationale française')))
 
     def date(self):
-        return self.opinionrep_set.all()[0].date
+        return self.opinionrep_set.all()[0].date if self.opinionrep_set.all()[0].date else date(1, 1, 1)
 
     def meps(self):
         return meps.models.MEP.objects.filter(opinionrep__opinion=self)

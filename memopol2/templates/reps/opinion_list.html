@@ -4,7 +4,7 @@
 
 <h1>{% trans "MEPs by opinions" %}</h1>
 <ul class="opinions">
-{% for opinion in object_list %}
+{% for opinion in object_list|dictsortreversed:"date" %}
     <li>
     <a href="{{ opinion.get_absolute_url }}">{{ opinion.title }}</a> expressed by {% if opinion.authors.count == 1 %}<a href="{{ opinion.author.get_absolute_url }}">{{ opinion.authors|first }}</a>{% else %}{{ opinion.authors.count }} representatives{% endif %}
     </li>

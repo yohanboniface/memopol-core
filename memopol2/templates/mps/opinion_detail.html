@@ -2,7 +2,11 @@
 
 {% block content %}
 {% with opinion.mps|first as mp %}
+{% if opinion.date.year != 1 %}
 <h1>« {{ opinion.title }} », opinion exprimé par <a href="{% url mps:mp mp.pk %}">{{ mp }}</a> le {{ opinion.date }}</h1>
+{% else %}
+<h1>« {{ opinion.title }} », opinion exprimé par <a href="{% url mps:mp mp.pk %}">{{ mp }}</a></h1>
+{% endif %}
 
 <section id="summary">
 
