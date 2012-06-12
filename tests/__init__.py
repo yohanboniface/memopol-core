@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import sys
 import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 import unittest
@@ -10,6 +11,10 @@ import django.core.handlers.wsgi
 logging.getLogger('django.db.backends').setLevel(logging.WARN)
 log = logging.getLogger('nose')
 
+from os.path import realpath
+sys.path.append(realpath("memopol2/"))
+BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path = [os.path.join(BASE_PATH, 'apps'),] + sys.path
 import settings
 
 settings.DEBUG_PROPAGATE_EXCEPTIONS = True
