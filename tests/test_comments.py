@@ -43,4 +43,3 @@ class TestCommentsModeration(UserTestCase):
         resp.mustcontain('<a href="comments/comment/">Comments</a>')
         resp = self.app.get('/admin/comments/comment/')
         resp.mustcontain('<th><a href="','/">garage1</a></th>')
-

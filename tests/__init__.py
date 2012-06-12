@@ -96,5 +96,3 @@ class UserTestCase(TestCase):
 
     def tearDown(self):
         self.user.delete()
-
-
