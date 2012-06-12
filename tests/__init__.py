@@ -65,6 +65,7 @@ class TestCase(unittest.TestCase):
     def mail(self):
         return self.mails[0]
 
+
 class UserTestCase(TestCase):
 
     user = None
