@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from tests import *
-from uuid import uuid4
+from tests import TestCase, UserTestCase, pq
 
 class TestComments(TestCase):
 
