@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from meps.models import LocalParty, Country, Group, Committee, Delegation, Organization, Building, MEP
 from reps.models import Opinion
 from votes.models import Proposal, Vote, Recommendation
-from votes.views import VoteRecommendation, VoteRecommendationChoice
+from meps.views import VoteRecommendation, VoteRecommendationChoice
 
 from views import BuildingDetailView, MEPView, MEPsFromView, MEPList, PartyView
 
