@@ -10,7 +10,7 @@
 <ul class="votes">
     {% for vote in object_list|dictsortreversed:"date" %}
         <li>
-            <a href="{% url votes:detail vote.id %}">{{ vote.title }}</a>
+            <a href="{{ vote.get_absolute_url }}">{{ vote.title }}</a>
         </li>
     {% endfor %}
 </ul>

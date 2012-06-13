@@ -1,11 +1,25 @@
 from django.conf.urls.defaults import patterns, url
 from django.views.generic import ListView, TemplateView, DetailView
+from django.shortcuts import get_object_or_404, render
 
 from meps.models import LocalParty, Country, Group, Committee, Delegation, Organization, Building, MEP
 from reps.models import Opinion
-from votes.models import Proposal
+from votes.models import Proposal, Vote, Recommendation
+from votes.views import VoteRecommendation, VoteRecommendationChoice
 
 from views import BuildingDetailView, MEPView, MEPsFromView, MEPList, PartyView
+
+# TODO: refactor this function, should probably be moved to class based generic views if possible
+def proposal_rep(request, proposal_id, mep_id):
+    representative = get_object_or_404(MEP, id=mep_id)
+    proposal = get_object_or_404(Proposal, id=proposal_id)
+    # dirty query because we don't store absent vote
+    votes = [Vote.objects.get(representative=representative, recommendation=r)
+             if Vote.objects.filter(representative=representative, recommendation=r)
+             else {'choice': 'absent', 'recommendation': r, 'representative': representative}
+             for r in proposal.recommendation_set.all()]
+    context = {'representative': representative, 'proposal': proposal, 'votes': votes}
+    return render(request, 'meps/per_mep.html', context)
 
 urlpatterns = patterns('meps.views',
     # those view are *very* expansive. we cache them in RAM for a week
@@ -34,7 +48,12 @@ urlpatterns = patterns('meps.views',
     url(r'^floor/brussels/(?P<pk>\w+)/(?P<floor>\w+)/$', BuildingDetailView.as_view(), name='bxl_floor'),
     url(r'^floor/strasbourg/(?P<pk>\w+)/(?P<floor>\w+)/$', BuildingDetailView.as_view(), name='stg_floor'),
 
-    url(r'^votes/$', ListView.as_view(queryset=Proposal.objects.filter(institution="EU")), name='index_votes'),
+    url(r'^vote/$', ListView.as_view(queryset=Proposal.objects.filter(institution="EU")), name='index_votes'),
+    url(r'^vote/(?P<proposal_id>[a-zA-Z/-_]+)/(?P<pk>\d+)/(?P<recommendation>\w+)/$', VoteRecommendationChoice.as_view(model=Recommendation), name='recommendation_choice'),
+    url(r'^vote/(?P<proposal_id>[a-zA-Z/-_]+)/(?P<pk>\d+)/$', VoteRecommendation.as_view(model=Recommendation, template_name="meps/recommendation_detail.html"), name='recommendation'),
+    url(r'^vote/(?P<pk>[a-zA-Z/-_]+)/dataporn/$', DetailView.as_view(model=Proposal, context_object_name='vote', template_name="meps/proposal_dataporn.html"), name='vote_dataporn'),
+    url(r'^vote/(?P<proposal_id>[a-zA-Z/-_]+)/(?P<mep_id>.+)/$', proposal_rep, name='votes_mep'),
+    url(r'^vote/(?P<pk>[a-zA-Z/-_]+)/$', DetailView.as_view(model=Proposal, context_object_name='vote', template_name="meps/proposal_detail.html"), name='vote'),
 
     url(r'^deputy/(?P<pk>\w+)/$', MEPView.as_view(), name='mep'),
     url(r'^deputy/(?P<pk>\w+)/dataporn/$', MEPView.as_view(template_name="meps/dataporn.html"), name='mep_dataporn'),

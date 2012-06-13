@@ -7,6 +7,7 @@ from utils import clean_all_trends
 from reps.models import Representative
 from meps.models import MEP, Group, Country
 from memopol2.utils import color, reify
+from django.core.urlresolvers import reverse
 
 class Proposal(models.Model):
     id = models.CharField(max_length=63, primary_key=True)
@@ -14,6 +15,11 @@ class Proposal(models.Model):
     ponderation = models.IntegerField(default=1)
     short_name = models.CharField(max_length=25, default=None, null=True)
     institution = models.CharField(max_length=63, choices=((u'EU', 'european parliament'), (u'FR', 'assemblée nationale française')))
+
+    def get_absolute_url(self):
+        if self.institution == "FR":
+            return reverse("mps:vote", args=[self.id])
+        return reverse("meps:vote", args=[self.id])
 
     @property
     def groups(self):
