@@ -6,6 +6,7 @@ from django.db.models import Avg
 from utils import clean_all_trends
 from reps.models import Representative
 from meps.models import MEP, Group, Country
+from mps.models import MP
 from memopol2.utils import color, reify
 from django.core.urlresolvers import reverse
 
@@ -43,6 +44,10 @@ class Proposal(models.Model):
     def meps(self):
         return MEP.objects.filter(score__proposal=self)
 
+    @reify
+    def mps(self):
+        return MP.objects.filter(score__proposal=self)
+
     def __unicode__(self):
         return self.title
 
@@ -65,6 +70,10 @@ class Recommendation(models.Model):
     def meps_with_votes(self):
         for mep in MEP.objects.filter(vote__recommendation=self):
             yield mep, mep.vote_set.get(recommendation=self).choice
+
+    def mps_with_votes(self):
+        for mp in MP.objects.filter(vote__recommendation=self):
+            yield mp, mp.vote_set.get(recommendation=self).choice
 
     def __unicode__(self):
         return self.subject
