@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: The Political Memory of La Quadrature du Net\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-11 15:25+0200\n"
+"POT-Creation-Date: 2012-06-15 19:07+0200\n"
 "PO-Revision-Date: 2012-05-30 17:28+0200\n"
 "Last-Translator: Benjamin Sonntag <benjamin@sonntag.fr>\n"
 "Language-Team: français <team@alternc.org>\n"
@@ -216,7 +216,7 @@ msgstr "Ce que vous recherchez ne se trouve pas ici."
 msgid "Internal Error 500"
 msgstr "Erreur Interne 500"
 
-#: memopol2/templates/api.html:4
+#: memopol2/templates/api.html:7
 #, fuzzy, python-format
 msgid ""
 "\n"
@@ -959,12 +959,12 @@ msgid "(on %(score.date)s)"
 msgstr "(le %(score.date)s)"
 
 #: memopol2/templates/meps/mep_detail.html:218
-#: memopol2/templates/votes/proposal_detail.html:16
-#: memopol2/templates/votes/proposal_detail.html:21
-#: memopol2/templates/votes/proposal_detail.html:24
-#: memopol2/templates/votes/recommendation_detail.html:25
-#: memopol2/templates/votes/recommendation_detail.html:28
-#: memopol2/templates/votes/recommendation_detail.html:31
+#: memopol2/templates/meps/proposal_detail.html:16
+#: memopol2/templates/meps/proposal_detail.html:21
+#: memopol2/templates/meps/proposal_detail.html:24
+#: memopol2/templates/meps/recommendation_detail.html:25
+#: memopol2/templates/meps/recommendation_detail.html:28
+#: memopol2/templates/meps/recommendation_detail.html:31
 msgid "Trends explanation"
 msgstr "Explication des tendances"
 
@@ -977,7 +977,10 @@ msgid "Add a public position"
 msgstr "Ajouter une position publique"
 
 #: memopol2/templates/meps/mep_detail.html:237
-msgid "Help us keep track of the public positions taken by this MEP"
+#, fuzzy
+msgid ""
+"Help us keep track of the public positions taken by this member of the "
+"European Parliament."
 msgstr ""
 "Aidez-nous à garder des traces des positions publiques prises par cet "
 "eurodéputé"
@@ -1057,6 +1060,101 @@ msgstr ""
 msgid "MEP by instances"
 msgstr "Eurodéputés par instance"
 
+#: memopol2/templates/meps/per_mep.html:6
+#, python-format
+msgid ""
+"Votes of <a href=\"%(mep_url)s\">%(representative_first_name)s "
+"%(representative_last_name)s</a> on <a href=\"%(proposal_url)s\">"
+"%(proposal_title)s</a>"
+msgstr ""
+"Votes de <a href=\"%(mep_url)s\">%(representative_first_name)s "
+"%(representative_last_name)s</a> sur <a href=\"%(proposal_url)s\">"
+"%(proposal_title)s</a>"
+
+#: memopol2/templates/meps/per_mep.html:14
+#: memopol2/templates/meps/proposal_detail.html:40
+#: memopol2/templates/mps/proposal_detail.html:23
+msgid "No description yet"
+msgstr "Aucune description pour l'instant"
+
+#: memopol2/templates/meps/per_mep.html:16
+#: memopol2/templates/meps/proposal_detail.html:42
+#: memopol2/templates/mps/proposal_detail.html:25
+msgid "Part"
+msgstr "Partie"
+
+#: memopol2/templates/meps/per_mep.html:17
+#: memopol2/templates/meps/proposal_detail.html:43
+#: memopol2/templates/mps/proposal_detail.html:26
+msgid "Recommendation"
+msgstr "Recommendation"
+
+#: memopol2/templates/meps/per_mep.html:19
+msgid "Vote"
+msgstr "Vote"
+
+#: memopol2/templates/meps/proposal_detail.html:44
+#: memopol2/templates/mps/proposal_detail.html:27
+msgid "Weight"
+msgstr "Poids"
+
+#: memopol2/templates/meps/proposal_detail.html:47
+#: memopol2/templates/mps/proposal_detail.html:30
+#, python-format
+msgid ""
+"Votes (%(significant_votes.count)s significant) (<a href="
+"\"%(recommendation_url)s\">full list</a>)"
+msgstr ""
+"Votes (%(significant_votes.count)s significatifs) (<a href="
+"\"%(recommendation_url)s\">liste complète</a>)"
+
+#: memopol2/templates/meps/recommendation_detail.html:6
+#: memopol2/templates/mps/recommendation_detail.html:6
+#, python-format
+msgid ""
+"Recommendation on %(recommendation.subject)s for the proposal <a href="
+"\"%(proposal_url)s\">%(proposal.title)s</a>"
+msgstr ""
+"Recommendation sur %(recommendation.subject)s pour la proposition <a href="
+"\"%(proposal_url)s\">%(proposal.title)s</a>"
+
+#: memopol2/templates/meps/recommendation_detail.html:13
+#: memopol2/templates/mps/recommendation_detail.html:13
+msgid "Part:"
+msgstr "Partie&nbsp;:"
+
+#: memopol2/templates/meps/recommendation_detail.html:14
+#: memopol2/templates/mps/recommendation_detail.html:14
+msgid "Recommendation:"
+msgstr "Recommendation&nbsp;:"
+
+#: memopol2/templates/meps/recommendation_detail.html:15
+#: memopol2/templates/mps/recommendation_detail.html:15
+msgid "Weight:"
+msgstr "Poids&nbsp;:"
+
+#: memopol2/templates/meps/recommendationdata_detail.html:21
+#, python-format
+msgid ""
+"Imported: %(object.imported)s as <a href=\"%(recommendation_url)s\">"
+"%(object.recommendation.title)s</a>"
+msgstr ""
+"Importé&nbsp;: %(object.imported)s sous le nom <a href="
+"\"%(recommendation_url)s\">%(object.recommendation.title)s</a>"
+
+#: memopol2/templates/meps/recommendationdata_detail.html:23
+#, python-format
+msgid "Imported: %(object.imported)s"
+msgstr "Importé&nbsp;: %(object.imported)s"
+
+#: memopol2/templates/meps/recommendationdata_detail.html:25
+msgid "Date:"
+msgstr "Date&nbsp;:"
+
+#: memopol2/templates/meps/recommendationdata_list.html:5
+msgid "Importable votes"
+msgstr "Votes à importer"
+
 #: memopol2/templates/mps/mp_detail.html:83
 msgid "on"
 msgstr "sur"
@@ -1091,92 +1189,6 @@ msgstr "Mauvais vote"
 #: memopol2/templates/votes/legend.html:5
 msgid "Abstention or absent"
 msgstr "Abstention ou absence"
-
-#: memopol2/templates/votes/per_rep.html:6
-#, python-format
-msgid ""
-"Votes of <a href=\"%(mep_url)s\">%(representative_first_name)s "
-"%(representative_last_name)s</a> on <a href=\"%(proposal_url)s\">"
-"%(proposal_title)s</a>"
-msgstr ""
-"Votes de <a href=\"%(mep_url)s\">%(representative_first_name)s "
-"%(representative_last_name)s</a> sur <a href=\"%(proposal_url)s\">"
-"%(proposal_title)s</a>"
-
-#: memopol2/templates/votes/per_rep.html:14
-#: memopol2/templates/votes/proposal_detail.html:40
-msgid "No description yet"
-msgstr "Aucune description pour l'instant"
-
-#: memopol2/templates/votes/per_rep.html:16
-#: memopol2/templates/votes/proposal_detail.html:42
-msgid "Part"
-msgstr "Partie"
-
-#: memopol2/templates/votes/per_rep.html:17
-#: memopol2/templates/votes/proposal_detail.html:43
-msgid "Recommendation"
-msgstr "Recommendation"
-
-#: memopol2/templates/votes/per_rep.html:19
-msgid "Vote"
-msgstr "Vote"
-
-#: memopol2/templates/votes/proposal_detail.html:44
-msgid "Weight"
-msgstr "Poids"
-
-#: memopol2/templates/votes/proposal_detail.html:47
-#, python-format
-msgid ""
-"Votes (%(significant_votes.count)s significant) (<a href="
-"\"%(recommendation_url)s\">full list</a>)"
-msgstr ""
-"Votes (%(significant_votes.count)s significatifs) (<a href="
-"\"%(recommendation_url)s\">liste complète</a>)"
-
-#: memopol2/templates/votes/recommendation_detail.html:6
-#, python-format
-msgid ""
-"Recommendation on %(recommendation.subject)s for the proposal <a href="
-"\"%(proposal_url)s\">%(proposal.title)s</a>"
-msgstr ""
-"Recommendation sur %(recommendation.subject)s pour la proposition <a href="
-"\"%(proposal_url)s\">%(proposal.title)s</a>"
-
-#: memopol2/templates/votes/recommendation_detail.html:13
-msgid "Part:"
-msgstr "Partie&nbsp;:"
-
-#: memopol2/templates/votes/recommendation_detail.html:14
-msgid "Recommendation:"
-msgstr "Recommendation&nbsp;:"
-
-#: memopol2/templates/votes/recommendation_detail.html:15
-msgid "Weight:"
-msgstr "Poids&nbsp;:"
-
-#: memopol2/templates/votes/recommendationdata_detail.html:21
-#, python-format
-msgid ""
-"Imported: %(object.imported)s as <a href=\"%(recommendation_url)s\">"
-"%(object.recommendation.title)s</a>"
-msgstr ""
-"Importé&nbsp;: %(object.imported)s sous le nom <a href="
-"\"%(recommendation_url)s\">%(object.recommendation.title)s</a>"
-
-#: memopol2/templates/votes/recommendationdata_detail.html:23
-#, python-format
-msgid "Imported: %(object.imported)s"
-msgstr "Importé&nbsp;: %(object.imported)s"
-
-#: memopol2/templates/votes/recommendationdata_detail.html:25
-msgid "Date:"
-msgstr "Date&nbsp;:"
-
-#: memopol2/templates/votes/recommendationdata_list.html:5
-msgid "Importable votes"
-msgstr "Votes à importer"
 
 #~ msgid "No description yet."
 #~ msgstr "Aucune description pour l'instant."
