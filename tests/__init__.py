@@ -46,9 +46,9 @@ class TestCase(unittest.TestCase):
             if l not in self.visited:
                 self.visited.add(l)
                 try:
-                    resp = self.app.get(l)
+                    self.app.get(l)
                     log.debug('visiting %r', l)
-                except Exception, e:
+                except Exception:
                     log.warn('seems that %r is not a valid url. cant be encoded', l)
 
     @property
