@@ -46,7 +46,7 @@ class Proposal(models.Model):
 
     @reify
     def mps(self):
-        return MP.objects.filter(score__proposal=self)
+        return MP.objects.filter(vote__recommendation__proposal=self).distinct()
 
     def __unicode__(self):
         return self.title
