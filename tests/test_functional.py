@@ -15,4 +15,3 @@ class TestMisc(TestCase):
         links = resp.pyquery('a[href^="/europe/parliament/deputy/"]')
         self.assert_(len(links) > 1, links)
         self.visit_links(links[:10])
-
