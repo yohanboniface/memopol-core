@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from tests import TestCase, UserTestCase, pq
 
+
 class TestComments(TestCase):
 
     def test_meps_comments(self):
@@ -19,6 +20,7 @@ class TestComments(TestCase):
         assert resp.status_int == 302, resp
         resp = resp.follow()
         resp.mustcontain('<h1>Thank you for your comment.</h1>')
+
 
 class TestCommentsModeration(UserTestCase):
 
