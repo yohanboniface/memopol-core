@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% load cache %}
 
+{% block title %}{% trans "Members of the European Parliament by opinions" %}{% endblock %}
+
 {% block content %}
 
-<h1>{% trans "MEPs by opinions" %}</h1>
+<h1>{% trans "Members of the European Parliament by opinions" %}</h1>
 
 {% cache 6000000 opinions.listing request.META.PATH_INFO %}
 <ul class="opinions">

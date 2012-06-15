@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% load flatblock_tags %}
 
+{% block title %}{% trans "Members of the European Parliament by instances" %}{% endblock %}
+
 {% block content %}
 
-<h1>{% trans "MEP by instances" %}</h1>
+<h1>{% trans "Members of the European Parliament by instances" %}</h1>
 {% flatblock "by_instances.info" %}
 <ul class="organisations">
 {% for organization in object_list %}

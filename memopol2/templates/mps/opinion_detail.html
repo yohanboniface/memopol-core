@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
+{% block title %}
+{% if opinion.date.year != 1 %}
+« {{ opinion.title }} », opinion exprimé par {{ mp }} le {{ opinion.date }}
+{% else %}
+« {{ opinion.title }} », opinion exprimé par {{ mp }}
+{% endif %}
+{% endblock %}
+
 {% block content %}
 {% with opinion.mps|first as mp %}
 {% if opinion.date.year != 1 %}

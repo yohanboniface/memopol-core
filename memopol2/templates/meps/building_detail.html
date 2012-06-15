@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %}{% blocktrans with building.name as building_name %}Members of the European Parliament in {{ building_name }} of the {{ floor }}th floor{% endblocktrans %}{% endblock %}
+
 {% block content %}
 
 <h1>{% blocktrans with building.name as building_name %}Members of the European Parliament in {{ building_name }} of the {{ floor }}th floor{% endblocktrans %}</h1>

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title with recommendation.subject as recommendation_subject and proposal.title as proposal_title %}{% blocktrans %}Recommendation on {{ recommendation_subject }} for the proposal {{ proposal_title }}{% endblocktrans %}{% endblock %}
+
 {% block content %}
 
 {% url mps:detail proposal.id as proposal_url %}

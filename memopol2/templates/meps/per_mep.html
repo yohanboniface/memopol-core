@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %}{% blocktrans with representative.first_name as representative_first_name and representative.last_name as representative_last_name and proposal.title as proposal_title %}Votes of {{ representative_first_name }} {{ representative_last_name }} on {{ proposal_title }}{% endblocktrans %}{% endblock %}
+
 {% block content %}
 {% url meps:mep representative.id as mep_url %}
 {% url meps:detail proposal.id as proposal_url %}

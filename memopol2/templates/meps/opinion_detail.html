@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 {% load cache %}
 
+{% block title %}
+{% if opinion.date.year != 1 %}
+{% blocktrans with opinion.title as opinion_title and opinion.date as opinion_date %}"{{ opinion_title }}", opinion expressed by {{ mep }} on {{ opinion_date }}{% endblocktrans %}
+{% else %}
+{% blocktrans with opinion.title as opinion_title %}"{{ opinion_title }}", opinion expressed by {{ mep }}{% endblocktrans %}
+{% endif %}
+{% endblock %}
+
+{% endblock %}
+
 {% block content %}
 {% if opinion.meps.count == 1 %}
 {% with mep=opinion.meps|first %}

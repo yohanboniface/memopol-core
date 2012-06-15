@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %}{% blocktrans with vote.title as vote_title %}{{ vote_title }}{% endblocktrans %}{% endblock %}
+
 {% load votes_tags %}
 {% load cache %}
 

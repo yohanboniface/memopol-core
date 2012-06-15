@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% load flatblock_tags %}
 
+{% block title %}{% trans "Members of the European Parliament by political group" %}{% endblock %}
+
 {% block content %}
 
-<h1>{% trans "MEPs by political group" %}</h1>
+<h1>{% trans "Members of the European Parliament by political group" %}</h1>
 {% flatblock "by_group.info" %}
 <ul class="groups">
 {% for group in object_list %}
@@ -15,7 +17,7 @@
         <a href="{% url meps:index_by_group group.abbreviation %}">
             {{ group.name }} ({{ group.abbreviation }})
         </a>
-        {% blocktrans with group.meps|length as count %} - {{ count }} MEPs {% endblocktrans %}
+        {% blocktrans with group.meps|length as count %} - {{ count }} Members {% endblocktrans %}
     </li>
     {% endif %}
 {% endfor %}

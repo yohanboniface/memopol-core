@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 {% load flatblock_tags %}
 
+{% block title %}{% trans "Members of the European Parliament by floor" %}{% endblock %}
+
 {% block content %}
 
 {% load floors_filter %}
 
-<h1>{% trans "MEPs by floor" %}</h1>
+<h1>{% trans "Members of the European Parliament by floor" %}</h1>
 {% flatblock "by_floor.info" %}
 {% regroup object_list by postcode as towns %}
 {% for town in towns %}
