@@ -1,9 +1,9 @@
 {% load memopol2 %}
-{% blocktrans %}
+{% blocktrans with comment.comment as comment_content %}
 A new opinion for {{ content_object }} has been suggested on the political memory.
 
 The opinion reads as follows:
-{{ comment.comment }}
+{{ comment_content }}
 
 {% enblocktrans %}
 {% trans "To validate the publication of the opinion follow this link:" %} {% root_url %}/comments/approve/{{ comment.id }}/
