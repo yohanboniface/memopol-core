@@ -336,7 +336,7 @@ class OrganizationMEP(models.Model):
 
 class MepModerator(CommentModerator):
     email_notification = True
-    moderate_after        = 0
+    moderate_after = 0
     def moderate(self, comment, content_object, request):
         return True
 
