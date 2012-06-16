@@ -14,3 +14,8 @@ class TestMPs(TestCase):
         mp = MP.objects.all().annotate(score_len=Count('score')).filter(score_len__exact=0)[0]
         resp = self.app.get(mp.get_absolute_url())
         assert not resp.pyquery('div#scores')
+
+    def test_mps_has_scores_average(self):
+        mp = MP.objects.all().annotate(score_len=Count('score')).filter(score_len__gt=0)[0]
+        resp = self.app.get(mp.get_absolute_url())
+        resp.mustcontain('Moyenne des scores : ' + str(int(mp.total_score())))

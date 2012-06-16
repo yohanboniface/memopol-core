@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Avg
 from reps.models import Representative
 from django.core.urlresolvers import reverse
 from memopol2.utils import reify
@@ -79,6 +80,9 @@ class MP(Representative):
 
     def scores(self):
         return self.score_set.all()
+
+    def total_score(self):
+        return self.score_set.aggregate(Avg('value'))['value__avg']
 
     @reify
     def phones(self):
