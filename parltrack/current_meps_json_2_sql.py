@@ -372,7 +372,6 @@ if __name__ == "__main__":
     with transaction.commit_on_success():
         MEP.objects.filter(active=True).update(active=False)
         a = 0
-        #for mep_json in meps["meps"]:
         for mep_json in meps:
             a += 1
             print a, "-", mep_json["Name"]["full"]
