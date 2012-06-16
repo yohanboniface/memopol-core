@@ -437,6 +437,9 @@ def group_proposal_score_stacked(request, proposal_id):
 
     proposal = get_object_or_404(Proposal, id=proposal_id)
 
+    if proposal.institution != "EU":
+        return HttpResponse("")
+
     group_color = {'ALDE': '#FFFF00',
                    'ELDR': '#FFFF00',
                    'ECR': '#000084',
