@@ -2,6 +2,7 @@
 
 import os
 PROJECT_PATH = os.path.abspath(os.path.split(__file__)[0])
+SUBPROJECT_PATH = os.path.split(PROJECT_PATH)[0]
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -18,16 +19,16 @@ DEFAULT_FROM_EMAIL = 'memopol@lqdn.fr'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/tmp/%s-memopol2.sqlite' % os.getenv('USER'),
+        'NAME': '%s/memopol2.sqlite' % PROJECT_PATH,
     },
 }
 
-WHOOSH_INDEX = '/tmp/%s-memopol2.index' % os.getenv('USER')
+WHOOSH_INDEX = '%s/memopol2.index' % PROJECT_PATH,
 
 APPS_DEBUG = False
 if os.getenv('VIRTUAL_ENV'):
-    DATABASES['default']['NAME'] = '%s/memopol2.sqlite' % os.getenv('VIRTUAL_ENV')
-    WHOOSH_INDEX = '%s/memopol2.index' % os.getenv('VIRTUAL_ENV')
+    DATABASES['default']['NAME'] = '%s/memopol2.sqlite' % PROJECT_PATH
+    WHOOSH_INDEX = '%s/memopol2.index' % PROJECT_PATH
     APPS_DEBUG = True
 elif not os.path.isfile('bin/django-manage'):
     APPS_DEBUG = True
@@ -78,18 +79,37 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'johnny.middleware.LocalStoreClearMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'johnny.middleware.QueryCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 if APPS_DEBUG:
     MIDDLEWARE_CLASSES += (
         'debug_toolbar.middleware.DebugToolbarMiddleware',
     )
+
+# WARNING just setting up DEBUG = False in settings_local won't change the cache settings!
+ENABLE_CACHING = not DEBUG
+
+CACHES = {
+    'default' : dict(
+        BACKEND = 'django.core.cache.backends.%s' % ('locmem.LocMemCache' if ENABLE_CACHING else 'dummy.DummyCache'),
+        JOHNNY_CACHE = True,
+        OPTIONS = {
+            'MAX_ENTRIES': 1000000000,
+        }
+    )
+}
+
+JOHNNY_MIDDLEWARE_KEY_PREFIX='cache_memopol2'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
@@ -124,6 +144,7 @@ INSTALLED_APPS = (
     'flatblocks',
     'contact_form',
     'captcha',
+    'django_extensions',
 
     # memopol
     'reps',
@@ -135,6 +156,8 @@ INSTALLED_APPS = (
     'trophies',
     'campaign',
     'search',
+    'gunicorn',
+    'positions',
 )
 
 if APPS_DEBUG:
@@ -154,6 +177,8 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.sql.SQLDebugPanel',
     'debug_toolbar.panels.signals.SignalDebugPanel',
     'debug_toolbar.panels.logger.LoggingPanel',
+    'debug_toolbar.panels.state.StateDebugPanel',
+    'debug_toolbar.panels.htmlvalidator.HTMLValidationDebugPanel',
 )
 
 LANGUAGES = (
@@ -161,12 +186,16 @@ LANGUAGES = (
   ('en', 'English'),
 )
 
+LOCALE_PATHS = (
+    SUBPROJECT_PATH + '/locale',
+)
+
 FIXTURE_DIRS = (
     'fixtures',
 )
 
 PARLTRACK_URL = "http://parltrack.euwiki.org"
-ROOT_URL = "http://memopol2.lqdn.org"
+ROOT_URL = "https://memopol.lqdn.fr"
 
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
@@ -202,6 +231,8 @@ CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
+COMMENTS_APP = 'positions'
 
 try:
     from settings_local import *

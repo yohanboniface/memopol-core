@@ -1,4 +1,4 @@
-{% load memopol2 i18n %}
+{% load memopol2 %}
 <tr>
   <td>
     <a href="{{ mp.get_absolute_url }}">{{ mp.last_name|upper }} {{ mp.first_name }}</a>
@@ -13,7 +13,7 @@
       <ul class="body">
           {% if mp.phones %}
             <li>
-              <b>{% trans "Phone" %}:</b>
+              <b>Téléphone&nbsp;:</b>
               {% for phone in mp.phones %}
                 <a href="callto://{{ phone|phone }}">{{ phone }}</a>
                 {% if not forloop.last %}-{% endif %}
@@ -23,7 +23,7 @@
 
           {% if mp.emails %}
             <li>
-              <b>{% trans "E-mail" %}:</b>
+              <b>Courriel&nbsp;:</b>
               {% for email in mp.emails %}
                 <a href="mailto:{{ email }}">{{ email }}</a>
                 {% if not forloop.last %}-{% endif %}
@@ -31,7 +31,7 @@
             </li>
           {% endif %}
       </ul>
-      <a class="more-contact" href="{% url mps:mp_contact mp.id %}">{% trans "More informations" %}...</a>
+      <a class="more-contact" href="{% url mps:mp_contact mp.id %}">Plus d'informations ...</a>
     </div>
   </td>
 </tr>

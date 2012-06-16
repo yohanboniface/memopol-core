@@ -1,17 +1,16 @@
 import distribute_setup
 distribute_setup.use_setuptools()
 
-import os
 from setuptools import setup, find_packages
 
 setup(
     name='Memopol',
     version = '1.99.1',
-    author = 'The memopol project',
-    author_email = 'deubeulyou@gmail.com',
+    author = 'The memopol team',
+    author_email = 'memopol@laquadrature.net',
     description = 'Memoire Politique',
-    long_description = open('README.txt').read(),
-    license = 'LICENSE.txt',
+    long_description = open('README.md').read(),
+    license = 'aGPLv3+',
     url = 'http://projets.lqdn.fr/projects/mempol',
     packages = find_packages(),
     include_package_data = True,

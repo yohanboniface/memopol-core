@@ -3,12 +3,11 @@
 from models import Campaign, Debriefing
 from campaign.forms import ScoreForm, DebriefingForm
 from campaign.models import MEPScore, ScoreRule
-from meps.models import MEP, OrganizationMEP
+from meps.models import MEP
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.conf import settings
 from django.template import RequestContext
-from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect #, Http404
@@ -29,7 +28,6 @@ def updateCampaignScores(form, pk, c):
 
         if form.cleaned_data['groupRole']:
             query['groupmep__role__in'] = form.cleaned_data['groupRole']
-            query['groupmep__end'] = date(9999, 12, 31)
 
     if form.cleaned_data['delegation']:
         query['delegationrole__delegation__name__in'] = form.cleaned_data['delegation']
@@ -37,7 +35,6 @@ def updateCampaignScores(form, pk, c):
 
         if form.cleaned_data['delegationRole']:
             query['delegationrole__role__in'] = form.cleaned_data['delegationRole']
-            query['delegationrole__end'] = date(9999, 12, 31)
 
     if form.cleaned_data['staff']:
         query['organizationmep__organization__name__in'] = form.cleaned_data['staff']
@@ -45,7 +42,6 @@ def updateCampaignScores(form, pk, c):
 
         if form.cleaned_data['staffRole']:
             query['organizationmep__role__in'] = form.cleaned_data['staffRole']
-            query['organizationmep__end'] = date(9999, 12, 31)
 
     if form.cleaned_data['committee']:
         query['committeerole__committee__name__in'] = form.cleaned_data['committee']
@@ -53,7 +49,6 @@ def updateCampaignScores(form, pk, c):
 
         if form.cleaned_data['committeeRole']:
             query['committeerole__role__in'] = form.cleaned_data['committeeRole']
-            query['committeerole__end'] = date(9999, 12, 31)
 
     #print ', '.join(["%s = %s" % (k,v) for k,v in query.items()])
     if query:
@@ -152,14 +147,15 @@ def feedback(request):
 def sendverifymail(feedback,to):
     actid = hashlib.sha1(''.join([chr(random.randint(32, 122))
                                   for x in range(12)])).hexdigest()
-    msg = MIMEText(_("Someone sent feedback on a campaign\nYour verification key is %s/campaign/feedback/%s/%s\n\nfrom: %s\nabout %s\ntype: %s\nresult: %s\ncomment: %s")
-                   % (settings.ROOT_URL or 'http://localhost:8001/',
-                      feedback.id,
-                      actid,
-                      feedback.usercontact,
-                      feedback.mep, feedback.type,
-                      feedback.response,
-                      feedback.text))
+    msg = MIMEText(_("Someone sent feedback on a campaign\nYour verification key is %(root_url)s/campaign/feedback/%(feedback_id)s/%(actid)s\n\nfrom: %(from)s\nabout %(mep)s\ntype: %(type)s\nresult: %(result)s\ncomment: %(comment)s")
+                   % {"root_url": settings.ROOT_URL or 'http://localhost:8001/',
+                      "feedback_id": feedback.id,
+                      "actid": actid,
+                      "from": feedback.usercontact,
+                      "mep": feedback.mep,
+                      "type": feedback.type,
+                      "result": feedback.response,
+                      "comment": feedback.text})
     msg['Subject'] = _('Memopol2 feedback moderation')
     msg['From'] = 'memopol2@memopol2.lqdn.fr'
     msg['To'] = ', '.join(to)
@@ -189,8 +185,11 @@ def report(request, pk):
     chosen=MEP.objects.filter(debriefing__campaign=c,debriefing__valid="").distinct()
     forms = [DebriefingForm(instance=Debriefing(mep=mep,campaign=c,valid="")) for mep in chosen]
     dbriefs = [Debriefing.objects.filter(mep=mep,campaign=c,valid="") for mep in chosen]
+    mepscores = MEPScore.objects.filter(campaign=c)
+    mepsforms = [DebriefingForm(instance=Debriefing(mep=mep,campaign=c,valid=""))
+                 for mep in MEP.objects.filter(mepscore__campaign=c)]
     return render_to_response('campaign/view.html',
                               { 'object_list': izip(chosen,forms, dbriefs ),
-                                'mepscores': MEPScore.objects.filter(campaign=c).exclude(mep__in=chosen),
+                                'mepscores': izip(mepscores,mepsforms),
                                 'campaign': c, },
                               context_instance = RequestContext(request))

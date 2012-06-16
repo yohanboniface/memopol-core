@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}{% blocktrans with vote.title as vote_title %}{{ vote_title }}{% endblocktrans %}{% endblock %}
+
+{% load votes_tags %}
+{% load cache %}
+
+{% block content %}
+
+{% if vote %}
+    <h1>{{ vote.title }}</h1>
+{% endif %}
+
+<div class="map map-eu" style="height: 520px; width: 680px;">
+    <object type="image/svg+xml" data="{% url trends:recommendation_countries_map vote.id %}" width="680" height="520"></object>
+</div>
+
+<p style="text-align: center;"><i><a href="{% url trends:documentation %}#countries_map">{% trans "Trends explanation" %}</a></i></p>
+
+<h2 class="collapsible collapsed">Score repartition</h2>
+<center class="body">
+<img src="{% url trends:group_proposal_score_stacked vote.id %}">
+<p style="text-align: center;"><i><a href="{% url trends:documentation %}#groups">{% trans "Trends explanation" %}</a></i></p>
+
+<img src="{% url trends:group_proposal_score_heatmap vote.id %}">
+<p style="text-align: center;"><i><a href="{% url trends:documentation %}#heatmap">{% trans "Trends explanation" %}</a></i></p>
+</center>
+
+<br/>
+
+{% cache 6000000 proposal.votes.recommendation request.META.PATH_INFO %}
+{% regroup vote.recommendation_set.all by subject as subvotes %}
+
+{% include "votes/legend.html" %}
+
+<ul>
+    {% for subvote in subvotes %}
+    <li><b>{{ subvote.grouper }}</b>
+    <ul>
+        {% for v in subvote.list %}
+        <li>
+        <a href="{% url meps:recommendation vote.id v.id %}">{% if v.description %}{{ v.description }}{% else %}{% trans "No description yet" %}{% endif %}</a>
+            <ul class="{{ v.recommendation }} recommendation">
+                <li><em>{% trans "Part" %}</em> : {{ v.part }}</li>
+                {% if v.recommendation %}<li><em>{% trans "Recommendation" %}</em> : {{ v.recommendation }}</li>{% endif %}
+                {% if v.weight %}<li><em>{% trans "Weight" %}</em> : {{ v.weight }}</li>{% endif %}
+                {% significant_votes v %}
+                {% url meps:recommendation vote.id v.id as recommendation_url %}
+                <li>{% blocktrans with significant_votes.count as significant_votes_count %}Votes ({{ significant_votes_count }} significant) (<a href="{{ recommendation_url }}">full list</a>){% endblocktrans %}</li>
+                <li>
+                <ul>
+                  {% regroup v.vote_set.all by choice as result %}
+                  {% for re in result reversed %}
+                  {% if re.grouper in "absent-abstention-against-for" %}
+                  <li><b><a
+                      class="{% if v.recommendation == re.grouper %}ok{% else %}{% if re.grouper == "abstention" or re.grouper == "absent" %}abstention{% else %}nok{% endif %}{% endif %}"
+                      href="{% url meps:recommendation_choice vote.id v.id re.grouper %}">{{ re.grouper }}</a></b>: {{ re.list|length }} </li>
+                  {% else %}
+                  <!-- FIXME: sometimes re.grouper is a float and we cant get the correct link -->
+                  <!-- FIXME: see http://localhost:8000/votes/Loi_Hadopi_Assemblee_nationale/ -->
+                  <li><b><a href="#">{{ re.grouper }}</a></b>: {{ re.list|length }} </li>
+                  {% endif %}
+                  {% endfor %}
+                </ul>
+                </li>
+            </ul>
+        </li>
+        <br>
+        {% endfor %}
+    </ul>
+    </li>
+    {% endfor %}
+</ul>
+{% endcache %}
+
+{% cache 6000000 proposal.votes.meps request.META.PATH_INFO %}
+{% with proposal_votes_listing="True" %}
+<table class="mep-list tablesorter">
+  {% include "meps/meps_table_thead.html" %}
+  <tbody>
+    {% for mep in vote.meps %}
+      {% include "meps/meps_table_tr.html" %}
+    {% endfor %}
+  </tbody>
+</table>
+{% endwith %}
+{% endcache %}
+
+{% endblock %}

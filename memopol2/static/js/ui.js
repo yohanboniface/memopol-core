@@ -12,49 +12,92 @@ function onMugshotError(source) {
 
 (function($) {
 
+$.parseQuery = function(query) {
+    // jQuery do not provide any helper to arse query strings, it's a shame…
+    var hash = {};
+    pairs = query.split('&');
+    for (var i = 0; i < pairs.length; ++i)
+    {
+        var pair = pairs[i].split('=');
+        if (pair.length != 2) {
+            hash[pair[0]] = null;
+        } else {
+            hash[pair[0]] = decodeURIComponent(pair[1].replace(/\+/g, " "));
+        }
+    }
+    return hash;
+};
+
 $('#content h1:first').addClass('document-title');
 
+var FILTERS_SELECT_LABEL = "Select...";// FIXME: not suitable for I18n
 // table
 $("table.mep-list").tablesorter();
 $("table.mp-list").tablesorter({ headers: { 2: { sorter: false }, }  });
-$("table.mp-list, table.mep-list").tableFilter({
-    filteredRows: function() {
-        $("table.mp-list, table.mep-list").trigger('filteredRows');
-    }
-});
+try {
+   $("table.mp-list, table.mep-list").tableFilter({
+       selectOptionLabel: FILTERS_SELECT_LABEL,
+       enableCookies: false,
+       filteredRows: function() {
+           $("table.mp-list, table.mep-list").trigger('filteredRows');
+       }
+   });
+} catch(err) {}
 
-
-function FilterExtension(table) {
+function Filter(table, input) {
     this.table = table;
-    var filtersBackup = this.filtersBackup = [];
-    this.table.find('.filters .filter').each(function(index, filter) {
-        filtersBackup[index] = $(filter).children().clone();
-    });
-    this.table.bind('filteredRows', $.proxy(this, 'refresh'));
-    this.refresh(true);
+    this.input = $(input);
+    this.backup = this.input.children().clone();
+
+    this.index = this.input.parent().prevAll().length + 1;
+    this.position = ':nth-child(' + this.index + ')';
+    this.name = this.table.find('thead th' + this.position).attr('data-column-name');
+    this.cells = this.table.find('tbody td' + this.position);
+    this.display(this.count());
 }
 
-FilterExtension.prototype.refresh = function(keepEmptyOptions) {
-    this.table.find('.filters .filter').each($.proxy(function(index, filter) {
-        var $filter = $(filter);
+Filter.prototype.isSelected = function() {
+    var value = this.input.val();
+    return $.trim(value) && value !== FILTERS_SELECT_LABEL;
+};
 
-        // reset select from previous state
-        var filterValue = $filter.val();
-        $filter.empty().append(this.filtersBackup[index].clone()).val(filterValue);
-        
-        this.displayCounts($filter, this.countEntries($filter), keepEmptyOptions);
+Filter.prototype.select = function(value) {
+    this.input.val(value);
+};
+
+Filter.prototype.reset = function() {
+    var value = this.val();
+    this.input.empty().append(this.backup.clone()).val(value);
+};
+
+Filter.prototype.val = function() {
+    return this.input.val();
+};
+
+Filter.prototype.refresh = function() {
+    if (!this.isSelected()) {
+        this.reset();
+        this.display(this.count());
+        return false;
+
+    }
+    return this.val();
+};
+
+Filter.prototype.display = function(counts) {
+    this.input.find('option[value]').each($.proxy(function(index, option) {
+        var $option = $(option);
+        var count = counts[$.trim($option.val())] || 0;
+
+        $option.html($option.html() + ' (' + count + ')');
+        if (!count) $option.remove();
     }, this));
+
 };
 
-FilterExtension.prototype.isSelected = function(filter) {
-    var filterValue = filter.val();
-    return $.trim(filterValue) && filterValue != new picnet.ui.filter.TableFilterOptions().selectOptionLabel;
-};
-
-FilterExtension.prototype.countEntries = function(filter) {
+Filter.prototype.count = function() {
     var counts = {};
-    var index = filter.parent().prevAll().length;
-    var cells = this.table.find('tbody tr[filtermatch!=false] td:nth-child(' + (index + 1) + ')');
+    var cells = this.cells.parents('tr[filtermatch!=false]').find('td' + this.position);
     cells.each(function(index, cell) {
         var html = $(cell).html();
         counts[html] = (counts[html] || 0) + 1;
@@ -62,19 +105,7 @@ FilterExtension.prototype.countEntries = function(filter) {
     return this.stripKeys(counts);
 };
 
-FilterExtension.prototype.displayCounts = function(filter, counts, keepEmptyOptions) {
-    filter.find('option[value]').each($.proxy(function(index, option) {
-        $option = $(option);
-        count = counts[$.trim($option.val())] || 0;
-        
-        $option.html($option.html() + ' (' + count + ')');
-        if (!count && !this.isSelected(filter)){
-            $option.remove();
-        }
-    }, this));
-};
-
-FilterExtension.prototype.stripKeys = function(counts) {
+Filter.prototype.stripKeys = function(counts) {
     var stripedCounts = {};
     for (html in counts) {
         stripedCounts[jQuery.trim(html.replace(/<\/?[^>]+>/gi, ''))] = counts[html];
@@ -82,7 +113,60 @@ FilterExtension.prototype.stripKeys = function(counts) {
     return stripedCounts;
 };
 
+
+function FilterExtension(table) {
+    this.table = $(table);
+    var filters = this.filters = [];
+    this.table.find('thead .filters .filter').each(function(i, select) {
+        filters.push(new Filter(table, select));
+    });
+
+    this.table.bind('filteredRows', $.proxy(this, 'onFilteredRows'));
+    var onQueryChanged = $.proxy(this, 'onQueryChanged');
+    $(document).ready(onQueryChanged)
+    $(window).bind('hashchange', onQueryChanged);
+}
+
+FilterExtension.prototype.BASE_HASH = '#!filters?';
+
+FilterExtension.prototype.BASE_HASH_RE = /^#!filters\?/;
+
+FilterExtension.prototype.onQueryChanged = function() {
+    var hash = window.location.hash;
+    if (!hash.match(this.BASE_HASH_RE)) return false;
+
+    var query = $.parseQuery(hash.replace(this.BASE_HASH_RE, ''));
+    $.each(this.filters, $.proxy(function(index, filter) {
+        var value = query[filter.name];
+        if (index) filter.refresh();
+        if (value) filter.select(value);
+        this.table.tableFilterRefresh();
+        filter.refresh();
+    }, this));
+};
+
+FilterExtension.prototype.onFilteredRows = function() {
+    var hash = {};
+    $.each(this.filters, function(index, filter) {
+        var value = filter.refresh();
+        if (value) hash[filter.name] = value;
+    });
+    window.location.hash = $.isEmptyObject(hash) ? '' : this.BASE_HASH + $.param(hash);
+};
+
 var filterExtension = new FilterExtension($("table.mep-list"));
+
+$('#csv').click(function() {
+    var self = $(this),
+        url = window.location.href;
+    if (/filter/.exec(url)) {
+        url = url.replace(FilterExtension.prototype.BASE_HASH, '?csv=true&');
+    } else {
+        url += '?csv=true';
+    }
+    self.attr('href', url);
+    return true;
+});
 
 $("table.mep-list tbody tr, table.mp-list tbody tr").hover(
     function() {$(this).addClass('odd');},
@@ -106,10 +190,22 @@ $(".collapsible").click(function(){
 
 
 // contact details
-$('a.more-contact').click(function() {
+$('body').delegate('.toogle-contact', 'click', function() {
+    $(this).find('.less-contact,.more-contact').toggleClass('hidden');
+});
+
+$('body').delegate('a.more-contact', 'click', function(event) {
+    event.preventDefault();
     // dynamic contact detail
-    $('div.body', $(this).parents('td')).load($(this).attr('href'));
-    return false;
+    var $this = $(this);
+    var $body = $this.parents('td').find('div.body');
+    $body.data('previousState', $body.html()).load($this.attr('href'));
+});
+
+$('body').delegate('a.less-contact', 'click', function(event) {
+    event.preventDefault();
+    var $body = $(this).parents('td').find('div.body');
+    $body.html($body.data('previousState'));
 });
 
 // the image #call-now click get his link from a.call-now from the contact details

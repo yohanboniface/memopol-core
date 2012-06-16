@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block head %}
+<link href="{{ MEDIA_URL }}prettify/prettify.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/static/prettify/prettify.js"></script>
+<style>
+pre.prettyprint {
+ overflow: scroll;
+ height: 800px;
+ font-size: 80%;
+}
+</style>
+{% endblock %}
+
+{% block bodyattrs %} onload="prettyPrint()";{% endblock %}
+
+{% block content %}
+
+<h1>{{ object.title }}{% if object.title != object.proposal_name %} from {{ object.proposal_name }}{% endif %}</h1>
+{% url votes:recommendation object.recommendation.proposal.id object.recommendation.id as recommendation_url %}
+{% if object.recommendation %}
+<p>{% blocktrans %}Imported: {{ object.imported }} as <a href="{{ recommendation_url }}">{{ object.recommendation.title }}</a>{% endblocktrans %}</p>
+{% else %}
+<p>{% blocktrans %}Imported: {{ object.imported }}{% endblocktrans %}</p>
+{% endif %}
+<p>{% trans "Date:" %} {{ object.date }}</p>
+<pre class="prettyprint lang-js">
+    {{ object.data_pretty|safe }}
+</pre>
+{% endblock %}

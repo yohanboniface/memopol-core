@@ -1,3 +1,6 @@
+# -*- coding:Utf-8 -*-
+from datetime import date
+
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.core.cache import cache
@@ -7,6 +10,7 @@ from memopol2.utils import reify
 from snippets import snippet
 import search
 import meps
+import mps
 
 class RepsContainerManager(models.Manager):
     """ Manager for models to which the representative model has a foreign key"""
@@ -17,7 +21,7 @@ class RepsContainerManager(models.Manager):
 
 @search.searchable
 class Party(models.Model):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
     objects = RepsContainerManager()
 
     def __unicode__(self):
@@ -35,10 +39,30 @@ class Party(models.Model):
 class Opinion(models.Model):
     title = models.CharField(max_length=1023)
     content = models.TextField()
-    url = models.URLField()
+    url = models.URLField(max_length=400)
+    institution = models.CharField(max_length=63, choices=((u'EU', 'european parliament'), (u'FR', 'assemblée nationale française')))
+
+    def date(self):
+        return self.opinionrep_set.all()[0].date if self.opinionrep_set.all()[0].date else date(1, 1, 1)
 
     def meps(self):
         return meps.models.MEP.objects.filter(opinionrep__opinion=self)
+
+    def mps(self):
+        return mps.models.MP.objects.filter(opinionrep__opinion=self)
+
+    def authors(self):
+        if self.institution == "FR":
+            return self.mps()
+        return self.meps()
+
+    def author(self):
+        return self.authors()[0]
+
+    def get_absolute_url(self):
+        if self.institution == "FR":
+            return reverse("mps:index_by_opinions", args=[self.id])
+        return reverse("meps:index_by_opinions", args=[self.id])
 
     def __unicode__(self):
         return self.title
@@ -49,10 +73,9 @@ class Representative(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     full_name = models.CharField(max_length=255, null=True)
-    gender = models.CharField(max_length=2, choices=((u'M', u'Male'), (u'F', u'Female')))
+    gender = models.CharField(max_length=2, choices=((u'M', u'Male'), (u'F', u'Female')), null=True)
     picture = models.CharField(max_length=255, unique=True)
-    #picture = models.ImageField(upload_to="")
-    birth_date = models.DateField()
+    birth_date = models.DateField(null=True)
     birth_place = models.CharField(max_length=255)
     local_party = models.ManyToManyField(Party, through='PartyRepresentative')
     opinions = models.ManyToManyField(Opinion, through='OpinionREP')

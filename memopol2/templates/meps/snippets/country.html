@@ -1,6 +1,6 @@
 {% if country %}
 <a href="{% url meps:index_by_country country.code %}">
-  <img src="{{ MEDIA_URL }}img/countries/small/{{ country.code }}.png"/>
+    <img src="{{ MEDIA_URL }}img/countries/small/{{ country.code }}.png" alt="{{ country.name }} flag"/>
   {{ country.name }}
 </a>
 {% else %}

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from tests import *
+from tests import TestCase
 
 class TestContact(TestCase):
 

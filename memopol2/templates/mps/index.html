@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
+{% block title %}Députés{% endblock %}
+
 {% block content %}
 
 {% if mps %}
-    <h1>{% trans "MEPs" %}</h1>
+    <h1>Députés</h1>
     <ul>
         {% for mp in mps %}
             <li>

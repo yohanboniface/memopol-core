@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %}{% blocktrans with group.name as group_name %}Members of the European Parliament from {{ groupe_name }}{% endblocktrans %}{% endblock %}
+
 {% block content %}
 
 {% if meps %}

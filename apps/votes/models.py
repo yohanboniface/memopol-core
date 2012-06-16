@@ -6,7 +6,9 @@ from django.db.models import Avg
 from utils import clean_all_trends
 from reps.models import Representative
 from meps.models import MEP, Group, Country
+from mps.models import MP
 from memopol2.utils import color, reify
+from django.core.urlresolvers import reverse
 
 class Proposal(models.Model):
     id = models.CharField(max_length=63, primary_key=True)
@@ -14,6 +16,11 @@ class Proposal(models.Model):
     ponderation = models.IntegerField(default=1)
     short_name = models.CharField(max_length=25, default=None, null=True)
     institution = models.CharField(max_length=63, choices=((u'EU', 'european parliament'), (u'FR', 'assemblée nationale française')))
+
+    def get_absolute_url(self):
+        if self.institution == "FR":
+            return reverse("mps:vote", args=[self.id])
+        return reverse("meps:vote", args=[self.id])
 
     @property
     def groups(self):
@@ -36,6 +43,10 @@ class Proposal(models.Model):
     @reify
     def meps(self):
         return MEP.objects.filter(score__proposal=self)
+
+    @reify
+    def mps(self):
+        return MP.objects.filter(vote__recommendation__proposal=self).distinct()
 
     def __unicode__(self):
         return self.title
@@ -60,6 +71,10 @@ class Recommendation(models.Model):
         for mep in MEP.objects.filter(vote__recommendation=self):
             yield mep, mep.vote_set.get(recommendation=self).choice
 
+    def mps_with_votes(self):
+        for mp in MP.objects.filter(vote__recommendation=self):
+            yield mp, mp.vote_set.get(recommendation=self).choice
+
     def __unicode__(self):
         return self.subject
 
@@ -67,7 +82,7 @@ class Recommendation(models.Model):
         ordering = ['datetime']
 
 class Vote(models.Model):
-    choice = models.CharField(max_length=15, choices=((u'for', u'for'), (u'against', u'against'), (u'abstention', u'abstention'), (u'abstent', u'abstent')))
+    choice = models.CharField(max_length=15, choices=((u'for', u'for'), (u'against', u'against'), (u'abstention', u'abstention'), (u'absent', u'absent')))
     name = models.CharField(max_length=127)
     recommendation = models.ForeignKey(Recommendation)
     representative = models.ForeignKey(Representative, null=True)
@@ -115,7 +130,10 @@ class Score(models.Model):
 
     @property
     def of_group(self):
-        return Score.objects.filter(representative__mep__groupmep__group=self.representative.mep.group, proposal=self.proposal).aggregate(Avg('value'))['value__avg']
+        if self.representative.mep.groups.count():
+            return Score.objects.filter(representative__mep__groupmep__group=self.representative.mep.group, proposal=self.proposal).aggregate(Avg('value'))['value__avg']
+        else:
+            return None
 
     @property
     def of_ep(self):
@@ -126,9 +144,12 @@ class RecommendationData(models.Model):
     proposal_name = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     imported = models.BooleanField(default=False)
-    date = models.DateField()
+    date = models.DateTimeField()
     data = models.TextField()
     recommendation = models.OneToOneField(Recommendation, null=True)
 
     def data_pretty(self):
         return json.dumps(json.loads(self.data), sort_keys=False, indent=4)
+
+    class Meta:
+        ordering = ['date', 'proposal_name']

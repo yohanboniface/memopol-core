@@ -10,9 +10,6 @@ import numpy
 import matplotlib
 matplotlib.use("Agg")
 from matplotlib import pyplot
-from matplotlib.patches import Ellipse
-
-from math import sqrt
 
 from os.path import join
 
@@ -47,11 +44,11 @@ def trends_for_mep(request, mep_id):
     pyplot.plot(scores)
     pyplot.axis([0, len(scores) - 1, 0, 102])
     pyplot.title("%s - Votes scores evolution over time" % (mep.full_name))
-    pyplot.xticks(range(len(scores)), [k.proposal.short_name if k.proposal.short_name else k.proposal.date for k in score_list])
+    pyplot.xticks(range(len(scores)), [k.proposal.short_name if k.proposal.short_name else k.proposal.date for k in score_list], rotation=-17)
     pyplot.xlabel("Votes names or dates")
     pyplot.ylabel("Scores on votes")
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
 
     return send_file(request,filename, content_type="image/png")
@@ -82,11 +79,11 @@ def bar_trends_for_mep(request, mep_id):
     pyplot.legend(('MEP', 'Group', 'Parliament', 'Country'), 'best', shadow=True)
     pyplot.axis([0, len(scores), 0, 102])
     pyplot.title("%s - Votes scores evolution over time" % (mep.full_name))
-    pyplot.xticks(map(lambda x: x+0.5, range(len(scores))), [k.proposal.short_name if k.proposal.short_name else k.proposal.date for k in score_list])
+    pyplot.xticks(map(lambda x: x+0.5, range(len(scores))), [k.proposal.short_name if k.proposal.short_name else k.proposal.date for k in score_list], rotation=-17)
     pyplot.xlabel("Votes names or dates")
     pyplot.ylabel("Scores on votes")
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
 
     return send_file(request,filename, content_type="image/png")
@@ -124,11 +121,11 @@ def comparaison_trends_for_mep(request, mep_id):
     pyplot.axis([0, len(scores), 0, max(maximum) + 50])
     pyplot.title("%s - Votes scores by vote importance" % (mep.full_name))
     pyplot.yticks([])
-    pyplot.xticks(map(lambda x: x+0.5, range(len(scores))), [k.proposal.short_name if k.proposal.short_name else k.proposal.date for k in score_list])
+    pyplot.xticks(map(lambda x: x+0.5, range(len(scores))), [k.proposal.short_name if k.proposal.short_name else k.proposal.date for k in score_list], rotation=-17)
     pyplot.xlabel("Votes names or dates")
     pyplot.ylabel("Score by vote importance")
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
 
     return send_file(request, filename, content_type="image/png")
@@ -169,11 +166,11 @@ def recommendation_group(request, recommendation_id):
 
     pyplot.legend(('Not present','against','abstention','for'), 'best', shadow=False)
     pyplot.title("Group vote repartition")
-    pyplot.xticks(map(lambda x: x+0.5, range(len(groups))), groups, rotation=12)
+    pyplot.xticks(map(lambda x: x+0.5, range(len(groups))), groups, rotation=-17)
     pyplot.xlabel("Groups")
     pyplot.ylabel("Number of meps")
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
 
     return send_file(request, filename, content_type="image/png")
@@ -258,7 +255,7 @@ def recommendation_countries(request, recommendation_id):
     pyplot.ylabel("Number of meps")
     pyplot.axis([0, len(countries), 0, max_total + 2])
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
 
     return send_file(request, filename, content_type="image/png")
@@ -304,7 +301,7 @@ def recommendation_countries_absolute(request, recommendation_id):
     pyplot.ylabel("% of choices")
     pyplot.axis([0, len(countries), 0, 100])
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
 
     return send_file(request, filename, content_type="image/png")
@@ -339,7 +336,7 @@ def group_proposal_score_repartition(request, group_abbreviation, proposal_id):
     pyplot.ylabel("MEPs")
     #pyplot.axis([0, 20.1, 0, maxeu + 3])
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
 
     return send_file(request, filename, content_type="image/png")
@@ -373,7 +370,7 @@ def proposal_score_repartition(request, proposal_id):
     pyplot.ylabel("MEPs")
     #pyplot.axis([0, 10.1, 0, maxeu + 3])
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
 
     return send_file(request, filename, content_type="image/png")
@@ -426,7 +423,7 @@ def group_proposal_score(request, proposal_id):
     pyplot.ylabel("MEPs per group")
     pyplot.axis([0, 10.1, 0, maxeu + 3])
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
 
     return send_file(request, filename, content_type="image/png")
@@ -439,6 +436,9 @@ def group_proposal_score_stacked(request, proposal_id):
         return cache
 
     proposal = get_object_or_404(Proposal, id=proposal_id)
+
+    if proposal.institution != "EU":
+        return HttpResponse("")
 
     group_color = {'ALDE': '#FFFF00',
                    'ELDR': '#FFFF00',
@@ -476,7 +476,7 @@ def group_proposal_score_stacked(request, proposal_id):
     pyplot.ylabel("Number of MEPs (by political group) with X points (for this vote)")
     #pyplot.axis([0, 10.1, 0, maxeu + 3])
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.figure(figsize=(8, 6))
     pyplot.clf()
 
@@ -492,7 +492,10 @@ def group_proposal_score_heatmap(request, proposal_id):
     countries= proposal.countries
     groups = proposal.groups
 
-    fig = pyplot.figure(figsize=(len(countries) / 2, len(groups) / 2))
+    if proposal.institution != "EU":
+        return HttpResponse("")
+
+    fig = pyplot.figure(figsize=(len(countries) / 2.8, len(groups) / 2.8))
     ax = fig.add_subplot(111)
     ax.set_xlim(0, len(proposal.countries))
     ax.set_ylim(0, len(groups))
@@ -534,14 +537,10 @@ def group_proposal_score_heatmap(request, proposal_id):
                                          representative__mep__countrymep__end__gte=proposal.date).aggregate(Avg('value'))['value__avg']
 
             if score:
-                # I'm doing sqrt here because I'm reducing the surface of the circle, not the len of the radius
-                el = Ellipse((a + 0.5,b + 0.5), 1./
-                             sqrt(biggest_group_of_a_country/meps), 1. /
-                             sqrt(biggest_group_of_a_country/meps),
-                             facecolor=map(lambda x: x/255., color(score)),
+                ax.scatter(a + 0.5,b + 0.5, s=250*(meps/biggest_group_of_a_country),
+                             c=map(lambda x: x/255., color(score)),
                              alpha=0.5)
 
-                ax.add_artist(el)
             b += 1
         a += 1
 
@@ -572,7 +571,7 @@ def group_proposal_score_heatmap(request, proposal_id):
     #pyplot.ylabel("MEPs per group")
     #pyplot.axis([0, 10.1, 0, maxeu + 3])
     check_dir(filename)
-    pyplot.savefig(filename, format="png")
+    pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.figure(figsize=(8, 6))
     pyplot.clf()
 

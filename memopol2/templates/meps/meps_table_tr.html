@@ -7,12 +7,15 @@
       {% if mep.position %}
       {{ mep.position }}
       {% else %}
-      No scores
+      {% trans "No scores" %}
       {% endif %}
   </td>
   {% endif %}
+  <td class="cell-score" style="background-color: {{ mep.score_color }};">
+    {{ mep.total_score|floatformat:1 }}
+  </td>
   <td>
-    <a href="{{ mep.get_absolute_url }}">{{ mep.first_name }} {{ mep.last_name|upper }}</a>
+    <a href="{{ mep.get_absolute_url }}">{{ mep.last_name|upper }} {{ mep.first_name }}</a>
   </td>
   {% if not 'country' in hidden_fields %}
   <td>
@@ -24,14 +27,9 @@
     {{ mep.group_tag|safe }}
   </td>
   {% endif %}
-  {% if not 'party' in hidden_fields %}
-  <td>
-    {{ mep.party_tag|safe }}
-  </td>
-  {% endif %}
   {% if choice_listing %}
   <td>
-      <div class="{% if choice == recommendation.recommendation %}ok{% else %}{% if choice == "abstention" %}abstention{% else %}nok{% endif %}{% endif %}">{{ choice }}</div>
+      <div class="{% if choice == recommendation.recommendation %}ok{% else %}{% if choice == "abstention" or choice == "absent" %}abstention{% else %}nok{% endif %}{% endif %}">{{ choice }}</div>
   </td>
   {% endif %}
   {% if organization_role %}
@@ -41,7 +39,11 @@
   {% endif %}
   {% if group_role %}
   <td>
+    {% if mep.groupmep.role != 'Member' %}
       {{ mep.groupmep.role }}
+    {% else %}
+      &nbsp;
+    {% endif %}
   </td>
   {% endif %}
   {% if committee_role %}
@@ -57,12 +59,16 @@
   <td>
     <div class="body">
       <ul class="body">
+          {% if mep.bxl_phone1 %}
         <li><b>{% trans "Brussels" %}</b>
          {% trans "Tel." %}: <a href="callto://{{ mep.bxl_phone1|phone }}">{{ mep.bxl_phone1 }}</a>&nbsp;-&nbsp;<a href="callto://{{ mep.bxl_phone2|phone }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
         </li>
+        {% endif %}
+        {% if mep.stg_phone1 %}
         <li><b>{% trans "Strasbourg" %}</b>
         {% trans "Tel." %}: <a href="callto://{{ mep.stg_phone1|cut:" " }}">{{ mep.stg_phone1 }}</a>&nbsp;-&nbsp;<a href="callto://{{ mep.stg_phone2|cut:" " }}">{{ mep.stg_phone2 }}</a>&nbsp;<br/>
         </li>
+        {% endif %}
         {% if mep.emails %}
           <li>
             <b>{% trans "E-mail" %}:</b>
@@ -73,7 +79,10 @@
           </li>
         {% endif %}
       </ul>
-      <a class="more-contact" href="{% url meps:mep_contact mep.id %}">{% trans "More information" %}...</a>
+    </div>
+    <div class="toogle-contact">
+        <a class="more-contact" href="{% url meps:mep_contact mep.id %}">{% trans "More information" %}...</a>
+        <a class="less-contact hidden" href="#">{% trans "Less information" %}...</a>
     </div>
   </td>
   {% if score_listing %}
@@ -85,7 +94,7 @@
               <li style="background-color: {{ score.color }}">{% if score.proposal.short_name %}{{ score.proposal.short_name }}{% else %}{{ score.proposal.title }}{% endif %}: {{ score.value }}</li>
           {% endfor %}
           </ul>
-      <p><b>Total score:</b> {{ mep.total_score|floatformat:1 }}</p>
+          <p><b>{% trans "Total score:" %}</b> {{ mep.total_score|floatformat:1 }}</p>
       </div>
       {% else %}
       -
@@ -94,10 +103,8 @@
   {% endif %}
   {% if proposal_votes_listing %}
   <td>
-      {% mep_votes_list_on_proposal mep vote %}
-      {% for vote in mep_votes %}
-      <p><a class="{% if vote.recommendation.recommendation == vote.choice %}ok{% else %}{% if vote.choice == "abstention" or vote.choice == "absent" %}abstention{% else %}nok{% endif %}{% endif %}" href="{% url votes:recommendation vote.recommendation.proposal.id vote.recommendation.id %}"> {{ vote.choice }} on {{ vote.recommendation.part }}</a></p>
-      {% endfor %}
+      {% mep_score_on_vote mep vote %}
+      <p style="background-color: {{ mep_score.color }}"><a href="{% url meps:votes_mep vote.id mep.id %}">{% trans "Score:" %} {{ mep_score.value }}</a></p>
   </td>
   {% endif %}
 </tr>

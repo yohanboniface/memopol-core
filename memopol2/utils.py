@@ -5,6 +5,7 @@ import os
 import time
 from django.http import HttpResponse
 from django.core.management import call_command
+from django.core.cache import cache
 
 def get_or_create(klass, _id=None, **kwargs):
     if _id is None:
@@ -57,21 +58,24 @@ def color(score):
         red = 3 * colors - val
     return (red, green, 0)
 
-global _cache
-_cache = {}
-
 def cached(expire):
     """cache the whole response for ``expire`` delay"""
     def wrapper(func):
         def wrapped(request, **kwargs):
-            global _cache
-            path = '%s:%s' % (request.user.is_anonymous() and 'anon' or 'auth', request.path)
-            if path in _cache:
-                ctime, resp = _cache[path]
-                if ctime > int(time.time()):
-                    return resp
-            resp = func(request, **kwargs)
-            _cache[path] = (int(time.time()) + expire, resp)
+            user = 'anon' if request.user.is_anonymous() else 'auth'
+            path = '%s:%s' % (user, request.path)
+            content = cache.get(path)
+            if content is None:
+                resp = func(request, **kwargs)
+                if not resp.is_rendered:
+                    resp.render()
+                content = resp.content.replace('   ', '')
+                cache.set(path, content, timeout=expire)
+                resp = HttpResponse(content)
+                resp['X-Cached'] = '0'
+            else:
+                resp = HttpResponse(content)
+                resp['X-Cached'] = '1'
             return resp
         return wrapped
     return wrapper
