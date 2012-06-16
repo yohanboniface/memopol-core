@@ -78,6 +78,7 @@ class MP(Representative):
     def get_absolute_url(self):
         return reverse('mps:mp', args=(self.id,))
 
+    @property
     def scores(self):
         return self.score_set.all()
 

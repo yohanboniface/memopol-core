@@ -23,4 +23,4 @@ class TestMPs(TestCase):
     def test_mps_has_scores_display_all(self):
         mp = MP.objects.all().annotate(score_len=Count('score')).filter(score_len__gt=0)[0]
         resp = self.app.get(mp.get_absolute_url())
-        assert len(resp.pyquery('div#scores li')) == mp.scores().count()
+        assert len(resp.pyquery('div#scores li')) == mp.scores.count()
