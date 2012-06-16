@@ -10,9 +10,6 @@ import numpy
 import matplotlib
 matplotlib.use("Agg")
 from matplotlib import pyplot
-from matplotlib.patches import Ellipse
-
-from math import sqrt
 
 from os.path import join
 
