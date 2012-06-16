@@ -130,7 +130,10 @@ class Score(models.Model):
 
     @property
     def of_group(self):
-        return Score.objects.filter(representative__mep__groupmep__group=self.representative.mep.group, proposal=self.proposal).aggregate(Avg('value'))['value__avg']
+        if self.representative.mep.groups.count():
+            return Score.objects.filter(representative__mep__groupmep__group=self.representative.mep.group, proposal=self.proposal).aggregate(Avg('value'))['value__avg']
+        else:
+            return None
 
     @property
     def of_ep(self):
