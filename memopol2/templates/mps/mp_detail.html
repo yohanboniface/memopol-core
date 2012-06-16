@@ -77,10 +77,10 @@
         <h2 class="collapsible collapsed">Moyenne des scores : {{ mp.total_score|floatformat:0 }}</h2>
         <ul class="body">
         {% for score in mp.scores %}
-        <li style="background:{{ score.color }}">
-          <div class="score-color"></div>
+        <li style="border-color:{{ score.color }}">
+          <div class="score-color" style="background-color:{{ score.color }}"></div>
           <div class="inner-score">
-            {{ score.label }}: <strong>{{ score.value }}</strong> ({% trans "on" %} {{ score.date }})<br/><a target="_" href="http://www.laquadrature.net/wiki/{{ score.wiki }}">Lire la suite ...</a>
+            {{ score.proposal.title }}: <strong>{{ score.value }}</strong> ({% trans "on" %} {{ score.date }})<br/><a target="_" href="http://www.laquadrature.net/wiki/{{ score.wiki }}">Lire la suite ...</a>
           </div>
         </li>
         {% endfor %}
