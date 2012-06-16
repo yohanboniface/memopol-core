@@ -76,7 +76,7 @@
     <div id="scores">
         <h2 class="collapsible collapsed">Moyenne des scores : {{ mp.total_score|floatformat:0 }}</h2>
         <ul class="body">
-        {% for score in mp.doc.scores %}
+        {% for score in mp.scores %}
         <li style="background:{{ score.color }}">
           <div class="score-color"></div>
           <div class="inner-score">
