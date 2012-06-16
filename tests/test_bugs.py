@@ -15,3 +15,4 @@ class TestAntiBugs(TestCase):
 
     def test_trends_french_proposal(self):
         self.app.get("/trends/proposal/groups-Loi_Hadopi_2_Assemblee_nationale-repartition-stacked.png")
+        self.app.get("/trends/proposal/groups-Loi_Hadopi_Assemblee_nationale-repartition-heatmap.png")
