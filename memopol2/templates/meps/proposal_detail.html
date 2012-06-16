@@ -46,7 +46,7 @@
                 {% if v.weight %}<li><em>{% trans "Weight" %}</em> : {{ v.weight }}</li>{% endif %}
                 {% significant_votes v %}
                 {% url meps:recommendation vote.id v.id as recommendation_url %}
-                <li>{% blocktrans %}Votes ({{ significant_votes.count }} significant) (<a href="{{ recommendation_url }}">full list</a>){% endblocktrans %}</li>
+                <li>{% blocktrans with significant_votes.count as significant_votes_count %}Votes ({{ significant_votes_count }} significant) (<a href="{{ recommendation_url }}">full list</a>){% endblocktrans %}</li>
                 <li>
                 <ul>
                   {% regroup v.vote_set.all by choice as result %}
