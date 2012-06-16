@@ -6,7 +6,6 @@
     Related issue: https://projets.lqdn.fr/issues/304
 """
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.contrib.syndication.views import Feed
 
 from votes.models import Proposal
@@ -35,4 +34,4 @@ class LatestProposalsFeed(Feed):
         return ""
 
     def item_link(self, item):
-        return reverse('votes:detail', args=[item.id])
+        return item.get_absolute_url()
