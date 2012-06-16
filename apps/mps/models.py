@@ -93,6 +93,7 @@ class MP(Representative):
               )
         return values
 
+
 class FunctionMP(models.Model):
     mp = models.ForeignKey(MP)
     function = models.ForeignKey(Function)
