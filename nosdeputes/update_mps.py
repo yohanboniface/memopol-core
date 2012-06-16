@@ -6,7 +6,7 @@ from urllib2 import urlopen, HTTPError
 from memopol2.utils import get_or_create
 
 from reps.models import Email, WebSite
-from mps.models import MP, Group
+from mps.models import MP
 
 def update_personal_informations(_mp, mp):
     _mp.full_name = mp["nom"]
