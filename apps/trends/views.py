@@ -98,25 +98,19 @@ def comparaison_trends_for_mep(request, mep_id):
     score_list = sorted(mep.score_set.all(), key=lambda k: k.proposal.date)
     scores = [s.value * s.proposal.ponderation for s in score_list]
     maximum = [100 * s.proposal.ponderation for s in score_list]
-    #of_country = [s.of_country for s in score_list]
+    center = map(lambda x: x+0.5, range(len(scores)))
     of_group = [s.of_group * s.proposal.ponderation for s in score_list]
     of_ep = [s.of_ep * s.proposal.ponderation for s in score_list]
     if not scores:
         return HttpResponseNotFound
 
-    #a, b = numpy.polyfit(range(len(scores)), [int(x) for x in scores], 1)
-    #pyplot.plot([a*int(x) + b for x in range(len(scores))])
-    # line
-    maximum_bar = pyplot.bar(map(lambda x: x+0.3, range(len(scores))), maximum, width=0.4, color="#FFFFFF")
-    for i, j in zip(map(lambda x: x+0.3, range(len(scores))), score_list):
-        mep_bar = pyplot.bar(i, j.value * j.proposal.ponderation, width=0.4, color=map(lambda x: x/255., j.color_tuple))
-    #pyplot.bar(map(lambda x: x+0.3, range(len(scores))), scores, width=0.4, color=(1, 0, 0))
-    group_plot, = pyplot.plot(map(lambda x: x+0.5, range(len(scores))), of_group, 'bo', markersize=10)
-    ep_plot, = pyplot.plot(map(lambda x: x+0.5, range(len(scores))), of_ep, 'pg', markersize=10)
-    #pyplot.text(map(lambda x: x+0.5, range(len(scores))), maximum, [s.value for s in score_list])
-    for i, j, k in zip(map(lambda x: x[0]+0.28 if x[1] == 100.0 else x[0]+0.35, zip(range(len(scores)), [s.value for s in score_list])), maximum, [s.value for s in score_list]):
-        pyplot.text(i - .05, j + 10, str(k) + "%")
-    #pyplot.bar(map(lambda x: x+0.7, range(len(scores))), of_country, width=0.2, color="yellow")
+    maximum_bar = pyplot.bar(center, maximum, width=0.4, color="#FFFFFF", align='center')
+    mep_bar = pyplot.bar(center, map(lambda y: y.value * y.proposal.ponderation, score_list), width=0.4, color=map(lambda z: map(lambda y: y/255., z.color_tuple), score_list), align='center')
+    group_plot, = pyplot.plot(center, of_group, 'bo', markersize=10)
+    ep_plot, = pyplot.plot(center, of_ep, 'pg', markersize=10)
+    for i, j, k in zip(center, maximum, [s.value for s in score_list]):
+        pyplot.text(i+0.02, j+18, str(k) + "%", horizontalalignment='center', verticalalignment='center')
+
     pyplot.legend((maximum_bar, mep_bar, ep_plot, group_plot), ('Maximum', 'MEP', 'Parliament', 'Group'), 'best', shadow=False)
     pyplot.axis([0, len(scores), 0, max(maximum) + 50])
     pyplot.title("%s - Votes scores by vote importance" % (mep.full_name))
