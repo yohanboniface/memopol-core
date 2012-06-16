@@ -15,14 +15,17 @@ def update_personal_informations(_mp, mp):
     _mp.an_webpage = mp["url_an"]
     _mp.profession = mp["profession"]
 
+
 def get_new_websites(mp, _mp):
     if mp["sites_web"]:
         for website in mp["sites_web"]:
             get_or_create(WebSite, url=website["site"], representative=_mp.representative_ptr)
 
+
 def get_new_emails(mp, _mp):
     for email in mp["emails"]:
         get_or_create(Email, email=email["email"], representative=_mp.representative_ptr)
+
 
 def set_mps_unactives():
     print "Setting all mps to unactive"
