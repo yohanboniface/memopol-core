@@ -1,5 +1,4 @@
 from tests import TestCase
-from meps.models import MEP
 
 class TestAntiBugs(TestCase):
 
