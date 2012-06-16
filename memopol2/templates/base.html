@@ -1,3 +1,4 @@
+{% load flatblock_tags %}
 {% load i18n %}
 <!doctype html>
 <html {% block htmlattrs %}{% endblock %}>
@@ -43,6 +44,8 @@
         <div id="mainheader" ><a href="/">{% block header %}<h1>{{ title|default:"Memopol" }}</h1>{% endblock %}</a></div>
 
         <div id="nav">
+
+            {% flatblock "sidebar.info" %}
 
             <h2>{% trans "Search" %}</h2>
             <div>
