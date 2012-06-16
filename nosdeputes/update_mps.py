@@ -2,6 +2,7 @@ import sys
 import time
 from json import load
 from urllib2 import urlopen, HTTPError
+from django.db import transaction
 
 from memopol2.utils import get_or_create
 
@@ -15,8 +16,9 @@ def update_personal_informations(_mp, mp):
     _mp.profession = mp["profession"]
 
 def get_new_websites(mp, _mp):
-    if mp["site_web"]:
-        get_or_create(WebSite, url=mp["site_web"], representative=_mp.representative_ptr)
+    if mp["sites_web"]:
+        for website in mp["sites_web"]:
+            get_or_create(WebSite, url=website["site"], representative=_mp.representative_ptr)
 
 def get_new_emails(mp, _mp):
     for email in mp["emails"]:
@@ -37,26 +39,26 @@ def set_mps_unactives():
 if __name__ == "__main__":
     mps = load(urlopen("http://www.nosdeputes.fr/deputes/json"))
 
-    set_mps_unactives()
+    with transaction.commit_on_success():
+        set_mps_unactives()
 
-    a = 0
-    for depute in mps["deputes"]:
-        a += 1
-        try:
-            mp = load(urlopen(depute["depute"]["api_url"]))["depute"]
-        except HTTPError:
+        a = 0
+        for depute in mps["deputes"]:
+            a += 1
             try:
-                print "Warning, failed to get a deputy, retrying in one seconde (url: %s)" % depute["depute"]["api_url"]
-                time.sleep(1)
-                mp = load(urlopen(depute["depute"]["api_url"]))["depute"]
+                mp = load(urlopen(depute["depute"]["url_nosdeputes_api"]))["depute"]
             except HTTPError:
-                print "Didn't managed to get this deputy, abort"
-                print "Go repport the bug on irc.freenode.net#regardscitoyens"
-                sys.exit(1)
-        print a, "-", mp["nom"]
-        #mp = load(open("test"))["depute"]
-        _mp = MP.objects.filter(an_id=mp["url_an"].split("/")[-1].split(".")[0])
-        try:
+                try:
+                    print "Warning, failed to get a deputy, retrying in one seconde (url: %s)" % depute["depute"]["api_url"]
+                    time.sleep(1)
+                    mp = load(urlopen(depute["depute"]["url_nosdeputes_api"]))["depute"]
+                except HTTPError:
+                    print "Didn't managed to get this deputy, abort"
+                    print "Go repport the bug on irc.freenode.net#regardscitoyens"
+                    sys.exit(1)
+            print a, "-", mp["nom"]
+            #mp = load(open("test"))["depute"]
+            _mp = MP.objects.filter(an_id=mp["url_an"].split("/")[-1].split(".")[0])
             if _mp:
                 _mp = _mp[0]
                 if not depute["depute"].get("ancien_depute"):
@@ -68,6 +70,3 @@ if __name__ == "__main__":
                 #if mp["groupe_sigle"] and mp["groupe_sigle"] != "NI":
                     #Group.objects.get(abbreviation=mp["groupe_sigle"])
                 _mp.save()
-        except Exception, e:
-            print depute["depute"]["api_url"]
-            raise e
