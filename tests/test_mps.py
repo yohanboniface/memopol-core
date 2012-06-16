@@ -29,3 +29,8 @@ class TestMPs(TestCase):
         mp = MP.objects.all().annotate(score_len=Count('score')).filter(score_len__gt=0)[0]
         resp = self.app.get(mp.get_absolute_url())
         assert mp.scores[0].proposal.title in resp.pyquery('div#scores div.inner-score')[0].text
+
+    def test_mps_has_score_display_link_to_wiki(self):
+        mp = MP.objects.all().annotate(score_len=Count('score')).filter(score_len__gt=0)[0]
+        resp = self.app.get(mp.get_absolute_url())
+        assert resp.pyquery("div#scores div.inner-score a")[0].attrib["href"] == "http://www.laquadrature.net/wiki/" + mp.scores[0].proposal.id
