@@ -46,7 +46,8 @@ def get_department_and_circo(mp, _mp):
         number = str(mp["num_circo"]) + "ème"
     else:
         number = str(mp["num_circo"]) + "ère"
-    Circonscription.objects.get(number=number, department=department)
+    _mp.department = department
+    _mp.circonscription = Circonscription.objects.get(number=number, department=department)
 
 
 def get_new_websites(mp, _mp):
