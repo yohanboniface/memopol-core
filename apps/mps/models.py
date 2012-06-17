@@ -72,6 +72,7 @@ class MP(Representative):
     functions = models.ManyToManyField(Function, through='FunctionMP')
     profession = models.CharField(max_length=255, null=True)
     department = models.ForeignKey(Department)
+    circonscription = models.ForeignKey(Circonscription, null=True)
     group = models.ForeignKey(Group)
     group_role = models.CharField(max_length=63, null=True)
 
