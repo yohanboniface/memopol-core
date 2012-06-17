@@ -10,7 +10,7 @@ from django.db import transaction
 from memopol2.utils import get_or_create
 
 from reps.models import Email, WebSite
-from mps.models import MP
+from mps.models import MP, Department
 
 if not os.path.exists("dumps"):
     os.mkdir("dumps")
@@ -34,6 +34,13 @@ def update_personal_informations(_mp, mp):
     if mp["lieu_naissance"] is not None:
         _mp.birth_place = re.sub("\(.*", "", mp["lieu_naissance"])
         _mp.birth_department = re.sub(".*\(", "", mp["lieu_naissance"])[:-1]
+
+
+def get_department(mp, _mp):
+    if mp["num_deptmt"] != 0:
+        Department.objects.get(number=mp["num_deptmt"])
+    else:
+        Department.objects.get(number=987)
 
 
 def get_new_websites(mp, _mp):
@@ -77,4 +84,5 @@ if __name__ == "__main__":
                 update_personal_informations(_mp, mp)
                 get_new_emails(mp, _mp)
                 get_new_websites(mp, _mp)
+                get_department(mp, _mp)
                 _mp.save()
