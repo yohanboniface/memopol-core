@@ -3,6 +3,7 @@ import sys
 import time
 from json import load
 from urllib2 import urlopen, HTTPError
+from dateutil.parser import parse
 from django.db import transaction
 
 from memopol2.utils import get_or_create
@@ -28,6 +29,7 @@ def update_personal_informations(_mp, mp):
     _mp.an_webpage = mp["url_an"]
     _mp.profession = mp["profession"]
     _mp.gender = mp["sexe"].replace("H", "M")
+    _mp.birth_date = parse(mp["date_naissance"])
 
 
 def get_new_websites(mp, _mp):
