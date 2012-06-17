@@ -1,3 +1,4 @@
+import os
 import sys
 import time
 from json import load
@@ -8,6 +9,17 @@ from memopol2.utils import get_or_create
 
 from reps.models import Email, WebSite
 from mps.models import MP
+
+if not os.path.exists("dumps"):
+    os.mkdir("dumps")
+
+
+def read_or_dl(url, name):
+    if not os.path.exists("dumps/%s" % name):
+        open("dumps/%s" % name, "w").write(urlopen(url).read())
+
+    return open("dumps/%s" % name, "r")
+
 
 def update_personal_informations(_mp, mp):
     _mp.full_name = mp["nom"]
@@ -39,8 +51,9 @@ def set_mps_unactives():
         sys.stdout.flush()
     sys.stdout.write("\n")
 
+
 if __name__ == "__main__":
-    mps = load(urlopen("http://www.nosdeputes.fr/deputes/json"))
+    mps = load(read_or_dl("http://www.nosdeputes.fr/deputes/json", "all_mps"))
 
     with transaction.commit_on_success():
         set_mps_unactives()
@@ -49,7 +62,8 @@ if __name__ == "__main__":
         for depute in mps["deputes"]:
             a += 1
             try:
-                mp = load(urlopen(depute["depute"]["url_nosdeputes_api"]))["depute"]
+                an_id = depute["depute"]["url_an"].split("/")[-1].split(".")[0]
+                mp = load(read_or_dl(depute["depute"]["url_nosdeputes_api"], an_id))["depute"]
             except HTTPError:
                 try:
                     print "Warning, failed to get a deputy, retrying in one seconde (url: %s)" % depute["depute"]["api_url"]
