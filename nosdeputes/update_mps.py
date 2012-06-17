@@ -27,6 +27,7 @@ def update_personal_informations(_mp, mp):
     _mp.first_name = mp["prenom"]
     _mp.an_webpage = mp["url_an"]
     _mp.profession = mp["profession"]
+    _mp.gender = mp["sexe"].replace("H", "M")
 
 
 def get_new_websites(mp, _mp):
