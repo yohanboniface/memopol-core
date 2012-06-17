@@ -75,7 +75,6 @@ if __name__ == "__main__":
                     print "Go repport the bug on irc.freenode.net#regardscitoyens"
                     sys.exit(1)
             print a, "-", mp["nom"].encode("Utf-8")
-            #mp = load(open("test"))["depute"]
             _mp = MP.objects.filter(an_id=mp["url_an"].split("/")[-1].split(".")[0])
             if _mp:
                 _mp = _mp[0]
@@ -84,7 +83,4 @@ if __name__ == "__main__":
                 update_personal_informations(_mp, mp)
                 get_new_emails(mp, _mp)
                 get_new_websites(mp, _mp)
-                print mp.get("groupe")
-                #if mp["groupe_sigle"] and mp["groupe_sigle"] != "NI":
-                    #Group.objects.get(abbreviation=mp["groupe_sigle"])
                 _mp.save()
