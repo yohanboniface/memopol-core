@@ -93,3 +93,5 @@ if __name__ == "__main__":
                 get_new_websites(mp, _mp)
                 get_department_and_circo(mp, _mp)
                 _mp.save()
+            else:
+                print "missing:", mp["nom"].encode("Utf-8")
