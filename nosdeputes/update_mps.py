@@ -1,3 +1,4 @@
+# -*- coding:Utf-8 -*-
 import os
 import sys
 import time
@@ -10,7 +11,7 @@ from django.db import transaction
 from memopol2.utils import get_or_create
 
 from reps.models import Email, WebSite
-from mps.models import MP, Department
+from mps.models import MP, Department, Circonscription
 
 if not os.path.exists("dumps"):
     os.mkdir("dumps")
@@ -36,11 +37,16 @@ def update_personal_informations(_mp, mp):
         _mp.birth_department = re.sub(".*\(", "", mp["lieu_naissance"])[:-1]
 
 
-def get_department(mp, _mp):
+def get_department_and_circo(mp, _mp):
     if mp["num_deptmt"] != 0:
-        Department.objects.get(number=mp["num_deptmt"])
+        department = Department.objects.get(number=mp["num_deptmt"])
+    else: # TOREMOVE: code is fixed on nosdeputes side but cache is still active
+        department = Department.objects.get(number=987)
+    if mp["num_circo"] != 1:
+        number = str(mp["num_circo"]) + "ème"
     else:
-        Department.objects.get(number=987)
+        number = str(mp["num_circo"]) + "ère"
+    Circonscription.objects.get(number=number, department=department)
 
 
 def get_new_websites(mp, _mp):
@@ -84,5 +90,5 @@ if __name__ == "__main__":
                 update_personal_informations(_mp, mp)
                 get_new_emails(mp, _mp)
                 get_new_websites(mp, _mp)
-                get_department(mp, _mp)
+                get_department_and_circo(mp, _mp)
                 _mp.save()
