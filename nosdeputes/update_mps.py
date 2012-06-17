@@ -74,7 +74,7 @@ if __name__ == "__main__":
                     print "Didn't managed to get this deputy, abort"
                     print "Go repport the bug on irc.freenode.net#regardscitoyens"
                     sys.exit(1)
-            print a, "-", mp["nom"]
+            print a, "-", mp["nom"].encode("Utf-8")
             #mp = load(open("test"))["depute"]
             _mp = MP.objects.filter(an_id=mp["url_an"].split("/")[-1].split(".")[0])
             if _mp:
