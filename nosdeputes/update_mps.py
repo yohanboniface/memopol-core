@@ -24,6 +24,7 @@ def read_or_dl(url, name):
 def update_personal_informations(_mp, mp):
     _mp.full_name = mp["nom"]
     _mp.last_name = mp["nom_de_famille"]
+    _mp.first_name = mp["prenom"]
     _mp.an_webpage = mp["url_an"]
     _mp.profession = mp["profession"]
 
