@@ -40,24 +40,11 @@ def get_new_emails(mp, _mp):
         get_or_create(Email, email=email["email"], representative=_mp.representative_ptr)
 
 
-def set_mps_unactives():
-    print "Setting all mps to unactive"
-    a = 0
-    total = MP.objects.count()
-    for mp in MP.objects.all():
-        a += 1
-        mp.active = False
-        mp.save()
-        sys.stdout.write("%i/%i\r" % (a, total))
-        sys.stdout.flush()
-    sys.stdout.write("\n")
-
-
 if __name__ == "__main__":
     mps = load(read_or_dl("http://www.nosdeputes.fr/deputes/json", "all_mps"))
 
     with transaction.commit_on_success():
-        set_mps_unactives()
+        MP.objects.filter(active=True).update(active=False)
 
         a = 0
         for depute in mps["deputes"]:
