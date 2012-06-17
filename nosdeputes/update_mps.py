@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import re
 from json import load
 from urllib2 import urlopen, HTTPError
 from dateutil.parser import parse
@@ -30,6 +31,9 @@ def update_personal_informations(_mp, mp):
     _mp.profession = mp["profession"]
     _mp.gender = mp["sexe"].replace("H", "M")
     _mp.birth_date = parse(mp["date_naissance"])
+    if mp["lieu_naissance"] is not None:
+        _mp.birth_place = re.sub("\(.*", "", mp["lieu_naissance"])
+        _mp.birth_department = re.sub(".*\(", "", mp["lieu_naissance"])[:-1]
 
 
 def get_new_websites(mp, _mp):
