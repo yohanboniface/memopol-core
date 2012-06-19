@@ -63,7 +63,7 @@
 
 {% if mp.opinionrep_set.all %}
 <div id="opinions">
-    <h2 class="collapsible collapsed">Opinions (venant da la première version du Mémoire Politique)</h2>
+    <h2 class="collapsible collapsed">Opinions (venant de la première version de Mémoire Politique)</h2>
     <ul class="body">
     {% for line in mp.opinionrep_set.all %}
     <li><b><a href="{{ line.opinion.get_absolute_url }}">{{ line.opinion.title }}</b></a> (le {{ line.date }})<br/>{% autoescape off %}{{ line.opinion.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.opinion.url }}"><br/>Voir la source de l'opinion</a> </li>
