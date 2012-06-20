@@ -97,15 +97,16 @@ def comparaison_trends_for_mep(request, mep_id):
     mep = get_object_or_404(MEP, id=mep_id)
     score_list = sorted(mep.score_set.all(), key=lambda k: k.proposal.date)
     scores = [s.value * s.proposal.ponderation for s in score_list]
-    maximum = [100 * s.proposal.ponderation for s in score_list]
-    center = map(lambda x: x+0.5, range(len(scores)))
-    of_group = [s.of_group * s.proposal.ponderation for s in score_list]
-    of_ep = [s.of_ep * s.proposal.ponderation for s in score_list]
     if not scores:
         return HttpResponseNotFound
+    maximum = [100 * s.proposal.ponderation for s in score_list]
+    center = [x+0.5 for x in range(len(scores))]
+    of_group = [s.of_group * s.proposal.ponderation for s in score_list]
+    of_ep = [s.of_ep * s.proposal.ponderation for s in score_list]
+    
 
     maximum_bar = pyplot.bar(center, maximum, width=0.4, color="#FFFFFF", align='center')
-    mep_bar = pyplot.bar(center, map(lambda y: y.value * y.proposal.ponderation, score_list), width=0.4, color=map(lambda z: map(lambda y: y/255., z.color_tuple), score_list), align='center')
+    mep_bar = pyplot.bar(center, scores, width=0.4, color=map(lambda z: map(lambda y: y/255., z.color_tuple), score_list), align='center')
     group_plot, = pyplot.plot(center, of_group, 'bo', markersize=10)
     ep_plot, = pyplot.plot(center, of_ep, 'pg', markersize=10)
     for i, j, k in zip(center, maximum, [s.value for s in score_list]):
