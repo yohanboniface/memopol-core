@@ -15,6 +15,7 @@ from os.path import realpath
 sys.path.append(realpath("memopol2/"))
 BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path = [os.path.join(BASE_PATH, 'apps'),] + sys.path
+print sys.path
 import settings
 
 settings.DEBUG_PROPAGATE_EXCEPTIONS = True
