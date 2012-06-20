@@ -396,9 +396,6 @@ def group_proposal_score(request, proposal_id):
 
     group_bar = {}
 
-    for group in proposal.groups:
-        if not group_color.get(group.abbreviation):
-            print group
     maxeu = 0
     #for mep in MEP.objects.filter(score__proposal=proposal, groupmep__group=group):
     a = 0.1
