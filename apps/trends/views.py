@@ -511,9 +511,9 @@ def group_proposal_score_heatmap(request, proposal_id):
 
     biggest_group_of_a_country = float(biggest_group_of_a_country)
 
-    a = 0
+    a = 0.5
     for country in countries:
-        b = 0
+        b = 0.5
         for group in groups:
             meps = MEP.objects.filter(score__proposal=proposal,
                                       groupmep__end__gte=proposal.date,
@@ -532,39 +532,17 @@ def group_proposal_score_heatmap(request, proposal_id):
                                          representative__mep__countrymep__end__gte=proposal.date).aggregate(Avg('value'))['value__avg']
 
             if score:
-                ax.scatter(a + 0.5,b + 0.5, s=250*(meps/biggest_group_of_a_country),
+                ax.scatter(a, b, s=280*(meps/biggest_group_of_a_country),
                              c=map(lambda x: x/255., color(score)),
-                             alpha=0.5)
+                             alpha=0.6)
 
             b += 1
         a += 1
 
-    #group_bar = {}
-    #scores = []
-
-    #maxeu = 0
-    #for score_range in range(0, 100, 10):
-        #meps = MEP.objects.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 10 if score_range != 90 else 101, score__value__gte=score_range).distinct().count()
-        #if meps > maxeu:
-            #maxeu = meps
-        #scores.append(meps)
-
-    #for mep in MEP.objects.filter(score__proposal=proposal, groupmep__group=group):
-    #for group in proposal.groups:
-        #for score_range in range(0, 100, 10):
-            #meps = group.mep_set.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 10 if score_range != 90 else 101, score__value__gte=score_range).distinct().count()
-            #scores[score_range/10] -= meps
-            #group_bar[group.abbreviation] = pyplot.bar(score_range/10 + 0.1, meps + scores[score_range/10], width=0.8, color=group_color.get(group.abbreviation, '#FFFFFF'))
-
-    #a, b = zip(*group_bar.items())
-    #pyplot.legend(list(b), list(a), 'best', shadow=False)
     pyplot.title("Heatmap of group/country on %s" % proposal.short_name if proposal.short_name else proposal.title)
-    #pyplot.xticks(range(11), range(0, 110, 10))
+
     pyplot.xticks(map(lambda x: x + 0.5, range(len(countries))), map(lambda x: x.code, countries))
     pyplot.yticks(map(lambda x: x + 0.5, range(len(groups))), map(lambda x: x.abbreviation, groups))
-    #pyplot.xlabel("Score range 10 by 10")
-    #pyplot.ylabel("MEPs per group")
-    #pyplot.axis([0, 10.1, 0, maxeu + 3])
     check_dir(filename)
     pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.figure(figsize=(8, 6))
