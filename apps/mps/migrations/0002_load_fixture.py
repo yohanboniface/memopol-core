@@ -1,14 +1,16 @@
 # encoding: utf-8
-import datetime
-from south.db import db
+from os import system
 from south.v2 import SchemaMigration
-from django.db import models
+
+from memopol2.utils import loaddata
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        from django.core.management import call_command
-        call_command("loaddata", "mps.json")
+        def _system(command):
+            return True if system(command) == 0 else False
+
+        loaddata(orm, "mps.json")
 
 
     def backwards(self, orm):
