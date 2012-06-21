@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: The Political Memory of La Quadrature du Net\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-15 22:12+0200\n"
+"POT-Creation-Date: 2012-06-21 02:17+0200\n"
 "PO-Revision-Date: 2012-05-30 17:28+0200\n"
 "Last-Translator: Benjamin Sonntag <benjamin@sonntag.fr>\n"
 "Language-Team: français <team@alternc.org>\n"
@@ -301,101 +301,101 @@ msgstr ""
 "<a href=\"http://cpc.regardscitoyens.org/trac/wiki/API\">les dumps de "
 "nosdeputes.fr</a> pour les données françaises.</p>\n"
 
-#: memopol2/templates/base.html:22
+#: memopol2/templates/base.html:23
 msgid "The Political Memory of La Quadrature du Net"
 msgstr "Le Mémoire Politique de la Quadrature du Net"
 
-#: memopol2/templates/base.html:26
+#: memopol2/templates/base.html:27
 msgid "Administration"
 msgstr "Administration"
 
-#: memopol2/templates/base.html:27
+#: memopol2/templates/base.html:28
 msgid "Comments moderation"
 msgstr "Modération des commentaires"
 
-#: memopol2/templates/base.html:28
+#: memopol2/templates/base.html:29
 msgid "Logout"
 msgstr "Se déconnecter"
 
-#: memopol2/templates/base.html:31 memopol2/templates/campaign/list.html:39
+#: memopol2/templates/base.html:32 memopol2/templates/campaign/list.html:39
 msgid "Login"
 msgstr "Se connecter"
 
-#: memopol2/templates/base.html:47 memopol2/templates/search.html:3
+#: memopol2/templates/base.html:52 memopol2/templates/search.html:3
 #: memopol2/templates/search.html.py:7 memopol2/templates/search.html:11
 msgid "Search"
 msgstr "Rechercher"
 
-#: memopol2/templates/base.html:51
+#: memopol2/templates/base.html:56
 msgid "GO"
 msgstr "GO"
 
-#: memopol2/templates/base.html:55
+#: memopol2/templates/base.html:60
 msgid "Eurodeputies "
 msgstr "Eurodéputés"
 
-#: memopol2/templates/base.html:57 memopol2/templates/base.html.py:83
+#: memopol2/templates/base.html:62 memopol2/templates/base.html.py:88
 msgid "By name"
 msgstr "Par nom"
 
-#: memopol2/templates/base.html:58
+#: memopol2/templates/base.html:63
 msgid "By country"
 msgstr "Par pays"
 
-#: memopol2/templates/base.html:59 memopol2/templates/base.html.py:84
+#: memopol2/templates/base.html:64 memopol2/templates/base.html.py:89
 msgid "By political group"
 msgstr "Par groupe parlementaire"
 
-#: memopol2/templates/base.html:60
+#: memopol2/templates/base.html:65
 msgid "By committee"
 msgstr "Par commission"
 
-#: memopol2/templates/base.html:61
+#: memopol2/templates/base.html:66
 msgid "By delegation"
 msgstr "Par délégation"
 
-#: memopol2/templates/base.html:62
+#: memopol2/templates/base.html:67
 msgid "By local party"
 msgstr "Par parti local"
 
-#: memopol2/templates/base.html:63
+#: memopol2/templates/base.html:68
 msgid "By instances"
 msgstr "Par instance"
 
-#: memopol2/templates/base.html:64
+#: memopol2/templates/base.html:69
 msgid "By floor"
 msgstr "Par étage"
 
-#: memopol2/templates/base.html:65
+#: memopol2/templates/base.html:70
 msgid "By total score"
 msgstr "Par score total"
 
-#: memopol2/templates/base.html:66 memopol2/templates/base.html.py:86
+#: memopol2/templates/base.html:71 memopol2/templates/base.html.py:91
 msgid "Tracked votes"
 msgstr "Votes suivis"
 
-#: memopol2/templates/base.html:67 memopol2/templates/base.html.py:87
+#: memopol2/templates/base.html:72 memopol2/templates/base.html.py:92
 msgid "Expressed opinions"
 msgstr "Opinions exprimées"
 
-#: memopol2/templates/base.html:68
+#: memopol2/templates/base.html:73
 msgid "Former eurodeputies"
 msgstr "Anciens eurodéputés"
 
-#: memopol2/templates/base.html:72 memopol2/templates/campaign/list.html:4
+#: memopol2/templates/base.html:77 memopol2/templates/campaign/list.html:4
 #: memopol2/templates/campaign/list.html:8
 msgid "Campaigns"
 msgstr "Campagnes"
 
-#: memopol2/templates/base.html:81
+#: memopol2/templates/base.html:86
 msgid "French deputies"
 msgstr "Députés français"
 
-#: memopol2/templates/base.html:85
+#: memopol2/templates/base.html:90
 msgid "By departments"
 msgstr "Par département"
 
-#: memopol2/templates/base.html:102
+#: memopol2/templates/base.html:107
 msgid ""
 " Memopol is free software <a href=\"https://gitorious.org/"
 "memopol2-0\">released</a> under the terms of the\n"
@@ -411,7 +411,7 @@ msgstr ""
 "- <a href=\"https://projets.lqdn.fr/projects/mempol/issues/new\">Signaler un "
 "bug</a>"
 
-#: memopol2/templates/base.html:106
+#: memopol2/templates/base.html:111
 msgid "Provided by"
 msgstr "Fourni par"
 
@@ -688,10 +688,10 @@ msgid "Actions"
 msgstr "Fonctions"
 
 #: memopol2/templates/campaign/list.html:31
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"<a href=\"/campaign/report/%(c.id)s/\">%(c.debriefing_set.count)s responses "
-"for %(mepcnt)s MEP(s)</a>"
+"<a href=\"/campaign/report/%(c_id)s/\">%(debriefing_count)s responses for "
+"%(mepcnt)s MEP(s)</a>"
 msgstr ""
 "<a href=\"/campaign/report/%(c.id)s/\">%(c.debriefing_set.count)s réponses "
 "pour %(mepcnt)s Eurodéputé(s)</a>"
@@ -735,7 +735,7 @@ msgstr "MEPs"
 #: memopol2/templates/campaign/view.html:177
 #: memopol2/templates/meps/mep_detail.html:59
 #: memopol2/templates/meps/meps_table_thead.html:7
-#: memopol2/templates/meps/opinion_detail.html:33
+#: memopol2/templates/meps/opinion_detail.html:31
 msgid "Country"
 msgstr "Pays"
 
@@ -955,38 +955,43 @@ msgstr ", eurodéputé"
 msgid "%(mep)s, member of the european parliament"
 msgstr "%(mep)s, eurodéputé"
 
+#: memopol2/templates/meps/mep_detail.html:49
+#, python-format
+msgid "show the %(group_abbreviation)s group"
+msgstr ""
+
 #: memopol2/templates/meps/mep_detail.html:57
-#: memopol2/templates/meps/opinion_detail.html:30
+#: memopol2/templates/meps/opinion_detail.html:28
 msgid "General information"
 msgstr "Informations générales"
 
 #: memopol2/templates/meps/mep_detail.html:58
-#: memopol2/templates/meps/opinion_detail.html:32
+#: memopol2/templates/meps/opinion_detail.html:30
 msgid "Former mep"
 msgstr "Ancien eurodéputé"
 
 #: memopol2/templates/meps/mep_detail.html:61
-#: memopol2/templates/meps/opinion_detail.html:35
+#: memopol2/templates/meps/opinion_detail.html:33
 msgid "Political group: "
 msgstr "Groupe politique&nbsp;: "
 
 #: memopol2/templates/meps/mep_detail.html:67
-#: memopol2/templates/meps/opinion_detail.html:41
+#: memopol2/templates/meps/opinion_detail.html:39
 msgid "National party: "
 msgstr "Parti local&nbsp;:"
 
 #: memopol2/templates/meps/mep_detail.html:70
-#: memopol2/templates/meps/opinion_detail.html:44
+#: memopol2/templates/meps/opinion_detail.html:42
 msgid "Born on"
 msgstr "Born on"
 
 #: memopol2/templates/meps/mep_detail.html:70
-#: memopol2/templates/meps/opinion_detail.html:44
+#: memopol2/templates/meps/opinion_detail.html:42
 msgid "Born on (female)"
 msgstr "Born on"
 
 #: memopol2/templates/meps/mep_detail.html:70
-#: memopol2/templates/meps/opinion_detail.html:44
+#: memopol2/templates/meps/opinion_detail.html:42
 #, python-format
 msgid ""
 "%(day)s %(month)s %(year)s<i> at </i>%(birth_place)s, %(age)s years old."
@@ -997,38 +1002,37 @@ msgid "Mandates"
 msgstr "Mandats"
 
 #: memopol2/templates/meps/mep_detail.html:90
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"Was MEP of <a href=\"%(countryurl)s\">%(role.country.name)s</a> for <a href="
-"\"%(partyurl)s\">%(role.party)s</a> from %(rolebegin)s to %(roleend)s"
+"Was MEP of <a href=\"%(countryurl)s\">%(country_name)s</a> for <a href="
+"\"%(partyurl)s\">%(party)s</a> from %(rolebegin)s to %(roleend)s"
 msgstr ""
 "Était eurodéputé de <a href=\"%(countryurl)s\">%(role.country.name)s</a> "
 "pour le parti <a href=\"%(partyurl)s\">%(role.party)s</a> du %(rolebegin)s "
 "au %(roleend)s"
 
 #: memopol2/templates/meps/mep_detail.html:92
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"Was MEP of <a href=\"%(countryurl)s\">%(role.country.name)s</a> from "
+"Was MEP of <a href=\"%(countryurl)s\">%(country_name)s</a> from "
 "%(rolebegin)s to %(roleend)s"
 msgstr ""
 "Était eurodéputé de <a href=\"%(countryurl)s\">%(role.country.name)s</a> du "
 "%(rolebegin)s au %(roleend)s"
 
 #: memopol2/templates/meps/mep_detail.html:96
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"Is MEP of <a href=\"%(countryurl)s\">%(role.country.name)s</a> for <a href="
-"\"%(partyurl)s\">%(role.party)s</a> from %(rolebegin)s"
+"Is MEP of <a href=\"%(countryurl)s\">%(country_name)s</a> for <a href="
+"\"%(partyurl)s\">%(party)s</a> from %(rolebegin)s"
 msgstr ""
 "Est eurodéputé de <a href=\"%(countryurl)s\">%(role.country.name)s</a> pour "
 "le parti <a href=\"%(partyurl)s\">%(role.party)s</a> depuis le %(rolebegin)s"
 
 #: memopol2/templates/meps/mep_detail.html:98
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"Is MEP of <a href=\"%(countryurl)s\">%(role.country.name)s</a> from "
-"%(rolebegin)s"
+"Is MEP of <a href=\"%(countryurl)s\">%(country_name)s</a> from %(rolebegin)s"
 msgstr ""
 "Est eurodéputé de <a href=\"%(countryurl)s\">%(role.country.name)s</a> "
 "depuis le %(rolebegin)s"
@@ -1038,20 +1042,20 @@ msgid "Groups"
 msgstr "Groupes"
 
 #: memopol2/templates/meps/mep_detail.html:113
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"Was MEP for <a href=\"%(groupurl)s\">%(mep.group.name)s "
-"(%(mep.group.abbreviation)s)</a> from %(groupbegin)s to %(groupend)s"
+"Was MEP for <a href=\"%(groupurl)s\">%(group_name)s (%(group_abbreviation)s)"
+"</a> from %(groupbegin)s to %(groupend)s"
 msgstr ""
 "Était député européen pour le groupe <a href=\"%(groupurl)s\">"
 "%(mep.group.name)s (%(mep.group.abbreviation)s)</a> du %(groupbegin)s au "
 "%(groupend)s"
 
 #: memopol2/templates/meps/mep_detail.html:115
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"Is MEP for <a href=\"%(groupurl)s\">%(mep.group.name)s "
-"(%(mep.group.abbreviation)s)</a> from %(groupbegin)s"
+"Is MEP for <a href=\"%(groupurl)s\">%(group_name)s (%(group_abbreviation)s)</"
+"a> from %(groupbegin)s"
 msgstr ""
 "Est député européen pour le groupe <a href=\"%(groupurl)s\">"
 "%(mep.group.name)s (%(mep.group.abbreviation)s)</a> depuis le %(groupbegin)s"
@@ -1060,16 +1064,21 @@ msgstr ""
 msgid "Committees"
 msgstr "Comités"
 
+#: memopol2/templates/meps/mep_detail.html:126
+#: memopol2/templates/meps/mep_detail.html:147
+msgid "of"
+msgstr ""
+
 #: memopol2/templates/meps/mep_detail.html:132
-#, python-format
-msgid "Was %(role)s in %(role.committee)s from %(rolebegin)s to %(roleend)s"
+#, fuzzy, python-format
+msgid "Was %(role)s in %(role_committee)s from %(rolebegin)s to %(roleend)s"
 msgstr ""
 "Était %(role)s dans la commission %(role.committee)s du %(rolebegin)s au "
 "%(roleend)s"
 
 #: memopol2/templates/meps/mep_detail.html:134
-#, python-format
-msgid "Is %(role)s in %(role.committee)s from %(rolebegin)s"
+#, fuzzy, python-format
+msgid "Is %(role)s in %(role_committee)s from %(rolebegin)s"
 msgstr ""
 "Est %(role)s dans la commission %(role.committee)s depuis le %(rolebegin)s"
 
@@ -1078,15 +1087,15 @@ msgid "Delegations"
 msgstr "Délégations"
 
 #: memopol2/templates/meps/mep_detail.html:153
-#, python-format
-msgid "Was %(role)s in %(role.delegation)s from %(rolebegin)s to %(roleend)s"
+#, fuzzy, python-format
+msgid "Was %(role)s in %(role_delegation)s from %(rolebegin)s to %(roleend)s"
 msgstr ""
 "Était %(role)s dans la délégation %(role.delegation)s du %(rolebegin)s au "
 "%(roleend)s"
 
 #: memopol2/templates/meps/mep_detail.html:155
-#, python-format
-msgid "Is %(role)s in %(role.delegation)s from %(rolebegin)s"
+#, fuzzy, python-format
+msgid "Is %(role)s in %(role_delegation)s from %(rolebegin)s"
 msgstr ""
 "Est %(role)s dans la délégation %(role.delegation)s depuis le %(rolebegin)s"
 
@@ -1099,17 +1108,17 @@ msgid "to"
 msgstr "à"
 
 #: memopol2/templates/meps/mep_detail.html:171
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"Was %(staff.role)s in %(staff.organization.name)s from %(staff.begin)s to "
-"%(staff.end)s"
+"Was %(staff_role)s in %(organization_name)s from %(staff_begin)s to "
+"%(staff_end)s"
 msgstr ""
 "Était %(staff.role)s dans %(staff.organization.name)s du %(staff.begin)s au "
 "%(staff.end)s"
 
 #: memopol2/templates/meps/mep_detail.html:173
-#, python-format
-msgid "Is %(staff.role)s in %(staff.organization.name)s from %(staff.begin)s"
+#, fuzzy, python-format
+msgid "Is %(staff_role)s in %(organization_name)s from %(staff_begin)s"
 msgstr ""
 "Est %(staff.role)s dans %(staff.organization.name)s depuis le %(staff.begin)s"
 
@@ -1137,8 +1146,8 @@ msgid "Total score:"
 msgstr "Score total&nbsp;:"
 
 #: memopol2/templates/meps/mep_detail.html:211
-#, python-format
-msgid "(on %(score.date)s)"
+#, fuzzy, python-format
+msgid "(on %(score_date)s)"
 msgstr "(le %(score.date)s)"
 
 #: memopol2/templates/meps/mep_detail.html:218
@@ -1219,34 +1228,34 @@ msgstr ""
 msgid "\"%(opinion_title)s\", opinion expressed by %(mep)s"
 msgstr ""
 
-#: memopol2/templates/meps/opinion_detail.html:20
+#: memopol2/templates/meps/opinion_detail.html:18
 #, python-format
 msgid ""
 "\"%(opinion_title)s\", opinion expressed by <a href=\"%(mep_url)s\">%(mep)s</"
 "a> on %(opinion_date)s"
 msgstr ""
 
-#: memopol2/templates/meps/opinion_detail.html:22
+#: memopol2/templates/meps/opinion_detail.html:20
 #, python-format
 msgid ""
 "\"%(opinion_title)s\", opinion expressed by <a href=\"%(mep_url)s\">%(mep)s</"
 "a>"
 msgstr ""
 
-#: memopol2/templates/meps/opinion_detail.html:50
+#: memopol2/templates/meps/opinion_detail.html:48
 #, python-format
 msgid ""
 "Members of the European Parliament that have expressed themselves on "
 "%(opinion_title)s"
 msgstr ""
 
-#: memopol2/templates/meps/opinion_detail.html:54
+#: memopol2/templates/meps/opinion_detail.html:52
 #, fuzzy
 msgid "Expressed opinion"
 msgstr "Opinions exprimées"
 
+#: memopol2/templates/meps/opinion_detail.html:54
 #: memopol2/templates/meps/opinion_detail.html:56
-#: memopol2/templates/meps/opinion_detail.html:58
 msgid "Link to opinion source"
 msgstr ""
 
@@ -1312,9 +1321,9 @@ msgstr "Poids"
 
 #: memopol2/templates/meps/proposal_detail.html:49
 #: memopol2/templates/mps/proposal_detail.html:32
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"Votes (%(significant_votes.count)s significant) (<a href="
+"Votes (%(significant_votes_count)s significant) (<a href="
 "\"%(recommendation_url)s\">full list</a>)"
 msgstr ""
 "Votes (%(significant_votes.count)s significatifs) (<a href="
@@ -1335,6 +1344,7 @@ msgstr ""
 "\"%(proposal_url)s\">%(proposal.title)s</a>"
 
 #: memopol2/templates/meps/recommendation_detail.html:8
+#: memopol2/templates/mps/recommendation_detail.html:8
 #, fuzzy, python-format
 msgid ""
 "Recommendation on %(recommendation_subject)s for the proposal <a href="
@@ -1359,17 +1369,17 @@ msgid "Weight:"
 msgstr "Poids&nbsp;:"
 
 #: memopol2/templates/meps/recommendationdata_detail.html:21
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"Imported: %(object.imported)s as <a href=\"%(recommendation_url)s\">"
-"%(object.recommendation.title)s</a>"
+"Imported: %(object_imported)s as <a href=\"%(recommendation_url)s\">"
+"%(recommendation_title)s</a>"
 msgstr ""
 "Importé&nbsp;: %(object.imported)s sous le nom <a href="
 "\"%(recommendation_url)s\">%(object.recommendation.title)s</a>"
 
 #: memopol2/templates/meps/recommendationdata_detail.html:23
-#, python-format
-msgid "Imported: %(object.imported)s"
+#, fuzzy, python-format
+msgid "Imported: %(imported)s"
 msgstr "Importé&nbsp;: %(object.imported)s"
 
 #: memopol2/templates/meps/recommendationdata_detail.html:25
@@ -1384,15 +1394,6 @@ msgstr "Votes à importer"
 msgid "on"
 msgstr "sur"
 
-#: memopol2/templates/mps/recommendation_detail.html:8
-#, python-format
-msgid ""
-"Recommendation on %(recommendation.subject)s for the proposal <a href="
-"\"%(proposal_url)s\">%(proposal.title)s</a>"
-msgstr ""
-"Recommendation sur %(recommendation.subject)s pour la proposition <a href="
-"\"%(proposal_url)s\">%(proposal.title)s</a>"
-
 #: memopol2/templates/reps/opinion_list.html:4
 #: memopol2/templates/reps/opinion_list.html:8
 #, fuzzy
@@ -1400,11 +1401,10 @@ msgid "Members of the European Parliament by opinions"
 msgstr "Eurodéputés"
 
 #: memopol2/templates/votes/header_mep_list.html:3
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "MEPs that have voted \"%(choice)s\" on <a href=\"%(recommendation)s\">"
-"%(recommendation.part)s</a> of <a href=\"%(vote_detail)s\">"
-"%(recommendation.proposal.title)s</a>"
+"%(part)s</a> of <a href=\"%(vote_detail)s\">%(proposal_title)s</a>"
 msgstr ""
 "Eurodéputé qui ont voté \"%(choice)s\" sur <a href=\"%(recommendation)s\">"
 "%(recommendation.part)s</a> de <a href=\"%(vote_detail)s\">"
@@ -1425,6 +1425,13 @@ msgstr "Mauvais vote"
 #: memopol2/templates/votes/legend.html:5
 msgid "Abstention or absent"
 msgstr "Abstention ou absence"
+
+#~ msgid ""
+#~ "Recommendation on %(recommendation.subject)s for the proposal <a href="
+#~ "\"%(proposal_url)s\">%(proposal.title)s</a>"
+#~ msgstr ""
+#~ "Recommendation sur %(recommendation.subject)s pour la proposition <a href="
+#~ "\"%(proposal_url)s\">%(proposal.title)s</a>"
 
 #~ msgid "Thanks for contributing"
 #~ msgstr "Merci d'avoir contribué"
