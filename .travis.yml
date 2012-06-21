@@ -5,4 +5,5 @@ install:
   - pip install numpy --use-mirrors
   - pip install -r requirements.txt --use-mirrors
   - cd memopol2; ./INIT
-script: nosetests tests
+script:
+  - nosetests tests
