@@ -7,3 +7,4 @@ install:
   - cd memopol2; ./INIT
 script:
   - nosetests tests
+  - cat tests/debug
