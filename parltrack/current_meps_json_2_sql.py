@@ -23,6 +23,7 @@ current_meps = "ep_meps_current.json"
 _parse_date = lambda date: datetime.strptime(date, "%Y-%m-%dT00:%H:00")
 
 def create_uniq_id(mep_json):
+    # TODO: replace with something like that: unicodedata.normalize('NFKD', u"%s%s" % (self["prenom"], self["nom_de_famille"])).encode('ascii', 'ignore'))
     id = mep_json["Name"]["sur"].capitalize().replace(" ", "") + mep_json["Name"]["family"].capitalize().replace(" ", "")
     id = id.replace(u"Á", u"A")
     id = id.replace(u"À", u"A")
