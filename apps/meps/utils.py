@@ -3,16 +3,18 @@ from sys import stdout
 from meps.models import MEP
 from votes.models import Proposal, Score
 from django.db.models import Sum
+from django.db import transaction
 
 def update_total_score_of_all_meps(verbose=False, mep=MEP, score=Score, proposal=Proposal):
     if verbose:
         a, total_meps = 0, mep.objects.filter().count()
-    for mep in mep.objects.all():
-        if verbose:
-            a += 1
-            stdout.write("Calculating score of meps ... %s/%s\r" % (a, total_meps))
-        stdout.flush()
-        update_total_score_of_mep(mep, score=score, proposal=proposal)
+    with transaction.commit_on_success():
+        for mep in mep.objects.all():
+            if verbose:
+                a += 1
+                stdout.write("Calculating score of meps ... %s/%s\r" % (a, total_meps))
+            stdout.flush()
+            update_total_score_of_mep(mep, score=score, proposal=proposal)
 
     if verbose:
         stdout.write("\n")
