@@ -16,8 +16,6 @@ from votes.utils import clean_all_trends
 from votes.models import RecommendationData, Proposal, Recommendation, Vote, Score
 from memopol2.utils import update_search_index
 
-from check_vote import check_recommendationdata
-
 def get_proposal(proposal_name, proposal_ponderation):
     proposal = Proposal.objects.filter(title=proposal_name)
     if proposal:
@@ -135,9 +133,6 @@ if __name__ == "__main__":
         proposal_ponderation = 1
     if recommendation not in ("for", "against"):
         print >>sys.stderr, "Recommendation should be either 'for' or 'against'"
-        sys.exit(1)
-    if len(check_recommendationdata(recommendationdata_id)) != 0:
-        print >>sys.stderr, "I didn't managed to get all the meps :("
         sys.exit(1)
     create_recommendation(*sys.argv[1:])
     sys.stdout.write("Update total score of all meps now\n")
