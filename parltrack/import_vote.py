@@ -60,10 +60,30 @@ def create_recommendation(recommendationdata_id, choice, weight, proposal_ponder
             for mep in group["votes"]:
                 mep = mep["orig"]
                 mep = mep.replace(u"ß", "SS")
-                print settings.PARLTRACK_URL + "/mep/%s?format=json&date=%s" % (mep.encode("Utf-8"), rd.date.strftime("%Y-%m-%d"))
-                mep_ep_id = json.loads(urlopen(settings.PARLTRACK_URL + "/mep/%s?format=json&date=%s" % (mep.encode("Utf-8"), rd.date.strftime("%Y-%m-%d"))).read())["UserID"]
-                print mep_ep_id, mep, json.loads(urlopen(settings.PARLTRACK_URL + "/mep/%s?format=json&date=%s" % (mep.encode("Utf-8"), rd.date.strftime("%Y-%m-%d"))).read())["Name"]["full"]
-                representative = MEP.objects.get(ep_id=mep_ep_id).representative_ptr
+                mep = mep.replace("(The Earl of) ", "")
+                try:
+                    representative = MEP.objects.filter(active=True, last_name=mep)
+                    if not representative:
+                        representative = MEP.objects.filter(active=True, last_name=mep.upper())
+                    if not representative:
+                        representative = MEP.objects.filter(active=True, last_name=re.sub("^DE ", "", mep.upper()))
+                    if not representative:
+                        representative = MEP.objects.filter(active=True, last_name__contains=mep.upper())
+                    if not representative:
+                        representative = MEP.objects.filter(active=True, full_name__contains=re.sub("^MC", "Mc", mep.upper()))
+                    if not representative:
+                        representative = MEP.objects.filter(active=True, full_name__iregex=mep)
+                    if not representative:
+                        representative = MEP.objects.filter(active=True, full_name=mep)
+                    if not representative:
+                        representative = MEP.objects.filter(active=True, first_name=mep)
+                    representative = representative[0]
+                except Exception as e:
+                    print "WARNING: failed to get mep using internal db, fall back on parltrack (exception: %s)" % e
+                    print settings.PARLTRACK_URL + "/mep/%s?format=json" % (mep.encode("Utf-8"))
+                    mep_ep_id = json.loads(urlopen(settings.PARLTRACK_URL + "/mep/%s?format=json" % (mep.encode("Utf-8"))).read())["UserID"]
+                    print mep_ep_id, mep, json.loads(urlopen(settings.PARLTRACK_URL + "/mep/%s?format=json" % (mep.encode("Utf-8"))).read())["Name"]["full"]
+                    representative = MEP.objects.get(ep_id=mep_ep_id).representative_ptr
                 print "Create vote for", representative.first_name, representative.last_name
                 Vote.objects.create(choice=choice, recommendation=r, representative=representative, name=rd.proposal_name)
                 a += 1
