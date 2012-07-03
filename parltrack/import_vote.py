@@ -9,6 +9,7 @@ from urllib import urlopen
 from datetime import datetime, time
 
 from django.conf import settings
+from django.db import transaction
 
 from meps.utils import update_total_score_of_all_meps, update_meps_positions
 from meps.models import MEP
@@ -134,7 +135,8 @@ if __name__ == "__main__":
     if recommendation not in ("for", "against"):
         print >>sys.stderr, "Recommendation should be either 'for' or 'against'"
         sys.exit(1)
-    create_recommendation(*sys.argv[1:])
+    with transaction.commit_on_success():
+        create_recommendation(*sys.argv[1:])
     sys.stdout.write("Update total score of all meps now\n")
     update_total_score_of_all_meps(verbose=True)
     update_meps_positions(verbose=True)
