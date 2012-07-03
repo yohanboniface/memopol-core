@@ -39,19 +39,20 @@ def update_meps_positions(verbose=False, mep=MEP):
         a, total_meps = 0, mep.objects.filter(active=True).count()
     previous_score = None
     position = 0
-    for _mep in mep.objects.filter(active=True).order_by('-total_score'):
-        a += 1
-        # else, scores are equal -> same position
-        if not _mep.total_score:
-            pass
-        if previous_score != _mep.total_score:
-            position += 1
-        if verbose:
-            stdout.write("Setting current position of meps ... %s/%s\r" % (a, total_meps))
-        stdout.flush()
-        _mep.position = position
-        _mep.save()
-        previous_score = _mep.total_score
+    with transaction.commit_on_success():
+        for _mep in mep.objects.filter(active=True).order_by('-total_score'):
+            a += 1
+            # else, scores are equal -> same position
+            if not _mep.total_score:
+                pass
+            if previous_score != _mep.total_score:
+                position += 1
+            if verbose:
+                stdout.write("Setting current position of meps ... %s/%s\r" % (a, total_meps))
+            stdout.flush()
+            _mep.position = position
+            _mep.save()
+            previous_score = _mep.total_score
 
     if verbose:
         stdout.write("\n")
