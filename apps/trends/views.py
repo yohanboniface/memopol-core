@@ -144,6 +144,8 @@ def recommendation_group(request, recommendation_id):
     a = 0
     for group in Group.objects.order_by('abbreviation'):
         votes = Vote.objects.filter(recommendation=recommendation, representative__mep__groupmep__group=group, representative__mep__groupmep__begin__lte=recommendation.proposal.date, representative__mep__groupmep__end__gte=recommendation.proposal.date)
+        if not votes:
+            votes = Vote.objects.filter(recommendation=recommendation, representative__mep__groupmep__group=group)
         if votes.count():
             _for = votes.filter(choice="for").count()
             abstention = votes.filter(choice="abstention").count()
@@ -223,10 +225,17 @@ def recommendation_countries(request, recommendation_id):
     max_total = 0
     countries = []
     a = 0
+    no_date = False
     for country in Country.objects.order_by('code'):
         votes = Vote.objects.filter(recommendation=recommendation, representative__mep__countrymep__country=country, representative__mep__countrymep__begin__lte=recommendation.proposal.date, representative__mep__countrymep__end__gte=recommendation.proposal.date).distinct()
+        if not votes:
+            votes = Vote.objects.filter(recommendation=recommendation, representative__mep__countrymep__country=country).distinct()
+            no_date = True
         if votes.count():
-            all_meps = country.meps_on_date(recommendation.proposal.date).distinct().count()
+            if not no_date:
+                all_meps = country.meps_on_date(recommendation.proposal.date).distinct().count()
+            else:
+                all_meps = country.meps.distinct().count()
             if all_meps > max_total:
                 max_total = all_meps
             _for = votes.filter(choice="for").distinct().count()
@@ -272,10 +281,18 @@ def recommendation_countries_absolute(request, recommendation_id):
 
     countries = []
     a = 0
+    no_date = False
     for country in Country.objects.order_by('code'):
         votes = Vote.objects.filter(recommendation=recommendation, representative__mep__countrymep__country=country, representative__mep__countrymep__begin__lte=recommendation.proposal.date, representative__mep__countrymep__end__gte=recommendation.proposal.date).distinct()
+        if not votes:
+            no_date = True
+            votes = Vote.objects.filter(recommendation=recommendation, representative__mep__countrymep__country=country).distinct()
+
         if votes.count():
-            all_meps = country.meps_on_date(recommendation.proposal.date).distinct().count()
+            if not no_date:
+                all_meps = country.meps_on_date(recommendation.proposal.date).distinct().count()
+            else:
+                all_meps = country.meps.distinct().count()
             _for = votes.filter(choice="for").distinct().count()
             against = votes.filter(choice="against").distinct().count()
             abstention = votes.filter(choice="abstention").distinct().count()
