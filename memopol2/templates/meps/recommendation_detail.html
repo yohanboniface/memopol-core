@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}{% blocktrans with Recommendation.subject as recommendation_subject and proposal.title as proposal_title %}Recommendation on {{ recommendation_subject }} for the proposal {{ proposal_title }}{% endblocktrans %}{% endblock %}
+{% block title %}{% blocktrans with recommendation.subject as recommendation_subject and proposal.title as proposal_title %}Recommendation on {{ recommendation_subject }} for the proposal {{ proposal_title }}{% endblocktrans %}{% endblock %}
 
 {% block content %}
 
 {% url meps:detail proposal.id as proposal_url %}
-<h1>{% blocktrans with Recommendation.subject as recommendation_subject and proposal.title as proposal_title %}Recommendation on {{ recommendation_subject }} for the proposal <a href="{{ proposal_url }}">{{ proposal_title }}</a>{% endblocktrans %}</h1>
+<h1>{% blocktrans with recommendation.subject as recommendation_subject and proposal.title as proposal_title %}Recommendation on {{ recommendation_subject }} for the proposal <a href="{{ proposal_url }}">{{ proposal_title }}</a>{% endblocktrans %}</h1>
 
 {% include "votes/legend.html" %}
 
