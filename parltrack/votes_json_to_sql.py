@@ -9,11 +9,13 @@ from json import loads, dumps
 sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
 
 from votes.models import RecommendationData
-from django.db import transaction
+from django.db import transaction, connection
 
 if __name__ == "__main__":
     print "cleaning"
-    RecommendationData.objects.all().delete()
+    connection.cursor().execute("DELETE FROM votes_recommendationdata")
+    transaction.commit_unless_managed()
+    print RecommendationData.objects.count()
     print "read file"
     current_json = ""
     a = 1
