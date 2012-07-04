@@ -24,11 +24,17 @@ class Proposal(models.Model):
 
     @property
     def groups(self):
-        return Group.objects.filter(groupmep__mep__score__proposal=self, groupmep__begin__lte=self.date, groupmep__end__gte=self.date).distinct().order_by('abbreviation')
+        groups = Group.objects.filter(groupmep__mep__score__proposal=self, groupmep__begin__lte=self.date, groupmep__end__gte=self.date).distinct().order_by('abbreviation')
+        if not groups:
+            return Group.objects.filter(groupmep__mep__score__proposal=self).distinct().order_by('abbreviation')
+        return groups
 
     @property
     def countries(self):
-        return Country.objects.filter(countrymep__mep__score__proposal=self, countrymep__begin__lte=self.date, countrymep__end__gte=self.date).distinct().order_by('code')
+        countries = Country.objects.filter(countrymep__mep__score__proposal=self, countrymep__begin__lte=self.date, countrymep__end__gte=self.date).distinct().order_by('code')
+        if not countries:
+            return Country.objects.filter(countrymep__mep__score__proposal=self).distinct().order_by('code')
+        return countries
 
     @property
     def date(self):

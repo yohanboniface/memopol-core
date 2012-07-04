@@ -457,6 +457,8 @@ def group_proposal_score_stacked(request, proposal_id):
         limit=0
         for group in proposal.groups:
             meps = group.mep_set.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 10 if score_range != 90 else 101, score__value__gte=score_range).distinct().count()
+            if not meps:
+                meps = group.mep_set.filter(score__proposal=proposal, score__value__lt=score_range + 10 if score_range != 90 else 101, score__value__gte=score_range).distinct().count()
             group_bar[group.abbreviation] = pyplot.bar(score_range/10 + 0.1, meps, width=0.8, bottom=limit, color=group_color.get(group.abbreviation, '#FFFFFF'))
             limit+=meps
 
@@ -503,6 +505,11 @@ def group_proposal_score_heatmap(request, proposal_id):
                                       countrymep__country=country,
                                       groupmep__group=group).distinct().count()
 
+            if not meps:
+                meps = MEP.objects.filter(score__proposal=proposal,
+                                          countrymep__country=country,
+                                          groupmep__group=group).distinct().count()
+
             if meps > biggest_group_of_a_country:
                 biggest_group_of_a_country = meps
 
@@ -520,6 +527,11 @@ def group_proposal_score_heatmap(request, proposal_id):
                                       countrymep__country=country,
                                       groupmep__group=group).distinct().count()
 
+            if not meps:
+                meps = MEP.objects.filter(score__proposal=proposal,
+                                          countrymep__country=country,
+                                          groupmep__group=group).distinct().count()
+
             score = Score.objects.filter(proposal=proposal,
                                          representative__mep__groupmep__group=group,
                                          representative__mep__groupmep__begin__lte=proposal.date,
@@ -527,6 +539,11 @@ def group_proposal_score_heatmap(request, proposal_id):
                                          representative__mep__countrymep__country=country,
                                          representative__mep__countrymep__begin__lte=proposal.date,
                                          representative__mep__countrymep__end__gte=proposal.date).aggregate(Avg('value'))['value__avg']
+
+            if not score:
+                score = Score.objects.filter(proposal=proposal,
+                                             representative__mep__groupmep__group=group,
+                                             representative__mep__countrymep__country=country).aggregate(Avg('value'))['value__avg']
 
             if score:
                 ax.scatter(a, b, s=280*(meps/biggest_group_of_a_country),
