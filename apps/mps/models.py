@@ -75,6 +75,7 @@ class MP(Representative):
     circonscription = models.ForeignKey(Circonscription, null=True)
     group = models.ForeignKey(Group)
     group_role = models.CharField(max_length=63, null=True)
+    hemicycle_sit = models.IntegerField()
 
     def get_absolute_url(self):
         return reverse('mps:mp', args=(self.id,))
