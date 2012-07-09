@@ -66,6 +66,36 @@ def get_etudes_groups(_mp, mp):
         get_or_create(FunctionMP, mp=_mp, function=function, role=group["fonction"])
 
 
+def get_other_functions(_mp, mp):
+    for i in mp["responsabilites"]:
+        function = i["responsabilite"]
+        if function["organisme"].startswith("Bureau"):
+            tipe = "bureau"
+        elif function["organisme"].encode("Utf-8").startswith("Comité"):
+            tipe = u"comité"
+        elif function["organisme"].startswith("Commission"):
+            tipe = "commission"
+        elif function["organisme"].encode("Utf-8").startswith("Délégation"):
+            tipe = "déléguation"
+        elif function["organisme"].startswith("Mission") or "- mission" in function["organisme"]:
+            tipe = "mission"
+        elif function["organisme"].encode("Utf-8").startswith("Office parlementaire"):
+            tipe = "office"
+        elif function["organisme"].encode("Utf-8").startswith("Groupe de travail"):
+            tipe = "groupe de travail"
+        elif function["organisme"].encode("Utf-8").startswith("Groupe français"):
+            tipe = "autre"
+        elif function["organisme"].encode("Utf-8").startswith("écologie, du développement durable, des transports et du logement"):
+            tipe = "autre"
+        elif function["organisme"].encode("Utf-8").startswith("Modalités de création des brigades de police spécialisées dans la prise en charge des mineurs dél"):
+            tipe = "autre"
+        else:
+            print function["organisme"]
+            raise Exception
+        new_function = get_or_create(Function, title=function["organisme"], type=tipe)
+        get_or_create(FunctionMP, mp=_mp, function=new_function, role=function["fonction"])
+
+
 def get_department_and_circo(mp, _mp):
     if mp["num_deptmt"] != 0:
         department = Department.objects.get(number=mp["num_deptmt"])
@@ -123,6 +153,8 @@ if __name__ == "__main__":
                 FunctionMP.objects.filter(mp=_mp).delete()
                 update_group_info(_mp, mp)
                 get_etudes_groups(_mp, mp)
+
+                get_other_functions(_mp, mp)
                 get_new_emails(mp, _mp)
                 get_new_websites(mp, _mp)
                 get_department_and_circo(mp, _mp)
