@@ -11,7 +11,7 @@ from django.db import transaction
 from memopol2.utils import get_or_create
 
 from reps.models import Email, WebSite
-from mps.models import MP, Department, Circonscription, Group
+from mps.models import MP, Department, Circonscription, Group, Function, FunctionMP
 
 if not os.path.exists("dumps"):
     os.mkdir("dumps")
@@ -51,6 +51,22 @@ def update_group_info(_mp, mp):
     _mp.group_role = mp["groupe"]["fonction"]
     group = Group.objects.get(abbreviation=mp["groupe_sigle"])
     _mp.group = group
+
+
+def get_etudes_groups(_mp, mp):
+    for i in mp["groupes_parlementaires"]:
+        group = i["responsabilite"]
+        tipe = " ".join(group["organisme"].split()[:2])
+        title = " ".join(group["organisme"].split()[2:])
+        if tipe.encode("Utf-8") not in ("Groupe d'amitié", "Groupe d'études"):
+            print group["organisme"]
+            raise Exception
+
+        # clean
+        FunctionMP.objects.filter(mp=_mp).delete()
+
+        function = get_or_create(Function, title=title, type=tipe)
+        get_or_create(FunctionMP, mp=_mp, function=function, role=group["fonction"])
 
 
 def get_department_and_circo(mp, _mp):
@@ -106,6 +122,7 @@ if __name__ == "__main__":
                     _mp.active = True
                 update_personal_informations(_mp, mp)
                 update_group_info(_mp, mp)
+                get_etudes_groups(_mp, mp)
                 get_new_emails(mp, _mp)
                 get_new_websites(mp, _mp)
                 get_department_and_circo(mp, _mp)
