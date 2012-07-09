@@ -102,6 +102,7 @@ class FunctionMP(models.Model):
     function = models.ForeignKey(Function)
     role = models.CharField(max_length=255)
     mission = models.CharField(max_length=255, null=True)
+    extra_parliamentary = models.BooleanField(default=False)
 
 
 class Address(models.Model):

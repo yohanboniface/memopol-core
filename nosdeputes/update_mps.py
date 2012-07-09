@@ -69,11 +69,11 @@ def get_etudes_groups(_mp, mp):
 def get_other_functions(_mp, mp):
     handle_strange_api = lambda x: x if x else []
     for i in handle_strange_api(mp["responsabilites"]):
-        handle_function(i, _mp)
+        handle_function(i, _mp, False)
     for i in handle_strange_api(mp["responsabilites_extra_parlementaires"]):
-        handle_function(i, _mp)
+        handle_function(i, _mp, True)
 
-def handle_function(i, _mp):
+def handle_function(i, _mp, extra):
     function = i["responsabilite"]
     if function["organisme"].startswith("Bureau"):
         tipe = "bureau"
@@ -115,7 +115,7 @@ def handle_function(i, _mp):
         print function["organisme"]
         raise Exception
     new_function = get_or_create(Function, title=function["organisme"], type=tipe)
-    get_or_create(FunctionMP, mp=_mp, function=new_function, role=function["fonction"])
+    get_or_create(FunctionMP, mp=_mp, function=new_function, role=function["fonction"], extra_parliamentary=extra)
 
 
 def get_department_and_circo(mp, _mp):
