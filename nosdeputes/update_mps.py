@@ -11,7 +11,7 @@ from django.db import transaction
 from memopol2.utils import get_or_create
 
 from reps.models import Email, WebSite
-from mps.models import MP, Department, Circonscription
+from mps.models import MP, Department, Circonscription, Group
 
 if not os.path.exists("dumps"):
     os.mkdir("dumps")
@@ -35,6 +35,21 @@ def update_personal_informations(_mp, mp):
     if mp["lieu_naissance"] is not None:
         _mp.birth_place = re.sub("\(.*", "", mp["lieu_naissance"])
         _mp.birth_department = re.sub(".*\(", "", mp["lieu_naissance"])[:-1]
+
+
+def update_group_info(_mp, mp):
+    an_id = mp["url_an"].split("/")[-1].split(".")[0]
+    if an_id in ("1931", "267553", "267456", "2090", "2769", "632", "2681",
+                 "331339", "333224", "267419", "267605", "408269", "1236",
+                 "1310", "332", "267165", "346886", "1068", "267285", "345727",
+                 "331481", "267872", "267591", "2107", "430"): # mp for which I have data but RC don't
+        return
+    if an_id in ("267765",):
+        _mp.group = get_or_create(Group, abbreviation="NI", name=u"Députés n'appartenant à aucun groupe")
+        return
+    _mp.group_role = mp["groupe"]["fonction"]
+    group = Group.objects.get(abbreviation=mp["groupe_sigle"])
+    _mp.group = group
 
 
 def get_department_and_circo(mp, _mp):
@@ -89,6 +104,7 @@ if __name__ == "__main__":
                 if not depute["depute"].get("ancien_depute"):
                     _mp.active = True
                 update_personal_informations(_mp, mp)
+                update_group_info(_mp, mp)
                 get_new_emails(mp, _mp)
                 get_new_websites(mp, _mp)
                 get_department_and_circo(mp, _mp)
