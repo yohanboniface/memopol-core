@@ -67,33 +67,55 @@ def get_etudes_groups(_mp, mp):
 
 
 def get_other_functions(_mp, mp):
-    for i in mp["responsabilites"]:
-        function = i["responsabilite"]
-        if function["organisme"].startswith("Bureau"):
-            tipe = "bureau"
-        elif function["organisme"].encode("Utf-8").startswith("Comité"):
-            tipe = u"comité"
-        elif function["organisme"].startswith("Commission"):
-            tipe = "commission"
-        elif function["organisme"].encode("Utf-8").startswith("Délégation"):
-            tipe = "déléguation"
-        elif function["organisme"].startswith("Mission") or "- mission" in function["organisme"]:
-            tipe = "mission"
-        elif function["organisme"].encode("Utf-8").startswith("Office parlementaire"):
-            tipe = "office"
-        elif function["organisme"].encode("Utf-8").startswith("Groupe de travail"):
-            tipe = "groupe de travail"
-        elif function["organisme"].encode("Utf-8").startswith("Groupe français"):
-            tipe = "autre"
-        elif function["organisme"].encode("Utf-8").startswith("écologie, du développement durable, des transports et du logement"):
-            tipe = "autre"
-        elif function["organisme"].encode("Utf-8").startswith("Modalités de création des brigades de police spécialisées dans la prise en charge des mineurs dél"):
-            tipe = "autre"
-        else:
-            print function["organisme"]
-            raise Exception
-        new_function = get_or_create(Function, title=function["organisme"], type=tipe)
-        get_or_create(FunctionMP, mp=_mp, function=new_function, role=function["fonction"])
+    handle_strange_api = lambda x: x if x else []
+    for i in handle_strange_api(mp["responsabilites"]):
+        handle_function(i, _mp)
+    for i in handle_strange_api(mp["responsabilites_extra_parlementaires"]):
+        handle_function(i, _mp)
+
+def handle_function(i, _mp):
+    function = i["responsabilite"]
+    if function["organisme"].startswith("Bureau"):
+        tipe = "bureau"
+    elif function["organisme"].encode("Utf-8").startswith("Comité") or function["organisme"].encode("Utf-8").startswith("Comuté"):
+        tipe = u"comité"
+    elif function["organisme"].startswith("Commission") or function["organisme"].startswith("Commision"):
+        tipe = "commission"
+    elif function["organisme"].encode("Utf-8").startswith("Délégation"):
+        tipe = "déléguation"
+    elif function["organisme"].encode("Utf-8").startswith("Observatoire"):
+        tipe = "observatoire"
+    elif function["organisme"].startswith("Mission") or "- mission" in function["organisme"]:
+        tipe = "mission"
+    elif function["organisme"].encode("Utf-8").startswith("Office parlementaire"):
+        tipe = "office"
+    elif function["organisme"].encode("Utf-8").startswith("Groupe de travail"):
+        tipe = "groupe de travail"
+    elif function["organisme"].encode("Utf-8").startswith("Conseil") or "conseil" in function["organisme"]:
+        tipe = "conseil"
+    elif function["organisme"].encode("Utf-8").startswith("Groupe français"):
+        tipe = "autre"
+    elif function["organisme"].encode("Utf-8").startswith("écologie, du développement durable, des transports et du logement"):
+        tipe = "autre"
+    elif function["organisme"].encode("Utf-8").startswith("Modalités de création des brigades de police spécialisées dans la prise en charge des mineurs dél"):
+        tipe = "autre"
+    elif function["organisme"].encode("Utf-8").startswith("Section française de "):
+        tipe = "autre"
+    elif function["organisme"].encode("Utf-8").startswith("Cour de justice de la république"):
+        tipe = "autre"
+    elif function["organisme"].encode("Utf-8").startswith("Conférence"):
+        tipe = "autre"
+    elif function["organisme"].encode("Utf-8").startswith("Agence nationale"):
+        tipe = "autre"
+    elif function["organisme"].encode("Utf-8").startswith("Haut comité"):
+        tipe = "autre"
+    elif function["organisme"].encode("Utf-8").startswith("Institut"):
+        tipe = "autre"
+    else:
+        print function["organisme"]
+        raise Exception
+    new_function = get_or_create(Function, title=function["organisme"], type=tipe)
+    get_or_create(FunctionMP, mp=_mp, function=new_function, role=function["fonction"])
 
 
 def get_department_and_circo(mp, _mp):
