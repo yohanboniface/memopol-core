@@ -62,9 +62,6 @@ def get_etudes_groups(_mp, mp):
             print group["organisme"]
             raise Exception
 
-        # clean
-        FunctionMP.objects.filter(mp=_mp).delete()
-
         function = get_or_create(Function, title=title, type=tipe)
         get_or_create(FunctionMP, mp=_mp, function=function, role=group["fonction"])
 
@@ -121,6 +118,9 @@ if __name__ == "__main__":
                 if not depute["depute"].get("ancien_depute"):
                     _mp.active = True
                 update_personal_informations(_mp, mp)
+
+                # clean
+                FunctionMP.objects.filter(mp=_mp).delete()
                 update_group_info(_mp, mp)
                 get_etudes_groups(_mp, mp)
                 get_new_emails(mp, _mp)
