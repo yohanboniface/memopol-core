@@ -32,6 +32,7 @@ def update_personal_informations(_mp, mp):
     _mp.profession = mp["profession"]
     _mp.gender = mp["sexe"].replace("H", "M")
     _mp.birth_date = parse(mp["date_naissance"])
+    _mp.hemicycle_site = mp["place_en_hemicycle"]
     if mp["lieu_naissance"] is not None:
         _mp.birth_place = re.sub("\(.*", "", mp["lieu_naissance"])
         _mp.birth_department = re.sub(".*\(", "", mp["lieu_naissance"])[:-1]
