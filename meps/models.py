@@ -130,7 +130,7 @@ class Building(models.Model):
 
     @reify
     def meps(self):
-        return MEP.objects.filter(active=True, **{'%s_building' % self._town: self})
+        return getattr(self, "%s_building" % self._town).filter(active=True)
 
     def __unicode__(self):
         return u"%s - %s - %s - %s" % (self.id, self.name, self.street, self.postcode)
