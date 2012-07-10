@@ -28,15 +28,15 @@
 <h2>{% trans "General information" %}</h2>
 
 {% if not mep.active %}<li><div class="nok">{% trans "Former mep" %}</div></li>{% endif %}
-<li><i>{% trans "Country" %}</i>:  <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.country.code %}">{{ mep.country.name }} </li></a>
+<li><i>{% trans "Country" %}</i>: <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.country.code %}">{{ mep.country.name }} </li></a>
 {% if mep.group %}
-<li><i>{% trans "Political group: " %}</i><a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></li>
+<li><i>{% trans "Political group" %}</i>: <a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></li>
 {% endif %}
 {% for post in mep.important_posts %}
 <li><b>{{ post.role }} of <a href="{{ post.instance.get_absolute_url }}">{{ post.instance.name }}</a></b></li>
 {% endfor %}
 {% if mep.party %}
-<li><i>{% trans "National party: " %}</i><a href="{% url meps:index_by_party mep.party.id mep.party.name|slugify %}">{{ mep.party.name }}</a></li>
+<li><i>{% trans "National party" %}</i>: <a href="{% url meps:index_by_party mep.party.id mep.party.name|slugify %}">{{ mep.party.name }}</a></li>
 {% endif %}
 {% if mep.birth_date %}
 <li><i>{% if mep.gender == 'M' %}{% trans "Born on" %}{% else %}{% trans "Born on (female)" %}{% endif %}</i> {% blocktrans with mep.birth_date.day as day and mep.birth_date|date:'F' as month and mep.birth_date.year as year and mep.birth_place as birth_place and mep.age as age %}{{ day }} {{ month }} {{ year }}<i> at </i>{{ birth_place }}, {{ age }} years old.{% endblocktrans %}</li>
