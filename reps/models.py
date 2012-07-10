@@ -42,6 +42,7 @@ class Opinion(models.Model):
     url = models.URLField(max_length=400)
     institution = models.CharField(max_length=63, choices=((u'EU', 'european parliament'), (u'FR', 'assemblée nationale française')))
     _date = models.DateField(default=None, null=True, blank=True)
+    _author = models.ForeignKey('Representative', default=None, null=True)
 
     def date(self):
         if self._date is None:
