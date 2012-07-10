@@ -46,7 +46,7 @@ Debian and debian-based
 
 Install the base python virtualenv tools (on Ubuntu you have to enable universe):
 
-    sudo apt-get install python-setuptools python-dev libxml2-dev libxslt1-dev libfreetype6-dev libpng12-dev python-pip libatlas-base-dev g++ mercurial git libtidy-dev
+    sudo apt-get install python-setuptools python-dev libxml2-dev libxslt1-dev libfreetype6-dev libpng12-dev python-pip libatlas-base-dev g++ mercurial git libtidy-dev imagemagick
     sudo pip install virtualenv
 
 Archlinux
@@ -54,14 +54,14 @@ Archlinux
 
 Install the following to have the tools on Archlinux (please note that you may have to adapt the following install procedure):
 
-    pacman -S python2 libxml2 libxslt freetype2 python-lxml python2-pip python2-virtualenv libpng mercurial git
+    pacman -S python2 libxml2 libxslt freetype2 python-lxml python2-pip python2-virtualenv libpng mercurial git imagemagick
 
 Fedora
 ------
 
 Install the following to have the tools on Fedora (please note that you may have to adapt the following install procedure):
 
-    yum install python-setuptools python-devel libxml2-devel libxslt-devel freetype freetype-devel libpng libpng-devel python-lxml python-pip atlas-devel g++ mercurial git
+    yum install python-setuptools python-devel libxml2-devel libxslt-devel freetype freetype-devel libpng libpng-devel python-lxml python-pip atlas-devel g++ mercurial git imagemagick
 
     pip-python install virtualenv
 
