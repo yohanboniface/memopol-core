@@ -7,12 +7,12 @@
 <h1>Départements</h1>
 <ul class="groups">
 {% for department in object_list %}
-    {% if department.count %}
+    {% if department.mps_count %}
     <li>
         <a href="{% url mps:index_by_department department.number %}">
             {{ department.name }} ({{ department.number }})
         </a>
-        - {{ department.count }} Députés
+        - {{ department.mps_count }} Députés
     </li>
     {% endif %}
 {% endfor %}

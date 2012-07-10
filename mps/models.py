@@ -24,6 +24,10 @@ class Department(models.Model):
     def mps(self):
         return self.mp_set.filter(active=True)
 
+    @classmethod
+    def with_mps_count(cls):
+        return cls.objects.distinct().filter(mp__active=True).annotate(mps_count=Count('mp', distinct=True))
+
     def __unicode__(self):
         return self.name
 
