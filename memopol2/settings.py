@@ -80,10 +80,8 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.cache.UpdateCacheMiddleware',
-    'johnny.middleware.LocalStoreClearMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'johnny.middleware.QueryCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -107,8 +105,6 @@ CACHES = {
         }
     )
 }
-
-JOHNNY_MIDDLEWARE_KEY_PREFIX='cache_memopol2'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
