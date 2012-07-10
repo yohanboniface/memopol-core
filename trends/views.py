@@ -103,7 +103,7 @@ def comparaison_trends_for_mep(request, mep_id):
     center = [x+0.5 for x in range(len(scores))]
     of_group = [s.of_group * s.proposal.ponderation for s in score_list]
     of_ep = [s.of_ep * s.proposal.ponderation for s in score_list]
-    
+
 
     maximum_bar = pyplot.bar(center, maximum, width=0.4, color="#FFFFFF", align='center')
     mep_bar = pyplot.bar(center, scores, width=0.4, color=map(lambda z: map(lambda y: y/255., z.color_tuple), score_list), align='center')
