@@ -41,6 +41,7 @@ class Opinion(models.Model):
     content = models.TextField()
     url = models.URLField(max_length=400)
     institution = models.CharField(max_length=63, choices=((u'EU', 'european parliament'), (u'FR', 'assemblée nationale française')))
+    _date = models.DateField(default=None, null=True, blank=True)
 
     def date(self):
         _date = self.opinionrep_set.all()[0].date
