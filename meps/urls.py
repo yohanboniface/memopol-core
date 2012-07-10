@@ -33,7 +33,7 @@ urlpatterns = patterns('meps.views',
 
     url(r'^opinion/$', ListView.as_view(queryset=Opinion.with_meps_count().order_by('-_date').select_related('_author')), name='index_opinions'),
     url(r'^opinion/(?P<pk>[0-9]+)/$', DetailView.as_view(model=Opinion, template_name="meps/opinion_detail.html"), name='index_by_opinions'),
-    url(r'^organization/$', ListView.as_view(model=Organization), name='index_organizations'),
+    url(r'^organization/$', ListView.as_view(queryset=Organization.with_meps_count()), name='index_organizations'),
     url(r'^organization/(?P<pk>[0-9]+)/$', MEPsFromView.as_view(model=Organization, organization_role=True), name='index_by_organization'),
     url(r'^country/$', ListView.as_view(queryset=Country.with_meps_count()), name='index_countries'),
     url(r'^country/(?P<slug>[a-zA-Z][a-zA-Z])/$', MEPsFromView.as_view(model=Country, slug_field='code', hidden_fields=['country'], named_header="meps/country_header.html"), name='index_by_country'),

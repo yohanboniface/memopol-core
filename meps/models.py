@@ -152,6 +152,9 @@ class Organization(models.Model):
         return self.mep_set.filter(active=True).distinct()
         #return self.mep_set.filter(active=True, organizationmep__end=date(9999, 12, 31)).distinct()
 
+    @classmethod
+    def with_meps_count(cls):
+        return cls.objects.distinct().filter(organizationmep__mep__active=True).annotate(meps_count=Count('organizationmep__mep', distinct=True))
 
 
 @search.searchable
