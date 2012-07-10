@@ -145,4 +145,3 @@ class OpinionREP(models.Model):
 
     def __unicode__(self):
         return u"%s: %s" % (self.representative, self.opinion)
-
