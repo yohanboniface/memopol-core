@@ -43,7 +43,8 @@ class Opinion(models.Model):
     institution = models.CharField(max_length=63, choices=((u'EU', 'european parliament'), (u'FR', 'assemblée nationale française')))
 
     def date(self):
-        return self.opinionrep_set.all()[0].date if self.opinionrep_set.all()[0].date else date(1, 1, 1)
+        _date = self.opinionrep_set.all()[0].date
+        return _date if _date else date(1, 1, 1)
 
     def meps(self):
         return meps.models.MEP.objects.filter(opinionrep__opinion=self)
