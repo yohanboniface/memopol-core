@@ -11,7 +11,7 @@
 <ul class="opinions">
 {% for opinion in object_list %}
     <li>
-    <a href="{{ opinion.get_absolute_url }}">{{ opinion.title }}</a> expressed by {% if opinion.authors.count == 1 %}<a href="{{ opinion.author.get_absolute_url }}">{{ opinion.authors|first }}</a>{% else %}{{ opinion.authors.count }} representatives{% endif %}
+    <a href="{{ opinion.get_absolute_url }}">{{ opinion.title }}</a> expressed by {% if opinion.authors.count == 1 %}<a href="{{ opinion.author.get_absolute_url }}">{{ opinion.author }}</a>{% else %}{{ opinion.authors.count }} representatives{% endif %}
     </li>
 {% endfor %}
 </ul>
