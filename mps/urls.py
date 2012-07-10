@@ -37,7 +37,7 @@ urlpatterns = patterns('mps.views',
     url(r'^opinion/$', ListView.as_view(queryset=Opinion.with_mps_count().order_by('-_date').select_related('_author')), name='index_opinions'),
     url(r'^opinion/(?P<pk>[0-9]+)/$', DetailView.as_view(model=Opinion, template_name="mps/opinion_detail.html"), name='index_by_opinions'),
 
-    url(r'^vote/$', ListView.as_view(queryset=Proposal.objects.filter(institution="FR")), name='index_votes'),
+    url(r'^vote/$', ListView.as_view(queryset=Proposal.objects.filter(institution="FR").order_by('-_date')), name='index_votes'),
     url(r'^vote/(?P<proposal_id>[a-zA-Z/-_]+)/(?P<pk>\d+)/(?P<recommendation>[\w.]+)/$', VoteRecommendationChoice.as_view(model=Recommendation), name='recommendation_choice'),
     url(r'^vote/(?P<proposal_id>[a-zA-Z/-_]+)/(?P<pk>\d+)/$', VoteRecommendation.as_view(model=Recommendation, template_name="mps/recommendation_detail.html"), name='recommendation'),
     url(r'^vote/(?P<pk>[a-zA-Z/-_]+)/dataporn/$', DetailView.as_view(model=Proposal, context_object_name='vote', template_name="mps/proposal_dataporn.html"), name='vote_dataporn'),
