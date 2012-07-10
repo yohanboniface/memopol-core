@@ -35,6 +35,11 @@ class Country(models.Model):
 class LocalParty(Party):
     country = models.ForeignKey(Country, null=True)
 
+    @classmethod
+    def with_meps_count(cls):
+        return cls.objects.distinct().filter(partyrepresentative__representative__mep__active=True).annotate(meps_count=Count('partyrepresentative__representative__mep', distinct=True))
+
+
 
 @search.searchable
 class Group(models.Model):

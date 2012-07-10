@@ -13,10 +13,10 @@
     <li>{{ country.grouper.name }}</li>
     <ul class="parties">
     {% for party in country.list %}
-        {% if party.meps|length %}
+        {% if party.meps_count %}
         <li>
             <a href="{% url meps:index_by_party party.id party.name|slugify %}">{{ party.name }}</a>
-            {% blocktrans with party.meps|length as count %} - {{ count }} Members {% endblocktrans %}
+            {% blocktrans with party.meps_count as count %} - {{ count }} Members {% endblocktrans %}
         </li>
         {% endif %}
     {% endfor %}
