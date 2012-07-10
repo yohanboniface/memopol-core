@@ -6,6 +6,7 @@
 {% load cache %}
 
 {% block content %}
+{% get_current_language as LANGUAGE_CODE %}
 
 {% if vote %}
     <h1>{{ vote.title }}</h1>
@@ -28,7 +29,7 @@
 
 <br/>
 
-{% cache 6000000 proposal.votes.recommendation request.META.PATH_INFO %}
+{% cache 6000000 proposal.votes.recommendation request.META.PATH_INFO LANGUAGE_CODE %}
 {% regroup vote.recommendation_set.all by subject as subvotes %}
 
 {% include "votes/legend.html" %}
@@ -73,7 +74,7 @@
 </ul>
 {% endcache %}
 
-{% cache 6000000 proposal.votes.meps request.META.PATH_INFO %}
+{% cache 6000000 proposal.votes.meps request.META.PATH_INFO LANGUAGE_CODE %}
 {% with proposal_votes_listing="True" %}
 <table class="mep-list tablesorter">
   {% include "meps/meps_table_thead.html" %}
