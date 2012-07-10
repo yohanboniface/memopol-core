@@ -48,8 +48,9 @@ class Group(models.Model):
     name = models.CharField(max_length=255)
 
     def count(self):
-        return len(self.mps())
+        return self.mps.count()
 
+    @property
     def mps(self):
         return self.mp_set.filter(active=True)
 
