@@ -1,4 +1,6 @@
 import re
+import os
+
 from django.conf import settings
 from django.db.models import Avg
 from django.http import HttpResponseNotFound, HttpResponse
@@ -172,10 +174,12 @@ def recommendation_group(request, recommendation_id):
 
     return send_file(request, filename, content_type="image/png")
 
-def proposal_countries_map(request, proposal_id):
-    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'proposal', "%s-countries-map.svg" % proposal_id)
+def proposal_countries_map(request, proposal_id, extension):
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'proposal', "%s-countries-map.%s" % (proposal_id, extension))
     cache = get_content_cache(request, filename)
     if cache:
+        if extension == "png":
+            return HttpResponse(cache, mimetype="image/png")
         return HttpResponse(cache, mimetype="image/svg+xml")
 
     proposal = get_object_or_404(Proposal, id=proposal_id)
@@ -205,6 +209,12 @@ def proposal_countries_map(request, proposal_id):
 
     check_dir(filename)
     open(filename, "w").write(out)
+
+    if extension == "png":
+        png_filename = ".".join(filename.split(".")[:-1]) + ".png"
+        os.system("convert %s %s" % (filename, png_filename))
+        return HttpResponse(open(png_filename).read(), mimetype="image/png")
+
     return HttpResponse(out, mimetype="image/svg+xml")
 
 def recommendation_countries(request, recommendation_id):
