@@ -39,7 +39,10 @@ class Proposal(models.Model):
 
     @property
     def date(self):
-        return self.recommendation_set.all()[0].datetime.date()
+        if self._date is None:
+            self._date = self.recommendation_set.all()[0].datetime.date()
+            self.save()
+        return self._date
 
     def save(self, *args, **kwargs):
         # if I'm modifyed and not created
