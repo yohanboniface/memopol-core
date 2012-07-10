@@ -1,9 +1,11 @@
 {% extends "base.html" %}
+{% load cache %}
 {% load flatblock_tags %}
 
 {% block title %}{% trans "Members of the European Parliament by country" %}{% endblock %}
 
 {% block content %}
+{% get_current_language as LANGUAGE_CODE %}
 
 <h1>{% trans "Members of the European Parliament by country" %}</h1>
 {% include "map-eu.html" %}
@@ -11,6 +13,7 @@
 <div class="prefix_2 grid_8 suffix_2 top_space_2">
 <div style="text-align: center;">{% flatblock "by_country.info" %}</div>
 <ul class="col">
+{% cache 6000000 meps.listing_from_container request.META.PATH_INFO LANGUAGE_CODE %}
 {% for country in object_list %}
     <li>
         <a href="{% url meps:index_by_country country.code %}">
@@ -19,6 +22,7 @@
         {% blocktrans with country.meps.count as count %} - {{ count }} Members {% endblocktrans %}
     </li>
 {% endfor %}
+{% endcache %}
 </ul>
 </div>
 
