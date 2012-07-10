@@ -12,7 +12,7 @@
 <ul class="groups">
 {% cache 6000000 meps.listing_from_container request.META.PATH_INFO LANGUAGE_CODE %}
 {% for group in object_list %}
-    {% if group.meps.count %}
+    {% if group.meps_count %}
     <li>
         <a href="{% url meps:index_by_group group.abbreviation %}">
         <img src="{{ MEDIA_URL }}img/groups/eu/{{ group.abbreviation|cut:"/" }}.png" />
@@ -20,7 +20,7 @@
         <a href="{% url meps:index_by_group group.abbreviation %}">
             {{ group.name }} ({{ group.abbreviation }})
         </a>
-        {% blocktrans with group.meps|length as count %} - {{ count }} Members {% endblocktrans %}
+        {% blocktrans with group.meps_count as count %} - {{ count }} Members {% endblocktrans %}
     </li>
     {% endif %}
 {% endfor %}

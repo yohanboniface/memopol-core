@@ -52,6 +52,9 @@ class Group(models.Model):
     def meps_on_date(self, date):
         return self.mep_set.filter(groupmep__end__gte=date, groupmep__begin__lte=date).distinct()
 
+    @classmethod
+    def ordered_by_meps_count(cls):
+        return cls.objects.distinct().filter(groupmep__mep__active=True).annotate(meps_count=Count('groupmep__mep', distinct=True)).order_by('-meps_count')
 
 
 @search.searchable
