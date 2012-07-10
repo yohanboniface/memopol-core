@@ -14,7 +14,7 @@
 <h2>{% if town.grouper == "1047" %}{% trans "Brussels" %}{% else %}{% trans "Strasbourg" %}{% endif %}</h2>
 <ul>
     {% for building in town.list %}
-    {% if building.meps|length %}
+    {% if building.meps.count %}
     <li>{{ building.name }}</li>
     <ul>
         {% for floor in building.floors %}
