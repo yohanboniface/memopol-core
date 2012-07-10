@@ -18,8 +18,9 @@ class Department(models.Model):
     number = models.CharField(max_length=3, primary_key=True)
 
     def count(self):
-        return len(self.mps())
+        return self.mps.count()
 
+    @property
     def mps(self):
         return self.mp_set.filter(active=True)
 
