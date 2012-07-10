@@ -28,7 +28,7 @@
 
 <ul id="infos" class="body">
 {% if not mep.active %}<li><div class="nok">{% trans "Former mep" %}</div></li>{% endif %}
-<li><i>{% trans "Country" %}</i>: <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.country.code %}">{{ mep.country.name }} </li></a>
+<li><i>{% trans "Country" %}</i>: <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.country.code %}">{{ mep.country.name }} </a></li>
 {% if mep.group %}
 <li><i>{% trans "Political group" %}</i>: <a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></li>
 {% endif %}
