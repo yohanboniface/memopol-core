@@ -7,12 +7,12 @@
 <h1>Députés Français par groupe politique</h1>
 <ul class="mp-groups">
 {% for group in object_list %}
-    {% if group.count %}
+    {% if group.mps_count %}
     <li>
         <a href="{% url mps:index_by_group group.abbreviation %}">
             {{ group.name }} ({{ group.abbreviation }})
         </a>
-        - {{ group.count }} Députés
+        - {{ group.mps_count }} Députés
     </li>
     {% endif %}
 {% endfor %}

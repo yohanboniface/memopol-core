@@ -30,7 +30,7 @@ urlpatterns = patterns('mps.views',
 
     url(r'^depute/(?P<pk>[a-zA-Z]+)/$', DetailView.as_view(model=MP, context_object_name='mp'), name='mp'),
     url(r'^depute/(?P<pk>[a-zA-Z]+)/contact$', DetailView.as_view(model=MP, context_object_name='mp', template_name='mps/mp_contact.html'), name='mp_contact'),
-    url(r'^group/$', ListView.as_view(model=Group), name='index_groups'),
+    url(r'^group/$', ListView.as_view(queryset=Group.with_mps_count()), name='index_groups'),
     url(r'^group/(?P<pk>.+)/$', DetailView.as_view(model=Group, template_name='mps/container_detail.html'), name='index_by_group'),
     url(r'^department/$', ListView.as_view(queryset=Department.objects.order_by('number')), name='index_departments'),
     url(r'^department/(?P<pk>.+)/$', DetailView.as_view(model=Department, template_name='mps/container_detail.html'), name='index_by_department'),

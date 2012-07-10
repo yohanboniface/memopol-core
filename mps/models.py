@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Avg
+from django.db.models import Avg, Count
 from reps.models import Representative
 from django.core.urlresolvers import reverse
 from memopol2.utils import reify
@@ -53,6 +53,10 @@ class Group(models.Model):
     @property
     def mps(self):
         return self.mp_set.filter(active=True)
+
+    @classmethod
+    def with_mps_count(cls):
+        return cls.objects.distinct().filter(mp__active=True).annotate(mps_count=Count('mp', distinct=True))
 
     def __unicode__(self):
         return self.name
