@@ -1,13 +1,16 @@
 {% extends "base.html" %}
+{% load cache %}
 {% load flatblock_tags %}
 
 {% block title %}{% trans "Members of the European Parliament by political group" %}{% endblock %}
 
 {% block content %}
+{% get_current_language as LANGUAGE_CODE %}
 
 <h1>{% trans "Members of the European Parliament by political group" %}</h1>
 {% flatblock "by_group.info" %}
 <ul class="groups">
+{% cache 6000000 meps.listing_from_container request.META.PATH_INFO LANGUAGE_CODE %}
 {% for group in object_list %}
     {% if group.meps.count %}
     <li>
@@ -21,6 +24,7 @@
     </li>
     {% endif %}
 {% endfor %}
+{% endcache %}
 </ul>
 <br />
 {% include "hemicycle-eu.html" %}
