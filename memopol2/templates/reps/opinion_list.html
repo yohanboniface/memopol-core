@@ -9,7 +9,7 @@
 
 {% cache 6000000 opinions.listing request.META.PATH_INFO %}
 <ul class="opinions">
-{% for opinion in object_list|dictsortreversed:"date" %}
+{% for opinion in object_list %}
     <li>
     <a href="{{ opinion.get_absolute_url }}">{{ opinion.title }}</a> expressed by {% if opinion.authors.count == 1 %}<a href="{{ opinion.author.get_absolute_url }}">{{ opinion.authors|first }}</a>{% else %}{{ opinion.authors.count }} representatives{% endif %}
     </li>
