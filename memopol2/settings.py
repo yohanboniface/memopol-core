@@ -122,7 +122,7 @@ ROOT_URLCONF = 'memopol2.urls'
 
 
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_PATH, "templates"),
+    os.path.join(SUBPROJECT_PATH, "templates"),
 )
 
 INSTALLED_APPS = (
