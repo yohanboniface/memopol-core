@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load cache %}
 
 {% block title %}{% trans "Home Page" %}{% endblock %}
 
@@ -12,10 +13,13 @@
     <h1 class="document-title">{% trans "MEPs by country" %}</h1>
     {% include "map-eu.html" %}
     <h1 class="document-title">{% trans "MEPs by committee" %}</h1>
+    {% cache 6000000 home.committees_list %}
     {% include "committees-eu.html" %}
+    {% endcache %}
     <h1 class="document-title">{% trans "MEPs by political group" %}</h1>
     {% include "hemicycle-eu.html" %}
 
+    {% cache 6000000 home.last_votes_list %}
     <div>
     {% if proposals %}
         <h1 class="document-title">{% trans "Last tracked votes" %} <a href="{% url votes:lastest-rss %}"><img src="/static/img/rss.png" /></a></h1>
@@ -28,4 +32,5 @@
         </ul>
     {% endif %}
     </div>
+    {% endcache %}
 {% endblock %}
