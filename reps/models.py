@@ -63,7 +63,10 @@ class Opinion(models.Model):
         return self.meps()
 
     def author(self):
-        return self.authors()[0]
+        if self._author is None:
+            self._author = self.authors()[0]
+            self.save()
+        return self._author
 
     def get_absolute_url(self):
         if self.institution == "FR":
