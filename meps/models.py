@@ -77,6 +77,10 @@ class Delegation(models.Model):
         return self.mep_set.filter(active=True).distinct()
         #return self.mep_set.filter(active=True, delegationrole__end=date(9999, 12, 31)).distinct()
 
+    @classmethod
+    def with_meps_count(cls):
+        return cls.objects.distinct().filter(delegationrole__mep__active=True).annotate(meps_count=Count('delegationrole__mep', distinct=True))
+
 
 @search.searchable
 class Committee(models.Model):
