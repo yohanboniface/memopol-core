@@ -21,12 +21,12 @@
 {% endif %}
 
 <section id="summary">
-<ul id="infos" class="body">
 <div class="quickView">
 <img class="mugshot" alt="{{ mep }}" src="{% url meps:mep-picture mep.ep_id %}" onerror="onMugshotError(this);"/>
 </div>
 <h2>{% trans "General information" %}</h2>
 
+<ul id="infos" class="body">
 {% if not mep.active %}<li><div class="nok">{% trans "Former mep" %}</div></li>{% endif %}
 <li><i>{% trans "Country" %}</i>: <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ MEDIA_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.country.code %}">{{ mep.country.name }} </li></a>
 {% if mep.group %}
