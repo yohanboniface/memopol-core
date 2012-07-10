@@ -16,6 +16,7 @@ class Proposal(models.Model):
     ponderation = models.IntegerField(default=1)
     short_name = models.CharField(max_length=25, default=None, null=True)
     institution = models.CharField(max_length=63, choices=((u'EU', 'european parliament'), (u'FR', 'assemblée nationale française')))
+    _date = models.DateField(default=None, null=True, blank=True)
 
     def get_absolute_url(self):
         if self.institution == "FR":
