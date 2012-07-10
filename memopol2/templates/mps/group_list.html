@@ -12,7 +12,7 @@
         <a href="{% url mps:index_by_group group.abbreviation %}">
             {{ group.name }} ({{ group.abbreviation }})
         </a>
-        - {{ count }} Députés
+        - {{ group.count }} Députés
     </li>
     {% endif %}
 {% endfor %}
