@@ -24,6 +24,10 @@ class Country(models.Model):
     def meps_on_date(self, date):
         return self.mep_set.filter(groupmep__end__gte=date, groupmep__begin__lte=date).distinct()
 
+    @classmethod
+    def with_meps_count(cls):
+        return cls.objects.distinct().filter(countrymep__mep__active=True).annotate(meps_count=Count('countrymep__mep', distinct=True))
+
     class Meta:
         ordering = ["code"]
 
