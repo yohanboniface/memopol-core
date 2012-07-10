@@ -9,7 +9,7 @@
 {% flatblock "by_group.info" %}
 <ul class="groups">
 {% for group in object_list %}
-    {% if group.meps|length %}
+    {% if group.meps.count %}
     <li>
         <a href="{% url meps:index_by_group group.abbreviation %}">
         <img src="{{ MEDIA_URL }}img/groups/eu/{{ group.abbreviation|cut:"/" }}.png" />
