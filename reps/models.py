@@ -44,8 +44,11 @@ class Opinion(models.Model):
     _date = models.DateField(default=None, null=True, blank=True)
 
     def date(self):
-        _date = self.opinionrep_set.all()[0].date
-        return _date if _date else date(1, 1, 1)
+        if self._date is None:
+            _date = self.opinionrep_set.all()[0].date
+            self._date = _date if _date else date(1, 1, 1)
+            self.save()
+        return self._date
 
     def meps(self):
         return meps.models.MEP.objects.filter(opinionrep__opinion=self)
