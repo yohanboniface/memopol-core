@@ -28,7 +28,7 @@
         <ul class="votes">
             {% for proposal in proposals|dictsortreversed:"date" %}
                 <li style="list-style: none; margin-left: 15px;">
-                <img src="{{ MEDIA_URL }}img/countries/small/{{ proposal.institution }}.png" /> <a href="{{ proposal.get_absolute_url }}">{{ proposal.title }}</a>
+                <img src="{{ MEDIA_URL }}img/countries/small/{{ proposal.institution }}.png" alt="{{ proposal.institution }} flag"/> <a href="{{ proposal.get_absolute_url }}">{{ proposal.title }}</a>
                 </li>
             {% endfor %}
         </ul>
