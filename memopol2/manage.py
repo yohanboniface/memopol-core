@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys, os.path
 BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path = [os.path.join(BASE_PATH, 'apps'),] + sys.path
+sys.path = [BASE_PATH] + sys.path
 from django.core.management import execute_manager
 try:
     import settings # Assumed to be in the same directory. pylint: disable=W0403
