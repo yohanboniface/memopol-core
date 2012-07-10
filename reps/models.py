@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.core.cache import cache
 from django.conf import settings
 from django.db import models
+from django.db.models import Count
 from memopol2.utils import reify
 from snippets import snippet
 import search
@@ -72,6 +73,14 @@ class Opinion(models.Model):
         if self.institution == "FR":
             return reverse("mps:index_by_opinions", args=[self.id])
         return reverse("meps:index_by_opinions", args=[self.id])
+
+    @classmethod
+    def with_meps_count(cls):
+        return cls.objects.distinct().filter(institution="EU", opinionrep__representative__mep__active=True).annotate(authors_count=Count('opinionrep__representative__mep', distinct=True))
+
+    @classmethod
+    def with_mps_count(cls):
+        return cls.objects.distinct().filter(institution="FR", opinionrep__representative__mp__active=True).annotate(authors_count=Count('opinionrep__representative__mp', distinct=True))
 
     def __unicode__(self):
         return self.title
