@@ -281,7 +281,7 @@ def optimise_mep_query(queryset, q_object=Q(), q_object_rep=Q()):
 
 
 class MEPView(DetailView):
-    queryset=MEP.objects.all().select_related('bxl_building', 'stg_building')
+    queryset=MEP.objects.all().select_related('bxl_building', 'stg_building').prefetch_related('cv_set')
     context_object_name="mep"
 
     def get_context_data(self, *args, **kwargs):
