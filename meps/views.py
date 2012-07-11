@@ -272,20 +272,7 @@ class MEPList(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(MEPList, self).get_context_data(**kwargs)
-
-        """
-        The following piece of code could be remove once the prefetch_related()
-        feature becomes available in Django ORM [1].
-        Since Django cannot yet follow oneToMany and ManyToMany relations,
-        we populate MEP objects manually in python. It does not hurt kittens
-        and boosts performance, greatly.
-
-        [1] https://docs.djangoproject.com/en/dev/topics/db/optimization/#use-queryset-select-related-and-prefetch-related
-        """
-        start = time()
         optimise_mep_query(context["object_list"])
-        logger.debug("MEPList relationships took %.2fsec to build." % (time() - start))
-
         context['score_listing'] = self.score_listing
         context['active'] = self.active
         return context
@@ -297,6 +284,16 @@ class MEPList(ListView):
                                                        **response_kwargs)
 
 def optimise_mep_query(queryset):
+    """
+    The following piece of code could be remove once the prefetch_related()
+    feature becomes available in Django ORM [1].
+    Since Django cannot yet follow oneToMany and ManyToMany relations,
+    we populate MEP objects manually in python. It does not hurt kittens
+    and boosts performance, greatly.
+
+    [1] https://docs.djangoproject.com/en/dev/topics/db/optimization/#use-queryset-select-related-and-prefetch-related
+    """
+    start = time()
     country_mep = {}
     for country in CountryMEP.objects.select_related('mep', 'country').order_by('mep', 'end').all():
         country_mep[country.mep.id] = country.country
@@ -311,6 +308,7 @@ def optimise_mep_query(queryset):
         mep.country = country_mep.get(mep.id)
         mep.group = group_mep.get(mep.id)
         mep.emails = emails_mep.get(mep.id)
+    logger.debug("MEPList relationships took %.2fsec to build." % (time() - start))
     return queryset
 
 
