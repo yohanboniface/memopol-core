@@ -12,8 +12,3 @@ def mep_votes_list_on_proposal(context, mep, proposal):
 def mep_score_on_vote(context, mep, proposal):
     context['mep_score'] = Score.objects.get(representative=mep, proposal=proposal)
     return ''
-
-@register.simple_tag(takes_context=True)
-def significant_votes(context, subvote):
-    context['significant_votes'] = subvote.vote_set.exclude(choice='absent').exclude(choice='abstention')
-    return ''

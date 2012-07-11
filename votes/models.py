@@ -86,6 +86,10 @@ class Recommendation(models.Model):
         for mp in MP.objects.filter(vote__recommendation=self):
             yield mp, mp.vote_set.get(recommendation=self).choice
 
+    @reify
+    def significant_votes(self):
+        return self.vote_set.all().exclude(choice='absent').exclude(choice='abstention')
+
     def __unicode__(self):
         return self.subject
 
