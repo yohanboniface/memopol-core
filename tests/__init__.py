@@ -11,12 +11,9 @@ import django.core.handlers.wsgi
 logging.getLogger('django.db.backends').setLevel(logging.WARN)
 log = logging.getLogger('nose')
 
-from os.path import realpath
-sys.path.append(realpath("memopol2/"))
 BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path = [os.path.join(BASE_PATH, 'apps'),] + sys.path
-open(BASE_PATH + "debug", "w").write("%s" % sys.path)
-print sys.path
+sys.path.append(BASE_PATH + "/memopol2")
+sys.path.append(BASE_PATH)
 import settings
 
 settings.DEBUG_PROPAGATE_EXCEPTIONS = True
