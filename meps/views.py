@@ -273,7 +273,7 @@ class MEPList(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(MEPList, self).get_context_data(**kwargs)
-        optimise_mep_query(context["object_list"])
+        optimise_mep_query(context["object_list"], Q(mep__active=self.active), Q(representative__mep__active=self.active))
         context['score_listing'] = self.score_listing
         context['active'] = self.active
         return context
