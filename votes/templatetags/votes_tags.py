@@ -15,7 +15,5 @@ def mep_score_on_vote(context, mep, proposal):
 
 @register.simple_tag(takes_context=True)
 def significant_votes(context, subvote):
-    ret = Vote.objects.filter(recommendation=subvote)
-    ret = ret.exclude(choice='absent').exclude(choice='abstention')
-    context['significant_votes'] = ret
+    context['significant_votes'] = subvote.vote_set.exclude(choice='absent').exclude(choice='abstention')
     return ''
