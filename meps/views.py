@@ -15,6 +15,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.db.models import Q
 
 from memopol2.utils import check_dir, send_file, get_content_cache
 
@@ -283,7 +284,7 @@ class MEPList(ListView):
         return super(MEPList, self).render_to_response(context,
                                                        **response_kwargs)
 
-def optimise_mep_query(queryset):
+def optimise_mep_query(queryset, q_object=Q(), q_object_rep=Q()):
     """
     The following piece of code could be remove once the prefetch_related()
     feature becomes available in Django ORM [1].
@@ -295,14 +296,15 @@ def optimise_mep_query(queryset):
     """
     start = time()
     country_mep = {}
-    for country in CountryMEP.objects.select_related('mep', 'country').order_by('mep', 'end').all():
+    for country in CountryMEP.objects.filter(q_object).select_related('mep', 'country').order_by('mep', 'end').all():
         country_mep[country.mep.id] = country.country
     group_mep = {}
-    for group in GroupMEP.objects.select_related('mep', 'group').order_by('mep', 'end').all():
+    groupmep_mep = {}
+    for group in GroupMEP.objects.filter(q_object).select_related('mep', 'group').order_by('mep', 'end').all():
         group_mep[group.mep.id] = group.group
         groupmep_mep[group.mep.id] = group
     emails_mep = {}
-    for email in Email.objects.select_related('representative').all():
+    for email in Email.objects.filter(q_object_rep).select_related('representative').all():
         emails_mep.setdefault(email.representative.id, []).append(email.email)
     # Overwrite MEP attributes
     for mep in queryset:
