@@ -147,7 +147,6 @@ INSTALLED_APPS = (
     'meps',
     'votes',
     'mps',
-    'queries',
     'trends',
     'trophies',
     'campaign',
