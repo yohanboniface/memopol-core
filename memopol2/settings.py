@@ -80,10 +80,8 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.cache.UpdateCacheMiddleware',
-    'johnny.middleware.LocalStoreClearMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'johnny.middleware.QueryCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -102,14 +100,11 @@ ENABLE_CACHING = not DEBUG
 CACHES = {
     'default' : dict(
         BACKEND = 'django.core.cache.backends.%s' % ('locmem.LocMemCache' if ENABLE_CACHING else 'dummy.DummyCache'),
-        JOHNNY_CACHE = True,
         OPTIONS = {
             'MAX_ENTRIES': 1000000000,
         }
     )
 }
-
-JOHNNY_MIDDLEWARE_KEY_PREFIX='cache_memopol2'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
@@ -123,7 +118,7 @@ ROOT_URLCONF = 'memopol2.urls'
 
 
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_PATH, "templates"),
+    os.path.join(SUBPROJECT_PATH, "templates"),
 )
 
 INSTALLED_APPS = (

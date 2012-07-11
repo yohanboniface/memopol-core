@@ -4,7 +4,7 @@ python:
 install:
   - pip install numpy --use-mirrors
   - pip install -r requirements.txt --use-mirrors
-  - cd memopol2; ./INIT
+  - ./INIT
 script:
   - nosetests tests
   - cat tests/debug

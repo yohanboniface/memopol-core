@@ -1,6 +1,7 @@
 from tests import TestCase
 from votes.models import Proposal
 
+
 class TestAntiBugs(TestCase):
 
     def test_trends_of_strasser(self):
