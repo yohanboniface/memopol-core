@@ -98,6 +98,30 @@ class Recommendation(models.Model):
             self.save()
         return self._significant_votes
 
+    def _get_cached_count(self, choice):
+        print "pouet"
+        if getattr(self, "_%s_count" % choice) is None:
+            setattr(self, "_%s_count" % choice, self.vote_set.filter(choice=choice).count())
+            print "caca"
+            self.save()
+        return getattr(self, "_%s_count" % choice)
+
+    @reify
+    def for_count(self):
+        return self._get_cached_count('for')
+
+    @reify
+    def against_count(self):
+        return self._get_cached_count('against')
+
+    @reify
+    def abstention_count(self):
+        return self._get_cached_count('abstention')
+
+    @reify
+    def abstent_count(self):
+        return self._get_cached_count('abstent')
+
     def __unicode__(self):
         return self.subject
 
