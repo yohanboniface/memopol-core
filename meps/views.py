@@ -317,8 +317,9 @@ def optimise_mep_query(queryset, q_object=Q(), q_object_rep=Q()):
 
 
 class MEPView(DetailView):
-    model = MEP
-    context_object_name = "mep"
+    model=MEP
+    context_object_name="mep"
+
     def get_context_data(self, *args, **kwargs):
         context = super(MEPView, self).get_context_data(**kwargs)
         context['now'] = datetime.date.today()
