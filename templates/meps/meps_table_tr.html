@@ -87,10 +87,10 @@
   </td>
   {% if score_listing %}
   <td>
-      {% if mep.score_set.all %}
+      {% if mep.scores %}
       <div class="scores" {% if mep.total_score %}style="background-color: {{ mep.score_color }};"{% endif %}>
           <ul>
-          {% for score in mep.score_set.all %}
+          {% for score in mep.scores %}
               <li style="background-color: {{ score.color }}">{% if score.proposal.short_name %}{{ score.proposal.short_name }}{% else %}{{ score.proposal.title }}{% endif %}: {{ score.value }}</li>
           {% endfor %}
           </ul>

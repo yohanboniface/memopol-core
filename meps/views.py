@@ -21,6 +21,7 @@ from memopol2.utils import check_dir, send_file, get_content_cache
 
 from models import LocalParty, Building, MEP, CountryMEP, GroupMEP, Committee, Group, Country, Organization, Delegation
 from reps.models import Email
+from votes.models import Score
 
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
 
@@ -236,7 +237,7 @@ class MEPList(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(MEPList, self).get_context_data(**kwargs)
-        optimise_mep_query(context["object_list"], Q(mep__active=self.active), Q(representative__mep__active=self.active))
+        optimise_mep_query(context["object_list"], Q(mep__active=self.active), Q(representative__mep__active=self.active), score_listing=self.score_listing)
         context['score_listing'] = self.score_listing
         context['active'] = self.active
         return context
@@ -248,7 +249,7 @@ class MEPList(ListView):
                                                        **response_kwargs)
 
 
-def optimise_mep_query(queryset, q_object=Q(), q_object_rep=Q()):
+def optimise_mep_query(queryset, q_object=Q(), q_object_rep=Q(), score_listing=False):
     """
     The following piece of code could be remove once the prefetch_related()
     feature becomes available in Django ORM [1].
@@ -270,12 +271,19 @@ def optimise_mep_query(queryset, q_object=Q(), q_object_rep=Q()):
     emails_mep = {}
     for email in Email.objects.filter(q_object_rep).select_related('representative').all():
         emails_mep.setdefault(email.representative.id, []).append(email.email)
+
+    if score_listing:
+        scores_mep = {}
+        for score in Score.objects.filter(q_object_rep).select_related('proposal', 'representative'):
+            scores_mep.setdefault(score.representative.id, []).append(score)
     # Overwrite MEP attributes
     for mep in queryset:
         mep.country = country_mep.get(mep.id)
         mep.group = group_mep.get(mep.id)
         mep.groupmep = groupmep_mep.get(mep.id)
         mep.emails = emails_mep.get(mep.id)
+        if score_listing:
+            mep.scores = scores_mep.get(mep.id)
     logger.debug("MEPList relationships took %.2fsec to build." % (time() - start))
     return queryset
 
