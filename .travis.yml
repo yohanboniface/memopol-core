@@ -5,6 +5,3 @@ install:
   - pip install numpy --use-mirrors
   - pip install -r requirements.txt --use-mirrors
   - python manage.py init
-script:
-  - nosetests tests
-  - cat tests/debug
