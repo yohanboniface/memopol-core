@@ -12,7 +12,7 @@
 <table class="mep-list tablesorter">
   {% include "meps/meps_table_thead.html" %}
   <tbody>
-    {% for mep in object.meps %}
+    {% for mep in meps %}
       {% include "meps/meps_table_tr.html" %}
     {% endfor %}
   </tbody>

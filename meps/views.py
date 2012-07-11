@@ -342,6 +342,7 @@ class MEPsFromView(DetailView):
         context['group_role'] = self.group_role
         context['committee_role'] = self.committee_role
         context['delegation_role'] = self.delegation_role
+        context['meps'] = optimise_mep_query(context['object'].meps, *context['object']._q_objects)
         return context
 
     def render_to_response(self, context, **response_kwargs):
