@@ -284,6 +284,7 @@ class MEPList(ListView):
         return super(MEPList, self).render_to_response(context,
                                                        **response_kwargs)
 
+
 def optimise_mep_query(queryset, q_object=Q(), q_object_rep=Q()):
     """
     The following piece of code could be remove once the prefetch_related()
