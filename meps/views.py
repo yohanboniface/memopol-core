@@ -20,7 +20,7 @@ from django.db.models import Q
 from memopol2.utils import check_dir, send_file, get_content_cache
 
 from models import LocalParty, Building, MEP, CountryMEP, GroupMEP, Committee, Group, Country, Organization, Delegation
-from reps.models import Email, PartyRepresentative
+from reps.models import Email
 
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
 
