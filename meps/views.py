@@ -345,7 +345,6 @@ class ProposalView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProposalView, self).get_context_data(**kwargs)
-        context["vote"].recommendations = context["vote"].recommendation_set.prefetch_related('vote_set')
         return context
 
 

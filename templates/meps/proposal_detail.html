@@ -29,7 +29,7 @@
 <br/>
 
 {% cache 6000000 proposal.votes.recommendation request.META.PATH_INFO LANGUAGE_CODE %}
-{% regroup vote.recommendations by subject as subvotes %}
+{% regroup vote.recommendation_set.all by subject as subvotes %}
 
 {% include "votes/legend.html" %}
 
