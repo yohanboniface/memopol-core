@@ -142,6 +142,7 @@ INSTALLED_APPS = (
     'django_extensions',
 
     # memopol
+    'memopol2',
     'reps',
     'meps',
     'votes',
