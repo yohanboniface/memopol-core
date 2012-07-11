@@ -345,7 +345,7 @@ class ProposalView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProposalView, self).get_context_data(**kwargs)
-        context["vote"].meps = optimise_mep_query(context["vote"].meps)
+        context["vote"].meps = optimise_mep_query(context["vote"].meps, Q(mep__score__proposal=context["vote"]), Q(representative__score__proposal=context["vote"]))
         return context
 
 
