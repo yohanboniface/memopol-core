@@ -21,7 +21,7 @@ from memopol2.utils import check_dir, send_file, get_content_cache
 
 from models import LocalParty, Building, MEP, CountryMEP, GroupMEP, Committee, Group, Country, Organization, Delegation
 from reps.models import Email
-from votes.models import Score
+from votes.models import Score, Proposal
 
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
 
@@ -336,6 +336,17 @@ class PartyView(MEPsFromView):
         if self.kwargs['slugified_name'] != slugify(self.object.name):
             return HttpResponseRedirect(reverse('meps:index_by_party', args=[self.object.id, slugify(self.object.name)]))
         return MEPsFromView.render_to_response(self, context)
+
+
+class ProposalView(DetailView):
+    model=Proposal
+    context_object_name="vote"
+    template_name="meps/proposal_detail.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProposalView, self).get_context_data(**kwargs)
+        context["vote"].recommendations = context["vote"].recommendation_set.prefetch_related('vote_set')
+        return context
 
 
 class VoteRecommendation(DetailView):

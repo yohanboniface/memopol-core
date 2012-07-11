@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from meps.models import LocalParty, Country, Group, Committee, Delegation, Organization, Building, MEP
 from reps.models import Opinion
 from votes.models import Proposal, Vote, Recommendation
-from meps.views import VoteRecommendation, VoteRecommendationChoice
+from meps.views import VoteRecommendation, VoteRecommendationChoice, ProposalView
 
 from views import BuildingDetailView, MEPView, MEPsFromView, MEPList, PartyView
 
@@ -54,7 +54,7 @@ urlpatterns = patterns('meps.views',
     url(r'^vote/(?P<proposal_id>[a-zA-Z/-_]+)/(?P<pk>\d+)/$', VoteRecommendation.as_view(model=Recommendation, template_name="meps/recommendation_detail.html"), name='recommendation'),
     url(r'^vote/(?P<pk>[a-zA-Z/-_]+)/dataporn/$', DetailView.as_view(model=Proposal, context_object_name='vote', template_name="meps/proposal_dataporn.html"), name='vote_dataporn'),
     url(r'^vote/(?P<proposal_id>[a-zA-Z/-_]+)/(?P<mep_id>.+)/$', proposal_rep, name='votes_mep'),
-    url(r'^vote/(?P<pk>[a-zA-Z/-_]+)/$', DetailView.as_view(model=Proposal, context_object_name='vote', template_name="meps/proposal_detail.html"), name='vote'),
+    url(r'^vote/(?P<pk>[a-zA-Z/-_]+)/$', ProposalView.as_view(), name='vote'),
 
     url(r'^votes/$', lambda request: redirect(reverse("meps:index_votes"))),
 
