@@ -48,18 +48,10 @@
                 <li>{% blocktrans with v.significant_votes as significant_votes_count %}Votes ({{ significant_votes_count }} significant) (<a href="{{ recommendation_url }}">full list</a>){% endblocktrans %}</li>
                 <li>
                 <ul>
-                  {% regroup v.vote_set.all by choice as result %}
-                  {% for re in result reversed %}
-                  {% if re.grouper in "absent-abstention-against-for" %}
-                  <li><b><a
-                      class="{% if v.recommendation == re.grouper %}ok{% else %}{% if re.grouper == "abstention" or re.grouper == "absent" %}abstention{% else %}nok{% endif %}{% endif %}"
-                      href="{% url meps:recommendation_choice vote.id v.id re.grouper %}">{{ re.grouper }}</a></b>: {{ re.list|length }} </li>
-                  {% else %}
-                  <!-- FIXME: sometimes re.grouper is a float and we cant get the correct link -->
-                  <!-- FIXME: see http://localhost:8000/votes/Loi_Hadopi_Assemblee_nationale/ -->
-                  <li><b><a href="#">{{ re.grouper }}</a></b>: {{ re.list|length }} </li>
-                  {% endif %}
-                  {% endfor %}
+                    {% if v.for_count %}<li><b><a class="{% if v.recommendation == "for" %}ok{% else %}nok{% endif %}" href="{% url meps:recommendation_choice vote.id v.id "for" %}">for</a></b>: {{ v.for_count }} </li>{% endif %}
+                    {% if v.against_count %}<li><b><a class="{% if v.recommendation == "against" %}ok{% else %}nok{% endif %}" href="{% url meps:recommendation_choice vote.id v.id "against" %}">against</a></b>: {{ v.against_count }} </li>{% endif %}
+                    {% if v.abstention_count %}<li><b><a class="abstention">abstention</a></b>: {{ v.abstention_count }} </li>{% endif %}
+                    {% if v.abstent_count %}<li><b><a class="abstention">abstent</a></b>: {{ v.abstent_count }} </li>{% endif %}
                 </ul>
                 </li>
             </ul>
