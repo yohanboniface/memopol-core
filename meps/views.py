@@ -300,6 +300,7 @@ def optimise_mep_query(queryset):
     group_mep = {}
     for group in GroupMEP.objects.select_related('mep', 'group').order_by('mep', 'end').all():
         group_mep[group.mep.id] = group.group
+        groupmep_mep[group.mep.id] = group
     emails_mep = {}
     for email in Email.objects.select_related('representative').all():
         emails_mep.setdefault(email.representative.id, []).append(email.email)
@@ -307,6 +308,7 @@ def optimise_mep_query(queryset):
     for mep in queryset:
         mep.country = country_mep.get(mep.id)
         mep.group = group_mep.get(mep.id)
+        mep.groupmep = groupmep_mep.get(mep.id)
         mep.emails = emails_mep.get(mep.id)
     logger.debug("MEPList relationships took %.2fsec to build." % (time() - start))
     return queryset
