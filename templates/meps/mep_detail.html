@@ -76,48 +76,6 @@ $(document).ready(function() {
     {% include "meps/mep_contact.html" %}
 </div>
 
-{% if mep.previous_mandates %}
-<div id="mandates">
-    <h2 class="collapsible collapsed">{% trans "Mandates" %}</h2>
-    <ul class="body mandates">
-    {% for role in mep.previous_mandates %}
-    <li><img src="{{ MEDIA_URL }}img/countries/small/{{ role.country.code }}.png"/>
-{% url meps:index_by_country mep.country.code as countryurl %}
-{% url meps:index_by_party mep.party.id mep.party.name|slugify as partyurl %}
-<i> 
-{% if now > role.end %}
-  {% if mep.party %}
-    {% blocktrans with role.begin|date:"d F Y" as rolebegin and role.end|date:"d F Y" as roleend and role.country.name as country_name and role.party as party %}Was MEP of <a href="{{ countryurl }}">{{ country_name }}</a> for <a href="{{ partyurl }}">{{ party }}</a> from {{ rolebegin }} to {{ roleend }}{% endblocktrans %}
-  {%else%}
-    {% blocktrans with role.begin|date:"d F Y" as rolebegin and role.end|date:"d F Y" as roleend and role.country.name as country_name %}Was MEP of <a href="{{ countryurl }}">{{ country_name }}</a> from {{ rolebegin }} to {{ roleend }}{% endblocktrans %}
-  {%endif%}
-{%else%}
-  {% if mep.party %}
-    {% blocktrans with role.begin|date:"d F Y" as rolebegin and role.country.name as country_name and role.party as party %}Is MEP of <a href="{{ countryurl }}">{{ country_name }}</a> for <a href="{{ partyurl }}">{{ party }}</a> from {{ rolebegin }}{% endblocktrans %}
-  {%else%}
-    {% blocktrans with role.begin|date:"d F Y" as rolebegin and role.country.name as country_name %}Is MEP of <a href="{{ countryurl }}">{{ country_name }}</a> from {{ rolebegin }}{% endblocktrans %}
-  {%endif%}
-{%endif%}</i></li>
-    {% endfor %}
-</div>
-{% endif %}
-
-{% if mep.old_groups %}
-<div id="groups">
-    <h2 class="collapsible collapsed">{% trans "Groups" %}</h2>
-    <ul class="body groups">
-    {% for group in mep.old_groups %}
-    <li><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" alt="{{ mep.group.abbreviation }}"/>
-{% url meps:index_by_group mep.group.abbreviation as groupurl %}
-<i>{% if now > group.end%}
-{% blocktrans with group.begin|date:"d F Y" as groupbegin and group.end|date:"d F Y" as groupend and mep.group.name as group_name and mep.group.abbreviation as group_abbreviation %}Was MEP for <a href="{{ groupurl }}">{{ group_name }} ({{ group_abbreviation }})</a> from {{ groupbegin }} to {{ groupend }}{% endblocktrans %}
-{%else%}
-{% blocktrans with group.begin|date:"d F Y" as groupbegin and mep.group.name as group_name and mep.group.abbreviation as group_abbreviation %}Is MEP for <a href="{{ groupurl }}">{{ group_name }} ({{ group_abbreviation }})</a> from {{ groupbegin }}{% endblocktrans %}
-{%endif%}</i></li>
-    {% endfor %}
-</div>
-{% endif %}
-
 {% if mep.committeerole_set.all %}
 <div id="committees">
     <h2 class="collapsible collapsed">{% trans "Committees" %}</h2>
@@ -125,16 +83,6 @@ $(document).ready(function() {
     {% for role in mep.current_committees %}
     <li><a href="{% url meps:index_by_committee role.committee.abbreviation %}">{{ role.role }} {% trans "of" %} {{ role.committee }}</a></li>
     {% endfor %}
-    {% if mep.old_committees %}
-    {% for role in mep.old_committees %}
-        <li class="old">
-<i>{% if now > role.end%}
-{% blocktrans with role.role|lower as role and role.begin|date:"d F Y" as rolebegin and role.end|date:"d F Y" as roleend and role.committee as role_committee %}Was {{ role }} in {{ role_committee }} from {{ rolebegin }} to {{ roleend }}{% endblocktrans %}
-{%else%}
-{% blocktrans with role.role|lower as role and role.begin|date:"d F Y" as rolebegin and role.committee as role_committee %}Is {{ role }} in {{ role_committee }} from {{ rolebegin }}{% endblocktrans %}
-{%endif%}</i></li>
-    {% endfor %}
-    {% endif %}
     </ul>
 </div>
 {% endif %}
@@ -146,35 +94,7 @@ $(document).ready(function() {
     {% for role in mep.current_delegations %}
     <li><a href="{% url meps:index_by_delegation role.delegation.id %}">{{ role.role }} {% trans "of" %} {{ role.delegation }}</a></li>
     {% endfor %}
-    {% if mep.old_delegations %}
-    {% for role in mep.old_delegations %}
-        <li class="old">
-<i>{% if now > role.end%}
-{% blocktrans with role.role|lower as role and role.begin|date:"d F Y" as rolebegin and role.end|date:"d F Y" as roleend and role.delegation as role_delegation %}Was {{ role }} in {{ role_delegation }} from {{ rolebegin }} to {{ roleend }}{% endblocktrans %}
-{%else%}
-{% blocktrans with role.role|lower as role and role.begin|date:"d F Y" as rolebegin and role.delegation as role_delegation %}Is {{ role }} in {{ role_delegation }} from {{ rolebegin }}{% endblocktrans %}
-{%endif%}</i></li>
-    {% endfor %}
-    {% endif %}
     </ul>
-</div>
-{% endif %}
-
-{% if mep.old_organizations %}
-<div id="staff">
-    <h2 class="collapsible collapsed">{% trans "Old staff" %}</h2>
-        <ul class="body organisations">
-    {% for staff in mep.old_organizations %}
-    <li class="old">
-<i>{% if now > role.end%}Was{%else%}Is{%endif%} {{ staff.role }} in {{ staff.organization.name }} {% trans "from" %} {{ staff.begin }} {% trans "to" %} {{ staff.end }}</i>
-<i>{% if now > role.end%}
-{% blocktrans with staff.role as staff_role and staff.organization.name as organization_name and staff.begin as staff_begin and staff.end as staff_end %}Was {{ staff_role }} in {{ organization_name }} from {{ staff_begin }} to {{ staff_end }}{% endblocktrans %}
-{%else%}
-{% blocktrans with staff.role as staff_role and staff.organization.name as organization_name and staff.begin as staff_begin %}Is {{ staff_role }} in {{ organization_name }} from {{ staff_begin }}{% endblocktrans %} 
-{%endif%} </i>
-</li>
-    {% endfor %}
-        </ul>
 </div>
 {% endif %}
 
