@@ -1,6 +1,6 @@
 from datetime import date
 from django.db import models
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.core.urlresolvers import reverse
 from memopol2.utils import reify
@@ -28,12 +28,20 @@ class Country(models.Model):
     def with_meps_count(cls):
         return cls.objects.distinct().filter(countrymep__mep__active=True).annotate(meps_count=Count('countrymep__mep', distinct=True))
 
+    @property
+    def _q_objects(self):
+        return Q(mep__countrymep__country=self), Q(representative__mep__countrymep__country=self)
+
     class Meta:
         ordering = ["code"]
 
 
 class LocalParty(Party):
     country = models.ForeignKey(Country, null=True)
+
+    @property
+    def _q_objects(self):
+        return Q(mep__partyrepresentative__party=self), Q(representative__partyrepresentative__party=self)
 
     @classmethod
     def with_meps_count(cls):
@@ -61,6 +69,10 @@ class Group(models.Model):
     def meps_on_date(self, date):
         return self.mep_set.filter(groupmep__end__gte=date, groupmep__begin__lte=date).distinct()
 
+    @property
+    def _q_objects(self):
+        return Q(mep__groupmep__group=self), Q(representative__mep__groupmep__group=self)
+
     @classmethod
     def ordered_by_meps_count(cls):
         return cls.objects.distinct().filter(groupmep__mep__active=True).annotate(meps_count=Count('groupmep__mep', distinct=True)).order_by('-meps_count')
@@ -82,6 +94,10 @@ class Delegation(models.Model):
         return self.mep_set.filter(active=True).distinct()
         #return self.mep_set.filter(active=True, delegationrole__end=date(9999, 12, 31)).distinct()
 
+    @property
+    def _q_objects(self):
+        return Q(mep__delegationrole__delegation=self), Q(representative__mep__delegationrole__delegation=self)
+
     @classmethod
     def with_meps_count(cls):
         return cls.objects.distinct().filter(delegationrole__mep__active=True).annotate(meps_count=Count('delegationrole__mep', distinct=True))
@@ -102,6 +118,10 @@ class Committee(models.Model):
     @property
     def meps(self):
         return self.mep_set.filter(active=True).distinct()
+
+    @property
+    def _q_objects(self):
+        return Q(mep__committeerole__committee=self), Q(representative__mep__committeerole__committee=self)
 
     @classmethod
     def ordered_by_meps_count(cls):
@@ -151,6 +171,10 @@ class Organization(models.Model):
     def meps(self):
         return self.mep_set.filter(active=True).distinct()
         #return self.mep_set.filter(active=True, organizationmep__end=date(9999, 12, 31)).distinct()
+
+    @property
+    def _q_objects(self):
+        return Q(mep__organizationmep__organization=self), Q(representative__mep__organizationmep__organization=self)
 
     @classmethod
     def with_meps_count(cls):
