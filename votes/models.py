@@ -72,6 +72,10 @@ class Recommendation(models.Model):
     proposal = models.ForeignKey(Proposal)
     recommendation = models.CharField(max_length=15, choices=((u'against', u'against'), (u'for', u'for')), null=True)
     _significant_votes = models.IntegerField(default=None, null=True, blank=True)
+    _for_count = models.IntegerField(default=None, null=True, blank=True)
+    _against_count = models.IntegerField(default=None, null=True, blank=True)
+    _abstention_count = models.IntegerField(default=None, null=True, blank=True)
+    _absent_count = models.IntegerField(default=None, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         # if I'm modifyed and not created
