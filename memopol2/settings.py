@@ -133,15 +133,11 @@ INSTALLED_APPS = (
     'django.contrib.comments',
     'django.contrib.sitemaps',
     'django.contrib.messages',
-
-    # 3rd party
     'south',
     'flatblocks',
     'contact_form',
     'captcha',
     'django_extensions',
-
-    # memopol
     'memopol2',
     'reps',
     'meps',
