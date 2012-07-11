@@ -71,6 +71,7 @@ class Recommendation(models.Model):
     weight = models.IntegerField(null=True)
     proposal = models.ForeignKey(Proposal)
     recommendation = models.CharField(max_length=15, choices=((u'against', u'against'), (u'for', u'for')), null=True)
+    _significant_votes = models.IntegerField(default=None, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         # if I'm modifyed and not created
@@ -88,7 +89,10 @@ class Recommendation(models.Model):
 
     @reify
     def significant_votes(self):
-        return self.vote_set.all().exclude(choice='absent').exclude(choice='abstention')
+        if not self._significant_votes:
+            self._significant_votes = self.vote_set.all().exclude(choice='absent').exclude(choice='abstention').count()
+            self.save()
+        return self._significant_votes
 
     def __unicode__(self):
         return self.subject
