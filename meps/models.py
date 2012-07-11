@@ -239,19 +239,19 @@ class MEP(Representative):
 
     @reify
     def group(self):
-        return self.groupmep_set.latest('end').group
+        return self.groupmep_set.select_related('group').latest('end').group
 
     @reify
     def groupmep(self):
-        return self.groupmep_set.latest('end')
+        return self.groupmep_set.self('group').latest('end')
 
     @reify
     def country(self):
-        return self.countrymep_set.latest('end').country
+        return self.countrymep_set.select_related('country').latest('end').country
 
     @reify
     def party(self):
-        return self.countrymep_set.latest('end').party
+        return self.countrymep_set.select_related('party').latest('end').party
 
     @reify
     def previous_mandates(self):
