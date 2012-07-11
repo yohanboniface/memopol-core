@@ -92,7 +92,6 @@ Run the "migration" scripts
 
 Warning: this might take a *LOTS* of time, around 15min.
 
-    cd memopol2
     ./INIT
 
 Do *not* try to run migrate by hand or you will have a bug due to fixtures
@@ -101,7 +100,6 @@ loading and will end up with no eurodeputies fixtures.
 Run the server
 --------------
 
-    cd memopol2
     python manage.py runserver
 
 Your application is available on http://localhost:8000/
