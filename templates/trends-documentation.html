@@ -17,7 +17,7 @@
 
 <h2><a name="countries_map" href="#countries_map">{% trans "Vote breakdown by countries" %}</a></h2>
 <div class="map map-eu" style="height: 520px; width: 680px;">
-    <object type="image/svg+xml" data="{% url trends:recommendation_countries_map "ACTA_resolution" %}" type="image/svg+xml" width="680" height="520"></object>
+    <object src="{% url trends:recommendation_countries_map "ACTA_resolution" png %}" />
 </div>
 
 {% blocktrans %}
