@@ -76,22 +76,22 @@ $(document).ready(function() {
     {% include "meps/mep_contact.html" %}
 </div>
 
-{% if mep.committeerole_set.all %}
+{% if mep.committeeroles %}
 <div id="committees">
     <h2 class="collapsible collapsed">{% trans "Committees" %}</h2>
     <ul class="body committees">
-    {% for role in mep.current_committees %}
+    {% for role in mep.committeeroles %}
     <li><a href="{% url meps:index_by_committee role.committee.abbreviation %}">{{ role.role }} {% trans "of" %} {{ role.committee }}</a></li>
     {% endfor %}
     </ul>
 </div>
 {% endif %}
 
-{% if mep.delegationrole_set.all %}
+{% if mep.delegationroles %}
 <div id="delegations">
     <h2 class="collapsible collapsed">{% trans "Delegations" %}</h2>
     <ul class="body delegations">
-    {% for role in mep.current_delegations %}
+    {% for role in mep.delegationroles %}
     <li><a href="{% url meps:index_by_delegation role.delegation.id %}">{{ role.role }} {% trans "of" %} {{ role.delegation }}</a></li>
     {% endfor %}
     </ul>
@@ -109,22 +109,22 @@ $(document).ready(function() {
 </div>
 {% endif %}
 
-{% if mep.opinionrep_set.all %}
+{% if mep.opinionreps %}
 <div id="opinions">
     <h2 class="collapsible collapsed">{% trans "Opinions (memopol v1)" %}</h2>
     <ul class="body opinions">
-     {% for line in mep.opinionrep_set.all %}
+     {% for line in mep.opinionreps %}
      <li><b><a href="{{ line.opinion.get_absolute_url }}">{{ line.opinion.title }}</b></a> {% blocktrans with line.date as opinion_date %}(on {{ opinion_date }}){% endblocktrans %}<br/>{% autoescape off %}{{ line.opinion.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.opinion.url }}"><br/>{% trans "Read more..." %}</a> </li>
      {% endfor %}
     </ul>
 </div>
 {% endif %}
 
-{% if mep.score_set.all %}
+{% if mep.scores %}
     <div id="scores">
         <h2 class="collapsible expanded">{% trans "Total score:" %} {{ mep.total_score|floatformat:0 }}</h2>
         <ul class="body">
-        {% for score in mep.score_set.all %}
+        {% for score in mep.scores %}
         <li style="border-color:{{ score.color }};">
           <div class="score-color" style="background-color:{{ score.color }};"></div>
           <div class="inner-score">
@@ -133,7 +133,7 @@ $(document).ready(function() {
         </li>
         {% endfor %}
         </ul>
-        {% if mep.score_set.all.count > 1 %}
+        {% if mep.scores.count > 1 %}
             <center><img src="{% url trends:comparaison_trends mep.id %}" /></center>
             <p style="text-align: center;"><i><a href="{% url trends:documentation %}#mep">{% trans "Trends explanation" %}</a></i></p>
         {% endif %}
@@ -153,6 +153,7 @@ $(document).ready(function() {
       {% endfor %}
    </div>
 {% endif %}
+
 <h2>{% trans "Add a public position" %}</h2>
 <p>{% trans "Help us keep track of the public positions taken by this member of the European Parliament." %}</p>
 <div class="body">

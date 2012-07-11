@@ -287,6 +287,10 @@ class MEPView(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(MEPView, self).get_context_data(**kwargs)
         context['now'] = datetime.date.today()
+        context['mep'].delegationroles = context['mep'].delegationrole_set.all().select_related('delegation')
+        context['mep'].committeeroles = context['mep'].committeerole_set.all().select_related('committee')
+        context['mep'].opinionreps = context['mep'].opinionrep_set.all().select_related('opinion')
+        context['mep'].scores = context['mep'].score_set.all().select_related('proposal')
         return context
 
 
