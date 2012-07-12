@@ -99,7 +99,6 @@ class Recommendation(models.Model):
         return self._significant_votes
 
     def _get_cached_count(self, choice):
-        print "pouet"
         if getattr(self, "_%s_count" % choice) is None:
             setattr(self, "_%s_count" % choice, self.vote_set.filter(choice=choice).count())
             print "caca"
