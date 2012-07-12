@@ -22,7 +22,7 @@
 
 <h2>Informations générales</h0>
 
-<li><i>{% if mp.gender == "F" %}Née{% else %}Né{% endif %} le</i>
+<li><i>Né{% if mp.gender == "F" %}e{% endif %} le</i>
 {{ mp.birth_date.day }}/{{ mp.birth_date.month }}/{{ mp.birth_date.year }} <i>à</i> {{ mp.birth_department }}</li>
 <li><i>Département&nbsp;: </i>
     <a href="{% url mps:index_by_department mp.department.number %}">
