@@ -45,18 +45,24 @@ class VoteRecommendationChoice(VoteRecommendation):
 
 
 class MPList(ListView):
-    queryset=MP.objects.filter(active=True).select_related('group').prefetch_related("email_set")
+    queryset=MP.objects.filter(active=True)
     context_object_name="mp"
 
     def get_context_data(self, *args, **kwargs):
         context = super(MPList, self).get_context_data(**kwargs)
-        phones = {}
-        for phone in Phone.objects.filter(type="phone", address__mp__active=True).select_related('address'):
-            phones.setdefault(phone.address.id, []).append(phone)
-        address = {}
-        for addr in Address.objects.filter(mp__active=True).select_related('mp'):
-            addr.phones = phones.get(addr.id, [])
-            address.setdefault(addr.mp.id, []).append(addr)
-        for mp in context["mp"]:
-            mp.address = address.get(mp.id, [])
+        optimize_mp_query(context["mp"])
         return context
+
+
+def optimize_mp_query(query):
+    query = query.select_related('group').prefetch_related("email_set")
+    phones = {}
+    for phone in Phone.objects.filter(type="phone", address__mp__active=True).select_related('address'):
+        phones.setdefault(phone.address.id, []).append(phone)
+    address = {}
+    for addr in Address.objects.filter(mp__active=True).select_related('mp'):
+        addr.phones = phones.get(addr.id, [])
+        address.setdefault(addr.mp.id, []).append(addr)
+    for mp in query:
+        mp.address = address.get(mp.id, [])
+    return query
