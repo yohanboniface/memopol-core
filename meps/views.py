@@ -288,7 +288,7 @@ def optimise_mep_query(queryset, q_object=Q(), q_object_rep=Q(), score_listing=F
 
     if choice_on_recommendation:
         choice_mep = {}
-        for vote in Vote.objects.filter(recommendation=choice_on_recommendation).select_related('representative'):
+        for vote in Vote.objects.filter(recommendation=choice_on_recommendation, representative__isnull=False).select_related('representative'):
             choice_mep[vote.representative.id] = vote.choice
 
     # Overwrite MEP attributes
