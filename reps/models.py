@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.core.cache import cache
 from django.conf import settings
 from django.db import models
-from django.db.models import Count
+from django.db.models import Count, Q
 from memopol2.utils import reify
 from snippets import snippet
 import search
@@ -52,6 +52,7 @@ class Opinion(models.Model):
             self.save()
         return self._date
 
+    @reify
     def meps(self):
         return meps.models.MEP.objects.filter(opinionrep__opinion=self)
 
@@ -81,6 +82,10 @@ class Opinion(models.Model):
     @classmethod
     def with_mps_count(cls):
         return cls.objects.distinct().filter(institution="FR", opinionrep__representative__mp__active=True).annotate(authors_count=Count('opinionrep__representative__mp', distinct=True))
+
+    @property
+    def _q_objects(self):
+        return Q(), Q()
 
     def __unicode__(self):
         return self.title
