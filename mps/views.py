@@ -48,11 +48,11 @@ class VoteRecommendationChoice(VoteRecommendation):
 
 class MPList(ListView):
     queryset=MP.objects.filter(active=True)
-    context_object_name="mp"
+    context_object_name="mps"
 
     def get_context_data(self, *args, **kwargs):
         context = super(MPList, self).get_context_data(**kwargs)
-        optimize_mp_query(context["mp"], Q(mp__active=True), Q(address__mp__active=True))
+        context["mps"] = optimize_mp_query(context["mps"], Q(mp__active=True), Q(address__mp__active=True))
         return context
 
 
