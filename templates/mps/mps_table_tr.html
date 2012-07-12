@@ -11,10 +11,10 @@
   <td>
     <div class="body">
       <ul class="body">
-          {% if mp.phones %}
+          {% if mp.optimized_phones %}
             <li>
               <b>Téléphone&nbsp;:</b>
-              {% for phone in mp.phones %}
+              {% for phone in mp.optimized_phones %}
                 <a href="callto://{{ phone|phone }}">{{ phone }}</a>
                 {% if not forloop.last %}-{% endif %}
               {% endfor %}

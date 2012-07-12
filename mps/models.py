@@ -98,6 +98,14 @@ class MP(Representative):
         return self.score_set.aggregate(Avg('value'))['value__avg']
 
     @reify
+    def optimized_phones(self):
+        phones = []
+        for i in self.address:
+            for p in i.phones:
+                phones.append(p.number)
+        return phones
+
+    @reify
     def phones(self):
         values = []
         for addr in self.address_set.all():

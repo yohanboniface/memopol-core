@@ -2,11 +2,11 @@ from urllib import urlopen
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.template.defaultfilters import slugify
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
-from models import MP
+from models import MP, Phone, Address
 
 def get_nosdeputes_widget(request, pk):
     mp = get_object_or_404(MP, id=pk)
@@ -41,4 +41,22 @@ class VoteRecommendationChoice(VoteRecommendation):
         context['object_list'] = MP.objects.filter(vote__recommendation=self.object,
                                   vote__choice=self.kwargs['recommendation'])
         self.redirect_args += [self.kwargs['recommendation']]
+        return context
+
+
+class MPList(ListView):
+    queryset=MP.objects.filter(active=True).select_related('group').prefetch_related("email_set")
+    context_object_name="mp"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(MPList, self).get_context_data(**kwargs)
+        phones = {}
+        for phone in Phone.objects.filter(type="phone", address__mp__active=True).select_related('address'):
+            phones.setdefault(phone.address.id, []).append(phone)
+        address = {}
+        for addr in Address.objects.filter(mp__active=True).select_related('mp'):
+            addr.phones = phones.get(addr.id, [])
+            address.setdefault(addr.mp.id, []).append(addr)
+        for mp in context["mp"]:
+            mp.address = address.get(mp.id, [])
         return context
