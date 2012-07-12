@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 
-{% load votes_tags %}
 {% load cache %}
 
 {% block title %}{% blocktrans with vote.title as vote_title %}{{ vote_title }}{% endblocktrans %}{% endblock %}
@@ -27,9 +26,8 @@
                 <li><em>{% trans "Part" %}</em> : {{ v.part }}</li>
                 {% if v.recommendation %}<li><em>{% trans "Recommendation" %}</em> : {{ v.recommendation }}</li>{% endif %}
                 {% if v.weight %}<li><em>{% trans "Weight" %}</em> : {{ v.weight }}</li>{% endif %}
-                {% significant_votes v %}
                 {% url mps:recommendation vote.id v.id as recommendation_url %}
-                <li>{% blocktrans with significant_votes.count as significant_votes_count %}Votes ({{ significant_votes_count }} significant) (<a href="{{ recommendation_url }}">full list</a>){% endblocktrans %}</li>
+                <li>{% blocktrans with v.significant_votes as significant_votes_count %}Votes ({{ significant_votes_count }} significant) (<a href="{{ recommendation_url }}">full list</a>){% endblocktrans %}</li>
                 <li>
                 <ul>
                   {% regroup v.vote_set.all by choice as result %}
