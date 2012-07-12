@@ -73,6 +73,7 @@ class ProposalDetailView(DetailView):
         context["mps"] = optimize_mp_query(context["vote"].mps)
         return context
 
+
 def optimize_mp_query(query, q_object=Q(), q_object_address=Q()):
     query = query.select_related('group').prefetch_related("email_set")
     phones = {}
