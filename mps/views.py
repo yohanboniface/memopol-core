@@ -51,14 +51,14 @@ class MPList(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(MPList, self).get_context_data(**kwargs)
-        optimize_mp_query(context["mp"])
+        optimize_mp_query(context["mp"], Q(mp__active=True), Q(address__mp__active=True))
         return context
 
 
 class MPsFromModel(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(MPsFromModel, self).get_context_data(**kwargs)
-        context["mps"] = optimize_mp_query(context["object"].mps)
+        context["mps"] = optimize_mp_query(context["object"].mps, *context["object"].q_objects)
         return context
 
 

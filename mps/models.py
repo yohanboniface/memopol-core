@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Avg, Count
+from django.db.models import Avg, Count, Q
 from reps.models import Representative
 from django.core.urlresolvers import reverse
 from memopol2.utils import reify
@@ -23,6 +23,10 @@ class Department(models.Model):
     @property
     def mps(self):
         return self.mp_set.filter(active=True)
+
+    @property
+    def q_objects(self):
+        return Q(mp__department=self), Q(address__mp__department=self)
 
     @classmethod
     def with_mps_count(cls):
@@ -58,6 +62,10 @@ class Group(models.Model):
     @property
     def mps(self):
         return self.mp_set.filter(active=True)
+
+    @property
+    def q_objects(self):
+        return Q(mp__group=self), Q(address__mp__group=self)
 
     @classmethod
     def with_mps_count(cls):
