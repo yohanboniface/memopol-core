@@ -74,6 +74,19 @@ class ProposalDetailView(DetailView):
         return context
 
 
+class MPView(DetailView):
+    queryset=MP.objects.select_related('group', 'department')
+    context_object_name='mp'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(MPView, self).get_context_data(**kwargs)
+        context["mp"].scores_optimized = context["mp"].score_set.select_related('proposal')
+        context["mp"].functions_optimized = context["mp"].functionmp_set.select_related('function')
+        context["mp"].opinions_optimized = context["mp"].opinionrep_set.select_related('opinion')
+        context["mp"].address_optimized = context["mp"].address_set.prefetch_related('phone_set')
+        return context
+
+
 def optimize_mp_query(query, q_object=Q(), q_object_address=Q()):
     query = query.select_related('group').prefetch_related("email_set")
     phones = {}

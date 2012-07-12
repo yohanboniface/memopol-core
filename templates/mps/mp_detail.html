@@ -49,11 +49,11 @@
     </ul>
 </div>
 
-{% if mp.functionmp_set.all %}
+{% if mp.functions_optimized %}
 <div id="functions">
     <h2 class="collapsible collapsed">Fonctions</h2>
     <ul class="body">
-    {% for function in mp.functionmp_set.all %}
+    {% for function in mp.functions_optimized %}
         {% if function.function.type != "Groupe d'études" and function.function.type != "Groupe d'amitié" %}
         <li>{% if function.role %}{{ function.role }} - {% endif %}{{ function.function.title }}</li>
         {% endif %}
@@ -61,22 +61,22 @@
     </ul>
 </div>
 
-{% if mp.opinionrep_set.all %}
+{% if mp.opinions_optimized %}
 <div id="opinions">
     <h2 class="collapsible collapsed">Opinions (venant de la première version de Mémoire Politique)</h2>
     <ul class="body">
-    {% for line in mp.opinionrep_set.all %}
+    {% for line in mp.opinions_optimized %}
     <li><b><a href="{{ line.opinion.get_absolute_url }}">{{ line.opinion.title }}</b></a> (le {{ line.date }})<br/>{% autoescape off %}{{ line.opinion.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.opinion.url }}"><br/>Voir la source de l'opinion</a> </li>
     {% endfor %}
     </ul>
 </div>
 {% endif %}
 
-{% if mp.scores %}
+{% if mp.scores_optimized %}
     <div id="scores">
         <h2 class="collapsible collapsed">Moyenne des scores : {{ mp.total_score|floatformat:0 }}</h2>
         <ul class="body">
-        {% for score in mp.scores %}
+        {% for score in mp.scores_optimized %}
         <li style="border-color:{{ score.color }}">
           <div class="score-color" style="background-color:{{ score.color }}"></div>
           <div class="inner-score">

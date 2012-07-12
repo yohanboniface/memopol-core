@@ -7,7 +7,7 @@ from memopol2 import utils
 
 from mps.models import MP, Group, Department
 from votes.models import Proposal, Vote, Recommendation
-from mps.views import VoteRecommendation, VoteRecommendationChoice, MPList, MPsFromModel, ProposalDetailView
+from mps.views import VoteRecommendation, VoteRecommendationChoice, MPList, MPsFromModel, ProposalDetailView, MPView
 from reps.models import Opinion
 
 
@@ -28,7 +28,7 @@ urlpatterns = patterns('mps.views',
     # the /names view is *very* expansive. we cache it in RAM for a week
     url(r'^$', utils.cached(3600*24*7)(MPList.as_view()), name='index'),
 
-    url(r'^depute/(?P<pk>[a-zA-Z]+)/$', DetailView.as_view(model=MP, context_object_name='mp'), name='mp'),
+    url(r'^depute/(?P<pk>[a-zA-Z]+)/$', MPView.as_view(), name='mp'),
     url(r'^depute/(?P<pk>[a-zA-Z]+)/contact$', DetailView.as_view(model=MP, context_object_name='mp', template_name='mps/mp_contact.html'), name='mp_contact'),
     url(r'^group/$', ListView.as_view(queryset=Group.with_mps_count()), name='index_groups'),
     url(r'^group/(?P<pk>.+)/$', MPsFromModel.as_view(model=Group, template_name='mps/container_detail.html'), name='index_by_group'),
