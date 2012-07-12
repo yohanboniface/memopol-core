@@ -21,7 +21,7 @@ from memopol2.utils import check_dir, send_file, get_content_cache
 
 from models import LocalParty, Building, MEP, CountryMEP, GroupMEP, Committee, Group, Country, Organization, Delegation
 from reps.models import Email
-from votes.models import Score, Proposal
+from votes.models import Score, Proposal, Vote
 
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
 
@@ -365,8 +365,13 @@ class VoteRecommendation(DetailView):
         context = super(VoteRecommendation, self).get_context_data(**kwargs)
         context['choice_listing'] = True
         context['proposal'] = self.object.proposal
+        context['meps_with_votes'] = self.meps_with_votes
         self.redirect_args = [self.object.proposal.id, self.object.id]
         return context
+
+    def meps_with_votes(self):
+        for mep in optimise_mep_query(MEP.objects.filter(vote__recommendation=self.object)):
+            yield mep, mep.vote_set.filter(recommendation=self.object)[0].choice # bad bad bad, filter should disapear soon for a get
 
     def render_to_response(self, context):
         if self.kwargs["proposal_id"] != self.object.proposal.id:

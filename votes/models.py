@@ -83,10 +83,6 @@ class Recommendation(models.Model):
             clean_all_trends()
         super(Recommendation, self).save(*args, **kwargs)
 
-    def meps_with_votes(self):
-        for mep in MEP.objects.filter(vote__recommendation=self):
-            yield mep, mep.vote_set.filter(recommendation=self)[0].choice # bad bad bad, filter should disapear soon for a get
-
     def mps_with_votes(self):
         for mp in MP.objects.filter(vote__recommendation=self):
             yield mp, mp.vote_set.get(recommendation=self).choice
