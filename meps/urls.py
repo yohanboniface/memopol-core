@@ -5,20 +5,22 @@ from django.core.urlresolvers import reverse
 
 from meps.models import LocalParty, Country, Group, Committee, Delegation, Organization, Building, MEP
 from reps.models import Opinion
-from votes.models import Proposal, Vote, Recommendation
+from votes.models import Proposal, Recommendation
 from meps.views import VoteRecommendation, VoteRecommendationChoice, ProposalView
 
 from views import BuildingDetailView, MEPView, MEPsFromView, MEPList, PartyView
 
-# TODO: refactor this function, should probably be moved to class based generic views if possible
 def proposal_rep(request, proposal_id, mep_id):
     representative = get_object_or_404(MEP, id=mep_id)
     proposal = get_object_or_404(Proposal, id=proposal_id)
     # dirty query because we don't store absent vote
-    votes = [Vote.objects.get(representative=representative, recommendation=r)
-             if Vote.objects.filter(representative=representative, recommendation=r)
-             else {'choice': 'absent', 'recommendation': r, 'representative': representative}
-             for r in proposal.recommendation_set.all()]
+    votes = []
+    for recommendation in proposal.recommendation_set.all():
+        vote = recommendation.vote_set.filter(representative=representative)
+        if vote:
+            votes.append(vote[0])
+        else:
+            vote.append({'choice': 'absent', 'recommendation': recommendation, 'representative': representative})
     context = {'representative': representative, 'proposal': proposal, 'votes': votes}
     return render(request, 'meps/per_mep.html', context)
 
