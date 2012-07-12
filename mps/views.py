@@ -5,6 +5,7 @@ from django.template.defaultfilters import slugify
 from django.views.generic import DetailView, ListView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 from models import MP, Phone, Address
 
@@ -61,13 +62,13 @@ class MPsFromModel(DetailView):
         return context
 
 
-def optimize_mp_query(query):
+def optimize_mp_query(query, q_object=Q(), q_object_address=Q()):
     query = query.select_related('group').prefetch_related("email_set")
     phones = {}
-    for phone in Phone.objects.filter(type="phone", address__mp__active=True).select_related('address'):
+    for phone in Phone.objects.filter(type="phone").filter(q_object_address).select_related('address'):
         phones.setdefault(phone.address.id, []).append(phone)
     address = {}
-    for addr in Address.objects.filter(mp__active=True).select_related('mp'):
+    for addr in Address.objects.filter(q_object).select_related('mp'):
         addr.phones = phones.get(addr.id, [])
         address.setdefault(addr.mp.id, []).append(addr)
     for mp in query:
