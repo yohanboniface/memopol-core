@@ -217,9 +217,13 @@ class BuildingDetailView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(BuildingDetailView, self).get_context_data(**kwargs)
-        context['meps'] = MEP.objects.filter(active=True,
-                                             **{'%s_building' % self.object._town: self.object,
-                                                '%s_floor' % self.object._town: self.kwargs["floor"]})
+        context['meps'] = optimise_mep_query(MEP.objects.filter(active=True,
+                                                                **{'%s_building' % self.object._town: self.object,
+                                                                   '%s_floor' % self.object._town: self.kwargs["floor"]}),
+                                             Q(mep__active=True, **{'mep__%s_building' % self.object._town: self.object,
+                                                                    'mep__%s_floor' % self.object._town: self.kwargs["floor"]}),
+                                               Q(representative__mep__active=True, **{'representative__mep__%s_building' % self.object._town: self.object,
+                                                                                      'representative__mep__%s_floor' % self.object._town: self.kwargs["floor"]}))
         context['floor'] = self.kwargs['floor']
         return context
 
