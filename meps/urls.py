@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 
 from meps.models import LocalParty, Country, Group, Committee, Delegation, Organization, Building, MEP
 from reps.models import Opinion
-from votes.models import Proposal, Recommendation
+from votes.models import Proposal, Vote, Recommendation
 from meps.views import VoteRecommendation, VoteRecommendationChoice, ProposalView
 
 from views import BuildingDetailView, MEPView, MEPsFromView, MEPList, PartyView
@@ -13,14 +13,15 @@ from views import BuildingDetailView, MEPView, MEPsFromView, MEPList, PartyView
 def proposal_rep(request, proposal_id, mep_id):
     representative = get_object_or_404(MEP, id=mep_id)
     proposal = get_object_or_404(Proposal, id=proposal_id)
-    # dirty query because we don't store absent vote
-    votes = []
-    for recommendation in proposal.recommendation_set.all():
-        vote = recommendation.vote_set.filter(representative=representative)
-        if vote:
-            votes.append(vote[0])
-        else:
-            vote.append({'choice': 'absent', 'recommendation': recommendation, 'representative': representative})
+
+    votes = list(Vote.objects.filter(representative=representative, recommendation__proposal=proposal).select_related('recommendation'))
+    # we don't store abstent votes so we have to guess them
+    # we need a dummy object for the key of the sorted bellow
+    votes += [type('DummyVote', (object,), {'choice': 'absent', 'recommendation': x, 'representative': representative}) for x in Recommendation.objects.filter(proposal=proposal).exclude(vote__representative=representative)]
+
+    # recreate default ordering
+    votes = sorted(votes, key=lambda x: x.recommendation.datetime)
+
     context = {'representative': representative, 'proposal': proposal, 'votes': votes}
     return render(request, 'meps/per_mep.html', context)
 
