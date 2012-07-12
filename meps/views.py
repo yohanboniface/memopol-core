@@ -370,7 +370,7 @@ class VoteRecommendation(DetailView):
         return context
 
     def meps_with_votes(self):
-        for mep in optimise_mep_query(MEP.objects.filter(vote__recommendation=self.object)):
+        for mep in optimise_mep_query(MEP.objects.filter(vote__recommendation=self.object), Q(mep__score__proposal=self.object.proposal), Q(representative__score__proposal=self.object.proposal)):
             yield mep, mep.vote_set.filter(recommendation=self.object)[0].choice # bad bad bad, filter should disapear soon for a get
 
     def render_to_response(self, context):
