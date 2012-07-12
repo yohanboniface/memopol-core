@@ -12,7 +12,6 @@
 
 {% for addr in mp.address_set.all %}
 <li><b>{{ addr.title|default:"Autre adresse" }}</b><br/>
-    {% if addr.building %} Bâtiment: {{ addr.building.name }} {{ addr.office}}<br/>{% endif %}
     {{ addr.street }}, {{ addr.postcode }} {{ addr.city }}<br/>
     {% for phone in addr.phone_set.all %}
     {{ phone.type|capfirst }}.: {% if phone.type == "phone" %}<a class="highlight call-now" href="callto://{{ phone.number|phone }}">{% endif %}{{ phone.number }}{% if phone.type == "phone" %}</a>{% endif %}&nbsp;<br/>
