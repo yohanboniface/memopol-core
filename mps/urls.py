@@ -7,7 +7,7 @@ from memopol2 import utils
 
 from mps.models import MP, Group, Department
 from votes.models import Proposal, Vote, Recommendation
-from mps.views import VoteRecommendation, VoteRecommendationChoice, MPList, MPsFromModel
+from mps.views import VoteRecommendation, VoteRecommendationChoice, MPList, MPsFromModel, ProposalDetailView
 from reps.models import Opinion
 
 
@@ -42,7 +42,7 @@ urlpatterns = patterns('mps.views',
     url(r'^vote/(?P<proposal_id>[a-zA-Z/-_]+)/(?P<pk>\d+)/$', VoteRecommendation.as_view(model=Recommendation, template_name="mps/recommendation_detail.html"), name='recommendation'),
     url(r'^vote/(?P<pk>[a-zA-Z/-_]+)/dataporn/$', DetailView.as_view(model=Proposal, context_object_name='vote', template_name="mps/proposal_dataporn.html"), name='vote_dataporn'),
     url(r'^vote/(?P<proposal_id>[a-zA-Z/-_]+)/(?P<mp_id>.+)/$', proposal_rep, name='votes_mp'),
-    url(r'^vote/(?P<pk>[a-zA-Z/-_]+)/$', DetailView.as_view(model=Proposal, context_object_name='vote', template_name="mps/proposal_detail.html"), name='vote'),
+    url(r'^vote/(?P<pk>[a-zA-Z/-_]+)/$', ProposalDetailView.as_view(), name='vote'),
 
     url(r'^votes/$', lambda request: redirect(reverse("mps:index_votes"))),
 

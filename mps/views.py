@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from django.db.models import Q
 
 from models import MP, Phone, Address
+from votes.models import Proposal
 
 def get_nosdeputes_widget(request, pk):
     mp = get_object_or_404(MP, id=pk)
@@ -61,6 +62,16 @@ class MPsFromModel(DetailView):
         context["mps"] = optimize_mp_query(context["object"].mps, *context["object"].q_objects)
         return context
 
+
+class ProposalDetailView(DetailView):
+    model=Proposal
+    context_object_name='vote'
+    template_name="mps/proposal_detail.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProposalDetailView, self).get_context_data(**kwargs)
+        context["mps"] = optimize_mp_query(context["vote"].mps)
+        return context
 
 def optimize_mp_query(query, q_object=Q(), q_object_address=Q()):
     query = query.select_related('group').prefetch_related("email_set")
