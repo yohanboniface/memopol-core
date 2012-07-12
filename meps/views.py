@@ -383,6 +383,8 @@ class VoteRecommendationChoice(VoteRecommendation):
         context['choice'] = self.kwargs['recommendation']
         context['header_template'] = 'votes/header_mep_list.html'
         context['object_list'] = optimise_mep_query(MEP.objects.filter(vote__recommendation=self.object,
-                                                                       vote__choice=self.kwargs['recommendation']))
+                                                                       vote__choice=self.kwargs['recommendation']),
+                                                    Q(mep__vote__recommendation=self.object, mep__vote__choice=self.kwargs['recommendation']),
+                                                    Q(representative__vote__recommendation=self.object, representative__vote__choice=self.kwargs['recommendation']))
         self.redirect_args += [self.kwargs['recommendation']]
         return context
