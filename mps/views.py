@@ -54,6 +54,13 @@ class MPList(ListView):
         return context
 
 
+class MPsFromModel(DetailView):
+    def get_context_data(self, *args, **kwargs):
+        context = super(MPsFromModel, self).get_context_data(**kwargs)
+        context["mps"] = optimize_mp_query(context["object"].mps)
+        return context
+
+
 def optimize_mp_query(query):
     query = query.select_related('group').prefetch_related("email_set")
     phones = {}

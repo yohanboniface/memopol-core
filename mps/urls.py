@@ -7,7 +7,7 @@ from memopol2 import utils
 
 from mps.models import MP, Group, Department
 from votes.models import Proposal, Vote, Recommendation
-from mps.views import VoteRecommendation, VoteRecommendationChoice, MPList
+from mps.views import VoteRecommendation, VoteRecommendationChoice, MPList, MPsFromModel
 from reps.models import Opinion
 
 
@@ -31,9 +31,9 @@ urlpatterns = patterns('mps.views',
     url(r'^depute/(?P<pk>[a-zA-Z]+)/$', DetailView.as_view(model=MP, context_object_name='mp'), name='mp'),
     url(r'^depute/(?P<pk>[a-zA-Z]+)/contact$', DetailView.as_view(model=MP, context_object_name='mp', template_name='mps/mp_contact.html'), name='mp_contact'),
     url(r'^group/$', ListView.as_view(queryset=Group.with_mps_count()), name='index_groups'),
-    url(r'^group/(?P<pk>.+)/$', DetailView.as_view(model=Group, template_name='mps/container_detail.html'), name='index_by_group'),
+    url(r'^group/(?P<pk>.+)/$', MPsFromModel.as_view(model=Group, template_name='mps/container_detail.html'), name='index_by_group'),
     url(r'^department/$', ListView.as_view(queryset=Department.with_mps_count().order_by('number')), name='index_departments'),
-    url(r'^department/(?P<pk>.+)/$', DetailView.as_view(model=Department, template_name='mps/container_detail.html'), name='index_by_department'),
+    url(r'^department/(?P<pk>.+)/$', MPsFromModel.as_view(model=Department, template_name='mps/container_detail.html'), name='index_by_department'),
     url(r'^opinion/$', ListView.as_view(queryset=Opinion.with_mps_count().order_by('-_date').select_related('_author')), name='index_opinions'),
     url(r'^opinion/(?P<pk>[0-9]+)/$', DetailView.as_view(model=Opinion, template_name="mps/opinion_detail.html"), name='index_by_opinions'),
 
