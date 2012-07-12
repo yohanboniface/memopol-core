@@ -249,7 +249,7 @@ class MEPList(ListView):
                                                        **response_kwargs)
 
 
-def optimise_mep_query(queryset, q_object=Q(), q_object_rep=Q(), score_listing=False, proposal_score=None):
+def optimise_mep_query(queryset, q_object=Q(), q_object_rep=Q(), score_listing=False, proposal_score=None, choice_on_recommendation=None):
     """
     The following piece of code could be remove once the prefetch_related()
     feature becomes available in Django ORM [1].
@@ -282,6 +282,11 @@ def optimise_mep_query(queryset, q_object=Q(), q_object_rep=Q(), score_listing=F
         for score in proposal_score.score_set.select_related('representative'):
             proposal_score_mep[score.representative.id] = score
 
+    if choice_on_recommendation:
+        choice_mep = {}
+        for vote in Vote.objects.filter(recommendation=choice_on_recommendation).select_related('representative'):
+            choice_mep[vote.representative.id] = vote.choice
+
     # Overwrite MEP attributes
     for mep in queryset:
         mep.country = country_mep.get(mep.id)
@@ -292,6 +297,8 @@ def optimise_mep_query(queryset, q_object=Q(), q_object_rep=Q(), score_listing=F
             mep.scores = scores_mep.get(mep.id)
         if proposal_score:
             mep.score = proposal_score_mep[mep.id]
+        if choice_on_recommendation:
+            mep.choice = choice_mep[mep.id]
     logger.debug("MEPList relationships took %.2fsec to build." % (time() - start))
     return queryset
 
@@ -370,8 +377,8 @@ class VoteRecommendation(DetailView):
         return context
 
     def meps_with_votes(self):
-        for mep in optimise_mep_query(MEP.objects.filter(vote__recommendation=self.object), Q(mep__score__proposal=self.object.proposal), Q(representative__score__proposal=self.object.proposal)):
-            yield mep, mep.vote_set.filter(recommendation=self.object)[0].choice # bad bad bad, filter should disapear soon for a get
+        for mep in optimise_mep_query(MEP.objects.filter(vote__recommendation=self.object), Q(mep__score__proposal=self.object.proposal), Q(representative__score__proposal=self.object.proposal), choice_on_recommendation=self.object):
+            yield mep, mep.choice # bad bad bad, filter should disapear soon for a get
 
     def render_to_response(self, context):
         if self.kwargs["proposal_id"] != self.object.proposal.id:
