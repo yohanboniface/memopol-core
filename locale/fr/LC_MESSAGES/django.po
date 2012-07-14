@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: The Political Memory of La Quadrature du Net\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-10 23:41+0200\n"
+"POT-Creation-Date: 2012-07-14 16:17+0200\n"
 "PO-Revision-Date: 2012-05-30 17:28+0200\n"
 "Last-Translator: Benjamin Sonntag <benjamin@sonntag.fr>\n"
 "Language-Team: français <team@alternc.org>\n"
@@ -24,6 +24,121 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bits\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/admin/__init__.py:127
+#: build/django-extensions/django_extensions/admin/__init__.py:127
+#: templates/comments/preview.html:15
+msgid "and"
+msgstr "et"
+
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/admin/__init__.py:129
+#: build/django-extensions/django_extensions/admin/__init__.py:129
+#, python-format
+msgid ""
+"Use the left field to do %(model_name)s lookups in the fields %(field_list)s."
+msgstr ""
+
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:16
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:17
+#: build/django-extensions/django_extensions/db/models.py:16
+#: build/django-extensions/django_extensions/mongodb/models.py:17
+msgid "created"
+msgstr ""
+
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:17
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:18
+#: build/django-extensions/django_extensions/db/models.py:17
+#: build/django-extensions/django_extensions/mongodb/models.py:18
+msgid "modified"
+msgstr ""
+
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:30
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:28
+#: build/django-extensions/django_extensions/db/models.py:30
+#: build/django-extensions/django_extensions/mongodb/models.py:28
+msgid "title"
+msgstr ""
+
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:31
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:29
+#: build/django-extensions/django_extensions/db/models.py:31
+#: build/django-extensions/django_extensions/mongodb/models.py:29
+msgid "slug"
+msgstr ""
+
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:32
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:30
+#: build/django-extensions/django_extensions/db/models.py:32
+#: build/django-extensions/django_extensions/mongodb/models.py:30
+#, fuzzy
+msgid "description"
+msgstr "Position"
+
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:57
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:52
+#: build/django-extensions/django_extensions/db/models.py:57
+#: build/django-extensions/django_extensions/mongodb/models.py:52
+#, fuzzy
+msgid "Inactive"
+msgstr "Fonctions"
+
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:58
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:53
+#: build/django-extensions/django_extensions/db/models.py:58
+#: build/django-extensions/django_extensions/mongodb/models.py:53
+#, fuzzy
+msgid "Active"
+msgstr "Fonctions"
+
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:60
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:55
+#: build/django-extensions/django_extensions/db/models.py:60
+#: build/django-extensions/django_extensions/mongodb/models.py:55
+msgid "status"
+msgstr ""
+
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:63
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:58
+#: build/django-extensions/django_extensions/db/models.py:63
+#: build/django-extensions/django_extensions/mongodb/models.py:58
+msgid "keep empty for an immediate activation"
+msgstr ""
+
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:65
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:60
+#: build/django-extensions/django_extensions/db/models.py:65
+#: build/django-extensions/django_extensions/mongodb/models.py:60
+msgid "keep empty for indefinite activation"
+msgstr ""
+
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/management/commands/show_urls.py:50
+#: build/django-extensions/django_extensions/management/commands/show_urls.py:50
+#, python-format
+msgid "%s does not appear to be a urlpattern object"
+msgstr ""
+
+#: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/fields/__init__.py:21
+#: build/django-extensions/django_extensions/mongodb/fields/__init__.py:21
+#, python-format
+msgid "String (up to %(max_length)s)"
+msgstr ""
+
+#: build/django-extensions/django_extensions/templates/django_extensions/widgets/foreignkey_searchinput.html:4
+msgid "Lookup"
+msgstr ""
+
+#: build/django-tastypie/tastypie/authentication.py:324
+#, python-format
+msgid "Invalid access token: %s"
+msgstr ""
+
+#: build/django-tastypie/tastypie/authentication.py:335
+msgid "You are not allowed to access this resource."
+msgstr ""
+
+#: build/django-tastypie/tastypie/authentication.py:337
+msgid "Invalid request parameters."
+msgstr ""
 
 #: campaign/forms.py:38
 msgid ""
@@ -75,19 +190,6 @@ msgstr "Source"
 #: positions/forms.py:12 templates/meps/meps_table_thead.html:4
 msgid "Position"
 msgstr "Position"
-
-# better ? 
-#: queries/forms.py:7
-msgid "Constituent Country"
-msgstr "Pays"
-
-#: queries/forms.py:8
-msgid "Political Group"
-msgstr "Groupe politique"
-
-#: queries/forms.py:9
-msgid "Commitee"
-msgstr "Commission"
 
 #: templates/404.html:3
 msgid "404"
@@ -328,7 +430,6 @@ msgid "Members of the European Parliament"
 msgstr "Eurodéputés"
 
 #: templates/index.html:3 templates/index.html.py:9
-#: templates/meps/mep_detail.html:169
 msgid "from"
 msgstr "de"
 
@@ -698,10 +799,6 @@ msgstr[0] "Veuillez corriger l'erreur suivante"
 msgstr[1] "Veuiller corriger les erreurs suivantes"
 
 #: templates/comments/preview.html:15
-msgid "and"
-msgstr "et"
-
-#: templates/comments/preview.html:15
 msgid "Post the position"
 msgstr "Envoyer la position"
 
@@ -832,12 +929,14 @@ msgstr "Informations générales"
 msgid "Former mep"
 msgstr "Ancien eurodéputé"
 
-#: templates/meps/mep_detail.html:61
-msgid "Political group: "
+#: templates/meps/mep_detail.html:61 templates/meps/opinion_detail.html:33
+#, fuzzy
+msgid "Political group"
 msgstr "Groupe politique&nbsp;: "
 
-#: templates/meps/mep_detail.html:67
-msgid "National party: "
+#: templates/meps/mep_detail.html:67 templates/meps/opinion_detail.html:39
+#, fuzzy
+msgid "National party"
 msgstr "Parti local&nbsp;:"
 
 #: templates/meps/mep_detail.html:70 templates/meps/opinion_detail.html:42
@@ -855,173 +954,61 @@ msgid ""
 msgstr "%(day)s %(month)s %(year)s<i> à </i>%(birth_place)s, %(age)s ans."
 
 #: templates/meps/mep_detail.html:81
-msgid "Mandates"
-msgstr "Mandats"
-
-#: templates/meps/mep_detail.html:90
-#, fuzzy, python-format
-msgid ""
-"Was MEP of <a href=\"%(countryurl)s\">%(country_name)s</a> for <a href="
-"\"%(partyurl)s\">%(party)s</a> from %(rolebegin)s to %(roleend)s"
-msgstr ""
-"Était eurodéputé de <a href=\"%(countryurl)s\">%(role.country.name)s</a> "
-"pour le parti <a href=\"%(partyurl)s\">%(role.party)s</a> du %(rolebegin)s "
-"au %(roleend)s"
-
-#: templates/meps/mep_detail.html:92
-#, fuzzy, python-format
-msgid ""
-"Was MEP of <a href=\"%(countryurl)s\">%(country_name)s</a> from "
-"%(rolebegin)s to %(roleend)s"
-msgstr ""
-"Était eurodéputé de <a href=\"%(countryurl)s\">%(role.country.name)s</a> du "
-"%(rolebegin)s au %(roleend)s"
-
-#: templates/meps/mep_detail.html:96
-#, fuzzy, python-format
-msgid ""
-"Is MEP of <a href=\"%(countryurl)s\">%(country_name)s</a> for <a href="
-"\"%(partyurl)s\">%(party)s</a> from %(rolebegin)s"
-msgstr ""
-"Est eurodéputé de <a href=\"%(countryurl)s\">%(role.country.name)s</a> pour "
-"le parti <a href=\"%(partyurl)s\">%(role.party)s</a> depuis le %(rolebegin)s"
-
-#: templates/meps/mep_detail.html:98
-#, fuzzy, python-format
-msgid ""
-"Is MEP of <a href=\"%(countryurl)s\">%(country_name)s</a> from %(rolebegin)s"
-msgstr ""
-"Est eurodéputé de <a href=\"%(countryurl)s\">%(role.country.name)s</a> "
-"depuis le %(rolebegin)s"
-
-#: templates/meps/mep_detail.html:107
-msgid "Groups"
-msgstr "Groupes"
-
-#: templates/meps/mep_detail.html:113
-#, fuzzy, python-format
-msgid ""
-"Was MEP for <a href=\"%(groupurl)s\">%(group_name)s (%(group_abbreviation)s)"
-"</a> from %(groupbegin)s to %(groupend)s"
-msgstr ""
-"Était député européen pour le groupe <a href=\"%(groupurl)s\">"
-"%(mep.group.name)s (%(mep.group.abbreviation)s)</a> du %(groupbegin)s au "
-"%(groupend)s"
-
-#: templates/meps/mep_detail.html:115
-#, fuzzy, python-format
-msgid ""
-"Is MEP for <a href=\"%(groupurl)s\">%(group_name)s (%(group_abbreviation)s)</"
-"a> from %(groupbegin)s"
-msgstr ""
-"Est député européen pour le groupe <a href=\"%(groupurl)s\">"
-"%(mep.group.name)s (%(mep.group.abbreviation)s)</a> depuis le %(groupbegin)s"
-
-#: templates/meps/mep_detail.html:123
 msgid "Committees"
 msgstr "Comités"
 
-#: templates/meps/mep_detail.html:126 templates/meps/mep_detail.html.py:147
+#: templates/meps/mep_detail.html:84 templates/meps/mep_detail.html.py:95
 msgid "of"
 msgstr ""
 
-#: templates/meps/mep_detail.html:132
-#, fuzzy, python-format
-msgid "Was %(role)s in %(role_committee)s from %(rolebegin)s to %(roleend)s"
-msgstr ""
-"Était %(role)s dans la commission %(role.committee)s du %(rolebegin)s au "
-"%(roleend)s"
-
-#: templates/meps/mep_detail.html:134
-#, fuzzy, python-format
-msgid "Is %(role)s in %(role_committee)s from %(rolebegin)s"
-msgstr ""
-"Est %(role)s dans la commission %(role.committee)s depuis le %(rolebegin)s"
-
-#: templates/meps/mep_detail.html:144
+#: templates/meps/mep_detail.html:92
 msgid "Delegations"
 msgstr "Délégations"
 
-#: templates/meps/mep_detail.html:153
-#, fuzzy, python-format
-msgid "Was %(role)s in %(role_delegation)s from %(rolebegin)s to %(roleend)s"
-msgstr ""
-"Était %(role)s dans la délégation %(role.delegation)s du %(rolebegin)s au "
-"%(roleend)s"
-
-#: templates/meps/mep_detail.html:155
-#, fuzzy, python-format
-msgid "Is %(role)s in %(role_delegation)s from %(rolebegin)s"
-msgstr ""
-"Est %(role)s dans la délégation %(role.delegation)s depuis le %(rolebegin)s"
-
-#: templates/meps/mep_detail.html:165
-msgid "Old staff"
-msgstr "Ancienne équipe"
-
-#: templates/meps/mep_detail.html:169
-msgid "to"
-msgstr "à"
-
-#: templates/meps/mep_detail.html:171
-#, fuzzy, python-format
-msgid ""
-"Was %(staff_role)s in %(organization_name)s from %(staff_begin)s to "
-"%(staff_end)s"
-msgstr ""
-"Était %(staff.role)s dans %(staff.organization.name)s du %(staff.begin)s au "
-"%(staff.end)s"
-
-#: templates/meps/mep_detail.html:173
-#, fuzzy, python-format
-msgid "Is %(staff_role)s in %(organization_name)s from %(staff_begin)s"
-msgstr ""
-"Est %(staff.role)s dans %(staff.organization.name)s depuis le %(staff.begin)s"
-
-#: templates/meps/mep_detail.html:183
+#: templates/meps/mep_detail.html:103
 msgid "CV"
 msgstr "CV"
 
-#: templates/meps/mep_detail.html:194
+#: templates/meps/mep_detail.html:114
 msgid "Opinions (memopol v1)"
 msgstr "Prises de position (memopol v1)"
 
-#: templates/meps/mep_detail.html:197
+#: templates/meps/mep_detail.html:117
 #, fuzzy, python-format
 msgid "(on %(opinion_date)s)"
 msgstr "(le %(line.date)s)"
 
-#: templates/meps/mep_detail.html:197 templates/meps/mep_detail.html.py:211
+#: templates/meps/mep_detail.html:117 templates/meps/mep_detail.html.py:131
 msgid "Read more..."
 msgstr "En savoir plus..."
 
-#: templates/meps/mep_detail.html:205 templates/meps/meps_table_tr.html:97
+#: templates/meps/mep_detail.html:125 templates/meps/meps_table_tr.html:97
 msgid "Total score:"
 msgstr "Score total&nbsp;:"
 
-#: templates/meps/mep_detail.html:211
+#: templates/meps/mep_detail.html:131
 #, fuzzy, python-format
 msgid "(on %(score_date)s)"
 msgstr "(le %(score.date)s)"
 
-#: templates/meps/mep_detail.html:218 templates/meps/proposal_detail.html:19
-#: templates/meps/proposal_detail.html:24
-#: templates/meps/proposal_detail.html:27
+#: templates/meps/mep_detail.html:138 templates/meps/proposal_detail.html:18
+#: templates/meps/proposal_detail.html:23
+#: templates/meps/proposal_detail.html:26
 #: templates/meps/recommendation_detail.html:27
 #: templates/meps/recommendation_detail.html:30
 #: templates/meps/recommendation_detail.html:33
 msgid "Trends explanation"
 msgstr "Explication des tendances"
 
-#: templates/meps/mep_detail.html:225
+#: templates/meps/mep_detail.html:145
 msgid "Public Positions"
 msgstr "Positions"
 
-#: templates/meps/mep_detail.html:236
+#: templates/meps/mep_detail.html:157
 msgid "Add a public position"
 msgstr "Ajouter une position publique"
 
-#: templates/meps/mep_detail.html:237
+#: templates/meps/mep_detail.html:158
 #, fuzzy
 msgid ""
 "Help us keep track of the public positions taken by this member of the "
@@ -1035,6 +1022,7 @@ msgid "Back to normal view"
 msgstr "Back to normal view"
 
 #: templates/meps/meps_table_thead.html:5
+#: templates/meps/meps_table_tr.html:106
 msgid "Score"
 msgstr "Score"
 
@@ -1066,10 +1054,6 @@ msgstr "Aucun score"
 msgid "Less information"
 msgstr "Résumé"
 
-#: templates/meps/meps_table_tr.html:107
-msgid "Score:"
-msgstr "Score&nbsp;:"
-
 #: templates/meps/opinion_detail.html:6
 #, python-format
 msgid "\"%(opinion_title)s\", opinion expressed by %(mep)s on %(opinion_date)s"
@@ -1093,16 +1077,6 @@ msgid ""
 "\"%(opinion_title)s\", opinion expressed by <a href=\"%(mep_url)s\">%(mep)s</"
 "a>"
 msgstr ""
-
-#: templates/meps/opinion_detail.html:33
-#, fuzzy
-msgid "Political group"
-msgstr "Groupe politique&nbsp;: "
-
-#: templates/meps/opinion_detail.html:39
-#, fuzzy
-msgid "National party"
-msgstr "Parti local&nbsp;:"
 
 #: templates/meps/opinion_detail.html:48
 #, python-format
@@ -1147,18 +1121,18 @@ msgstr ""
 "%(representative_last_name)s</a> sur <a href=\"%(proposal_url)s\">"
 "%(proposal_title)s</a>"
 
-#: templates/meps/per_mep.html:16 templates/meps/proposal_detail.html:43
-#: templates/mps/proposal_detail.html:25
+#: templates/meps/per_mep.html:16 templates/meps/proposal_detail.html:42
+#: templates/mps/proposal_detail.html:24
 msgid "No description yet"
 msgstr "Aucune description pour l'instant"
 
-#: templates/meps/per_mep.html:18 templates/meps/proposal_detail.html:45
-#: templates/mps/proposal_detail.html:27
+#: templates/meps/per_mep.html:18 templates/meps/proposal_detail.html:44
+#: templates/mps/proposal_detail.html:26
 msgid "Part"
 msgstr "Partie"
 
-#: templates/meps/per_mep.html:19 templates/meps/proposal_detail.html:46
-#: templates/mps/proposal_detail.html:28
+#: templates/meps/per_mep.html:19 templates/meps/proposal_detail.html:45
+#: templates/mps/proposal_detail.html:27
 msgid "Recommendation"
 msgstr "Recommendation"
 
@@ -1166,18 +1140,18 @@ msgstr "Recommendation"
 msgid "Vote"
 msgstr "Vote"
 
-#: templates/meps/proposal_detail.html:3 templates/mps/proposal_detail.html:6
+#: templates/meps/proposal_detail.html:3 templates/mps/proposal_detail.html:5
 #, python-format
 msgid "%(vote_title)s"
 msgstr ""
 
-#: templates/meps/proposal_detail.html:47
-#: templates/mps/proposal_detail.html:29
+#: templates/meps/proposal_detail.html:46
+#: templates/mps/proposal_detail.html:28
 msgid "Weight"
 msgstr "Poids"
 
-#: templates/meps/proposal_detail.html:50
-#: templates/mps/proposal_detail.html:32
+#: templates/meps/proposal_detail.html:48
+#: templates/mps/proposal_detail.html:30
 #, fuzzy, python-format
 msgid ""
 "Votes (%(significant_votes_count)s significant) (<a href="
@@ -1282,17 +1256,126 @@ msgstr "Date&nbsp;:"
 msgid "Importable votes"
 msgstr "Votes à importer"
 
-#, fuzzy
-#~ msgid "description"
-#~ msgstr "Position"
+# better ? 
+#~ msgid "Constituent Country"
+#~ msgstr "Pays"
+
+#~ msgid "Political Group"
+#~ msgstr "Groupe politique"
+
+#~ msgid "Commitee"
+#~ msgstr "Commission"
+
+#~ msgid "Political group: "
+#~ msgstr "Groupe politique&nbsp;: "
+
+#~ msgid "National party: "
+#~ msgstr "Parti local&nbsp;:"
+
+#~ msgid "Mandates"
+#~ msgstr "Mandats"
 
 #, fuzzy
-#~ msgid "Inactive"
-#~ msgstr "Fonctions"
+#~ msgid ""
+#~ "Was MEP of <a href=\"%(countryurl)s\">%(country_name)s</a> for <a href="
+#~ "\"%(partyurl)s\">%(party)s</a> from %(rolebegin)s to %(roleend)s"
+#~ msgstr ""
+#~ "Était eurodéputé de <a href=\"%(countryurl)s\">%(role.country.name)s</a> "
+#~ "pour le parti <a href=\"%(partyurl)s\">%(role.party)s</a> du "
+#~ "%(rolebegin)s au %(roleend)s"
 
 #, fuzzy
-#~ msgid "Active"
-#~ msgstr "Fonctions"
+#~ msgid ""
+#~ "Was MEP of <a href=\"%(countryurl)s\">%(country_name)s</a> from "
+#~ "%(rolebegin)s to %(roleend)s"
+#~ msgstr ""
+#~ "Était eurodéputé de <a href=\"%(countryurl)s\">%(role.country.name)s</a> "
+#~ "du %(rolebegin)s au %(roleend)s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Is MEP of <a href=\"%(countryurl)s\">%(country_name)s</a> for <a href="
+#~ "\"%(partyurl)s\">%(party)s</a> from %(rolebegin)s"
+#~ msgstr ""
+#~ "Est eurodéputé de <a href=\"%(countryurl)s\">%(role.country.name)s</a> "
+#~ "pour le parti <a href=\"%(partyurl)s\">%(role.party)s</a> depuis le "
+#~ "%(rolebegin)s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Is MEP of <a href=\"%(countryurl)s\">%(country_name)s</a> from "
+#~ "%(rolebegin)s"
+#~ msgstr ""
+#~ "Est eurodéputé de <a href=\"%(countryurl)s\">%(role.country.name)s</a> "
+#~ "depuis le %(rolebegin)s"
+
+#~ msgid "Groups"
+#~ msgstr "Groupes"
+
+#, fuzzy
+#~ msgid ""
+#~ "Was MEP for <a href=\"%(groupurl)s\">%(group_name)s "
+#~ "(%(group_abbreviation)s)</a> from %(groupbegin)s to %(groupend)s"
+#~ msgstr ""
+#~ "Était député européen pour le groupe <a href=\"%(groupurl)s\">"
+#~ "%(mep.group.name)s (%(mep.group.abbreviation)s)</a> du %(groupbegin)s au "
+#~ "%(groupend)s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Is MEP for <a href=\"%(groupurl)s\">%(group_name)s "
+#~ "(%(group_abbreviation)s)</a> from %(groupbegin)s"
+#~ msgstr ""
+#~ "Est député européen pour le groupe <a href=\"%(groupurl)s\">"
+#~ "%(mep.group.name)s (%(mep.group.abbreviation)s)</a> depuis le "
+#~ "%(groupbegin)s"
+
+#, fuzzy
+#~ msgid "Was %(role)s in %(role_committee)s from %(rolebegin)s to %(roleend)s"
+#~ msgstr ""
+#~ "Était %(role)s dans la commission %(role.committee)s du %(rolebegin)s au "
+#~ "%(roleend)s"
+
+#, fuzzy
+#~ msgid "Is %(role)s in %(role_committee)s from %(rolebegin)s"
+#~ msgstr ""
+#~ "Est %(role)s dans la commission %(role.committee)s depuis le %(rolebegin)s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Was %(role)s in %(role_delegation)s from %(rolebegin)s to %(roleend)s"
+#~ msgstr ""
+#~ "Était %(role)s dans la délégation %(role.delegation)s du %(rolebegin)s au "
+#~ "%(roleend)s"
+
+#, fuzzy
+#~ msgid "Is %(role)s in %(role_delegation)s from %(rolebegin)s"
+#~ msgstr ""
+#~ "Est %(role)s dans la délégation %(role.delegation)s depuis le "
+#~ "%(rolebegin)s"
+
+#~ msgid "Old staff"
+#~ msgstr "Ancienne équipe"
+
+#~ msgid "to"
+#~ msgstr "à"
+
+#, fuzzy
+#~ msgid ""
+#~ "Was %(staff_role)s in %(organization_name)s from %(staff_begin)s to "
+#~ "%(staff_end)s"
+#~ msgstr ""
+#~ "Était %(staff.role)s dans %(staff.organization.name)s du %(staff.begin)s "
+#~ "au %(staff.end)s"
+
+#, fuzzy
+#~ msgid "Is %(staff_role)s in %(organization_name)s from %(staff_begin)s"
+#~ msgstr ""
+#~ "Est %(staff.role)s dans %(staff.organization.name)s depuis le "
+#~ "%(staff.begin)s"
+
+#~ msgid "Score:"
+#~ msgstr "Score&nbsp;:"
 
 #~ msgid ""
 #~ "Recommendation on %(recommendation.subject)s for the proposal <a href="
