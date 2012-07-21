@@ -21,7 +21,7 @@ from memopol2.utils import check_dir, send_file, get_content_cache
 
 from models import LocalParty, Building, MEP, CountryMEP, GroupMEP, Committee, Group, Country, Organization, Delegation
 from reps.models import Email
-from votes.models import Score, Proposal, Vote
+from votes.models import Score, Vote
 
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
 
@@ -355,52 +355,3 @@ class PartyView(MEPsFromView):
         if self.kwargs['slugified_name'] != slugify(self.object.name):
             return HttpResponseRedirect(reverse('meps:index_by_party', args=[self.object.id, slugify(self.object.name)]))
         return MEPsFromView.render_to_response(self, context)
-
-
-class ProposalView(DetailView):
-    model=Proposal
-    context_object_name="vote"
-    template_name="meps/proposal_detail.html"
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(ProposalView, self).get_context_data(**kwargs)
-        context["vote"].meps = optimise_mep_query(context["vote"].meps, Q(mep__score__proposal=context["vote"]), Q(representative__score__proposal=context["vote"]), proposal_score=context["vote"])
-        return context
-
-
-class VoteRecommendation(DetailView):
-    template_name='meps/recommendation_detail.html'
-    redirect="meps:recommendation"
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(VoteRecommendation, self).get_context_data(**kwargs)
-        context['choice_listing'] = True
-        context['proposal'] = self.object.proposal
-        context['meps_with_votes'] = self.meps_with_votes
-        self.redirect_args = [self.object.proposal.id, self.object.id]
-        return context
-
-    def meps_with_votes(self):
-        for mep in optimise_mep_query(MEP.objects.filter(vote__recommendation=self.object), Q(mep__score__proposal=self.object.proposal), Q(representative__score__proposal=self.object.proposal), choice_on_recommendation=self.object):
-            yield mep, mep.choice # bad bad bad, filter should disapear soon for a get
-
-    def render_to_response(self, context):
-        if self.kwargs["proposal_id"] != self.object.proposal.id:
-            return HttpResponseRedirect(reverse(self.redirect, args=self.redirect_args))
-        return DetailView.render_to_response(self, context)
-
-
-class VoteRecommendationChoice(VoteRecommendation):
-    template_name='meps/mep_list.html'
-    redirect="meps:recommendation_choice"
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(VoteRecommendationChoice, self).get_context_data(**kwargs)
-        context['choice'] = self.kwargs['recommendation']
-        context['header_template'] = 'votes/header_mep_list.html'
-        context['object_list'] = optimise_mep_query(MEP.objects.filter(vote__recommendation=self.object,
-                                                                       vote__choice=self.kwargs['recommendation']),
-                                                    Q(mep__vote__recommendation=self.object, mep__vote__choice=self.kwargs['recommendation']),
-                                                    Q(representative__vote__recommendation=self.object, representative__vote__choice=self.kwargs['recommendation']))
-        self.redirect_args += [self.kwargs['recommendation']]
-        return context

@@ -1,29 +1,13 @@
-from django.conf.urls.defaults import patterns, url
-from django.views.generic import ListView, TemplateView, DetailView
-from django.shortcuts import get_object_or_404, render, redirect
+from django.conf.urls.defaults import patterns, url, include
+from django.views.generic import ListView, TemplateView
+from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 
 from meps.models import LocalParty, Country, Group, Committee, Delegation, Organization, Building, MEP
 from reps.models import Opinion
-from votes.models import Proposal, Vote, Recommendation
-from meps.views import VoteRecommendation, VoteRecommendationChoice, ProposalView
 
 from views import BuildingDetailView, MEPView, MEPsFromView, MEPList, PartyView
 
-def proposal_rep(request, proposal_id, mep_id):
-    representative = get_object_or_404(MEP, id=mep_id)
-    proposal = get_object_or_404(Proposal, id=proposal_id)
-
-    votes = list(Vote.objects.filter(representative=representative, recommendation__proposal=proposal).select_related('recommendation'))
-    # we don't store abstent votes so we have to guess them
-    # we need a dummy object for the key of the sorted bellow
-    votes += [type('DummyVote', (object,), {'choice': 'absent', 'recommendation': x, 'representative': representative}) for x in Recommendation.objects.filter(proposal=proposal).exclude(vote__representative=representative)]
-
-    # recreate default ordering
-    votes = sorted(votes, key=lambda x: x.recommendation.datetime)
-
-    context = {'representative': representative, 'proposal': proposal, 'votes': votes}
-    return render(request, 'meps/per_mep.html', context)
 
 urlpatterns = patterns('meps.views',
     # those view are *very* expansive. we cache them in RAM for a week
@@ -52,14 +36,9 @@ urlpatterns = patterns('meps.views',
     url(r'^floor/brussels/(?P<pk>\w+)/(?P<floor>\w+)/$', BuildingDetailView.as_view(), name='bxl_floor'),
     url(r'^floor/strasbourg/(?P<pk>\w+)/(?P<floor>\w+)/$', BuildingDetailView.as_view(), name='stg_floor'),
 
-    url(r'^vote/$', ListView.as_view(queryset=Proposal.objects.filter(institution="EU").order_by('-_date')), name='index_votes'),
-    url(r'^vote/(?P<proposal_id>[a-zA-Z/-_]+)/(?P<pk>\d+)/(?P<recommendation>\w+)/$', VoteRecommendationChoice.as_view(model=Recommendation), name='recommendation_choice'),
-    url(r'^vote/(?P<proposal_id>[a-zA-Z/-_]+)/(?P<pk>\d+)/$', VoteRecommendation.as_view(model=Recommendation, template_name="meps/recommendation_detail.html"), name='recommendation'),
-    url(r'^vote/(?P<pk>[a-zA-Z/-_]+)/dataporn/$', DetailView.as_view(model=Proposal, context_object_name='vote', template_name="meps/proposal_dataporn.html"), name='vote_dataporn'),
-    url(r'^vote/(?P<proposal_id>[a-zA-Z/-_]+)/(?P<mep_id>.+)/$', proposal_rep, name='votes_mep'),
-    url(r'^vote/(?P<pk>[a-zA-Z/-_]+)/$', ProposalView.as_view(), name='vote'),
+    url(r'^vote/', include('meps_votes.urls', namespace="votes", app_name="meps_votes")),
 
-    url(r'^votes/$', lambda request: redirect(reverse("meps:index_votes"))),
+    url(r'^votes/$', lambda request: redirect(reverse("meps:votes:index_votes"))),
 
     url(r'^deputy/(?P<pk>\w+)/$', MEPView.as_view(), name='mep'),
     url(r'^deputy/(?P<pk>\w+)/dataporn/$', MEPView.as_view(template_name="meps/dataporn.html"), name='mep_dataporn'),

@@ -22,7 +22,7 @@ class Proposal(models.Model):
     def get_absolute_url(self):
         if self.institution == "FR":
             return reverse("mps:vote", args=[self.id])
-        return reverse("meps:vote", args=[self.id])
+        return reverse("meps:votes:vote", args=[self.id])
 
     @property
     def groups(self):
