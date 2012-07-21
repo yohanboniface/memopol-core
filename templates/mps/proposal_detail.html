@@ -21,17 +21,17 @@
     <ul>
         {% for v in subvote.list %}
         <li>
-        <a href="{% url mps:recommendation vote.id v.id %}">{% if v.description %}{{ v.description }}{% else %}{% trans "No description yet" %}{% endif %}</a>
+        <a href="{% url mps:votes:recommendation vote.id v.id %}">{% if v.description %}{{ v.description }}{% else %}{% trans "No description yet" %}{% endif %}</a>
             <ul class="{{ v.recommendation }} recommendation">
                 <li><em>{% trans "Part" %}</em> : {{ v.part }}</li>
                 {% if v.recommendation %}<li><em>{% trans "Recommendation" %}</em> : {{ v.recommendation }}</li>{% endif %}
                 {% if v.weight %}<li><em>{% trans "Weight" %}</em> : {{ v.weight }}</li>{% endif %}
-                {% url mps:recommendation vote.id v.id as recommendation_url %}
+                {% url mps:votes:recommendation vote.id v.id as recommendation_url %}
                 <li>{% blocktrans with v.significant_votes as significant_votes_count %}Votes ({{ significant_votes_count }} significant) (<a href="{{ recommendation_url }}">full list</a>){% endblocktrans %}</li>
                 <li>
                 <ul>
-                    {% if v.for_count %}<li><b><a class="{% if v.recommendation == "for" %}ok{% else %}nok{% endif %}" href="{% url meps:recommendation_choice vote.id v.id "for" %}">for</a></b>: {{ v.for_count }} </li>{% endif %}
-                    {% if v.against_count %}<li><b><a class="{% if v.recommendation == "against" %}ok{% else %}nok{% endif %}" href="{% url meps:recommendation_choice vote.id v.id "against" %}">against</a></b>: {{ v.against_count }} </li>{% endif %}
+                    {% if v.for_count %}<li><b><a class="{% if v.recommendation == "for" %}ok{% else %}nok{% endif %}" href="{% url meps:votes:recommendation_choice vote.id v.id "for" %}">for</a></b>: {{ v.for_count }} </li>{% endif %}
+                    {% if v.against_count %}<li><b><a class="{% if v.recommendation == "against" %}ok{% else %}nok{% endif %}" href="{% url meps:votes:recommendation_choice vote.id v.id "against" %}">against</a></b>: {{ v.against_count }} </li>{% endif %}
                     {% if v.abstention_count %}<li><b><a class="abstention">abstention</a></b>: {{ v.abstention_count }} </li>{% endif %}
                     {% if v.abstent_count %}<li><b><a class="abstention">abstent</a></b>: {{ v.abstent_count }} </li>{% endif %}
                 </ul>
