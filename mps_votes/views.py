@@ -31,8 +31,8 @@ class VoteRecommendationChoice(VoteRecommendation):
     def get_context_data(self, *args, **kwargs):
         context = super(VoteRecommendationChoice, self).get_context_data(**kwargs)
         context['choice'] = self.kwargs['recommendation']
-        context['mps'] = MP.objects.filter(vote__recommendation=self.object,
-                                  vote__choice=self.kwargs['recommendation'])
+        context['mps'] = optimize_mp_query(MP.objects.filter(vote__recommendation=self.object,
+                                  vote__choice=self.kwargs['recommendation']))
         self.redirect_args += [self.kwargs['recommendation']]
         return context
 
