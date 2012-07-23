@@ -724,11 +724,11 @@ msgstr "Merci, votre retour a été envoyé à l'équipe de développement !"
 msgid ""
 "Members of the European Parliament in %(building_name)s of the %(floor)sth "
 "floor"
-msgstr "Eurodéputés situés au %(floor)s e étage du bâtiment %(building.name)s"
+msgstr "Eurodéputés situés au %(floor)s e étage du bâtiment %(building_name)s"
 
 #: templates/meps/building_list.html:4 templates/meps/building_list.html:10
 msgid "Members of the European Parliament by floor"
-msgstr "Eurodéputés"
+msgstr "Eurodéputés par étages"
 
 #: templates/meps/building_list.html:21
 msgid "floor"
@@ -737,15 +737,11 @@ msgstr "étage"
 #: templates/meps/by_group.html:3
 #, python-format
 msgid "Members of the European Parliament from %(groupe_name)s"
-msgstr "Eurodéputés"
-
-#: templates/meps/by_group.html:8
-msgid " from "
-msgstr "de"
+msgstr "Eurodéputés du groupe %(groupe_name)s"
 
 #: templates/meps/committee_list.html:4 templates/meps/committee_list.html:8
 msgid "Members of the European Parliament by committee"
-msgstr "Eurodéputés"
+msgstr "Eurodéputés par committées"
 
 #: templates/meps/committee_list.html:15 templates/meps/country_list.html:22
 #: templates/meps/delegation_list.html:15 templates/meps/group_list.html:23
@@ -1113,7 +1109,7 @@ msgstr ""
 #: templates/votes/recommendationdata_detail.html:23
 #, python-format
 msgid "Imported: %(imported)s"
-msgstr "Votes à importer"
+msgstr "Importé: %(imported)s"
 
 #: templates/votes/recommendationdata_detail.html:25
 msgid "Date:"
