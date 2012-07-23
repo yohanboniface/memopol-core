@@ -1,29 +1,29 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Translators:
 #   <adoutte@gmail.com>, 2012.
+# Benjamin Sonntag <benjamin@sonntag.fr>, 2012.
 #   <hydraze+transifex@hydraze.org>, 2012.
+#   <intnumerix@gmail.com>, 2012.
 # Julien Rabier <>, 2012.
 # Oriane  <>, 2012.
 # yost3d  <>, 2012.
-# Benjamin Sonntag <benjamin@sonntag.fr>, 2012.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: The Political Memory of La Quadrature du Net\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://projets.lqdn.fr/projects/mempol\n"
 "POT-Creation-Date: 2012-07-14 16:17+0200\n"
-"PO-Revision-Date: 2012-05-30 17:28+0200\n"
-"Last-Translator: Benjamin Sonntag <benjamin@sonntag.fr>\n"
-"Language-Team: français <team@alternc.org>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2012-07-21 16:42+0000\n"
+"Last-Translator: Oriane <>\n"
+"Language-Team: French (http://www.transifex.com/projects/p/memopol2/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/admin/__init__.py:127
 #: build/django-extensions/django_extensions/admin/__init__.py:127
@@ -35,50 +35,49 @@ msgstr "et"
 #: build/django-extensions/django_extensions/admin/__init__.py:129
 #, python-format
 msgid ""
-"Use the left field to do %(model_name)s lookups in the fields %(field_list)s."
-msgstr ""
+"Use the left field to do %(model_name)s lookups in the fields "
+"%(field_list)s."
+msgstr "Utilisez le champ à gauche pour rechercher %(model_name)s dans les champs %(field_list)s."
 
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:16
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:17
 #: build/django-extensions/django_extensions/db/models.py:16
 #: build/django-extensions/django_extensions/mongodb/models.py:17
 msgid "created"
-msgstr ""
+msgstr "créé le"
 
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:17
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:18
 #: build/django-extensions/django_extensions/db/models.py:17
 #: build/django-extensions/django_extensions/mongodb/models.py:18
 msgid "modified"
-msgstr ""
+msgstr "modifié le"
 
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:30
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:28
 #: build/django-extensions/django_extensions/db/models.py:30
 #: build/django-extensions/django_extensions/mongodb/models.py:28
 msgid "title"
-msgstr ""
+msgstr "titre"
 
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:31
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:29
 #: build/django-extensions/django_extensions/db/models.py:31
 #: build/django-extensions/django_extensions/mongodb/models.py:29
 msgid "slug"
-msgstr ""
+msgstr "slug"
 
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:32
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:30
 #: build/django-extensions/django_extensions/db/models.py:32
 #: build/django-extensions/django_extensions/mongodb/models.py:30
-#, fuzzy
 msgid "description"
-msgstr "Position"
+msgstr "Positions"
 
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:57
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:52
 #: build/django-extensions/django_extensions/db/models.py:57
 #: build/django-extensions/django_extensions/mongodb/models.py:52
-#, fuzzy
 msgid "Inactive"
 msgstr "Fonctions"
 
@@ -86,7 +85,6 @@ msgstr "Fonctions"
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:53
 #: build/django-extensions/django_extensions/db/models.py:58
 #: build/django-extensions/django_extensions/mongodb/models.py:53
-#, fuzzy
 msgid "Active"
 msgstr "Fonctions"
 
@@ -95,21 +93,21 @@ msgstr "Fonctions"
 #: build/django-extensions/django_extensions/db/models.py:60
 #: build/django-extensions/django_extensions/mongodb/models.py:55
 msgid "status"
-msgstr ""
+msgstr "état"
 
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:63
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:58
 #: build/django-extensions/django_extensions/db/models.py:63
 #: build/django-extensions/django_extensions/mongodb/models.py:58
 msgid "keep empty for an immediate activation"
-msgstr ""
+msgstr "garder vide pour activer immédiatement"
 
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/db/models.py:65
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/mongodb/models.py:60
 #: build/django-extensions/django_extensions/db/models.py:65
 #: build/django-extensions/django_extensions/mongodb/models.py:60
 msgid "keep empty for indefinite activation"
-msgstr ""
+msgstr "garder vide pour activer de manière indéfinie"
 
 #: build/django-extensions/build/lib.linux-x86_64-2.7/django_extensions/management/commands/show_urls.py:50
 #: build/django-extensions/django_extensions/management/commands/show_urls.py:50
@@ -125,7 +123,7 @@ msgstr ""
 
 #: build/django-extensions/django_extensions/templates/django_extensions/widgets/foreignkey_searchinput.html:4
 msgid "Lookup"
-msgstr ""
+msgstr "Aperçu"
 
 #: build/django-tastypie/tastypie/authentication.py:324
 #, python-format
@@ -134,42 +132,30 @@ msgstr ""
 
 #: build/django-tastypie/tastypie/authentication.py:335
 msgid "You are not allowed to access this resource."
-msgstr ""
+msgstr "Vous n'êtes pas autorisé à accéder à cette ressource."
 
 #: build/django-tastypie/tastypie/authentication.py:337
 msgid "Invalid request parameters."
-msgstr ""
+msgstr "Paramètres de requête invalide."
 
 #: campaign/forms.py:38
 msgid ""
 "Unfortunately we must protect against automatic attacks, please forgive us "
 "this inconvenience."
-msgstr ""
-"Malheureusement, nous devons nous prémunir d'éventuelles attaques, veuillez "
-"nous excuser pour le dérangement."
+msgstr "Malheureusement, nous devons nous prémunir d'éventuelles attaques, veuillez nous excuser pour le dérangement."
 
 #: campaign/views.py:150
 #, python-format
 msgid ""
 "Someone sent feedback on a campaign\n"
-"Your verification key is %(root_url)s/campaign/feedback/%(feedback_id)s/"
-"%(actid)s\n"
+"Your verification key is %(root_url)s/campaign/feedback/%(feedback_id)s/%(actid)s\n"
 "\n"
 "from: %(from)s\n"
 "about %(mep)s\n"
 "type: %(type)s\n"
 "result: %(result)s\n"
 "comment: %(comment)s"
-msgstr ""
-"Quelqu'un a envoyé un retour sur une campagne\n"
-"Votre clé de vérification key est %(root_url)s/campaign/feedback/"
-"%(feedback_id)s/%(actid)s\n"
-"\n"
-"expéditeur: %(from)s\n"
-"à propos de %(mep)s\n"
-"type: %(type)s\n"
-"résultat: %(result)s\n"
-"commentaire: %(comment)s"
+msgstr "Quelqu'un a envoyé un retour sur une campagne\nVotre clé de vérification key est %(root_url)s/campaign/feedback/%(feedback_id)s/%(actid)s\n\nexpéditeur: %(from)s\nà propos de %(mep)s\ntype: %(type)s\nrésultat: %(result)s\ncommentaire: %(comment)s"
 
 #: campaign/views.py:159
 msgid "Memopol2 feedback moderation"
@@ -193,7 +179,7 @@ msgstr "Position"
 
 #: templates/404.html:3
 msgid "404"
-msgstr ""
+msgstr "404"
 
 #: templates/404.html:6
 msgid "Page Not Found"
@@ -209,15 +195,13 @@ msgstr "Erreur Interne 500"
 
 #: templates/api.html:3
 msgid "Restful API documentation"
-msgstr ""
+msgstr "Documentation de l'API REST"
 
 #: templates/api.html:9
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
-"<p>Memopol2 offers a simple Rest API to access nearly all its data. "
-"Following the Restful principles it is self describing, starting at the root "
-"you'll be able to get everywhere via urls.</p>\n"
+"<p>Memopol2 offers a simple Rest API to access nearly all its data. Following the Restful principles it is self describing, starting at the root you'll be able to get everywhere via urls.</p>\n"
 "\n"
 "<p>You can access the api here:</p>\n"
 "\n"
@@ -237,56 +221,12 @@ msgid ""
 "\n"
 "<p>Note: you can change \"json\" with either \"xml\" or \"yaml\".</p>\n"
 "\n"
-"<p>We generate a representation of the schema of our data, you can find it "
-"<a href=\"https://projets.lqdn.fr/projects/mempol/files\">here</a> (note: "
-"not all what you see on it is accessible via the API, but the vast majority "
-"of it).</p>\n"
+"<p>We generate a representation of the schema of our data, you can find it <a href=\"https://projets.lqdn.fr/projects/mempol/files\">here</a> (note: not all what you see on it is accessible via the API, but the vast majority of it).</p>\n"
 "\n"
-"<p>This API is generated using <a href=\"http://tastypieapi.org/\">tastypie</"
-"a>, you can read the usage documentation <a href=\"http://django-tastypie."
-"readthedocs.org/en/latest/interacting.html#fetching-data\">here</a>.</p>\n"
+"<p>This API is generated using <a href=\"http://tastypieapi.org/\">tastypie</a>, you can read the usage documentation <a href=\"http://django-tastypie.readthedocs.org/en/latest/interacting.html#fetching-data\">here</a>.</p>\n"
 "\n"
-"<p>If you aren't interested in Memopol2-related data maybe the <a href="
-"\"http://parltrack.euwiki.org/dumps/\">dumps from parltarck</a> will be "
-"better for you for the European Parliament part or <a href=\"http://cpc."
-"regardscitoyens.org/trac/wiki/API\">nosdeputes.fr dumps</a> for the french "
-"side.</p>\n"
+"<p>If you aren't interested in Memopol2-related data maybe the <a href=\"http://parltrack.euwiki.org/dumps/\">dumps from parltarck</a> will be better for you for the European Parliament part or <a href=\"http://cpc.regardscitoyens.org/trac/wiki/API\">nosdeputes.fr dumps</a> for the french side.</p>\n"
 msgstr ""
-"\n"
-"<p>Memopol2 fournit une API Rest simple pour accéder à quasiment toutes ses "
-"données. Comme le préconise Rest, l'API est autodocumentée, partant de la "
-"racine, vous pourrez tout découvrir via des urls.\n"
-"</p>\n"
-"\n"
-"<p>Vous pouvez accéder à l'API ici&nbsp;:</p>\n"
-"\n"
-"<p>\n"
-"<code>\n"
-"    %(root_url)s/api/v1/\n"
-"</code>\n"
-"</p>\n"
-"\n"
-"<p>La meilleure façon de démarrer pour jouer avec est en utilisant "
-"curl&nbsp;:</p>\n"
-"\n"
-"<p>\n"
-"<code>\n"
-"    curl \"%(root_url)s/api/v1/?format=json\" | python -m json.tool\n"
-"</code>\n"
-"</p>\n"
-"\n"
-"<p>Note&nbsp;: vous pouvez utiliser \"xml\" ou \"yaml\" au lieu de \"json\"."
-"</p>\n"
-"\n"
-"<p>Cette API est générée grâce à <a href=\"http://tastypieapi.org/"
-"\">tastypie</a>, dont vous pouvez retrouver la <a href=\"http://django-"
-"tastypie.readthedocs.org/\">documentation ici</a>.</p>\n"
-"\n"
-"<p>Si vous n'êtes pas intéressé par les données de Memopol2, peut-être que "
-"<a href=\"http://parltrack.euwiki.org/dumps/\">les dumps de parltrack</a> "
-"vous seront plus utiles pour votre recherche sur le Parlement Européen, ou "
-"<a href=\"http://cpc.regardscitoyens.org/trac/wiki/API\">les dumps de "
-"nosdeputes.fr</a> pour les données françaises.</p>\n"
 
 #: templates/base.html:23
 msgid "The Political Memory of La Quadrature du Net"
@@ -384,19 +324,9 @@ msgstr "Par département"
 
 #: templates/base.html:107
 msgid ""
-" Memopol is free software <a href=\"https://gitorious.org/"
-"memopol2-0\">released</a> under the terms of the\n"
-"      <a href=\"http://www.gnu.org/licenses/agpl.html\">GNU aGPLV3+</a> - <a "
-"href=\"https://projets.lqdn.fr/projects/mempol\">Bug tracking system</a> - "
-"<a href=\"https://projets.lqdn.fr/projects/mempol/issues/new\">Report a bug</"
-"a>"
-msgstr ""
-" Memopol est un logiciel libre <a href=\"https://gitorious.org/"
-"memopol2-0\">publié</a> sous licence⏎\n"
-"      <a href=\"http://www.gnu.org/licenses/agpl.html\">GNU aGPLV3+</a> - <a "
-"href=\"https://projets.lqdn.fr/projects/mempol\">Outil de suivi des bugs</a> "
-"- <a href=\"https://projets.lqdn.fr/projects/mempol/issues/new\">Signaler un "
-"bug</a>"
+" Memopol is free software <a href=\"https://gitorious.org/memopol2-0\">released</a> under the terms of the\n"
+"      <a href=\"http://www.gnu.org/licenses/agpl.html\">GNU aGPLV3+</a> - <a href=\"https://projets.lqdn.fr/projects/mempol\">Bug tracking system</a> - <a href=\"https://projets.lqdn.fr/projects/mempol/issues/new\">Report a bug</a>"
+msgstr " Memopol est un logiciel libre <a href=\"https://gitorious.org/memopol2-0\">publié</a> sous licence⏎\n      <a href=\"http://www.gnu.org/licenses/agpl.html\">GNU aGPLV3+</a> - <a href=\"https://projets.lqdn.fr/projects/mempol\">Outil de suivi des bugs</a> - <a href=\"https://projets.lqdn.fr/projects/mempol/issues/new\">Signaler un bug</a>"
 
 #: templates/base.html:111
 msgid "Provided by"
@@ -404,7 +334,7 @@ msgstr "Fourni par"
 
 #: templates/home.html:5
 msgid "Home Page"
-msgstr ""
+msgstr "Page d'Accueil"
 
 #: templates/home.html:15 templates/index.html:22
 msgid "MEPs by country"
@@ -447,63 +377,47 @@ msgid "Search results"
 msgstr "Résultats de la recherche"
 
 #: templates/trends-documentation.html:3 templates/trends-documentation.html:6
-#, fuzzy
 msgid "Charts explanation page"
-msgstr "Explication des tendances"
+msgstr "Page d'explication des graphiques"
 
 #: templates/trends-documentation.html:7
-#, fuzzy
 msgid "Member of the European Parliament chart"
 msgstr "Eurodéputés"
 
 #: templates/trends-documentation.html:10
 msgid ""
 "\n"
-"<p>This chart gives a quick evaluation of a MEP's scores on votes regarding "
-"rights and freedoms of citizens on the internet as seen by la Quadrature du "
-"Net, and its evolution.</p>\n"
-"<p>Each bar represents a vote on an important issue, for which la Quadrature "
-"du Net has made a voting recommendation. The size of the bar represents the "
-"importance of the issue from la Quadrature du Net's point of view.</p>\n"
-"<p>The score of the MEP reflects his commitment in favor of online freedoms. "
-"It is represented both by the size and the color of the colored bar (the "
-"higher the better, the greener the better).</p>\n"
-"<p>The blue circle represents the average score of the MEP political group, "
-"the green pentagone represents the parliament's average score.</p>\n"
+"<p>This chart gives a quick evaluation of a MEP's scores on votes regarding rights and freedoms of citizens on the internet as seen by la Quadrature du Net, and its evolution.</p>\n"
+"<p>Each bar represents a vote on an important issue, for which la Quadrature du Net has made a voting recommendation. The size of the bar represents the importance of the issue from la Quadrature du Net's point of view.</p>\n"
+"<p>The score of the MEP reflects his commitment in favor of online freedoms. It is represented both by the size and the color of the colored bar (the higher the better, the greener the better).</p>\n"
+"<p>The blue circle represents the average score of the MEP political group, the green pentagone represents the parliament's average score.</p>\n"
 "<p>The figure at the top of the bar is the score.</p>\n"
-msgstr ""
+msgstr "\n<p>Ce graphique donne une évaluation rapide du score des eurodéputés concernant les droits et libertés des citoyens sur Internet, défendus par la Quadrature du Net, et leur évolution;</p>\n<p>Chaque barre représente un vote sur une question importante pour laquelle la Quadrature du Net a émis une recommandation de vote. La taille de la barre représente l'importance de la question du point de vue de la Quadrature du Net.</p>\n<p>Le score de l'eurodéputé reflète son engagement en faveur des libertés en ligne. Il est représenté à la fois par la taille et la couleur de la bare de couleur (plus la barre est haute et verte, mieux c'est).</p>\n<p>Le cercle bleu représente le score moyen du groupe politique de l'eurodéputé, le pentagone vert, le score moyen du parlement. </p>\n<p>Le chiffre en haut de la barre indique le score.</p>\n"
 
 #: templates/trends-documentation.html:18
 msgid "Vote breakdown by countries"
-msgstr ""
+msgstr "Répartition des votes par pays"
 
 #: templates/trends-documentation.html:23
 msgid ""
 "\n"
-"<p>This chart shows which countries have, in average, MEPs defending online "
-"freedoms in the European Parliament.</p>\n"
-"<p>Color represents the average scores of each country's MEPs (the greener "
-"the better).</p>\n"
-msgstr ""
+"<p>This chart shows which countries have, in average, MEPs defending online freedoms in the European Parliament.</p>\n"
+"<p>Color represents the average scores of each country's MEPs (the greener the better).</p>\n"
+msgstr "\n<p>Ce graphique montre quels pays ont, en moyenne, des eurodéputés défendant les libertés en ligne au Parlement Européen.</p>\n<p>Les couleurs représentent le score moyen des eurodéputés de chaque pays (plus c'est vert, mieux c'est).</p>\n"
 
 #: templates/trends-documentation.html:28
 msgid "Groups breakdown by score"
-msgstr ""
+msgstr "Répartition des groupes par score"
 
 #: templates/trends-documentation.html:31
 msgid ""
 "\n"
-"<p>This chart shows which political groups are defending online freedoms in "
-"the European Parliament.</p>\n"
-"<p>Each bar shows the number of MEPs from this group within a certain score "
-"range. Color represents the group.</p>\n"
-"<p>MEPS are sorted by score, in ranges of 10 points. MEPs who scored between "
-"0 and 10 are grouped together, then those who scored between 10 and 20, and "
-"so on.</p>\n"
+"<p>This chart shows which political groups are defending online freedoms in the European Parliament.</p>\n"
+"<p>Each bar shows the number of MEPs from this group within a certain score range. Color represents the group.</p>\n"
+"<p>MEPS are sorted by score, in ranges of 10 points. MEPs who scored between 0 and 10 are grouped together, then those who scored between 10 and 20, and so on.</p>\n"
 "\n"
-"<p>How to read : On ACTA, around 240 EPP members (almost all of them) have a "
-"score between 0 and 10</p>\n"
-msgstr ""
+"<p>How to read : On ACTA, around 240 EPP members (almost all of them) have a score between 0 and 10</p>\n"
+msgstr "\n<p>Ce graphique montre quels groupes politiques défendent les libretés en ligne au Parlement Européen.</p>\n<p>Chaque barre représente le nombre d'eurodéputés de ces groupes dans une certaine tranche de score. La couleur représente les groupes.</p>\n<p>Les eurodéputés sont affichés par score, par tranches de dix points. Les eurodéputés ayant entre 0 et 10 points sont affichés ensemble, puis ceux ayant entre 10 et 20, et ainsi de suite.</p>\n\n<p>LIre ainsi : sur ACTA, à peu près 240 membres de EPP (presque tous) ont un score entre 0 et 10.</p>\n"
 
 #: templates/trends-documentation.html:39
 msgid "Heatmap of votes by political group (for each country)"
@@ -512,62 +426,52 @@ msgstr ""
 #: templates/trends-documentation.html:42
 msgid ""
 "\n"
-"<p>This chart allows you to compare votes from different groups of the same "
-"country, or from different countries in the same group.</p>\n"
-"<p>It represents votes by political group (and the associated score), for "
-"each country.</p>\n"
-"<p>Each column represents a political group, each line represents a country."
-"</p>\n"
+"<p>This chart allows you to compare votes from different groups of the same country, or from different countries in the same group.</p>\n"
+"<p>It represents votes by political group (and the associated score), for each country.</p>\n"
+"<p>Each column represents a political group, each line represents a country.</p>\n"
 "<p>The size of the circle represents the number of MEPs.</p>\n"
-"<p>The color of the circle represents the average score of those MEPs for "
-"this vote.</p>\n"
+"<p>The color of the circle represents the average score of those MEPs for this vote.</p>\n"
 "\n"
-"<p>How to read : On ACTA's resolution, UK's Socialists &amp; Democrats have "
-"a bad score compared to the rest of the S&amp;D.</p>\n"
+"<p>How to read : On ACTA's resolution, UK's Socialists &amp; Democrats have a bad score compared to the rest of the S&amp;D.</p>\n"
 msgstr ""
 
 #: templates/trends-documentation.html:52
 msgid "Vote breakdown (for each group)"
-msgstr ""
+msgstr "Répartition des votes (pour chaque groupe)"
 
 #: templates/trends-documentation.html:55
 #, python-format
 msgid ""
 "\n"
-"<p>This chart represents the breakdown of a vote (for/against/abstention/"
-"absent) within each political group.</p>\n"
+"<p>This chart represents the breakdown of a vote (for/against/abstention/absent) within each political group.</p>\n"
 "<p>La Quadrature du Net's recommendation appears in green.</p>\n"
 "\n"
-"<p>How to read : 90%% of EPP voted against La Quadrature's recommendation.</"
-"p>\n"
+"<p>How to read : 90%% of EPP voted against La Quadrature's recommendation.</p>\n"
 msgstr ""
 
 #: templates/trends-documentation.html:62
 msgid "Vote breakdown by country"
-msgstr ""
+msgstr "Répartition des votes par pays"
 
 #: templates/trends-documentation.html:65
 msgid ""
 "\n"
-"<p>This chart represents the breakdown of a vote (for/against/abstention/"
-"absent) within each country.</p>\n"
+"<p>This chart represents the breakdown of a vote (for/against/abstention/absent) within each country.</p>\n"
 "<p>La Quadrature du Net's recommendation appears in green.</p>\n"
 msgstr ""
 
 #: templates/trends-documentation.html:70
 msgid "Vote breakdown (percentage)"
-msgstr ""
+msgstr "Répartition des votes (pourcentage)"
 
 #: templates/trends-documentation.html:73
 #, python-format
 msgid ""
 "\n"
-"<p>This chart represents the breakdown of a vote (for/against/abstention/"
-"absent) within each country, in percents.</p>\n"
+"<p>This chart represents the breakdown of a vote (for/against/abstention/absent) within each country, in percents.</p>\n"
 "<p>La Quadrature du Net's recommendation appears in green.</p> \n"
 "\n"
-"<p>How to read : On ACTA's resolution, 30%% of Italian MEPs voted according "
-"to La Quadrature's recommendation.</p>\n"
+"<p>How to read : On ACTA's resolution, 30%% of Italian MEPs voted according to La Quadrature's recommendation.</p>\n"
 msgstr ""
 
 #: templates/admin/base_site.html:3 templates/admin/base_site.html.py:6
@@ -593,7 +497,6 @@ msgid "Log in"
 msgstr "Se connecter"
 
 #: templates/campaign/edit.html:3
-#, fuzzy
 msgid "Campaign edit page"
 msgstr "Campagnes"
 
@@ -642,8 +545,7 @@ msgstr "En savoir plus"
 #: templates/campaign/edit.html:111 templates/campaign/view.html:143
 #: templates/campaign/view.html.py:243
 msgid "Feedback - crap will be moderated and gives you bad karma!"
-msgstr ""
-"Retour - Les conneries seront modérées et vous donneront un mauvais Karma !"
+msgstr "Retour - Les conneries seront modérées et vous donneront un mauvais Karma !"
 
 #: templates/campaign/list.html:23
 msgid "Results"
@@ -654,13 +556,11 @@ msgid "Actions"
 msgstr "Fonctions"
 
 #: templates/campaign/list.html:31
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<a href=\"/campaign/report/%(c_id)s/\">%(debriefing_count)s responses for "
 "%(mepcnt)s MEP(s)</a>"
 msgstr ""
-"<a href=\"/campaign/report/%(c.id)s/\">%(c.debriefing_set.count)s réponses "
-"pour %(mepcnt)s Eurodéputé(s)</a>"
 
 #: templates/campaign/list.html:32
 msgid "Edit influence"
@@ -755,8 +655,7 @@ msgstr "Retour !"
 #, python-format
 msgid ""
 "\n"
-"A new opinion for %(content_object)s has been suggested on the political "
-"memory.\n"
+"A new opinion for %(content_object)s has been suggested on the political memory.\n"
 "\n"
 "The opinion reads as follows:\n"
 "%(comment_content)s\n"
@@ -765,11 +664,11 @@ msgstr ""
 
 #: templates/comments/comment_notification_email.txt:9
 msgid "To validate the publication of the opinion follow this link:"
-msgstr ""
+msgstr "Pour valider la publication de cette prise de position, suivre ce lien :"
 
 #: templates/comments/comment_notification_email.txt:11
 msgid "To delete this suggestion of opinion follow this link:"
-msgstr ""
+msgstr "Pour supprimer la suggestion de prise de position, suivre ce lien :"
 
 #: templates/comments/form.html:19 templates/comments/preview.html:33
 msgid "Post"
@@ -780,7 +679,6 @@ msgid "Preview"
 msgstr "Aperçu"
 
 #: templates/comments/posted.html:3
-#, fuzzy
 msgid "Thanks for your contribution"
 msgstr "Merci pour votre contribution"
 
@@ -822,14 +720,13 @@ msgid "Thanks, your feedback has been sent to the development team!"
 msgstr "Merci, votre retour a été envoyé à l'équipe de développement !"
 
 #: templates/meps/building_detail.html:3 templates/meps/building_detail.html:7
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Members of the European Parliament in %(building_name)s of the %(floor)sth "
 "floor"
 msgstr "Eurodéputés situés au %(floor)s e étage du bâtiment %(building.name)s"
 
 #: templates/meps/building_list.html:4 templates/meps/building_list.html:10
-#, fuzzy
 msgid "Members of the European Parliament by floor"
 msgstr "Eurodéputés"
 
@@ -838,7 +735,7 @@ msgid "floor"
 msgstr "étage"
 
 #: templates/meps/by_group.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Members of the European Parliament from %(groupe_name)s"
 msgstr "Eurodéputés"
 
@@ -847,39 +744,33 @@ msgid " from "
 msgstr "de"
 
 #: templates/meps/committee_list.html:4 templates/meps/committee_list.html:8
-#, fuzzy
 msgid "Members of the European Parliament by committee"
 msgstr "Eurodéputés"
 
 #: templates/meps/committee_list.html:15 templates/meps/country_list.html:22
 #: templates/meps/delegation_list.html:15 templates/meps/group_list.html:23
 #: templates/meps/localparty_list.html:19
-#, fuzzy, python-format
+#, python-format
 msgid " - %(count)s Members "
-msgstr " - %(count)s députés "
+msgstr "- %(count)s députés"
 
 #: templates/meps/country_list.html:5 templates/meps/country_list.html:10
-#, fuzzy
 msgid "Members of the European Parliament by country"
 msgstr "Eurodéputés"
 
 #: templates/meps/delegation_list.html:4
-#, fuzzy
 msgid "Members of European Parliament by delegation"
 msgstr "Eurodéputés"
 
 #: templates/meps/delegation_list.html:8
-#, fuzzy
 msgid "Members of the European Parliament by delegation"
 msgstr "Eurodéputés"
 
 #: templates/meps/group_list.html:5 templates/meps/group_list.html.py:10
-#, fuzzy
 msgid "Members of the European Parliament by political group"
 msgstr "Eurodéputés"
 
 #: templates/meps/localparty_list.html:4 templates/meps/localparty_list.html:8
-#, fuzzy
 msgid "Members of the European Parliament by local party"
 msgstr "Eurodéputés"
 
@@ -930,12 +821,10 @@ msgid "Former mep"
 msgstr "Ancien eurodéputé"
 
 #: templates/meps/mep_detail.html:61 templates/meps/opinion_detail.html:33
-#, fuzzy
 msgid "Political group"
 msgstr "Groupe politique&nbsp;: "
 
 #: templates/meps/mep_detail.html:67 templates/meps/opinion_detail.html:39
-#, fuzzy
 msgid "National party"
 msgstr "Parti local&nbsp;:"
 
@@ -959,7 +848,7 @@ msgstr "Comités"
 
 #: templates/meps/mep_detail.html:84 templates/meps/mep_detail.html.py:95
 msgid "of"
-msgstr ""
+msgstr "de"
 
 #: templates/meps/mep_detail.html:92
 msgid "Delegations"
@@ -974,9 +863,9 @@ msgid "Opinions (memopol v1)"
 msgstr "Prises de position (memopol v1)"
 
 #: templates/meps/mep_detail.html:117
-#, fuzzy, python-format
+#, python-format
 msgid "(on %(opinion_date)s)"
-msgstr "(le %(line.date)s)"
+msgstr "(le %(opinion_date)s)"
 
 #: templates/meps/mep_detail.html:117 templates/meps/mep_detail.html.py:131
 msgid "Read more..."
@@ -987,9 +876,9 @@ msgid "Total score:"
 msgstr "Score total&nbsp;:"
 
 #: templates/meps/mep_detail.html:131
-#, fuzzy, python-format
+#, python-format
 msgid "(on %(score_date)s)"
-msgstr "(le %(score.date)s)"
+msgstr ""
 
 #: templates/meps/mep_detail.html:138 templates/meps/proposal_detail.html:18
 #: templates/meps/proposal_detail.html:23
@@ -1009,13 +898,10 @@ msgid "Add a public position"
 msgstr "Ajouter une position publique"
 
 #: templates/meps/mep_detail.html:158
-#, fuzzy
 msgid ""
 "Help us keep track of the public positions taken by this member of the "
 "European Parliament."
 msgstr ""
-"Aidez-nous à garder des traces des positions publiques prises par cet "
-"eurodéputé"
 
 #: templates/meps/mep_raw.html:17
 msgid "Back to normal view"
@@ -1062,64 +948,56 @@ msgstr ""
 #: templates/meps/opinion_detail.html:8
 #, python-format
 msgid "\"%(opinion_title)s\", opinion expressed by %(mep)s"
-msgstr ""
+msgstr "\"%(opinion_title)s\", opinion exprimée par %(mep)s"
 
 #: templates/meps/opinion_detail.html:18
 #, python-format
 msgid ""
-"\"%(opinion_title)s\", opinion expressed by <a href=\"%(mep_url)s\">%(mep)s</"
-"a> on %(opinion_date)s"
-msgstr ""
+"\"%(opinion_title)s\", opinion expressed by <a "
+"href=\"%(mep_url)s\">%(mep)s</a> on %(opinion_date)s"
+msgstr "\"%(opinion_title)s\", prise de position affichée par  <a href=\"%(mep_url)s\">%(mep)s</a> le %(opinion_date)s"
 
 #: templates/meps/opinion_detail.html:20
 #, python-format
 msgid ""
-"\"%(opinion_title)s\", opinion expressed by <a href=\"%(mep_url)s\">%(mep)s</"
-"a>"
-msgstr ""
+"\"%(opinion_title)s\", opinion expressed by <a "
+"href=\"%(mep_url)s\">%(mep)s</a>"
+msgstr "\"%(opinion_title)s\", prise de position affichée par <a href=\"%(mep_url)s\">%(mep)s</a>"
 
 #: templates/meps/opinion_detail.html:48
 #, python-format
 msgid ""
 "Members of the European Parliament that have expressed themselves on "
 "%(opinion_title)s"
-msgstr ""
+msgstr "Membres du Parlement Européen s'étant exprimés à propos de %(opinion_title)s"
 
 #: templates/meps/opinion_detail.html:52
-#, fuzzy
 msgid "Expressed opinion"
 msgstr "Opinions exprimées"
 
 #: templates/meps/opinion_detail.html:54 templates/meps/opinion_detail.html:56
 msgid "Link to opinion source"
-msgstr ""
+msgstr "Lien vers la source de la prise de position"
 
 #: templates/meps/organization_list.html:4
 #: templates/meps/organization_list.html:8
-#, fuzzy
 msgid "Members of the European Parliament by instances"
 msgstr "Eurodéputés"
 
 #: templates/meps/per_mep.html:3
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Votes of %(representative_first_name)s %(representative_last_name)s on "
 "%(proposal_title)s"
 msgstr ""
-"Votes de <a href=\"%(mep_url)s\">%(representative_first_name)s "
-"%(representative_last_name)s</a> sur <a href=\"%(proposal_url)s\">"
-"%(proposal_title)s</a>"
 
 #: templates/meps/per_mep.html:8
 #, python-format
 msgid ""
 "Votes of <a href=\"%(mep_url)s\">%(representative_first_name)s "
-"%(representative_last_name)s</a> on <a href=\"%(proposal_url)s\">"
-"%(proposal_title)s</a>"
-msgstr ""
-"Votes de <a href=\"%(mep_url)s\">%(representative_first_name)s "
-"%(representative_last_name)s</a> sur <a href=\"%(proposal_url)s\">"
-"%(proposal_title)s</a>"
+"%(representative_last_name)s</a> on <a "
+"href=\"%(proposal_url)s\">%(proposal_title)s</a>"
+msgstr "Votes de <a href=\"%(mep_url)s\">%(representative_first_name)s %(representative_last_name)s</a> sur <a href=\"%(proposal_url)s\">%(proposal_title)s</a>"
 
 #: templates/meps/per_mep.html:16 templates/meps/proposal_detail.html:42
 #: templates/mps/proposal_detail.html:24
@@ -1143,7 +1021,7 @@ msgstr "Vote"
 #: templates/meps/proposal_detail.html:3 templates/mps/proposal_detail.html:5
 #, python-format
 msgid "%(vote_title)s"
-msgstr ""
+msgstr "%(vote_title)s"
 
 #: templates/meps/proposal_detail.html:46
 #: templates/mps/proposal_detail.html:28
@@ -1152,37 +1030,31 @@ msgstr "Poids"
 
 #: templates/meps/proposal_detail.html:48
 #: templates/mps/proposal_detail.html:30
-#, fuzzy, python-format
+#, python-format
 msgid ""
-"Votes (%(significant_votes_count)s significant) (<a href="
-"\"%(recommendation_url)s\">full list</a>)"
+"Votes (%(significant_votes_count)s significant) (<a "
+"href=\"%(recommendation_url)s\">full list</a>)"
 msgstr ""
-"Votes (%(significant_votes.count)s significatifs) (<a href="
-"\"%(recommendation_url)s\">liste complète</a>)"
 
 #: templates/meps/query.html:3
 msgid "Custom queries engine"
-msgstr ""
+msgstr "Moteur de recherche personnalisé"
 
 #: templates/meps/recommendation_detail.html:3
 #: templates/mps/recommendation_detail.html:3
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Recommendation on %(recommendation_subject)s for the proposal "
 "%(proposal_title)s"
 msgstr ""
-"Recommendation sur %(recommendation.subject)s pour la proposition <a href="
-"\"%(proposal_url)s\">%(proposal.title)s</a>"
 
 #: templates/meps/recommendation_detail.html:8
 #: templates/mps/recommendation_detail.html:8
-#, fuzzy, python-format
+#, python-format
 msgid ""
-"Recommendation on %(recommendation_subject)s for the proposal <a href="
-"\"%(proposal_url)s\">%(proposal_title)s</a>"
+"Recommendation on %(recommendation_subject)s for the proposal <a "
+"href=\"%(proposal_url)s\">%(proposal_title)s</a>"
 msgstr ""
-"Recommendation sur %(recommendation.subject)s pour la proposition <a href="
-"\"%(proposal_url)s\">%(proposal.title)s</a>"
 
 #: templates/meps/recommendation_detail.html:15
 #: templates/mps/recommendation_detail.html:15
@@ -1204,19 +1076,16 @@ msgid "on"
 msgstr "sur"
 
 #: templates/reps/opinion_list.html:4 templates/reps/opinion_list.html.py:8
-#, fuzzy
 msgid "Members of the European Parliament by opinions"
 msgstr "Eurodéputés"
 
 #: templates/votes/header_mep_list.html:3
-#, fuzzy, python-format
+#, python-format
 msgid ""
-"MEPs that have voted \"%(choice)s\" on <a href=\"%(recommendation)s\">"
-"%(part)s</a> of <a href=\"%(vote_detail)s\">%(proposal_title)s</a>"
+"MEPs that have voted \"%(choice)s\" on <a "
+"href=\"%(recommendation)s\">%(part)s</a> of <a "
+"href=\"%(vote_detail)s\">%(proposal_title)s</a>"
 msgstr ""
-"Eurodéputé qui ont voté \"%(choice)s\" sur <a href=\"%(recommendation)s\">"
-"%(recommendation.part)s</a> de <a href=\"%(vote_detail)s\">"
-"%(recommendation.proposal.title)s</a>"
 
 #: templates/votes/legend.html:2
 msgid "Legend"
@@ -1235,18 +1104,16 @@ msgid "Abstention or absent"
 msgstr "Abstention ou absence"
 
 #: templates/votes/recommendationdata_detail.html:21
-#, fuzzy, python-format
+#, python-format
 msgid ""
-"Imported: %(object_imported)s as <a href=\"%(recommendation_url)s\">"
-"%(recommendation_title)s</a>"
+"Imported: %(object_imported)s as <a "
+"href=\"%(recommendation_url)s\">%(recommendation_title)s</a>"
 msgstr ""
-"Importé&nbsp;: %(object.imported)s sous le nom <a href="
-"\"%(recommendation_url)s\">%(object.recommendation.title)s</a>"
 
 #: templates/votes/recommendationdata_detail.html:23
-#, fuzzy, python-format
+#, python-format
 msgid "Imported: %(imported)s"
-msgstr "Importé&nbsp;: %(object.imported)s"
+msgstr "Votes à importer"
 
 #: templates/votes/recommendationdata_detail.html:25
 msgid "Date:"
@@ -1256,183 +1123,68 @@ msgstr "Date&nbsp;:"
 msgid "Importable votes"
 msgstr "Votes à importer"
 
-# better ? 
 #~ msgid "Constituent Country"
-#~ msgstr "Pays"
+#~ msgstr "Constituent Country"
 
 #~ msgid "Political Group"
-#~ msgstr "Groupe politique"
+#~ msgstr "Political Group"
 
 #~ msgid "Commitee"
-#~ msgstr "Commission"
+#~ msgstr "Commitee"
 
 #~ msgid "Political group: "
-#~ msgstr "Groupe politique&nbsp;: "
+#~ msgstr "Political group: "
 
 #~ msgid "National party: "
-#~ msgstr "Parti local&nbsp;:"
-
-#~ msgid "Mandates"
-#~ msgstr "Mandats"
-
-#, fuzzy
-#~ msgid ""
-#~ "Was MEP of <a href=\"%(countryurl)s\">%(country_name)s</a> for <a href="
-#~ "\"%(partyurl)s\">%(party)s</a> from %(rolebegin)s to %(roleend)s"
-#~ msgstr ""
-#~ "Était eurodéputé de <a href=\"%(countryurl)s\">%(role.country.name)s</a> "
-#~ "pour le parti <a href=\"%(partyurl)s\">%(role.party)s</a> du "
-#~ "%(rolebegin)s au %(roleend)s"
-
-#, fuzzy
-#~ msgid ""
-#~ "Was MEP of <a href=\"%(countryurl)s\">%(country_name)s</a> from "
-#~ "%(rolebegin)s to %(roleend)s"
-#~ msgstr ""
-#~ "Était eurodéputé de <a href=\"%(countryurl)s\">%(role.country.name)s</a> "
-#~ "du %(rolebegin)s au %(roleend)s"
-
-#, fuzzy
-#~ msgid ""
-#~ "Is MEP of <a href=\"%(countryurl)s\">%(country_name)s</a> for <a href="
-#~ "\"%(partyurl)s\">%(party)s</a> from %(rolebegin)s"
-#~ msgstr ""
-#~ "Est eurodéputé de <a href=\"%(countryurl)s\">%(role.country.name)s</a> "
-#~ "pour le parti <a href=\"%(partyurl)s\">%(role.party)s</a> depuis le "
-#~ "%(rolebegin)s"
-
-#, fuzzy
-#~ msgid ""
-#~ "Is MEP of <a href=\"%(countryurl)s\">%(country_name)s</a> from "
-#~ "%(rolebegin)s"
-#~ msgstr ""
-#~ "Est eurodéputé de <a href=\"%(countryurl)s\">%(role.country.name)s</a> "
-#~ "depuis le %(rolebegin)s"
-
-#~ msgid "Groups"
-#~ msgstr "Groupes"
-
-#, fuzzy
-#~ msgid ""
-#~ "Was MEP for <a href=\"%(groupurl)s\">%(group_name)s "
-#~ "(%(group_abbreviation)s)</a> from %(groupbegin)s to %(groupend)s"
-#~ msgstr ""
-#~ "Était député européen pour le groupe <a href=\"%(groupurl)s\">"
-#~ "%(mep.group.name)s (%(mep.group.abbreviation)s)</a> du %(groupbegin)s au "
-#~ "%(groupend)s"
-
-#, fuzzy
-#~ msgid ""
-#~ "Is MEP for <a href=\"%(groupurl)s\">%(group_name)s "
-#~ "(%(group_abbreviation)s)</a> from %(groupbegin)s"
-#~ msgstr ""
-#~ "Est député européen pour le groupe <a href=\"%(groupurl)s\">"
-#~ "%(mep.group.name)s (%(mep.group.abbreviation)s)</a> depuis le "
-#~ "%(groupbegin)s"
-
-#, fuzzy
-#~ msgid "Was %(role)s in %(role_committee)s from %(rolebegin)s to %(roleend)s"
-#~ msgstr ""
-#~ "Était %(role)s dans la commission %(role.committee)s du %(rolebegin)s au "
-#~ "%(roleend)s"
-
-#, fuzzy
-#~ msgid "Is %(role)s in %(role_committee)s from %(rolebegin)s"
-#~ msgstr ""
-#~ "Est %(role)s dans la commission %(role.committee)s depuis le %(rolebegin)s"
-
-#, fuzzy
-#~ msgid ""
-#~ "Was %(role)s in %(role_delegation)s from %(rolebegin)s to %(roleend)s"
-#~ msgstr ""
-#~ "Était %(role)s dans la délégation %(role.delegation)s du %(rolebegin)s au "
-#~ "%(roleend)s"
-
-#, fuzzy
-#~ msgid "Is %(role)s in %(role_delegation)s from %(rolebegin)s"
-#~ msgstr ""
-#~ "Est %(role)s dans la délégation %(role.delegation)s depuis le "
-#~ "%(rolebegin)s"
+#~ msgstr "National party: "
 
 #~ msgid "Old staff"
-#~ msgstr "Ancienne équipe"
+#~ msgstr "Old staff"
 
 #~ msgid "to"
-#~ msgstr "à"
-
-#, fuzzy
-#~ msgid ""
-#~ "Was %(staff_role)s in %(organization_name)s from %(staff_begin)s to "
-#~ "%(staff_end)s"
-#~ msgstr ""
-#~ "Était %(staff.role)s dans %(staff.organization.name)s du %(staff.begin)s "
-#~ "au %(staff.end)s"
-
-#, fuzzy
-#~ msgid "Is %(staff_role)s in %(organization_name)s from %(staff_begin)s"
-#~ msgstr ""
-#~ "Est %(staff.role)s dans %(staff.organization.name)s depuis le "
-#~ "%(staff.begin)s"
+#~ msgstr "to"
 
 #~ msgid "Score:"
-#~ msgstr "Score&nbsp;:"
-
-#~ msgid ""
-#~ "Recommendation on %(recommendation.subject)s for the proposal <a href="
-#~ "\"%(proposal_url)s\">%(proposal.title)s</a>"
-#~ msgstr ""
-#~ "Recommendation sur %(recommendation.subject)s pour la proposition <a href="
-#~ "\"%(proposal_url)s\">%(proposal.title)s</a>"
+#~ msgstr "Scores average"
 
 #~ msgid "Thanks for contributing"
-#~ msgstr "Merci d'avoir contribué"
+#~ msgstr "Thanks for contributing"
 
 #~ msgid "MEPs by floor"
-#~ msgstr "Eurodéputés par étage"
+#~ msgstr "MEPs by floor"
 
 #~ msgid "MEPs by delegation"
-#~ msgstr "Eurodéputés par délégation"
+#~ msgstr "MEPs by delegation"
 
 #~ msgid "MEPs by local party"
-#~ msgstr "Eurodéputés par parti local"
+#~ msgstr "MEPs by local party"
 
 #~ msgid "Political Memory: "
-#~ msgstr "Mémoire Politique :"
+#~ msgstr "Political Memory: "
 
 #~ msgid "MEP by instances"
-#~ msgstr "Eurodéputés par instance"
+#~ msgstr "MEP by instances"
 
 #~ msgid "MEPs by opinions"
-#~ msgstr "Eurodéputés par opinion"
+#~ msgstr "MEPs by opinions"
 
 #~ msgid "No description yet."
-#~ msgstr "Aucune description pour l'instant."
+#~ msgstr "Campaigns"
 
-#, fuzzy
-#~ msgid "from group"
-#~ msgstr "Groupes précédents"
-
-#, fuzzy
-#~ msgid "Tel.:"
-#~ msgstr "Tel."
-
-#, fuzzy
-#~ msgid "Website:"
-#~ msgstr "Site web :"
-
-#, fuzzy
-#~ msgid ""
-#~ "Political Memory: %(mep)s, member of the european parliament - Memopol"
-#~ msgstr ", eurodéputé"
+#~ msgid "French deputies "
+#~ msgstr "French deputies "
 
 #~ msgid "Total score"
-#~ msgstr "Score total"
+#~ msgstr "Total score"
 
 #~ msgid "Current mandate page on the website of the European Parliament"
-#~ msgstr "Page du mandat actuel sur le site du Parlement européen"
+#~ msgstr "Current mandate page on the website of the European Parliament"
 
 #~ msgid "Previous mandates"
-#~ msgstr "Précédents mandats"
+#~ msgstr "Previous mandates"
+
+#~ msgid "Previous groups"
+#~ msgstr "Previous groups"
 
 #~ msgid "Members of the French AN"
 #~ msgstr "Members of the French AN"
@@ -1442,6 +1194,9 @@ msgstr "Votes à importer"
 
 #~ msgid "French MPs by political group"
 #~ msgstr "French MPs by political group"
+
+#~ msgid "Web&nbsp;: "
+#~ msgstr "Web&nbsp;: "
 
 #~ msgid ", member of the french parliament"
 #~ msgstr ", member of the french parliament"
