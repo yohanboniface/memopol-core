@@ -74,6 +74,7 @@
             </ul>
 
 
+            {% comment %}
             <h2><a href="{% url campaign:list %}">{% trans "Campaigns" %}</a></h2>
             {% if campaigns %}
             <ul>
@@ -82,6 +83,7 @@
                 {% endfor %}
             </ul>
             {% endif %}
+            {% endcomment %}
 
             <h2>{% trans "French deputies" %} <img src="{{ MEDIA_URL }}/img/countries/small/FR.png" alt="FR flag"/></h2>
             <ul>

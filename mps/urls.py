@@ -25,7 +25,7 @@ urlpatterns = patterns('mps.views',
 
     url(r'^vote/', include("mps_votes.urls", namespace="votes", app_name="mps_urls")),
 
-    url(r'^votes/$', lambda request: redirect(reverse("mps:index_votes"))),
+    url(r'^votes/$', lambda request: redirect(reverse("mps:votes:index_votes"))),
 
     url(r'^nosdeputes/(?P<pk>.+)/$', 'get_nosdeputes_widget')
 )
