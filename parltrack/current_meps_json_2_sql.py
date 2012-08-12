@@ -310,7 +310,7 @@ def manage_mep(mep, mep_json):
     add_committees(mep, mep_json.get("Committees", []))
     add_delegations(mep, mep_json.get("Delegations", []))
     add_countries(mep, mep_json["Constituencies"])
-    add_groups(mep, mep_json["Groups"])
+    add_groups(mep, mep_json.get("Groups", []))
     if mep_json.get("Addresses"):
         add_addrs(mep, mep_json["Addresses"])
     add_organizations(mep, mep_json.get("Staff", []))
