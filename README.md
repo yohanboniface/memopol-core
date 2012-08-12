@@ -104,6 +104,19 @@ Run the server
 
 Your application is available on http://localhost:8000/
 
+And you're done, but you might want to take a look at the next section
+depanding on what you want to dev.
+
+Updating memopol's data
+=======================
+
+You might want to get the last data for the European Parliament. To do so you
+need to got into the parltrack/ directory and run:
+
+    ./import_current_meps.sh
+
+This might take some time. Be sure to do that after having run "init".
+
 Small lexicon
 =============
 
