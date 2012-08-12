@@ -54,7 +54,7 @@ Archlinux
 
 Install the following to have the tools on Archlinux (please note that you may have to adapt the following install procedure):
 
-    pacman -S python2 libxml2 libxslt freetype2 python-lxml python2-pip python2-virtualenv libpng mercurial git imagemagick
+    pacman -S python2 libxml2 libxslt freetype2 python-lxml python2-pip python2-virtualenv libpng mercurial git imagemagick tidyhtml
 
 Fedora
 ------

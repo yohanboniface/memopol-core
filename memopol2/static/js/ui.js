@@ -32,6 +32,18 @@ $('#content h1:first').addClass('document-title');
 
 var FILTERS_SELECT_LABEL = "Select...";// FIXME: not suitable for I18n
 // table
+$.tablesorter.addParser({
+    id: 'votes',
+    is: function(s) {
+        // return false so this parser is not auto detected
+        return false;
+    },
+    format: function(s, table, cell, cellIndex) {
+        // get a bloc of digits [0-9.]+, remove the rest
+        return s.replace(/^([^]*[^0-9.])?([0-9.]+)([^0-9.][^]*)?$/, '$2')
+    },
+    type: 'numeric'
+});
 $("table.mep-list").tablesorter();
 $("table.mp-list").tablesorter({ headers: { 2: { sorter: false }, }  });
 try {
