@@ -364,7 +364,7 @@ if __name__ == "__main__":
         a = 0
         for mep_json in meps:
             a += 1
-            print a, "-", mep_json["Name"]["full"]
+            print a, "-", mep_json["Name"]["full"].encode("Utf-8")
             in_db_mep = MEP.objects.filter(ep_id=int(mep_json["UserID"]))
             if in_db_mep:
                 mep = in_db_mep[0]
