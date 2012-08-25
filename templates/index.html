@@ -11,7 +11,7 @@
     <ul class="col">
         {% for mep in meps %}
             <li>
-                <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group|cut:"/" }}.png" />
+                <img class="grouplogo" src="{{ STATIC_URL }}img/groups/eu/{{ mep.group|cut:"/" }}.png" />
                 <a href="{% url meps:mep mep.id %}">{{ mep.last }} {{ mep.first }}</a>
             </li>
         {% endfor %}
@@ -25,7 +25,7 @@
     {% for country in countries %}
         <li>
             <a href="{% url meps:index_by_country country.key %}">
-                <img src="{{ MEDIA_URL }}img/countries/small/{{ country.key }}.png"/>
+                <img src="{{ STATIC_URL }}img/countries/small/{{ country.key }}.png"/>
                 {{ country.value.name }}</a>&nbsp;
             {% blocktrans with country.value.count as count %} - {{ count }} MEPs {% endblocktrans %}
         </li>
@@ -50,7 +50,7 @@
     {% for group in groups %}
         <li>
             <a href="{% url meps:index_by_group group.key %}">
-            <img src="{{ MEDIA_URL }}img/groups/eu/{{ group.key|cut:"/" }}.png" />
+            <img src="{{ STATIC_URL }}img/groups/eu/{{ group.key|cut:"/" }}.png" />
             </a>
             <a href="{% url meps:index_by_group group.key %}">
                 {{ group.value.name }} ({{ group.key }})

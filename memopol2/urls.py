@@ -1,12 +1,11 @@
-import os
-
 from django.contrib.sitemaps import GenericSitemap
 from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.contrib import admin
-from django.views.static import serve
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 from mps.models import MP
 from meps.models import Committee
 from votes.models import Proposal
@@ -41,7 +40,7 @@ if settings.APPS_DEBUG:
 
 
 class RobotsTxt(TemplateView):
-    template_name="robots.txt"
+    template_name = "robots.txt"
 
     def render_to_response(self, context, **response_kwargs):
         response_kwargs['mimetype'] = 'text/plain'
@@ -52,8 +51,7 @@ class RobotsTxt(TemplateView):
         context["DEBUG"] = settings.DEBUG
         return context
 
-
-urlpatterns = patterns('', # pylint: disable=C0103
+urlpatterns = patterns('',  # pylint: disable=C0103
     url(r'^$', direct_to_template, {'template': 'home.html', 'extra_context': home}, name='index'),
     url(r'^api/$', direct_to_template, {'template': 'api.html', 'extra_context': {"root_url": settings.ROOT_URL}}, name='api_doc'),
     url(r'^europe/parliament/', include('meps.urls', namespace='meps', app_name='meps')),
@@ -72,10 +70,4 @@ urlpatterns = patterns('', # pylint: disable=C0103
     url(r'^api/', include(v1_api.urls)),
 )
 
-# hack to autodiscover static files location in dev mode
-if settings.DEBUG:
-    urlpatterns += patterns('',
-        url(r'^static/(.*)$', serve, {'document_root': os.path.join(settings.PROJECT_PATH, 'static')}),
-    )
-# TODO: static files location in production
-# should never be served by django, settings.MEDIA_URL is the right way to do
+urlpatterns += staticfiles_urlpatterns()

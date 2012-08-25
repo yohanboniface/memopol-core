@@ -1,15 +1,15 @@
 {% block head %}
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="{{ MEDIA_URL }}css/map.css" type="text/css" />
+   <link rel="stylesheet" href="{{ STATIC_URL }}css/map.css" type="text/css" />
 {% endblock %}
 
 {% block javascript %}
-   <script type="text/javascript" src="{{ MEDIA_URL }}js/script.min.js"></script>
+   <script type="text/javascript" src="{{ STATIC_URL }}js/script.min.js"></script>
    <script type="text/javascript">
-      $script(['{{ MEDIA_URL }}js/jquery.min.js'], 'jquery');
-      $script(['{{ MEDIA_URL }}js/raphael.min.js', '{{ MEDIA_URL }}js/kartograph.min.js', '{{ MEDIA_URL }}js/chroma.min.js', '{{ MEDIA_URL }}js/qtip.min.js'], 'kartograph');
+      $script(['{{ STATIC_URL }}js/jquery.min.js'], 'jquery');
+      $script(['{{ STATIC_URL }}js/raphael.min.js', '{{ STATIC_URL }}js/kartograph.min.js', '{{ STATIC_URL }}js/chroma.min.js', '{{ STATIC_URL }}js/qtip.min.js'], 'kartograph');
    </script>
-   <script type="text/javascript" src="{{ MEDIA_URL }}js/map.js"></script>
+   <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
 {% endblock %}
 
 <div id="map"></div>

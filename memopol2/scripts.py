@@ -8,7 +8,7 @@ meps_templates = dict(
     country=Template('''
         {% if country %}
         <a href="{% url meps:index_by_country country.code %}">
-          <img src="{{ MEDIA_URL }}img/countries/small/{{ country.code }}.png"/>
+          <img src="{{ STATIC_URL }}img/countries/small/{{ country.code }}.png"/>
           {{ country.name }}
         </a>
         {% else %}
@@ -18,7 +18,7 @@ meps_templates = dict(
     group=Template('''
         {% if group %}
         <a href="{% url meps:index_by_group group.abbreviation %}">
-          <img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ group.abbreviation|cut:"/" }}.png" />
+          <img class="grouplogo" src="{{ STATIC_URL }}img/groups/eu/{{ group.abbreviation|cut:"/" }}.png" />
           {{ mep.group.abbreviation }}
         </a>
         {% else %}
@@ -46,7 +46,7 @@ def gen_templates():
         ctx = Context(dict(mep=mep,
                            country=mep.countrymep_set.latest('end').country,
                            group=mep.groupmep_set.latest('end').group,
-                           MEDIA_URL=settings.MEDIA_URL))
+                           STATIC_URL=settings.STATIC_URL))
         for name, tmpl in meps_templates.items():
             value = tmpl.render(ctx)
             filename = os.path.join(dirname, 'mep-%s-%s.html' % (mep.id, name))
