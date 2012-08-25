@@ -65,11 +65,6 @@ MEDIA_URL = '/medias/'
 # FIXME: remove this setting, use MEDIA_ROOT instead
 MEDIA_DIRECTORY = os.path.join(PROJECT_PATH, MEDIA_URL.lstrip('/'))
 
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
-
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'pw93$2vi7^b_8q#-j@z2#2rc-x7e(vcqmi)ekf9%8h57)#caoy'
 
@@ -132,6 +127,11 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_PATH, "static"),
 )
 
+# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
+# trailing slash.
+# Examples: "http://foo.com/media/", "/media/".
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+
 INSTALLED_APPS = (
     # django
     'django.contrib.auth',
@@ -161,6 +161,9 @@ INSTALLED_APPS = (
     'search',
     'gunicorn',
     'positions',
+    'haystack',
+    'ajax_select',
+    'dynamiq',
 )
 
 if APPS_DEBUG:
@@ -236,6 +239,19 @@ CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 COMMENTS_APP = 'positions'
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': WHOOSH_INDEX,
+    },
+}
+HAYSTACK_DOCUMENT_FIELD = "fulltext"
+AJAX_LOOKUP_CHANNELS = {
+    # dynamiq_search is a "fake" channel, it's used to dynamically switch channels
+    # in javascript - the widget needs a real one to start with something...
+    'dynamiq_search': ('dynamiq.ajax_lookups', 'DynamiqAjaxLookupSearch'),
+}
 
 try:
     from settings_local import *

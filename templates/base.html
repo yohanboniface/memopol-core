@@ -8,11 +8,15 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/reset.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/fluid_grid.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/main.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}dynamiq/css/dynamiq.css" />
     {% block head %}{% endblock %}
     <title>{% block title %}Home{% endblock %} - {{ title|default:"The Political Memory of la Quadrature du Net" }}</title>
     <!--[if IE]>
     <script src="{{ STATIC_URL }}js/html5.js"></script>
     <![endif]-->
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui-1.8.22.custom.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/ajax_select.js"></script>
 </head>
 
 <body {% block bodyattrs %}{% endblock %}>
@@ -119,7 +123,6 @@
 
 <div id="livesearch" class="hidden" alt="{% url search_xhr %}"></div>
 
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.6.3.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.metadata.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.hashchange.min.js"></script>
