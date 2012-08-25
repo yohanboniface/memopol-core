@@ -4,14 +4,14 @@
 <html {% block htmlattrs %}{% endblock %}>
 <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="{{ MEDIA_URL }}img/favicon.ico" />
-    <link rel="stylesheet" href="{{ MEDIA_URL }}css/reset.css" />
-    <link rel="stylesheet" href="{{ MEDIA_URL }}css/fluid_grid.css" />
-    <link rel="stylesheet" href="{{ MEDIA_URL }}css/main.css" />
+    <link rel="icon" type="image/png" href="{{ STATIC_URL }}img/favicon.ico" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/reset.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/fluid_grid.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/main.css" />
     {% block head %}{% endblock %}
     <title>{% block title %}Home{% endblock %} - {{ title|default:"The Political Memory of la Quadrature du Net" }}</title>
     <!--[if IE]>
-    <script src="{{ MEDIA_URL }}js/html5.js"></script>
+    <script src="{{ STATIC_URL }}js/html5.js"></script>
     <![endif]-->
 </head>
 
@@ -57,7 +57,7 @@
               </form>
             </div>
 
-            <h2>{% trans "Eurodeputies " %}<img src="{{ MEDIA_URL }}img/countries/small/EU.png" alt="EU flag"/></h2>
+            <h2>{% trans "Eurodeputies " %}<img src="{{ STATIC_URL }}img/countries/small/EU.png" alt="EU flag"/></h2>
             <ul>
                 <li><a href="{% url meps:index_names %}">{% trans "By name" %}</a></li>
                 <li><a href="{% url meps:index_countries %}">{% trans "By country" %}</a></li>
@@ -85,7 +85,8 @@
             {% endif %}
             {% endcomment %}
 
-            <h2>{% trans "French deputies" %} <img src="{{ MEDIA_URL }}img/countries/small/FR.png" alt="FR flag"/></h2>
+            <h2>{% trans "French deputies " %}<img src="{{ STATIC_URL }}img/countries/small/FR.png" alt="FR flag"/></h2>
+
             <ul>
                 <li><a href="{% url mps:index %}">{% trans "By name" %}</a></li>
                 <li><a href="{% url mps:index_groups %}">{% trans "By political group" %}</a></li>
@@ -118,12 +119,12 @@
 
 <div id="livesearch" class="hidden" alt="{% url search_xhr %}"></div>
 
-<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.6.3.min.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.tablesorter.min.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.metadata.min.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.hashchange.min.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/picnet.table.filter.min.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/ui.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.6.3.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.metadata.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.hashchange.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/picnet.table.filter.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/ui.js"></script>
 {% block javascript %}{% endblock %}
 </body>
 </html>
