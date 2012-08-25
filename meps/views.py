@@ -16,12 +16,19 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.db.models import Q
+from django.views.generic import TemplateView
+
+from haystack.query import SearchQuerySet, EmptySearchQuerySet
+
+from dynamiq.utils import get_advanced_search_formset_class, FiltersBuilder
+from dynamiq.shortcuts import SearchShortcut
 
 from memopol2.utils import check_dir, send_file, get_content_cache
 
 from models import LocalParty, Building, MEP, CountryMEP, GroupMEP, Committee, Group, Country, Organization, Delegation
 from reps.models import Email
 from votes.models import Score, Vote
+from .forms import MEPSearchForm, MEPSearchAdvancedFormset, MEPSearchOptionsForm
 
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
 
@@ -48,6 +55,85 @@ convert_arguments_table = {
     "true": True,
     "false": False,
 }
+
+
+class MEPBaseShortcut(SearchShortcut):
+    base_url_name = "meps:mep_search"
+
+
+class TopRated(MEPBaseShortcut):
+    title = u"Top rated"
+
+    def __init__(self, request):
+        super(TopRated, self).__init__(request)
+        self.options = {
+            'sort': MEPSearchOptionsForm.SORT.TOTAL_SCORE,
+            'limit': 15,
+        }
+        self.filters = [
+            {
+                'filter_name': 'total_score',
+                'int_lookup': MEPSearchForm.FILTER_LOOKUPS_INT.GTE,
+                'filter_value_int': 50,
+                'filter_right_op': MEPSearchForm.FILTER_RIGHT_OP.EMPTY
+            },
+        ]
+
+
+class WorstRated(MEPBaseShortcut):
+    title = u"Worst rated"
+
+    def __init__(self, request):
+        super(WorstRated, self).__init__(request)
+        self.options = {
+            'sort': MEPSearchOptionsForm.SORT.TOTAL_SCORE_ASC,
+            'limit': 15,
+        }
+        self.filters = [
+            {
+                'filter_name': 'total_score',
+                'int_lookup': MEPSearchForm.FILTER_LOOKUPS_INT.GTE,
+                'filter_value_int': 1,
+                'filter_right_op': MEPSearchForm.FILTER_RIGHT_OP.EMPTY
+            },
+        ]
+
+
+class MEPSearchView(TemplateView):
+
+    template_name = 'search/search.html'
+
+    def get_context_data(self, **kwargs):
+        data = self.request.GET if len(self.request.GET) else None
+
+        formset_class = get_advanced_search_formset_class(self.request.user, MEPSearchAdvancedFormset, MEPSearchForm)
+        formset = formset_class(data)
+        formset.full_clean()
+        if formset.is_valid():
+            F = FiltersBuilder(formset)
+            query, label = F()
+            sort = formset.options_form.cleaned_data.get("sort")
+            limit = formset.options_form.cleaned_data.get("limit", 15)
+
+            results = SearchQuerySet()
+            if query:
+                results = results.filter(query)
+            if sort:
+                results = results.order_by(sort)
+            if limit:
+                results = results[:limit]
+        else:
+            results = EmptySearchQuerySet()
+            label = ""
+        return {
+            "dynamiq_results": results,
+            "dynamiq_label": label,
+            "dynamiq_formset": formset,
+            "shortcuts": [
+                TopRated({"request": self.request}),
+                WorstRated({"request": self.request})
+            ]
+        }
 
 
 def convert_argument(argument):

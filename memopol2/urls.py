@@ -68,6 +68,7 @@ urlpatterns = patterns('',  # pylint: disable=C0103
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
     url(r'^captcha/', include('captcha.urls')),
     url(r'^api/', include(v1_api.urls)),
+    url(r'^ajax_select/', include('ajax_select.urls')),
 )
 
 urlpatterns += staticfiles_urlpatterns()
