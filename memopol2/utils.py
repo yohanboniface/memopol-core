@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-import time
 from django.http import HttpResponse
 from django.core.management import call_command
 from django.core.cache import cache
