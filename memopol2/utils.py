@@ -5,6 +5,7 @@ import os
 from django.http import HttpResponse
 from django.core.management import call_command
 from django.core.cache import cache
+from django.core.servers.basehttp import FileWrapper
 
 def get_or_create(klass, _id=None, **kwargs):
     if _id is None:
@@ -29,7 +30,7 @@ def send_file(request, filename, content_type='text/plain'):
     """
     Send a file through Django.
     """
-    buffer = open(filename, 'rb').read()
+    buffer = FileWrapper(file(filename))
     response = HttpResponse(buffer, content_type=content_type)
     response['Content-Length'] = os.path.getsize(filename)
     return response
