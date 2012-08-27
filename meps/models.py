@@ -239,7 +239,10 @@ class MEP(Representative):
 
     @reify
     def group(self):
-        return self.groupmep_set.select_related('group').latest('end').group
+        if self.groupmep_set.count():
+            return self.groupmep_set.select_related('group').latest('end').group
+        else:
+            return None
 
     @reify
     def groupmep(self):
