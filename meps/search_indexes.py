@@ -9,6 +9,7 @@ class MEPIndex(indexes.SearchIndex, indexes.Indexable):
     group = indexes.CharField(model_attr="group__abbreviation", faceted=True)
     country = indexes.CharField(model_attr="country__code", faceted=True)
     committees = indexes.MultiValueField()
+    delegations = indexes.MultiValueField()
     total_score = indexes.FloatField(model_attr="total_score", default=0)
     is_active = indexes.BooleanField(model_attr="active")
 
@@ -17,3 +18,6 @@ class MEPIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_committees(self, obj):
         return [c.abbreviation for c in obj.committees.all()]
+
+    def prepare_delegations(self, obj):
+        return [d.pk for d in obj.delegations.all()]

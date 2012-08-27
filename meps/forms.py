@@ -4,9 +4,9 @@ from extended_choices import Choices
 
 from dynamiq.forms.haystack import HaystackForm
 from dynamiq.forms.base import DynamiqSearchOptionsForm, DynamiqAdvancedFormset
-from dynamiq.fields import DynamiqStrChoiceField
+from dynamiq.fields import DynamiqStrChoiceField, DynamiqIntChoiceField
 
-from .models import MEP, Country, Group, Committee
+from .models import MEP, Country, Group, Committee, Delegation
 
 
 def model_choice_value(model):
@@ -18,6 +18,7 @@ def model_choice_value(model):
 COUNTRY = Choices(*((c.code.upper(), c.code, c.name) for c in Country.objects.all()))
 GROUP = Choices(*((g.abbreviation.upper(), g.abbreviation, g.name) for g in Group.objects.all()))
 COMMITTEE = Choices(*((c.abbreviation.upper(), c.abbreviation, c.name) for c in Committee.objects.all()))
+DELEGATION = Choices(*(("DELEGATION_%d" % d.pk, d.pk, d.name) for d in Delegation.objects.all()))
 
 
 FILTER_NAME = Choices(
@@ -28,6 +29,7 @@ FILTER_NAME = Choices(
     ('COUNTRY', 'country', u'Country'),
     ('GROUP', 'group', u'Group'),
     ('COMMITTEE', 'committees', u'Committee'),
+    ('DELEGATION', 'delegations', u'Delegation'),
     ('TOTAL_SCORE', 'total_score', u'Score'),
 )
 
@@ -71,6 +73,7 @@ class MEPSearchForm(HaystackForm):
         FILTER_NAME.COUNTRY: 'str',
         FILTER_NAME.GROUP: 'str',
         FILTER_NAME.COMMITTEE: 'str',
+        FILTER_NAME.DELEGATION: 'int',
         FILTER_NAME.TOTAL_SCORE: 'int',
     }
     _FILTER_VALUE_RECEPTACLE_BY_NAME = {
@@ -80,12 +83,14 @@ class MEPSearchForm(HaystackForm):
         FILTER_NAME.COUNTRY: 'country',
         FILTER_NAME.GROUP: 'group',
         FILTER_NAME.COMMITTEE: 'committees',
+        FILTER_NAME.DELEGATION: 'delegations',
         FILTER_NAME.TOTAL_SCORE: 'int',
     }
 
     filter_value_country = DynamiqStrChoiceField(COUNTRY)
     filter_value_group = DynamiqStrChoiceField(GROUP)
     filter_value_committees = DynamiqStrChoiceField(COMMITTEE)
+    filter_value_delegations = DynamiqIntChoiceField(DELEGATION)
 
     JS_FILTERS_BUILDERS = (
         (u'vider', {
