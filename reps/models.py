@@ -112,10 +112,6 @@ class Representative(models.Model):
             return self.first_name or self.last_name
     content = __unicode__
 
-    def model_type(self):
-        # FIXME: find a better way, like a function to pass to the index
-        return self.__class__.__name__.lower()
-
     class Meta:
         ordering = ['last_name']
 
