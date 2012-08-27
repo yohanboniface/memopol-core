@@ -6,7 +6,7 @@ from dynamiq.forms.haystack import HaystackForm
 from dynamiq.forms.base import DynamiqSearchOptionsForm, DynamiqAdvancedFormset
 from dynamiq.fields import DynamiqStrChoiceField
 
-from .models import MEP, Country, Group
+from .models import MEP, Country, Group, Committee
 
 
 def model_choice_value(model):
@@ -17,15 +17,17 @@ def model_choice_value(model):
 
 COUNTRY = Choices(*((c.code.upper(), c.code, c.name) for c in Country.objects.all()))
 GROUP = Choices(*((g.abbreviation.upper(), g.abbreviation, g.name) for g in Group.objects.all()))
+COMMITTEE = Choices(*((c.abbreviation.upper(), c.abbreviation, c.name) for c in Committee.objects.all()))
 
 
 FILTER_NAME = Choices(
     ('FULLTEXT', 'fulltext', u'Nom'),
     # ('ALL_TITLES', 'suptitle,title,subtitle', u'Titraille'),
     ('TITLE', 'title', u'Titre'),
-    ('IS_ACTIVE', 'is_active', u'Actif'),
-    ('COUNTRY', 'country', u'Pays'),
-    ('GROUP', 'group', u'Groupe'),
+    ('IS_ACTIVE', 'is_active', u'Active'),
+    ('COUNTRY', 'country', u'Country'),
+    ('GROUP', 'group', u'Group'),
+    ('COMMITTEE', 'committees', u'Committee'),
     ('TOTAL_SCORE', 'total_score', u'Score'),
 )
 
@@ -68,6 +70,7 @@ class MEPSearchForm(HaystackForm):
         FILTER_NAME.IS_ACTIVE: 'int',
         FILTER_NAME.COUNTRY: 'str',
         FILTER_NAME.GROUP: 'str',
+        FILTER_NAME.COMMITTEE: 'str',
         FILTER_NAME.TOTAL_SCORE: 'int',
     }
     _FILTER_VALUE_RECEPTACLE_BY_NAME = {
@@ -76,11 +79,13 @@ class MEPSearchForm(HaystackForm):
         FILTER_NAME.IS_ACTIVE: 'yes_no',
         FILTER_NAME.COUNTRY: 'country',
         FILTER_NAME.GROUP: 'group',
+        FILTER_NAME.COMMITTEE: 'committees',
         FILTER_NAME.TOTAL_SCORE: 'int',
     }
 
     filter_value_country = DynamiqStrChoiceField(COUNTRY)
     filter_value_group = DynamiqStrChoiceField(GROUP)
+    filter_value_committees = DynamiqStrChoiceField(COMMITTEE)
 
     JS_FILTERS_BUILDERS = (
         (u'vider', {
