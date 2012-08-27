@@ -23,7 +23,7 @@ DATABASES = {
     },
 }
 
-WHOOSH_INDEX = '%s/memopol2.index' % PROJECT_PATH,
+WHOOSH_INDEX = '%s/memopol2.index' % PROJECT_PATH
 
 APPS_DEBUG = False
 if os.getenv('VIRTUAL_ENV'):
@@ -240,10 +240,11 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 COMMENTS_APP = 'positions'
 
+WHOOSH_TEMPORARY_INDEX = '%s/temporary.index' % PROJECT_PATH
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH': WHOOSH_INDEX,
+        'PATH': WHOOSH_TEMPORARY_INDEX,
     },
 }
 HAYSTACK_DOCUMENT_FIELD = "fulltext"
