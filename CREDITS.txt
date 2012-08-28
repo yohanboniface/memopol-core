@@ -25,7 +25,9 @@ Mathieu Leplatre <mathieu.leplatre@makina-corpus.com>
 Julien Miotte <mike.perdide@gmail.com>
 Julien Rabier <taziden@flexiden.org>
 Rogdham <contact@rogdham.net>
+Yohan Boniface <yb@enix.org>
 
 Gibus <neurone2@laquadrature.net> - creator of memopol v1
+Jz's mustache.
 
 Translators can be see in the *.po files.
