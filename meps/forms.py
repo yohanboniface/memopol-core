@@ -22,9 +22,7 @@ DELEGATION = Choices(*(("DELEGATION_%d" % d.pk, d.pk, d.name) for d in Delegatio
 
 
 FILTER_NAME = Choices(
-    ('FULLTEXT', 'fulltext', u'Nom'),
-    # ('ALL_TITLES', 'suptitle,title,subtitle', u'Titraille'),
-    ('TITLE', 'title', u'Titre'),
+    ('FULLTEXT', 'fulltext', u'Name'),
     ('IS_ACTIVE', 'is_active', u'Active'),
     ('COUNTRY', 'country', u'Country'),
     ('GROUP', 'group', u'Group'),
@@ -34,23 +32,16 @@ FILTER_NAME = Choices(
 )
 
 SORT_CHOICES = Choices(
-    # ('LAST_CREATED', '-created_at', u'Date de création'),
-    # ('LAST_MODIFIED', '-modified_at', u'Date de modification'),
     ('TOTAL_SCORE', '-total_score', u'Score'),
     ('TOTAL_SCORE_ASC', 'total_score', u'Score asc'),
-    # ('XXX', '-publication_date,page_number', u'Date de pub.'),
-    # ('XXX', 'publication_date,page_number', u'Date de pub.'),
-    # ('RELEVANCE', '-sesql_relevance', u'Pertinence'),
-    # ('LAST_PUBLISHED', '-publication_date_time', u'Date de publication web'),
 )
 
 IS_ACTIVE = Choices(
-    ('TRUE', True, u'Oui'),
-    ('FALSE', False, u'Non'),
+    ('TRUE', True, u'Yes'),
+    ('FALSE', False, u'No'),
 )
 
 MODEL_CHOICES = Choices(
-    # ('CONTENTMODELS', ','.join('libe:%s' % c for c in XXX), "Contenus"),
     ('MEP', model_choice_value(MEP), MEP._meta.verbose_name),
 )
 
@@ -68,7 +59,6 @@ class MEPSearchForm(HaystackForm):
 
     _FILTER_TYPE_BY_NAME = {
         FILTER_NAME.FULLTEXT: 'fulltext',
-        FILTER_NAME.TITLE: 'fulltext',
         FILTER_NAME.IS_ACTIVE: 'int',
         FILTER_NAME.COUNTRY: 'str',
         FILTER_NAME.GROUP: 'str',
@@ -78,7 +68,6 @@ class MEPSearchForm(HaystackForm):
     }
     _FILTER_VALUE_RECEPTACLE_BY_NAME = {
         FILTER_NAME.FULLTEXT: 'fulltext',
-        FILTER_NAME.TITLE: 'fulltext',
         FILTER_NAME.IS_ACTIVE: 'yes_no',
         FILTER_NAME.COUNTRY: 'country',
         FILTER_NAME.GROUP: 'group',
@@ -93,16 +82,16 @@ class MEPSearchForm(HaystackForm):
     filter_value_delegations = DynamiqIntChoiceField(DELEGATION)
 
     JS_FILTERS_BUILDERS = (
-        (u'vider', {
+        (u'reset', {
             'replace': True,
             'filter_name': FILTER_NAME.FULLTEXT
         }),
-        (u'actif', {
+        (u'active', {
             'filter_name': FILTER_NAME.IS_ACTIVE,
             'filter_lookup': HaystackForm.FILTER_LOOKUPS_INT.EXACT,
             'filter_value': IS_ACTIVE.TRUE,
         }),
-        (u'nom', {
+        (u'name', {
             'filter_name': FILTER_NAME.FULLTEXT,
             'previous_right_op': HaystackForm.FILTER_RIGHT_OP.AND,
         }),
@@ -120,12 +109,4 @@ class MEPSearchAdvancedFormset(DynamiqAdvancedFormset):
             'limit': 15,
         }
         initial = {}
-        # initial = [
-        #     {
-        #         'filter_name': FILTER_NAME.EDITORIAL_SOURCE,
-        #         'int_lookup': FILTER_LOOKUPS_INT.EXACT,
-        #         'filter_value_editor_source': EDITORIAL_SOURCE_CHOICES.PRINT,
-        #         'filter_right_op': FILTER_RIGHT_OP.AND,
-        #     },
-        # ]
         return initial, initial_options
