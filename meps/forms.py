@@ -3,6 +3,7 @@
 from extended_choices import Choices
 
 from dynamiq.forms.haystack import HaystackForm
+from dynamiq.forms.constants import YES_NO
 from dynamiq.forms.base import DynamiqSearchOptionsForm, DynamiqAdvancedFormset
 from dynamiq.fields import DynamiqStrChoiceField, DynamiqIntChoiceField
 from dynamiq.utils import model_choice_value
@@ -29,11 +30,6 @@ FILTER_NAME = Choices(
 SORT_CHOICES = Choices(
     ('TOTAL_SCORE', '-total_score', u'Score'),
     ('TOTAL_SCORE_ASC', 'total_score', u'Score asc'),
-)
-
-IS_ACTIVE = Choices(
-    ('TRUE', True, u'Yes'),
-    ('FALSE', False, u'No'),
 )
 
 MODEL_CHOICES = Choices(
@@ -84,7 +80,7 @@ class MEPSearchForm(HaystackForm):
         (u'active', {
             'filter_name': FILTER_NAME.IS_ACTIVE,
             'filter_lookup': HaystackForm.FILTER_LOOKUPS_INT.EXACT,
-            'filter_value': IS_ACTIVE.TRUE,
+            'filter_value': YES_NO.YES,
         }),
         (u'name', {
             'filter_name': FILTER_NAME.FULLTEXT,
