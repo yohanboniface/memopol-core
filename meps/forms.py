@@ -54,7 +54,7 @@ class MEPSearchForm(HaystackForm):
 
     _FILTER_TYPE_BY_NAME = {
         FILTER_NAME.FULLTEXT: 'fulltext',
-        FILTER_NAME.IS_ACTIVE: 'int',
+        FILTER_NAME.IS_ACTIVE: 'yes_no',
         FILTER_NAME.COUNTRY: 'str',
         FILTER_NAME.GROUP: 'str',
         FILTER_NAME.COMMITTEE: 'str',
