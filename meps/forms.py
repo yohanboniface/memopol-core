@@ -5,15 +5,10 @@ from extended_choices import Choices
 from dynamiq.forms.haystack import HaystackForm
 from dynamiq.forms.base import DynamiqSearchOptionsForm, DynamiqAdvancedFormset
 from dynamiq.fields import DynamiqStrChoiceField, DynamiqIntChoiceField
+from dynamiq.utils import model_choice_value
 
 from .models import MEP, Country, Group, Committee, Delegation
 
-
-def model_choice_value(model):
-    """
-    In MODEL_CHOICES, we need to add the app_label AND the model name
-    """
-    return '%s:%s' % (model._meta.app_label, model._meta.object_name)
 
 COUNTRY = Choices(*((c.code.upper(), c.code, c.name) for c in Country.objects.all()))
 GROUP = Choices(*((g.abbreviation.upper(), g.abbreviation, g.name) for g in Group.objects.all()))
