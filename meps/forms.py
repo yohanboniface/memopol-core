@@ -3,6 +3,7 @@
 from extended_choices import Choices
 
 from dynamiq.forms.haystack import HaystackForm
+from dynamiq.forms.haystack.constants import FILTER_LOOKUPS_ALIASES
 from dynamiq.forms.constants import YES_NO
 from dynamiq.forms.base import DynamiqSearchOptionsForm, DynamiqAdvancedFormset
 from dynamiq.fields import DynamiqStrChoiceField, DynamiqIntChoiceField
@@ -66,6 +67,7 @@ class MEPSearchForm(HaystackForm):
         FILTER_NAME.DELEGATION: 'delegations',
         FILTER_NAME.TOTAL_SCORE: 'int',
     }
+    FILTER_LOOKUPS_ALIASES = FILTER_LOOKUPS_ALIASES
 
     filter_value_country = DynamiqStrChoiceField(COUNTRY)
     filter_value_group = DynamiqStrChoiceField(GROUP)
