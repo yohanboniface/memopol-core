@@ -118,7 +118,7 @@ class MEPSearchView(TemplateView):
             query, label = F()
             formset = formset_class()
         else:
-            formset = formset_class(self.request.GET)
+            formset = formset_class(self.request.GET or None)
             formset.full_clean()
             if formset.is_valid():
                 F = FiltersBuilder(formset)
