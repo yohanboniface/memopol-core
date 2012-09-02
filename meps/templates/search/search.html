@@ -29,7 +29,9 @@
             });
         </script>
     {% endif %}
+    {% if dynamiq_formset %}
         {% render_dynamiq_advanced_formset request dynamiq_formset %}
+    {% endif %}
 
     {% if dynamiq_results %}
         <table class="mep-list tablesorter">
