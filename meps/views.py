@@ -105,19 +105,20 @@ class MEPSearchView(TemplateView):
     template_name = 'search/search.html'
 
     def get_context_data(self, **kwargs):
-        data = self.request.GET if len(self.request.GET) else None
         query = None
         sort = None
         limit = None
         label = ""
-        formset = None
+        q = ""
 
+        formset_class = get_advanced_search_formset_class(self.request.user, MEPSearchAdvancedFormset, MEPSearchForm)
         if "q" in self.request.GET:
-            F = StringFiltersBuilder(self.request.GET['q'], MEPSearchForm)
+            q = self.request.GET['q']
+            F = StringFiltersBuilder(q, MEPSearchForm)
             query, label = F()
+            formset = formset_class()
         else:
-            formset_class = get_advanced_search_formset_class(self.request.user, MEPSearchAdvancedFormset, MEPSearchForm)
-            formset = formset_class(data)
+            formset = formset_class(self.request.GET)
             formset.full_clean()
             if formset.is_valid():
                 F = FiltersBuilder(formset)
@@ -133,15 +134,17 @@ class MEPSearchView(TemplateView):
                 results = results[:limit]
         else:
             results = EmptySearchQuerySet()
-            label = ""
         return {
-            "dynamiq_results": results,
-            "dynamiq_label": label,
-            "dynamiq_formset": formset,
-            "shortcuts": [
-                TopRated({"request": self.request}),
-                WorstRated({"request": self.request})
-            ]
+            "dynamiq": {
+                "results": results,
+                "q": q,
+                "label": label,
+                "formset": formset,
+                "shortcuts": [
+                    TopRated({"request": self.request}),
+                    WorstRated({"request": self.request})
+                ]
+            }
         }
 
 
