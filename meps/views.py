@@ -125,16 +125,15 @@ class MEPSearchView(TemplateView):
                 sort = formset.options_form.cleaned_data.get("sort")
                 limit = formset.options_form.cleaned_data.get("limit", 15)
 
-        results = SearchQuerySet()
         if query:
-            results = results.filter(query)
-        if sort:
-            results = results.order_by(sort)
-        if limit:
-            results = results[:limit]
-        # else:
-        #     results = EmptySearchQuerySet()
-        #     label = ""
+            results = SearchQuerySet().filter(query)
+            if sort:
+                results = results.order_by(sort)
+            if limit:
+                results = results[:limit]
+        else:
+            results = EmptySearchQuerySet()
+            label = ""
         return {
             "dynamiq_results": results,
             "dynamiq_label": label,
