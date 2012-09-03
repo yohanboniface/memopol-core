@@ -55,7 +55,7 @@ class MEPSearchForm(HaystackForm):
         FILTER_NAME.COUNTRY: 'str',
         FILTER_NAME.GROUP: 'str',
         FILTER_NAME.COMMITTEE: 'str',
-        FILTER_NAME.DELEGATION: 'int',
+        FILTER_NAME.DELEGATION: 'id',
         FILTER_NAME.TOTAL_SCORE: 'int',
     }
     _FILTER_VALUE_RECEPTACLE_BY_NAME = {
