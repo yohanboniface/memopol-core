@@ -3,7 +3,6 @@
 from extended_choices import Choices
 
 from dynamiq.forms.haystack import HaystackForm
-from dynamiq.forms.haystack.constants import FILTER_LOOKUPS_ALIASES
 from dynamiq.forms.constants import YES_NO
 from dynamiq.forms.base import DynamiqSearchOptionsForm, DynamiqAdvancedFormset
 from dynamiq.fields import DynamiqStrChoiceField, DynamiqIntChoiceField
@@ -49,25 +48,36 @@ class MEPSearchForm(HaystackForm):
 
     FILTER_NAME = FILTER_NAME
 
-    _FILTER_TYPE_BY_NAME = {
-        FILTER_NAME.FULLTEXT: 'fulltext',
-        FILTER_NAME.IS_ACTIVE: 'yes_no',
-        FILTER_NAME.COUNTRY: 'str',
-        FILTER_NAME.GROUP: 'str',
-        FILTER_NAME.COMMITTEE: 'str',
-        FILTER_NAME.DELEGATION: 'id',
-        FILTER_NAME.TOTAL_SCORE: 'int',
+    _FILTERS_BY_FIELD = {
+        FILTER_NAME.FULLTEXT: {
+            'type': 'fulltext',
+            'receptacle': 'fulltext'
+        },
+        FILTER_NAME.IS_ACTIVE: {
+            'type': 'yes_no',
+            'receptacle': 'yes_no',
+        },
+        FILTER_NAME.COUNTRY: {
+            'type': 'str',
+            'receptacle': 'country',
+        },
+        FILTER_NAME.GROUP: {
+            'type': 'str',
+            'receptacle': 'group',
+        },
+        FILTER_NAME.COMMITTEE: {
+            'type': 'str',
+            'receptacle': 'committees',
+        },
+        FILTER_NAME.DELEGATION: {
+            'type': 'id',
+            'receptacle': 'delegations',
+        },
+        FILTER_NAME.TOTAL_SCORE: {
+            'type': 'int',
+            'receptacle': 'int',
+        },
     }
-    _FILTER_VALUE_RECEPTACLE_BY_NAME = {
-        FILTER_NAME.FULLTEXT: 'fulltext',
-        FILTER_NAME.IS_ACTIVE: 'yes_no',
-        FILTER_NAME.COUNTRY: 'country',
-        FILTER_NAME.GROUP: 'group',
-        FILTER_NAME.COMMITTEE: 'committees',
-        FILTER_NAME.DELEGATION: 'delegations',
-        FILTER_NAME.TOTAL_SCORE: 'int',
-    }
-    FILTER_LOOKUPS_ALIASES = FILTER_LOOKUPS_ALIASES
 
     filter_value_country = DynamiqStrChoiceField(COUNTRY)
     filter_value_group = DynamiqStrChoiceField(GROUP)
