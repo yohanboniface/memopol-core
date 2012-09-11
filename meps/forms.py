@@ -111,5 +111,12 @@ class MEPSearchAdvancedFormset(DynamiqAdvancedFormset):
             'model': "MEP",
             'limit': 15,
         }
-        initial = {}
+        initial = [
+                {
+                    'filter_name': FILTER_NAME.IS_ACTIVE,
+                    'yes_no_lookup': HaystackForm.FILTER_LOOKUPS_YES_NO.EXACT,
+                    'filter_value_yes_no': YES_NO.YES,
+                    'filter_right_op': HaystackForm.FILTER_RIGHT_OP.AND,
+                },
+        ]
         return initial, initial_options
