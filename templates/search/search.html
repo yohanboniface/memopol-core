@@ -1,0 +1,95 @@
+ {% extends 'base.html' %}
+{% load dynamiq_tags %}
+
+{% block javascript %}
+    <script type="text/javascript" src="{{ STATIC_URL }}dynamiq/js/inlines.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}dynamiq/js/dynamiq.js"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="dynamiq_shortcuts">
+        Quick search:
+        {% for shortcut in dynamiq.shortcuts %}
+            <a href="{{ shortcut.get_url }}">{{ shortcut.get_title }}</a>
+        {% endfor %}
+        Mode: <a href="#" id="dynamiq_toggle_mode">simple / advanced</a>
+        <script>
+            jQuery(document).ready(function($){
+                $('#dynamiq_toggle_mode').click(function(e) {
+                    $('#dynamiq_advanced_search').toggle();
+                    $('#dynamiq_search').toggle();
+                    e.preventDefault();
+                });
+            });
+        </script>
+    </div>
+    {% if dynamiq.results %}
+        <div class="search_label">
+            Searching {{ dynamiq.label|format_dynamiq_label }}
+            {% if dynamiq.formset.is_bound %}
+            <input id="relaunch_search" type="button" value="Edit search" />
+            <script>
+                jQuery(document).ready(function($){
+                    $('#relaunch_search').click(function(e) {
+                        $(this).hide();
+                        $('#dynamiq_advanced_search').show();
+                        e.preventDefault();
+                    });
+                });
+            </script>
+            {% endif %}
+        </div>
+    {% endif %}
+    {% render_dynamiq_advanced_formset request dynamiq.formset %}
+    <div id="dynamiq_search" {% if dynamiq.formset.is_bound %}style="display:none;"{% endif %}>
+        <form action="." method="get">
+            <input type="text" name="q" value="{{ dynamiq.q }}" />
+            <input type="submit" value="OK" />
+            <a href="#" id="dynamiq_toggle_help">help</a>
+        </form>
+        <script>
+            jQuery(document).ready(function($){
+                $('#dynamiq_toggle_help').click(function(e) {
+                    $('#simple_search_help').toggle("slow");
+                    e.preventDefault();
+                });
+            });
+        </script>
+        <div id="simple_search_help" style="font-size: 0.8em; background-color: #e5e5e5; padding: 10px; margin-top: 10px;{% if dynamiq.q != "" %} display:none;{% endif %}">
+            <p><strong>Usable operators:</strong> <kbd>: = != !: &gt; &lt; &gt;= &lt;= AND (default) OR " -</kbd></p>
+            <ul><strong>List of fields:</strong>
+                <li>fulltext (default; search in MEP's name)</li>
+                <li>total_score</li>
+                <li>country</li>
+                <li>group</li>
+                <li>committee</li>
+                <li>delegation</li>
+                <li>is_active</li>
+            </ul>
+            <ul><strong>Here are some examples:</strong>
+                <li><kbd>daniel</kbd> will search all the MEPs which name contains "daniel"</li>
+                <li><kbd>daniel country=FR</kbd> whill search for MEPS which name contains "daniel" and country is France (you can use also <kbd>country:FR</kbd>)</li>
+                <li><kbd>daniel country!=FR</kbd> will search for "daniel" which country is <b>not</b> France (country=-FR also works)</li>
+                <li><kbd>daniel total_score>90</kbd> will search for "daniel" which score is more than 90</li>
+                <li><kbd>daniel or Pavel</kbd> will search for MEPs which name contains "daniel" or Pavel</li>
+                <li><kbd>"STROŽ Daniel"</kbd> will search for MEPs which name contains the string "STROŽ Daniel"</li>
+                <li>Of course, you can mix all this: <kbd>daniel AND country!=FR OR -"Le PEN Marine" country:FR is_active:1 group=NI</kbd> will search for all MEPs which name contains "daniel" and which is not France, or all MEPs which name does not contain "Le PEN Marine" and which country is France and which group is NI</li>
+            </ul>
+        </div>
+    </div>
+
+    {% if dynamiq.results %}
+        <table class="mep-list tablesorter">
+          {% include "meps/meps_table_thead.html" %}
+          <tbody>
+            {% for result in  dynamiq.results %}
+              {% include "meps/meps_table_tr.html" with mep=result.object %}
+            {% endfor %}
+          </tbody>
+        </table>
+    {% else %}
+        {% if dynamiq.formset.is_bound or dynamiq.q != "" %}
+            <p>No results found.</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

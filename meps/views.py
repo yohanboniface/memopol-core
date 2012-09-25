@@ -20,7 +20,7 @@ from django.views.generic import TemplateView
 
 from haystack.query import SearchQuerySet, EmptySearchQuerySet
 
-from dynamiq.utils import get_advanced_search_formset_class, BaseQBuilder
+from dynamiq.utils import get_advanced_search_formset_class, BaseQBuilder, StringFiltersBuilder
 from dynamiq.shortcuts import SearchShortcut
 
 from memopol2.utils import check_dir, send_file, get_content_cache
@@ -28,7 +28,8 @@ from memopol2.utils import check_dir, send_file, get_content_cache
 from models import LocalParty, Building, MEP, CountryMEP, GroupMEP, Committee, Group, Country, Organization, Delegation
 from reps.models import Email
 from votes.models import Score, Vote
-from .forms import MEPSearchForm, MEPSearchAdvancedFormset, MEPSearchOptionsForm
+from .forms import (MEPSearchForm, MEPSearchAdvancedFormset,
+                    MEPSearchOptionsForm)
 
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
 
@@ -104,35 +105,46 @@ class MEPSearchView(TemplateView):
     template_name = 'search/search.html'
 
     def get_context_data(self, **kwargs):
-        data = self.request.GET if len(self.request.GET) else None
+        query = None
+        sort = None
+        limit = None
+        label = ""
+        q = ""
 
         formset_class = get_advanced_search_formset_class(self.request.user, MEPSearchAdvancedFormset, MEPSearchForm)
-        formset = formset_class(data)
-        formset.full_clean()
-        if formset.is_valid():
-            F = BaseQBuilder(formset)
+        if "q" in self.request.GET:
+            q = self.request.GET['q']
+            F = StringFiltersBuilder(q, MEPSearchForm)
             query, label = F()
-            sort = formset.options_form.cleaned_data.get("sort")
-            limit = formset.options_form.cleaned_data.get("limit", 15)
+            formset = formset_class()
+        else:
+            formset = formset_class(self.request.GET or None)
+            formset.full_clean()
+            if formset.is_valid():
+                F = BaseQBuilder(formset)
+                query, label = F()
+                sort = formset.options_form.cleaned_data.get("sort")
+                limit = formset.options_form.cleaned_data.get("limit", 15)
 
-            results = SearchQuerySet()
-            if query:
-                results = results.filter(query)
+        if query:
+            results = SearchQuerySet().filter(query)
             if sort:
                 results = results.order_by(sort)
             if limit:
                 results = results[:limit]
         else:
             results = EmptySearchQuerySet()
-            label = ""
         return {
-            "dynamiq_results": results,
-            "dynamiq_label": label,
-            "dynamiq_formset": formset,
-            "shortcuts": [
-                TopRated({"request": self.request}),
-                WorstRated({"request": self.request})
-            ]
+            "dynamiq": {
+                "results": results,
+                "q": q,
+                "label": label,
+                "formset": formset,
+                "shortcuts": [
+                    TopRated({"request": self.request}),
+                    WorstRated({"request": self.request})
+                ]
+            }
         }
 
 
@@ -260,15 +272,15 @@ def render_to_csv(view, context, **response_kwargs):
             u' - '.join(mep.emails),
             mep.country.name,
             mep.group.abbreviation,
-            mep.bxl_building.id,
-            mep.bxl_building.name,
+            mep.bxl_building.id if mep.bxl_building else '',
+            mep.bxl_building.name if mep.bxl_building else '',
             mep.bxl_floor,
             mep.bxl_office_number,
             mep.bxl_fax,
             mep.bxl_phone1,
             mep.bxl_phone2,
-            mep.stg_building.id,
-            mep.stg_building.name,
+            mep.stg_building.id if mep.stg_building else '',
+            mep.stg_building.name if mep.stg_building else '',
             mep.stg_floor,
             mep.stg_office_number,
             mep.stg_fax,
