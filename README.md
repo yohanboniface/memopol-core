@@ -117,6 +117,18 @@ need to got into the parltrack/ directory and run:
 
 This might take some time. Be sure to do that after having run "init".
 
+Remove la Quadrature du Net data from Memopol
+=============================================
+
+If you want to remove this data to use memopol for your own cause (yay \o/) a
+command is ready for you:
+
+    python manage.py remove_lqdn_data
+
+This will remove everything related to the votes that we are tracking and the
+opinions. More customisability will appears in the future and better doc on how
+to use the cli tools.
+
 Small lexicon
 =============
 
