@@ -20,7 +20,8 @@ from django.views.generic import TemplateView
 
 from haystack.query import SearchQuerySet, EmptySearchQuerySet
 
-from dynamiq.utils import get_advanced_search_formset_class, BaseQBuilder, StringFiltersBuilder
+from dynamiq.utils import get_advanced_search_formset_class, BaseQBuilder
+#from dynamiq.utils import get_advanced_search_formset_class, BaseQBuilder, StringFiltersBuilder
 from dynamiq.shortcuts import SearchShortcut
 
 from memopol2.utils import check_dir, send_file, get_content_cache
