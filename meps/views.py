@@ -20,8 +20,7 @@ from django.views.generic import TemplateView
 
 from haystack.query import SearchQuerySet, EmptySearchQuerySet
 
-from dynamiq.utils import get_advanced_search_formset_class, BaseQBuilder
-#from dynamiq.utils import get_advanced_search_formset_class, BaseQBuilder, StringFiltersBuilder
+from dynamiq.utils import get_advanced_search_formset_class, FormsetQBuilder, ParsedStringQBuilder
 from dynamiq.shortcuts import SearchShortcut
 
 from memopol2.utils import check_dir, send_file, get_content_cache
@@ -115,14 +114,14 @@ class MEPSearchView(TemplateView):
         formset_class = get_advanced_search_formset_class(self.request.user, MEPSearchAdvancedFormset, MEPSearchForm)
         if "q" in self.request.GET:
             q = self.request.GET['q']
-            F = StringFiltersBuilder(q, MEPSearchForm)
+            F = ParsedStringQBuilder(q, MEPSearchForm)
             query, label = F()
             formset = formset_class()
         else:
             formset = formset_class(self.request.GET or None)
             formset.full_clean()
             if formset.is_valid():
-                F = BaseQBuilder(formset)
+                F = FormsetQBuilder(formset)
                 query, label = F()
                 sort = formset.options_form.cleaned_data.get("sort")
                 limit = formset.options_form.cleaned_data.get("limit", 15)
