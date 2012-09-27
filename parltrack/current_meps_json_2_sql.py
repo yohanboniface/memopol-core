@@ -318,7 +318,7 @@ def manage_mep(mep, mep_json):
         add_mep_email(mep, mep_json["Mail"])
     mep.website_set.filter(url="").delete()
     if mep_json.get("Homepage"):
-        add_mep_website(mep, mep_json["Homepage"])
+        add_mep_website(mep, mep_json["Homepage"] + mep_json.get("Twitter", []) + mep_json.get("Facebook", []))
     add_mep_cv(mep, mep_json.get("CV", []))
     print "     save mep modifications"
     mep.save()
@@ -345,7 +345,7 @@ def create_mep(mep_json):
         add_mep_email(mep, mep_json["Mail"])
 
     if mep_json.get("Homepage"):
-        add_mep_website(mep, mep_json["Homepage"])
+        add_mep_website(mep, mep_json["Homepage"] + mep_json.get("Twitter", []) + mep_json.get("Facebook", []))
     add_mep_cv(mep, mep_json.get("CV", []))
     print "     save mep modifications"
     mep.save()
