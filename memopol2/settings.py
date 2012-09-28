@@ -109,7 +109,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.core.context_processors.media',
     'django.contrib.messages.context_processors.messages',
-    'campaign.context_processor.campaigns',
+    #'campaign.context_processor.campaigns',
 )
 
 ROOT_URLCONF = 'memopol2.urls'
