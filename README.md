@@ -110,10 +110,12 @@ depanding on what you want to dev.
 Updating memopol's data
 =======================
 
-You might want to get the last data for the European Parliament. To do so you
-need to got into the parltrack/ directory and run:
+Update European Parliament related data
+---------------------------------------
 
-    ./import_current_meps.sh
+Just run:
+
+    python manage.py update_meps
 
 This might take some time. Be sure to do that after having run "init".
 
