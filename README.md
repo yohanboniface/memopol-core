@@ -117,8 +117,17 @@ need to got into the parltrack/ directory and run:
 
 This might take some time. Be sure to do that after having run "init".
 
+Personalization
+===============
+
+Change the organization name
+----------------------------
+
+You can change the organization name displayed on the header in
+`memopol2/settings.py` by changing the `ORGANIZATION_NAME` variable.
+
 Remove la Quadrature du Net data from Memopol
-=============================================
+---------------------------------------------
 
 If you want to remove this data to use memopol for your own cause (yay \o/) a
 command is ready for you:
