@@ -233,7 +233,7 @@ $.extend($, {
         if ($.livesearchtext == q) {
             q = self.val();
             q = q.replace(/\s+$/, '');
-            if (!/\*$/.exec(q)) { q += '*'; }
+            if (q.search('[\:=\* ]') == -1) { q += '*'; }
             if ($('#search').length) {
                 // serialize form and extract only types from qs
                 q += '&' + $('#search').serialize().replace(/q=[^&]+/, '').substring(1);

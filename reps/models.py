@@ -9,7 +9,6 @@ from django.db import models
 from django.db.models import Count, Q
 from memopol2.utils import reify
 from snippets import snippet
-import search
 import meps
 import mps
 
@@ -20,7 +19,6 @@ class RepsContainerManager(models.Manager):
         return self.get_query_set().filter(representative__mep__active=True).annotate(count=models.Count('representative'))
 
 
-@search.searchable
 class Party(models.Model):
     name = models.CharField(max_length=255)
     objects = RepsContainerManager()

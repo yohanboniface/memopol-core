@@ -8,7 +8,7 @@ from dynamiq.forms.base import DynamiqSearchOptionsForm, DynamiqAdvancedFormset
 from dynamiq.fields import DynamiqStrChoiceField, DynamiqIntChoiceField
 from dynamiq.utils import model_choice_value
 
-from .models import MEP, Country, Group, Committee, Delegation
+from meps.models import MEP, Country, Group, Committee, Delegation
 
 
 COUNTRY = Choices(*((c.code.upper(), c.code, c.name) for c in Country.objects.all()))
