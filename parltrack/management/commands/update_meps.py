@@ -1,16 +1,15 @@
-#!/usr/bin/python
-# -*- coding:Utf-8 -*-
+# encoding: utf-8
 
 import os
-import sys
 import json
 import re
-from datetime import datetime, date
+from os.path import join, exists
+from datetime import datetime
 
+from django.core.management.base import BaseCommand
 from django.db.models import Count
 from django.db import transaction
-
-sys.path += [os.path.abspath(os.path.split(__file__)[0])[:-len("parltrack")] + "apps/"]
+from django.conf import settings
 
 from meps.utils import update_meps_positions
 from memopol2.utils import update_search_index, get_or_create
@@ -18,9 +17,48 @@ from memopol2.utils import update_search_index, get_or_create
 from reps.models import PartyRepresentative, Email, WebSite, CV
 from meps.models import LocalParty, MEP, Delegation, DelegationRole, PostalAddress, Country, CountryMEP, Organization, OrganizationMEP, Committee, CommitteeRole, Group, GroupMEP, Building
 
-current_meps = "ep_meps_current.json"
 
+JSON_DUMP_DIR = join(settings.SUBPROJECT_PATH, "tmp")
+JSON_DUMP_ARCHIVE_LOCALIZATION = join(settings.SUBPROJECT_PATH, "tmp", "ep_meps_current.json.xz")
+JSON_DUMP_LOCALIZATION = join(settings.SUBPROJECT_PATH, "tmp", "ep_meps_current.json")
 _parse_date = lambda date: datetime.strptime(date, "%Y-%m-%dT00:%H:00")
+
+
+if not exists(JSON_DUMP_DIR):
+    os.makedirs(JSON_DUMP_DIR)
+
+
+class Command(BaseCommand):
+    help = 'Update the eurodeputies data by pulling it from parltrack'
+
+    def handle(self, *args, **options):
+        print "clean old downloaded files"
+        os.system("rm %s %s" % (JSON_DUMP_ARCHIVE_LOCALIZATION, JSON_DUMP_LOCALIZATION))
+        print "download lastest data dump of meps from parltrack"
+        os.system("wget http://parltrack.euwiki.org/dumps/ep_meps_current.json.xz -O %s" % JSON_DUMP_ARCHIVE_LOCALIZATION)
+        print "unxz dump"
+        os.system("unxz %s" % JSON_DUMP_ARCHIVE_LOCALIZATION)
+        print "load json"
+        meps = json.load(open(JSON_DUMP_LOCALIZATION, "r"))
+        print "Set all current active mep to unactive before importing"
+        with transaction.commit_on_success():
+            MEP.objects.filter(active=True).update(active=False)
+            a = 0
+            for mep_json in meps:
+                a += 1
+                print a, "-", mep_json["Name"]["full"].encode("Utf-8")
+                in_db_mep = MEP.objects.filter(ep_id=int(mep_json["UserID"]))
+                if in_db_mep:
+                    mep = in_db_mep[0]
+                    mep.active = mep_json['active']
+                    manage_mep(mep, mep_json)
+                else:
+                    mep = create_mep(mep_json)
+            clean()
+        print
+        update_meps_positions(verbose=True)
+        update_search_index()
+
 
 def create_uniq_id(mep_json):
     # TODO: replace with something like that: unicodedata.normalize('NFKD', u"%s%s" % (self["prenom"], self["nom_de_famille"])).encode('ascii', 'ignore'))
@@ -354,28 +392,5 @@ def clean():
     Delegation.objects.annotate(mep_count=Count('mep')).filter(mep_count=0).delete()
     Committee.objects.annotate(mep_count=Count('mep')).filter(mep_count=0).delete()
     Organization.objects.annotate(mep_count=Count('mep')).filter(mep_count=0).delete()
-
-if __name__ == "__main__":
-    print "load json"
-    meps = json.load(open(current_meps, "r"))
-    print "Set all current active mep to unactive before importing"
-    with transaction.commit_on_success():
-        MEP.objects.filter(active=True).update(active=False)
-        a = 0
-        for mep_json in meps:
-            a += 1
-            print a, "-", mep_json["Name"]["full"].encode("Utf-8")
-            in_db_mep = MEP.objects.filter(ep_id=int(mep_json["UserID"]))
-            if in_db_mep:
-                mep = in_db_mep[0]
-                mep.active = mep_json['active']
-                manage_mep(mep, mep_json)
-            else:
-                mep = create_mep(mep_json)
-        clean()
-    print
-    update_meps_positions(verbose=True)
-    update_search_index()
-
 
 # vim:set shiftwidth=4 tabstop=4 expandtab:

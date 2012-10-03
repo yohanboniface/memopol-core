@@ -160,6 +160,7 @@ INSTALLED_APPS = (
     'trends',
     'trophies',
     'campaign',
+    'parltrack',
     'search',
     'gunicorn',
     'positions',
