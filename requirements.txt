@@ -23,3 +23,4 @@ git+https://github.com/toastdriven/django-haystack.git@master
 git+git://github.com/liberation/django-ajax-selects.git
 git+git://github.com/liberation/django-extended-choices.git
 git+git://github.com/liberation/django-dynamiq-search-form.git
+unidecode
