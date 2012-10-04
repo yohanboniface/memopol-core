@@ -47,19 +47,20 @@ class Command(BaseCommand):
 def get_proposal(proposal_name, proposal_ponderation):
     proposal = Proposal.objects.filter(title=proposal_name)
     if proposal:
+        return proposal[0]
+
+    _id = raw_input("Chose a proposal id (only letter and _) for '%s'\n>>> " % proposal_name)
+    while not re.match("^[0-9A-Za-z_]+$", _id):
+        _id = raw_input("Bad input, chose a proposal id (only letter and _) for '%s'\n>>> ")
+    proposal = Proposal.objects.filter(id=_id)
+    if proposal:
+        print "Get proposal that already exist with this id"
         proposal = proposal[0]
     else:
-        _id = raw_input("Chose a proposal id (only letter and _) for '%s'\n>>> " % proposal_name)
-        while not re.match("^[0-9A-Za-z_]+$", _id):
-            _id = raw_input("Bad input, chose a proposal id (only letter and _) for '%s'\n>>> ")
-        proposal = Proposal.objects.filter(id=_id)
-        if proposal:
-            print "Get proposal that already exist with this id"
-            proposal = proposal[0]
-        else:
-            print "Create new proposal"
-            proposal = Proposal.objects.create(title=proposal_name, id=_id, institution="EU", ponderation=int(proposal_ponderation))
+        print "Create new proposal"
+        proposal = Proposal.objects.create(title=proposal_name, id=_id, institution="EU", ponderation=int(proposal_ponderation))
     return proposal
+
 
 def create_recommendation(recommendationdata_id, choice, weight, proposal_ponderation=1):
     rd = RecommendationData.objects.get(id=recommendationdata_id)
