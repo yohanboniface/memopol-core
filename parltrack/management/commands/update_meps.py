@@ -3,7 +3,7 @@
 import os
 import json
 import re
-from os.path import join, exists
+from os.path import join
 from datetime import datetime
 
 from django.core.management.base import BaseCommand
@@ -18,14 +18,9 @@ from reps.models import PartyRepresentative, Email, WebSite, CV
 from meps.models import LocalParty, MEP, Delegation, DelegationRole, PostalAddress, Country, CountryMEP, Organization, OrganizationMEP, Committee, CommitteeRole, Group, GroupMEP, Building
 
 
-JSON_DUMP_DIR = join(settings.SUBPROJECT_PATH, "tmp")
-JSON_DUMP_ARCHIVE_LOCALIZATION = join(settings.SUBPROJECT_PATH, "tmp", "ep_meps_current.json.xz")
-JSON_DUMP_LOCALIZATION = join(settings.SUBPROJECT_PATH, "tmp", "ep_meps_current.json")
+JSON_DUMP_ARCHIVE_LOCALIZATION = join(settings.MEMOPOL_TMP_DIR, "ep_meps_current.json.xz")
+JSON_DUMP_LOCALIZATION = join(settings.MEMOPOL_TMP_DIR, "ep_meps_current.json")
 _parse_date = lambda date: datetime.strptime(date, "%Y-%m-%dT00:%H:00")
-
-
-if not exists(JSON_DUMP_DIR):
-    os.makedirs(JSON_DUMP_DIR)
 
 
 class Command(BaseCommand):

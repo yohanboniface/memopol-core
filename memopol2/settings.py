@@ -1,6 +1,7 @@
 # Django settings for memopol2 project.
 
 import os
+from os.path import join, exists
 PROJECT_PATH = os.path.abspath(os.path.split(__file__)[0])
 SUBPROJECT_PATH = os.path.split(PROJECT_PATH)[0]
 
@@ -36,6 +37,11 @@ elif not os.path.isfile('bin/django-manage'):
 SNIPPETS_CACHE_DELAY = 3600 * 60 * 24
 
 ORGANIZATION_NAME = "La Quadrature du Net"
+
+MEMOPOL_TMP_DIR = join(SUBPROJECT_PATH, "tmp")
+
+if not exists(MEMOPOL_TMP_DIR):
+    os.makedirs(MEMOPOL_TMP_DIR)
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
