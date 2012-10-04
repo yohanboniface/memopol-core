@@ -119,6 +119,39 @@ Just run:
 
 This might take some time. Be sure to do that after having run "init".
 
+Adding a voting recommendation
+------------------------------
+
+First, you have to get all the votes data by running this command:
+
+    python manage.py import_ep_votes_data
+
+If you want to update the available importables votes, just re-run this
+command.
+
+Then you need chose a vote on which you want to create a recommendation. For
+this: got to `/votes/import/` on your instance (for example:
+http://mempol2.serverside.fr/votes/import/). There, you'll see the list of the
+importable votes (with not very user friendly name, those are the one given by
+the European Parliament). Chose a vote, click on it, grab it's "ID" as
+specified on his page, then run:
+
+    python manage.py create_voting_recommandation <vote id> <{for,against}> <weight of the recommendation> <weight of the proposal, 1 by default>
+
+Where: the `vote id` is the idea you have chosen, `for` or `against` is your
+voting recommendation, `weight of the recommendations` is the weight you want
+to give to the recommendation (for exemple: the weight of the final vote is way
+more important than the one of a small amendment) and weight of the proposal is
+the weight of the total vote (for example: the vote on ACTA is way more
+important than the Lambrinidis rapport for la Quadrature du Net).
+
+Example:
+
+    python manage.py create_voting_recommendation 8838 for 3 3
+
+**WARNING**: due to the nature of the data, this last command has
+non-negligible chances of failing.
+
 Personalization
 ===============
 
