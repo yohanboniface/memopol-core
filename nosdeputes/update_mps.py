@@ -152,25 +152,18 @@ def get_department_and_circo(mp, _mp):
     except:
         _mp.circonscription=get_or_create(Circonscription, 
                 number=number, department=department)
-        print "[Error] Circonscription not found in the Database : "+number
+        print "[Warning] Created new Circonscription : "+number
 
 
 def get_new_websites(mp, _mp):
     if mp["sites_web"]:
         for website in mp["sites_web"]:
-            try:
-                get_or_create(WebSite, url=website["site"], representative=_mp.representative_ptr)
-            except:
-                print "[Error] while cretaing the website"
+            get_or_create(WebSite, url=website["site"], representative=_mp.representative_ptr)
 
 
 def get_new_emails(mp, _mp):
-    print "representative_ptr : "+_mp.representative_ptr.id
     for email in mp["emails"]:
-        #try:
-            get_or_create(Email, email=email["email"], representative=_mp.representative_ptr)
-        #except:
-         #   print "[Error] while adding an email"
+        get_or_create(Email, email=email["email"], representative=_mp.representative_ptr)
 
 def get_mandate(mp, _mp):
     for mandate in mp["mandat_debut"]:
@@ -178,7 +171,7 @@ def get_mandate(mp, _mp):
 
 def create_uniq_id(mp_json):
     # TODO: replace with something like that: unicodedata.normalize('NFKD', u"%s%s" % (self["prenom"], self["nom_de_famille"])).encode('ascii', 'ignore'))
-    id = mp_json["prenom"].capitalize().replace(" ", "") + mp_json["nom"].capitalize().replace(" ", "")
+    id = mp_json["prenom"].capitalize().replace(" ", "") + mp_json["nom_de_famille"].capitalize().replace(" ", "")
     id = id.replace(u"Á", u"A")
     id = id.replace(u"À", u"A")
     id = id.replace(u"Â", u"A")
@@ -286,31 +279,22 @@ def create_uniq_id(mp_json):
 #Create a new mp that is empty
 #we will then fill it with the common update 
 def create_new_mp(mp):
-    #try:
-       # _mp = MP.objects.create(an_id=mp["url_an"].split("/")[-1].split(".")[0], 
-        #        hemicycle_sit=mp["place_en_hemicycle"], active=1)
-        _mp = MP()
-        _mp.id = create_uniq_id(mp)
-        _mp.picture = _mp.id +".jpg"
-        _mp.an_id=mp["url_an"].split("/")[-1].split(".")[0]
-        if mp["place_en_hemicycle"] :
-            _mp.hemicycle_sit=mp["place_en_hemicycle"]
-        else:
-            _mp.hemicycle_sit=0
-        _mp.active=True
-        update_personal_informations(_mp, mp)
-        _mp.save()
-        get_new_emails(mp, _mp)
-    
-        _mp.save()
-        print "MP created !"
-        return _mp
-    #except: 
-    #    _mp = MP.objects.create(an_id=mp["url_an"].split("/")[-1].split(".")[0], 
-    #            hemicycle_sit="0", active=1)
-    #    _mp.id = create_uniq_id(mp)
-    #    print "[Warning] MP created with place_en_hemicyle at 0 : "+mp["nom_de_famille"]
-    #    return _mp
+    _mp = MP()
+    _mp.id = create_uniq_id(mp)
+    _mp.picture = _mp.id +".jpg"
+    _mp.an_id=mp["url_an"].split("/")[-1].split(".")[0]
+    if mp["place_en_hemicycle"] :
+        _mp.hemicycle_sit=mp["place_en_hemicycle"]
+    else:
+        _mp.hemicycle_sit=0
+    _mp.active=True
+    update_personal_informations(_mp, mp)
+    _mp.save()
+    #get_new_emails(mp, _mp)
+
+    #_mp.save()
+    print "MP created !"
+    return _mp
 
 if __name__ == "__main__":
     mps = load(read_or_dl("http://www.nosdeputes.fr/deputes/json", "all_mps"))
