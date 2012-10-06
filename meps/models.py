@@ -3,10 +3,10 @@ from django.db import models
 from django.db.models import Count, Q
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.core.urlresolvers import reverse
-from memopol2.utils import reify
 from snippets import snippet
 import search
 
+from memopol2.utils import reify, color
 from reps.models import Representative, Party
 
 class Country(models.Model):
@@ -290,9 +290,7 @@ class MEP(Representative):
 
     @property
     def score_color(self):
-        red = 255 - self.total_score
-        green = self.total_score * 2.55
-        return "rgb(%d, %d, 0)" % (red, green)
+        return "rgb(%s, %s, %s)" % color(self.total_score)
 
     @snippet(template='meps/snippets/country.html')
     def country_tag(self):

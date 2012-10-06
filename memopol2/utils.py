@@ -46,17 +46,21 @@ def get_content_cache(request, filename, content_type='image/png'):
         return False
     return send_file(request, filename, content_type=content_type)
 
+COLORS =\
+((55, 157, 0),
+(55, 157, 0),
+(58, 198, 9),
+(114, 220, 44),
+(162, 253, 11),
+(232, 253, 11),
+(253, 247, 11),
+(253, 220, 11),
+(246, 183, 36),
+(222, 79, 17),
+(208, 0, 0))
+
 def color(score):
-    colors = 255
-    val = int(3 * colors * (score / 100.))
-    red = green = colors
-    if val < colors:
-        green = int(2. / 3. * val)
-    elif val < 2 * colors:
-        green = int((2. / 3.) * colors + (1. / 3.) * (val / 2. - colors))
-    else:
-        red = 3 * colors - val
-    return (red, green, 0)
+    return COLORS[int(score/10)]
 
 def cached(expire):
     """cache the whole response for ``expire`` delay"""
