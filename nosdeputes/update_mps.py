@@ -292,6 +292,8 @@ def create_new_mp(mp):
         _mp.hemicycle_sit = 0
         _mp.active = False
     update_personal_informations(_mp, mp)
+    update_group_info(_mp, mp)
+    get_department_and_circo(mp, _mp)
     _mp.save()
     #get_new_emails(mp, _mp)
 
