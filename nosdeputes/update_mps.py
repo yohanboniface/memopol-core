@@ -128,14 +128,20 @@ def handle_function(i, _mp, extra):
 
 
 def get_department_and_circo(mp, _mp):
-    if mp["num_deptmt"] == 999:
-        get_or_create(Department, name="Etranger", number="999")
-    if mp["num_deptmt"] != 0:
+    if mp["num_deptmt"] in (999, "999"):
+        department = get_or_create(Department, name="Etranger", number="999")
+    elif mp["num_deptmt"] != 0:
         try:
             department = Department.objects.get(number=mp["num_deptmt"])
         except:
-            print "[Error] Department not in database : " + mp["num_deptmt"]
-            return
+            if mp["num_deptmt"] == "977":
+                department = Department.objects.get(number="987")
+                department.num_deptmt = "977"
+                department.save()
+                _mp.department = department
+            else:
+                print "[Error] Department not in database : " + mp["num_deptmt"]
+                return
     else: # TOREMOVE: code is fixed on nosdeputes side but cache is still active
         department = Department.objects.get(number=987)
     if mp["num_circo"] != 1:
