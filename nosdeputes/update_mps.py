@@ -72,7 +72,7 @@ def get_etudes_groups(_mp, mp):
             raise Exception
 
         function = get_or_create(Function, title=title, type=tipe)
-        get_or_create(FunctionMP, mp=_mp, function=function, role=group["fonction"])
+        get_or_create(FunctionMP, mp=_mp, function=function, role=group["fonction"], extra_parliamentary=False)
 
 
 def get_other_functions(_mp, mp):
