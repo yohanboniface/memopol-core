@@ -38,7 +38,7 @@ def update_personal_informations(_mp, mp):
 
     try:
         _mp.hemicycle_site = mp["place_en_hemicycle"]
-    except: 
+    except:
         _mp.hemicycle_site=0
     if mp["lieu_naissance"] is not None:
         _mp.birth_place = re.sub("\(.*", "", mp["lieu_naissance"])
@@ -57,12 +57,12 @@ def update_group_info(_mp, mp):
         return
     _mp.group_role = mp["groupe"]["fonction"]
 
-    try: 
+    try:
         group = Group.objects.get(abbreviation=mp["groupe_sigle"])
     except:
         group = get_or_create(Group, abbreviation=mp["groupe_sigle"], name=mp["groupe"]["organisme"])
         print "[Error] Group does not exist : " +mp["groupe_sigle"]
-        return  
+        return
     _mp.group = group
 
 
@@ -150,7 +150,7 @@ def get_department_and_circo(mp, _mp):
     try:
         _mp.circonscription = Circonscription.objects.get(number=number, department=department)
     except:
-        _mp.circonscription=get_or_create(Circonscription, 
+        _mp.circonscription=get_or_create(Circonscription,
                 number=number, department=department)
         print "[Warning] Created new Circonscription : "+number
 
@@ -277,7 +277,7 @@ def create_uniq_id(mp_json):
 
 
 #Create a new mp that is empty
-#we will then fill it with the common update 
+#we will then fill it with the common update
 def create_new_mp(mp):
     _mp = MP()
     _mp.id = create_uniq_id(mp)
@@ -309,7 +309,7 @@ if __name__ == "__main__":
             try:
                 an_id = depute["depute"]["url_an"].split("/")[-1].split(".")[0]
                 print an_id +"  :  " +depute["depute"]["url_nosdeputes_api"]
-                
+
                 mp = load(read_or_dl(depute["depute"]["url_nosdeputes_api"], an_id))["depute"]
             except HTTPError:
                 try:
@@ -330,7 +330,7 @@ if __name__ == "__main__":
                 print "missing:", mp["nom"].encode("Utf-8")
                 _mp = create_new_mp(mp)
                 #_mp = MP.objects.filter(an_id=mp["url_an"].split("/")[-1].split(".")[0])
-                
+
                 if not _mp:
                     exit
             else:
