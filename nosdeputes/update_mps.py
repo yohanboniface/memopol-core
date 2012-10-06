@@ -17,11 +17,13 @@ if not os.path.exists("dumps"):
     os.mkdir("dumps")
 
 
-def read_or_dl(url, name):
-    if not os.path.exists("dumps/%s" % name):
-        open("dumps/%s" % name, "w").write(urlopen(url).read())
+def read_or_dl(url, name, prefix):
+    if not os.path.exists(prefix):
+        os.makedirs(prefix)
+    if not os.path.exists("%s/%s" % (prefix, name)):
+        open("%s/%s" % (prefix, name), "w").write(urlopen(url).read())
 
-    return open("dumps/%s" % name, "r")
+    return open("%s/%s" % (prefix, name), "r")
 
 
 def update_personal_informations(_mp, mp):
@@ -298,57 +300,63 @@ def create_new_mp(mp):
     print "MP created !"
     return _mp
 
+
+def update_mps(mps, prefix):
+    #update all MP to inactive
+    MP.objects.filter(active=True).update(active=False)
+
+    a = 0
+    for depute in mps["deputes"]:
+        a += 1
+        try:
+            an_id = depute["depute"]["url_an"].split("/")[-1].split(".")[0]
+            print an_id, " : ", depute["depute"]["url_nosdeputes_api"]
+
+            mp = load(read_or_dl(depute["depute"]["url_nosdeputes_api"], an_id, prefix))["depute"]
+        except HTTPError:
+            try:
+                print "Warning, failed to get a deputy, retrying in one seconde (url: %s)" % depute["depute"]["api_url"]
+                time.sleep(1)
+                mp = load(urlopen(depute["depute"]["url_nosdeputes_api"]))["depute"]
+            except HTTPError:
+                print "Didn't managed to get this deputy, abort"
+                print "Go repport the bug on irc.freenode.net#regardscitoyens"
+                sys.exit(1)
+        #except :
+        #    print "[Error] could not load this MP : " + mp["nom"].encode("Utf-8")
+        #    continue
+        print a, "-", mp["nom"].encode("Utf-8")
+        _mp = MP.objects.filter(an_id=mp["url_an"].split("/")[-1].split(".")[0])
+        print _mp
+        if not _mp:
+            print "missing:", mp["nom"].encode("Utf-8")
+            _mp = create_new_mp(mp)
+            #_mp = MP.objects.filter(an_id=mp["url_an"].split("/")[-1].split(".")[0])
+
+            if not _mp:
+                exit
+        else:
+            print _mp
+            _mp = _mp[0]
+        if not depute["depute"].get("ancien_depute"):
+            _mp.active = True
+        update_personal_informations(_mp, mp)
+
+        # clean
+        FunctionMP.objects.filter(mp=_mp).delete()
+        update_group_info(_mp, mp)
+        get_etudes_groups(_mp, mp)
+
+        get_other_functions(_mp, mp)
+        get_new_emails(mp, _mp)
+        get_new_websites(mp, _mp)
+        get_department_and_circo(mp, _mp)
+        _mp.save()
+
 if __name__ == "__main__":
-    mps = load(read_or_dl("http://www.nosdeputes.fr/deputes/json", "all_mps"))
+    old_mps = load(read_or_dl("http://2007-2012.nosdeputes.fr/deputes/json", "all_mps", "old_dumps"))
+    mps = load(read_or_dl("http://www.nosdeputes.fr/deputes/json", "all_mps", "dumps"))
 
     with transaction.commit_on_success():
-        #update all MP to inactive
-        MP.objects.filter(active=True).update(active=False)
-
-        a = 0
-        for depute in mps["deputes"]:
-            a += 1
-            try:
-                an_id = depute["depute"]["url_an"].split("/")[-1].split(".")[0]
-                print an_id, " : ", depute["depute"]["url_nosdeputes_api"]
-
-                mp = load(read_or_dl(depute["depute"]["url_nosdeputes_api"], an_id))["depute"]
-            except HTTPError:
-                try:
-                    print "Warning, failed to get a deputy, retrying in one seconde (url: %s)" % depute["depute"]["api_url"]
-                    time.sleep(1)
-                    mp = load(urlopen(depute["depute"]["url_nosdeputes_api"]))["depute"]
-                except HTTPError:
-                    print "Didn't managed to get this deputy, abort"
-                    print "Go repport the bug on irc.freenode.net#regardscitoyens"
-                    sys.exit(1)
-            #except :
-            #    print "[Error] could not load this MP : " + mp["nom"].encode("Utf-8")
-            #    continue
-            print a, "-", mp["nom"].encode("Utf-8")
-            _mp = MP.objects.filter(an_id=mp["url_an"].split("/")[-1].split(".")[0])
-            print _mp
-            if not _mp:
-                print "missing:", mp["nom"].encode("Utf-8")
-                _mp = create_new_mp(mp)
-                #_mp = MP.objects.filter(an_id=mp["url_an"].split("/")[-1].split(".")[0])
-
-                if not _mp:
-                    exit
-            else:
-                print _mp
-                _mp = _mp[0]
-            if not depute["depute"].get("ancien_depute"):
-                _mp.active = True
-            update_personal_informations(_mp, mp)
-
-            # clean
-            FunctionMP.objects.filter(mp=_mp).delete()
-            update_group_info(_mp, mp)
-            get_etudes_groups(_mp, mp)
-
-            get_other_functions(_mp, mp)
-            get_new_emails(mp, _mp)
-            get_new_websites(mp, _mp)
-            get_department_and_circo(mp, _mp)
-            _mp.save()
+        update_mps(old_mps, "old_dumps")
+        update_mps(mps, "dumps")
