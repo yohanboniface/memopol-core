@@ -59,14 +59,7 @@ def update_group_info(_mp, mp):
         _mp.group = get_or_create(Group, abbreviation="NI", name=u"Députés n'appartenant à aucun groupe")
         return
     _mp.group_role = mp["groupe"]["fonction"]
-
-    try:
-        group = Group.objects.get(abbreviation=mp["groupe_sigle"])
-    except:
-        group = get_or_create(Group, abbreviation=mp["groupe_sigle"], name=mp["groupe"]["organisme"])
-        print "[Error] Group does not exist : " + mp["groupe_sigle"]
-        return
-    _mp.group = group
+    _mp.group = get_or_create(Group, _id="abbreviation", abbreviation=mp["groupe_sigle"], name=mp["groupe"]["organisme"])
 
 
 def get_etudes_groups(_mp, mp):
