@@ -34,12 +34,12 @@ def update_personal_informations(_mp, mp):
     try:
         _mp.birth_date = parse(mp["date_naissance"])
     except:
-        print "[Warning] No birth date for " +mp["nom"].encode("Utf-8")
+        print "[Warning] No birth date for " + mp["nom"].encode("Utf-8")
 
     try:
         _mp.hemicycle_site = mp["place_en_hemicycle"]
     except:
-        _mp.hemicycle_site=0
+        _mp.hemicycle_site = 0
     if mp["lieu_naissance"] is not None:
         _mp.birth_place = re.sub("\(.*", "", mp["lieu_naissance"])
         _mp.birth_department = re.sub(".*\(", "", mp["lieu_naissance"])[:-1]
@@ -61,7 +61,7 @@ def update_group_info(_mp, mp):
         group = Group.objects.get(abbreviation=mp["groupe_sigle"])
     except:
         group = get_or_create(Group, abbreviation=mp["groupe_sigle"], name=mp["groupe"]["organisme"])
-        print "[Error] Group does not exist : " +mp["groupe_sigle"]
+        print "[Error] Group does not exist : " + mp["groupe_sigle"]
         return
     _mp.group = group
 
@@ -150,9 +150,9 @@ def get_department_and_circo(mp, _mp):
     try:
         _mp.circonscription = Circonscription.objects.get(number=number, department=department)
     except:
-        _mp.circonscription=get_or_create(Circonscription,
+        _mp.circonscription = get_or_create(Circonscription,
                 number=number, department=department)
-        print "[Warning] Created new Circonscription : "+number
+        print "[Warning] Created new Circonscription : " + number
 
 
 def get_new_websites(mp, _mp):
@@ -281,13 +281,13 @@ def create_uniq_id(mp_json):
 def create_new_mp(mp):
     _mp = MP()
     _mp.id = create_uniq_id(mp)
-    _mp.picture = _mp.id +".jpg"
+    _mp.picture = _mp.id + ".jpg"
     _mp.an_id=mp["url_an"].split("/")[-1].split(".")[0]
     if mp["place_en_hemicycle"] :
-        _mp.hemicycle_sit=mp["place_en_hemicycle"]
+        _mp.hemicycle_sit = mp["place_en_hemicycle"]
     else:
-        _mp.hemicycle_sit=0
-    _mp.active=True
+        _mp.hemicycle_sit = 0
+    _mp.active = True
     update_personal_informations(_mp, mp)
     _mp.save()
     #get_new_emails(mp, _mp)
@@ -308,7 +308,7 @@ if __name__ == "__main__":
             a += 1
             try:
                 an_id = depute["depute"]["url_an"].split("/")[-1].split(".")[0]
-                print an_id +"  :  " +depute["depute"]["url_nosdeputes_api"]
+                print an_id, " : ", depute["depute"]["url_nosdeputes_api"]
 
                 mp = load(read_or_dl(depute["depute"]["url_nosdeputes_api"], an_id))["depute"]
             except HTTPError:
@@ -321,7 +321,7 @@ if __name__ == "__main__":
                     print "Go repport the bug on irc.freenode.net#regardscitoyens"
                     sys.exit(1)
             #except :
-            #    print "[Error] could not load this MP : "+mp["nom"].encode("Utf-8")
+            #    print "[Error] could not load this MP : " + mp["nom"].encode("Utf-8")
             #    continue
             print a, "-", mp["nom"].encode("Utf-8")
             _mp = MP.objects.filter(an_id=mp["url_an"].split("/")[-1].split(".")[0])
