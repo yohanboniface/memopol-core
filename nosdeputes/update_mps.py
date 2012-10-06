@@ -40,6 +40,7 @@ def update_personal_informations(_mp, mp):
         _mp.hemicycle_site = mp["place_en_hemicycle"]
     except:
         _mp.hemicycle_site = 0
+        _mp.active = False
     if mp["lieu_naissance"] is not None:
         _mp.birth_place = re.sub("\(.*", "", mp["lieu_naissance"])
         _mp.birth_department = re.sub(".*\(", "", mp["lieu_naissance"])[:-1]
@@ -285,9 +286,10 @@ def create_new_mp(mp):
     _mp.an_id=mp["url_an"].split("/")[-1].split(".")[0]
     if mp["place_en_hemicycle"] :
         _mp.hemicycle_sit = mp["place_en_hemicycle"]
+        _mp.active = True
     else:
         _mp.hemicycle_sit = 0
-    _mp.active = True
+        _mp.active = False
     update_personal_informations(_mp, mp)
     _mp.save()
     #get_new_emails(mp, _mp)
