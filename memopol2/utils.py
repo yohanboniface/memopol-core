@@ -47,17 +47,16 @@ def get_content_cache(request, filename, content_type='image/png'):
     return send_file(request, filename, content_type=content_type)
 
 COLORS =\
-((55, 157, 0),
-(55, 157, 0),
-(58, 198, 9),
-(114, 220, 44),
-(162, 253, 11),
-(232, 253, 11),
-(253, 247, 11),
-(253, 220, 11),
-(246, 183, 36),
+((208, 0, 0),
 (222, 79, 17),
-(208, 0, 0))
+(246, 183, 36),
+(253, 220, 11),
+(253, 247, 11),
+(232, 253, 11),
+(162, 253, 11),
+(114, 220, 44),
+(58, 198, 9),
+(55, 157, 0))
 
 def color(score):
     return COLORS[int(score/10)]
