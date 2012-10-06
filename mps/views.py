@@ -9,7 +9,10 @@ from models import MP, Phone, Address
 
 def get_nosdeputes_widget(request, pk):
     mp = get_object_or_404(MP, id=pk)
-    return HttpResponse(urlopen("http://www.nosdeputes.fr/widget/%s-%s" % (slugify(mp.first_name), slugify(mp.last_name))).read().replace("935", "800"))
+    if mp.active:
+        return HttpResponse(urlopen("http://www.nosdeputes.fr/widget14/%s-%s" % (slugify(mp.first_name), slugify(mp.last_name))).read().replace("935", "800"))
+    else:
+        return HttpResponse(urlopen("http://www.nosdeputes.fr/widget/%s-%s" % (slugify(mp.first_name), slugify(mp.last_name))).read().replace("935", "800"))
 
 
 class MPList(ListView):
