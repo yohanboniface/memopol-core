@@ -55,7 +55,7 @@ $(document).ready(function() {
 
 
 <h2>{% trans "General information" %}</h2>
-{% if not mep.active %}<li><div class="nok">{% trans "Former mep" %}</div></li>{% endif %}
+{% if not mep.active %}<li><div class="nok"><a href="{% url meps:index_inactive %}">{% trans "Former mep" %}</a></div></li>{% endif %}
 <li><i>{% trans "Country" %}</i>:  <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ STATIC_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.country.code %}">{{ mep.country.name }}</li></a>
 {% if mep.group %}
 <li><i>{% trans "Political group" %}</i>: <a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></li>
