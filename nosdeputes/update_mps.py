@@ -135,10 +135,7 @@ def get_department_and_circo(mp, _mp):
             department = Department.objects.get(number=mp["num_deptmt"])
         except:
             if mp["num_deptmt"] == "977":
-                department = Department.objects.get(number="987")
-                department.num_deptmt = "977"
-                department.save()
-                _mp.department = department
+                department = Department.objects.create(number="977", name=mp["nom_circo"])
             else:
                 print "[Error] Department not in database : " + mp["num_deptmt"]
                 return
