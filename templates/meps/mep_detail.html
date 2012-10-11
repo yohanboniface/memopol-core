@@ -128,7 +128,7 @@ $(document).ready(function() {
         <li style="border-color:{{ score.color }};">
           <div class="score-color" style="background-color:{{ score.color }};"></div>
           <div class="inner-score">
-            <a href="{% url meps:votes:votes_mep score.proposal.id mep.id %}">{{ score.proposal.title }}</a>: <strong>{{ score.value|floatformat:"-1" }}</strong> {% blocktrans with score.date as score_date %}(on {{ score_date }}){% endblocktrans %}<br/><a href="http://www.laquadrature.net/wiki/{{ score.proposal.id }}">{% trans "Read more..." %}</a>
+            <a href="{% url meps:votes:votes_mep score.proposal.id mep.id %}">{{ score.proposal.title }}</a>: <strong>{{ score.value|floatformat:"-1" }}</strong> {% blocktrans with score.date as score_date %}(on {{ score_date }}){% endblocktrans %}<br/><a href="{{ score.proposal.get_absolute_url }}">{% trans "Read more..." %}</a>
           </div>
         </li>
         {% endfor %}
