@@ -8,10 +8,11 @@ from votes.models import Proposal
 
 from meps.views import optimise_mep_query
 
+
 class ProposalView(DetailView):
-    model=Proposal
-    context_object_name="vote"
-    template_name="meps/proposal_detail.html"
+    model = Proposal
+    context_object_name = "vote"
+    template_name = "meps/proposal_detail.html"
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProposalView, self).get_context_data(**kwargs)
@@ -20,8 +21,8 @@ class ProposalView(DetailView):
 
 
 class VoteRecommendation(DetailView):
-    template_name='meps/recommendation_detail.html'
-    redirect="meps:votes:recommendation"
+    template_name = 'meps/recommendation_detail.html'
+    redirect = "meps:votes:recommendation"
 
     def get_context_data(self, *args, **kwargs):
         context = super(VoteRecommendation, self).get_context_data(**kwargs)
@@ -33,7 +34,7 @@ class VoteRecommendation(DetailView):
 
     def meps_with_votes(self):
         for mep in optimise_mep_query(MEP.objects.filter(vote__recommendation=self.object), Q(mep__score__proposal=self.object.proposal), Q(representative__score__proposal=self.object.proposal), choice_on_recommendation=self.object):
-            yield mep, mep.choice # bad bad bad, filter should disapear soon for a get
+            yield mep, mep.choice  # bad bad bad, filter should disapear soon for a get
 
     def render_to_response(self, context):
         if self.kwargs["proposal_id"] != self.object.proposal.id:
@@ -42,8 +43,8 @@ class VoteRecommendation(DetailView):
 
 
 class VoteRecommendationChoice(VoteRecommendation):
-    template_name='meps/mep_list.html'
-    redirect="meps:votes:recommendation_choice"
+    template_name = 'meps/mep_list.html'
+    redirect = "meps:votes:recommendation_choice"
 
     def get_context_data(self, *args, **kwargs):
         context = super(VoteRecommendationChoice, self).get_context_data(**kwargs)
