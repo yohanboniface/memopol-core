@@ -6,10 +6,9 @@ from django.core.urlresolvers import reverse
 from meps.models import LocalParty, Country, Group, Committee, Delegation, Organization, Building, MEP
 from reps.models import Opinion
 
-from views import BuildingDetailView, MEPView, MEPsFromView, MEPList, PartyView, MEPSearchView
+from views import BuildingDetailView, MEPView, MEPsFromView, MEPList, PartyView
 
 urlpatterns = patterns('meps.views',
-    url(r'^search/$', MEPSearchView.as_view(), name='mep_search'),
     # those view are *very* expansive. we cache them in RAM for a week
     url(r'^generic/$', 'generic', name="generic"),
     url(r'^query/$', TemplateView.as_view(template_name="meps/query.html"), name="generic"),

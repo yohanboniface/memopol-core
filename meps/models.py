@@ -4,10 +4,10 @@ from django.db.models import Count, Q
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.core.urlresolvers import reverse
 from snippets import snippet
-import search
 
 from memopol2.utils import reify, color
 from reps.models import Representative, Party
+
 
 class Country(models.Model):
     code = models.CharField(max_length=2, unique=True)
@@ -48,8 +48,6 @@ class LocalParty(Party):
         return cls.objects.distinct().filter(partyrepresentative__representative__mep__active=True).annotate(meps_count=Count('partyrepresentative__representative__mep', distinct=True))
 
 
-
-@search.searchable
 class Group(models.Model):
     abbreviation = models.CharField(max_length=10, unique=True)
     name = models.CharField(max_length=100, unique=True)
@@ -78,7 +76,6 @@ class Group(models.Model):
         return cls.objects.distinct().filter(groupmep__mep__active=True).annotate(meps_count=Count('groupmep__mep', distinct=True)).order_by('-meps_count')
 
 
-@search.searchable
 class Delegation(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
@@ -103,7 +100,6 @@ class Delegation(models.Model):
         return cls.objects.distinct().filter(delegationrole__mep__active=True).annotate(meps_count=Count('delegationrole__mep', distinct=True))
 
 
-@search.searchable
 class Committee(models.Model):
     name = models.CharField(max_length=255, unique=True)
     abbreviation = models.CharField(max_length=30, unique=True)
@@ -156,7 +152,6 @@ class Building(models.Model):
         return u"%s - %s - %s - %s" % (self.id, self.name, self.street, self.postcode)
 
 
-@search.searchable
 class Organization(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
@@ -181,7 +176,6 @@ class Organization(models.Model):
         return cls.objects.distinct().filter(organizationmep__mep__active=True).annotate(meps_count=Count('organizationmep__mep', distinct=True))
 
 
-@search.searchable
 class MEP(Representative):
     active = models.BooleanField()
     ep_id = models.IntegerField(unique=True)

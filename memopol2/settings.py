@@ -249,11 +249,10 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 COMMENTS_APP = 'positions'
 
-WHOOSH_TEMPORARY_INDEX = '%s/temporary.index' % PROJECT_PATH
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH': WHOOSH_TEMPORARY_INDEX,
+        'PATH': WHOOSH_INDEX,
     },
 }
 HAYSTACK_DOCUMENT_FIELD = "fulltext"

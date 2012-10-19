@@ -19,7 +19,7 @@ def get_or_create(klass, _id=None, **kwargs):
         return klass.objects.create(**kwargs)
 
 def update_search_index():
-    call_command("update_memopol_index")
+    call_command("update_index")
 
 def check_dir(filename):
     dirname = os.path.dirname(filename)

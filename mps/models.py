@@ -3,7 +3,7 @@ from django.db.models import Avg, Count, Q
 from reps.models import Representative
 from django.core.urlresolvers import reverse
 from memopol2.utils import reify
-import search
+
 
 class Function(models.Model):
     type = models.CharField(max_length=255)
@@ -75,7 +75,6 @@ class Group(models.Model):
         return self.name
 
 
-@search.searchable
 class MP(Representative):
     active = models.BooleanField()
     birth_department = models.CharField(max_length=255)

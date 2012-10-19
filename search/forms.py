@@ -4,11 +4,11 @@ from extended_choices import Choices
 
 from dynamiq.forms.haystack import HaystackForm
 from dynamiq.forms.constants import YES_NO
-from dynamiq.forms.base import DynamiqSearchOptionsForm, DynamiqAdvancedFormset
-from dynamiq.fields import DynamiqStrChoiceField, DynamiqIntChoiceField
+from dynamiq.forms.base import SearchOptionsForm, AdvancedFormset
+from dynamiq.fields import StrChoiceField, IntChoiceField
 from dynamiq.utils import model_choice_value
 
-from .models import MEP, Country, Group, Committee, Delegation
+from meps.models import MEP, Country, Group, Committee, Delegation
 
 
 COUNTRY = Choices(*((c.code.upper(), c.code, c.name) for c in Country.objects.all()))
@@ -37,7 +37,7 @@ MODEL_CHOICES = Choices(
 )
 
 
-class MEPSearchOptionsForm(DynamiqSearchOptionsForm):
+class MEPSearchOptionsForm(SearchOptionsForm):
 
     SORT = SORT_CHOICES
     SORT_INITIAL = SORT.TOTAL_SCORE
@@ -79,10 +79,10 @@ class MEPSearchForm(HaystackForm):
         },
     }
 
-    filter_value_country = DynamiqStrChoiceField(COUNTRY)
-    filter_value_group = DynamiqStrChoiceField(GROUP)
-    filter_value_committees = DynamiqStrChoiceField(COMMITTEE)
-    filter_value_delegations = DynamiqIntChoiceField(DELEGATION)
+    filter_value_country = StrChoiceField(COUNTRY)
+    filter_value_group = StrChoiceField(GROUP)
+    filter_value_committees = StrChoiceField(COMMITTEE)
+    filter_value_delegations = IntChoiceField(DELEGATION)
 
     JS_FILTERS_BUILDERS = (
         (u'reset', {
@@ -101,7 +101,7 @@ class MEPSearchForm(HaystackForm):
     )
 
 
-class MEPSearchAdvancedFormset(DynamiqAdvancedFormset):
+class MEPSearchAdvancedFormset(AdvancedFormset):
     options_form_class = MEPSearchOptionsForm
     form = MEPSearchForm
 
