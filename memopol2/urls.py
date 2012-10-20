@@ -57,6 +57,7 @@ urlpatterns = patterns('',  # pylint: disable=C0103
     url(r'^europe/parliament/', include('meps.urls', namespace='meps', app_name='meps')),
     url(r'^france/assemblee/', include('mps.urls', namespace='mps', app_name='mps')),
     url(r'^votes/', include('votes.urls', namespace='votes', app_name='votes')),
+    url(r'^patches/', include('patch_o_maton.urls', namespace='patch_o_maton', app_name='patch_o_maton')),
     url(r'^trends/', include('trends.urls', namespace='trends', app_name='trends')),
     url(r'^campaign/', include('campaign.urls', namespace='campaign', app_name='campaign')),
     url(r'^search/', include('search.urls')),
