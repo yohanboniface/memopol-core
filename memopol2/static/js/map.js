@@ -1,4 +1,4 @@
-$script.ready('kartograph', function() {
+$(document).ready(function() {
    var onCountryClick = function(target) {
       window.location='/europe/parliament/country/'+target.iso2+"/";
    };
