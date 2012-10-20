@@ -69,6 +69,12 @@ $(document).ready(function() {
 {% if mep.birth_date %}
 <li><i>{% if mep.gender == 'M' %}{% trans "Born on" %}{% else %}{% trans "Born on (female)" %}{% endif %}</i> {% blocktrans with mep.birth_date.day as day and mep.birth_date|date:'F' as month and mep.birth_date.year as year and mep.birth_place as birth_place and mep.age as age %}{{ day }} {{ month }} {{ year }}<i> at </i>{{ birth_place }}, {{ age }} years old.{% endblocktrans %}</li>
 {% endif %}
+{% for achievement in mep.achievements.all %}
+<li>
+{% if achievement.thumbnail %}<img src="{{ achievement.thumbnail.url }}" alt="{{ achievement.name }}" />{% endif %}
+{{ achievement.name }}
+</li>
+{% endfor %}
 </ul>
 
 <div class="rounded_box" id="contact">
