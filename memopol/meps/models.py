@@ -380,6 +380,13 @@ class MepModerator(CommentModerator):
     moderate_after = 0
     def moderate(self, comment, content_object, request):
         return True
-
-
 moderator.register(MEP, MepModerator)
+
+
+    
+class Assistant(models.Model):
+    full_name = models.CharField(max_length=255)
+    mep = models.ForeignKey(MEP)
+    assistant_type = models.CharField(max_length=255)
+    #active = models.BooleanField()
+
