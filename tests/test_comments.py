@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from tests import TestCase, UserTestCase
+from . import TestCase, UserTestCase
 from meps.models import MEP
 
 
@@ -44,7 +44,6 @@ class TestCommentsModeration(UserTestCase):
         ## login as staff user
         self.set_user(is_staff=True)
         resp = self.app.get('/admin/')
-        resp.mustcontain('<a href="comments/comment/">Comments</a>')
+        resp.mustcontain('<a href="/admin/comments/comment/">Comments</a>')
         resp = self.app.get('/admin/comments/comment/')
-        print resp
-        resp.mustcontain('<th><a href="','/">garage1</a></th>')
+        resp.mustcontain('<th><a href="', '/">garage1</a></th>')

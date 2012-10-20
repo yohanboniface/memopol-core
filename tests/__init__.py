@@ -29,6 +29,7 @@ from django.contrib.contenttypes.models import ContentType
 
 django_app = django.core.handlers.wsgi.WSGIHandler()
 
+
 class TestCase(unittest.TestCase):
 
     visited = set()

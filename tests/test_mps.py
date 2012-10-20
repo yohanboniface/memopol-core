@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from tests import TestCase
+from . import TestCase
 from mps.models import MP
 from django.db.models import Count
 from django.core.urlresolvers import reverse
+
 
 class TestMPs(TestCase):
 
@@ -39,4 +40,4 @@ class TestMPs(TestCase):
     def test_mps_has_score_display_link_to_mp_votes_on_proposal(self):
         mp = MP.objects.all().annotate(score_len=Count('score')).filter(score_len__gt=0)[0]
         resp = self.app.get(mp.get_absolute_url())
-        assert resp.pyquery("div#scores div.inner-score a")[0].attrib["href"] == reverse("mps:votes_mp", args=[mp.scores[0].proposal.pk, mp.pk])
+        assert resp.pyquery("div#scores div.inner-score a")[0].attrib["href"] == reverse("mps:votes:votes_mp", args=[mp.scores[0].proposal.pk, mp.pk])
