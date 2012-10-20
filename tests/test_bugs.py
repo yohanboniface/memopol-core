@@ -1,4 +1,4 @@
-from tests import TestCase
+from . import TestCase
 from votes.models import Proposal
 
 

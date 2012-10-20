@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from tests import TestCase, UserTestCase
+from . import TestCase, UserTestCase
 from meps.models import MEP
 
 

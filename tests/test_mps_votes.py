@@ -1,4 +1,4 @@
-from tests import TestCase
+from . import TestCase
 from django.db.models import Count
 from django.core.urlresolvers import reverse
 from mps.models import MP
