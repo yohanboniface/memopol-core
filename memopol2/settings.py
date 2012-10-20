@@ -173,6 +173,8 @@ INSTALLED_APPS = (
     'haystack',
     'ajax_select',
     'dynamiq',
+    'categories',
+    'categories.editor',
 )
 
 if APPS_DEBUG:
