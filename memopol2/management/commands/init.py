@@ -10,4 +10,4 @@ class Command(BaseCommand):
         call_command("migrate", "reps", "0007")
         call_command("migrate", "meps")
         call_command("migrate")
-        call_command("rebuild_index", noinput=True)
+        call_command("rebuild_index", interactive=False)
