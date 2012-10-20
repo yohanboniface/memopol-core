@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8" />
+
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width" />
+
+  <title>Political Memory of La Quadrature du Net</title>
+  
+  <!-- Included CSS Files (Uncompressed) -->
+  <!--
+  <link rel="stylesheet" href="stylesheets/foundation.css">
+  -->
+  
+  <!-- Included CSS Files (Compressed) -->
+  <link rel="stylesheet" href="{{ STATIC_URL }}foundation/stylesheets/foundation.min.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}foundation/stylesheets/app.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/qcc.css">
+
+  <script src="{{ STATIC_URL }}foundation/javascripts/modernizr.foundation.js"></script>
+
+
+  <!-- IE Fix for HTML5 Tags -->
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+</head>
+<body>
+
+	<div id="header">
+		<img src="https://memopol.lqdn.fr/static/img/logo.png"><h1>Political Memory</h1>
+		<p>La Quadrature du Net</p>
+	</div>
+
+	<div id="wrapper">
+		
+		<div class="clear"></div>
+
+		<div class="row twelve columns" >
+			<form>
+				<input type="text" class="six columns" placeholder="Standard Input" />
+		<label for="customDropdown">Dropdown Label</label>
+<select style="display:none;" id="customDropdown">
+  <option SELECTED>This is a dropdown</option>
+  <option>This is another option</option>
+  <option>Look, a third option</option>
+</select>
+<div class="custom dropdown">
+  <a href="#" class="current">This is a dropdown</a>
+  <a href="#" class="selector"></a>
+  <ul>
+    <li>This is a dropdown</li>
+    <li>This is another option</li>
+    <li>Look, a third option</li>
+  </ul>
+</div>
+
+	
+				<input class="one secondary button" type="button" value="Go">
+			</form>	
+		</div>
+		
+		<div class="row">
+        	<div class="four columns">
+          		<div class="panel">
+            		<h3>Last events</h3>
+					<ul>
+					<li>09 juillet 2012 : Michel Geist, un professeur de droit canadien, révèle sur son blog qu'une version de CETA datant de février 2012 reproduit mot pour mot les pires chapitres d'ACTA.</li>
+					<li>4 juillet 2012 - Vote final au Parlement européen : rejet par 478 voix contre 39</li>
+					<li>21 juin 2012 - La commission INTA vote son rapport sur ACTA</li>
+					<li>4 juin 2012 - La commission DEVE vote son rapport sur ACTA</li>
+					<li>31 mai 2012 - La commission ITRE vote son rapport sur ACTA</li>
+					</ul>
+          		</div>
+        	</div>
+        
+			<div class="four columns">
+          		<div class="panel">
+            		<h3>What is going on</h3>
+					<p>
+					Le Parlement européen a largement rejeté ACTA le mercredi 4 juillet.
+					À présent, il est temps d'entamer une réforme du cadre européen du droit d'auteur !
+					Pour continuer son action et assurer les victoires futures, soutenez La Quadrature, en faisant un don où en vous engageant dans ses actions. 
+					</p>
+          		</div>
+        	</div>
+        	
+			<div class="four columns">
+          		<div class="panel">
+            		<h3>What I'm doing here?</h3>
+					<p>
+					Memopol…
+					</p>
+         		 </div>
+       		</div>
+      </div>
+      
+		<div class="row">
+			<div class="seven columns">
+				<dl class="tabs">
+   					<dd class="active"><a href="#simple1">Geographical View</a></dd>
+   					<dd><a href="#simple2">Parliament view</a></dd>
+   					<dd><a href="#simple3">List of the commitees</a></dd>
+ 				</dl>
+                                                                                             
+				 <ul class="tabs-content">
+   				<li class="active" id="simple1Tab">
+  				HERE, SOON, A MAP
+ 				 </li>
+   				<li id="simple2Tab">HERE, SOON, A MAP OF THE EUROPEAN PARLIAMENT</li>
+   				<li id="simple3Tab">HERE, SOON, A LIST OF THE COMITTEES</li>
+ 				</ul>
+			</div>
+
+			<div class="four columns">
+				<div class="panel">
+					<h3>Random MEP</h3>
+					<img src="http://www.laquadrature.net/wiki/images/3/3b/MarielleGallo.jpg" width="100px" height="150px">
+					<h4>Marielle Gallo</h4>
+					<p>French MEP</p>
+					<a href="#">More…</a>
+				</div>
+			</div>
+	
+		</div>
+
+ 		<div class="clear"></div>
+
+	</div>
+
+	<div id="footer" class="row">
+		<div class="six columns">
+			La Quadrature du Net
+		</div> 
+	
+		<div class="six columns">
+			News of the project
+		</div>
+	</div>
+
+ 
+  <!-- Included JS Files (Uncompressed) -->
+  <!--
+  
+  <script src="javascripts/jquery.js"></script>
+  
+  <script src="javascripts/jquery.foundation.mediaQueryToggle.js"></script>
+  
+  <script src="javascripts/jquery.foundation.forms.js"></script>
+  
+  <script src="javascripts/jquery.foundation.reveal.js"></script>
+  
+  <script src="javascripts/jquery.foundation.orbit.js"></script>
+  
+  <script src="javascripts/jquery.foundation.navigation.js"></script>
+  
+  <script src="javascripts/jquery.foundation.buttons.js"></script>
+  
+  <script src="javascripts/jquery.foundation.tabs.js"></script>
+  
+  <script src="javascripts/jquery.foundation.tooltips.js"></script>
+  
+  <script src="javascripts/jquery.foundation.accordion.js"></script>
+  
+  <script src="javascripts/jquery.placeholder.js"></script>
+  
+  <script src="javascripts/jquery.foundation.alerts.js"></script>
+  
+  <script src="javascripts/jquery.foundation.topbar.js"></script>
+  
+  -->
+  
+  <!-- Included JS Files (Compressed) -->
+  <script src="{{ STATIC_URL }}foundation/javascripts/jquery.js"></script>
+  <script src="{{ STATIC_URL }}foundation/javascripts/foundation.min.js"></script>
+  
+  <!-- Initialize JS Plugins -->
+  <script src="{{ STATIC_URL }}foundation/javascripts/app.js"></script>
+</body>
+</html>
