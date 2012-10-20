@@ -38,6 +38,16 @@ Like in any free software project:
 
 You can see the list of our awesome contributors in CREDITS.txt (if someone is missing just tell me).
 
+Running tests
+-------------
+
+Projects tests are centralized in the `tests` dir.
+
+To run tests, you just need to run `nosetests` in the project root directory.
+
+The nose configuration is in the `setup.cfg` file.
+
+
 Installation
 ============
 
