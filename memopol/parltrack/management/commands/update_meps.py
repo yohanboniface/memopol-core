@@ -256,8 +256,7 @@ def manage_mep(mep, mep_json):
     add_delegations(mep, mep_json.get("Delegations", []))
     add_countries(mep, mep_json["Constituencies"])
     add_groups(mep, mep_json.get("Groups", []))
-    if mep_json.get("assistants"):
-        add_assistants(mep, mep_json["assistants"])
+    add_assistants(mep, mep_json.get("assistants", []))
     if mep_json.get("Addresses"):
         add_addrs(mep, mep_json["Addresses"])
     add_organizations(mep, mep_json.get("Staff", []))
