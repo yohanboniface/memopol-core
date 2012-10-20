@@ -7,4 +7,4 @@ install:
   - python manage.py init
 script:
   - echo "Running scripts..."
-  - nosetests
+  - PYTHONPATH=. nosetests
