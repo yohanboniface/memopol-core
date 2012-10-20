@@ -1,10 +1,17 @@
 language: python
 python:
   - "2.7"
+before_install:
+  - export PIP_USE_MIRRORS=true
 install:
-  - pip install numpy --use-mirrors
-  - pip install -r requirements.txt --use-mirrors
+  - pip install -e .
+  - pip install numpy
+  - pip install -r requirements.txt
   - python manage.py init
 script:
-  - echo "Running scripts..."
   - nosetests
+branches:
+  only:
+    - master
+notifications:
+  irc: "irc.freenode.org#lqdn-memopol"

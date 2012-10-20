@@ -252,7 +252,7 @@ COMMENTS_APP = 'positions'
 
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'ENGINE': 'search.backends.WhooshEngine',
         'PATH': WHOOSH_INDEX,
     },
 }
