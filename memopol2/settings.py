@@ -173,6 +173,7 @@ INSTALLED_APPS = (
     'haystack',
     'ajax_select',
     'dynamiq',
+    'patch_o_maton',
 )
 
 if APPS_DEBUG:
