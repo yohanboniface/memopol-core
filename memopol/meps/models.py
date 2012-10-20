@@ -211,6 +211,7 @@ class MEP(Representative):
     organizations = models.ManyToManyField(Organization, through='OrganizationMEP')
     position = models.IntegerField(default=None, null=True)
     total_score = models.FloatField(default=None, null=True)
+    max_score_could_have = models.FloatField(default=None, null=True)
 
     def age(self):
         if date.today().month > self.birth_date.month:

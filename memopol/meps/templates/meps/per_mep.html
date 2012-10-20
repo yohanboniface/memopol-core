@@ -24,6 +24,8 @@
             <li><em>{% trans "Part" %}</em> : {{ vote.recommendation.part }}</li>
             {% if vote.recommendation.recommendation %}<li><em>{% trans "Recommendation" %}</em> : <a href="{% url meps:votes:recommendation_choice proposal.id vote.recommendation.id vote.recommendation.recommendation %}">{{ vote.recommendation.recommendation }}</a></li>{% endif %}
             {% if vote.recommendation.weight %}<li><em>Weight</em> : {{ vote.recommendation.weight }}</li>{% endif %}
+            <li><em>Max score</em> : {{ vote.recommendation.max_score|floatformat }}</li>
+            <li><em>Points</em> : {{ vote.score }}</li>
             <li><em>{% trans "Vote" %}</em> : <a class="{% if vote.recommendation.recommendation == vote.choice %}ok{% else %}{% if vote.choice == "abstention" or vote.choice == "absent" %}abstention{% else %}nok{% endif %}{% endif %}" href="{% url meps:votes:recommendation_choice proposal.id vote.recommendation.id vote.choice %}">{{ vote.choice }}</a></li>
             <!--<li><em>Vote</em> : <a class="{% if vote.recommendation.recommendation == vote.choice %}ok{% else %}{% if vote.choice == "abstention" %}abstention{% else %}nok{% endif %}{% endif %}" href="{% url meps:votes:recommendation_choice proposal.id vote.recommendation.id vote.choice %}">{{ vote.choice }}</a></li>-->
         </ul>
