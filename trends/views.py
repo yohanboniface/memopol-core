@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db.models import Avg
 from django.http import HttpResponseNotFound, HttpResponse
 from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext, get_language
 
 from memopol2.utils import check_dir, send_file, get_content_cache, color
 
@@ -20,7 +21,7 @@ from votes.models import Recommendation, Vote, Score, Proposal
 
 def trends_for_mep(request, mep_id):
 
-    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'meps', "%s-scores.png" % mep_id)
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'meps', get_language() + "-%s-scores.png" % mep_id)
     cache = get_content_cache(request, filename)
     if cache:
         return cache
@@ -42,13 +43,13 @@ def trends_for_mep(request, mep_id):
     pyplot.plot(of_country, 'y--')
     pyplot.plot(of_group, 'r--')
     pyplot.plot(of_ep, 'b--')
-    pyplot.legend(('Scores', 'Median', 'Country', 'Group', 'Parliament'), 'best', shadow=True)
+    pyplot.legend((ugettext('Scores'), ugettext('Median'), ugettext('Country'), ugettext('Group'), ugettext('Parliament')), 'best', shadow=True)
     pyplot.plot(scores)
     pyplot.axis([0, len(scores) - 1, 0, 102])
-    pyplot.title("%s - Votes scores evolution over time" % (mep.full_name))
+    pyplot.title(ugettext("%(mep_name)s - Votes scores evolution over time") % {"mep_name": mep.full_name})
     pyplot.xticks(range(len(scores)), [k.proposal.short_name if k.proposal.short_name else k.proposal.date for k in score_list], rotation=-17)
-    pyplot.xlabel("Votes names or dates")
-    pyplot.ylabel("Scores on votes")
+    pyplot.xlabel(ugettext("Votes names or dates"))
+    pyplot.ylabel(ugettext("Scores on votes"))
     check_dir(filename)
     pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
@@ -57,7 +58,7 @@ def trends_for_mep(request, mep_id):
 
 def bar_trends_for_mep(request, mep_id):
 
-    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'meps', "%s-bar-scores.png" % mep_id)
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'meps', get_language() + "-%s-bar-scores.png" % mep_id)
     cache = get_content_cache(request, filename)
     if cache:
         return cache
@@ -78,12 +79,12 @@ def bar_trends_for_mep(request, mep_id):
     pyplot.bar(map(lambda x: x+0.3, range(len(scores))), of_group, width=0.2, color="red")
     pyplot.bar(map(lambda x: x+0.5, range(len(scores))), of_ep, width=0.2, color="green")
     pyplot.bar(map(lambda x: x+0.7, range(len(scores))), of_country, width=0.2, color="yellow")
-    pyplot.legend(('MEP', 'Group', 'Parliament', 'Country'), 'best', shadow=True)
+    pyplot.legend((ugettext('MEP'), ugettext('Group'), ugettext('Parliament'), ugettext('Country')), 'best', shadow=True)
     pyplot.axis([0, len(scores), 0, 102])
-    pyplot.title("%s - Votes scores evolution over time" % (mep.full_name))
+    pyplot.title(ugettext("%(mep_name)s - Votes scores evolution over time") % {"mep_name": mep.full_name})
     pyplot.xticks(map(lambda x: x+0.5, range(len(scores))), [k.proposal.short_name if k.proposal.short_name else k.proposal.date for k in score_list], rotation=-17)
-    pyplot.xlabel("Votes names or dates")
-    pyplot.ylabel("Scores on votes")
+    pyplot.xlabel(ugettext("Votes names or dates"))
+    pyplot.ylabel(ugettext("Scores on votes"))
     check_dir(filename)
     pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
@@ -91,7 +92,7 @@ def bar_trends_for_mep(request, mep_id):
     return send_file(request,filename, content_type="image/png")
 
 def comparaison_trends_for_mep(request, mep_id):
-    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'meps', "%s-comparaison-scores.png" % mep_id)
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'meps', get_language() + "-%s-comparaison-scores.png" % mep_id)
     cache = get_content_cache(request, filename)
     if cache:
         return cache
@@ -114,13 +115,13 @@ def comparaison_trends_for_mep(request, mep_id):
     for i, j, k in zip(center, maximum, [s.value for s in score_list]):
         pyplot.text(i+0.02, j+18, str(k) + "%", horizontalalignment='center', verticalalignment='center')
 
-    pyplot.legend((maximum_bar, mep_bar, ep_plot, group_plot), ('Maximum', 'MEP', 'Parliament', 'Group'), 'best', shadow=False)
+    pyplot.legend((maximum_bar, mep_bar, ep_plot, group_plot), (ugettext('Maximum'), ugettext('MEP'), ugettext('Parliament'), ugettext('Group')), 'best', shadow=False)
     pyplot.axis([0, len(scores), 0, max(maximum) + 50])
-    pyplot.title("%s - Votes scores by vote importance" % (mep.full_name))
+    pyplot.title(ugettext("%(mep_name)s - Votes scores by vote importance") % {"mep_name": mep.full_name})
     pyplot.yticks([])
     pyplot.xticks(map(lambda x: x+0.5, range(len(scores))), [k.proposal.short_name if k.proposal.short_name else k.proposal.date for k in score_list], rotation=-17)
-    pyplot.xlabel("Votes names or dates")
-    pyplot.ylabel("Score by vote importance")
+    pyplot.xlabel(ugettext("Votes names or dates"))
+    pyplot.ylabel(ugettext("Score by vote importance"))
     check_dir(filename)
     pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
@@ -128,7 +129,7 @@ def comparaison_trends_for_mep(request, mep_id):
     return send_file(request, filename, content_type="image/png")
 
 def recommendation_group(request, recommendation_id):
-    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'recommendations', "%s-group.png" % recommendation_id)
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'recommendations', get_language() + "-%s-group.png" % recommendation_id)
     cache = get_content_cache(request, filename)
     if cache:
         return cache
@@ -163,11 +164,11 @@ def recommendation_group(request, recommendation_id):
             groups.append(group.abbreviation)
             a += 1
 
-    pyplot.legend(('Not present','against','abstention','for'), 'best', shadow=False)
-    pyplot.title("Group vote repartition")
+    pyplot.legend((ugettext('Not present'),ugettext('against'), ugettext('abstention'), ugettext('for')), 'best', shadow=False)
+    pyplot.title(ugettext("Group vote repartition"))
     pyplot.xticks(map(lambda x: x+0.5, range(len(groups))), groups, rotation=-17)
-    pyplot.xlabel("Groups")
-    pyplot.ylabel("Number of meps")
+    pyplot.xlabel(ugettext("Groups"))
+    pyplot.ylabel(ugettext("Number of meps"))
     check_dir(filename)
     pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.clf()
@@ -218,7 +219,7 @@ def proposal_countries_map(request, proposal_id, extension):
     return HttpResponse(out, mimetype="image/svg+xml")
 
 def recommendation_countries(request, recommendation_id):
-    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'recommendations', "%s-countries.png" % recommendation_id)
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'recommendations', get_language() + "-%s-countries.png" % recommendation_id)
     cache = get_content_cache(request, filename)
     if cache:
         return cache
@@ -262,11 +263,11 @@ def recommendation_countries(request, recommendation_id):
             countries.append(country.code)
             a += 1
 
-    pyplot.legend(('Not present', 'against', 'abstention', 'for'), 'best', shadow=False)
-    pyplot.title("Countries vote repartition on %s for %s" % (recommendation.part, recommendation.proposal.short_name if recommendation.proposal.short_name else recommendation.proposal.title))
+    pyplot.legend((ugettext('Not present'), ugettext('against'), ugettext('abstention'), ugettext('for')), 'best', shadow=False)
+    pyplot.title(ugettext("Countries vote repartition on %(recommendation_part)s for %(recommandation_proposal)s") % {"recommendation_part": recommendation.part, "recommandation_proposal": recommendation.proposal.short_name if recommendation.proposal.short_name else recommendation.proposal.title})
     pyplot.xticks(map(lambda x: x+0.5, range(len(countries))), countries)
-    pyplot.xlabel("Countries")
-    pyplot.ylabel("Number of meps")
+    pyplot.xlabel(ugettext("Countries"))
+    pyplot.ylabel(ugettext("Number of meps"))
     pyplot.axis([0, len(countries), 0, max_total + 2])
     check_dir(filename)
     pyplot.savefig(filename, format="png", bbox_inches='tight')
@@ -275,7 +276,7 @@ def recommendation_countries(request, recommendation_id):
     return send_file(request, filename, content_type="image/png")
 
 def recommendation_countries_absolute(request, recommendation_id):
-    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'recommendations', "%s-countries-absolute.png" % recommendation_id)
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'recommendations', get_language() + "-%s-countries-absolute.png" % recommendation_id)
     cache = get_content_cache(request, filename)
     if cache:
         return cache
@@ -316,11 +317,11 @@ def recommendation_countries_absolute(request, recommendation_id):
             countries.append(country.code)
             a += 1
 
-    #pyplot.legend(('Not present', 'against', 'abstention', 'for'), 'best', shadow=False)
-    pyplot.title("Normalized countries vote repartition on %s for %s" % (recommendation.part, recommendation.proposal.short_name if recommendation.proposal.short_name else recommendation.proposal.title))
+    #pyplot.legend((ugettext('Not present'), ugettext('against'), ugettext('abstention'), ugettext('for')), 'best', shadow=False)
+    pyplot.title(ugettext("Normalized countries vote repartition on %(recommendation_part)s for %(recommendation_proposal)s") % {"recommendation_part": recommendation.part, "recommandation_proposal": recommendation.proposal.short_name if recommendation.proposal.short_name else recommendation.proposal.title})
     pyplot.xticks(map(lambda x: x+0.5, range(len(countries))), countries)
-    pyplot.xlabel("Countries")
-    pyplot.ylabel("% of choices")
+    pyplot.xlabel(ugettext("Countries"))
+    pyplot.ylabel(ugettext("% of choices"))
     pyplot.axis([0, len(countries), 0, 100])
     check_dir(filename)
     pyplot.savefig(filename, format="png", bbox_inches='tight')
@@ -330,7 +331,7 @@ def recommendation_countries_absolute(request, recommendation_id):
 
 def group_proposal_score_repartition(request, group_abbreviation, proposal_id):
     group_id = group_abbreviation
-    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', "%s-%s-repartition.png" % (group_id, proposal_id))
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', get_language() + "-%s-%s-repartition.png" % (group_id, proposal_id))
     cache = get_content_cache(request, filename)
     if cache:
         return cache
@@ -352,10 +353,10 @@ def group_proposal_score_repartition(request, group_abbreviation, proposal_id):
     pyplot.plot(*zip(*scores))
 
     #pyplot.legend(('MEPs',), 'best', shadow=False)
-    pyplot.title("Score repartition for %s on %s" % (group.abbreviation, proposal.short_name if proposal.short_name else proposal.title))
+    pyplot.title(ugettext("Score repartition for %(abbr)s on %(proposal)s") % {"abbr": group.abbreviation, "proposal": proposal.short_name if proposal.short_name else proposal.title})
     pyplot.xticks(range(0, 105, 5), range(0, 105, 5))
-    pyplot.xlabel("Score range 5 by 5")
-    pyplot.ylabel("MEPs")
+    pyplot.xlabel(ugettext("Score range 5 by 5"))
+    pyplot.ylabel(ugettext("MEPs"))
     #pyplot.axis([0, 20.1, 0, maxeu + 3])
     check_dir(filename)
     pyplot.savefig(filename, format="png", bbox_inches='tight')
@@ -364,7 +365,7 @@ def group_proposal_score_repartition(request, group_abbreviation, proposal_id):
     return send_file(request, filename, content_type="image/png")
 
 def proposal_score_repartition(request, proposal_id):
-    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', "%s-repartition.png" % proposal_id)
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', get_language() + "-%s-repartition.png" % proposal_id)
     cache = get_content_cache(request, filename)
     if cache:
         return cache
@@ -385,11 +386,11 @@ def proposal_score_repartition(request, proposal_id):
     scores.append((100, MEP.objects.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value=100).distinct().count()))
     pyplot.plot(*zip(*scores))
 
-    #pyplot.legend(('MEPs',), 'best', shadow=False)
-    pyplot.title("Score repartition on %s" % proposal.short_name if proposal.short_name else proposal.title)
+    #pyplot.legend((ugettext('MEPs'),), 'best', shadow=False)
+    pyplot.title(ugettext("Score repartition on %(proposal)s") % {"proposal": proposal.short_name if proposal.short_name else proposal.title})
     pyplot.xticks(range(0, 105, 5), range(0, 105, 5))
-    pyplot.xlabel("Score range 5 by 5")
-    pyplot.ylabel("MEPs")
+    pyplot.xlabel(ugettext("Score range 5 by 5"))
+    pyplot.ylabel(ugettext("MEPs"))
     #pyplot.axis([0, 10.1, 0, maxeu + 3])
     check_dir(filename)
     pyplot.savefig(filename, format="png", bbox_inches='tight')
@@ -398,7 +399,7 @@ def proposal_score_repartition(request, proposal_id):
     return send_file(request, filename, content_type="image/png")
 
 def group_proposal_score(request, proposal_id):
-    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', "groups-%s-repartition.png" % proposal_id)
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', get_language() + "-groups-%s-repartition.png" % proposal_id)
     cache = get_content_cache(request, filename)
     if cache:
         return cache
@@ -436,10 +437,10 @@ def group_proposal_score(request, proposal_id):
 
     a, b = zip(*group_bar.items())
     pyplot.legend(list(b), list(a), 'best', shadow=False)
-    pyplot.title("Score repartition for groups on %s" % proposal.short_name if proposal.short_name else proposal.title)
+    pyplot.title(ugettext("Score repartition for groups on %(proposal)s") % {"proposal": proposal.short_name if proposal.short_name else proposal.title})
     pyplot.xticks(range(11), range(0, 110, 10))
-    pyplot.xlabel("Score range 10 by 10")
-    pyplot.ylabel("MEPs per group")
+    pyplot.xlabel(ugettext("Score range 10 by 10"))
+    pyplot.ylabel(ugettext("MEPs per group"))
     pyplot.axis([0, 10.1, 0, maxeu + 3])
     check_dir(filename)
     pyplot.savefig(filename, format="png", bbox_inches='tight')
@@ -448,7 +449,7 @@ def group_proposal_score(request, proposal_id):
     return send_file(request, filename, content_type="image/png")
 
 def group_proposal_score_stacked(request, proposal_id):
-    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', "groups-%s-repartition-stacked.png" % proposal_id)
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', get_language() + "-groups-%s-repartition-stacked.png" % proposal_id)
     pyplot.figure(figsize=(8, 8))
     cache = get_content_cache(request, filename)
     if cache:
@@ -491,10 +492,10 @@ def group_proposal_score_stacked(request, proposal_id):
 
     a, b = zip(*group_bar.items())
     pyplot.legend(list(b), list(a), 'best', shadow=False)
-    pyplot.title("Score repartition for groups on %s" % proposal.short_name if proposal.short_name else proposal.title)
+    pyplot.title(ugettext("Score repartition for groups on %(proposal)s") % {"proposal": proposal.short_name if proposal.short_name else proposal.title})
     pyplot.xticks(range(11), range(0, 110, 10))
-    pyplot.xlabel("Score on vote (range 10 by 10)")
-    pyplot.ylabel("Number of MEPs (by political group) with X points (for this vote)")
+    pyplot.xlabel(ugettext("Score on vote (range 10 by 10)"))
+    pyplot.ylabel(ugettext("Number of MEPs (by political group) with X points (for this vote)"))
     #pyplot.axis([0, 10.1, 0, maxeu + 3])
     check_dir(filename)
     pyplot.savefig(filename, format="png", bbox_inches='tight')
@@ -504,7 +505,7 @@ def group_proposal_score_stacked(request, proposal_id):
     return send_file(request, filename, content_type="image/png")
 
 def group_proposal_score_heatmap(request, proposal_id):
-    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', "groups-%s-repartition-heatmap.png" % proposal_id)
+    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', get_language() + "-groups-%s-repartition-heatmap.png" % proposal_id)
     cache = get_content_cache(request, filename)
     if cache:
         return cache
@@ -580,7 +581,7 @@ def group_proposal_score_heatmap(request, proposal_id):
             b += 1
         a += 1
 
-    pyplot.title("Heatmap of group/country on %s" % proposal.short_name if proposal.short_name else proposal.title)
+    pyplot.title(ugettext("Heatmap of group/country on %(proposal)s") % {"proposal": proposal.short_name if proposal.short_name else proposal.title})
 
     pyplot.xticks(map(lambda x: x + 0.5, range(len(countries))), map(lambda x: x.code, countries))
     pyplot.yticks(map(lambda x: x + 0.5, range(len(groups))), map(lambda x: x.abbreviation, groups))
