@@ -1,12 +1,7 @@
+{% load flatblock_tags %}
+
 <div class="four columns">
   <div class="panel">
-    <h3>What is going on</h3>
-    <p>
-      Le Parlement européen a largement rejeté ACTA le mercredi 4
-      juillet.  À présent, il est temps d'entamer une réforme du cadre
-      européen du droit d'auteur !  Pour continuer son action et assurer
-      les victoires futures, soutenez La Quadrature, en faisant un don où
-      en vous engageant dans ses actions.
-    </p>
+    {% flatblock "welcome.info" 60 using "blocks/last_news_flat_block.html" %}
   </div>
 </div>
