@@ -390,3 +390,5 @@ class Assistant(models.Model):
     assistant_type = models.CharField(max_length=255)
     #active = models.BooleanField()
 
+    def __unicode__(self):
+        return self.full_name
