@@ -34,5 +34,5 @@ class Score(models.Model):
 class Comment(models.Model):
     am = models.ForeignKey(Amendment)
     user = models.ForeignKey(User)
-    comment = models.TextField()
+    comment = models.TextField(blank=True)
     date = models.DateTimeField(default=None, null=True, blank=True)

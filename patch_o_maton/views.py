@@ -4,8 +4,9 @@ from django.shortcuts import render
 import re, json, datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.contrib.auth.decorators import login_required
 
-from models import Dossier, Committee, Amendment
+from models import Dossier, Committee, Amendment, Score, Comment
 from utils import fetch, committee_map
 
 dossiermask=re.compile(r'[0-9]{4}/[0-9]{4}\([A-Z]{3}\)')
@@ -64,16 +65,32 @@ def amendments(request,cid):
     ams = Amendment.objects.filter(committee=c)
     return render(request, "pom_list_amendments.html", {"ams": ams, "committee": c})
 
+@login_required
 def score(request):
     amid=int(request.POST.get('amid'))
-    print amid
-    print request.user
-    print request.POST.get('value')
+    a=Amendment.objects.get(pk=amid)
+    tmp=int(request.POST.get('value'))
+    if abs(tmp)>1: return HttpResponse('nok')
+    s=Score.objects.filter(am=a, user=request.user)
+    if len(s)>1:
+        return HttpResponse('nok')
+    if len(s)==1:
+        s=s[0]
+        s.score=tmp
+        s.save()
+    else:
+        Score(user=request.user, am=a, score=tmp).save()
     return HttpResponse('ok')
 
+@login_required
 def comment(request):
     amid=int(request.POST.get('amid'))
-    print amid
-    print request.user
-    print request.POST.get('comment')
+    a=Amendment.objects.get(pk=amid)
+    comment=request.POST.get('comment','').strip()
+    if len(comment)<1: 
+        return HttpResponse('nok')
+    Comment(user=request.user,
+            date=datetime.datetime.now(),
+            comment=comment,
+            am=a).save()
     return HttpResponse('ok')
