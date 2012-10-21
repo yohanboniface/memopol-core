@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: The Political Memory of La Quadrature du Net\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-21 02:22+0200\n"
+"POT-Creation-Date: 2012-10-21 02:27+0200\n"
 "PO-Revision-Date: 2012-07-21 16:42+0000\n"
 "Last-Translator: Oriane <>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/memopol2/language/"
@@ -563,18 +563,20 @@ msgid "Feedback"
 msgstr "Retour"
 
 #: templates/campaign/view.html:64 templates/campaign/view.html.py:176
-#: templates/meps/meps_table_thead.html:6
+#: templates/meps/meps_table_thead.html:6 trends/views.py:82
+#: trends/views.py:118
 msgid "MEP"
 msgstr "MEPs"
 
 #: templates/campaign/view.html:65 templates/campaign/view.html.py:177
 #: templates/meps/mep_detail.html:59 templates/meps/meps_table_thead.html:7
-#: templates/meps/opinion_detail.html:31
+#: templates/meps/opinion_detail.html:31 trends/views.py:46 trends/views.py:82
 msgid "Country"
 msgstr "Pays"
 
 #: templates/campaign/view.html:66 templates/campaign/view.html.py:178
-#: templates/meps/meps_table_thead.html:8
+#: templates/meps/meps_table_thead.html:8 trends/views.py:46
+#: trends/views.py:82 trends/views.py:118
 msgid "Group"
 msgstr "Groupe"
 
@@ -902,7 +904,7 @@ msgstr "Choix"
 msgid "Role"
 msgstr "Rôle"
 
-#: templates/meps/meps_table_thead.html:15
+#: templates/meps/meps_table_thead.html:15 trends/views.py:46
 msgid "Scores"
 msgstr "Scores"
 
@@ -1108,6 +1110,142 @@ msgstr "Date&nbsp;:"
 #: templates/votes/recommendationdata_list.html:5
 msgid "Importable votes"
 msgstr "Votes à importer"
+
+#: trends/views.py:46
+msgid "Median"
+msgstr ""
+
+#: trends/views.py:46 trends/views.py:82 trends/views.py:118
+msgid "Parliament"
+msgstr "Parlement"
+
+#: trends/views.py:49 trends/views.py:84
+#, python-format
+msgid "%(mep_name)s - Votes scores evolution over time"
+msgstr "%(mep_name)s - Évolution des scores"
+
+#: trends/views.py:51 trends/views.py:86 trends/views.py:123
+msgid "Votes names or dates"
+msgstr "Noms ou dates des votes"
+
+#: trends/views.py:52 trends/views.py:87
+msgid "Scores on votes"
+msgstr "Scores sur les votes"
+
+#: trends/views.py:118
+msgid "Maximum"
+msgstr "Maximum"
+
+#: trends/views.py:120
+#, python-format
+msgid "%(mep_name)s - Votes scores by vote importance"
+msgstr "%(mep_name)s - Scores par importance du vote"
+
+#: trends/views.py:124
+msgid "Score by vote importance"
+msgstr "Score par importance du vote"
+
+#: trends/views.py:167 trends/views.py:266
+msgid "Not present"
+msgstr "Absent"
+
+#: trends/views.py:167 trends/views.py:266
+msgid "against"
+msgstr "contre"
+
+#: trends/views.py:167 trends/views.py:266
+#, fuzzy
+msgid "abstention"
+msgstr "Abstention ou absence"
+
+#: trends/views.py:167 trends/views.py:266
+#, fuzzy
+msgid "for"
+msgstr "étage"
+
+#: trends/views.py:168
+msgid "Group vote repartition"
+msgstr "Répartition des votes des groupes"
+
+#: trends/views.py:170
+#, fuzzy
+msgid "Groups"
+msgstr "Groupe"
+
+#: trends/views.py:171 trends/views.py:270
+msgid "Number of meps"
+msgstr "Nombre de membres"
+
+#: trends/views.py:267
+#, python-format
+msgid ""
+"Countries vote repartition on %(recommendation_part)s for "
+"%(recommandation_proposal)s"
+msgstr ""
+"Répartition des votes par pays sur %(recommendation_part)s pour "
+"%(recommandation_proposal)s"
+
+#: trends/views.py:269 trends/views.py:323
+#, fuzzy
+msgid "Countries"
+msgstr "Pays"
+
+#: trends/views.py:321
+#, python-format
+msgid ""
+"Normalized countries vote repartition on %(recommendation_part)s for "
+"%(recommendation_proposal)s"
+msgstr ""
+
+#: trends/views.py:324
+#, python-format
+msgid "% of choices"
+msgstr "% des choix"
+
+#: trends/views.py:356
+#, python-format
+msgid "Score repartition for %(abbr)s on %(proposal)s"
+msgstr "Répartition des scores pour %(abbr)s sur %(proposal)s"
+
+#: trends/views.py:358 trends/views.py:392
+msgid "Score range 5 by 5"
+msgstr "Score de 5 en 5"
+
+#: trends/views.py:359 trends/views.py:393
+msgid "MEPs"
+msgstr "MEPs"
+
+#: trends/views.py:390
+#, python-format
+msgid "Score repartition on %(proposal)s"
+msgstr "Répartition des scores pour %(proposal)s"
+
+#: trends/views.py:440 trends/views.py:495
+#, python-format
+msgid "Score repartition for groups on %(proposal)s"
+msgstr "Répartition des scores par groupe pour %(proposal)s"
+
+#: trends/views.py:442
+msgid "Score range 10 by 10"
+msgstr "Score de 10 en 10"
+
+#: trends/views.py:443
+#, fuzzy
+msgid "MEPs per group"
+msgstr "Eurodéputés par groupe parlementaire"
+
+#: trends/views.py:497
+msgid "Score on vote (range 10 by 10)"
+msgstr "Score pour ce vote de 10 en 10"
+
+#: trends/views.py:498
+msgid "Number of MEPs (by political group) with X points (for this vote)"
+msgstr "Nombre de MEPs (par groupe politique) avec X points (pour ce vote)"
+
+#: trends/views.py:584
+#, python-format
+msgid "Heatmap of group/country on %(proposal)s"
+msgstr "Heatmap groupe/pays pour %(proposal)s"
 
 #~ msgid ""
 #~ "Use the left field to do %(model_name)s lookups in the fields "
