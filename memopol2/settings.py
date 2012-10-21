@@ -223,7 +223,7 @@ LOGGING = {
     'formatters': {
         'crontab': {
             'format':
-                '%(levelname)s %(asctime)s %(name)s:%(lineno)d %(message)s'
+                '%(levelname)s %(asctime)s %(name)s: %(message)s'
         },
     },
     'handlers': {

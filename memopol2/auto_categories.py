@@ -23,23 +23,30 @@ class Base(object):
     def __init__(self):
         try:
             self.category = Category.objects.get(slug=self.category_slug)
-        except Category.DoesNotExist, e:
+        except Category.DoesNotExist:
+            log.debug('Create category %s', self.category_slug)
             self.category = Category()
             name = self.category_slug.replace('-', ' ').capitalize()
-            self.category.name = name
+            self.category.name = self.category.alternate_title = name
             self.category.save()
-            log.exception(e)
-        filename = os.path.join(settings.MEDIA_ROOT, 'auto_categories',
-                                '%s.jpg' % self.category_slug)
-        if os.path.exists(filename):
-            file_content = ContentFile(open(filename).read())
-            self.category.thumbnail.save(os.path.basename(filename),
-                                         file_content)
-            self.category.save()
-        else:
-            log.warn(
-                 'Category "%s" do not have an image declared. We expect %s',
-                 self.category, filename)
+
+        for ext in ('jpg', 'png'):
+            filename = os.path.join(settings.PROJECT_PATH,
+                                    'static', 'auto_categories',
+                                    '%s.%s' % (self.category_slug, ext))
+            if os.path.exists(filename):
+                break
+
+        if not bool(self.category.thumbnail):
+            if os.path.exists(filename):
+                file_content = ContentFile(open(filename).read())
+                self.category.thumbnail.save(os.path.basename(filename),
+                                             file_content)
+                log.debug('Using %s as thumbnail', filename)
+            else:
+                log.warn(
+                  'Category "%s" do not have an image declared. We expect %s',
+                  self.category, filename)
 
     def get_queryset(self):
         return self.queryset.all()
