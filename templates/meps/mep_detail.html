@@ -46,7 +46,7 @@ $(document).ready(function() {
 <img class="mugshot" alt="{{ mep }}" src="{% url meps:mep-picture mep.ep_id %}" onerror="onMugshotError(this);"/>
 <span>{{ mep }} <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ STATIC_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> </span>
 {% if mep.group %}
-<a href="{% url meps:index_by_group mep.group.abbreviation %}" title="{% blocktrans with mep.group.abbreviation as group_abbreviation %}show the {{ group_abbreviation }} group{% endblocktrans %}"><img class="grouplogo" src="{{ STATIC_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" alt="{{ mep.group.abbreviation }}"/></a><ul>{% for i in mep.achievements %}<li><img alt="{{ i.0 }}" src="{{ STATIC_URL }}img/trophies/{{ i.1 }}" /></li>{% endfor %}</ul>
+<a href="{% url meps:index_by_group mep.group.abbreviation %}" title="{% blocktrans with mep.group.abbreviation as group_abbreviation %}show the {{ group_abbreviation }} group{% endblocktrans %}"><img class="grouplogo" src="{{ STATIC_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" alt="{{ mep.group.abbreviation }}"/></a>
 {% endif %}
 <a href="#" id="call-now" />
   <img src="{{ STATIC_URL }}img/call_now_en.png" />
@@ -69,6 +69,12 @@ $(document).ready(function() {
 {% if mep.birth_date %}
 <li><i>{% if mep.gender == 'M' %}{% trans "Born on" %}{% else %}{% trans "Born on (female)" %}{% endif %}</i> {% blocktrans with mep.birth_date.day as day and mep.birth_date|date:'F' as month and mep.birth_date.year as year and mep.birth_place as birth_place and mep.age as age %}{{ day }} {{ month }} {{ year }}<i> at </i>{{ birth_place }}, {{ age }} years old.{% endblocktrans %}</li>
 {% endif %}
+{% for achievement in mep.achievements.all %}
+<li>
+{% if achievement.thumbnail %}<img src="{{ achievement.thumbnail.url }}" alt="{{ achievement.name }}" />{% endif %}
+{{ achievement.name }}
+</li>
+{% endfor %}
 </ul>
 
 <div class="rounded_box" id="contact">

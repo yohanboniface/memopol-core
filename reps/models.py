@@ -100,6 +100,7 @@ class Representative(models.Model):
     birth_place = models.CharField(max_length=255)
     local_party = models.ManyToManyField(Party, through='PartyRepresentative')
     opinions = models.ManyToManyField(Opinion, through='OpinionREP')
+    achievements = models.ManyToManyField('categories.Category')
 
     def __unicode__(self):
         if self.first_name and self.last_name:

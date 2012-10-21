@@ -62,7 +62,7 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(PROJECT_PATH, 'medias/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -71,7 +71,7 @@ MEDIA_ROOT = ''
 MEDIA_URL = '/medias/'
 
 # FIXME: remove this setting, use MEDIA_ROOT instead
-MEDIA_DIRECTORY = os.path.join(PROJECT_PATH, MEDIA_URL.lstrip('/'))
+MEDIA_DIRECTORY = MEDIA_ROOT
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'pw93$2vi7^b_8q#-j@z2#2rc-x7e(vcqmi)ekf9%8h57)#caoy'
@@ -174,6 +174,8 @@ INSTALLED_APPS = (
     'ajax_select',
     'dynamiq',
     'patch_o_maton',
+    'categories',
+    'categories.editor',
 )
 
 if APPS_DEBUG:
@@ -218,10 +220,21 @@ ROOT_URL = "https://memopol.lqdn.fr"
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
+    'formatters': {
+        'crontab': {
+            'format':
+                '%(levelname)s %(asctime)s %(name)s:%(lineno)d %(message)s'
+        },
+    },
     'handlers': {
         'console': {
             'level': 'WARN',
             'class': 'logging.StreamHandler',
+        },
+        'crontab': {
+            'level': DEBUG and 'DEBUG' or 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'crontab',
         },
     },
     'loggers': {
@@ -233,6 +246,11 @@ LOGGING = {
         'memopol2': {
             'handlers': ['console'],
             'level': 'WARN',
+            'propagate': True,
+        },
+        'crontab': {
+            'handlers': ['crontab'],
+            'level': DEBUG and 'DEBUG' or 'INFO',
             'propagate': True,
         },
         'search': {

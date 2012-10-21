@@ -25,3 +25,4 @@ git+git://github.com/liberation/django-extended-choices.git
 git+git://github.com/liberation/django-dynamiq-search-form.git
 unidecode
 diff_match_patch
+django-categories
