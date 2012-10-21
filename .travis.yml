@@ -10,6 +10,8 @@ install:
 script:
   - python -c "import sys; print sys.path"
   - echo $PATH
+  - echo $PWD
+  - ls
 #  - nosetests
 branches:
   only:
