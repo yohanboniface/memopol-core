@@ -6,11 +6,13 @@ before_install:
 install:
   - pip install numpy
   - pip install -r requirements.txt
-  - python manage.py init
+#  - python manage.py init
 script:
-  - nosetests
+  - python -c "import sys; print sys.path"
+  - echo $PATH
+#  - nosetests
 branches:
   only:
     - master
-notifications:
-  irc: "irc.freenode.org#lqdn-memopol"
+#notifications:
+#  irc: "irc.freenode.org#lqdn-memopol"
