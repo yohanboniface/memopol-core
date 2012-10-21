@@ -2,11 +2,19 @@
 
 {% block content %}
 <div class="row">
-    {% include "blocks/last_votes.html" %}
-    {% include "blocks/last_news.html" %}
-    {% include "blocks/what_is_memopol.html" %}
+    <div class="four columns">
+        {% include "blocks/last_news.html" %}
+        {% include "blocks/what_is_memopol.html" %}
+    </div>
+    <div class="eight columns">
+        {% include "blocks/home_slider.html" %}
+    </div>
 </div>
-
+<div class="row">
+    <div class="eight columns">
+        {% include "blocks/last_votes.html" %}
+    </div>
+</div>
 {% endblock content %}
 
 <div class="row">

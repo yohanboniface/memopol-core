@@ -1,5 +1,7 @@
 from django.views.generic import TemplateView
+
 from votes.models import Proposal
+from meps.models import Committee
 
 
 class HomeView(TemplateView):
@@ -8,7 +10,8 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         return {
-            'proposals': Proposal.objects.filter(institution="EU")[:5]
+            'proposals': Proposal.objects.filter(institution="EU")[:10],
+            'committees': Committee.objects.order_by('abbreviation').all()
         }
 
 home = HomeView.as_view()

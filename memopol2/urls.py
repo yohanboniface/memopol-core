@@ -7,8 +7,6 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from mps.models import MP
-from meps.models import Committee
-from votes.models import Proposal
 
 from memopol2.api import v1_api
 from memopol2 import views
