@@ -4,9 +4,9 @@ import urllib2, time, cookielib
 opener=None
 def init_opener():
     global opener
-    #opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookielib.CookieJar()))
-    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookielib.CookieJar()),
-                                  urllib2.ProxyHandler({'http': 'http://localhost:8123/'}))
+    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookielib.CookieJar()))
+    #opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookielib.CookieJar()),
+    #                              urllib2.ProxyHandler({'http': 'http://localhost:8123/'}))
     opener.addheaders = [('User-agent', 'memopol2')]
 
 def fetch(url, retries=5, ignore=[], params=None):

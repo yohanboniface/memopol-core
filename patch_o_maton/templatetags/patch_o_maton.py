@@ -9,3 +9,7 @@ def asdiff(obj):
    diffs=de.diff_main(' '.join(obj.old.split('\n')),' '.join(obj.new.split('\n')))
    de.diff_cleanupSemantic(diffs)
    return de.diff_prettyHtml(diffs)
+
+@register.filter()
+def totalscore(obj):
+   return sum([x.score for x in obj.score_set.all()])

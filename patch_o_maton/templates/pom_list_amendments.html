@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load flatblock_tags %}
 {% load cache %}
-{% load asdiff %}
+{% load patch_o_maton %}
 
 {% block title %}{% trans "Amendments for" %} {{committee.dossier.id}} {{committee.dossier.title}}{% endblock %}
 
@@ -50,6 +50,10 @@ $(document).ready(function(){
        <tr>
          <td>{{am|asdiff|safe}}</td>
          <td>
+            <div>Score: {{am|totalscore}}</div>
+            {% for c in am.comment_set.all%}
+            <div><div>{{c.user}} - {{c.date}}</div><div>{{c.comment|striptags|urlize|linebreaks}}</div>
+            {%endfor%}
             <form class="rate" action="../rate">
                <input type="submit" value="+1" />
                <input type="hidden" name="value" value="+1" />
