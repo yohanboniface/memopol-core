@@ -29,7 +29,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         print "clean old downloaded files"
-        os.system("rm %s %s" % (JSON_DUMP_ARCHIVE_LOCALIZATION, JSON_DUMP_LOCALIZATION))
+        if os.path.exists(JSON_DUMP_ARCHIVE_LOCALIZATION):
+            os.system("rm %s" % (JSON_DUMP_ARCHIVE_LOCALIZATION))
+        if os.path.exists(JSON_DUMP_LOCALIZATION):
+            os.system("rm %s" % (JSON_DUMP_LOCALIZATION))
         print "download lastest data dump of meps from parltrack"
         os.system("wget http://parltrack.euwiki.org/dumps/ep_meps_current.json.xz -O %s" % JSON_DUMP_ARCHIVE_LOCALIZATION)
         print "unxz dump"
