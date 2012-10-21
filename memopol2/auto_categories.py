@@ -3,8 +3,11 @@ __doc__ = """This module allow to run tasks on a queryset per category.
 As a simple example you can have a look at :class:`WorstScore`.
 """
 from categories.models import Category
+from django.core.files.base import ContentFile
+from django.conf import settings
 from meps.models import MEP
 import logging
+import os
 
 log = logging.getLogger('crontab')
 
@@ -21,7 +24,22 @@ class Base(object):
         try:
             self.category = Category.objects.get(slug=self.category_slug)
         except Category.DoesNotExist, e:
+            self.category = Category()
+            name = self.category_slug.replace('-', ' ').capitalize()
+            self.category.name = name
+            self.category.save()
             log.exception(e)
+        filename = os.path.join(settings.MEDIA_ROOT, 'auto_categories',
+                                '%s.jpg' % self.category_slug)
+        if os.path.exists(filename):
+            file_content = ContentFile(open(filename).read())
+            self.category.thumbnail.save(os.path.basename(filename),
+                                         file_content)
+            self.category.save()
+        else:
+            log.warn(
+                 'Category "%s" do not have an image declared. We expect %s',
+                 self.category, filename)
 
     def get_queryset(self):
         return self.queryset.all()
