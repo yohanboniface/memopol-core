@@ -1,0 +1,7 @@
+{% load search_tags %}
+
+{% for object in objects %}
+<div class="six columns">
+  <a href="{% simple_search_shortcut object.url %}">{{ object.display }}</a>
+</div>
+{% endfor %}
