@@ -386,9 +386,12 @@ moderator.register(MEP, MepModerator)
     
 class Assistant(models.Model):
     full_name = models.CharField(max_length=255)
-    mep = models.ForeignKey(MEP)
-    assistant_type = models.CharField(max_length=255)
-    #active = models.BooleanField()
 
     def __unicode__(self):
         return self.full_name
+
+class AssistantMEP(models.Model):
+    mep = models.ForeignKey(MEP)
+    assistant = models.ForeignKey(Assistant)
+    type = models.CharField(max_length=255)
+    # active = models.BooleanField()

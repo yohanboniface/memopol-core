@@ -16,7 +16,7 @@ from memopol.meps.utils import update_meps_positions
 from memopol.base.utils import update_search_index, get_or_create
 
 from memopol.reps.models import PartyRepresentative, Email, WebSite, CV
-from memopol.meps.models import LocalParty, MEP, Delegation, DelegationRole, PostalAddress, Country, CountryMEP, Organization, OrganizationMEP, Committee, CommitteeRole, Group, GroupMEP, Building
+from memopol.meps.models import LocalParty, MEP, Delegation, DelegationRole, PostalAddress, Country, CountryMEP, Organization, OrganizationMEP, Committee, CommitteeRole, Group, GroupMEP, Building, Assistant, AssistantMEP
 
 
 JSON_DUMP_ARCHIVE_LOCALIZATION = join(settings.MEMOPOL_TMP_DIR, "ep_meps_current.json.xz")
@@ -244,8 +244,8 @@ def add_assistants(mep, assistants):
         type_name = assist_type
         for assistant in assistants[type_name]:
             print assistant
-            get_or_create(Assistant, full_name=assistant, mep=mep,
-                    assistant_type= type_name)
+            assistant = get_or_create(Assistant, full_name=assistant)
+            get_or_create(AssistantMEP, mep=mep, assistant=assistant, type=type_name)
 
 
 
