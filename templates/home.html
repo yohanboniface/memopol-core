@@ -11,41 +11,13 @@
     </div>
 </div>
 <div class="row">
+    <div class="four column">
+        {% with mep=spotlight_mep %}
+            {% include "blocks/representative_preview.html" %}
+        {% endwith %}
+    </div>
     <div class="eight columns">
         {% include "blocks/last_votes.html" %}
     </div>
 </div>
 {% endblock content %}
-
-<div class="row">
-<div class="seven columns">
-  <dl class="tabs">
-    <dd class="active">
-      <a href="#simple1">Geographical View</a>
-    </dd>
-    <dd>
-      <a href="#simple2">Parliament view</a>
-    </dd>
-    <dd>
-      <a href="#simple3">List of the commitees</a>
-    </dd>
-  </dl>
-
-  <ul class="tabs-content">
-    <li class="active" id="simple1Tab">
-      HERE, SOON, A MAP
-    </li>
-    <li id="simple2Tab">HERE, SOON, A MAP OF THE EUROPEAN PARLIAMENT</li>
-    <li id="simple3Tab">HERE, SOON, A LIST OF THE COMITTEES</li>
-  </ul>
-</div>
-<div class="four columns">
-  <div class="panel">
-    <h3>Random MEP</h3>
-    <img src="http://www.laquadrature.net/wiki/images/3/3b/MarielleGallo.jpg" width="100px" height="150px">
-    <h4>Marielle Gallo</h4>
-    <p>French MEP</p>
-    <a href="#">More…</a>
-  </div>
-</div>
-</div>
