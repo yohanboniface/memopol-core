@@ -28,10 +28,13 @@
 
     <!-- Included CSS Files (Compressed) -->
     <link rel="stylesheet" href="{{ STATIC_URL }}foundation/stylesheets/foundation.min.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}foundation/stylesheets/app.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}dynamiq/css/dynamiq.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/qcc.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}foundation/stylesheets/app.css">
 
     <script src="{{ STATIC_URL }}foundation/javascripts/modernizr.foundation.js"></script>
+    <script src="{{ STATIC_URL }}foundation/javascripts/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/ajax_select.js"></script>
 
 
     <!-- IE Fix for HTML5 Tags -->
@@ -49,13 +52,15 @@
     </div>
   </div>
   {% include "blocks/footer.html" %}
+  {% block modals %}
+    {% include "blocks/modals.html" %}
+  {% endblock modals %}
 
 
 
     <!-- Included JS Files (Uncompressed) -->
     
 
-        <script src="{{ STATIC_URL }}foundation/javascripts/jquery.js"></script>
 
         <script src="{{ STATIC_URL }}foundation/javascripts/jquery.foundation.mediaQueryToggle.js"></script>
 
@@ -88,6 +93,8 @@
     -->
 
     <!-- Initialize JS Plugins -->
+    <script type="text/javascript" src="{{ STATIC_URL }}dynamiq/js/inlines.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}dynamiq/js/dynamiq.js"></script>
     <script src="{{ STATIC_URL }}foundation/javascripts/app.js"></script>
     <script type="text/javascript">
       $(document).foundationTopBar();

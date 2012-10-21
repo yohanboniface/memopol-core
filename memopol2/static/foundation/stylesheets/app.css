@@ -19,6 +19,13 @@ li {
 
 
 /* -----------------------------------------
+   Structure
+----------------------------------------- */
+.floor {
+    margin-bottom: 22px;
+}
+
+/* -----------------------------------------
    Panels
 ----------------------------------------- */
 .panel li a {
@@ -28,7 +35,21 @@ li {
 
 
 /* -----------------------------------------
-   Page Name 2
+   Search
 ----------------------------------------- */
 
-
+#dynamiq_search {
+    height: 30px;
+}
+#dynamiq_advanced_search {
+    display: block;
+}
+.search_form select {
+    width: auto;
+}
+.search_form input[type="text"] {
+    display: inline;
+}
+.search_toggle {
+    text-align: right;
+}
