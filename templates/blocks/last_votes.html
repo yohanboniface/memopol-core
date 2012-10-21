@@ -1,0 +1,12 @@
+<div class="four columns">
+  <div class="panel">
+    <h3>Last tracked votes</h3>
+    <ul>
+      {% for proposal in proposals %}
+        <li>
+          <img src="{{ STATIC_URL }}img/countries/small/{{ proposal.institution }}.png" alt="{{ proposal.institution }} flag"/> <a href="{{ proposal.get_absolute_url }}">{{ proposal.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
