@@ -1,5 +1,5 @@
 from django import template
-from meps.models import Country, Group
+from meps.models import Country, Group, Committee
 
 register = template.Library()
 
@@ -19,6 +19,13 @@ def build_menu():
             'content': ({
                 "url": "group:%s" % group.abbreviation,
                 "display": group.name} for group in Group.objects.all().order_by("abbreviation")),
+            'flyout_class': 'twelve',
+        },
+        {
+            'name': 'Committees',
+            'content': ({
+                "url": "committees:%s" % committee.abbreviation,
+                "display": committee.name} for committee in Committee.objects.all().order_by("abbreviation")),
             'flyout_class': 'twelve',
         },
         ]
