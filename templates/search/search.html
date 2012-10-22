@@ -9,9 +9,7 @@
             <a href="#" data-reveal-id="advanced_search_modal" class="button secondary">{% trans 'Edit search' %}</a>
             {% endif %}
         </div>
-            {% for result in dynamiq.results %}
-                {% include "blocks/representative_list_item.html" with mep=result.object %}
-            {% endfor %}
+        {% include list_template_name %}
     {% else %}
         {% if dynamiq.formset.is_bound or dynamiq.q != "" %}
             <p>No results found.</p>

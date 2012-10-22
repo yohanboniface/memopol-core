@@ -176,6 +176,7 @@ INSTALLED_APPS = (
     'patch_o_maton',
     'categories',
     'categories.editor',
+    'endless_pagination',
 )
 
 if APPS_DEBUG:

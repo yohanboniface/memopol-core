@@ -17,6 +17,17 @@ log = logging.getLogger(__name__)
 class SearchView(TemplateView):
 
     template_name = 'search/search.html'
+    list_template_name = "blocks/representative_list.html"
+    DEFAULT_SEARCH_LIMIT = 15
+
+    def get_template_names(self):
+        """
+        Dispatch template according to the kind of request: ajax or normal.
+        """
+        if self.request.is_ajax():
+            return [self.list_template_name]
+        else:
+            return [self.template_name]
 
     def get_context_data(self, **kwargs):
         query = None
@@ -31,6 +42,7 @@ class SearchView(TemplateView):
             F = ParsedStringQBuilder(q, MEPSearchForm)
             query, label = F()
             formset = formset_class()
+            limit = self.request.GET.get("limit", self.DEFAULT_SEARCH_LIMIT)
         else:
             formset = formset_class(self.request.GET or None)
             formset.full_clean()
@@ -38,14 +50,12 @@ class SearchView(TemplateView):
                 F = FormsetQBuilder(formset)
                 query, label = F()
                 sort = formset.options_form.cleaned_data.get("sort")
-                limit = formset.options_form.cleaned_data.get("limit", 15)
+                limit = formset.options_form.cleaned_data.get("limit", self.DEFAULT_SEARCH_LIMIT)
 
         if query:
             results = SearchQuerySet().filter(query)
             if sort:
                 results = results.order_by(sort)
-            if limit:
-                results = results[:limit]
         else:
             results = EmptySearchQuerySet()
         return {
@@ -58,7 +68,9 @@ class SearchView(TemplateView):
                     TopRated({"request": self.request}),
                     WorstRated({"request": self.request})
                 ]
-            }
+            },
+            "list_template_name": self.list_template_name,
+            "per_page": limit
         }
 
 
