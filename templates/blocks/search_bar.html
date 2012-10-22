@@ -5,7 +5,7 @@
     <div id="dynamiq_search" {% if dynamiq.formset.is_bound %}style="display:none;"{% endif %}>
         <form action="{% url search %}" method="get">
           <div class="row collapse">
-            <div class="nine mobile-three columns">
+            <div class="nine mobile-three columns" style="padding-left: 10px;">
               <input type="text" name="q" value="{{ dynamiq.q }}" />
             </div>
             <div class="one mobile-one columns">

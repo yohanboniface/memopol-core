@@ -42,14 +42,16 @@
 
 </head>
 <body {% block bodyattrs %}{% endblock %}>
+  <div id="content" style="background-color: #EEEEEE;">
   {% include "blocks/header.html" %}
-  <div class="row">
-    <div class="twelve columns">
-      {% block content %}
-      {% endblock %}
-    </div>
-  </div>
+      <div class="row" style="background-color: #FFFFFF;">
+        <div class="twelve columns">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
   {% include "blocks/footer.html" %}
+  </div>
 
 
 
