@@ -138,3 +138,12 @@ li {
     width: 74px;
     float:left;
 }
+
+
+/* -----------------------------------------
+   Listing pages
+----------------------------------------- */
+
+.listing_details {
+    display: none;
+}

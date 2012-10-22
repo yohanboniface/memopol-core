@@ -18,14 +18,9 @@
             </script>
             {% endif %}
         </div>
-        <table class="mep-list tablesorter">
-          {% include "meps/meps_table_thead.html" %}
-          <tbody>
-            {% for result in  dynamiq.results %}
-              {% include "meps/meps_table_tr.html" with mep=result.object %}
+            {% for result in dynamiq.results %}
+                {% include "blocks/representative_list_item.html" with mep=result.object %}
             {% endfor %}
-          </tbody>
-        </table>
     {% else %}
         {% if dynamiq.formset.is_bound or dynamiq.q != "" %}
             <p>No results found.</p>
