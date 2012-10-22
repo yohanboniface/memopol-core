@@ -210,7 +210,7 @@ LOCALE_PATHS = (
 )
 
 FIXTURE_DIRS = (
-    'fixtures',
+    PROJECT_PATH + '/fixtures',
 )
 
 PARLTRACK_URL = "http://parltrack.euwiki.org"
