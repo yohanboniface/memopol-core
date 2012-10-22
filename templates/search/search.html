@@ -6,16 +6,7 @@
         <div class="search_label">
             Searching {{ dynamiq.label|format_dynamiq_label }}
             {% if dynamiq.formset.is_bound %}
-            <input id="relaunch_search" type="button" value="Edit search" />
-            <script>
-                jQuery(document).ready(function($){
-                    $('#relaunch_search').click(function(e) {
-                        $(this).hide();
-                        $('#dynamiq_advanced_search').show();
-                        e.preventDefault();
-                    });
-                });
-            </script>
+            <a href="#" data-reveal-id="advanced_search_modal" class="button secondary">{% trans 'Edit search' %}</a>
             {% endif %}
         </div>
             {% for result in dynamiq.results %}
