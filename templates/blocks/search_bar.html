@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="row">
   <div class="twelve columns">
     <div id="dynamiq_search" {% if dynamiq.formset.is_bound %}style="display:none;"{% endif %}>
@@ -7,7 +9,7 @@
               <input type="text" name="q" value="{{ dynamiq.q }}" />
             </div>
             <div class="one mobile-one columns">
-              <a href="#" class="postfix button expand">Search</a>
+              <input type="submit" class="postfix button expand" value="{% trans 'Search' %}" />
             </div>
           </div>
         </form>
