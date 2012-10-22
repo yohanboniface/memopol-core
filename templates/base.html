@@ -100,8 +100,10 @@
       {% include "blocks/modals.html" %}
     {% endblock modals %}
     <script type="text/javascript">
+    {% block js_onload %}
       $(document).foundationTopBar();
       $(document).foundationTabs();
     </script>
+    {% endblock js_onload %}
   </body>
 </html>
