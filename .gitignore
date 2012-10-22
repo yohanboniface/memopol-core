@@ -25,3 +25,4 @@ memopol2/templates/snippets/*
 static/img/
 *.index
 tmp/*
+memopol2.sqlite
