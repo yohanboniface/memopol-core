@@ -10,7 +10,7 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         # Get a random mep
-        spotlight_mep = MEP.objects.latest('pk')
+        spotlight_mep = MEP.objects.filter(active=True).order_by("?")[0]
         return {
             'proposals': Proposal.objects.filter(institution="EU")[:10],
             'committees': Committee.objects.order_by('abbreviation').all(),
