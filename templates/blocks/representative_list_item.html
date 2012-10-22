@@ -15,8 +15,11 @@
                 <h4>{{ mep }}</h4>
             </div>
             <div class="row">
-                <span class="secondary label">tag</span>
-                <span class="secondary label">JURI</span>
+              {% for achievement in mep.achievements.all %}
+                {% if achievement.thumbnail %}<img src="{{ achievement.thumbnail.url }}" alt="{{ achievement.name }}" />{% endif %}
+                <span class="secondary label">{{ achievement.name }}</span>
+                </li>
+              {% endfor %}
             </div>
             
             <div class="row">&nbsp;</div>                       
