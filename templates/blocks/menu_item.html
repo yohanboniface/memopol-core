@@ -1,7 +1,7 @@
 {% load search_tags %}
 
-{% for object in objects %}
-<div class="six columns">
-  <a href="{% simple_search_shortcut object.url %}">{{ object.display }}</a>
-</div>
+{% for item in menu.content %}
+    <div class="{{ menu.flyout_class }} columns">
+        <a href="{% simple_search_shortcut item.url %}">{{ item.display }}</a>
+    </div>
 {% endfor %}

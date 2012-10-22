@@ -36,35 +36,6 @@ h2, h3, h4 {
 	margin:auto;
 }
 
-#header, #footer {
-	background: none repeat scroll 0 0 #5B8EDC;
-	color: #FFFFFF;
-	height: 78px;
-	line-height: 45px;
-	padding: 0 20px;
-	vertical-align: middle;
-	width: 910px;
-	margin: auto;
-}
-
-#header h1 {
-	color: #fff;
-	padding-top: 15px;
-	margin: 0;
-	font-family : 'propagandaregular';
-	font-size: 26px;
-}
-
-#header p {
-	font-style: italic;
-	padding-left: 20px;
-}
-
-#header img {
-	width: 74px;
-	float:left;
-}
-
 #searchfield {
 	width: 580px;
 }
