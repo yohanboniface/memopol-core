@@ -8,10 +8,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 
 from mps.models import MP
-from meps.models import Committee
-from votes.models import Proposal
 
 from memopol2.api import v1_api
+from memopol2 import views
 
 admin.autodiscover()
 
@@ -28,11 +27,6 @@ sitemps_dict = {
 sitemaps = {
     'meps': GenericSitemap(sitemeps_dict, priority=0.6),
     'mps': GenericSitemap(sitemps_dict, priority=0.6),
-}
-
-home = {
-    'committees': Committee.objects.order_by('abbreviation').all(),
-    'proposals': Proposal.objects.all()
 }
 
 #home_mimetype = 'application/xhtml+xml'  # required for embedded SVG
@@ -53,7 +47,7 @@ class RobotsTxt(TemplateView):
         return context
 
 urlpatterns = patterns('',  # pylint: disable=C0103
-    url(r'^$', direct_to_template, {'template': 'home.html', 'extra_context': home}, name='index'),
+    url(r'^$', views.home, name='index'),
     url(r'^api/$', direct_to_template, {'template': 'api.html', 'extra_context': {"root_url": settings.ROOT_URL}}, name='api_doc'),
     url(r'^europe/parliament/', include('meps.urls', namespace='meps', app_name='meps')),
     url(r'^france/assemblee/', include('mps.urls', namespace='mps', app_name='mps')),

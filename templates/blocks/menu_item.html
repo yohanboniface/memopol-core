@@ -1,0 +1,7 @@
+{% load search_tags %}
+
+{% for item in menu.content %}
+    <div class="{{ menu.flyout_class }} columns">
+        <a href="{% simple_search_shortcut item.url %}">{{ item.display }}</a>
+    </div>
+{% endfor %}

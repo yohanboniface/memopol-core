@@ -1,0 +1,149 @@
+/* Artfully masterminded by ZURB  */
+
+/* -------------------------------------------------- 
+   Table of Contents
+-----------------------------------------------------
+:: Shared Styles
+:: Structure
+:: Panels
+:: Search
+:: Nav menu
+*/
+
+
+/* -----------------------------------------
+   Shared Styles
+----------------------------------------- */
+li {
+    text-decoration: none;
+    list-style: none;
+}
+
+
+/* -----------------------------------------
+   Structure
+----------------------------------------- */
+.floor {
+    margin-bottom: 22px;
+}
+
+/* -----------------------------------------
+   Panels
+----------------------------------------- */
+.panel li a {
+    color: #222;
+}
+
+
+/* -----------------------------------------
+   Search
+----------------------------------------- */
+
+#dynamiq_search {
+    height: 30px;
+}
+#dynamiq_advanced_search {
+    display: block;
+}
+.search_form select {
+    width: auto;
+}
+.search_form input[type="text"] {
+    display: inline;
+}
+.search_toggle {
+    text-align: right;
+}
+
+/* -----------------------------------------
+   Nav menu
+----------------------------------------- */
+
+.nav-bar {
+    margin-top: 0;
+    background-color: #fff;
+    border-bottom: 1px solid #EEEEEE;
+    height: 30px;
+    line-height: 30px;
+}
+.nav-bar > li > a {
+    color: #000;
+    line-height: 30px;
+    text-decoration: none;
+}
+.nav-bar > li:hover {
+    background-color: #fff;
+}
+.nav-bar > li:hover a {
+    text-decoration: underline;
+}
+.nav-bar > li, .nav-bar > li:last-child {
+    border: none;
+}
+.nav-bar > li.has-flyout > a.flyout-toggle {
+    display: none;
+}
+.flyout {
+    background-color: #fff;
+    border: none;
+    top: 30px;
+}
+.flyout a {
+    text-decoration: none;
+    color: #000;
+}
+.nav-bar > li:hover a {
+    text-decoration: none;
+}
+.flyout a:hover {
+    text-decoration: underline;
+}
+.nav-bar > li.has-flyout > a:first-child:after {
+    border: none;
+}
+
+
+/* -----------------------------------------
+   Header / footer
+----------------------------------------- */
+
+#header, #footer {
+    background: none repeat scroll 0 0 #5B8EDC;
+    color: #FFFFFF;
+    height: 78px;
+    line-height: 45px;
+    padding: 0 20px;
+    vertical-align: middle;
+    width: 940px;
+    margin: auto;
+}
+
+#header h1 a {
+    color: #fff;
+    font-family : 'propagandaregular';
+    font-size: 26px;
+    line-height: 10px;
+}
+
+#header h1 {
+    margin: 0;
+}
+
+#header p {
+    font-style: italic;
+    padding-left: 20px;
+}
+
+#header img {
+    width: 74px;
+    float:left;
+}
+
+
+/* -----------------------------------------
+   Listing pages
+----------------------------------------- */
+
+.listing_details {
+    display: none;
+}

@@ -1,0 +1,13 @@
+{% load memopol_tags %}
+<ul class="nav-bar">
+  {% for menu in menus %}
+  <li class="has-flyout">
+    <a href="#">{{ menu.name }}</a>
+    <div style="display: none;" class="flyout large">
+      <div class="row">
+        {% include "blocks/menu_item.html" %}
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+</ul>

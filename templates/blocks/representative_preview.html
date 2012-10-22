@@ -1,0 +1,7 @@
+<div class="panel">
+<h3>Hightlight a MEP</h3>
+<img src="{% url meps:mep-picture mep.ep_id %}" width="100px" height="150px">
+<h4>{{ mep }}</h4>
+<p><a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></p>
+<a href="{{ mep.get_absolute_url }}">More…</a>
+</div>

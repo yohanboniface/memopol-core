@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="dynamiq_search" {% if dynamiq.formset.is_bound %}style="display:none;"{% endif %}>
+        <form action="{% url search %}" method="get">
+          <div class="row collapse">
+            <div class="eleven mobile-three columns">
+              <input type="text" name="q" value="{{ dynamiq.q }}" />
+            </div>
+            <div class="one mobile-one columns">
+              <a href="#" class="postfix button expand">Search</a>
+            </div>
+          </div>
+        </form>
+    </div>
+    <div class="column twelve search_toggle">
+        <a href="#" data-reveal-id="advanced_search_modal">advanced</a> - <a href="#" data-reveal-id="simple_search_help">help</a>
+    </div>
+  </div>
+</div>
