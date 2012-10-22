@@ -1,4 +1,4 @@
-{% load memopol2 %}
+{% load memopol2 memopol_tags %}
 <div class="row">
     <div class="twelve columns panel">
         <div class="two columns">
@@ -6,7 +6,7 @@
         </div>
 
         <div class="two columns">
-            <div class="panel callout radius">{{ mep.total_score|floatformat:1 }}</div>
+            <div class="panel radius {{ mep.total_score|scolorize }}">{{ mep.total_score|floatformat:1 }}</div>
             {{ mep.country_tag|safe }}
         </div>
 

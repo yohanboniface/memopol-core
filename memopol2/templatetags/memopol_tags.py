@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django import template
 from meps.models import Country, Group, Committee
 
@@ -30,3 +32,22 @@ def build_menu():
         },
         ]
     }
+
+
+@register.filter
+def scolorize(score, max_score=100):
+    """
+    Output classnames to colorize a score in the frontend.
+    If `max_score` is not given, we assum that `score` is a percentage.
+    """
+    classnames = "scolorized"  # A generic class, for factorizing CSS
+                               # and help retrieving all the scores in js
+    if score is not None:
+        # No score means no specific class
+        prefix = "-" if score < 0 else ""
+        score = abs(score)
+        percentage = 100.0 * score / max_score
+        idx = percentage / 10  # use 10 ref
+        classnames += " scolorized%s%s" % (prefix, int(idx))  # will output scolorized1
+                                                             # or scolorized-1 if negative
+    return classnames

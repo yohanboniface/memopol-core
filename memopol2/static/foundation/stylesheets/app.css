@@ -147,3 +147,56 @@ li {
 .listing_details {
     display: none;
 }
+
+/* -----------------------------------------
+   Score colors
+----------------------------------------- */
+
+.scolorized {
+    text-align: center;
+}
+.scolorized.scolorized0 {
+    background-color: rgb(208, 0, 0);
+    border-color: rgb(208, 0, 0);
+}
+.scolorized.scolorized1 {
+    background-color: rgb(222, 79, 17);
+    border-color: rgb(222, 79, 17);
+}
+.scolorized.scolorized2 {
+    background-color: rgb(246, 183, 36);
+    border-color: rgb(246, 183, 36);
+}
+.scolorized.scolorized3 {
+    background-color: rgb(253, 220, 11);
+    border-color: rgb(253, 220, 11);
+}
+.scolorized.scolorized4 {
+    background-color: rgb(253, 247, 11);
+    border-color: rgb(253, 247, 11);
+    color: #666;
+}
+.scolorized.scolorized5 {
+    background-color: rgb(232, 253, 11);
+    border-color: rgb(232, 253, 11);
+}
+.scolorized.scolorized6 {
+    background-color: rgb(162, 253, 11);
+    border-color: rgb(162, 253, 11);
+}
+.scolorized.scolorized7 {
+    background-color: rgb(114, 220, 44);
+    border-color: rgb(114, 220, 44);
+}
+.scolorized.scolorized8 {
+    background-color: rgb(58, 198, 9);
+    border-color: rgb(58, 198, 9);
+}
+.scolorized.scolorized9 {
+    background-color: rgb(55, 157, 0);
+    border-color: rgb(55, 157, 0);
+}
+.scolorized.scolorized10 {
+    background-color: rgb(55, 157, 0);
+    border-color: rgb(55, 157, 0);
+}

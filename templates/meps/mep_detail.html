@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% load memopol2 comments %}
+{% load memopol2 comments memopol_tags %}
 {% block content %}
 	<div class="row">
 		<div class="twelve columns">
 			<div class="three columns">
-				<div class="panel callout radius">{{ mep.total_score|floatformat:1 }}</div>
+				<div class="panel radius {{ mep.total_score|scolorize }}">{{ mep.total_score|floatformat:1 }}</div>
 			</div>
 			
 			<div class="nine columns">

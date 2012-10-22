@@ -1,3 +1,5 @@
+{% load memopol_tags %}
+
 <div class="panel">
     <div class="row">
         <h3>Hightlight a MEP</h3>
@@ -5,7 +7,7 @@
             <img src="{% url meps:mep-picture mep.ep_id %}" width="100px" height="150px">
         </div>
         <div class="six columns">
-            <div class="panel callout radius">{{ mep.total_score|floatformat:1 }}</div>
+            <div class="panel radius {{ mep.total_score|scolorize }}">{{ mep.total_score|floatformat:1 }}</div>
             {{ mep.country_tag|safe }}
         </div>
     </div>
