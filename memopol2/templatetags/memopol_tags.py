@@ -20,7 +20,7 @@ def build_menu():
             'name': 'Political group',
             'content': ({
                 "url": "group:%s" % group.abbreviation,
-                "display": group.name} for group in Group.objects.all().order_by("abbreviation")),
+                "display": group.name} for group in Group.ordered_by_meps_count()),
             'flyout_class': 'twelve',
         },
         {
