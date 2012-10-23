@@ -4,7 +4,7 @@
     <div class="row">
         <h3>Hightlight a MEP</h3>
         <div class="six columns">
-            <img src="{% url meps:mep-picture mep.ep_id %}" width="100px" height="150px">
+            <a href="{{ mep.get_absolute_url }}"><img src="{% url meps:mep-picture mep.ep_id %}" width="100px" height="150px"></a>
         </div>
         <div class="six columns">
             <div class="panel radius {{ mep.total_score|scolorize }}">{{ mep.total_score|floatformat:1 }}</div>
