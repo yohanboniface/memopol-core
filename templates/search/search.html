@@ -2,6 +2,7 @@
 {% load dynamiq_tags %}
 
 {% block content %}
+<div class="twelve columns">
     {% if dynamiq.results %}
         <div class="search_label">
             Searching {{ dynamiq.label|format_dynamiq_label }}
@@ -15,4 +16,5 @@
             <p>No results found.</p>
         {% endif %}
     {% endif %}
+</div>
 {% endblock %}

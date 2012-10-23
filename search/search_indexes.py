@@ -12,6 +12,7 @@ class MEPIndex(indexes.SearchIndex, indexes.Indexable):
     delegations = indexes.MultiValueField()
     total_score = indexes.FloatField(model_attr="total_score", default=0)
     is_active = indexes.BooleanField(model_attr="active")
+    achievements = indexes.MultiValueField()
 
     def get_model(self):
         return MEP
@@ -21,3 +22,6 @@ class MEPIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_delegations(self, obj):
         return [d.pk for d in obj.delegations.all()]
+
+    def prepare_achievements(self, obj):
+        return [a.slug for a in obj.achievements.all()]
