@@ -11,7 +11,7 @@
             {{ mep.country_tag|safe }}
         </div>
     </div>
-    <h4>{{ mep }}</h4>
+    <h4><a href="{{ mep.get_absolute_url }}" style="color: black;">{{ mep }}</a></h4>
     <p><a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></p>
     <a href="{{ mep.get_absolute_url }}">More…</a>
 </div>
