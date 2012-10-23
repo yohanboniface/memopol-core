@@ -13,14 +13,16 @@ def build_menu():
             'name': 'Country',
             'content': ({
                 "url": "country:%s" % country.code,
-                "display": country.name} for country in Country.objects.all().order_by("name")),
+                "display": country.name,
+                "image": "/static/img/countries/small/%s.png" % country.code} for country in Country.objects.all().order_by("name")),
             'flyout_class': 'four',
         },
         {
             'name': 'Political group',
             'content': ({
                 "url": "group:%s" % group.abbreviation,
-                "display": group.name} for group in Group.ordered_by_meps_count()),
+                "display": group.name,
+                "image": "/static/img/groups/eu/%s.png" % group.abbreviation} for group in Group.ordered_by_meps_count()),
             'flyout_class': 'twelve',
         },
         {

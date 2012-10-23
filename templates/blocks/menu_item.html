@@ -2,6 +2,6 @@
 
 {% for item in menu.content %}
     <div class="{{ menu.flyout_class }} columns">
-        <a href="{% simple_search_shortcut item.url %}">{{ item.display }}</a>
+        <img src="{{ item.image }}" /> <a href="{% simple_search_shortcut item.url %}">{{ item.display }}</a>
     </div>
 {% endfor %}
