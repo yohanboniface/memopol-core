@@ -66,11 +66,18 @@ li {
 .floor, .row .floor {
     margin-bottom: 22px;
 }
+.flat {
+    padding-left: 0;
+}
 body {
     background-color: #e5e5e5;
 }
 .main {
     background-color: #fff;
+}
+
+.button + .button {
+    margin-top: 22px;
 }
 
 /* -----------------------------------------
@@ -226,6 +233,9 @@ h2, h3, h4 {
     text-align: center;
     background-color: rgb(208, 0, 0); /* Default value used when no score is available */
     border-color: rgb(208, 0, 0);
+}
+.panel.scolorized {
+    width: 80px;
 }
 .scolorized.scolorized0 {
     background-color: rgb(208, 0, 0);
