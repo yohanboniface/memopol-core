@@ -1,132 +1,36 @@
 {% extends "base.html" %}
-{% load memopol2 comments memopol_tags %}
 {% block content %}
 	<div class="row">
 		<div class="twelve columns">
-			<div class="three columns">
-				<div class="panel radius {{ mep.total_score|scolorize }}">{{ mep.total_score|floatformat:1 }}</div>
-			</div>
-			
-			<div class="nine columns">
-      {% for achievement in mep.achievements.all %}
-        {% render_achievement achievement %}
-      {% endfor %}
-			</div>			
+
+      <dl class="tabs">
+        <dd class="active"><a href="#simple1">Profile</a></dd>
+        <dd><a href="#simple2">Scores</a></dd>
+        <dd><a href="#simple3">{% trans "Delegations" %}</a></dd>
+        <dd><a href="#simple4">{% trans "Committees" %}</a></dd>
+        <dd><a href="#simple5">{% trans "CV" %}</a></dd>
+      </dl>
+
+      <ul class="tabs-content">
+        <li class="active" id="simple1Tab">
+          {% include "meps/mep_detail/main.html" %}
+        </li>
+        <li id="simple2Tab">
+          {% include "meps/mep_detail/scores.html" %}
+        </li>
+        <li id="simple3Tab">
+          {% include "meps/mep_detail/delegations.html" %}
+        </li>
+        <li id="simple4Tab">
+          {% include "meps/mep_detail/committees.html" %}
+        </li>
+        <li id="simple5Tab">
+          {% include "meps/mep_detail/cv.html" %}
+        </li>
+      </ul>
+
 		</div>
 	</div>
-
-
-	<div class="row">
-		<div class="twelve columns panel">
-			<div class="two columns">
-				<img width="100px" src="{% url meps:mep-picture mep.ep_id %}">
-			</div>
-
-			<div class="seven columns">
-				<div class="row"><h4>{{ mep }}</h4></div>	
-	
-				<div class="row">
-					<p>{{ mep.group_tag|safe }}</p>	
-				</div>
-			</div>
-			<div class="three columns">
-				<div class="row">
-					<a href="callto://{{ mep.bxl_phone1|phone }}" class="panel callout button radius">Click to call&nbsp;</a>
-				</div>
-				<div class="row">
-					<span class="secondary label">Brussels</span>{{ mep.bxl_phone1|phone }}<br>
-					<span class="secondary label">Tel 2</span>bla 2<br>
-					<span class="secondary label">Email</span>bla@bla.com 	
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="twelve columns panel">
-			<ul class="accordion">
-            <li class="active">
-              <div class="title">
-                <h5>{% trans "Committees" %}</h5>
-              </div>
-              <div class="content">
-                {% if mep.committeeroles %}
-                <ul>
-                    {% for role in mep.committeeroles %}
-                        <li><a href="{% url meps:index_by_committee role.committee.abbreviation %}">{{ role.role }} {% trans "of" %} {{ role.committee }}</a></li>
-                    {% endfor %}
-                </ul>
-                {% else %}
-                    <p>{% trans "No committee." %}</p>
-                {% endif %}
-              </div>
-            </li>
-            <li>
-              <div class="title">
-                <h5>{% trans "Delegations" %}</h5>
-              </div>
-              <div class="content">
-                {% if mep.delegationroles %}
-                    <ul>
-                    {% for role in mep.delegationroles %}
-                        <li><a href="{% url meps:index_by_delegation role.delegation.id %}">{{ role.role }} {% trans "of" %} {{ role.delegation }}</a></li>
-                    {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>{% trans "No delegation." %}</p>
-                {% endif %}
-              </div>
-            </li>
-            <li>
-              <div class="title">
-                <h5>{% trans "CV" %}</h5>
-              </div>
-              <div class="content">
-                {% if mep.cv_set.all %}
-                    <ul>
-                        {% for line in mep.cv_set.all %}
-                            <li>{{ line }}</li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>{% trans "No CV available." %}</p>
-                {% endif %}
-              </div>
-            </li>
-            <li>
-              <div class="title">
-                <h5>{% trans "Total score:" %} {{ mep.total_score|floatformat:0 }}</h5>
-              </div>
-              <div class="content">
-                {% if mep.scores %}
-                        <ul>
-                        {% for score in mep.scores %}
-                        <li>
-                          <a href="{% url meps:votes:votes_mep score.proposal.id mep.id %}">{{ score.proposal.title }}</a>: <strong>{{ score.value|floatformat:"-1" }}</strong> {% blocktrans with score.date as score_date %}(on {{ score_date }}){% endblocktrans %}<br/><a href="{{ score.proposal.get_absolute_url }}">{% trans "Read more..." %}</a>
-                        </li>
-                        {% endfor %}
-                        </ul>
-                        {% if mep.scores.count > 1 %}
-                            <center><img src="{% url trends:comparaison_trends mep.id %}" /></center>
-                            <p style="text-align: center;"><i><a href="{% url trends:documentation %}#mep">{% trans "Trends explanation" %}</a></i></p>
-                        {% endif %}
-                    </div>
-                {% endif %}
-              </div>
-            </li>
-          </ul>
-		</div>
-	</div>
-
-    <script type="text/javascript" src="{{ STATIC_URL }}js/tinymce/tiny_mce.js"></script>
-
-	<div class="twelve columns panel">
-		<h3>Add a public position</h3>
-        <p>{% trans "Help us keep track of the public positions taken by this member of the European Parliament." %}</p>
-        {% render_comment_form for mep %}
-	</div>
-
-
 {% endblock %}
 
 
@@ -136,7 +40,7 @@
     $(document).ready(function() {
        tinyMCE.init({
                    mode : "textareas",
-                   width : "900",
+                   width : "870",
                    height : "300",
                    theme : "advanced",
                    theme_advanced_toolbar_align : "left",
