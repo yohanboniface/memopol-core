@@ -114,6 +114,16 @@ h2, h3, h4 {
 .search_toggle {
     text-align: right;
 }
+.label_fragment {
+    background: none;
+}
+.label_name, .label_value {
+    font-weight: normal;
+    font-style: italic;
+}
+.label_lookup, .label_operator {
+    color: #5B8EDC;
+}
 
 /* -----------------------------------------
    Nav menu
