@@ -53,3 +53,10 @@ def scolorize(score, max_score=100):
         classnames += " scolorized%s%s" % (prefix, int(idx))  # will output scolorized1
                                                              # or scolorized-1 if negative
     return classnames
+
+
+@register.inclusion_tag("blocks/achievement.html")
+def render_achievement(achievement):
+    return {
+        "achievement": achievement
+    }

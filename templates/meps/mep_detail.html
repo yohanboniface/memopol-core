@@ -9,9 +9,7 @@
 			
 			<div class="nine columns">
       {% for achievement in mep.achievements.all %}
-        {% if achievement.thumbnail %}<img src="{{ achievement.thumbnail.url }}" alt="{{ achievement.name }}" />{% endif %}
-        <span class="secondary label">{{ achievement.name }}</span>
-        </li>
+        {% render_achievement achievement %}
       {% endfor %}
 			</div>			
 		</div>
