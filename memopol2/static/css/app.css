@@ -112,6 +112,10 @@ h2, h3, h4 {
 #dynamiq_advanced_search {
     display: block;
 }
+#dynamiq_search input[type="text"] {
+    color: #c5c5c5;
+    font-style: italic;
+}
 .search_form select {
     width: auto;
 }
