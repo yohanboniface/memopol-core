@@ -10,6 +10,7 @@ register = template.Library()
 def build_menu():
     return {
         'menus': [{
+            'id': 'countries_menu',
             'name': 'Country',
             'content': ({
                 "url": "country:%s" % country.code,
@@ -18,17 +19,20 @@ def build_menu():
             'flyout_class': 'four',
         },
         {
+            'id': 'groups_menu',
             'name': 'Political group',
             'content': ({
                 "url": "group:%s" % group.abbreviation,
                 "display": group.name,
-                "image": "/static/img/groups/eu/%s.png" % group.abbreviation} for group in Group.ordered_by_meps_count()),
+                "image": "/static/img/groups/eu/%s.png" % group.abbreviation.replace("/", "")} for group in Group.ordered_by_meps_count()),
             'flyout_class': 'twelve',
         },
         {
+            'id': 'committees_menu',
             'name': 'Committees',
             'content': ({
                 "url": "committees:%s" % committee.abbreviation,
+                "code": committee.abbreviation,
                 "display": committee.name} for committee in Committee.ordered_by_meps_count()),
             'flyout_class': 'twelve',
         },
