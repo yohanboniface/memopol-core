@@ -35,5 +35,6 @@ dl.tabs dd.active {
 }
 
 #countries_menu {
-    width: 600px;
+    width: 480px;
+    padding: 0 0 0 15px;
 }
