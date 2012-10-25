@@ -280,6 +280,7 @@ AJAX_LOOKUP_CHANNELS = {
     # dynamiq_search is a "fake" channel, it's used to dynamically switch channels
     # in javascript - the widget needs a real one to start with something...
     'dynamiq_search': ('dynamiq.ajax_lookups', 'DynamiqAjaxLookupSearch'),
+    'mep_achievements': ('search.ajax_lookups', 'MepAchievements'),
 }
 
 try:

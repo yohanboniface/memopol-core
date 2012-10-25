@@ -3,13 +3,15 @@
 
 {% block content %}
 <div class="twelve columns">
-    {% if dynamiq.results %}
-        <div class="search_label">
-            Searching {{ dynamiq.label|format_dynamiq_label }}
+    {% if dynamiq.label %}
+        <div class="row panel floor">
+            Searching for «{{ dynamiq.label|format_dynamiq_label }}»
             {% if dynamiq.formset.is_bound %}
             <a href="#" data-reveal-id="advanced_search_modal" class="button secondary">{% trans 'Edit search' %}</a>
             {% endif %}
         </div>
+    {% endif %}
+    {% if dynamiq.results %}
         {% include list_template_name %}
     {% else %}
         {% if dynamiq.formset.is_bound or dynamiq.q != "" %}

@@ -6,7 +6,7 @@
         <form action="{% url search %}" method="get">
           <div class="row collapse">
             <div class="nine mobile-three columns" style="padding-left: 10px;">
-              <input type="text" name="q" value="{{ dynamiq.q }}" />
+              <input type="text" name="q" value="{{ dynamiq.q }}" placeholder="{% trans 'Find a MEP' %}" />
             </div>
             <div class="one mobile-one columns">
               <input type="submit" class="postfix button expand" value="{% trans 'Search' %}" />

@@ -25,6 +25,7 @@ FILTER_NAME = Choices(
     ('COMMITTEE', 'committees', u'Committee'),
     ('DELEGATION', 'delegations', u'Delegation'),
     ('TOTAL_SCORE', 'total_score', u'Score'),
+    ('ACHIEVEMENT', 'achievements', u'Achievement'),
 )
 
 SORT_CHOICES = Choices(
@@ -76,6 +77,11 @@ class MEPSearchForm(HaystackForm):
         FILTER_NAME.TOTAL_SCORE: {
             'type': 'int',
             'receptacle': 'int',
+        },
+        FILTER_NAME.ACHIEVEMENT: {
+            'type': 'id',
+            'receptacle': 'autocomplete',
+            'autocomplete_lookup': 'mep_achievements',
         },
     }
 
