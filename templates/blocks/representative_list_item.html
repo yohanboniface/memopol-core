@@ -13,7 +13,7 @@
 
     <div class="six columns">
         <div class="row">
-            <h4>{{ mep }}</h4>
+            <h4><a href="{{ mep.get_absolute_url }}" style="color: black;">{{ mep }}</a></h4>
         </div>
         <div class="row">
           {% for achievement in mep.achievements.all %}
