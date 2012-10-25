@@ -32,6 +32,7 @@ def build_menu():
             'name': 'Committees',
             'content': ({
                 "url": "committees:%s" % committee.abbreviation,
+                "code": committee.abbreviation,
                 "display": committee.name} for committee in Committee.ordered_by_meps_count()),
             'flyout_class': 'twelve',
         },
