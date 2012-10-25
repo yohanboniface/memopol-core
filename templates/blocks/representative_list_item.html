@@ -24,7 +24,7 @@
         <div class="row">&nbsp;</div>
 
         <div class="row">
-                <p><a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></p>
+                {% if mep.group %}<p><a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></p>{% endif %}
                 <div class="listing_details">
                     <span class="secondary label">Tel 1</span> bla<br/>
                     <span class="secondary label">Tel 2</span> bla 2<br/>
