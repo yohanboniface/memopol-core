@@ -24,7 +24,7 @@ def build_menu():
             'content': ({
                 "url": "group:%s" % group.abbreviation,
                 "display": group.name,
-                "image": "/static/img/groups/eu/%s.png" % group.abbreviation} for group in Group.ordered_by_meps_count()),
+                "image": "/static/img/groups/eu/%s.png" % group.abbreviation.replace("/", "")} for group in Group.ordered_by_meps_count()),
             'flyout_class': 'twelve',
         },
         {
