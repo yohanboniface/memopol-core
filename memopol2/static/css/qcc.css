@@ -1,4 +1,3 @@
-
 /*body {
 	background: #E8EDED; 
 }
@@ -35,3 +34,6 @@ dl.tabs dd.active {
     margin-top: -3px;
 }
 
+#countries_menu {
+    width: 600px;
+}

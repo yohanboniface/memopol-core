@@ -1,7 +1,7 @@
 {% load search_tags %}
 
 {% for item in menu.content %}
-    <div class="{{ menu.flyout_class }} columns">
-        <img src="{{ item.image }}" /> <a href="{% simple_search_shortcut item.url %}">{{ item.display }}</a>
+    <div class="{{ menu.flyout_class }} columns dropdown_menu">
+        <a href="{% simple_search_shortcut item.url %}"><img src="{{ item.image }}" /> {{ item.display }}</a>
     </div>
 {% endfor %}

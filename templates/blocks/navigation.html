@@ -3,7 +3,7 @@
   {% for menu in menus %}
   <li class="has-flyout">
     <a href="#">{{ menu.name }}</a>
-    <div style="display: none;" class="flyout large">
+    <div style="display: none;" class="flyout large" id="{{ menu.id }}">
       <div class="row">
         {% include "blocks/menu_item.html" %}
       </div>
