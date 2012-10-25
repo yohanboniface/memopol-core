@@ -13,7 +13,7 @@ def build_menu():
             'id': 'countries_menu',
             'name': 'Country',
             'content': ({
-                "url": "country:%s" % country.code,
+                "url": "country:%s is_active:1" % country.code,
                 "display": country.name,
                 "image": "/static/img/countries/small/%s.png" % country.code} for country in Country.objects.all().order_by("name")),
             'flyout_class': 'four',
@@ -22,7 +22,7 @@ def build_menu():
             'id': 'groups_menu',
             'name': 'Political group',
             'content': ({
-                "url": "group:%s" % group.abbreviation,
+                "url": "group:%s is_active:1" % group.abbreviation,
                 "display": group.name,
                 "image": "/static/img/groups/eu/%s.png" % group.abbreviation.replace("/", "")} for group in Group.ordered_by_meps_count()),
             'flyout_class': 'twelve',
@@ -31,7 +31,7 @@ def build_menu():
             'id': 'committees_menu',
             'name': 'Committees',
             'content': ({
-                "url": "committees:%s" % committee.abbreviation,
+                "url": "committees:%s is_active:1" % committee.abbreviation,
                 "code": committee.abbreviation,
                 "display": committee.name} for committee in Committee.ordered_by_meps_count()),
             'flyout_class': 'twelve',
