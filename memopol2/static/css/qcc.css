@@ -38,3 +38,8 @@ dl.tabs dd.active {
     width: 480px;
     padding: 0 0 0 15px;
 }
+
+#groups_menu {
+    width: 630px;
+    padding: 8px 5px 5px 10px;
+}
