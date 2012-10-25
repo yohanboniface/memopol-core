@@ -1,5 +1,10 @@
 {% load memopol_tags %}
+{% load search_tags %}
+
 <ul class="nav-bar">
+  <li>
+    <a href="{% simple_search_shortcut "is_active:1" %}">By names</a>
+  </li>
   {% for menu in menus %}
   <li class="has-flyout">
     <a href="#">{{ menu.name }}</a>
