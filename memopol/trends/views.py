@@ -192,7 +192,7 @@ def proposal_countries_map(request, proposal_id, extension):
 
     current_country = None
     out = ""
-    for line in open(join(settings.MEDIA_DIRECTORY, "grey_europe_map.svg"), "r").readlines():
+    for line in open(join(settings.STATIC_ROOT, "svg", "grey_europe_map.svg"), "r").readlines():
 
         if '         {}' in line:
             get = re.match('.*([a-z][a-z]).*', line)
