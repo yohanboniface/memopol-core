@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from . import TestCase
-from memopol2.templatetags.memopol_tags import scolorize
+from memopol.base.templatetags.memopol_tags import scolorize
 
 
 class TestScolorize(TestCase):

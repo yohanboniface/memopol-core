@@ -1,7 +1,7 @@
 from . import TestCase
 from django.db.models import Count
 from django.core.urlresolvers import reverse
-from mps.models import MP
+from memopol.mps.models import MP
 
 
 class TestMPsVotes(TestCase):

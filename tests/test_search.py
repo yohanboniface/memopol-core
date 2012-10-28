@@ -1,5 +1,5 @@
 from . import TestCase
-from search.templatetags.search_tags import simple_search_shortcut
+from memopol.search.templatetags.search_tags import simple_search_shortcut
 
 
 class TestSearchTemplateTags(TestCase):

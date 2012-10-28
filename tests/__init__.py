@@ -1,20 +1,17 @@
 # -*- coding: utf-8 -*-
-import sys
+
 import os
-os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'memopol.base.settings'
 import unittest
 import logging
 from webtest import TestApp, TestResponse
 from pyquery import PyQuery as pq
 import django.core.handlers.wsgi
+from django.conf import settings
 
 logging.getLogger('django.db.backends').setLevel(logging.WARN)
 log = logging.getLogger('nose')
 
-BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(BASE_PATH + "/memopol2")
-sys.path.append(BASE_PATH)
-import settings
 
 settings.DEBUG_PROPAGATE_EXCEPTIONS = True
 settings.MIDDLEWARE_CLASSES += ('django.contrib.auth.middleware.RemoteUserMiddleware',)

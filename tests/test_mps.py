@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from . import TestCase
-from mps.models import MP
 from django.db.models import Count
 from django.core.urlresolvers import reverse
+
+from memopol.mps.models import MP
 
 
 class TestMPs(TestCase):

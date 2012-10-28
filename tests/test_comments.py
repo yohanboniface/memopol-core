@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from . import TestCase, UserTestCase
-from meps.models import MEP
+from memopol.meps.models import MEP
 
 
 class TestComments(TestCase):

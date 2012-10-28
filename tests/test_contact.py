@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from . import TestCase
 
+
 class TestContact(TestCase):
 
     def test_contact(self):

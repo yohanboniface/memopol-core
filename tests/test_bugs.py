@@ -1,5 +1,5 @@
 from . import TestCase
-from votes.models import Proposal
+from memopol.votes.models import Proposal
 
 
 class TestAntiBugs(TestCase):
