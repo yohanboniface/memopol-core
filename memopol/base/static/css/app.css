@@ -101,6 +101,12 @@ h2, h3, h4 {
 .label a:hover {
     text-decoration: underline;
 }
+.label.committee {
+    display: inline-block;
+    width: 4em;
+    /*background-color: #E65B23;*/
+    padding-top: 3px;
+}
 
 /* -----------------------------------------
    Search
