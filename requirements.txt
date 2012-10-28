@@ -8,6 +8,7 @@ django-flatblocks==0.5
 django-awesome-snippets>=0.2
 whoosh
 lxml
+BeautifulSoup
 pyquery
 WebTest
 nose
@@ -27,3 +28,4 @@ unidecode
 diff_match_patch
 django-categories
 django-endless-pagination
+django-compressor

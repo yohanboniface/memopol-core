@@ -1,6 +1,5 @@
 {% load flatblock_tags %}
-{% load i18n %}
-{% load personalization %}
+{% load i18n personalization compress %}
 {% organization_name as organization_name %}
 <!DOCTYPE html>
 
@@ -26,13 +25,13 @@
     <!--
         <link rel="stylesheet" href="stylesheets/foundation.css">
         -->
-
+{% compress css %}
     <!-- Included CSS Files (Compressed) -->
     <link rel="stylesheet" href="{{ STATIC_URL }}foundation/stylesheets/foundation.min.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}dynamiq/css/dynamiq.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/qcc.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/app.css">
-
+{% endcompress %}
     <script src="{{ STATIC_URL }}foundation/javascripts/modernizr.foundation.js"></script>
 
 
