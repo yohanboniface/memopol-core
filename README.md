@@ -1,3 +1,6 @@
+**IMPORTANT NOTICE:** We are splitting the repository, so the README may be not up to date.
+
+
 Introduction
 ============
 
