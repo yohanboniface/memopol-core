@@ -1,4 +1,10 @@
-include *.txt
-recursive-include docs *.txt
 include distribute_setup.py
-recursive-include migration *
+recursive-include memopol/base/static *
+recursive-include memopol/meps/static *
+recursive-include memopol/base/templates *
+recursive-include memopol/meps/templates *
+recursive-include memopol/mps/templates *
+recursive-include memopol/reps/templates *
+recursive-include memopol/votes/templates *
+recursive-include memopol/patch_o_maton/templates *
+recursive-include memopol/search/templates *
