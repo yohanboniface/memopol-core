@@ -6,6 +6,7 @@ import os
 import logging
 
 from django.core.files.base import ContentFile
+from django.template.defaultfilters import slugify
 from django.conf import settings
 
 from categories.models import Category
@@ -21,7 +22,8 @@ class Base(object):
     """
     __task__ = True
     queryset = None
-    category_slug = None
+    category_name = None
+    category_description = None
 
     def __init__(self):
         try:
@@ -29,12 +31,12 @@ class Base(object):
         except Category.DoesNotExist:
             log.debug('Create category %s', self.category_slug)
             self.category = Category()
-            name = self.category_slug.replace('-', ' ').capitalize()
-            self.category.name = self.category.alternate_title = name
+            self.category.name = self.category_name
+            self.category.desciption = self.category_description
             self.category.save()
 
         for ext in ('jpg', 'png'):
-            filename = os.path.join(settings.PROJECT_PATH,
+            filename = os.path.join(settings.PROJECT_DIR,
                                     'static', 'auto_categories',
                                     '%s.%s' % (self.category_slug, ext))
             if os.path.exists(filename):
@@ -71,6 +73,10 @@ class Base(object):
     def process_entry(self, entry):
         raise NotImplementedError()
 
+    @property
+    def category_slug(self):
+        return slugify(self.category_name)
+
     def __call__(self):
         log.info('Delete existing %s', self.category)
         self.delete_existings()
@@ -85,7 +91,8 @@ class Base(object):
 
 
 class WorstScore(Base):
-    category_slug = 'worst-score'
+    category_name = 'Worst Score'
+    category_description = 'FIXME before going live little boy'
     queryset = MEP.objects.filter(total_score__lt=30)
 
     def process_entry(self, entry):
