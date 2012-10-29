@@ -8,6 +8,12 @@ from snippets import snippet
 from memopol.base.utils import reify, color
 from memopol.reps.models import Representative, Party
 
+from representatives.models import Representative as GenericRepresentative
+
+
+class MP_EU(GenericRepresentative):
+    pass
+
 
 class Country(models.Model):
     code = models.CharField(max_length=2, unique=True)
