@@ -25,12 +25,11 @@
     <!--
         <link rel="stylesheet" href="stylesheets/foundation.css">
         -->
-{% compress css %}
     <!-- Included CSS Files (Compressed) -->
+{% compress css %}
     <link rel="stylesheet" href="{{ STATIC_URL }}foundation/stylesheets/foundation.min.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}dynamiq/css/dynamiq.css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/qcc.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/app.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/app.sass" type="text/x-sass" />
 {% endcompress %}
     <script src="{{ STATIC_URL }}foundation/javascripts/modernizr.foundation.js"></script>
 

@@ -1,0 +1,38 @@
+// -----------------------------------------
+//   Nav menu
+// -----------------------------------------
+
+.nav-bar
+    margin-top: 0
+    background-color: #fff
+    border-bottom: 1px solid #EEEEEE
+    height: 30px
+    line-height: 30px
+.nav-bar > li > a
+    color: #000
+    line-height: 30px
+    text-decoration: none
+.nav-bar > li:hover
+    background-color: #fff
+.nav-bar > li:hover a
+    text-decoration: underline
+.nav-bar > li, .nav-bar > li:last-child
+    border: none
+.nav-bar > li.has-flyout > a.flyout-toggle
+    display: none
+.flyout
+    background-color: #fff
+    border: none
+    top: 30px
+.flyout a
+    text-decoration: none
+    color: #000
+.nav-bar > li:hover a
+    text-decoration: none
+.flyout a:hover
+    text-decoration: underline
+.nav-bar > li.has-flyout > a:first-child:after
+    border: none
+
+//@import "menu/*.png"
+//@include all-menu-sprites
