@@ -165,6 +165,16 @@ Example:
 **WARNING**: due to the nature of the data, this last command has
 non-negligible chances of failing.
 
+Making sprites
+==============
+
+We use [glue](http://glue.readthedocs.org/en/latest/).
+
+Here are the commands:
+
+    $ cd memopol-core/memopol/base/static/img
+    $ glue icons sprites --project
+
 Personalization
 ===============
 

@@ -16,7 +16,7 @@ def build_menu():
             'content': ({
                 "url": "country:%s is_active:1" % country.code,
                 "display": country.name,
-                "image": "/static/img/countries/small/%s.png" % country.code} for country in Country.objects.all().order_by("name")),
+                "sprite": "sprite-country_small-%s" % country.code} for country in Country.objects.all().order_by("name")),
             'flyout_class': 'four',
         },
         {
@@ -25,7 +25,7 @@ def build_menu():
             'content': ({
                 "url": "group:%s is_active:1" % group.abbreviation,
                 "display": group.name,
-                "image": "/static/img/groups/eu/%s.png" % group.abbreviation.replace("/", "")} for group in Group.ordered_by_meps_count()),
+                "sprite": "sprite-eu_group-%s" % group.abbreviation.replace("/", "")} for group in Group.ordered_by_meps_count()),
             'flyout_class': 'twelve',
         },
         {
