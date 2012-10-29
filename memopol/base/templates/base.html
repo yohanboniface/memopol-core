@@ -56,7 +56,7 @@
 
     <!-- Included JS Files (Uncompressed) -->
 
-
+{% compress js %}
     {# Foundation scripts must be loaded at the end #}
     <script src="{{ STATIC_URL }}foundation/javascripts/jquery.js"></script>
 
@@ -87,15 +87,12 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui-1.8.22.custom.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/ajax_select.js"></script>
     <script src="{{ STATIC_URL }}endless_pagination/js/endless.js"></script>
-    <!-- Included JS Files (Compressed)
-    <script src="{{ STATIC_URL }}foundation/javascripts/jquery.js"></script>
-    <script src="{{ STATIC_URL }}foundation/javascripts/foundation.min.js"></script>
-    -->
 
     <!-- Initialize JS Plugins -->
     <script type="text/javascript" src="{{ STATIC_URL }}dynamiq/js/inlines.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}dynamiq/js/dynamiq.js"></script>
     <script src="{{ STATIC_URL }}foundation/javascripts/app.js"></script>
+{% endcompress %}
     {% block modals %}
       {# Modals must be out ot the main content (required by foundation) #}
       {% include "blocks/modals.html" %}
