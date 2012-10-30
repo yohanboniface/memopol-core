@@ -4,19 +4,48 @@
 {% block content %}
 <div class="twelve columns">
     {% if dynamiq.label %}
-        <div class="row panel floor">
-            Searching for «{{ dynamiq.label|format_dynamiq_label }}»
-            {% if dynamiq.formset.is_bound %}
-            <a href="#" data-reveal-id="advanced_search_modal" class="button secondary">{% trans 'Edit search' %}</a>
-            {% endif %}
+        <div class="row panel">
+            <div class="nine columns">
+                Searching for «{{ dynamiq.label|format_dynamiq_label }}»
+                {% if dynamiq.formset.is_bound %}
+                <a href="#" data-reveal-id="advanced_search_modal" class="button secondary">{% trans 'Edit search' %}</a>
+                {% endif %}
+            </div>
+            <div class="three columns">
+                <a href="#" class="secondary button global_list_item_details_switcher">Show details</a>
+            </div>
         </div>
     {% endif %}
     {% if dynamiq.results %}
         {% include list_template_name %}
     {% else %}
         {% if dynamiq.formset.is_bound or dynamiq.q != "" %}
-            <p>No results found.</p>
+        <div class="row floor">
+                No results found.
+        </div>
         {% endif %}
     {% endif %}
 </div>
 {% endblock %}
+
+{% block js_onload %}
+    {{ block.super }}
+    $(document).on('click', '.list_item_details_switcher', function(e) {
+        e.preventDefault();
+        var list_item = $(this).parents('.list_item');
+        list_item.find('.list_item_details').toggle('on');
+    });
+    $('.global_list_item_details_switcher').on('click', function(e) {
+        e.preventDefault();
+        if($(this).hasClass('on')) {
+            $('.list_item_details').hide();
+            $(this).removeClass('on');
+            $(this).text('Show details');
+        }
+        else {
+            $(this).addClass('on');
+            $('.list_item_details').show();
+            $(this).text('Hide details');
+        }
+    });
+{% endblock js_onload %}

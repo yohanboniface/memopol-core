@@ -1,7 +1,9 @@
+// -----------------------------------------
+//   Core imports
+// -----------------------------------------
+
 @import "fonts.sass"
 @import "variables.sass"
-@import "menu.sass"
-@import "header_footer.sass"
 
 // -----------------------------------------
 //   Shared Styles
@@ -15,7 +17,9 @@ li
 //   Structure
 // -----------------------------------------
 .floor, .row .floor
-    margin-bottom: $margin1
+    margin:
+        top: $margin1
+        bottom: $margin1
 .flat
     padding-left: 0
 body
@@ -49,41 +53,6 @@ h2, h3, h4
     width: 4em
     /*background-color: #E65B23;*/
     padding-top: 3px
-
-
-// -----------------------------------------
-//   Search
-// -----------------------------------------
-
-#dynamiq_search
-    height: 30px
-#dynamiq_advanced_search
-    display: block
-#dynamiq_search input[type="text"]
-    color: #c5c5c5
-    font-style: italic
-.search_form select
-    width: auto
-.search_form input[type="text"]
-    display: inline
-.search_toggle
-    text-align: right
-.label_fragment
-    background: none
-.label_name, .label_value
-    font:
-        weight: normal
-        style: italic
-.label_lookup, .label_operator
-    color: $blue
-
-
-// -----------------------------------------
-//  Listing pages
-// -----------------------------------------
-
-.listing_details
-    display: none
 
 
 // -----------------------------------------
@@ -148,3 +117,10 @@ h2, h3, h4
     cursor: pointer
 .ui-menu-item:hover a
     color: #fff
+
+// -----------------------------------------
+//   Business import
+// -----------------------------------------
+@import "search.sass"
+@import "menu.sass"
+@import "header_footer.sass"

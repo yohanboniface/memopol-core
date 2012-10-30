@@ -1,5 +1,6 @@
 {% load memopol2 memopol_tags %}
-<div class="row panel floor">
+<div class="floor twelve list_item">
+<div class="row panel">
     <div class="four columns flat mobile-four">
         <div class="six columns flat mobile-two">
             <a class="th" href="{{ mep.get_absolute_url }}"><img width="100px" src="{% url meps:mep-picture mep.ep_id %}"></a>
@@ -24,18 +25,39 @@
         <div class="row">&nbsp;</div>
 
         <div class="row">
-                {% if mep.group %}<p><a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></p>{% endif %}
-                <div class="listing_details">
-                    <span class="secondary label">Tel 1</span> bla<br/>
-                    <span class="secondary label">Tel 2</span> bla 2<br/>
-                    <span class="secondary label">Email</span> bla@bla.com
-                </div>
+            {% if mep.group %}<p><a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></p>{% endif %}
         </div>
     </div>
 
     <div class="two columns mobile-four">
-        <a href="{{ mep.get_absolute_url }}" class="secondary button">More</a>
-        <a href="callto://{{ mep.bxl_phone1|phone }}" class="regular button">Call&nbsp;</a>
+        <a href="callto://{{ mep.bxl_phone1|phone }}" class="regular button">Call</a>
+        <a href="{{ mep.get_absolute_url }}" class="button secondary list_item_details_switcher">More</a>
     </div>
+</div>
+<div class="row panel list_item_details off">
+    <div class="twelve columns">
+        <ul class="rep_details">
+            {% if mep.bxl_phone1 %}
+                <li><strong>{% trans "Brussels" %}</strong>
+                 {% trans "Tel." %}: <a href="callto://{{ mep.bxl_phone1|phone }}">{{ mep.bxl_phone1 }}</a>&nbsp;—&nbsp;<a href="callto://{{ mep.bxl_phone2|phone }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
+                </li>
+            {% endif %}
+            {% if mep.stg_phone1 %}
+                <li><strong>{% trans "Strasbourg" %}</strong>
+                {% trans "Tel." %}: <a href="callto://{{ mep.stg_phone1|cut:" " }}">{{ mep.stg_phone1 }}</a>&nbsp;—&nbsp;<a href="callto://{{ mep.stg_phone2|cut:" " }}">{{ mep.stg_phone2 }}</a>&nbsp;<br/>
+                </li>
+            {% endif %}
+            {% if mep.emails %}
+                  <li>
+                    <strong>{% trans "E-mail" %}:</strong>
+                    {% for email in mep.emails %}
+                      <a href="mailto:{{ email }}">{{ email }}</a>
+                      {% if not forloop.last %}—{% endif %}
+                    {% endfor %}
+                  </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
 </div>
 
