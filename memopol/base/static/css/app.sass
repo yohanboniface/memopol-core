@@ -28,7 +28,12 @@ body
     background-color: #fff
 .button + .button
     margin-top: $margin1
-
+.panel.columns .columns
+    padding-left: 0
+.panel.columns + .columns
+    padding-left: $padding2
+.panel ul
+    margin-left: 0
 
 // -----------------------------------------
 //   Titles
@@ -42,7 +47,7 @@ h2, h3, h4
 // -----------------------------------------
 //   Panels and labels
 // -----------------------------------------
-.panel li a
+.panel.call_data li a
     color: $text_color
 .label a
     color: #505050
