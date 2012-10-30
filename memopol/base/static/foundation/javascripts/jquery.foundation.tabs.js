@@ -30,7 +30,6 @@
     };
 
     $(document).on('click.fndtn', 'dl.tabs dd a', function (event){
-      console.log("clicking")
       activateTab($(this).parent('dd'));
     });
 
