@@ -28,4 +28,4 @@ unidecode
 diff_match_patch
 django-categories
 django-endless-pagination
-django-compressor
+django-compressorBeautifulSoup
