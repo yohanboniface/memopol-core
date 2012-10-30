@@ -37,7 +37,7 @@ class Migration(DataMigration):
     def backwards(self, orm):
         "Write your backwards methods here."
 
-        orm["representatives.representative"].objects.all().delete()
+        db.execute("DELETE FROM representatives_representative")
 
 
     models = {
