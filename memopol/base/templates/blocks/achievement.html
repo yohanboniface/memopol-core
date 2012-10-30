@@ -5,5 +5,4 @@
 <img src="{{ achievement.thumbnail.url }}" alt="{{ achievement.name }}" />
 {% endif %}
 <span class="secondary label"><a href="{% simple_search_shortcut 'achievements:'|add:achievement.slug %}" class="has-tip" title="{{ achievement.description }}">{{ achievement.name }}</a></span>
-</li>
 {% endspaceless %}

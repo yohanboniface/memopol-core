@@ -1,39 +1,47 @@
 {% load comments memopol2 memopol_tags %}
 
-<div class="row">
-    <div class="three columns">
-        <div class="panel radius {{ mep.total_score|scolorize }}">{{ mep.total_score|floatformat:1 }}</div>
-    </div>
-
-    <div class="nine columns">
-        {% for achievement in mep.achievements.all %}
-            {% render_achievement achievement %}
-        {% endfor %}
-    </div>
-</div>
-
-
-<div class="twelve columns panel">
-    <div class="two columns">
-        <img width="100px" src="{% url meps:mep-picture mep.ep_id %}">
-    </div>
-
-    <div class="seven columns">
-        <div class="row"><h4>{{ mep }}</h4></div>   
-
-        <div class="row">
-            <p>{{ mep.group_tag|safe }}</p> 
+<div class="twelve columns floor">
+    <div class="row panel">
+        <div class="two columns">
+            <div class="panel radius {{ mep.total_score|scolorize }}">{{ mep.total_score|floatformat:1 }}</div>
         </div>
+        <div class="seven columns">
+            <h4>{{ mep }}</h4>
+            <div>
+                {% for achievement in mep.achievements.all %}
+                    {% render_achievement achievement %}
+                {% endfor %}
+            </div>
+        </div>   
+        <div class="three columns">
+            <div class="row">
+                <a href="callto://{{ mep.bxl_phone1|phone }}" class="panel callout button radius">Click to call&nbsp;</a>
+            </div>
+        </div>
+
     </div>
-    <div class="three columns">
-        <div class="row">
-            <a href="callto://{{ mep.bxl_phone1|phone }}" class="panel callout button radius">Click to call&nbsp;</a>
+
+    <div class="row panel">
+        <div class="two columns">
+            <img width="100px" src="{% url meps:mep-picture mep.ep_id %}">
         </div>
-        <div class="row">
-            <span class="secondary label">Brussels</span>{{ mep.bxl_phone1|phone }}<br>
-            <span class="secondary label">Tel 2</span>bla 2<br>
-            <span class="secondary label">Email</span>bla@bla.com   
-        </div>
+
+        <ul class="ten columns">
+            {% if not mep.active %}<li><div class="nok"><a href="{% url meps:index_inactive %}">{% trans "Former mep" %}</a></div></li>{% endif %}
+            <li><i>{% trans "Country" %}</i>:  <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ STATIC_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.country.code %}">{{ mep.country.name }}</li></a>
+            {% if mep.group %}
+            <li><i>{% trans "Political group" %}</i>: <a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></li>
+            {% endif %}
+            {% for post in mep.important_posts %}
+            <li><b>{{ post.role }} of <a href="{{ post.instance.get_absolute_url }}">{{ post.instance.name }}</a></b></li>
+            {% endfor %}
+            {% if mep.party %}
+            <li><i>{% trans "National party" %}</i>: <a href="{% url meps:index_by_party mep.party.id mep.party.name|slugify %}">{{ mep.party.name }}</a></li>
+            {% endif %}
+            {% if mep.birth_date %}
+            <li><i>{% if mep.gender == 'M' %}{% trans "Born on" %}{% else %}{% trans "Born on (female)" %}{% endif %}</i> {% blocktrans with mep.birth_date.day as day and mep.birth_date|date:'F' as month and mep.birth_date.year as year and mep.birth_place as birth_place and mep.age as age %}{{ day }} {{ month }} {{ year }}<i> at </i>{{ birth_place }}, {{ age }} years old.{% endblocktrans %}</li>
+            {% endif %}
+        </ul>
     </div>
 </div>
 <div class="twelve columns panel">
