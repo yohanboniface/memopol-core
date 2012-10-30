@@ -9,7 +9,7 @@ import datetime
 from json import dumps
 
 from django.conf import settings
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, RedirectView
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -356,3 +356,13 @@ class PartyView(MEPsFromView):
         if self.kwargs['slugified_name'] != slugify(self.object.name):
             return HttpResponseRedirect(reverse('meps:index_by_party', args=[self.object.id, slugify(self.object.name)]))
         return MEPsFromView.render_to_response(self, context)
+
+
+class RedirectToSearch(RedirectView):
+    permanent = False
+    filter = None
+
+    def get_redirect_url(self, **kwargs):
+        search_string = "%s:%s" % (self.filter, kwargs['value'])
+        base_url = reverse("search")
+        return "%s?q=%s" % (base_url, search_string)

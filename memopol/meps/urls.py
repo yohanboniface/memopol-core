@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from memopol.meps.models import LocalParty, Country, Group, Committee, Delegation, Organization, Building, MEP
 from memopol.reps.models import Opinion
 
-from .views import BuildingDetailView, MEPView, MEPsFromView, MEPList, PartyView
+from .views import BuildingDetailView, MEPView, MEPsFromView, MEPList, PartyView, RedirectToSearch
 
 urlpatterns = patterns('memopol.meps.views',
     # those view are *very* expansive. we cache them in RAM for a week
@@ -24,7 +24,7 @@ urlpatterns = patterns('memopol.meps.views',
     url(r'^country/$', ListView.as_view(queryset=Country.with_meps_count()), name='index_countries'),
     url(r'^country/(?P<slug>[a-zA-Z][a-zA-Z])/$', MEPsFromView.as_view(model=Country, slug_field='code', hidden_fields=['country'], named_header="meps/country_header.html"), name='index_by_country'),
     url(r'^group/$', ListView.as_view(queryset=Group.ordered_by_meps_count()), name='index_groups'),
-    url(r'^group/(?P<slug>[a-zA-Z/-]+)/$', MEPsFromView.as_view(model=Group, hidden_fields=['group'], slug_field="abbreviation", named_header="meps/group_header.html", group_role=True),  name='index_by_group'),
+    url(r'^group/(?P<value>[a-zA-Z/-]+)/$', RedirectToSearch.as_view(filter="group"), name='index_by_group'),
     url(r'^committee/$', ListView.as_view(queryset=Committee.ordered_by_meps_count()), name='index_committees'),
     url(r'^committee/(?P<slug>[A-Z]+)/$', MEPsFromView.as_view(model=Committee, slug_field="abbreviation", committee_role=True), name='index_by_committee'),
     url(r'^delegation/$', ListView.as_view(queryset=Delegation.with_meps_count()), name='index_delegations'),
