@@ -12,7 +12,7 @@
             <a href="{{ score.proposal.get_absolute_url }}">{{ score.proposal.title }}</a> {% blocktrans with score.date as score_date %}(on {{ score_date }}){% endblocktrans %}
         </div>
         <div class="two column">
-            <a href="{% url meps:votes:votes_mep score.proposal.id mep.id %}" class="button secondary">{% trans "Read more" %}</a>
+            <a href="{% url meps:votes:votes_mep score.proposal.id mep.id %}" class="button secondary">{% trans "Details" %}</a>
         </div>
     </div>
     {% endfor %}

@@ -14,7 +14,7 @@
 {% for vote in votes %}
 <div class="row panel">
     <div class="two columns">
-        <div class="panel radius {{ vote.choice|scolorize_position:vote.recommendation.recommendation }}">{{ vote.choice }}</div>
+        <div class="panel radius {{ vote.choice|scolorize_position:vote.recommendation.recommendation }} position">{{ vote.choice }}</div>
     </div>
     <div class="six columns">
         <a href="{% url meps:votes:recommendation proposal.id vote.recommendation.id %}">{% if vote.recommendation.description %}{{ vote.recommendation.description }}{% else %}{% trans "No description yet" %}{% endif %}</a>
