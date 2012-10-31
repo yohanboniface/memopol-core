@@ -2,22 +2,22 @@
 
 {% block content %}
 <div class="row">
+    <div class="eight columns">
+        {% include "blocks/home_slider.html" %}
+    </div>
     <div class="four columns">
         {% include "blocks/last_news.html" %}
         {% include "blocks/what_is_memopol.html" %}
     </div>
-    <div class="eight columns">
-        {% include "blocks/home_slider.html" %}
-    </div>
 </div>
 <div class="row">
+    <div class="eight columns">
+        {% include "blocks/last_votes.html" %}
+    </div>
     <div class="four column">
         {% with mep=spotlight_mep %}
             {% include "blocks/representative_preview.html" %}
         {% endwith %}
-    </div>
-    <div class="eight columns">
-        {% include "blocks/last_votes.html" %}
     </div>
 </div>
 {% endblock content %}
