@@ -27,5 +27,5 @@ git+git://github.com/liberation/django-dynamiq-search-form.git
 unidecode
 diff_match_patch
 django-categories
-django-endless-pagination
+git+git://github.com/frankban/django-endless-pagination.git
 django-compressor

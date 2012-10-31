@@ -30,6 +30,7 @@
 
 {% block js_onload %}
     {{ block.super }}
+    $.endlessPaginate({paginateOnScroll: true});
     $(document).on('click', '.list_item_details_switcher', function(e) {
         e.preventDefault();
         var list_item = $(this).parents('.list_item');
