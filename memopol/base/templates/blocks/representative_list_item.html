@@ -2,13 +2,14 @@
 <div class="floor twelve list_item">
 <div class="row panel">
     <div class="four columns flat mobile-four">
-        <div class="six columns flat mobile-two">
+        <div class="five columns flat mobile-two">
             <a class="th" href="{{ mep.get_absolute_url }}"><img width="100px" src="{% url meps:mep-picture mep.ep_id %}"></a>
         </div>
 
-        <div class="six columns mobile-two">
+        <div class="seven columns mobile-two">
             <div class="panel radius {{ mep.total_score|scolorize }}">{{ mep.total_score|floatformat:1 }}</div>
-            {{ mep.country_tag|safe }}
+            <div>{{ mep.country_tag|safe }}</div>
+            <div>{{ mep.group_tag|safe }}</div>
         </div>
     </div>
 
@@ -21,11 +22,12 @@
             {% render_achievement achievement %}
           {% endfor %}
         </div>
-
-        <div class="row">&nbsp;</div>
-
         <div class="row">
-            {% if mep.group %}<p><a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></p>{% endif %}
+            <ul>
+            {% for post in mep.important_posts %}
+            <li>{{ post.role }} of <a href="{{ post.instance.get_absolute_url }}">{{ post.instance.name }}</a></li>
+            {% endfor %}
+            </ul>
         </div>
     </div>
 
