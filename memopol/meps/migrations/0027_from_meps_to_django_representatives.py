@@ -15,7 +15,7 @@ class Migration(DataMigration):
         }
         total = orm["meps.mep"].objects.count()
         for number, mep in enumerate(orm["meps.mep"].objects.all(), 1):
-            sys.stdout.write("%s/%s\r" % (number, total))
+            sys.stdout.write("meps %s/%s\r" % (number, total))
             sys.stdout.flush()
             orm["representatives.representative"].objects.create(
                 full_name=mep.full_name,
@@ -28,9 +28,7 @@ class Migration(DataMigration):
                 remote_id=mep.ep_id,
                 slug=slugify(mep.full_name if mep.full_name else mep.first_name + " " + mep.last_name),
             )
-
         sys.stdout.write("\n")
-
 
     def backwards(self, orm):
         "Write your backwards methods here."
