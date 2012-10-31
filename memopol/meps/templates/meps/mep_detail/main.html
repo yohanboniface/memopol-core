@@ -3,9 +3,12 @@
 <div class="twelve columns floor">
     <div class="row panel">
         <div class="two columns">
+            <img width="100px" src="{% url meps:mep-picture mep.ep_id %}">
+        </div>
+        <div class="two columns">
             <div class="panel radius {{ mep.total_score|scolorize }}">{{ mep.total_score|floatformat:1 }}</div>
         </div>
-        <div class="seven columns">
+        <div class="six columns">
             <h4>{{ mep }}</h4>
             <div>
                 {% for achievement in mep.achievements.all %}
@@ -13,7 +16,7 @@
                 {% endfor %}
             </div>
         </div>   
-        <div class="three columns">
+        <div class="two columns">
             <div class="row">
                 <a href="callto://{{ mep.bxl_phone1|phone }}" class="panel callout button radius">Click to call&nbsp;</a>
             </div>
@@ -22,16 +25,15 @@
     </div>
 
     <div class="row panel">
-        <div class="two columns">
-            <img width="100px" src="{% url meps:mep-picture mep.ep_id %}">
-        </div>
 
-        <ul class="ten columns">
+        <ul class="four columns">
             {% if not mep.active %}<li><div class="nok"><a href="{% url meps:index_inactive %}">{% trans "Former mep" %}</a></div></li>{% endif %}
-            <li><i>{% trans "Country" %}</i>:  <a href="{% url meps:index_by_country mep.country.code %}"><img src="{{ STATIC_URL }}img/countries/small/{{ mep.country.code }}.png"/></a> <a href="{% url meps:index_by_country mep.country.code %}">{{ mep.country.name }}</li></a>
+            <li><a href="{% url meps:index_by_country mep.country.code %}"><span class="sprite-country_small-{{ mep.country.code }}"></span> {{ mep.country.name }}</li></a>
             {% if mep.group %}
-            <li><i>{% trans "Political group" %}</i>: <a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></li>
+            <li><a href="{% url meps:index_by_group mep.group.abbreviation %}"><span class="sprite-eu_group-{{ mep.group.abbreviation|cut:'/' }}"></span>{{ mep.group.name }} ({{ mep.group.abbreviation }})</a></li>
             {% endif %}
+        </ul>
+        <ul class="eight columns">
             {% for post in mep.important_posts %}
             <li><b>{{ post.role }} of <a href="{{ post.instance.get_absolute_url }}">{{ post.instance.name }}</a></b></li>
             {% endfor %}
