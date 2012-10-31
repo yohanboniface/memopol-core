@@ -6,9 +6,9 @@
       <dl class="tabs">
         <dd class="active"><a href="#simple1">Profile</a></dd>
         <dd><a href="#simple2">Scores</a></dd>
-        <dd><a href="#simple3">{% trans "Delegations" %}</a></dd>
-        <dd><a href="#simple4">{% trans "Committees" %}</a></dd>
-        <dd><a href="#simple5">{% trans "CV" %}</a></dd>
+        <dd><a href="#simple3">{% trans "Committees" %}</a></dd>
+        <dd><a href="#simple4">{% trans "CV" %}</a></dd>
+        <dd><a href="#simple5">{% trans "Delegations" %}</a></dd>
       </dl>
 
       <ul class="tabs-content">
@@ -19,13 +19,13 @@
           {% include "meps/mep_detail/scores.html" %}
         </li>
         <li id="simple3Tab">
-          {% include "meps/mep_detail/delegations.html" %}
-        </li>
-        <li id="simple4Tab">
           {% include "meps/mep_detail/committees.html" %}
         </li>
-        <li id="simple5Tab">
+        <li id="simple4Tab">
           {% include "meps/mep_detail/cv.html" %}
+        </li>
+        <li id="simple5Tab">
+          {% include "meps/mep_detail/delegations.html" %}
         </li>
       </ul>
 
