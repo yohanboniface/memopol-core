@@ -16,7 +16,14 @@ class ProposalView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProposalView, self).get_context_data(**kwargs)
-        context["vote"].meps = optimise_mep_query(context["vote"].meps, Q(mep__score__proposal=context["vote"]), Q(representative__score__proposal=context["vote"]), proposal_score=context["vote"])
+        subvotes = self.object.recommendation_set.all()
+        context['subvotes'] = {}
+        # Group subvotes by subject
+        for subvote in subvotes:
+            if not subvote.subject in context['subvotes']:
+                context['subvotes'][subvote.subject] = []
+            context['subvotes'][subvote.subject].append(subvote)
+        context["vote"].meps = optimise_mep_query(context["vote"].meps.prefetch_related('vote_set'), Q(mep__score__proposal=context["vote"]), Q(representative__score__proposal=context["vote"]), proposal_score=context["vote"])
         return context
 
 

@@ -1,0 +1,34 @@
+{% load cache memopol_tags votes_tags %}
+
+{% cache 6000000 proposal.votes.meps request.META.PATH_INFO LANGUAGE_CODE %}
+<table class="twelve">
+    <thead>
+        <tr>
+            <th rowspan="2">&nbsp;</th>
+            {% for grouper, subvotes_list in subvotes.iteritems %}
+                <th colspan="{{ subvote_list|length }}">{{ grouper }}</th>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for grouper, subvotes_list in subvotes.iteritems %}
+                {% for v in subvotes_list %}
+                    <th><span class="has-tip" title="{{ v.description }}">[{{ forloop.counter }}]</span></th>
+                {% endfor %}
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+    {% for mep in vote.meps %}
+        <tr>
+            <th><a href="{{ mep.get_absolute_url }}">{{ mep }}</a></th>
+            {% for grouper, subvotes_list in subvotes.iteritems %}
+                {% for v in subvotes_list %}
+                    {% rep_position_on_recommendation mep v %}
+                    <td class="{{ rep_position.choice|scolorize_position:v.recommendation }}">{{ rep_position.choice }}</td>
+                {% endfor %}
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endcache %}
