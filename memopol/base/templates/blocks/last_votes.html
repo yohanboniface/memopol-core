@@ -3,7 +3,7 @@
   <ul>
     {% for proposal in proposals %}
       <li>
-        <span class="sprite-country_small-{{ proposal.institution }}" alt="{{ proposal.institution }} flag"></span> <a href="{{ proposal.get_absolute_url }}">{{ proposal.title }}</a>
+        <span class="sprite-country_small-{{ proposal.institution }}" alt="{{ proposal.institution }} flag"></span> <a href="{{ proposal.get_absolute_url }}">{{ proposal.title }}</a> <em>({{ proposal.date }})</em>
       </li>
     {% endfor %}
   </ul>
