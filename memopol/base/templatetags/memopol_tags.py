@@ -60,6 +60,21 @@ def scolorize(score, max_score=100):
     return classnames
 
 
+@register.filter
+def scolorize_position(position, recommandation="for"):
+    """
+    Colorize a position on a vote according to a recommandation.
+    Choices are "for", "against", "absent", "abstention".
+    """
+    if position == recommandation:
+        score = 1
+    elif position in ("absent", "abstention"):
+        score = 0.5
+    else:
+        score = 0
+    return scolorize(score, max_score=1)
+
+
 @register.inclusion_tag("blocks/achievement.html")
 def render_achievement(achievement):
     return {
