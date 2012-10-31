@@ -62,6 +62,9 @@ class Proposal(models.Model):
     def __unicode__(self):
         return self.title
 
+    class Meta:
+        ordering = ('-_date', )
+
 
 class Recommendation(models.Model):
     datetime = models.DateTimeField()
