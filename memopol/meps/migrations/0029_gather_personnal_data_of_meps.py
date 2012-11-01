@@ -12,26 +12,26 @@ class Migration(DataMigration):
     def forwards(self, orm):
         "Write your forwards methods here."
 
-        #total = orm["reps.email"].objects.filter(representative__mep__isnull=False).count()
-        #for number, email in enumerate(orm["reps.email"].objects.filter(representative__mep__isnull=False), 1):
-            #sys.stdout.write("emails %s/%s\r" % (number, total))
-            #sys.stdout.flush()
-            #orm["representatives.email"].objects.create(
-                #email=email.email,
-                #kind="official" if "@europarl.europa.eu" in email.email else "other",
-                #representative=orm["representatives.representative"].objects.get(remote_id=email.representative.mep.ep_id),
-            #)
-        #sys.stdout.write("\n")
+        total = orm["reps.email"].objects.filter(representative__mep__isnull=False).count()
+        for number, email in enumerate(orm["reps.email"].objects.filter(representative__mep__isnull=False), 1):
+            sys.stdout.write("emails %s/%s\r" % (number, total))
+            sys.stdout.flush()
+            orm["representatives.email"].objects.create(
+                email=email.email,
+                kind="official" if "@europarl.europa.eu" in email.email else "other",
+                representative=orm["representatives.representative"].objects.get(remote_id=email.representative.mep.ep_id),
+            )
+        sys.stdout.write("\n")
 
-        #total = orm["reps.website"].objects.filter(representative__mep__isnull=False).count()
-        #for number, website in enumerate(orm["reps.website"].objects.filter(representative__mep__isnull=False), 1):
-            #sys.stdout.write("websites %s/%s\r" % (number, total))
-            #sys.stdout.flush()
-            #orm["representatives.website"].objects.create(
-                #url=website.url,
-                #representative=orm["representatives.representative"].objects.get(remote_id=website.representative.mep.ep_id),
-            #)
-        #sys.stdout.write("\n")
+        total = orm["reps.website"].objects.filter(representative__mep__isnull=False).count()
+        for number, website in enumerate(orm["reps.website"].objects.filter(representative__mep__isnull=False), 1):
+            sys.stdout.write("websites %s/%s\r" % (number, total))
+            sys.stdout.flush()
+            orm["representatives.website"].objects.create(
+                url=website.url,
+                representative=orm["representatives.representative"].objects.get(remote_id=website.representative.mep.ep_id),
+            )
+        sys.stdout.write("\n")
 
         belgium = orm["representatives.country"].objects.create(name="Belgium", code="BE")
         france = orm["representatives.country"].objects.create(name="France", code="FR")
