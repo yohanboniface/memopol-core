@@ -17,7 +17,7 @@ class Migration(DataMigration):
         for number, mep in enumerate(orm["meps.mep"].objects.all(), 1):
             sys.stdout.write("meps %s/%s\r" % (number, total))
             sys.stdout.flush()
-            orm["representatives.representative"].objects.create(
+            orm["meps.MP_EU"].objects.create(
                 full_name=mep.full_name,
                 first_name=mep.first_name,
                 last_name=mep.last_name,
