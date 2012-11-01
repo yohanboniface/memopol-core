@@ -1,6 +1,6 @@
 {% load cache memopol_tags votes_tags %}
 
-{% cache 6000000 proposal.votes.meps request.META.PATH_INFO LANGUAGE_CODE %}
+{% cache 6000000 representatives_data request.META.PATH_INFO LANGUAGE_CODE %}
 <table class="twelve">
     <thead>
         <tr>
@@ -18,14 +18,15 @@
         </tr>
     </thead>
     <tbody>
-    {% for mep in vote.meps %}
+    {% for mep, positions in representatives_data.itervalues %}
         <tr>
             <th><a href="{{ mep.get_absolute_url }}">{{ mep }}</a></th>
-            {% for grouper, subvotes_list in subvotes.iteritems %}
-                {% for v in subvotes_list %}
-                    {% rep_position_on_recommendation mep v %}
-                    <td class="{{ rep_position.choice|scolorize_position:v.recommendation }}">{{ rep_position.choice }}</td>
-                {% endfor %}
+            {% for position, recommendation in positions %}
+                {% if position %}
+                    <td class="{{ position|scolorize_position:recommendation }}">{{ position }}</td>
+                {% else %}
+                    <td>—</td>
+                {% endif %}
             {% endfor %}
         </tr>
     {% endfor %}

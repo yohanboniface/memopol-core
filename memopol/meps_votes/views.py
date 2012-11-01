@@ -1,10 +1,12 @@
+# -*- coding: utf-8 -*-
+
 from django.db.models import Q
 from django.views.generic import DetailView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
 from memopol.meps.models import MEP
-from memopol.votes.models import Proposal
+from memopol.votes.models import Proposal, Vote
 
 from memopol.meps.views import optimise_mep_query
 
@@ -16,14 +18,37 @@ class ProposalView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProposalView, self).get_context_data(**kwargs)
-        subvotes = self.object.recommendation_set.all()
-        context['subvotes'] = {}
+        recommendations = self.object.recommendation_set.all()
+
         # Group subvotes by subject
-        for subvote in subvotes:
-            if not subvote.subject in context['subvotes']:
-                context['subvotes'][subvote.subject] = []
-            context['subvotes'][subvote.subject].append(subvote)
-        context["vote"].meps = optimise_mep_query(context["vote"].meps.prefetch_related('vote_set'), Q(mep__score__proposal=context["vote"]), Q(representative__score__proposal=context["vote"]), proposal_score=context["vote"])
+        subvotes = {}
+        subvotes_per_mep = {}
+        for subvote in recommendations:
+            if not subvote.subject in subvotes:
+                subvotes[subvote.subject] = []
+            subvotes[subvote.subject].append(subvote)
+            # Retrieve all recommendation choices
+            positions = Vote.objects.filter(recommendation=subvote).select_related("representative").values('representative_id', 'choice')
+            subvotes_per_mep[subvote.pk] = dict((p["representative_id"], p['choice']) for p in positions)
+
+        # Link positions to representatives
+        representatives_data = {}
+        for mep in context["vote"].meps:
+            positions = []
+            for subvote in recommendations:
+                try:
+                    position = subvotes_per_mep[subvote.pk][mep.pk]
+                except KeyError:
+                    # No proposition for this mep, don't break the order
+                    # so use a None value
+                    position = None
+                finally:
+                    positions.append((position, subvote.recommendation))
+            representatives_data[mep.pk] = (mep, positions)
+        context.update({
+            "representatives_data": representatives_data,
+            "subvotes": subvotes,
+        })
         return context
 
 
