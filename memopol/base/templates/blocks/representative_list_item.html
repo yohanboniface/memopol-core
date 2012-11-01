@@ -32,8 +32,10 @@
     </div>
 
     <div class="two columns mobile-four">
-        <a href="callto://{{ mep.bxl_phone1|phone }}" class="regular button">Call</a>
-        <a href="{{ mep.get_absolute_url }}" class="button secondary list_item_details_switcher">More</a>
+        {% if mep.active %}
+            {% call_now mep.bxl_phone1 %}
+        {% endif %}
+        <a href="{{ mep.get_absolute_url }}" class="button secondary list_item_details_switcher">Details</a>
     </div>
 </div>
 <div class="row panel list_item_details off">

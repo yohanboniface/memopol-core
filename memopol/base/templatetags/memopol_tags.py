@@ -80,3 +80,10 @@ def render_achievement(achievement):
     return {
         "achievement": achievement
     }
+
+
+@register.inclusion_tag("blocks/call_now.html")
+def call_now(phone_number):
+    return {
+        "phone_number": phone_number
+    }

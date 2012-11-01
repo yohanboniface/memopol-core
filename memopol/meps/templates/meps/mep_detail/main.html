@@ -17,9 +17,11 @@
             </div>
         </div>   
         <div class="two columns">
+            {% if mep.active %}
             <div class="row">
-                <a href="callto://{{ mep.bxl_phone1|phone }}" class="panel callout button radius">Click to call&nbsp;</a>
+                {% call_now mep.bxl_phone1 %}
             </div>
+            {% endif %}
         </div>
 
     </div>
