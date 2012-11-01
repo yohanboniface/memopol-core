@@ -20,6 +20,11 @@ class TemporaryMEPScoresLink(models.Model):
     score = models.ForeignKey("votes.Score")
 
 
+class TemporaryMEPVoteLink(models.Model):
+    representative = models.ForeignKey(MP_EU)
+    vote = models.ForeignKey("votes.Vote")
+
+
 class Country(models.Model):
     code = models.CharField(max_length=2, unique=True)
     name = models.CharField(max_length=30, unique=True)
