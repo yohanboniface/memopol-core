@@ -13,7 +13,7 @@
         <tr>
             {% for grouper, subvotes_list in subvotes.iteritems %}
                 {% for v in subvotes_list %}
-                    <th><a href="{{ {% url meps:votes:recommendation vote.id v.id %}" class="has-tip" title="{{ v.description }}">{{ v.description|truncatewords:5 }}</a></th>
+                    <th><a href="{% url meps:votes:recommendation vote.id v.id %}" class="has-tip" title="{{ v.description }}">{{ v.description|truncatewords:5 }}</a></th>
                 {% endfor %}
             {% endfor %}
         </tr>
