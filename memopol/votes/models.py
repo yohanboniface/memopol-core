@@ -157,6 +157,9 @@ class Score(models.Model):
             clean_all_trends()
         super(Score, self).save(*args, **kwargs)
 
+    def __unicode__(self):
+        return u"%.2f" % self.value
+
     class Meta:
         ordering = ['date']
 

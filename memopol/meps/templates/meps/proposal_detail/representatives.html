@@ -5,6 +5,7 @@
     <thead>
         <tr>
             <th rowspan="2">&nbsp;</th>
+            <th rowspan="2">Score for this vote</th>
             {% for grouper, subvotes_list in subvotes.iteritems %}
                 <th colspan="{{ subvote_list|length }}">{{ grouper }}</th>
             {% endfor %}
@@ -16,11 +17,30 @@
                 {% endfor %}
             {% endfor %}
         </tr>
+        <tr>
+            <th>Vote weight</th>
+            <th>&nbsp;</th>
+            {% for grouper, subvotes_list in subvotes.iteritems %}
+                {% for v in subvotes_list %}
+                    <td>{{ v.weight }}</td>
+                {% endfor %}
+            {% endfor %}
+        </tr>
+        <tr>
+            <th>Recommendation</th>
+            <th>&nbsp;</th>
+            {% for grouper, subvotes_list in subvotes.iteritems %}
+                {% for v in subvotes_list %}
+                    <td>{{ v.recommendation }}</td>
+                {% endfor %}
+            {% endfor %}
+        </tr>
     </thead>
     <tbody>
     {% for mep, positions in representatives_data.itervalues %}
         <tr>
             <th><a href="{{ mep.get_absolute_url }}">{{ mep }}</a></th>
+            <td class="{{ mep.score.value|scolorize }}">{{ mep.score }}</td>
             {% for position, recommendation in positions %}
                 {% if position %}
                     <td class="{{ position|scolorize_position:recommendation }}">{{ position }}</td>
