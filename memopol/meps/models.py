@@ -15,6 +15,11 @@ class MP_EU(GenericRepresentative):
     pass
 
 
+class TemporaryMEPScoresLink(models.Model):
+    representative = models.ForeignKey(MP_EU)
+    score = models.ForeignKey("votes.Score")
+
+
 class Country(models.Model):
     code = models.CharField(max_length=2, unique=True)
     name = models.CharField(max_length=30, unique=True)
