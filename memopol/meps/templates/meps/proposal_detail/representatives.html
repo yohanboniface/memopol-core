@@ -12,7 +12,7 @@
         <tr>
             {% for grouper, subvotes_list in subvotes.iteritems %}
                 {% for v in subvotes_list %}
-                    <th><span class="has-tip" title="{{ v.description }}">[{{ forloop.counter }}]</span></th>
+                    <th><span class="has-tip" title="{{ v.description }}">{{ v.description|truncatewords:5 }}</span></th>
                 {% endfor %}
             {% endfor %}
         </tr>
