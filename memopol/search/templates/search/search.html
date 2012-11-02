@@ -12,6 +12,12 @@
                 {% endif %}
             </div>
             <div class="three columns">
+                {% if dynamiq.form.q.value %}
+                    <form action="{% url search %}" method="get" class="simple_search_options">
+                        <input type="hidden" value="{{ dynamiq.form.q.value }}" name="q" />
+                        {{ dynamiq.form.sort }}
+                    </form>
+                {% endif %}
                 <a href="#" class="secondary button global_list_item_details_switcher">Show details</a>
             </div>
         </div>
@@ -19,7 +25,7 @@
     {% if dynamiq.results %}
         {% include list_template_name %}
     {% else %}
-        {% if dynamiq.formset.is_bound or dynamiq.q != "" %}
+        {% if dynamiq.formset.is_bound or dynamiq.form.is_bound %}
         <div class="row floor">
                 No results found.
         </div>
@@ -48,5 +54,8 @@
             $('.list_item_details').show();
             $(this).text('Hide details');
         }
+    });
+    $('select[name=sort]').on('change', function(e) {
+         $(this).closest('form').trigger('submit');
     });
 {% endblock js_onload %}

@@ -7,7 +7,7 @@ from haystack.query import SearchQuerySet, EmptySearchQuerySet
 
 from dynamiq.utils import get_advanced_search_formset_class, FormsetQBuilder, ParsedStringQBuilder
 
-from .forms import MEPSearchForm, MEPSearchAdvancedFormset
+from .forms import MEPSearchForm, MEPSearchAdvancedFormset, MEPSimpleSearchForm
 from .shortcuts import TopRated, WorstRated
 
 
@@ -18,7 +18,6 @@ class SearchView(TemplateView):
 
     template_name = 'search/search.html'
     list_template_name = "blocks/representative_list.html"
-    DEFAULT_SEARCH_LIMIT = 15
 
     def get_template_names(self):
         """
@@ -31,26 +30,28 @@ class SearchView(TemplateView):
 
     def get_context_data(self, **kwargs):
         query = None
-        sort = None
-        limit = None
+        sort = MEPSearchAdvancedFormset.options_form_class.SORT_INITIAL
+        limit = MEPSearchAdvancedFormset.options_form_class.LIMIT_INITIAL
         label = ""
-        q = ""
 
         formset_class = get_advanced_search_formset_class(self.request.user, MEPSearchAdvancedFormset, MEPSearchForm)
         if "q" in self.request.GET:
-            q = self.request.GET['q']
-            F = ParsedStringQBuilder(q, MEPSearchForm)
-            query, label = F()
-            formset = formset_class()
-            limit = self.request.GET.get("limit", self.DEFAULT_SEARCH_LIMIT)
+            form = MEPSimpleSearchForm(self.request.GET)
+            if form.is_valid():
+                F = ParsedStringQBuilder(form.cleaned_data['q'], MEPSearchForm)
+                query, label = F()
+                formset = formset_class()
+                limit = form.cleaned_data.get("limit") or limit
+                sort = form.cleaned_data.get("sort") or sort
         else:
+            form = MEPSimpleSearchForm()
             formset = formset_class(self.request.GET or None)
             formset.full_clean()
             if formset.is_valid():
                 F = FormsetQBuilder(formset)
                 query, label = F()
-                sort = formset.options_form.cleaned_data.get("sort")
-                limit = formset.options_form.cleaned_data.get("limit", self.DEFAULT_SEARCH_LIMIT)
+                sort = formset.options_form.cleaned_data.get("sort", sort)
+                limit = formset.options_form.cleaned_data.get("limit", limit)
 
         if query:
             results = SearchQuerySet().filter(query)
@@ -61,9 +62,9 @@ class SearchView(TemplateView):
         return {
             "dynamiq": {
                 "results": results,
-                "q": q,
                 "label": label,
                 "formset": formset,
+                "form": form,
                 "shortcuts": [
                     TopRated({"request": self.request}),
                     WorstRated({"request": self.request})

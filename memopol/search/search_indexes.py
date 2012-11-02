@@ -6,6 +6,7 @@ from memopol.meps.models import MEP
 
 class MEPIndex(indexes.SearchIndex, indexes.Indexable):
     fulltext = indexes.CharField(document=True, model_attr="content")
+    last_name = indexes.CharField(model_attr="last_name")
     group = indexes.CharField(model_attr="group__abbreviation", faceted=True, default="")
     country = indexes.CharField(model_attr="country__code", faceted=True)
     committees = indexes.MultiValueField()

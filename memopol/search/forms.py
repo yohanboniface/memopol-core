@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from django import forms
+from django.utils.translation import ugettext as _
+
 from extended_choices import Choices
 
 from dynamiq.forms.haystack import HaystackForm
@@ -29,8 +32,10 @@ FILTER_NAME = Choices(
 )
 
 SORT_CHOICES = Choices(
-    ('TOTAL_SCORE', '-total_score', u'Score'),
-    ('TOTAL_SCORE_ASC', 'total_score', u'Score asc'),
+    ('LAST_NAME', 'last_name', u'Sort by last name'),
+    ('LAST_NAME_DESC', '-last_name', u'Sort by last name desc'),
+    ('TOTAL_SCORE', '-total_score', u'Sort by score'),
+    ('TOTAL_SCORE_ASC', 'total_score', u'Sort by score asc'),
 )
 
 MODEL_CHOICES = Choices(
@@ -41,7 +46,8 @@ MODEL_CHOICES = Choices(
 class MEPSearchOptionsForm(SearchOptionsForm):
 
     SORT = SORT_CHOICES
-    SORT_INITIAL = SORT.TOTAL_SCORE
+    SORT_INITIAL = SORT.LAST_NAME
+    LIMIT_INITIAL = 15
 
 
 class MEPSearchForm(HaystackForm):
@@ -126,3 +132,23 @@ class MEPSearchAdvancedFormset(AdvancedFormset):
                 },
         ]
         return initial, initial_options
+
+
+class MEPSimpleSearchForm(forms.Form):
+
+    limit = forms.IntegerField(
+                min_value=1,
+                max_value=100,
+                required=False,
+                initial=15,
+                label=_("Total results")
+            )
+    sort = forms.ChoiceField(
+                required=False,
+                initial=SORT_CHOICES.LAST_NAME,
+                label=_("Sort by"),
+                choices=SORT_CHOICES
+            )
+    q = forms.CharField(
+                required=False,
+            )
