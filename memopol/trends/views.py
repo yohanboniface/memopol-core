@@ -505,7 +505,7 @@ def group_proposal_score_stacked(request, proposal_id):
     return send_file(request, filename, content_type="image/png")
 
 def group_proposal_score_heatmap(request, proposal_id):
-    filename = join(settings.MEDIA_DIRECTORY, 'img', 'trends', 'group', get_language() + "-groups-%s-repartition-heatmap.png" % proposal_id)
+    filename = join(settings.STATIC_ROOT, 'img', 'trends', 'group', get_language() + "-groups-%s-repartition-heatmap.png" % proposal_id)
     cache = get_content_cache(request, filename)
     if cache:
         return cache
