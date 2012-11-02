@@ -1,5 +1,6 @@
 <div id="footer" class="row">
+    {% url about as about_url %}
     {% blocktrans %} Memopol is free software <a href="https://gitorious.org/memopol2-0">released</a> under the terms of the
-    <a href="http://www.gnu.org/licenses/agpl.html">GNU aGPLV3+</a> - <a href="https://projets.lqdn.fr/projects/mempol">Bug tracking system</a> - <a href="https://projets.lqdn.fr/projects/mempol/issues/new">Report a bug</a>{% endblocktrans %}<br />
+    <a href="http://www.gnu.org/licenses/agpl.html">GNU aGPLV3+</a> — <a href="{{ about_url }}">About</a> — <a href="https://projets.lqdn.fr/projects/mempol">Bug tracking system</a> — <a href="https://projets.lqdn.fr/projects/mempol/issues/new">Report a bug</a>{% endblocktrans %}<br />
     {% trans "Provided by" %} <a href="http://www.laquadrature.net/">La Quadrature du Net</a>
 </div>

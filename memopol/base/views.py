@@ -18,3 +18,8 @@ class HomeView(TemplateView):
         }
 
 home = HomeView.as_view()
+
+
+class AboutView(TemplateView):
+    template_name = "about.html"
+about = AboutView.as_view()

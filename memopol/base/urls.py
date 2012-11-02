@@ -48,6 +48,7 @@ class RobotsTxt(TemplateView):
 
 urlpatterns = patterns('',  # pylint: disable=C0103
     url(r'^$', views.home, name='index'),
+    url(r'^about/$', views.about, name='about'),
     url(r'^api/$', direct_to_template, {'template': 'api.html', 'extra_context': {"root_url": settings.ROOT_URL}}, name='api_doc'),
     url(r'^europe/parliament/', include('memopol.meps.urls', namespace='meps', app_name='meps')),
     url(r'^france/assemblee/', include('memopol.mps.urls', namespace='mps', app_name='mps')),
