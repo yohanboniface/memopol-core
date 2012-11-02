@@ -15,11 +15,8 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
 
-    <title>
-      {% blocktrans %}
-      Political Memory of {{ organization_name }}
-      {% endblocktrans %}
-    </title>
+    {% block head %}{% endblock %}
+    <title>{% block title %}Home{% endblock %} - The Political Memory of {{ organization_name }}</title>
 
     <!-- Included CSS Files (Uncompressed) -->
     <!--
