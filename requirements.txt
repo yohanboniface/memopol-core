@@ -6,7 +6,7 @@ git+http://github.com/matplotlib/matplotlib.git@0fc9830fe946f6221e9ceff2910cd0c2
 hg+https://bitbucket.org/gregmuellegger/django-contact-form-i18n#egg=django-contact-form
 django-flatblocks==0.5
 django-awesome-snippets>=0.2
-whoosh
+hg+https://bitbucket.org/mchaput/whoosh@2.4x
 lxml
 BeautifulSoup
 pyquery
