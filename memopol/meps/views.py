@@ -363,6 +363,6 @@ class RedirectToSearch(RedirectView):
     filter = None
 
     def get_redirect_url(self, **kwargs):
-        search_string = "%s:%s" % (self.filter, kwargs['value'])
+        search_string = "%s:%s is_active:1" % (self.filter, kwargs['value'])
         base_url = reverse("search")
         return "%s?q=%s" % (base_url, search_string)
