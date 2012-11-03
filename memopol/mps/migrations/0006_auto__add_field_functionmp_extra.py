@@ -53,7 +53,7 @@ class Migration(SchemaMigration):
         },
         'mps.functionmp': {
             'Meta': {'object_name': 'FunctionMP'},
-            'extra': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'extra_parliamentary': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'function': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['mps.Function']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'mission': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
