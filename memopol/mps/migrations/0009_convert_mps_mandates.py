@@ -1,39 +1,75 @@
 # encoding: utf-8
 import sys
 from south.v2 import DataMigration
-from django.template.defaultfilters import slugify
 
 class Migration(DataMigration):
 
     def forwards(self, orm):
         "Write your forwards methods here."
 
-        gender_convertion_dict = {
-            u"F": 1,
-            u"M": 2
-        }
-        total = orm["mps.mp"].objects.count()
-        for number, mp in enumerate(orm["mps.mp"].objects.all(), 1):
-            sys.stdout.write("mps %s/%s\r" % (number, total))
+        total = orm["mps.mandate"].objects.count()
+        for number, mandate in enumerate(orm["mps.mandate"].objects.all(), 1):
+            sys.stdout.write("mandates %s/%s\r" % (number, total))
             sys.stdout.flush()
-            orm["mps.MP_FR"].objects.create(
-                full_name=mp.full_name if mp.full_name else mp.first_name + " " + mp.last_name,
-                first_name=mp.first_name,
-                last_name=mp.last_name,
-                gender=gender_convertion_dict.get(mp.gender, 0),
-                birth_date=mp.birth_date,
-                birth_place=mp.birth_place,
-                remote_id=mp.an_id,
-                cv=mp.profession,
-                slug=slugify(mp.full_name if mp.full_name else mp.first_name + " " + mp.last_name),
+            orm["representatives.mandate"].objects.create(
+                name=mandate.type,
+                kind=mandate.type,
+                constituency=mandate.institution,
+                role=mandate.role,
+                begin_date=mandate.begin_term,
+                end_date=mandate.end_term,
+                representative=orm["mps.mp_fr"].objects.get(remote_id=mandate.mp.an_id),
             )
         sys.stdout.write("\n")
+
+        total = orm["mps.functionmp"].objects.count()
+        for number, functionmp in enumerate(orm["mps.functionmp"].objects.all(), 1):
+            sys.stdout.write("functionmp %s/%s\r" % (number, total))
+            sys.stdout.flush()
+            orm["representatives.mandate"].objects.create(
+                name=functionmp.function.title,
+                kind=functionmp.function.type,
+                constituency="France",
+                role=functionmp.role,
+                active=True,
+                representative=orm["mps.mp_fr"].objects.get(remote_id=functionmp.mp.an_id),
+            )
+        sys.stdout.write("\n")
+
+        total = orm["mps.mp"].objects.count()
+        for number, mp in enumerate(orm["mps.mp"].objects.all(), 1):
+            sys.stdout.write("groups %s/%s\r" % (number, total))
+            sys.stdout.flush()
+            orm["representatives.mandate"].objects.create(
+                name=mp.group.name,
+                kind="group",
+                constituency="France",
+                active=True,
+                short_id=mp.group.abbreviation,
+                representative=orm["mps.mp_fr"].objects.get(remote_id=mp.an_id),
+            )
+        sys.stdout.write("\n")
+
+        total = orm["mps.mp"].objects.count()
+        for number, mp in enumerate(orm["mps.mp"].objects.all(), 1):
+            sys.stdout.write("departments %s/%s\r" % (number, total))
+            sys.stdout.flush()
+            orm["representatives.mandate"].objects.create(
+                name=mp.department.name,
+                kind="deputy manadate",
+                constituency=mp.circonscription.number if mp.circonscription else None,
+                active=True,
+                short_id=mp.department.number,
+                representative=orm["mps.mp_fr"].objects.get(remote_id=mp.an_id),
+            )
+        sys.stdout.write("\n")
+
 
 
     def backwards(self, orm):
         "Write your backwards methods here."
 
-        orm["mps.MP_FR"].objects.all().delete()
+        orm["representatives.mandate"].objects.filter(representative__mp_fr__isnull=False).delete()
 
 
     models = {
