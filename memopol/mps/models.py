@@ -5,6 +5,12 @@ from django.core.urlresolvers import reverse
 from memopol.reps.models import Representative
 from memopol.base.utils import reify
 
+from representatives.models import Representative as GenericRepresentative
+
+
+class MP_FR(GenericRepresentative):
+    pass
+
 
 class Function(models.Model):
     type = models.CharField(max_length=255)
