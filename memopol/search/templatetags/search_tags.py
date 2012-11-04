@@ -10,12 +10,15 @@ register = template.Library()
 
 
 @register.simple_tag
-def simple_search_shortcut(search_string):
+def simple_search_shortcut(search_string, sort=None):
     """
     Return a simple search URL from a search string, like "daniel OR country:CZ".
     """
     base_url = reverse("search")
-    return "%s?q=%s" % (base_url, urlencode(search_string))
+    query_string = "q=%s" % urlencode(search_string)
+    if sort:
+        query_string = "%s&sort=%s" % (query_string, sort)
+    return "%s?%s" % (base_url, query_string)
 
 
 @register.inclusion_tag('blocks/search_form.html', takes_context=True)
