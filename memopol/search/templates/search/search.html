@@ -35,7 +35,8 @@
 {% endblock %}
 
 {% block js_onload %}
-    {{ block.super }}
+{{ block.super }}
+<script type="text/javascript">
     $.endlessPaginate({paginateOnScroll: true});
     $(document).on('click', '.list_item_details_switcher', function(e) {
         e.preventDefault();
@@ -58,4 +59,5 @@
     $('select[name=sort]').on('change', function(e) {
          $(this).closest('form').trigger('submit');
     });
+</script>
 {% endblock js_onload %}

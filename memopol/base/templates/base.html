@@ -90,16 +90,21 @@
     <script type="text/javascript" src="{{ STATIC_URL }}dynamiq/js/inlines.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}dynamiq/js/dynamiq.js"></script>
     <script src="{{ STATIC_URL }}foundation/javascripts/app.js"></script>
+    {% block javascript %}
+    {% endblock javascript %}
 {% endcompress %}
+  <script type="text/javascript" src='{{ STATIC_URL }}js/raphael.js'></script>
+  <script type="text/javascript" src='{{ STATIC_URL }}js/kartograph.js'></script>
+  <script type="text/javascript" src='{{ STATIC_URL }}js/chroma.min.js'></script>
     {% block modals %}
       {# Modals must be out ot the main content (required by foundation) #}
       {% include "blocks/modals.html" %}
     {% endblock modals %}
-    <script type="text/javascript">
     {% block js_onload %}
+    <script type="text/javascript">
       $(document).foundationTopBar();
       $(document).foundationTabs();
-    {% endblock js_onload %}
     </script>
+    {% endblock js_onload %}
   </body>
 </html>
