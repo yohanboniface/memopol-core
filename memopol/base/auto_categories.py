@@ -71,7 +71,7 @@ class Base(object):
         entry.save()
 
     def process_entry(self, entry):
-        raise NotImplementedError()
+        self.add_category(entry)
 
     @property
     def category_slug(self):
@@ -93,8 +93,4 @@ class Base(object):
 class WorstScore(Base):
     category_name = 'Worst Score'
     category_description = 'This MEP has one of the 50 worst scores of the Parliament'
-    queryset = MEP.objects.filter(total_score__lt=50)
-
-    def process_entry(self, entry):
-        if entry.total_score < 50:
-            self.add_category(entry)
+    queryset = MEP.objects.order_by("total_score")[:50]
