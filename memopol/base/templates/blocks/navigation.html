@@ -5,6 +5,9 @@
   <li>
     <a href="{% simple_search_shortcut "is_active:1" %}">By names</a>
   </li>
+  <li>
+    <a href="{% simple_search_shortcut 'total_score>0' sort='-total_score' %}">By total score</a>
+  </li>
   {% for menu in menus %}
   <li class="has-flyout">
     <a href="#">{{ menu.name }}</a>
@@ -15,4 +18,7 @@
     </div>
   </li>
   {% endfor %}
+  <li>
+    <a href="{% simple_search_shortcut "is_active:0" %}">Former MEPs</a>
+  </li>
 </ul>
