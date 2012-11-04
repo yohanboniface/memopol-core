@@ -1,7 +1,9 @@
-{% load memopol_tags %}
+{% load memopol_tags cache %}
 <div class="row head">
-  {% include "blocks/brand.html" %}
-  {% build_menu %}
-  {% include "blocks/search_bar.html" %}
+    {% include "blocks/brand.html" %}
+    {% cache 3600 memopol_menu %}
+        {% build_menu %}
+    {% endcache %}
+    {% include "blocks/search_bar.html" %}
 </div>
 
