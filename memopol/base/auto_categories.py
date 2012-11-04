@@ -94,3 +94,9 @@ class WorstScore(Base):
     category_name = 'Worst Score'
     category_description = 'This MEP has one of the 50 worst scores of the Parliament'
     queryset = MEP.objects.order_by("total_score")[:50]
+
+
+class BestScore(Base):
+    category_name = 'Best Score'
+    category_description = 'This MEP has one of the 50 best scores of the Parliament'
+    queryset = MEP.objects.filter(total_score__gt=0).order_by("-total_score")[:50]
