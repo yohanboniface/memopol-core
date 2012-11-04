@@ -55,6 +55,8 @@
 
 <script type="text/javascript" src="{{ STATIC_URL }}js/tinymce/tiny_mce.js"></script>
 
+{% render_comment_list for mep %}
+
 <div class="twelve columns panel">
     <h3>Add a public position</h3>
     <p>{% trans "Help us keep track of the public positions taken by this member of the European Parliament." %}</p>
