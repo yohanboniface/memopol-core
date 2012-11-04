@@ -92,7 +92,7 @@ class Base(object):
 
 class WorstScore(Base):
     category_name = 'Worst Score'
-    category_description = 'FIXME before going live little boy'
+    category_description = 'This MEP has one of the 50 worst scores of the Parliament'
     queryset = MEP.objects.filter(total_score__lt=30)
 
     def process_entry(self, entry):
