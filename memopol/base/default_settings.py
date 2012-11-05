@@ -56,7 +56,12 @@ STATICFILES_FINDERS += (
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
 )
-
+CACHE_MIDDLEWARE_SECONDS = 60 * 60  # one hour
+MIDDLEWARE_CLASSES = (
+    'memopol.base.middlewares.CacheControlHeaders',  # Must be first to be
+                                                     # last while processing
+                                                     # response
+    ) + MIDDLEWARE_CLASSES
 
 #==============================================================================
 # Memopol core default settings

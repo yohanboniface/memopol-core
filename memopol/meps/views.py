@@ -16,6 +16,7 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.db.models import Q
+from django.views.decorators.cache import cache_control
 
 from memopol.base.utils import check_dir, send_file, get_content_cache
 
@@ -88,6 +89,7 @@ def get_filter(request, name):
         return HttpResponse('')
 
 
+@cache_control(max_age=60 * 60 * 24 * 31)  # one month
 def get_mep_picture(request, ep_id):
     filename = join(settings.MEDIA_DIRECTORY, 'img', 'meps', u"%s.jpg" % ep_id)
     cache = get_content_cache(request, filename, 'image/jpeg')
