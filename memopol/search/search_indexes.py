@@ -14,6 +14,10 @@ class MEPIndex(indexes.SearchIndex, indexes.Indexable):
     total_score = indexes.FloatField(model_attr="total_score", default=0)
     is_active = indexes.BooleanField(model_attr="active")
     achievements = indexes.MultiValueField()
+    bxl_building = indexes.CharField(model_attr="bxl_building__pk", null=True)
+    bxl_floor = indexes.CharField(model_attr="bxl_floor", null=True)
+    stg_building = indexes.CharField(model_attr="stg_building__pk", null=True)
+    stg_floor = indexes.CharField(model_attr="stg_floor", null=True)
 
     def get_model(self):
         return MEP

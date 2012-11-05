@@ -11,13 +11,16 @@ from dynamiq.forms.base import SearchOptionsForm, AdvancedFormset
 from dynamiq.fields import StrChoiceField, IntChoiceField
 from dynamiq.utils import model_choice_value
 
-from memopol.meps.models import MEP, Country, Group, Committee, Delegation
+from memopol.meps.models import MEP, Country, Group, Committee, Delegation, Building
 
 
 COUNTRY = Choices(*((c.code.upper(), c.code, c.name) for c in Country.objects.all()))
 GROUP = Choices(*((g.abbreviation.upper(), g.abbreviation, g.name) for g in Group.objects.all()))
 COMMITTEE = Choices(*((c.abbreviation.upper(), c.abbreviation, c.name) for c in Committee.objects.all()))
 DELEGATION = Choices(*(("DELEGATION_%d" % d.pk, d.pk, d.name) for d in Delegation.objects.all()))
+# FIXME: when using django representatives, remove hardcoded postcode (use manager)
+BXL_BUILDING = Choices(*((b.pk.upper(), b.pk, b.name) for b in Building.objects.filter(postcode="1047")))
+STG_BUILDING = Choices(*((b.pk.upper(), b.pk, b.name) for b in Building.objects.exclude(postcode="1047")))
 
 
 FILTER_NAME = Choices(
@@ -29,6 +32,10 @@ FILTER_NAME = Choices(
     ('DELEGATION', 'delegations', u'Delegation'),
     ('TOTAL_SCORE', 'total_score', u'Score'),
     ('ACHIEVEMENT', 'achievements', u'Achievement'),
+    ('BXL_BUILDING', 'bxl_building', u'Brussels building'),
+    ('BXL_FLOOR', 'bxl_floor', u'Brussels floor'),
+    ('STG_BUILDING', 'stg_building', u'Strasbourg building'),
+    ('STG_FLOOR', 'stg_floor', u'Strasbourg floor'),
 )
 
 SORT_CHOICES = Choices(
@@ -89,12 +96,30 @@ class MEPSearchForm(HaystackForm):
             'receptacle': 'autocomplete',
             'autocomplete_lookup': 'mep_achievements',
         },
+        FILTER_NAME.BXL_BUILDING: {
+            'type': 'str',
+            'receptacle': 'bxl_building',
+        },
+        FILTER_NAME.BXL_FLOOR: {
+            'type': 'str',
+            'receptacle': 'str',
+        },
+        FILTER_NAME.STG_BUILDING: {
+            'type': 'str',
+            'receptacle': 'stg_building',
+        },
+        FILTER_NAME.STG_FLOOR: {
+            'type': 'str',
+            'receptacle': 'str',
+        },
     }
 
     filter_value_country = StrChoiceField(COUNTRY)
     filter_value_group = StrChoiceField(GROUP)
     filter_value_committees = StrChoiceField(COMMITTEE)
     filter_value_delegations = IntChoiceField(DELEGATION)
+    filter_value_bxl_building = StrChoiceField(BXL_BUILDING)
+    filter_value_stg_building = StrChoiceField(STG_BUILDING)
 
     JS_FILTERS_BUILDERS = (
         (u'reset', {

@@ -364,7 +364,19 @@ class RedirectToSearch(RedirectView):
     permanent = False
     filter = None
 
+    def build_search_string(self, **kwargs):
+        return "%s:%s is_active:1" % (self.filter, kwargs['value'])
+
     def get_redirect_url(self, **kwargs):
-        search_string = "%s:%s is_active:1" % (self.filter, kwargs['value'])
+        search_string = self.build_search_string(**kwargs)
         base_url = reverse("search")
         return "%s?q=%s" % (base_url, search_string)
+
+
+class RedirectFloorListToSearch(RedirectToSearch):
+    city = None
+
+    def build_search_string(self, **kwargs):
+        building_filter = "%s_building:%s" % (self.city, kwargs['building'])
+        floor_filter = "%s_floor:%s" % (self.city, kwargs['floor'])
+        return "%s %s is_active:1" % (building_filter, floor_filter)

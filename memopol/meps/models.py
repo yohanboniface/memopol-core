@@ -131,6 +131,9 @@ class Building(models.Model):
     street = models.CharField(max_length=255)
     postcode = models.CharField(max_length=255)
 
+    class Meta:
+        ordering = ('postcode', 'pk',)
+
     @reify
     def _town(self):
         return "bxl" if self.postcode == "1047" else "stg"

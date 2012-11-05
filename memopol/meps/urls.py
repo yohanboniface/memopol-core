@@ -6,7 +6,8 @@ from django.core.urlresolvers import reverse
 from memopol.meps.models import LocalParty, Country, Group, Committee, Delegation, Organization, Building, MEP
 from memopol.reps.models import Opinion
 
-from .views import BuildingDetailView, MEPView, MEPsFromView, MEPList, PartyView, RedirectToSearch
+from .views import (MEPView, MEPsFromView, MEPList, PartyView,
+                    RedirectToSearch, RedirectFloorListToSearch)
 
 urlpatterns = patterns('memopol.meps.views',
     # those view are *very* expansive. we cache them in RAM for a week
@@ -32,8 +33,8 @@ urlpatterns = patterns('memopol.meps.views',
     url(r'^party/$', ListView.as_view(queryset=LocalParty.with_meps_count().order_by('country').select_related('country')), name='index_parties'),
     url(r'^party/(?P<pk>[0-9]+)-(?P<slugified_name>[0-9a-z\-]*)/$', PartyView.as_view(),  name='index_by_party'),
     url(r'^floor/$', ListView.as_view(queryset=Building.objects.order_by('postcode')), name='index_floor'),
-    url(r'^floor/brussels/(?P<pk>\w+)/(?P<floor>\w+)/$', BuildingDetailView.as_view(), name='bxl_floor'),
-    url(r'^floor/strasbourg/(?P<pk>\w+)/(?P<floor>\w+)/$', BuildingDetailView.as_view(), name='stg_floor'),
+    url(r'^floor/brussels/(?P<building>\w+)/(?P<floor>\w+)/$', RedirectFloorListToSearch.as_view(city="bxl"), name='bxl_floor'),
+    url(r'^floor/strasbourg/(?P<building>\w+)/(?P<floor>\w+)/$', RedirectFloorListToSearch.as_view(city="stg"), name='stg_floor'),
 
     url(r'^vote/', include('memopol.meps_votes.urls', namespace="votes", app_name="meps_votes")),
 

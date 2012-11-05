@@ -3,10 +3,13 @@
 
 <ul class="nav-bar">
   <li>
-    <a href="{% simple_search_shortcut "is_active:1" %}">By names</a>
+    <a href="{% simple_search_shortcut "is_active:1" %}">By name</a>
   </li>
   <li>
     <a href="{% simple_search_shortcut 'total_score>0' sort='-total_score' %}">By total score</a>
+  </li>
+  <li>
+    <a href="{% url meps:index_floor %}">By floor</a>
   </li>
   {% for menu in menus %}
   <li class="has-flyout">
