@@ -7,24 +7,28 @@
 		<div class="twelve columns">
 
       <dl class="tabs">
-        <dd class="active"><a href="#profile">Profile</a></dd>
-        <dd><a href="#scores">Scores</a></dd>
-        <dd><a href="#memberships">{% trans "Memberships" %}</a></dd>
-        <dd><a href="#cv">{% trans "CV" %}</a></dd>
+        <dd class="active"><a href="#simple1">Profile</a></dd>
+        <dd><a href="#simple2">Scores</a></dd>
+        <dd><a href="#simple3">{% trans "Committees" %}</a></dd>
+        <dd><a href="#simple4">{% trans "CV" %}</a></dd>
+        <dd><a href="#simple5">{% trans "Delegations" %}</a></dd>
       </dl>
 
       <ul class="tabs-content">
-        <li class="active" id="profileTab">
+        <li class="active" id="simple1Tab">
           {% include "meps/mep_detail/main.html" %}
         </li>
-        <li id="scoresTab">
+        <li id="simple2Tab">
           {% include "meps/mep_detail/scores.html" %}
         </li>
-        <li id="membershipsTab">
-          {% include "meps/mep_detail/memberships.html" %}
+        <li id="simple3Tab">
+          {% include "meps/mep_detail/committees.html" %}
         </li>
-        <li id="cvTab">
+        <li id="simple4Tab">
           {% include "meps/mep_detail/cv.html" %}
+        </li>
+        <li id="simple5Tab">
+          {% include "meps/mep_detail/delegations.html" %}
         </li>
       </ul>
 
