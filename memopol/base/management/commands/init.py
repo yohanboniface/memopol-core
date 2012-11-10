@@ -13,5 +13,5 @@ class Command(BaseCommand):
         call_command("migrate", "meps")
         call_command("migrate")
         call_command("rebuild_index", interactive=False)
-        if settings.get("COMPRESS_OFFLINE", False):
+        if hasattr(settings, "COMPRESS_OFFLINE") and settings.COMPRESS_OFFLINE:
             call_command("compress")
