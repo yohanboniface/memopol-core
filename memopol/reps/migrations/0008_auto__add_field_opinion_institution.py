@@ -1,19 +1,21 @@
 # encoding: utf-8
-import datetime
 from south.db import db
 from south.v2 import SchemaMigration
-from django.db import models
 
 class Migration(SchemaMigration):
 
+    depends_on = (
+        ('meps', '0021_load_fixture'),
+    )
+
     def forwards(self, orm):
-        
+
         # Adding field 'Opinion.institution'
         db.add_column('reps_opinion', 'institution', self.gf('django.db.models.fields.CharField')(default='FR', max_length=63), keep_default=False)
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Opinion.institution'
         db.delete_column('reps_opinion', 'institution')
 

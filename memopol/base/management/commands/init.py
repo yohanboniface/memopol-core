@@ -8,9 +8,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         call_command("syncdb", interactive=False)
-        call_command("migrate", "categories")
-        call_command("migrate", "reps", "0007")
-        call_command("migrate", "meps")
         call_command("migrate")
         call_command("rebuild_index", interactive=False)
         if hasattr(settings, "COMPRESS_OFFLINE") and settings.COMPRESS_OFFLINE:
