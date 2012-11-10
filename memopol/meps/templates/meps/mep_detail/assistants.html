@@ -1,0 +1,9 @@
+{% if mep.assistantmep_set.count %}
+<div id="assistants">
+    <ul class="body">
+    {% for assistantmep in mep.assistantmep_set.all %}
+        <li>{{ assistantmep.assistant }}</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}

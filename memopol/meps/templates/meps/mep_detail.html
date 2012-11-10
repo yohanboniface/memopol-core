@@ -12,6 +12,7 @@
         <dd><a href="#committees">{% trans "Committees" %}</a></dd>
         <dd><a href="#cv">{% trans "CV" %}</a></dd>
         <dd><a href="#delegations">{% trans "Delegations" %}</a></dd>
+        <dd><a href="#assistants">{% trans "Assistants" %}</a></dd>
       </dl>
 
       <ul class="tabs-content">
@@ -29,6 +30,9 @@
         </li>
         <li id="delegationsTab">
           {% include "meps/mep_detail/delegations.html" %}
+        </li>
+        <li id="assistantsTab">
+          {% include "meps/mep_detail/assistants.html" %}
         </li>
       </ul>
 
