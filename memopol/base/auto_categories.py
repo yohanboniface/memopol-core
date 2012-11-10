@@ -32,7 +32,7 @@ class Base(object):
             log.debug('Create category %s', self.category_slug)
             self.category = Category()
             self.category.name = self.category_name
-            self.category.desciption = self.category_description
+            self.category.description = self.category_description
             self.category.save()
 
         for ext in ('jpg', 'png'):
