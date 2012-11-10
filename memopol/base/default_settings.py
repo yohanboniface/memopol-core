@@ -7,6 +7,10 @@
 
 from django.conf.global_settings import *   # pylint: disable=W0614,W0401
 
+import os
+MEMOPOL_BASE_PATH = os.path.abspath(os.path.split(__file__)[0])
+MEMOPOL_PATH = os.path.split(MEMOPOL_BASE_PATH)[0]
+
 #==============================================================================
 # Generic Django project settings
 #==============================================================================

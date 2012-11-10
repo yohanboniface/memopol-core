@@ -1,4 +1,5 @@
 # encoding: utf-8
+import os
 import sys
 from re import sub
 from dateutil.parser import parse
@@ -40,7 +41,7 @@ class Migration(DataMigration):
         print "Import opinions:"
         Opinion.objects.all().delete()
         OpinionREP.objects.all().delete()
-        new_opinions = load(open(settings.PROJECT_PATH + "/opinions.json"))
+        new_opinions = load(open(os.path.join(settings.MEMOPOL_BASE_PATH, "opinions.json")))
         size = len(new_opinions)
         a = 1
         for op in new_opinions:
