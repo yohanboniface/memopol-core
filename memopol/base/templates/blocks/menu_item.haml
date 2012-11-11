@@ -1,0 +1,14 @@
+-load search_tags
+
+-spaceless
+  -for item in menu.content
+      %div{class: "{{ menu.flyout_class }} columns dropdown_menu"}
+        %a{href: "{% simple_search_shortcut item.url %}"}
+          -if item.image
+            %img{src: "{{ item.image }}"}
+          -elif item.code
+            %span.label
+            =item.code
+          -elif item.sprite
+            %span{class: "{{ item.sprite }}"}
+          =item.display
