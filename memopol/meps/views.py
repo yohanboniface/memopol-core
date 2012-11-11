@@ -6,7 +6,6 @@ from os.path import join
 from time import time
 import logging
 import datetime
-from json import dumps
 
 from django.conf import settings
 from django.views.generic import DetailView, ListView, RedirectView
@@ -14,79 +13,18 @@ from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
-from django.shortcuts import render
 from django.db.models import Q
 from django.views.decorators.cache import cache_control
 
 from memopol.base.utils import check_dir, send_file, get_content_cache
 
-from .models import LocalParty, Building, MEP, CountryMEP, GroupMEP, Committee, Group, Country, Organization, Delegation
+from .models import LocalParty, Building, MEP, CountryMEP, GroupMEP, Committee
 from memopol.reps.models import Email
 from memopol.votes.models import Score, Vote
 
 UE_IMAGE_URL = u"http://www.europarl.europa.eu/mepphoto/%s.jpg"
 
 logger = logging.getLogger(__name__)
-
-
-generic_operations = {
-    "active": lambda queryset, argument: queryset.filter(active=argument),
-    "country": lambda queryset, argument: queryset.filter(countrymep__country__code=argument.upper()),
-    "group": lambda queryset, argument: queryset.filter(groupmep__group__abbreviation=argument),
-    "committee": lambda queryset, argument: queryset.filter(committeerole__committee__abbreviation=argument.upper()),
-    "delegation": lambda queryset, argument: queryset.filter(delegationrole__delegation__id=argument),
-    "score_min": lambda queryset, argument: queryset.filter(total_score__gt=argument),
-    "score_max": lambda queryset, argument: queryset.filter(total_score__lt=argument),
-    "last_name": lambda queryset, argument: queryset.filter(last_name=argument.upper()),
-    "bxl_floor": lambda queryset, argument: queryset.filter(bxl_floor=argument.upper()),
-    "bxl_building": lambda queryset, argument: queryset.filter(bxl_building=argument.upper()),
-    "stg_floor": lambda queryset, argument: queryset.filter(stg_floor=argument.upper()),
-    "stg_building": lambda queryset, argument: queryset.filter(stg_building=argument.upper()),
-    "organization": lambda queryset, argument: queryset.filter(organizationmep__organization__id=argument),
-}
-
-convert_arguments_table = {
-    "true": True,
-    "false": False,
-}
-
-
-
-def convert_argument(argument):
-    return convert_arguments_table.get(argument, argument)
-
-
-def generic(request):
-    GET_arguments_in_generic_operations = filter(lambda x: x in generic_operations.keys(), request.GET)
-
-    queryset = MEP.objects.all()
-    for i in GET_arguments_in_generic_operations:
-        queryset = generic_operations[i](queryset, convert_argument(request.GET[i]))
-
-    queryset = optimise_mep_query(queryset.distinct())
-
-    return render(request, "meps/generic.html", {"meps": queryset, "fields": generic_operations.keys()})
-
-
-filters = {
-    "active": lambda: [["true", "true"], ["false", "false"]],
-    "country": lambda: [[x.code, x.name] for x in Country.objects.all()],
-    "group": lambda: [[x.abbreviation, "(%s) " % x.abbreviation + x.name] for x in Group.objects.all()],
-    "committee": lambda: [[x.abbreviation, "(%s) " % x.abbreviation + x.name] for x in Committee.objects.all()],
-    "delegation": lambda: [[x.id, x.name[:85] + ("..." if len(x.name) > 84 else "")] for x in Delegation.objects.all()],
-    "bxl_floor": lambda: [[x, x] for x in sorted(filter(None, set(map(lambda x: x.bxl_floor, MEP.objects.all()))))],
-    "bxl_building": lambda: [[x.id, "(%s) %s" % (x.id, x.name)] for x in filter(lambda x: x._town == "bxl", Building.objects.all())],
-    "stg_floor": lambda: [[x, x] for x in sorted(filter(None, set(map(lambda x: x.stg_floor, MEP.objects.all()))))],
-    "stg_building": lambda: [[x.id, "(%s) %s" % (x.id, x.name)] for x in filter(lambda x: x._town == "stg", Building.objects.all())],
-    "organization": lambda: [[x.id, x.name] for x in Organization.objects.all()],
-}
-
-
-def get_filter(request, name):
-    if filters.get(name):
-        return HttpResponse(dumps(filters[name]()))
-    else:
-        return HttpResponse('')
 
 
 @cache_control(max_age=60 * 60 * 24 * 31)  # one month
