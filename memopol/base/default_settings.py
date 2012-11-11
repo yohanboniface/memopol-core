@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'memopol.trophies',
     'memopol.campaign',
     'memopol.parltrack',
+    'memopol.nosdeputes',
     'memopol.search',
     'gunicorn',
     'memopol.positions',

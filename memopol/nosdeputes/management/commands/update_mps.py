@@ -1,23 +1,39 @@
 # -*- coding:Utf-8 -*-
+import re
 import os
 import sys
 import time
-import re
+import unidecode
 from json import load
 from urllib2 import urlopen, HTTPError
 from dateutil.parser import parse
 from django.db import transaction
+from django.core.management.base import BaseCommand
 
 from memopol.base.utils import get_or_create
 
 from memopol.reps.models import Email, WebSite
-from memopol.mps.models import MP, Department, Circonscription, Group, Function, FunctionMP
+from memopol.mps.models import MP, Department, Circonscription, Group, Function, FunctionMP, Mandate
 
-if not os.path.exists("dumps"):
-    os.mkdir("dumps")
+
+class Command(BaseCommand):
+    help = 'Update french members of the parliament'
+
+    def handle(self, *args, **options):
+        if not os.path.exists("dumps"):
+            os.mkdir("dumps")
+
+        old_mps = load(read_or_dl("http://2007-2012.nosdeputes.fr/deputes/json", "all_mps", "old_dumps"))
+        mps = load(read_or_dl("http://www.nosdeputes.fr/deputes/json", "all_mps", "dumps"))
+
+        with transaction.commit_on_success():
+            update_mps(old_mps, "old_dumps")
+            update_mps(mps, "dumps")
 
 
 def read_or_dl(url, name, prefix):
+    return urlopen(url)
+
     if not os.path.exists(prefix):
         os.makedirs(prefix)
     if not os.path.exists("%s/%s" % (prefix, name)):
@@ -249,11 +265,3 @@ def update_mps(mps, prefix):
         get_new_websites(mp, _mp)
         get_department_and_circo(mp, _mp)
         _mp.save()
-
-if __name__ == "__main__":
-    old_mps = load(read_or_dl("http://2007-2012.nosdeputes.fr/deputes/json", "all_mps", "old_dumps"))
-    mps = load(read_or_dl("http://www.nosdeputes.fr/deputes/json", "all_mps", "dumps"))
-
-    with transaction.commit_on_success():
-        update_mps(old_mps, "old_dumps")
-        update_mps(mps, "dumps")
