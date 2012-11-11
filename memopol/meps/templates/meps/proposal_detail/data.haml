@@ -1,0 +1,23 @@
+.map.map-eu{style: "height: 520px; width: 680px;"}
+  %img{src: '{% url trends:recommendation_countries_map vote.id "png" %}', alt: "europe map score repartition"}
+
+%p{style: "text-align: center;"}
+  %i
+    %a{href: "{% url trends:documentation %}#countries_map"}
+      -trans "Trends explanation"
+
+%h2.collapsible.collapsed
+  Score repartition
+
+%center.body
+  %img{src: "{% url trends:group_proposal_score_stacked vote.id %}"}
+  %p{style: "text-align: center;"}
+    %i
+      %a{href: "{% url trends:documentation %}#groups"}
+        -trans "Trends explanation"
+
+  %img{src: "{% url trends:group_proposal_score_heatmap vote.id %}"}
+  %p{style: "text-align: center;"}
+    %i
+      %a{href: "{% url trends:documentation %}#heatmap"}
+        -trans "Trends explanation"
