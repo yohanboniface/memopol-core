@@ -1,0 +1,7 @@
+-load memopol_tags cache
+
+.row.head
+    -include "blocks/brand.html"
+    -cache 3600 memopol_menu
+        -build_menu
+    -include "blocks/search_bar.html"
