@@ -1,0 +1,17 @@
+-extends "base.html"
+
+-block title
+  -blocktrans with group.name as group_name
+    Members of the European Parliament from {{ groupe_name }}
+
+-block content
+  -if meps
+    %h1
+      %img.grouplogo{src: "{{ STATIC_URL }}img/groups/eu/{{ group.code|cut:"/" }}.png"}
+        {% trans "Members of the European Parliament" %}{% trans " from " %}  {{ group.name }}
+
+    %table.mep-list.tablesorter
+      -include "meps/meps_table_thead.html"
+      %tbody
+        -for mep in meps
+          -include "meps/meps_table_tr.html"
