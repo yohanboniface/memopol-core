@@ -104,7 +104,7 @@ def handle_function(i, _mp, extra):
         tipe = "bureau"
     elif function["organisme"].encode("Utf-8").startswith("Comité") or function["organisme"].encode("Utf-8").startswith("Comuté"):
         tipe = u"comité"
-    elif function["organisme"].startswith("Commission") or function["organisme"].startswith("Commision"):
+    elif function["organisme"].startswith("Commission") or function["organisme"].startswith("Commision") or function["organisme"].startswith("Ccommission"):
         tipe = "commission"
     elif function["organisme"].encode("Utf-8").startswith("Délégation"):
         tipe = "déléguation"
