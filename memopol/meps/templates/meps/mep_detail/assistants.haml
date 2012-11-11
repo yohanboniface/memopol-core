@@ -1,0 +1,12 @@
+-load assistants
+
+-if mep.assistantmep_set.count
+  #assistants
+    %ul.body
+      -for assistantmep in mep.assistantmep_set.all
+        %li
+          =assistantmep.assistant
+          -meps_the_assistant_is_also_working_for assistantmep.assistant mep as other_meps
+          -if other_meps
+            (also working for:
+            {% for other_mep in other_meps %}<a href="{{ other_mep.get_absolute_url }}">{{ other_mep }}</a>{% endfor %})
