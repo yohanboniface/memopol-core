@@ -1,0 +1,18 @@
+%dl.tabs
+  %dd.active
+    %a{href: "#europe_map"}
+      Geographical Map
+  %dd
+    %a{href: "#committees"}
+      List of committees
+  %dd
+    %a{href: "#parliament"}
+      Parliament hemicycle
+
+%ul.tabs-content
+    %li#europe_mapTab.active
+        -include "map-eu.html"
+    %li#committeesTab
+        -include "committees-eu.html"
+    %li#parliamentTab
+        -include "hemicycle-eu.html"
