@@ -1,0 +1,11 @@
+.twelve.columns.panel
+  %h3
+    Public positions
+  -for comment in comment_list
+    %div
+      =comment.comment|safe
+    %div
+      %em
+        (See the <a href="{{ comment.user_url }}">source</a>).
+    -if not forloop.last
+      %hr
