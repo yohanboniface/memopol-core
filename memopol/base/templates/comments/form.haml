@@ -7,20 +7,18 @@
       %input{type: "hidden", name: "next", value: "{{ next }}"}
   -for field in form
     -if field.is_hidden
-      <div>{{ field }}</div>
+      %div
+        =field
     -else
       -if field.errors
         =field.errors
-      %p
-        -if field.errors
-          class="error"{% endif %}
-        -ifequal field.name "honeypot"
-          style="display:none;"
-        -ifequal field.name "email"
-          style="display:none;"
-        -ifequal field.name "name"
-          style="display:none;"
+      <p
+        {% if field.errors %} class="error"{% endif %}
+        {% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}
+        {% ifequal field.name "email" %} style="display:none;"{% endifequal %}
+        {% ifequal field.name "name" %} style="display:none;"{% endifequal %}>
         {{ field.label_tag }} {{ field }}
+      </p>
   %p.submit
     %input.submit-post{type: "submit", name: "post", value: '{% trans "Post" %}'}
     %input.submit-preview{type: "submit", name: "preview", value: '{% trans "Preview" %}'}
