@@ -298,8 +298,8 @@ class MEP(Representative):
     @reify
     def important_posts(self):
         all_roles = list(OrganizationMEP.objects.filter(mep=self).select_related('organization'))
-        for i in (GroupMEP.objects.select_related('group'), CommitteeRole.objects.select_related('committee')):
-            roles = i.filter(mep=self).exclude(role="Member").exclude(role="Substitute")
+        for i in (GroupMEP.objects.select_related('group').exclude(role="Member").exclude(role="Substitute"), CommitteeRole.objects.select_related('committee')):
+            roles = i.filter(mep=self)
             if roles:
                 all_roles += list(roles)
         return all_roles
