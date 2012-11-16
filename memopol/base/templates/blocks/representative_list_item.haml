@@ -27,7 +27,9 @@
         %ul
           -for post in mep.important_posts
             %li
-              {{ post.role }} of <a href="{{ post.instance.get_absolute_url }}">{{ post.instance.name }}</a>
+              <a href="{{ post.instance.get_absolute_url }}">{{ post.instance.name }}</a>
+              -if not post.role|lower == "member"
+                ({{ post.role|lower }})
 
     .two.columns.mobile-four
       -if mep.active and mep.bxl_phone1
