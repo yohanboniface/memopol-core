@@ -3,7 +3,7 @@
 -if querystring
   .endless_container.row.floor
     .one.columns.centered
-      %a.endless_more{button href: "{{ path }}{{ querystring }}", rel: "{{ querystring_key }}"}
+      %a.endless_more.button{href: "{{ path }}{{ querystring }}", rel: "{{ querystring_key }}"}
         -if label
           =label
         -else
