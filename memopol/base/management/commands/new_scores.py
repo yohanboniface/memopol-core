@@ -46,3 +46,9 @@ class Command(BaseCommand):
                     mep.max_score_could_have = 10 * mep_proposals_ponderation
                 mep.save()
             sys.stdout.write("\n")
+
+            vote_count = Vote.objects.count()
+            for number, vote in enumerate(Vote.objects.filter(representative__mep__isnull=False), 1):
+                sys.stdout.write("%s/%s\r" % (number, vote_count))
+                vote.score # dirty hack because this is a lazy property, I'm too lazy to write the actual code
+            sys.stdout.write("\n")
