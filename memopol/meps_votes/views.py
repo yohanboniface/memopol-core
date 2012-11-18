@@ -29,8 +29,8 @@ class ProposalView(DetailView):
                 subvotes[subvote.subject] = []
             subvotes[subvote.subject].append(subvote)
             # Retrieve all recommendation choices
-            positions = Vote.objects.filter(recommendation=subvote).select_related("representative").values('representative_id', 'choice')
-            subvotes_per_mep[subvote.pk] = dict((p["representative_id"], p['choice']) for p in positions)
+            positions = Vote.objects.filter(recommendation=subvote).select_related("representative", "recommendation")
+            subvotes_per_mep[subvote.pk] = dict((p.representative_id, {"choice": p.choice, "score": p.score}) for p in positions)
 
         # Link positions to representatives
         representatives_data = {}
