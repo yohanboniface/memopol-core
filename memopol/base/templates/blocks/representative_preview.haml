@@ -9,8 +9,15 @@
         %img{src: "{% url meps:mep-picture mep.ep_id %}", width: "100px", height: "150px"}
 
     .six.columns
-      .panel.radius{class: "{{ mep.total_score|scolorize }}"}
-        =mep.total_score|floatformat:1
+      -if mep.total_score != None
+        %span.has-tip.tip-top{title: "can go from {{ mep.max_score_could_have|floatformat:0 }} to -{{ mep.max_score_could_have|floatformat:0 }}"}
+          .panel.radius{class: "{{ mep|mep_score_scolorize }}"}
+            =mep.total_score|floatformat:0
+            \/
+            =mep.max_score_could_have|floatformat:0
+      -else
+          .panel.radius{class: "{{ mep|mep_score_scolorize }}"}
+
       =mep.country_tag|safe
 
   %h4

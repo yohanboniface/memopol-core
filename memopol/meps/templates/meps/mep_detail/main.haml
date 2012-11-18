@@ -6,8 +6,15 @@
       %img{width: "100px", src: "{% url meps:mep-picture mep.ep_id %}"}
 
     .two.columns
-      %div{class: "panel radius {{ mep.total_score|scolorize }}"}
-        =mep.total_score|floatformat:1
+      -if mep.total_score != None
+        %span.has-tip.tip-top{title: "can go from {{ mep.max_score_could_have|floatformat:0 }} to -{{ mep.max_score_could_have|floatformat:0 }}"}
+          .panel.radius{class: "{{ mep|mep_score_scolorize }}"}
+            =mep.total_score|floatformat:0
+            \/
+            =mep.max_score_could_have|floatformat:0
+      -else
+          .panel.radius{class: "{{ mep|mep_score_scolorize }}"}
+
 
     .six.columns
       %h4

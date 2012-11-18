@@ -61,6 +61,21 @@ def scolorize(score, max_score=100):
 
 
 @register.filter
+def mep_score_scolorize(mep):
+    """
+    Output classnames to colorize a score in the frontend.
+    If `max_score` is not given, we assum that `score` is a percentage.
+    """
+    classnames = "scolorized"  # A generic class, for factorizing CSS
+                               # and help retrieving all the scores in js
+    if mep.total_score is not None:
+        idx = ((mep.total_score + mep.max_score_could_have) / (mep.max_score_could_have*2)) * 10
+        classnames += " scolorized%s" % int(idx)  # will output scolorized1
+                                                  # or scolorized-1 if negative
+    return classnames
+
+
+@register.filter
 def scolorize_position(position, recommandation="for"):
     """
     Colorize a position on a vote according to a recommandation.
