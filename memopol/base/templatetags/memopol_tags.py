@@ -83,7 +83,7 @@ def proposal_score_scolorize(score):
     """
     classnames = "scolorized"  # A generic class, for factorizing CSS
                                # and help retrieving all the scores in js
-    idx = ((score.value + score.proposal.total_score) / (score.proposal.total_score*2)) * 10
+    idx = (float(score.value + score.proposal.total_score) / (score.proposal.total_score*2)) * 10
     classnames += " scolorized%s" % int(idx)  # will output scolorized1
                                               # or scolorized-1 if negative
     return classnames
