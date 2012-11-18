@@ -126,7 +126,10 @@ class Recommendation(models.Model):
 
     @reify
     def max_score(self):
-        return float(self.weight) * self.proposal.total_score / Recommendation.objects.filter(proposal=self.proposal).aggregate(Sum('weight'))['weight__sum']
+        if self.weight:
+            return float(self.weight) * self.proposal.total_score / Recommendation.objects.filter(proposal=self.proposal).aggregate(Sum('weight'))['weight__sum']
+        else:
+            return None
 
     def __unicode__(self):
         return self.subject
@@ -139,6 +142,7 @@ class Vote(models.Model):
     name = models.CharField(max_length=127)
     recommendation = models.ForeignKey(Recommendation)
     representative = models.ForeignKey(Representative, null=True)
+    _score = models.CharField(max_length=10, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         # if I'm modifyed and not created
@@ -151,16 +155,27 @@ class Vote(models.Model):
 
     @property
     def score(self):
+        if not self._score is None:
+            return self._score
+
+        if self.recommendation.max_score is None:
+            self._score = ""
+            self.save()
+            return self._score
+
         if self.choice in ('for', 'against'):
             if self.recommendation.recommendation == self.choice:
-                return "+%s" % floatformat(self.recommendation.max_score)
+                self._score = "+%s" % floatformat(self.recommendation.max_score)
             elif self.recommendation.recommendation != self.choice:
-                return "-%s" % floatformat(self.recommendation.max_score)
+                self._score = "-%s" % floatformat(self.recommendation.max_score)
         else:  # absent, abstention
             if self.recommendation.recommendation == "against":
-                return "+%s" % (floatformat(self.recommendation.max_score / 2))
+                self._score = "+%s" % (floatformat(self.recommendation.max_score / 2))
             else:
-                return "-%s" % (floatformat(self.recommendation.max_score / 2))
+                self._score =  "-%s" % (floatformat(self.recommendation.max_score / 2))
+
+        self.save()
+        return self._score
 
     def __unicode__(self):
         return '%s (%s)' % (self.name, self.choice)
