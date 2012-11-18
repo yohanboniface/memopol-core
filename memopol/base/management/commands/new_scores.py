@@ -38,8 +38,9 @@ class Command(BaseCommand):
                 score.save()
             sys.stdout.write("\n")
 
+            mep_count = MEP.objects.count()
             for number, mep in enumerate(MEP.objects.all(), 1):
-                sys.stdout.write("%s/%s\r" % (number, MEP.objects.count()))
+                sys.stdout.write("%s/%s\r" % (number, mep_count))
                 mep.total_score = Score.objects.filter(representative__mep=mep).aggregate(Sum('value'))['value__sum']
                 mep_proposals_ponderation = Proposal.objects.filter(score__representative=mep).aggregate(Sum('ponderation'))['ponderation__sum']
                 if mep_proposals_ponderation is not None:
