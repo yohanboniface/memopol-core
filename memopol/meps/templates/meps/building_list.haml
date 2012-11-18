@@ -6,7 +6,8 @@
   -trans "Members of the European Parliament by floor"
 
 -block content
-  <h3>{% trans "Members of the European Parliament by floor" %}</h3>
+  %h3
+    -trans "Members of the European Parliament by floor"
   -flatblock "by_floor.info"
   -regroup object_list by postcode as towns
   -for town in towns
