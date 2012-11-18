@@ -10,20 +10,21 @@
     -trans "Members of the European Parliament by floor"
   -flatblock "by_floor.info"
   -regroup object_list by postcode as towns
+
   -for town in towns
-  .six.columns
-    %h4
-      -if town.grouper == "1047"
-        -trans "Brussels"
-      -else
-        -trans "Strasbourg"
-    %ul
-      -for building in town.list
-        -if building.meps.count
-          %li
-            =building.name
-          %ul
-            -for floor in building.floors
-              %li
-                %a{href: "{% if town.grouper == \"1047\" %}{% url meps:bxl_floor building.id floor %}{% else %}{% url meps:stg_floor building.id floor %}{% endif %}"}
-                  {{ floor|floors_suffix }} {% trans "floor" %}
+    .six.columns
+      %h4
+        -if town.grouper == '1047'
+          -trans "Brussels"
+        -else
+          -trans "Strasbourg"
+      %ul
+        -for building in town.list
+          -if building.meps.count
+            %li
+              =building.name
+            %ul
+              -for floor in building.floors
+                %li
+                  %a{href: "{% if town.grouper == \"1047\" %}{% url meps:bxl_floor building.id floor %}{% else %}{% url meps:stg_floor building.id floor %}{% endif %}"}
+                    {{ floor|floors_suffix }} {% trans "floor" %}
