@@ -37,27 +37,27 @@
       %a.button.secondary.list_item_details_switcher{href: "{{ mep.get_absolute_url }}"}
         Details
 
-.row.panel.list_item_details.off
-  .twelve.columns
-    %ul.rep_details
-      -if mep.bxl_phone1
-        %li
-          %strong
-            -trans "Brussels"
-          {% trans "Tel." %}: <a href="callto://{{ mep.bxl_phone1|phone }}">{{ mep.bxl_phone1 }}</a>&nbsp;—&nbsp;<a href="callto://{{ mep.bxl_phone2|phone }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
+  .row.panel.list_item_details.off
+    .twelve.columns
+      %ul.rep_details
+        -if mep.bxl_phone1
+          %li
+            %strong
+              -trans "Brussels"
+            {% trans "Tel." %}: <a href="callto://{{ mep.bxl_phone1|phone }}">{{ mep.bxl_phone1 }}</a>&nbsp;—&nbsp;<a href="callto://{{ mep.bxl_phone2|phone }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
 
-      -if mep.stg_phone1
-        %li
-          %strong
-            -trans "Strasbourg"
-        {% trans "Tel." %}: <a href="callto://{{ mep.stg_phone1|cut:" " }}">{{ mep.stg_phone1 }}</a>&nbsp;—&nbsp;<a href="callto://{{ mep.stg_phone2|cut:" " }}">{{ mep.stg_phone2 }}</a>&nbsp;<br/>
+        -if mep.stg_phone1
+          %li
+            %strong
+              -trans "Strasbourg"
+          {% trans "Tel." %}: <a href="callto://{{ mep.stg_phone1|cut:" " }}">{{ mep.stg_phone1 }}</a>&nbsp;—&nbsp;<a href="callto://{{ mep.stg_phone2|cut:" " }}">{{ mep.stg_phone2 }}</a>&nbsp;<br/>
 
-      -if mep.emails
-        %li
-          %strong
-            {% trans "E-mail" %}:
-          -for email in mep.emails
-            %a{href: "mailto:{{ email }}"}
-              =email
-            -if not forloop.last
-              —
+        -if mep.emails
+          %li
+            %strong
+              {% trans "E-mail" %}:
+            -for email in mep.emails
+              %a{href: "mailto:{{ email }}"}
+                =email
+              -if not forloop.last
+                —
