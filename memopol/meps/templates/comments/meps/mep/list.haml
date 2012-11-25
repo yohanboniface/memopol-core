@@ -1,6 +1,6 @@
 .twelve.columns.panel
   %h3
-    Public positions
+    -trans "Public positions"
   %hr
   -if comment_list
     -for comment in comment_list
@@ -12,7 +12,8 @@
       -if not forloop.last
         %hr
   -else
-    %p
-      We don't have any public positions taken by this representative on our subjects.
-    %p
-      You can help use collecting them by using the form bellow.
+    -blocktrans
+      %p
+        We don't have any public positions taken by this representative on our subjects.
+      %p
+        You can help use collecting them by using the form bellow.
