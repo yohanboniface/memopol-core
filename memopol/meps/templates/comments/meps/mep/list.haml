@@ -1,11 +1,18 @@
 .twelve.columns.panel
   %h3
     Public positions
-  -for comment in comment_list
-    %div
-      =comment.comment|safe
-    %div
-      %em
-        (See the <a href="{{ comment.user_url }}">source</a>).
-    -if not forloop.last
-      %hr
+  %hr
+  -if comment_list
+    -for comment in comment_list
+      %div
+        =comment.comment|safe
+      %div
+        %em
+          (See the <a href="{{ comment.user_url }}">source</a>).
+      -if not forloop.last
+        %hr
+  -else
+    %p
+      We don't have any public positions taken by this representative on our subjects.
+    %p
+      You can help use collecting them by using the form bellow.
