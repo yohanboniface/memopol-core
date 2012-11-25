@@ -380,10 +380,11 @@ class MepModerator(CommentModerator):
     moderate_after = 0
     def moderate(self, comment, content_object, request):
         return True
+
+
 moderator.register(MEP, MepModerator)
 
 
-    
 class Assistant(models.Model):
     full_name = models.CharField(max_length=255)
 

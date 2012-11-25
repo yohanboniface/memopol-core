@@ -119,3 +119,5 @@ TEMPLATE_LOADERS = (
     'hamlpy.template.loaders.HamlPyFilesystemLoader',
     'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
 ) + TEMPLATE_LOADERS
+
+COMMENTS_APP = 'memopol.positions'
