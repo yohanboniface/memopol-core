@@ -241,7 +241,7 @@ def add_groups(mep, groups):
                                 #end=_parse_date(group["end"]))
 
 def add_assistants(mep, assistants):
-    print "Assistants for " + mep.full_name
+    print "Assistants for " + mep.full_name.encode("Utf-8")
     for assist_type in assistants:
         print "TYPE : " + assist_type
         type_name = assist_type
