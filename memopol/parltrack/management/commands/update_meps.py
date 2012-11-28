@@ -243,10 +243,10 @@ def add_groups(mep, groups):
 def add_assistants(mep, assistants):
     print "Assistants for " + mep.full_name.encode("Utf-8")
     for assist_type in assistants:
-        print "TYPE : " + assist_type
+        print "TYPE : " + assist_type.encode("Utf-8")
         type_name = assist_type
         for assistant in assistants[type_name]:
-            print assistant
+            print assistant.encode("Utf-8")
             assistant = get_or_create(Assistant, full_name=assistant)
             get_or_create(AssistantMEP, mep=mep, assistant=assistant, type=type_name)
 
