@@ -54,7 +54,7 @@ class MEPSearchOptionsForm(SearchOptionsForm):
 
     SORT = SORT_CHOICES
     SORT_INITIAL = SORT.LAST_NAME
-    LIMIT_INITIAL = 15
+    LIMIT_INITIAL = 30
 
 
 class MEPSearchForm(HaystackForm):
