@@ -20,7 +20,7 @@ werkzeug
 pytidylib
 django-tastypie
 pyyaml
-git+https://github.com/yohanboniface/django-haystack.git@memopol
+git+https://github.com/yohanboniface/django-haystack.git@memopol2.4
 git+git://github.com/liberation/django-ajax-selects.git
 git+git://github.com/liberation/django-extended-choices.git
 git+git://github.com/liberation/django-dynamiq-search-form.git
