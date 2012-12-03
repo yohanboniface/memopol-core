@@ -8,6 +8,8 @@ from haystack.query import SearchQuerySet, EmptySearchQuerySet
 
 from dynamiq.utils import get_advanced_search_formset_class, FormsetQBuilder, ParsedStringQBuilder
 
+from memopol.meps.views import render_to_csv
+
 from .forms import MEPSearchForm, MEPSearchAdvancedFormset, MEPSimpleSearchForm
 from .shortcuts import TopRated, WorstRated
 
@@ -29,19 +31,21 @@ class SearchView(TemplateView):
         else:
             return [self.template_name]
 
-    def get_context_data(self, **kwargs):
+    def get(self, request, *args, **kwargs):
         query = None
         sort = MEPSearchAdvancedFormset.options_form_class.SORT_INITIAL
         limit = MEPSearchAdvancedFormset.options_form_class.LIMIT_INITIAL
+        format = MEPSearchAdvancedFormset.options_form_class.FORMAT_INITIAL
         label = ""
 
         formset_class = get_advanced_search_formset_class(self.request.user, MEPSearchAdvancedFormset, MEPSearchForm)
         form = MEPSimpleSearchForm(self.request.GET or None)
-        if form.is_valid():
-            F = ParsedStringQBuilder(form.cleaned_data['q'], MEPSearchForm)
-            query, label = F()
-            limit = form.cleaned_data.get("limit") or limit
-            sort = form.cleaned_data.get("sort") or sort
+        # if form.is_valid():
+        #     F = ParsedStringQBuilder(form.cleaned_data['q'], MEPSearchForm)
+        #     query, label = F()
+        #     limit = form.cleaned_data.get("limit") or limit
+        #     sort = form.cleaned_data.get("sort") or sort
+        #     format = form.cleaned_data.get("format") or format
 
         def generate_form_args_part(query_part, form_number, filter_type):
             parts = query_part.split(' ')
@@ -92,6 +96,7 @@ class SearchView(TemplateView):
             form_args.update({
                 "limit": get_args.get('limit', 15),
                 "sort": get_args.get('sort', "last_name"),
+                "format": get_args.get('format', format),
                 "search_mode": "advanced",
             })
             query_string = u"&".join("%s=%s" % (k, v) for k, v in form_args.iteritems())
@@ -105,6 +110,7 @@ class SearchView(TemplateView):
             query, label = F()
             sort = formset.options_form.cleaned_data.get("sort", sort)
             limit = formset.options_form.cleaned_data.get("limit", limit)
+            format = formset.options_form.cleaned_data.get("format")
 
         if query:
             results = SearchQuerySet().filter(query)
@@ -112,7 +118,7 @@ class SearchView(TemplateView):
                 results = results.order_by(sort)
         else:
             results = EmptySearchQuerySet()
-        return {
+        context = {
             "dynamiq": {
                 "results": results,
                 "label": label,
@@ -126,6 +132,11 @@ class SearchView(TemplateView):
             "list_template_name": self.list_template_name,
             "per_page": limit
         }
+        if format == MEPSearchAdvancedFormset.options_form_class.FORMAT.CSV:
+            objects = [r.object for r in results]
+            return render_to_csv(objects)
+        else:
+            return self.render_to_response(context)
 
 
 class XhrSearchView(SearchView):

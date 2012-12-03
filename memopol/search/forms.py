@@ -8,7 +8,7 @@ from extended_choices import Choices
 from dynamiq.forms.haystack import HaystackForm
 from dynamiq.forms.constants import YES_NO
 from dynamiq.forms.base import SearchOptionsForm, AdvancedFormset
-from dynamiq.fields import StrChoiceField, IntChoiceField
+from dynamiq.fields import StrChoiceField, IntChoiceField, DynamiqChoiceField
 from dynamiq.utils import model_choice_value
 
 from memopol.meps.models import MEP, Country, Group, Committee, Delegation, Building
@@ -50,11 +50,26 @@ MODEL_CHOICES = Choices(
 )
 
 
+FORMAT_CHOICES = Choices(
+    ('HTML', 'html', 'HTML'),
+    ('CSV', 'csv', 'CSV'),
+)
+
+
 class MEPSearchOptionsForm(SearchOptionsForm):
 
     SORT = SORT_CHOICES
     SORT_INITIAL = SORT.LAST_NAME
-    LIMIT_INITIAL = 15
+    LIMIT_INITIAL = 30
+    FORMAT_INITIAL = FORMAT_CHOICES.HTML
+    FORMAT = FORMAT_CHOICES
+
+    format = DynamiqChoiceField(
+               choices=FORMAT_CHOICES,
+               required=False,
+               label=_("Output format"),
+               css_class="format"
+           )
 
 
 class MEPSearchForm(HaystackForm):

@@ -38,11 +38,9 @@ def get_mep_picture(request, ep_id):
     return send_file(request, filename, content_type='image/jpeg')
 
 
-def render_to_csv(view, context, **response_kwargs):
-    params = view.request.GET
+def render_to_csv(meps, filename="meps"):
     response = HttpResponse(mimetype='text/csv')
-    name = view.request.path.strip('/').replace('/', '_')
-    response['Content-Disposition'] = 'attachment; filename=%s.csv' % name
+    response['Content-Disposition'] = 'attachment; filename=%s.csv' % filename
 
     header = [
             'name',
@@ -71,23 +69,6 @@ def render_to_csv(view, context, **response_kwargs):
 
     header += committees
 
-    meps = []
-
-    max_score = int(params.get('max_score', 100))
-    min_score = int(params.get('min_score', -100))
-
-    if 'object' in context:
-        obj = context['object']
-        meps = getattr(obj, 'meps', [])
-
-    if hasattr(meps, 'query'):
-        # got a queryset
-        meps = meps.select_related().distinct()
-        if 'group' in params:
-            meps = meps.filter(groups__abbreviation=params['group'])
-        if 'country' in params:
-            meps = meps.filter(countries__name=params['country'])
-
     writer = csv.writer(response, delimiter=';',
                                   quotechar='"',
                                   doublequote=True)
@@ -95,26 +76,13 @@ def render_to_csv(view, context, **response_kwargs):
 
     for mep in meps:
 
-        # re-filter in case of non queryset objects
-        if 'group' in params and \
-            mep.group.abbreviation != params['group']:
-            continue
-        if 'country' in params and \
-            params['country'] not in (mep.country.name,
-                                      mep.country.code):
-            continue
-        if mep.total_score and\
-               (mep.total_score < min_score or \
-               mep.total_score > max_score):
-            continue
-
         row = [
             unicode(mep),
             mep.gender,
             int(mep.total_score) if mep.total_score else '',
             u' - '.join(mep.emails),
             mep.country.name,
-            mep.group.abbreviation,
+            mep.group.abbreviation if mep.group else '',
             mep.bxl_building.id if mep.bxl_building else '',
             mep.bxl_building.name if mep.bxl_building else '',
             mep.bxl_floor,
