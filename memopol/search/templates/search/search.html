@@ -62,5 +62,10 @@
     $('select[name=sort]').on('change', function(e) {
          $(this).closest('form').trigger('submit');
     });
+    $(document).ready(function() {
+      $(".js-advanced_search").click(function() {
+        $("#advanced_search_modal").reveal();
+      });
+    });
 </script>
 {% endblock js_onload %}
