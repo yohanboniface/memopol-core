@@ -7,16 +7,16 @@ from extended_choices import Choices
 
 from dynamiq.forms.haystack import HaystackForm
 from dynamiq.forms.constants import YES_NO
-from dynamiq.forms.base import SearchOptionsForm, AdvancedFormset
-from dynamiq.fields import StrChoiceField, IntChoiceField
+from dynamiq.forms.base import SearchOptionsForm, AdvancedFormset, SearchOptionsMixin
+from dynamiq.fields import StrChoiceField, IntChoiceField, BooleanChoiceField
 from dynamiq.utils import model_choice_value
 
 from memopol.meps.models import MEP, Country, Group, Committee, Delegation, Building
 
 
-COUNTRY = Choices(*((c.code.upper(), c.code, c.name) for c in Country.objects.all()))
-GROUP = Choices(*((g.abbreviation.upper(), g.abbreviation, g.name) for g in Group.objects.all()))
-COMMITTEE = Choices(*((c.abbreviation.upper(), c.abbreviation, c.name) for c in Committee.objects.all()))
+COUNTRY = Choices(*[('ANY', '', _('From any country'))] + [(c.code.upper(), c.code, c.name) for c in Country.objects.all()])
+GROUP = Choices(*[('ANY', '', _('In any group'))] + [(g.abbreviation.upper(), g.abbreviation, g.name) for g in Group.objects.all()])
+COMMITTEE = Choices(*[('ANY', '', _('In any committee'))] + [(c.abbreviation.upper(), c.abbreviation, c.name) for c in Committee.objects.all()])
 DELEGATION = Choices(*(("DELEGATION_%d" % d.pk, d.pk, d.name) for d in Delegation.objects.all()))
 # FIXME: when using django representatives, remove hardcoded postcode (use manager)
 BXL_BUILDING = Choices(*((b.pk.upper(), b.pk, b.name) for b in Building.objects.filter(postcode="1047")))
@@ -47,6 +47,11 @@ SORT_CHOICES = Choices(
 
 MODEL_CHOICES = Choices(
     ('MEP', model_choice_value(MEP), MEP._meta.verbose_name),
+)
+
+ACTIVE_CHOICES = Choices(
+    ('ACTIVE', 1, _('in position')),
+    ('INACTIVE', 0, _('former')),
 )
 
 
@@ -159,21 +164,12 @@ class MEPSearchAdvancedFormset(AdvancedFormset):
         return initial, initial_options
 
 
-class MEPSimpleSearchForm(forms.Form):
+class MEPSimpleSearchForm(SearchOptionsMixin, forms.Form):
 
-    limit = forms.IntegerField(
-                min_value=1,
-                max_value=100,
-                required=False,
-                initial=15,
-                label=_("Total results")
-            )
-    sort = forms.ChoiceField(
-                required=False,
-                initial=SORT_CHOICES.LAST_NAME,
-                label=_("Sort by"),
-                choices=SORT_CHOICES
-            )
-    q = forms.CharField(
-                required=False,
-            )
+    options_form_class = MEPSearchOptionsForm
+
+    fulltext = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Search for MEPs')}))
+    country = StrChoiceField(COUNTRY, required=False)
+    group = StrChoiceField(GROUP, required=False)
+    committees = StrChoiceField(COMMITTEE, required=False)
+    is_active = BooleanChoiceField(ACTIVE_CHOICES)

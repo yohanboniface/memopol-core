@@ -4,7 +4,7 @@ from django import template
 
 from dynamiq.utils import get_advanced_search_formset_class
 
-from ..forms import MEPSearchForm, MEPSearchAdvancedFormset
+from ..forms import MEPSearchForm, MEPSearchAdvancedFormset, MEPSimpleSearchForm
 
 register = template.Library()
 
@@ -21,10 +21,10 @@ def simple_search_shortcut(search_string, sort=None):
     return "%s?%s" % (base_url, query_string)
 
 
-@register.inclusion_tag('blocks/search_form.html', takes_context=True)
-def render_search_form(context):
+@register.inclusion_tag('blocks/search_formset.html', takes_context=True)
+def render_search_formset(context):
     """
-    Display the search form, if a `dynamiq` key is on the context, it will
+    Display the search form, if a `dynamiq` key is on the context, it will be
     used, otherwise, it create an empty form
     """
     if 'dynamiq' in context:
@@ -37,6 +37,26 @@ def render_search_form(context):
                 "q": "",
                 "label": "",
                 "formset": formset,
+            }
+    return {
+        'dynamiq': dynamiq
+    }
+
+
+@register.inclusion_tag('blocks/search_form.html', takes_context=True)
+def render_search_form(context):
+    """
+    Display the search form, if a `dynamiq` key is on the context, it will be
+    used, otherwise, it create an empty form
+    """
+    if 'dynamiq' in context:
+        dynamiq = context['dynamiq']
+    else:
+        form = MEPSimpleSearchForm(None)
+        dynamiq = {
+                "q": "",
+                "label": "",
+                "form": form,
             }
     return {
         'dynamiq': dynamiq

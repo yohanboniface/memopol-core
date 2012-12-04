@@ -2,6 +2,7 @@
 import logging
 
 from django.views.generic import TemplateView
+from django.db.models import Q
 
 from haystack.query import SearchQuerySet, EmptySearchQuerySet
 
@@ -35,14 +36,13 @@ class SearchView(TemplateView):
         label = ""
 
         formset_class = get_advanced_search_formset_class(self.request.user, MEPSearchAdvancedFormset, MEPSearchForm)
-        if "q" in self.request.GET:
+        if "fulltext" in self.request.GET:
             form = MEPSimpleSearchForm(self.request.GET)
+            formset = formset_class()
             if form.is_valid():
-                F = ParsedStringQBuilder(form.cleaned_data['q'], MEPSearchForm)
-                query, label = F()
-                formset = formset_class()
-                limit = form.cleaned_data.get("limit") or limit
-                sort = form.cleaned_data.get("sort") or sort
+                query = self.build_simple_search_query(form)
+                limit = form.options_form.cleaned_data.get("limit") or limit
+                sort = form.options_form.cleaned_data.get("sort") or sort
         else:
             form = MEPSimpleSearchForm()
             formset = formset_class(self.request.GET or None)
@@ -55,10 +55,12 @@ class SearchView(TemplateView):
 
         if query:
             results = SearchQuerySet().filter(query)
+            print "sort", sort
             if sort:
                 results = results.order_by(sort)
         else:
             results = EmptySearchQuerySet()
+
         return {
             "dynamiq": {
                 "results": results,
@@ -73,6 +75,19 @@ class SearchView(TemplateView):
             "list_template_name": self.list_template_name,
             "per_page": limit
         }
+
+    def build_simple_search_query(self, form):
+        """
+        Generate a Q object from a simple form.
+        """
+        query = Q()
+        for field_name, field in form.fields.items():
+            value = form.cleaned_data.get(field_name)
+            if value != "":
+                filter_type = MEPSearchForm.determine_filter_type(field_name)
+                filter_lookup = MEPSearchForm.FILTER_LOOKUPS[filter_type]
+                query &= Q(**{'%s__%s' % (field_name, filter_lookup): value})
+        return query
 
 
 class XhrSearchView(SearchView):
