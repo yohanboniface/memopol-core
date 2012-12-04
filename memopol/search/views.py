@@ -36,14 +36,7 @@ class SearchView(TemplateView):
         label = ""
 
         formset_class = get_advanced_search_formset_class(self.request.user, MEPSearchAdvancedFormset, MEPSearchForm)
-        if "fulltext" in self.request.GET:
-            form = MEPSimpleSearchForm(self.request.GET)
-            formset = formset_class()
-            if form.is_valid():
-                query = self.build_simple_search_query(form)
-                limit = form.options_form.cleaned_data.get("limit") or limit
-                sort = form.options_form.cleaned_data.get("sort") or sort
-        else:
+        if "form-TOTAL_FORMS" in self.request.GET:
             form = MEPSimpleSearchForm()
             formset = formset_class(self.request.GET or None)
             formset.full_clean()
@@ -52,10 +45,16 @@ class SearchView(TemplateView):
                 query, label = F()
                 sort = formset.options_form.cleaned_data.get("sort", sort)
                 limit = formset.options_form.cleaned_data.get("limit", limit)
+        else:
+            form = MEPSimpleSearchForm(self.request.GET)
+            formset = formset_class()
+            if form.is_valid():
+                query = self.build_simple_search_query(form)
+                limit = form.options_form.cleaned_data.get("limit") or limit
+                sort = form.options_form.cleaned_data.get("sort") or sort
 
         if query:
             results = SearchQuerySet().filter(query)
-            print "sort", sort
             if sort:
                 results = results.order_by(sort)
         else:

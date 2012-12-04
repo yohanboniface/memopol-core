@@ -3,7 +3,7 @@
 -spaceless
   -for item in menu.content
       %div{class: "{{ menu.flyout_class }} columns dropdown_menu"}
-        %a{href: "{% simple_search_shortcut item.url %}"}
+        %a{href: "{{ item.url }}"}
           -if item.image
             %img{src: "{{ item.image }}"}
           -elif item.code

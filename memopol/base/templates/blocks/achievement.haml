@@ -4,5 +4,5 @@
     -if achievement.thumbnail
       %img{src: "{{ achievement.thumbnail.url }}", alt: "{{ achievement.name }}"}
     %span.secondary.label
-      %a.has-tip{href: "{% simple_search_shortcut 'achievements:'|add:achievement.slug %}", title: "{{ achievement.description }}"}
+      %a.has-tip{href: "{% string_search_shortcut 'achievements:'|add:achievement.slug %}", title: "{{ achievement.description }}"}
         =achievement.name

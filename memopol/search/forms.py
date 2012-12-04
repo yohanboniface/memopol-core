@@ -61,6 +61,11 @@ class MEPSearchOptionsForm(SearchOptionsForm):
     SORT_INITIAL = SORT.LAST_NAME
     LIMIT_INITIAL = 30
 
+    def __init__(self, *args, **kwargs):
+        super(MEPSearchOptionsForm, self).__init__(*args, **kwargs)
+        self.fields['sort'].required = False
+        self.fields['limit'].required = False
+
 
 class MEPSearchForm(HaystackForm):
     options_form_class = MEPSearchOptionsForm

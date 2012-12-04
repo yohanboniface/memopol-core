@@ -3,10 +3,10 @@
 
 %ul.nav-bar
   %li
-    %a{href: "{% simple_search_shortcut 'is_active:1' %}"}
+    %a{href: "{% simple_search_shortcut is_active=1 %}"}
       By name
   %li
-    %a{href: "{% simple_search_shortcut 'total_score>0 is_active:1' sort='-total_score' %}"}
+    %a{href: "{% simple_search_shortcut is_active=1 sort='-total_score' %}"}
       By total score
   -for menu in menus
     %li.has-flyout
@@ -19,5 +19,5 @@
     %a{href: "{% url meps:index_floor %}"}
       By floor
   %li
-    %a{href: "{% simple_search_shortcut 'is_active:0' %}"}
+    %a{href: "{% simple_search_shortcut is_active=0 %}"}
       Former MEPs

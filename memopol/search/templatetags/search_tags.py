@@ -10,14 +10,28 @@ register = template.Library()
 
 
 @register.simple_tag
-def simple_search_shortcut(search_string, sort=None):
+def string_search_shortcut(search_string, sort=None):
     """
     Return a simple search URL from a search string, like "daniel OR country:CZ".
     """
     base_url = reverse("search")
-    query_string = "q=%s" % urlencode(search_string)
+    query_string = "s=%s" % urlencode(search_string)
     if sort:
         query_string = "%s&sort=%s" % (query_string, sort)
+    return "%s?%s" % (base_url, query_string)
+
+
+@register.simple_tag
+def simple_search_shortcut(**kwargs):
+    """
+    Return a simple search URL from the kwargs.
+    """
+    search_kwargs = {
+        "is_active": 1
+    }
+    search_kwargs.update(kwargs)
+    base_url = reverse("search")
+    query_string = u"&".join("%s=%s" % (k, urlencode(v)) for k, v in search_kwargs.iteritems())
     return "%s?%s" % (base_url, query_string)
 
 
