@@ -7,7 +7,7 @@
   %h1
     -trans "Contact form"
   %form#contact{method: "POST"}
-  -csrf_token
-  =form.as_p
-  %p.submit
-    %input{name: "ok", type: "submit", value: "{% trans 'Send' %}"}
+    -csrf_token
+    =form.as_p
+    %p.submit
+      %input{name: "ok", type: "submit", value: "{% trans 'Send' %}"}
