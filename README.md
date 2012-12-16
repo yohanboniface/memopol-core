@@ -107,9 +107,6 @@ Warning: this might take a *LOTS* of time, around 15min.
 
     python manage.py init
 
-Do *not* try to run migrate by hand or you will have a bug due to fixtures
-loading and will end up with no eurodeputies fixtures.
-
 Run the server
 --------------
 
