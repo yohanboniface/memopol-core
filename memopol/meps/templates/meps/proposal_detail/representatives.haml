@@ -39,11 +39,11 @@
           %th
             %a{href: "{{ mep.get_absolute_url }}"}
               =mep
-        %td{class: "{{ mep.score.value|scolorize }}"}
-          =mep.score
-        -for position, recommendation in positions
-          -if position
-            %td{class: "{{ position|scolorize_position:recommendation }}"}
-              =position
-          -else
-            %td —
+          %td{class: "{{ mep.score.value|scolorize }}"}
+            =mep.score
+          -for position, recommendation in positions
+            -if position
+              %td{class: "{{ position|scolorize_position:recommendation }}"}
+                =position
+            -else
+              %td —
