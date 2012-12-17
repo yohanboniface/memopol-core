@@ -14,7 +14,7 @@ def dont_broke_old_urls(request, pk):
 
 urlpatterns = patterns('',
     url(r'^$', ListView.as_view(model=Proposal), name='index'),
-    url(r'^import/$', ListView.as_view(model=RecommendationData), name='import'),
+    url(r'^import/$', ListView.as_view(model=RecommendationData, paginate_by=100), name='import'),
     url(r'^import/(?P<pk>\d+)/$', DetailView.as_view(model=RecommendationData), name='import_vote'),
     url(r'^latest/feed', LatestProposalsFeed(), name='lastest-rss'),
     url(r'^(?P<pk>[a-zA-Z/-_]+)/(.*)$', dont_broke_old_urls),
