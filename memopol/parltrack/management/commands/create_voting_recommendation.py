@@ -163,19 +163,21 @@ def find_matching_mep_in_db(mep):
 def handle_absent_vote(proposal):
     # if there is only one proposal this doesn't make any sens, we won't have
     # absent votes
-    if proposal.recommendation_set.count() != 1:
-        z = 0
-        print "Creating absent votes"
-        # creating absent
-        for mep in MEP.objects.filter(score__proposal=proposal):
-            for recommendation in proposal.recommendation_set.all():
-                if not mep.vote_set.filter(recommendation=recommendation):
-                    Vote.objects.create(representative=mep.representative_ptr,
-                                        choice="absent",
-                                        recommendation=recommendation)
-                    z += 1
-                    sys.stdout.write("%i\r" % z)
-                    sys.stdout.flush()
-        sys.stdout.write("\n")
+    if proposal.recommendation_set.count() == 1:
+        return
+
+    z = 0
+    print "Creating absent votes"
+    # creating absent
+    for mep in MEP.objects.filter(score__proposal=proposal):
+        for recommendation in proposal.recommendation_set.all():
+            if not mep.vote_set.filter(recommendation=recommendation):
+                Vote.objects.create(representative=mep.representative_ptr,
+                                    choice="absent",
+                                    recommendation=recommendation)
+                z += 1
+                sys.stdout.write("%i\r" % z)
+                sys.stdout.flush()
+    sys.stdout.write("\n")
 
 # vim:set shiftwidth=4 tabstop=4 expandtab:
