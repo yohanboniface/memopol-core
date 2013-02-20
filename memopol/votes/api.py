@@ -8,7 +8,7 @@ from memopol.votes.models import Proposal,\
 
 
 class ProposalResource(ModelResource):
-    score_set = fields.ToManyField("votes.api.ScoreResource", "score_set")
+    score_set = fields.ToManyField("memopol.votes.api.ScoreResource", "score_set")
     recommendation_set = fields.ToManyField("votes.api.RecommendationResource", "recommendation_set")
 
     class Meta:
@@ -16,7 +16,7 @@ class ProposalResource(ModelResource):
 
 
 class RecommendationResource(ModelResource):
-    vote_set = fields.ToManyField("votes.api.VoteResource", "vote_set")
+    vote_set = fields.ToManyField("memopol.votes.api.VoteResource", "vote_set")
     proposal = fields.ForeignKey(ProposalResource, "proposal")
 
     class Meta:
@@ -24,7 +24,7 @@ class RecommendationResource(ModelResource):
 
 
 class VoteResource(ModelResource):
-    representative = fields.ForeignKey("reps.api.REPRepresentativeResource", "representative")
+    representative = fields.ForeignKey("memopol.reps.api.REPRepresentativeResource", "representative")
     recommendation = fields.ForeignKey(RecommendationResource, "recommendation")
 
     class Meta:
@@ -32,7 +32,7 @@ class VoteResource(ModelResource):
 
 
 class ScoreResource(ModelResource):
-    representative = fields.ForeignKey("reps.api.REPRepresentativeResource", "representative")
+    representative = fields.ForeignKey("memopol.reps.api.REPRepresentativeResource", "representative")
     proposal = fields.ForeignKey(ProposalResource, "proposal")
 
     class Meta:

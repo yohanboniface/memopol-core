@@ -13,15 +13,15 @@ from memopol.mps.models import Function,\
 
 
 class MPFunctionResource(ModelResource):
-    functionmp_set = fields.ToManyField("mps.api.MPFunctionMPResource", "functionmp_set")
+    functionmp_set = fields.ToManyField("memopol.mps.api.MPFunctionMPResource", "functionmp_set")
 
     class Meta:
         queryset = Function.objects.all()
 
 
 class MPDepartmentResource(ModelResource):
-    mp_set = fields.ToManyField("mps.api.MPMPResource", "mp_set")
-    circonscription_set = fields.ToManyField("mps.api.MPCirconscriptionResource", "circonscription_set")
+    mp_set = fields.ToManyField("memopol.mps.api.MPMPResource", "mp_set")
+    circonscription_set = fields.ToManyField("memopol.mps.api.MPCirconscriptionResource", "circonscription_set")
 
     class Meta:
         queryset = Department.objects.all()
@@ -42,19 +42,19 @@ class MPCantonResource(ModelResource):
 
 
 class MPGroupResource(ModelResource):
-    mp_set = fields.ToManyField("mps.api.MPMPResource", "mp_set")
+    mp_set = fields.ToManyField("memopol.mps.api.MPMPResource", "mp_set")
 
     class Meta:
         queryset = Group.objects.all()
 
 
 class MPMPResource(ModelResource):
-    functionmp_set = fields.ToManyField("mps.api.MPFunctionMPResource", "functionmp_set")
+    functionmp_set = fields.ToManyField("memopol.mps.api.MPFunctionMPResource", "functionmp_set")
     department = fields.ForeignKey(MPDepartmentResource, "department")
     group = fields.ForeignKey(MPGroupResource, "group")
-    mandate_set = fields.ToManyField("mps.api.MPMandateResource", "mandate_set")
-    address_set = fields.ToManyField("mps.api.MPAddressResource", "address_set")
-    representative_ptr = fields.ForeignKey("reps.api.REPRepresentativeResource", "representative_ptr")
+    mandate_set = fields.ToManyField("memopol.mps.api.MPMandateResource", "mandate_set")
+    address_set = fields.ToManyField("memopol.mps.api.MPAddressResource", "address_set")
+    representative_ptr = fields.ForeignKey("memopol.reps.api.REPRepresentativeResource", "representative_ptr")
 
     class Meta:
         queryset = MP.objects.all()
@@ -70,7 +70,7 @@ class MPFunctionMPResource(ModelResource):
 
 class MPAddressResource(ModelResource):
     mp = fields.ForeignKey(MPMPResource, "mp")
-    phone_set = fields.ToManyField("mps.api.MPPhoneResource", "phone_set")
+    phone_set = fields.ToManyField("memopol.mps.api.MPPhoneResource", "phone_set")
 
     class Meta:
         queryset = Address.objects.all()
