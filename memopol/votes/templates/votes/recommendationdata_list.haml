@@ -9,7 +9,7 @@
   -if is_paginated
     %p
       -if page_obj.has_previous
-        %a{href: "?page={{ page_obj.previous_page_number "}
+        %a{href: "?page={{ page_obj.previous_page_number }}"}
           ← 
       =page_obj.number
       \/
