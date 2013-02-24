@@ -138,19 +138,17 @@ def find_matching_mep_in_db(mep):
     try:
         representative = MEP.objects.filter(active=True, last_name=mep)
         if not representative:
-            representative = MEP.objects.filter(active=True, last_name=mep.upper())
+            representative = MEP.objects.filter(active=True, last_name__iexact=mep)
         if not representative:
-            representative = MEP.objects.filter(active=True, last_name=re.sub("^DE ", "", mep.upper()))
+            representative = MEP.objects.filter(active=True, last_name__iexact=re.sub("^DE ", "", mep.upper()))
         if not representative:
             representative = MEP.objects.filter(active=True, last_name__contains=mep.upper())
         if not representative:
             representative = MEP.objects.filter(active=True, full_name__contains=re.sub("^MC", "Mc", mep.upper()))
         if not representative:
-            representative = MEP.objects.filter(active=True, full_name__iregex=mep)
+            representative = MEP.objects.filter(active=True, full_name__icontains=mep)
         if not representative:
-            representative = MEP.objects.filter(active=True, full_name=mep)
-        if not representative:
-            representative = MEP.objects.filter(active=True, first_name=mep)
+            representative = [dict([("%s %s" % (x.last_name.lower(), x.first_name.lower()), x) for x in MEP.objects.filter(active=True)])[mep.lower()]]
         representative = representative[0]
     except Exception as e:
         print "WARNING: failed to get mep using internal db, fall back on parltrack (exception: %s)" % e
