@@ -11,25 +11,25 @@ from memopol.reps.models import Party,\
 
 
 class REPPartyResource(ModelResource):
-    partyrepresentative_set = fields.ToManyField("reps.api.REPPartyRepresentativeResource", "partyrepresentative_set")
+    partyrepresentative_set = fields.ToManyField("memopol.reps.api.REPPartyRepresentativeResource", "partyrepresentative_set")
 
     class Meta:
         queryset = Party.objects.all()
 
 
 class REPOpinionResource(ModelResource):
-    opinionrep_set = fields.ToManyField("reps.api.REPOpinionREPResource", "opinionrep_set")
+    opinionrep_set = fields.ToManyField("memopol.reps.api.REPOpinionREPResource", "opinionrep_set")
 
     class Meta:
         queryset = Opinion.objects.all()
 
 
 class REPRepresentativeResource(ModelResource):
-    opinionrep_set = fields.ToManyField("reps.api.REPOpinionREPResource", "opinionrep_set")
-    email_set = fields.ToManyField("reps.api.REPEmailResource", "email_set")
-    website_set = fields.ToManyField("reps.api.REPWebSiteResource", "website_set")
-    cv_set = fields.ToManyField("reps.api.REPCVResource", "cv_set")
-    partyrepresentative_set = fields.ToManyField("reps.api.REPPartyRepresentativeResource", "partyrepresentative_set")
+    opinionrep_set = fields.ToManyField("memopol.reps.api.REPOpinionREPResource", "opinionrep_set")
+    email_set = fields.ToManyField("memopol.reps.api.REPEmailResource", "email_set")
+    website_set = fields.ToManyField("memopol.reps.api.REPWebSiteResource", "website_set")
+    cv_set = fields.ToManyField("memopol.reps.api.REPCVResource", "cv_set")
+    partyrepresentative_set = fields.ToManyField("memopol.reps.api.REPPartyRepresentativeResource", "partyrepresentative_set")
     score_set = fields.ToManyField("votes.api.ScoreResource", "score_set")
     vote_set = fields.ToManyField("votes.api.VoteResource", "vote_set")
 

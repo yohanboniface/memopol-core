@@ -5,6 +5,7 @@ from south.v2 import DataMigration
 from django.contrib.comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
+from django.db.utils import DatabaseError
 
 class Migration(DataMigration):
 
@@ -15,17 +16,28 @@ class Migration(DataMigration):
         total = orm["reps.opinion"].objects.count()
         for number, position in enumerate(orm["reps.opinion"].objects.all(), 1):
             if position.representative_set.count() == 1:
-                Comment.objects.create(
-                    object_pk=position.representative_set.all()[0].pk,
-                    content_type=content_type,
-                    site=site,
-                    comment="<p><b>" + position.title + "</b></p>" + position.content,
-                    ip_address='0.0.0.0',
-                    is_public=True,
-                    is_removed=False,
-                    submit_date=datetime.datetime.now(),
-                    user_url=position.url,
-                )
+                try:
+                    Comment.objects.create(
+                        object_pk=position.representative_set.all()[0].pk,
+                        content_type=content_type,
+                        site=site,
+                        comment="<p><b>" + position.title + "</b></p>" + position.content,
+                        ip_address='0.0.0.0',
+                        is_public=True,
+                        is_removed=False,
+                        submit_date=datetime.datetime.now(),
+                        user_url=position.url,
+                    )
+                except DatabaseError:
+                    # dirty hack: some data have a len(postion.url) > 200 and
+                    # user_url (an URLField is limited to a len of 200 by
+                    # defaults. Sqlite won't care but with psql you'll need to
+                    # alter the database by hand (if you really care about
+                    # that, which I doubt)
+                    # Here is a sample psql command to do that:
+                    # alter table django_comments alter column user_url type character varying(500);
+                    # I'm thinking about putting this is raw sql here but this is horrible
+                    pass
             sys.stdout.write("%s/%s\r" % (number, total))
             sys.stdout.flush()
 

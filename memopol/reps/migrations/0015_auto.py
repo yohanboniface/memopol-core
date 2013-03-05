@@ -1,13 +1,16 @@
 # encoding: utf-8
-import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
 class Migration(SchemaMigration):
 
+    depends_on = (
+        ('categories', '0013_null_category_id'),
+    )
+
     def forwards(self, orm):
-        
+
         # Adding M2M table for field achievements on 'Representative'
         db.create_table('reps_representative_achievements', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
@@ -18,7 +21,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Removing M2M table for field achievements on 'Representative'
         db.delete_table('reps_representative_achievements')
 

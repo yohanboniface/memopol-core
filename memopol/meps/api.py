@@ -17,14 +17,14 @@ from memopol.meps.models import Country,\
 
 
 class MEPCountryResource(ModelResource):
-    countrymep_set = fields.ToManyField("meps.api.MEPCountryMEPResource", "countrymep_set")
+    countrymep_set = fields.ToManyField("memopol.meps.api.MEPCountryMEPResource", "countrymep_set")
 
     class Meta:
         queryset = Country.objects.all()
 
 
 class MEPLocalPartyResource(ModelResource):
-    countrymep_set = fields.ToManyField("meps.api.MEPCountryMEPResource", "countrymep_set")
+    countrymep_set = fields.ToManyField("memopol.meps.api.MEPCountryMEPResource", "countrymep_set")
     country = fields.ForeignKey(MEPCountryResource, "country")
 
     class Meta:
@@ -32,20 +32,20 @@ class MEPLocalPartyResource(ModelResource):
 
 
 class MEPGroupResource(ModelResource):
-    groupmep_set = fields.ToManyField("meps.api.MEPGroupMEPResource", "groupmep_set")
+    groupmep_set = fields.ToManyField("memopol.meps.api.MEPGroupMEPResource", "groupmep_set")
     class Meta:
         queryset = Group.objects.all()
 
 
 class MEPDelegationResource(ModelResource):
-    delegationrole_set = fields.ToManyField("meps.api.MEPDelegationRoleResource", "delegationrole_set")
+    delegationrole_set = fields.ToManyField("memopol.meps.api.MEPDelegationRoleResource", "delegationrole_set")
 
     class Meta:
         queryset = Delegation.objects.all()
 
 
 class MEPCommitteeResource(ModelResource):
-    committeerole_set = fields.ToManyField("meps.api.MEPCommitteeRoleResource", "committeerole_set")
+    committeerole_set = fields.ToManyField("memopol.meps.api.MEPCommitteeRoleResource", "committeerole_set")
 
     class Meta:
         queryset = Committee.objects.all()
@@ -57,7 +57,7 @@ class MEPBuildingResource(ModelResource):
 
 
 class MEPOrganizationResource(ModelResource):
-    organizationmep_set = fields.ToManyField("meps.api.MEPOrganizationMEPResource", "organizationmep_set")
+    organizationmep_set = fields.ToManyField("memopol.meps.api.MEPOrganizationMEPResource", "organizationmep_set")
 
     class Meta:
         queryset = Organization.objects.all()
@@ -66,12 +66,12 @@ class MEPOrganizationResource(ModelResource):
 class MEPMEPResource(ModelResource):
     bxl_building = fields.ForeignKey(MEPBuildingResource, "bxl_building")
     stg_building = fields.ForeignKey(MEPBuildingResource, "stg_building")
-    countrymep_set = fields.ToManyField("meps.api.MEPCountryMEPResource", "countrymep_set")
-    groupmep_set = fields.ToManyField("meps.api.MEPGroupMEPResource", "groupmep_set")
-    delegationrole_set = fields.ToManyField("meps.api.MEPDelegationRoleResource", "delegationrole_set")
-    committeerole_set = fields.ToManyField("meps.api.MEPCommitteeRoleResource", "committeerole_set")
-    organizationmep_set = fields.ToManyField("meps.api.MEPOrganizationMEPResource", "organizationmep_set")
-    representative_ptr = fields.ForeignKey("reps.api.REPRepresentativeResource", "representative_ptr")
+    countrymep_set = fields.ToManyField("memopol.meps.api.MEPCountryMEPResource", "countrymep_set")
+    groupmep_set = fields.ToManyField("memopol.meps.api.MEPGroupMEPResource", "groupmep_set")
+    delegationrole_set = fields.ToManyField("memopol.meps.api.MEPDelegationRoleResource", "delegationrole_set")
+    committeerole_set = fields.ToManyField("memopol.meps.api.MEPCommitteeRoleResource", "committeerole_set")
+    organizationmep_set = fields.ToManyField("memopol.meps.api.MEPOrganizationMEPResource", "organizationmep_set")
+    representative_ptr = fields.ForeignKey("memopol.reps.api.REPRepresentativeResource", "representative_ptr")
 
     class Meta:
         queryset = MEP.objects.all()
