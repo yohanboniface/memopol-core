@@ -60,6 +60,7 @@ urlpatterns = patterns('',  # pylint: disable=C0103
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^comments/', include('django.contrib.comments.urls')),
+    url(r'^contact/$', 'contact_form.views.contact_form', {'template_name': 'contact_form/contact_form_display.html'}),
     url(r'^contact/', include('contact_form.urls')),
     url(r'^robots\.txt$', RobotsTxt.as_view()),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
