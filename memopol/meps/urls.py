@@ -7,7 +7,8 @@ from memopol.meps.models import LocalParty, Country, Group, Committee, Delegatio
 from memopol.reps.models import Opinion
 
 from .views import (MEPView, MEPsFromView, MEPList, PartyView,
-                    RedirectToSearch, RedirectFloorListToSearch)
+                    RedirectToSearch, RedirectFloorListToSearch,
+                    RedirectToMepFromEPID)
 
 urlpatterns = patterns('memopol.meps.views',
     # those view are *very* expansive. we cache them in RAM for a week
@@ -37,6 +38,7 @@ urlpatterns = patterns('memopol.meps.views',
 
     url(r'^votes/$', lambda request: redirect(reverse("meps:votes:index_votes"))),
 
+    url(r'^deputy_from_ep_id/(?P<ep_id>\d+)/$', RedirectToMepFromEPID.as_view(), name='mep'),
     url(r'^deputy/(?P<pk>\w+)/$', MEPView.as_view(), name='mep'),
     url(r'^deputy/(?P<pk>\w+)/dataporn/$', MEPView.as_view(template_name="meps/dataporn.html"), name='mep_dataporn'),
     url(r'^deputy/(?P<pk>\w+)/contact$', MEPView.as_view(template_name="meps/mep_contact.html"), name='mep_contact'),

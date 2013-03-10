@@ -8,6 +8,7 @@ import logging
 import datetime
 
 from django.conf import settings
+from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView, RedirectView
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
@@ -318,3 +319,11 @@ class RedirectFloorListToSearch(RedirectToSearch):
         building_filter = "%s_building:%s" % (self.city, kwargs['building'])
         floor_filter = "%s_floor:%s" % (self.city, kwargs['floor'])
         return "%s %s is_active:1" % (building_filter, floor_filter)
+
+
+class RedirectToMepFromEPID(RedirectView):
+    query_string = True
+
+    def get_redirect_url(self, ep_id):
+        mep = get_object_or_404(MEP, ep_id=ep_id)
+        return mep.get_absolute_url()
