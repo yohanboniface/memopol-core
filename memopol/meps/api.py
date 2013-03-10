@@ -64,8 +64,8 @@ class MEPOrganizationResource(ModelResource):
 
 
 class MEPMEPResource(ModelResource):
-    bxl_building = fields.ForeignKey(MEPBuildingResource, "bxl_building")
-    stg_building = fields.ForeignKey(MEPBuildingResource, "stg_building")
+    bxl_building = fields.ForeignKey(MEPBuildingResource, "bxl_building", null=True)
+    stg_building = fields.ForeignKey(MEPBuildingResource, "stg_building", null=True)
     countrymep_set = fields.ToManyField("memopol.meps.api.MEPCountryMEPResource", "countrymep_set")
     groupmep_set = fields.ToManyField("memopol.meps.api.MEPGroupMEPResource", "groupmep_set")
     delegationrole_set = fields.ToManyField("memopol.meps.api.MEPDelegationRoleResource", "delegationrole_set")
