@@ -3,6 +3,9 @@ from django.views.generic import TemplateView
 from memopol.votes.models import Proposal
 from memopol.meps.models import Committee, MEP
 
+from random import seed, randint
+from datetime import datetime
+
 
 class HomeView(TemplateView):
 
@@ -10,7 +13,16 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         # Get a random mep
-        spotlight_mep = MEP.objects.filter(active=True).order_by("?")[0]
+
+        # Old method
+        # spotlight_mep = MEP.objects.filter(active=True).order_by("?")[0]
+
+        # #415 : Make the "random MEP" the same for one day
+        MEP_list = MEP.objects.filter(active=True)
+        now = datetime.now()
+        seed(int("{}{}{}".format(now.year, now.month, now.day)))
+        spotlight_mep = MEP_list[randint(1,MEP_list.count())]
+
         return {
             'proposals': Proposal.objects.filter(institution="EU")[:10],
             'committees': Committee.objects.order_by('abbreviation').all(),
