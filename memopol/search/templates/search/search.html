@@ -15,10 +15,18 @@
                 {% if dynamiq.form.q.value %}
                     <form action="{% url search %}" method="get" class="simple_search_options">
                         <input type="hidden" value="{{ dynamiq.form.q.value }}" name="q" />
+			<input type="hidden" name="limit" value="{{ per_page }}"/>
                         {{ dynamiq.form.sort }}
                     </form>
                 {% endif %}
                 <a href="#" class="secondary button global_list_item_details_switcher">Show details</a>
+                {% if per_page %}
+                    <form action="{% url search %}" method="get" class="simple_search_options">
+                      <input type="hidden" value="{{ dynamiq.form.q.value }}" name="q" />
+                      <input type="hidden" name="limit" value="0" />
+		      <input type="submit" value="Disable pagination" />
+		    </form>
+		{% endif %}
             </div>
         </div>
     {% endif %}
