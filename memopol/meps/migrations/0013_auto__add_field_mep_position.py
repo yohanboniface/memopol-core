@@ -12,8 +12,9 @@ class Migration(SchemaMigration):
         db.add_column('meps_mep', 'position', self.gf('django.db.models.fields.IntegerField')(default=None, null=True), keep_default=False)
         db.add_column('meps_mep', 'total_score', self.gf('django.db.models.fields.FloatField')(default=None, null=True), keep_default=False)
 
-        update_total_score_of_all_meps(score=orm['votes.Score'], mep=orm.MEP, proposal=orm['votes.Proposal'], verbose=True)
-        update_meps_positions(mep=orm.MEP, verbose=True)
+        if not db.dry_run:
+            update_total_score_of_all_meps(score=orm['votes.Score'], mep=orm.MEP, proposal=orm['votes.Proposal'], verbose=True)
+            update_meps_positions(mep=orm.MEP, verbose=True)
 
     def backwards(self, orm):
 

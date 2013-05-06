@@ -13,9 +13,10 @@ class Migration(SchemaMigration):
         # Adding field 'Score.date'
         db.add_column('votes_score', 'date', self.gf('django.db.models.fields.DateField')(default=datetime.date(2011, 6, 9)), keep_default=False)
 
-        for s in Score.objects.all():
-            s.date = s.proposal.date
-            s.save()
+        if not db.dry_run:        
+            for s in Score.objects.all():
+                s.date = s.proposal.date
+                s.save()
 
     def backwards(self, orm):
 
