@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from snippets import snippet
 
 from memopol.base.utils import reify, color
-from memopol.reps.models import Representative, Party
+from memopol.reps.models import Representative, Party, TimePeriod
 
 
 class Country(models.Model):
@@ -308,24 +308,20 @@ class MEP(Representative):
         ordering = ['last_name']
 
 
-class GroupMEP(models.Model):
+class GroupMEP(TimePeriod):
     mep = models.ForeignKey(MEP)
     group = models.ForeignKey(Group)
     role = models.CharField(max_length=255)
-    begin = models.DateField(null=True)
-    end = models.DateField(null=True)
 
     @reify
     def instance(self):
         return self.group
 
 
-class DelegationRole(models.Model):
+class DelegationRole(TimePeriod):
     mep = models.ForeignKey(MEP)
     delegation = models.ForeignKey(Delegation)
     role = models.CharField(max_length=255)
-    begin = models.DateField(null=True)
-    end = models.DateField(null=True)
 
     @reify
     def instance(self):
@@ -335,12 +331,10 @@ class DelegationRole(models.Model):
         return u"%s : %s" % (self.mep.full_name, self.delegation)
 
 
-class CommitteeRole(models.Model):
+class CommitteeRole(TimePeriod):
     mep = models.ForeignKey(MEP)
     committee = models.ForeignKey(Committee)
     role = models.CharField(max_length=255)
-    begin = models.DateField(null=True)
-    end = models.DateField(null=True)
 
     @reify
     def instance(self):
@@ -355,20 +349,16 @@ class PostalAddress(models.Model):
     mep = models.ForeignKey(MEP)
 
 
-class CountryMEP(models.Model):
+class CountryMEP(TimePeriod):
     mep = models.ForeignKey(MEP)
     country = models.ForeignKey(Country)
     party = models.ForeignKey(LocalParty)
-    begin = models.DateField(null=True)
-    end = models.DateField(null=True)
 
 
-class OrganizationMEP(models.Model):
+class OrganizationMEP(TimePeriod):
     mep = models.ForeignKey(MEP)
     organization = models.ForeignKey(Organization)
     role = models.CharField(max_length=255)
-    begin = models.DateField(null=True)
-    end = models.DateField(null=True)
 
     @reify
     def instance(self):

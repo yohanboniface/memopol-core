@@ -90,6 +90,68 @@ class Opinion(models.Model):
         return self.title
 
 
+CURRENT_MAGIC_VAL=date(9999, 12, 31)
+
+class TimePeriodQueryset(models.query.QuerySet):
+    def newer_first(self):
+        return self.order_by('-end', '-begin')
+
+    def only_current(self):
+        return self.filter(end=CURRENT_MAGIC_VAL)
+
+    def only_old(self):
+        return self.filter(end__lt=CURRENT_MAGIC_VAL)
+
+    def at_date(self, _date):
+        return self.filter(begin__lt=_date, end__gt=_date)[0]
+
+
+class TimePeriodManager(models.Manager):
+    use_for_related_fields = True
+
+    def newer_first(self):
+        return self.get_query_set().newer_first()
+
+    def only_current(self):
+        return self.get_query_set().only_current()
+
+    def only_old(self):
+        return self.get_query_set().only_old()
+
+    def at_date(self, _date):
+        return self.get_query_set().at_date(_date)
+
+    def get_query_set(self):
+        return TimePeriodQueryset(self.model)
+
+
+class TimePeriod(models.Model):
+    """
+    Helper base class used on M2M intermediary models representing a
+    relationship between a Representative and a Role (Group/Delegation/etc.)
+    during a certain period in time.
+    """
+    class Meta:
+        abstract = True
+
+    objects = TimePeriodManager()
+
+    begin = models.DateField(null=True)
+    end = models.DateField(null=True)
+
+    def is_current(self):
+        if self.end == CURRENT_MAGIC_VAL:
+            return True
+        else:
+            return False
+
+    def is_past(self):
+        if self.end < date.today():
+            return True
+        else:
+            return False
+
+
 class Representative(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     first_name = models.CharField(max_length=255)
