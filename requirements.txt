@@ -1,5 +1,5 @@
-Django
-South
+Django<1.5
+South==0.7.6
 git+git://github.com/joymax/django-debug-toolbar.git
 numpy==1.5.1
 git+http://github.com/matplotlib/matplotlib.git@0fc9830fe946f6221e9ceff2910cd0c2118b0965
