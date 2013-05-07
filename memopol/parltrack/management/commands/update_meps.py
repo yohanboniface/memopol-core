@@ -236,7 +236,7 @@ def add_groups(mep, groups):
             params['begin']=_parse_date(group["start"])
         if group.get("end"):
             params['end']=_parse_date(group["end"])
-        GroupMEP.objects.create(mep=mep, group=in_db_group, role=group["role"])
+        GroupMEP.objects.create(mep=mep, group=in_db_group, role=group["role"], **params)
                                 #begin=_parse_date(group["start"]),
                                 #end=_parse_date(group["end"]))
 
