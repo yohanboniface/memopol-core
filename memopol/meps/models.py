@@ -235,55 +235,43 @@ class MEP(Representative):
         return self.stg_floor + self.stg_office_number
 
     @reify
+    def groups_mep(self):
+        return self.groupmep_set.select_related('group')
+
+    @reify
     def group(self):
-        if self.groupmep_set.count():
-            return self.groupmep_set.select_related('group').latest('end').group
-        else:
+        try:
+            return self.groups_mep.latest('end').group
+        except GroupMEP.DoesNotExist:
             return None
 
     @reify
-    def groupmep(self):
-        return self.groupmep_set.self('group').latest('end')
-
-    @reify
     def country(self):
-        return self.countrymep_set.select_related('country').latest('end').country
+        return self.countries_mep.latest('end').country
 
     @reify
     def party(self):
-        return self.countrymep_set.select_related('party').latest('end').party
+        return self.countries_mep.latest('end').party
 
     @reify
-    def previous_mandates(self):
-        return self.countrymep_set.filter(end__isnull=False).order_by('-end')
+    def countries_mep(self):
+        return self.countrymep_set.select_related('country', 'party')
 
     @reify
-    def current_delegations(self):
-        return self.delegationrole_set.filter(end__isnull=True)
+    def delegations_roles(self):
+        return self.delegationrole_set.select_related('delegation')
 
     @reify
-    def old_delegations(self):
-        return self.delegationrole_set.filter(end__isnull=False).order_by('-end')
+    def committees_roles(self):
+        return self.committeerole_set.select_related('committee')
 
     @reify
-    def current_committees(self):
-        return self.committeerole_set.filter(end__isnull=True)
+    def organizations_mep(self):
+        return self.organizationmep_set.select_related('organization')
 
     @reify
-    def old_committees(self):
-        return self.committeerole_set.filter(end__isnull=False).order_by('-end')
-
-    @reify
-    def current_organizations(self):
-        return self.organizationmep_set.filter(end__isnull=True)
-
-    @reify
-    def old_organizations(self):
-        return self.organizationmep_set.filter(end__isnull=False).order_by('-end')
-
-    @reify
-    def old_groups(self):
-        return self.groupmep_set.filter(end__isnull=False).order_by('-end')
+    def assistants_mep(self):
+        return self.assistantmep_set.select_related('assistant')
 
     @property
     def score_color(self):
@@ -297,8 +285,9 @@ class MEP(Representative):
 
     @reify
     def important_posts(self):
-        all_roles = list(OrganizationMEP.objects.filter(mep=self).select_related('organization'))
-        for i in (GroupMEP.objects.select_related('group').exclude(role="Member").exclude(role="Substitute"), CommitteeRole.objects.select_related('committee')):
+        all_roles = list(self.organizations_mep.only_current())
+        for i in (self.groups_mep.only_current().exclude(role="").exclude(role="Member").exclude(role="Substitute"),
+                  self.committees_roles.only_current()):
             roles = i.filter(mep=self)
             if roles:
                 all_roles += list(roles)
