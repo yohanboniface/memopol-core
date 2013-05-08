@@ -21,7 +21,11 @@
                 {% endif %}
                 <a href="#" class="secondary button global_list_item_details_switcher">Show details</a>
 		{% if per_page %}
-		  <a href="#" class="secondary button disable_pagination_button">Disable pagination</a>
+                  {% if dynamiq.formset.is_bound %}
+		    <a href="#" class="secondary button advanced_disable_pagination_button">Disable pagination</a>
+		  {% else %}
+		    <a href="#" class="secondary button disable_pagination_button">Disable pagination</a>
+		  {% endif %}
 		{% endif %}
             </div>
         </div>
@@ -69,6 +73,10 @@
     $('.disable_pagination_button').on('click', function(e) {
          $('[name=limit]').val('0');
          $(this).siblings('form').trigger('submit');
+    });
+    $('.advanced_disable_pagination_button').on('click', function(e) {
+         $('[name=limit]').val('0');
+         $('.advanced_search_form').trigger('submit');
     });
 </script>
 {% endblock js_onload %}
