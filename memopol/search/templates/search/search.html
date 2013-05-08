@@ -20,12 +20,8 @@
                     </form>
                 {% endif %}
                 <a href="#" class="secondary button global_list_item_details_switcher">Show details</a>
-                {% if per_page %}
-                    <form action="{% url search %}" method="get" class="simple_search_options">
-                      <input type="hidden" value="{{ dynamiq.form.q.value }}" name="q" />
-                      <input type="hidden" name="limit" value="0" />
-		      <input type="submit" value="Disable pagination" />
-		    </form>
+		{% if per_page %}
+		  <a href="#" class="secondary button disable_pagination_button">Disable pagination</a>
 		{% endif %}
             </div>
         </div>
@@ -69,6 +65,10 @@
     });
     $('select[name=sort]').on('change', function(e) {
          $(this).closest('form').trigger('submit');
+    });
+    $('.disable_pagination_button').on('click', function(e) {
+         $('[name=limit]').val('0');
+         $(this).siblings('form').trigger('submit');
     });
 </script>
 {% endblock js_onload %}
