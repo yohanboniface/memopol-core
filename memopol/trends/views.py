@@ -318,7 +318,7 @@ def recommendation_countries_absolute(request, recommendation_id):
             a += 1
 
     #pyplot.legend((ugettext('Not present'), ugettext('against'), ugettext('abstention'), ugettext('for')), 'best', shadow=False)
-    pyplot.title(ugettext("Normalized countries vote repartition on %(recommendation_part)s for %(recommendation_proposal)s") % {"recommendation_part": recommendation.part, "recommandation_proposal": recommendation.proposal.short_name if recommendation.proposal.short_name else recommendation.proposal.title})
+    pyplot.title(ugettext("Normalized countries vote repartition on %(recommendation_part)s for %(recommendation_proposal)s") % {"recommendation_part": recommendation.part, "recommendation_proposal": recommendation.proposal.short_name if recommendation.proposal.short_name else recommendation.proposal.title})
     pyplot.xticks(map(lambda x: x+0.5, range(len(countries))), countries)
     pyplot.xlabel(ugettext("Countries"))
     pyplot.ylabel(ugettext("% of choices"))
