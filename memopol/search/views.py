@@ -41,8 +41,8 @@ class SearchView(TemplateView):
                 F = ParsedStringQBuilder(form.cleaned_data['q'], MEPSearchForm)
                 query, label = F()
                 formset = formset_class()
-                _limit = form.cleaned_data.get("limit")
-                if _limit is not None: limit = _limit
+                if "limit" in form.cleaned_data:
+                    limit = form.cleaned_data["limit"]
                 sort = form.cleaned_data.get("sort") or sort
         else:
             form = MEPSimpleSearchForm()
