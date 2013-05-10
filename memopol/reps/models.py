@@ -186,7 +186,9 @@ class Representative(models.Model):
             cache.set(key, value, settings.SNIPPETS_CACHE_DELAY)
         return value
 
-    group_tag = snippet(name='group')
+    @snippet(template='meps/snippets/group.html')
+    def group_tag(self):
+        return dict(group=self.group)
 
 
 class PartyRepresentative(models.Model):

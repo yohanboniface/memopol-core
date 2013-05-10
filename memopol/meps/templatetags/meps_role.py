@@ -24,3 +24,7 @@ def current_delegation_role(mep, delegation):
     roles = DelegationRole.objects.filter(mep=mep, delegation=delegation)
     roles = sorted([role.role for role in roles if role.role != 'Member'])
     return roles and roles[0] or ''
+
+@register.filter
+def at_date(queryset, date):
+    return queryset.at_date(date)

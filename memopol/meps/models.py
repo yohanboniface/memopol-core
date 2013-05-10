@@ -281,7 +281,9 @@ class MEP(Representative):
     def country_tag(self):
         return dict(country=self.country)
 
-    party_tag = snippet(name='party', template='meps/snippets/party.html')
+    @snippet(template='meps/snippets/party.html')
+    def party_tag(self):
+        return dict(party=self.party)
 
     @reify
     def important_posts(self):
