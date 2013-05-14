@@ -11,17 +11,20 @@
                 <a href="#" data-reveal-id="advanced_search_modal" class="button secondary">{% trans 'Edit search' %}</a>
                 {% endif %}
             </div>
-	    <div class="nine columns">
-	      <a href="?q={{ dynamiq.form.q.value }}&csv">{% trans 'Download as CSV' %}</a>
-	    </div>
             <div class="three columns">
                 {% if dynamiq.form.q.value %}
                     <form action="{% url search %}" method="get" class="simple_search_options">
                         <input type="hidden" value="{{ dynamiq.form.q.value }}" name="q" />
+                        <input type="hidden" name="csv" value="{{ csv }}"/>
                         {{ dynamiq.form.sort }}
                     </form>
                 {% endif %}
-                <a href="#" class="secondary button global_list_item_details_switcher">Show details</a>
+                <a href="#" class="secondary button filter_button global_list_item_details_switcher">Show details</a>
+		{% if dynamiq.formset.is_bound %}
+		  <a href="#" class="secondary button filter_button advanced_csv_download_button">Download as CSV</a>
+		{% else %}
+		  <a href="#" class="secondary button filter_button csv_download_button">Download as CSV</a>
+		{% endif %}
             </div>
         </div>
     {% endif %}
@@ -65,5 +68,14 @@
     $('select[name=sort]').on('change', function(e) {
          $(this).closest('form').trigger('submit');
     });
+    $('.csv_download_button').on('click', function(e) {
+         $('[name=csv]').val('1');
+         $(this).siblings('form').trigger('submit');
+    });
+    $('.advanced_csv_download_button').on('click', function(e) {
+         $('[name=csv]').val('1');
+         $('.advanced_search_form').trigger('submit');
+    });
+
 </script>
 {% endblock js_onload %}

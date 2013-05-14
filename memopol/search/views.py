@@ -73,26 +73,15 @@ class SearchView(TemplateView):
                 ]
             },
             "list_template_name": self.list_template_name,
-            "per_page": limit
+            "per_page": limit,
+            "csv":  self.request.GET.get('csv', '0')
         }
 
     def render_to_response(self, context, **response_kwargs):
-        if 'csv' in self.request.GET:
+        if self.request.GET.get('csv', '0') != '0':
             return self.render_to_csv(context, **response_kwargs)
         return super(SearchView, self).render_to_response(context,
                                                           **response_kwargs)
-
-    def render_to_csv_test(self, context, **response_kwargs):
-        params = self.request.GET
-        response = HttpResponse()
-        name = self.request.path.strip('/').replace('/', '_')
-
-        data = self.get_context_data(**response_kwargs)
-        for result in data['dynamiq']['results']:
-            mep = result.object
-            response.write(u'<li>%s %s</li>' % (mep.first_name,mep.last_name))
-
-        return response
 
     def render_to_csv(self, context, **response_kwargs):
         params = self.request.GET
