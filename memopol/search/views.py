@@ -41,7 +41,8 @@ class SearchView(TemplateView):
                 F = ParsedStringQBuilder(form.cleaned_data['q'], MEPSearchForm)
                 query, label = F()
                 formset = formset_class()
-                limit = form.cleaned_data.get("limit") or limit
+                if "limit" in form.cleaned_data:
+                    limit = form.cleaned_data["limit"]
                 sort = form.cleaned_data.get("sort") or sort
         else:
             form = MEPSimpleSearchForm()
@@ -57,6 +58,10 @@ class SearchView(TemplateView):
             results = SearchQuerySet().filter(query)
             if sort:
                 results = results.order_by(sort)
+            if not limit:
+                # When iterating over SearchQuerySet, haystack will fetch
+                # results 10 by 10. This fetchs them all in one call:
+                results = results[:]
         else:
             results = EmptySearchQuerySet()
         return {

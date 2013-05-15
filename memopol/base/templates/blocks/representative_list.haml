@@ -1,8 +1,11 @@
 -load endless
 
 -with objects=dynamiq.results
-  -# Note that "paginate" doesn't accept variable name with dot inside
-  -paginate per_page objects
+  -if per_page > 0
+    -# Note that "paginate" doesn't accept variable name with dot inside
+    -paginate per_page objects
   -for result in objects
     -include "blocks/representative_list_item.html" with mep=result.object
-  -show_more
+  -if per_page > 0
+    -show_more
+
