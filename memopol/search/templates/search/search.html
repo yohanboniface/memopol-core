@@ -15,16 +15,12 @@
                 {% if dynamiq.form.q.value %}
                     <form action="{% url search %}" method="get" class="simple_search_options">
                         <input type="hidden" value="{{ dynamiq.form.q.value }}" name="q" />
-                        <input type="hidden" name="csv" value="{{ csv }}"/>
+                        <input type="hidden" value="{{ as_csv.value }}" name="as_csv" />
                         {{ dynamiq.form.sort }}
                     </form>
                 {% endif %}
                 <a href="#" class="secondary button filter_button global_list_item_details_switcher">Show details</a>
-		{% if dynamiq.formset.is_bound %}
-		  <a href="#" class="secondary button filter_button advanced_csv_download_button">Download as CSV</a>
-		{% else %}
-		  <a href="#" class="secondary button filter_button csv_download_button">Download as CSV</a>
-		{% endif %}
+		<a href="#" class="secondary button filter_button csv_download_button">Download as CSV</a>
             </div>
         </div>
     {% endif %}
@@ -69,13 +65,13 @@
          $(this).closest('form').trigger('submit');
     });
     $('.csv_download_button').on('click', function(e) {
-         $('[name=csv]').val('1');
-         $(this).siblings('form').trigger('submit');
+         {% if dynamiq.formset.is_bound %}
+            $('[name=as_csv]').attr('checked', 'checked');
+            $('.advanced_search_form').trigger('submit');
+         {% else %}
+            $('[name=as_csv]').val('as_csv');
+            $(this).siblings('form').trigger('submit');
+         {% endif %}
     });
-    $('.advanced_csv_download_button').on('click', function(e) {
-         $('[name=csv]').val('1');
-         $('.advanced_search_form').trigger('submit');
-    });
-
 </script>
 {% endblock js_onload %}
