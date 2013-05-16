@@ -13,16 +13,17 @@ class Migration(SchemaMigration):
         # Adding field 'MEP.bxl_office_number'
         db.add_column('meps_mep', 'bxl_office_number', self.gf('django.db.models.fields.CharField')(default=" ", max_length=255), keep_default=False)
 
-        a, end = 0, orm.MEP.objects.all().count()
-        for mep in orm.MEP.objects.all():
-            a += 1
-            stdout.write("Spliting mep bxl office ... %i/%i\r" % (a, end))
-            stdout.flush()
-            mep.bxl_floor = mep.bxl_office[:2]
-            mep.bxl_office_number = mep.bxl_office[2:]
-            mep.save()
+        if not db.dry_run:
+            a, end = 0, orm.MEP.objects.all().count()
+            for mep in orm.MEP.objects.all():
+                a += 1
+                stdout.write("Spliting mep bxl office ... %i/%i\r" % (a, end))
+                stdout.flush()
+                mep.bxl_floor = mep.bxl_office[:2]
+                mep.bxl_office_number = mep.bxl_office[2:]
+                mep.save()
 
-        stdout.write("\n")
+                stdout.write("\n")
 
         return
 

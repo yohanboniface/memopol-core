@@ -14,16 +14,17 @@ class Migration(SchemaMigration):
         # Adding field 'MEP.stg_office_number'
         db.add_column('meps_mep', 'stg_office_number', self.gf('django.db.models.fields.CharField')(default='-1', max_length=255), keep_default=False)
 
-        a, end = 0, orm.MEP.objects.all().count()
-        for mep in orm.MEP.objects.all():
-            a += 1
-            stdout.write("Spliting mep stg office ... %i/%i\r" % (a, end))
-            stdout.flush()
-            mep.stg_floor = mep.stg_office[:3]
-            mep.stg_office_number = mep.stg_office[3:]
-            mep.save()
+        if not db.dry_run:
+            a, end = 0, orm.MEP.objects.all().count()
+            for mep in orm.MEP.objects.all():
+                a += 1
+                stdout.write("Spliting mep stg office ... %i/%i\r" % (a, end))
+                stdout.flush()
+                mep.stg_floor = mep.stg_office[:3]
+                mep.stg_office_number = mep.stg_office[3:]
+                mep.save()
 
-        stdout.write("\n")
+            stdout.write("\n")
 
 
     def backwards(self, orm):
