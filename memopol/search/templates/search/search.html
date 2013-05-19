@@ -16,11 +16,19 @@
                     <form action="{% url search %}" method="get" class="simple_search_options">
                         <input type="hidden" value="{{ dynamiq.form.q.value }}" name="q" />
                         <input type="hidden" value="{{ as_csv.value }}" name="as_csv" />
+			<input type="hidden" name="limit" value="{{ per_page }}"/>
                         {{ dynamiq.form.sort }}
                     </form>
                 {% endif %}
                 <a href="#" class="secondary button filter_button global_list_item_details_switcher">Show details</a>
 		<a href="#" class="secondary button filter_button csv_download_button">Download as CSV</a>
+		{% if per_page %}
+                  {% if dynamiq.formset.is_bound %}
+		    <a href="#" class="secondary button filter_button advanced_disable_pagination_button">Disable pagination</a>
+		  {% else %}
+		    <a href="#" class="secondary button filter_button disable_pagination_button">Disable pagination</a>
+		  {% endif %}
+		{% endif %}
             </div>
         </div>
     {% endif %}
@@ -72,6 +80,13 @@
             $('[name=as_csv]').val('as_csv');
             $(this).siblings('form').trigger('submit');
          {% endif %}
+    $('.disable_pagination_button').on('click', function(e) {
+         $('[name=limit]').val('0');
+         $(this).siblings('form').trigger('submit');
+    });
+    $('.advanced_disable_pagination_button').on('click', function(e) {
+         $('[name=limit]').val('0');
+         $('.advanced_search_form').trigger('submit');
     });
 </script>
 {% endblock js_onload %}

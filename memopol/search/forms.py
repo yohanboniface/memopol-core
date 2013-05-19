@@ -62,6 +62,14 @@ class MEPSearchOptionsForm(SearchOptionsForm):
                 label=_("Download as CSV"),
             )
 
+    limit = forms.IntegerField(
+                min_value=0,
+                max_value=100,
+                required=True,
+                initial=30,
+                label=_("Total results")
+            )
+
 class MEPSearchForm(HaystackForm):
     options_form_class = MEPSearchOptionsForm
 
@@ -167,7 +175,7 @@ class MEPSearchAdvancedFormset(AdvancedFormset):
 class MEPSimpleSearchForm(forms.Form):
 
     limit = forms.IntegerField(
-                min_value=1,
+                min_value=0,
                 max_value=100,
                 required=False,
                 initial=15,
