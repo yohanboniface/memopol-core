@@ -62,14 +62,18 @@ class SearchView(TemplateView):
                 # When iterating over SearchQuerySet, haystack will fetch
                 # results 10 by 10. This fetchs them all in one call:
                 results = results[:]
+			# we must find the average score for the search results
+            average = sum([mep.total_score for mep in results])/len(results)
         else:
             results = EmptySearchQuerySet()
+            average = 0.0
         return {
             "dynamiq": {
                 "results": results,
                 "label": label,
                 "formset": formset,
                 "form": form,
+				"average": average,
                 "shortcuts": [
                     TopRated({"request": self.request}),
                     WorstRated({"request": self.request})
