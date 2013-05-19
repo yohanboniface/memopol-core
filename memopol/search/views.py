@@ -79,7 +79,11 @@ class SearchView(TemplateView):
                 "label": label,
                 "formset": formset,
                 "form": form,
+<<<<<<< HEAD
                 "average": average,
+=======
+				"average": average,
+>>>>>>> Bug #320 - Add the average score to the search result page
                 "shortcuts": [
                     TopRated({"request": self.request}),
                     WorstRated({"request": self.request})
