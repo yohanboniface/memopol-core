@@ -3,14 +3,18 @@
 .twelve.columns.floor
   .row.panel
     .two.columns
-      %img{width: "100px", src: "{% url meps:mep-picture mep.ep_id %}"}
+      %img{width: "100px", src: "{% url meps:mep-picture mep.ep_id %}", itemprop: "image"}
 
-    .two.columns
-      %div{class: "panel radius {{ mep.total_score|scolorize }}"}
+    .two.columns{itemscope: None, itemtype: "http://schema.org/AggregateRating", itemprop: "aggregateRating"}
+      %div{class: "panel radius {{ mep.total_score|scolorize }}", itemprop: "ratingValue"}
         =mep.total_score|floatformat:1
+      <meta itemprop="itemReviewed" content="{{ mep }}"/>
+      <meta itemprop="ratingCount" content="{{ mep.scores|length }}"/>
+      <meta itemprop="bestRating" content="100"/>
+      <meta itemprop="worstRating" content="0"/>
 
     .six.columns
-      %h4
+      %h4{itemprop: "name"}
         =mep
       %div
         -for achievement in mep.achievements.all
@@ -30,13 +34,13 @@
               -trans "Former mep"
       %li
         %a{href: "{% url meps:index_by_country mep.country.code %}"}
-          %span{class: "sprite-country_small-{{ mep.country.code }}"}
-          =mep.country.name
+          %span{class: "sprite-country_small-{{ mep.country.code }}", itemprop: "brand"}
+            =mep.country.name
       -if mep.group
         %li
           %a{href: "{% url meps:index_by_group mep.group.abbreviation %}"}
-            %span{class: "sprite-eu_group-{{ mep.group.abbreviation|cut:'/' }}"}
-            {{ mep.group.name }} ({{ mep.group.abbreviation }})
+            %span{class: "sprite-eu_group-{{ mep.group.abbreviation|cut:'/' }}", itemprop: "brand"}
+              {{ mep.group.name }} ({{ mep.group.abbreviation }})
 
     %ul.eight.columns
       -for post in mep.important_posts
@@ -45,7 +49,7 @@
             {{ post.role }} of <a href="{{ post.instance.get_absolute_url }}">{{ post.instance.name }}</a>
       -if mep.party
         %li
-          <i>{% trans "National party" %}</i>: <a href="{% url meps:index_by_party mep.party.id mep.party.name|slugify %}">{{ mep.party.name }}</a></li>
+	  <i>{% trans "National party" %}</i>: <a href="{% url meps:index_by_party mep.party.id mep.party.name|slugify %}" itemprop="brand">{{ mep.party.name }}</a></li>
       -if mep.birth_date
         %li
           <i>{% if mep.gender == 'M' %}{% trans "Born on" %}{% else %}{% trans "Born on (female)" %}{% endif %}</i> {% blocktrans with mep.birth_date.day as day and mep.birth_date|date:'F' as month and mep.birth_date.year as year and mep.birth_place as birth_place and mep.age as age %}{{ day }} {{ month }} {{ year }}<i> at </i>{{ birth_place }}, {{ age }} years old.{% endblocktrans %}</li>
