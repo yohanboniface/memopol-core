@@ -8,10 +8,11 @@
     .two.columns{itemscope: None, itemtype: "http://schema.org/AggregateRating", itemprop: "aggregateRating"}
       %div{class: "panel radius {{ mep.total_score|scolorize }}", itemprop: "ratingValue"}
         =mep.total_score|floatformat:1
-      <meta itemprop="itemReviewed" content="{{ mep }}"/>
-      <meta itemprop="ratingCount" content="{{ mep.scores|length }}"/>
-      <meta itemprop="bestRating" content="100"/>
-      <meta itemprop="worstRating" content="0"/>
+      %div{style: "display: none;"}      
+        <span itemprop="itemReviewed">{{ mep }}</span>
+        <span itemprop="ratingCount">{{ mep.scores|length }}</span>
+        <span itemprop="bestRating">100</span>
+        <span itemprop="worstRating">0</span>
 
     .six.columns
       %h4{itemprop: "name"}
@@ -49,7 +50,7 @@
             {{ post.role }} of <a href="{{ post.instance.get_absolute_url }}">{{ post.instance.name }}</a>
       -if mep.party
         %li
-	  <i>{% trans "National party" %}</i>: <a href="{% url meps:index_by_party mep.party.id mep.party.name|slugify %}" itemprop="brand">{{ mep.party.name }}</a></li>
+          <i>{% trans "National party" %}</i>: <a href="{% url meps:index_by_party mep.party.id mep.party.name|slugify %}" itemprop="brand">{{ mep.party.name }}</a></li>
       -if mep.birth_date
         %li
           <i>{% if mep.gender == 'M' %}{% trans "Born on" %}{% else %}{% trans "Born on (female)" %}{% endif %}</i> {% blocktrans with mep.birth_date.day as day and mep.birth_date|date:'F' as month and mep.birth_date.year as year and mep.birth_place as birth_place and mep.age as age %}{{ day }} {{ month }} {{ year }}<i> at </i>{{ birth_place }}, {{ age }} years old.{% endblocktrans %}</li>
