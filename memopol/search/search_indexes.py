@@ -2,7 +2,11 @@
 
 from haystack import indexes
 from memopol.meps.models import MEP
+import unicodedata
 
+def _stripdiacritics(s):
+    return ''.join(c for c in unicodedata.normalize('NFD', s)
+                   if unicodedata.category(c) != 'Mn')
 
 class MEPIndex(indexes.SearchIndex, indexes.Indexable):
     fulltext = indexes.CharField(document=True, model_attr="content")
@@ -30,3 +34,10 @@ class MEPIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_achievements(self, obj):
         return [a.slug for a in obj.achievements.all()]
+
+    def prepare_fulltext(self, obj):
+        return [obj.content(), _stripdiacritics(obj.content())]
+
+    def prepare_last_name(self, obj):
+        return [obj.last_name, _stripdiacritics(obj.last_name)]
+
