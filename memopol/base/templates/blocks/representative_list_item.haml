@@ -2,13 +2,26 @@
 
 -cache 86400 representative_list_item result_mep.id
   -with mep=result_mep.object
-    .floor.twelve.list_item
-      .row.panel
+    .floor.twelve.list_item{itemscope: None, itemtype: "http://schema.org/Review"}
+      %div{itemscope: None, itemtype: "http://schema.org/AggregateRating",
+           itemprop: "aggregateRating", style: "display: none;"}
+        <span itemprop="ratingValue">{{ mep.total_score|floatformat:1 }}</span>
+        <span itemprop="reviewCount">{{ mep.score_set.all|length }}</span>
+        <span itemprop="bestRating">100</span>
+        <span itemprop="worstRating">0</span>
+      .row.panel{itemscope: None, itemtype: "http://schema.org/Person",
+                 itemprop: "itemReviewed"}
+        %div{style: "display: none;"}
+          %div{itemprop="nationality"}
+            {{ mep.country.name }}
+          -for group in mep.groups.all
+            -# we should do the same with organizations, delegations, etc...
+            <span itemprop="memberof">{{ group.name }}</span>
         .four.columns.flat.mobile-four
           .five.columns.flat.mobile-two
             %a{class: "th", href: "{{ mep.get_absolute_url }}"}
-              %img{width: "100px", src: "{% url meps:mep-picture mep.ep_id %}"}
-
+              %img{width: "100px", src: "{% url meps:mep-picture mep.ep_id %}",
+                   itemprop: "image"}
           .seven.columns.mobile-two
             .panel.radius{class: "{{ mep.total_score|scolorize }}"}
               =mep.total_score|floatformat:1
@@ -20,7 +33,8 @@
         .six.columns
           .row
             %h4
-              %a{href: "{{ mep.get_absolute_url }}", style: "color: black;"}
+              %a{href: "{{ mep.get_absolute_url }}", style: "color: black;",
+                 itemprop: "name"}
                 =mep
           .row
             -for achievement in mep.achievements.all
@@ -32,7 +46,6 @@
                   <a href="{{ post.instance.get_absolute_url }}">{{ post.instance.name }}</a>
                   -if not post.role|lower == "member"
                     ({{ post.role|lower }})
-
         .two.columns.mobile-four
           -if mep.active and mep.bxl_phone1
               -call_now mep.bxl_phone1
