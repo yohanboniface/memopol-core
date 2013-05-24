@@ -32,11 +32,10 @@ class MEPIndex(indexes.SearchIndex, indexes.Indexable):
         return [a.slug for a in obj.achievements.all()]
 
     def prepare_fulltext(self, obj):
-        s = stripdiacritics(obj.content())
-        if s == obj.content():
-            return s
-        return [s, obj.content()]
+        return [stripdiacritics(obj.content()), ]
 
-    prepare_last_name = prepare_fulltext
+    def prepare_last_name(self, obj):
+        return [stripdiacritics(obj.last_name), ]
+
 
 
