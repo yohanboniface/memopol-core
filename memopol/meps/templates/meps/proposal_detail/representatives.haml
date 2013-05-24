@@ -34,7 +34,7 @@
               =v.recommendation
 
     %tbody
-      -for mep, positions in representatives_data.itervalues
+      -for mep, positions in representatives_data
         %tr
           %th
             %a{href: "{{ mep.get_absolute_url }}"}
