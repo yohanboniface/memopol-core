@@ -1,4 +1,4 @@
-# -*- coding:Utf-8 -*-
+# -*- coding:utf-8 -*-
 import json
 from django.db import models
 from django.db.models import Avg
