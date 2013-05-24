@@ -9,7 +9,7 @@ from memopol.meps.models import MEP
 from memopol.votes.models import Proposal, Vote
 
 from memopol.meps.views import optimise_mep_query
-
+from memopol.base.utils import stripdiacritics
 
 class ProposalView(DetailView):
     model = Proposal
@@ -47,7 +47,8 @@ class ProposalView(DetailView):
                     positions.append((position, subvote.recommendation))
             representatives_data[mep.pk] = (mep, positions)
         context.update({
-            "representatives_data": representatives_data,
+            "representatives_data": sorted(representatives_data.values(),
+                                           key=lambda x: stripdiacritics(x[0].last_name).lower()),
             "subvotes": subvotes,
         })
         return context
