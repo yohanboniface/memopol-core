@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import unicodedata
 from django.http import HttpResponse
 from django.core.management import call_command
 from django.core.cache import cache
@@ -170,3 +171,7 @@ def loaddata(orm, fixture_name):
             call_command("loaddata", fixture_name)
 
 # end of code from dingus and more http://stackoverflow.com/questions/5472925/django-loading-data-from-fixture-after-backward-migration-loaddata-is-using-mod/5906258#5906258
+
+def stripdiacritics(s):
+    return ''.join(c for c in unicodedata.normalize('NFD', s)
+                   if unicodedata.category(c) != 'Mn')
