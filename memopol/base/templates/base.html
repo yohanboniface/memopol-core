@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/app.sass" type="text/x-sass" />
 {% endcompress %}
     <script src="{{ STATIC_URL }}foundation/javascripts/modernizr.foundation.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
 
 
     <!-- IE Fix for HTML5 Tags -->
@@ -93,9 +94,6 @@
     {% block javascript %}
     {% endblock javascript %}
 {% endcompress %}
-  <script type="text/javascript" src='{{ STATIC_URL }}js/raphael.js'></script>
-  <script type="text/javascript" src='{{ STATIC_URL }}js/kartograph.js'></script>
-  <script type="text/javascript" src='{{ STATIC_URL }}js/chroma.min.js'></script>
     {% block modals %}
       {# Modals must be out ot the main content (required by foundation) #}
       {% include "blocks/modals.html" %}
