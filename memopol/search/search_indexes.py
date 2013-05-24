@@ -2,15 +2,11 @@
 
 from haystack import indexes
 from memopol.meps.models import MEP
-import unicodedata
-
-def _stripdiacritics(s):
-    return ''.join(c for c in unicodedata.normalize('NFD', s)
-                   if unicodedata.category(c) != 'Mn')
+from memopol.base.utils import stripdiacritics
 
 class MEPIndex(indexes.SearchIndex, indexes.Indexable):
-    fulltext = indexes.CharField(document=True, model_attr="content")
-    last_name = indexes.CharField(model_attr="last_name")
+    fulltext = indexes.CharField(document=True)
+    last_name = indexes.CharField()
     group = indexes.CharField(model_attr="group__abbreviation", faceted=True, default="")
     country = indexes.CharField(model_attr="country__code", faceted=True)
     committees = indexes.MultiValueField()
@@ -36,8 +32,11 @@ class MEPIndex(indexes.SearchIndex, indexes.Indexable):
         return [a.slug for a in obj.achievements.all()]
 
     def prepare_fulltext(self, obj):
-        return [obj.content(), _stripdiacritics(obj.content())]
+        s = stripdiacritics(obj.content())
+        if s == obj.content():
+            return s
+        return [s, obj.content()]
 
-    def prepare_last_name(self, obj):
-        return [obj.last_name, _stripdiacritics(obj.last_name)]
+    prepare_last_name = prepare_fulltext
+
 
