@@ -36,6 +36,3 @@ class MEPIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_last_name(self, obj):
         return [stripdiacritics(obj.last_name), ]
-
-
-
