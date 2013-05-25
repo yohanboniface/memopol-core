@@ -11,6 +11,9 @@
                 <a href="#" data-reveal-id="advanced_search_modal" class="button secondary">{% trans 'Edit search' %}</a>
                 {% endif %}
             </div>
+	    <div class="nine columns">
+	      <a href="?q={{ dynamiq.form.q.value }}&csv">{% trans 'Download as CSV' %}</a>
+	    </div>
             <div class="three columns">
                 {% if dynamiq.form.q.value %}
                     <form action="{% url search %}" method="get" class="simple_search_options">
