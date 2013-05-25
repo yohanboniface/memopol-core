@@ -66,7 +66,10 @@ class SearchView(TemplateView):
                 results = results[:]
 
             # we must find the average score for the search results
-            average = sum([mep.total_score for mep in results if mep.total_score])/len(filter(lambda mep: mep.total_score, results))
+            if len(filter(lambda mep: mep.total_score, results)) != 0:
+                average = sum([mep.total_score for mep in results if mep.total_score])/len(filter(lambda mep: mep.total_score, results))
+            else:
+                average = 0.0
         else:
             results = EmptySearchQuerySet()
             average = 0.0
