@@ -64,7 +64,7 @@ class SearchView(TemplateView):
                 # When iterating over SearchQuerySet, haystack will fetch
                 # results 10 by 10. This fetchs them all in one call:
                 results = results[:]
-			# we must find the average score for the search results
+            # we must find the average score for the search results
             average = sum([mep.total_score for mep in results])/len(results)
         else:
             results = EmptySearchQuerySet()
@@ -75,7 +75,7 @@ class SearchView(TemplateView):
                 "label": label,
                 "formset": formset,
                 "form": form,
-				"average": average,
+                "average": average,
                 "shortcuts": [
                     TopRated({"request": self.request}),
                     WorstRated({"request": self.request})
@@ -132,7 +132,7 @@ class SearchView(TemplateView):
         if 'object' in context:
             obj = context['object']
             meps = getattr(obj, 'meps', [])
-    
+
             if hasattr(meps, 'query'):
                 # got a queryset
                 meps = meps.select_related().distinct()
