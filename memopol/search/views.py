@@ -121,13 +121,7 @@ class SearchView(TemplateView):
             'stg phone2',
         ]
 
-        #committees = sorted([c.abbreviation for c in Committee.objects.all()])
-        #header += committees
-
         meps = []
-
-        max_score = int(params.get('max_score', 100))
-        min_score = int(params.get('min_score', -100))
 
         if 'object' in context:
             obj = context['object']
