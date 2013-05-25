@@ -1,9 +1,28 @@
--if mep.delegationroles
-  %ul
-    -for role in mep.delegationroles
-      %li
-        %a{href: "{% url meps:index_by_delegation role.delegation.id %}"}
-          {{ role.role }} {% trans "of" %} {{ role.delegation }}
--else
-  %p
-    -trans "No delegation."
+-with mep.delegations_roles.only_current.newer_first as current_delegations
+  -if current_delegations
+    #currentDelegations.currentRoles
+      %strong
+        -trans "Current Delegations:"
+      %ul
+        -for role in current_delegations
+          %li
+            %a{href: "{% url meps:index_by_delegation role.delegation.id %}"}
+              {{ role.role }} {% trans "of" %} {{ role.delegation }}
+            %span{class: "role-date"}
+              {% blocktrans with begin=role.begin %}since {{ begin }}{% endblocktrans %}
+  -else
+    %p
+      -trans "No current delegation."
+
+-with mep.delegations_roles.only_old.newer_first as old_delegations
+  -if old_delegations
+    #oldDelegations.oldRoles
+      %strong
+        -trans "Previous Delegations:"
+      %ul
+        -for role in old_delegations
+          %li
+            %a{href: "{% url meps:index_by_delegation role.delegation.id %}"}
+              {% blocktrans with role=role.role delegation=role.delegation %}{{ role }} of {{ delegation }}{% endblocktrans %}
+            %span{class: "role-date"}
+              {{ role.begin }} &ndash; {{ role.end }}

@@ -1,9 +1,28 @@
--if mep.committeeroles
-  %ul
-    -for role in mep.committeeroles
-      %li
-        %a{href: "{% url meps:index_by_committee role.committee.abbreviation %}"}
-          <span class="label committee">{{ role.committee.abbreviation }}</span> {{ role.committee.name }}: <strong>{{ role.role }}</strong></a></li>
--else
-  %p
-    -trans "No committee."
+-with mep.committees_roles.only_current.newer_first as current_committees
+  -if current_committees
+    #currentCommittees.currentRoles
+      %strong
+        -trans "Current Committees:"
+      %ul
+        -for role in current_committees
+          %li
+            %a{href: "{% url meps:index_by_committee role.committee.abbreviation %}"}
+              <span class="label committee">{{ role.committee.abbreviation }}</span> {{ role.committee.name }}: <strong>{{ role.role }}</strong>
+            %span{class: "role-date"}
+              {% blocktrans with begin=role.begin %}since {{ begin }}{% endblocktrans %}
+  -else
+    %p
+      -trans "No current committee."
+
+-with mep.committees_roles.only_old.newer_first as old_committees
+  -if old_committees
+    #previousCommittees.oldRoles
+      %strong
+        -trans "Previous Committees:"
+      %ul
+        -for role in old_committees
+          %li
+            %a{href: "{% url meps:index_by_committee role.committee.abbreviation %}", class: "old-committee"}
+              <span class="label committee">{{ role.committee.abbreviation }}</span> {{ role.committee.name }}: <strong>{{ role.role }}</strong>
+            %span{class: "role-date"}
+              {{ role.begin }} &ndash; {{ role.end }}

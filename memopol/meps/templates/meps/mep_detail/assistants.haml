@@ -1,9 +1,9 @@
 -load assistants
 
--if mep.assistantmep_set.count
+-if mep.assistants_mep.count
   #assistants
     %ul.body
-      -for assistantmep in mep.assistantmep_set.all
+      -for assistantmep in mep.assistants_mep
         %li
           =assistantmep.assistant
           -meps_the_assistant_is_also_working_for assistantmep.assistant mep as other_meps

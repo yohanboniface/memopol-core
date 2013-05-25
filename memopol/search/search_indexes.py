@@ -23,10 +23,10 @@ class MEPIndex(indexes.SearchIndex, indexes.Indexable):
         return MEP
 
     def prepare_committees(self, obj):
-        return [c.abbreviation for c in obj.committees.all()]
+        return [c.committee.abbreviation for c in obj.committees_roles.only_current()]
 
     def prepare_delegations(self, obj):
-        return [d.pk for d in obj.delegations.all()]
+        return [d.delegation.pk for d in obj.delegations_roles.only_current()]
 
     def prepare_achievements(self, obj):
         return [a.slug for a in obj.achievements.all()]
@@ -36,6 +36,3 @@ class MEPIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_last_name(self, obj):
         return [stripdiacritics(obj.last_name), ]
-
-
-

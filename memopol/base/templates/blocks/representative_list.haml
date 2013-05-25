@@ -1,11 +1,12 @@
 -load endless
 
+-if dynamiq.average > 0
+  -include "blocks/representative_list_average.html" with average=dynamiq.average
 -with objects=dynamiq.results
   -if per_page > 0
     -# Note that "paginate" doesn't accept variable name with dot inside
     -paginate per_page objects
   -for result in objects
-    -include "blocks/representative_list_item.html" with mep=result.object
+    -include "blocks/representative_list_item.html" with result_mep=result
   -if per_page > 0
     -show_more
-
