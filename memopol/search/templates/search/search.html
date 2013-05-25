@@ -11,24 +11,19 @@
                 <a href="#" data-reveal-id="advanced_search_modal" class="button secondary">{% trans 'Edit search' %}</a>
                 {% endif %}
             </div>
-	    <div class="nine columns">
-	      <a href="?q={{ dynamiq.form.q.value }}&csv">{% trans 'Download as CSV' %}</a>
-	    </div>
             <div class="three columns">
                 {% if dynamiq.form.q.value %}
                     <form action="{% url search %}" method="get" class="simple_search_options">
                         <input type="hidden" value="{{ dynamiq.form.q.value }}" name="q" />
+                        <input type="hidden" value="" name="as_csv" />
 			<input type="hidden" name="limit" value="{{ per_page }}"/>
                         {{ dynamiq.form.sort }}
                     </form>
                 {% endif %}
-                <a href="#" class="secondary button global_list_item_details_switcher">Show details</a>
+                <a href="#" class="secondary button filter_button global_list_item_details_switcher">Show details</a>
+		<a href="#" class="secondary button filter_button csv_download_button">Download as CSV</a>
 		{% if per_page %}
-                  {% if dynamiq.formset.is_bound %}
-		    <a href="#" class="secondary button advanced_disable_pagination_button">Disable pagination</a>
-		  {% else %}
-		    <a href="#" class="secondary button disable_pagination_button">Disable pagination</a>
-		  {% endif %}
+		  <a href="#" class="secondary button filter_button disable_pagination_button">Disable pagination</a>
 		{% endif %}
             </div>
         </div>
@@ -73,13 +68,24 @@
     $('select[name=sort]').on('change', function(e) {
          $(this).closest('form').trigger('submit');
     });
+    $('.csv_download_button').on('click', function(e) {
+         {% if dynamiq.formset.is_bound %}
+            $('[name=as_csv]').attr('checked', 'checked');
+            $('.advanced_search_form').trigger('submit');
+         {% else %}
+            $('[name=as_csv]').val('as_csv');
+            $(this).siblings('form').trigger('submit');
+         {% endif %}
+    });
     $('.disable_pagination_button').on('click', function(e) {
          $('[name=limit]').val('0');
-         $(this).siblings('form').trigger('submit');
-    });
-    $('.advanced_disable_pagination_button').on('click', function(e) {
-         $('[name=limit]').val('0');
-         $('.advanced_search_form').trigger('submit');
+         {% if dynamiq.formset.is_bound %}
+            $('[name=as_csv]').attr('checked', '');
+            $('.advanced_search_form').trigger('submit');
+         {% else %} 
+            $('[name=as_csv]').val('');
+            $(this).siblings('form').trigger('submit');
+         {% endif %}
     });
 </script>
 {% endblock js_onload %}

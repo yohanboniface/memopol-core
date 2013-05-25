@@ -56,6 +56,12 @@ class MEPSearchOptionsForm(SearchOptionsForm):
     SORT_INITIAL = SORT.LAST_NAME
     LIMIT_INITIAL = 30
 
+    as_csv = forms.BooleanField(
+                required=False,
+                initial=False,
+                label=_("Download as CSV"),
+            )
+
     limit = forms.IntegerField(
                 min_value=0,
                 max_value=100,
@@ -63,7 +69,6 @@ class MEPSearchOptionsForm(SearchOptionsForm):
                 initial=30,
                 label=_("Total results")
             )
-
 
 class MEPSearchForm(HaystackForm):
     options_form_class = MEPSearchOptionsForm
@@ -185,3 +190,9 @@ class MEPSimpleSearchForm(forms.Form):
     q = forms.CharField(
                 required=False,
             )
+    as_csv = forms.BooleanField(
+                required=False,
+                initial=False,
+                label=_("Download as CSV"),
+            )
+

@@ -78,11 +78,12 @@ class SearchView(TemplateView):
                 ]
             },
             "list_template_name": self.list_template_name,
-            "per_page": limit
+            "per_page": limit,
+            "as_csv":  self.request.GET.get('as_csv', False)
         }
 
     def render_to_response(self, context, **response_kwargs):
-        if 'csv' in self.request.GET:
+        if self.request.GET.get('as_csv', False):
             return self.render_to_csv(context, **response_kwargs)
         return super(SearchView, self).render_to_response(context,
                                                           **response_kwargs)
