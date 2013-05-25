@@ -64,8 +64,9 @@ class SearchView(TemplateView):
                 # When iterating over SearchQuerySet, haystack will fetch
                 # results 10 by 10. This fetchs them all in one call:
                 results = results[:]
+
             # we must find the average score for the search results
-            average = sum([mep.total_score for mep in results])/len(results)
+            average = sum([mep.total_score for mep in results if mep.total_score])/len(filter(lambda mep: mep.total_score, results))
         else:
             results = EmptySearchQuerySet()
             average = 0.0
