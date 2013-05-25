@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from snippets import snippet
 
 from memopol.base.utils import reify, color
-from memopol.reps.models import Representative, Party, TimePeriod
+from memopol.reps.models import Representative, Party, TimePeriod, CURRENT_MAGIC_VAL
 
 
 class Country(models.Model):
@@ -73,7 +73,8 @@ class Group(models.Model):
 
     @classmethod
     def ordered_by_meps_count(cls):
-        return cls.objects.distinct().filter(groupmep__mep__active=True).annotate(meps_count=Count('groupmep__mep', distinct=True)).order_by('-meps_count')
+        return (cls.objects.distinct().filter(groupmep__mep__active=True, groupmep__end=CURRENT_MAGIC_VAL)
+                           .annotate(meps_count=Count('groupmep__mep', distinct=True)).order_by('-meps_count'))
 
 
 class Delegation(models.Model):
@@ -97,7 +98,8 @@ class Delegation(models.Model):
 
     @classmethod
     def with_meps_count(cls):
-        return cls.objects.distinct().filter(delegationrole__mep__active=True).annotate(meps_count=Count('delegationrole__mep', distinct=True))
+        return (cls.objects.distinct().filter(delegationrole__mep__active=True, delegationrole__end=CURRENT_MAGIC_VAL)
+                           .annotate(meps_count=Count('delegationrole__mep', distinct=True)))
 
 
 class Committee(models.Model):
@@ -121,7 +123,8 @@ class Committee(models.Model):
 
     @classmethod
     def ordered_by_meps_count(cls):
-        return cls.objects.distinct().filter(committeerole__mep__active=True).annotate(meps_count=Count('committeerole__mep', distinct=True)).order_by('-meps_count')
+        return (cls.objects.distinct().filter(committeerole__mep__active=True, committeerole__end=CURRENT_MAGIC_VAL)
+                           .annotate(meps_count=Count('committeerole__mep', distinct=True)).order_by('-meps_count'))
 
 
 class Building(models.Model):
