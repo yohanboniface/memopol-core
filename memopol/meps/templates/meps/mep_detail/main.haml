@@ -39,12 +39,14 @@
               -trans "Former mep"
       %li
         %a{href: "{% url meps:index_by_country mep.country.code %}"}
-          %span{class: "sprite-country_small-{{ mep.country.code }}", itemprop: "brand"}
+          %span{class: "sprite-country_small-{{ mep.country.code }}"}
+          %span{itemprop: "brand"}
             =mep.country.name
       -if mep.group
         %li
           %a{href: "{% url meps:index_by_group mep.group.abbreviation %}"}
-            %span{class: "sprite-eu_group-{{ mep.group.abbreviation|cut:'/' }}", itemprop: "brand"}
+            %span{class: "sprite-eu_group-{{ mep.group.abbreviation|cut:'/' }}"}
+            %span{itemprop: "brand"}
               {{ mep.group.name }} ({{ mep.group.abbreviation }})
 
     %ul.eight.columns
