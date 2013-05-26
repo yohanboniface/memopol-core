@@ -60,10 +60,10 @@ class SearchView(TemplateView):
             results = SearchQuerySet().filter(query)
             if sort:
                 results = results.order_by(sort)
-            if not limit:
-                # When iterating over SearchQuerySet, haystack will fetch
-                # results 10 by 10. This fetchs them all in one call:
-                results = results[:]
+
+            # When iterating over SearchQuerySet, haystack will fetch
+            # results 10 by 10. This fetchs them all in one call:
+            results = results[:]
 
             # we must find the average score for the search results
             if len(filter(lambda mep: mep.total_score, results)) != 0:
