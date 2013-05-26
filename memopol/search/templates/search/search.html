@@ -28,6 +28,9 @@
             </div>
         </div>
     {% endif %}
+    {% if dynamiq.average > 0 %}
+        {% include "blocks/representative_list_average.html" with average=dynamiq.average %}
+    {% endif %}
     {% if dynamiq.results %}
         {% include list_template_name %}
     {% else %}
