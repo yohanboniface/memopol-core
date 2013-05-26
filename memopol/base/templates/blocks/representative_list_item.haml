@@ -5,10 +5,14 @@
     .floor.twelve.list_item{itemscope: None, itemtype: "http://schema.org/Review"}
       %div{itemscope: None, itemtype: "http://schema.org/AggregateRating",
            itemprop: "aggregateRating", style: "display: none;"}
-        <span itemprop="ratingValue">{{ mep.total_score|floatformat:1 }}</span>
-        <span itemprop="reviewCount">{{ mep.score_set.all|length }}</span>
-        <span itemprop="bestRating">100</span>
-        <span itemprop="worstRating">0</span>
+        %span{itemprop: "ratingValue"}
+          =mep.total_score|floatformat:1
+        %span{itemprop: "reviewCount"}
+          =mep.score_set.all|length
+        %span{itemprop: "bestRating"}
+          100
+        %span{itemprop: "worstRating"}
+          0
       .row.panel{itemscope: None, itemtype: "http://schema.org/Person",
                  itemprop: "itemReviewed"}
         %div{style: "display: none;"}
@@ -16,7 +20,8 @@
             =mep.country.name
           -for group in mep.groups.all
             -# we should do the same with organizations, delegations, etc...
-            <span itemprop="memberof">{{ group.name }}</span>
+            %span{itemprop: "memberof"}
+              =group.name
         .four.columns.flat.mobile-four
           .five.columns.flat.mobile-two
             %a{class: "th", href: "{{ mep.get_absolute_url }}"}
@@ -44,7 +49,8 @@
             %ul
               -for post in mep.important_posts
                 %li
-                  <a href="{{ post.instance.get_absolute_url }}">{{ post.instance.name }}</a>
+                  %a{href: "{{ post.instance.get_absolute_url }}"}
+                    =post.instance.name
                   -if not post.role|lower == "member"
                     ({{ post.role|lower }})
 

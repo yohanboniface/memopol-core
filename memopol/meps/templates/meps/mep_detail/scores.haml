@@ -24,10 +24,12 @@
         .eight.columns
           %div{itemprop: "datePublished", style: "display: none;"}
             =score.date|date:"Y-m-d"
-          <a href="{{ score.proposal.get_absolute_url }}" itemprop="about">{{ score.proposal.title }}</a> {% blocktrans with score.date as score_date %}(on {{ score_date }}){% endblocktrans %}
+          %a{href: "{{ score.proposal.get_absolute_url }}", itemprop: "about"}
+            =score.proposal.title
+          {% blocktrans with score.date as score_date %}(on {{ score_date }}){% endblocktrans %}
 
         .two.columns{itemprop: "reviewBody"}
           %a.button.secondary{href: "{% url meps:votes:votes_mep score.proposal.id mep.id %}"}
             -trans "Details"
         %div{itemprop: "author", style: "display: none;"}
-          lqdn
+          La Quadrature du Net

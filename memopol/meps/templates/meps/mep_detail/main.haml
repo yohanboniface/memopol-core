@@ -9,10 +9,14 @@
       %div{class: "panel radius {{ mep.total_score|scolorize }}", itemprop: "ratingValue"}
         =mep.total_score|floatformat:1
       %div{style: "display: none;"}      
-        <span itemprop="itemReviewed">{{ mep }}</span>
-        <span itemprop="ratingCount">{{ mep.scores|length }}</span>
-        <span itemprop="bestRating">100</span>
-        <span itemprop="worstRating">0</span>
+        %span{itemprop: "itemReviewed"}
+          =mep
+        %span{itemprop: "ratingCount"}
+          =mep.scores|length
+        %span{itemprop: "bestRating"}
+          100
+        %span{itemprop: "worstRating"}
+          0
 
     .six.columns
       %h4{itemprop: "name"}
