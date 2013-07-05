@@ -145,6 +145,8 @@ def add_countries(mep, countries):
     for country in countries:
         print country
         print "     link mep to country", '"%s"' % country["country"], "for a madate"
+        if country["country"] == "Croatia" and not Country.objects.filter(name="Croatia"):
+            Country.objects.create(name="Croatia", code="HR")
         _country = Country.objects.get(name=country["country"])
         print "     link representative to party"
         if "party" in country:
