@@ -30,3 +30,4 @@ django-categories
 git+git://github.com/frankban/django-endless-pagination.git
 django-compressor
 hamlpy
+ijson
