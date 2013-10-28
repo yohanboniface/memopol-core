@@ -2,6 +2,7 @@ from django.conf.urls.defaults import patterns, url, include
 from django.views.generic import ListView
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
+from django.views.decorators.cache import cache_page
 
 from memopol.meps.models import LocalParty, Country, Group, Committee, Delegation, Organization, Building, MEP
 from memopol.reps.models import Opinion
@@ -39,9 +40,9 @@ urlpatterns = patterns('memopol.meps.views',
     url(r'^votes/$', lambda request: redirect(reverse("meps:votes:index_votes"))),
 
     url(r'^deputy_from_ep_id/(?P<ep_id>\d+)/$', RedirectToMepFromEPID.as_view(), name='mep'),
-    url(r'^deputy/(?P<pk>\w+)/$', MEPView.as_view(), name='mep'),
-    url(r'^deputy/(?P<pk>\w+)/dataporn/$', MEPView.as_view(template_name="meps/dataporn.html"), name='mep_dataporn'),
-    url(r'^deputy/(?P<pk>\w+)/contact$', MEPView.as_view(template_name="meps/mep_contact.html"), name='mep_contact'),
+    url(r'^deputy/(?P<pk>\w+)/$', cache_page(MEPView.as_view(), 60 * 60 * 24), name='mep'),
+    url(r'^deputy/(?P<pk>\w+)/dataporn/$', cache_page(MEPView.as_view(template_name="meps/dataporn.html"), 60 * 60 * 24), name='mep_dataporn'),
+    url(r'^deputy/(?P<pk>\w+)/contact$', cache_page(MEPView.as_view(template_name="meps/mep_contact.html"), 60 * 60 * 24), name='mep_contact'),
 )
 
 urlpatterns += patterns('memopol.meps.views',
