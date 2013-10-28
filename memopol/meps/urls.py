@@ -12,11 +12,6 @@ from .views import (MEPView, MEPsFromView, MEPList, PartyView,
                     RedirectToMepFromEPID)
 
 urlpatterns = patterns('memopol.meps.views',
-    # those view are *very* expansive. we cache them in RAM for a week
-    url(r'^names/$', MEPList.as_view(), name='index_names'),
-    url(r'^inactive/$', MEPList.as_view(active=False), name='index_inactive'),
-    url(r'^score/$', MEPList.as_view(queryset=MEP.objects.filter(active=True).exclude(total_score__isnull=True).order_by('position'), score_listing=True), name='scores'),
-
     url(r'^opinion/$', ListView.as_view(queryset=Opinion.with_meps_count().order_by('-_date').select_related('_author')), name='index_opinions'),
     url(r'^opinion/(?P<pk>[0-9]+)/$', MEPsFromView.as_view(model=Opinion, template_name="meps/opinion_detail.html"), name='index_by_opinions'),
     url(r'^organization/$', ListView.as_view(queryset=Organization.with_meps_count()), name='index_organizations'),
