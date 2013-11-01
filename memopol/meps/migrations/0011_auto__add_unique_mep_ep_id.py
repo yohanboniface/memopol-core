@@ -7,10 +7,11 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
 
-        for i in orm.MEP.objects.all():
-            if orm.MEP.objects.filter(ep_id=i.ep_id).count() > 1:
-                for die in orm.MEP.objects.filter(ep_id=i.ep_id)[1:]:
-                    die.delete()
+        if not db.dry_run:
+            for i in orm.MEP.objects.all():
+                if orm.MEP.objects.filter(ep_id=i.ep_id).count() > 1:
+                    for die in orm.MEP.objects.filter(ep_id=i.ep_id)[1:]:
+                        die.delete()
         # Adding unique constraint on 'MEP', fields ['ep_id']
         db.create_unique('meps_mep', ['ep_id'])
 

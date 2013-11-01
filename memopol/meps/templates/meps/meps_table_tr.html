@@ -19,12 +19,20 @@
   </td>
   {% if not 'country' in hidden_fields %}
   <td>
+    {% if proposal %}
+    {% with countrymep=mep.countries_mep|at_date:proposal.date %}{% include 'meps/snippets/country.html' with country=countrymep.country %}{% endwith %}
+    {% else %}
     {{ mep.country_tag|safe }}
+    {% endif %}
   </td>
   {% endif %}
   {% if not 'group' in hidden_fields %}
   <td>
+    {% if proposal %}
+    {% with groupmep=mep.groups_mep|at_date:proposal.date %}{% include 'meps/snippets/group.html' with group=groupmep.group %}{% endwith %}
+    {% else %}
     {{ mep.group_tag|safe }}
+    {% endif %}
   </td>
   {% endif %}
   {% if choice_listing %}

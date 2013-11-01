@@ -145,6 +145,8 @@ def add_countries(mep, countries):
     for country in countries:
         print country
         print "     link mep to country", '"%s"' % country["country"], "for a madate"
+        if country["country"] == "Croatia" and not Country.objects.filter(name="Croatia"):
+            Country.objects.create(name="Croatia", code="HR")
         _country = Country.objects.get(name=country["country"])
         print "     link representative to party"
         if "party" in country:
@@ -236,7 +238,7 @@ def add_groups(mep, groups):
             params['begin']=_parse_date(group["start"])
         if group.get("end"):
             params['end']=_parse_date(group["end"])
-        GroupMEP.objects.create(mep=mep, group=in_db_group, role=group["role"])
+        GroupMEP.objects.create(mep=mep, group=in_db_group, role=group["role"], **params)
                                 #begin=_parse_date(group["start"]),
                                 #end=_parse_date(group["end"]))
 

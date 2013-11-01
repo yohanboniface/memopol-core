@@ -3,7 +3,7 @@
 -block content
   .row
     .eight.columns
-      -include "blocks/home_slider.html"
+      -include "map-eu.html"
     .four.columns
       -include "blocks/last_news.html"
       -include "blocks/what_is_memopol.html"
@@ -16,3 +16,4 @@
 
 -block js_onload
   %script{type: "text/javascript", src: "{{ STATIC_URL }}js/map.js"}
+  %script{type: "text/javascript", src: "http://d3js.org/d3.v3.min.js"}

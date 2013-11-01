@@ -1,8 +1,0 @@
-{% if object.group %}
-<a href="{% url meps:index_by_group object.group.abbreviation %}">
-    <span class="sprite-eu_group-{{ object.group.abbreviation|cut:"/" }}" alt="{{ object.group.abbreviation }} logo"></span>
-  {{ object.group.abbreviation }}
-</a>
-{% else %}
--
-{% endif %}

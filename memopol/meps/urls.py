@@ -2,6 +2,7 @@ from django.conf.urls.defaults import patterns, url, include
 from django.views.generic import ListView
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
+from django.views.decorators.cache import cache_page
 
 from memopol.meps.models import LocalParty, Country, Group, Committee, Delegation, Organization, Building, MEP
 from memopol.reps.models import Opinion
@@ -11,11 +12,6 @@ from .views import (MEPView, MEPsFromView, MEPList, PartyView,
                     RedirectToMepFromEPID)
 
 urlpatterns = patterns('memopol.meps.views',
-    # those view are *very* expansive. we cache them in RAM for a week
-    url(r'^names/$', MEPList.as_view(), name='index_names'),
-    url(r'^inactive/$', MEPList.as_view(active=False), name='index_inactive'),
-    url(r'^score/$', MEPList.as_view(queryset=MEP.objects.filter(active=True).exclude(total_score__isnull=True).order_by('position'), score_listing=True), name='scores'),
-
     url(r'^opinion/$', ListView.as_view(queryset=Opinion.with_meps_count().order_by('-_date').select_related('_author')), name='index_opinions'),
     url(r'^opinion/(?P<pk>[0-9]+)/$', MEPsFromView.as_view(model=Opinion, template_name="meps/opinion_detail.html"), name='index_by_opinions'),
     url(r'^organization/$', ListView.as_view(queryset=Organization.with_meps_count()), name='index_organizations'),
@@ -39,9 +35,9 @@ urlpatterns = patterns('memopol.meps.views',
     url(r'^votes/$', lambda request: redirect(reverse("meps:votes:index_votes"))),
 
     url(r'^deputy_from_ep_id/(?P<ep_id>\d+)/$', RedirectToMepFromEPID.as_view(), name='mep'),
-    url(r'^deputy/(?P<pk>\w+)/$', MEPView.as_view(), name='mep'),
-    url(r'^deputy/(?P<pk>\w+)/dataporn/$', MEPView.as_view(template_name="meps/dataporn.html"), name='mep_dataporn'),
-    url(r'^deputy/(?P<pk>\w+)/contact$', MEPView.as_view(template_name="meps/mep_contact.html"), name='mep_contact'),
+    url(r'^deputy/(?P<pk>\w+)/$', cache_page(MEPView.as_view(), 60 * 60 * 24), name='mep'),
+    url(r'^deputy/(?P<pk>\w+)/dataporn/$', cache_page(MEPView.as_view(template_name="meps/dataporn.html"), 60 * 60 * 24), name='mep_dataporn'),
+    url(r'^deputy/(?P<pk>\w+)/contact$', cache_page(MEPView.as_view(template_name="meps/mep_contact.html"), 60 * 60 * 24), name='mep_contact'),
 )
 
 urlpatterns += patterns('memopol.meps.views',
