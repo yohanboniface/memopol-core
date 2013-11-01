@@ -114,9 +114,10 @@ def add_addrs(mep, addrs):
                                          postcode=bxl["Address"]["Zip"])
         mep.bxl_floor = bxl["Address"]["Office"][:2]
         mep.bxl_office_number = bxl["Address"]["Office"][2:]
-        mep.bxl_fax = bxl["Fax"]
-        mep.bxl_phone1 = bxl["Phone"]
-        mep.bxl_phone2 = bxl["Phone"][:-4] + "7" + bxl["Phone"][-3:]
+        mep.bxl_fax = bxl.get("Fax")
+        if "Phone" in bxl:
+            mep.bxl_phone1 = bxl["Phone"]
+            mep.bxl_phone2 = bxl["Phone"][:-4] + "7" + bxl["Phone"][-3:]
     print "     add Strasbourg infos"
     if addrs.get("Strasbourg"):
         stg = addrs["Strasbourg"]
@@ -128,9 +129,10 @@ def add_addrs(mep, addrs):
                                          postcode=stg["Address"].get("Zip", stg["Address"]["Zip1"]))
         mep.stg_floor = stg["Address"]["Office"][:3]
         mep.stg_office_number = stg["Address"]["Office"][3:]
-        mep.stg_fax = stg["Fax"]
-        mep.stg_phone1 = stg["Phone"]
-        mep.stg_phone2 = stg["Phone"][:-4] + "7" + stg["Phone"][-3:]
+        mep.stg_fax = stg.get("Fax")
+        if "Phone" in stg:
+            mep.stg_phone1 = stg["Phone"]
+            mep.stg_phone2 = stg["Phone"][:-4] + "7" + stg["Phone"][-3:]
         print "     adding mep's postal addresses:"
     mep.save()
     PostalAddress.objects.filter(mep=mep).delete()
@@ -186,8 +188,9 @@ def change_mep_details(mep, mep_json):
     if mep_json.get("Birth"):
         print "     update mep birth date"
         mep.birth_date = _parse_date(mep_json["Birth"]["date"])
-        print "     update mep birth place"
-        mep.birth_place = mep_json["Birth"]["place"]
+        if "place" in mep_json["Birth"]:
+            print "     update mep birth place"
+            mep.birth_place = mep_json["Birth"]["place"]
     print "     update mep first name"
     mep.first_name = mep_json["Name"]["sur"]
     print "     update mep last name"
