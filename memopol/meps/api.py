@@ -1,5 +1,6 @@
 from tastypie import fields
 from tastypie.resources import ModelResource
+from tastypie.constants import ALL
 from memopol.meps.models import Country,\
                                 LocalParty,\
                                 Group,\
@@ -75,6 +76,9 @@ class MEPMEPResource(ModelResource):
 
     class Meta:
         queryset = MEP.objects.all()
+        filtering = {
+            "ep_id": ALL,
+        }
 
 
 class MEPGroupMEPResource(ModelResource):
