@@ -20,7 +20,7 @@ class HomeView(TemplateView):
         # #415 : Make the "random MEP" the same for one day
         MEP_list = MEP.objects.filter(active=True)
         now = datetime.now()
-        seed(int("{}{}{}".format(now.year, now.month, now.day)))
+        seed(int("%s%s%s" % (now.year, now.month, now.day)))
         spotlight_mep = MEP_list[randint(1,MEP_list.count())]
 
         return {
