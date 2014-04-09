@@ -198,7 +198,7 @@ def change_mep_details(mep, mep_json):
     print "     update mep full name"
     mep.full_name = "%s %s" %(mep_json["Name"]["sur"], mep_json["Name"]["family"])
     print "     update mep gender"
-    if mep_json["Gender"] == u'n/a':
+    if mep_json.get("Gender", u'n/a') == u'n/a':
         mep.gender = None
     else:
         mep.gender = mep_json["Gender"]
