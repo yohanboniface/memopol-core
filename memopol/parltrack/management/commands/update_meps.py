@@ -49,7 +49,7 @@ class Command(BaseCommand):
                 in_db_mep = MEP.objects.filter(ep_id=int(mep_json["UserID"]))
                 if in_db_mep:
                     mep = in_db_mep[0]
-                    mep.active = mep_json['active']
+                    mep.active = bool(mep_json['active'])
                     manage_mep(mep, mep_json)
                 else:
                     mep = create_mep(mep_json)
