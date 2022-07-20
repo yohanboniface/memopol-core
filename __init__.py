@@ -1,3 +1,0 @@
-"""
-memopol2 apps
-"""
