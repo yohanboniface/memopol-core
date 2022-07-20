@@ -1,5 +1,0 @@
-{% if party %}
-<ul class="party">
-<a href="{% url meps:index_by_party party.id party.name|slugify %}">{{ party.name }}</a>
-</ul>
-{% endif %}

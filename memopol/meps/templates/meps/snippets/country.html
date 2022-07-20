@@ -1,8 +1,0 @@
-{% if country %}
-<a href="{% url meps:index_by_country country.code %}">
-    <span class="sprite-country_small-{{ country.code }}" alt="{{ country.name }} flag"></span>
-  {{ country.name }}
-</a>
-{% else %}
--
-{% endif %}
